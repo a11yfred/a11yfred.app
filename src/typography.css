@@ -1,0 +1,34 @@
+/* ─── Typography ─────────────────────────────────────────────
+   Base text treatment and type scale utilities.
+   Components currently apply font sizes via inline styles;
+   these classes are available for gradual adoption.
+──────────────────────────────────────────────────────────── */
+
+/* Scale utilities */
+.text-xs   { font-size: var(--fs-xs);   }
+.text-sm   { font-size: var(--fs-sm);   }
+.text-base { font-size: var(--fs-base); }
+.text-md   { font-size: var(--fs-md);   }
+.text-lg   { font-size: var(--fs-lg);   }
+.text-xl   { font-size: var(--fs-xl);   }
+.text-2xl  { font-size: var(--fs-2xl);  }
+
+/* Weight utilities */
+.font-normal  { font-weight: 400; }
+.font-medium  { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+
+/* Color utilities */
+.text-default { color: var(--text);       }
+.text-muted   { color: var(--text-muted); }
+.text-faint   { color: var(--text-faint); }
+.text-accent  { color: var(--accent-text);}
+
+/* Line clamp — used for result list descriptions */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+}

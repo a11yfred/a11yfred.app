@@ -1,0 +1,167 @@
+/* ─── Reset ───────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Base ────────────────────────────────────────────────── */
+
+html {
+  font-size: 14pt; /* rem base — all --fs-* tokens are relative to this */
+  height: 100%;
+}
+
+body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  font-size: var(--fs-md); /* 1rem = 14pt */
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+input, textarea, button, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* ─── Focus ───────────────────────────────────────────────── */
+
+/* Keyboard focus ring — 3:1 min contrast against all surfaces.
+   Mouse clicks do not trigger :focus-visible, so this is
+   keyboard-navigation only (correct per WCAG 2.4.11). */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Suppress the default outline only on elements that supply
+   their own visible focus treatment via border-color change. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 0;
+}
+
+/* ─── Layout ─────────────────────────────────────────────── */
+
+.app-container {
+  padding: var(--space-5) var(--space-4);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (width >= 768px) {
+  .app-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-6);
+  }
+}
+
+/* ─── Modal / bottom sheet ───────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgb(0 0 0 / 0.4);
+  display: flex;
+  align-items: flex-end;   /* bottom sheet on mobile */
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-6);
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  will-change: transform;
+  animation: slide-up 0.22s ease;
+}
+
+/* Drag handle indicator */
+.modal-content::before {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 4px;
+  background: var(--border);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-5);
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-content { animation: none; }
+}
+
+@media (width >= 768px) {
+  .modal-overlay {
+    align-items: center;
+    padding: var(--space-4);
+  }
+
+  .modal-content {
+    max-width: 460px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    max-height: none;
+    overflow-y: visible;
+    will-change: auto;
+    animation: none;
+  }
+
+  /* Hide drag handle on desktop */
+  .modal-content::before {
+    display: none;
+  }
+}
+
+/* ─── Touch targets ───────────────────────────────────────── */
+
+/* Icon-only buttons: invisible padding keeps the visual size
+   unchanged while meeting the 44px minimum tap target. */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  color: var(--text-muted);
+}
+
+/* ─── Visually hidden (screen reader only) ────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

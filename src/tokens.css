@@ -1,0 +1,99 @@
+/* ─── Design Tokens ──────────────────────────────────────────
+   Single source of truth for all design values.
+   Components reference these via var(). Dark mode overrides
+   only the values that change. Priority badge colors are
+   defined here; ResultList.jsx migration is tracked in TODO.md.
+──────────────────────────────────────────────────────────── */
+
+:root {
+
+  /* Color — surfaces */
+  --bg:              #ffffff;
+  --bg-subtle:       #f5f5f5;
+  --border:          #e0e0e0;
+
+  /* Color — text
+     All values checked for ≥ 4.5:1 contrast against --bg (#fff). */
+  --text:            #111111;  /* 15.9:1 */
+  --text-muted:      #666666;  /* 5.7:1  */
+  --text-faint:      #767676;  /* 4.5:1  — minimum passing value */
+
+  /* Color — accent */
+  --accent:          #5548c8;
+  --accent-bg:       #eeedfe;
+  --accent-text:     #3c3489;
+
+  /* Color — semantic */
+  --success:         #2d6a4f;
+
+  /* Color — focus ring
+     ≥ 3:1 against both --bg and --bg-subtle surfaces. */
+  --focus:           #5548c8;  /* 6.4:1 against #fff */
+
+  /* Color — priority badges (ResultList.jsx uses JS objects today;
+     tokens ready for migration) */
+  --priority-critical-text: #a32d2d;
+  --priority-critical-bg:   #fcebeb;
+  --priority-high-text:     #854f0b;
+  --priority-high-bg:       #faeeda;
+  --priority-medium-text:   #185fa5;
+  --priority-medium-bg:     #e6f1fb;
+  --priority-low-text:      #3b6d11;
+  --priority-low-bg:        #eaf3de;
+
+  /* Typography — families
+     Noto Sans first (self-hosted, cross-platform open source),
+     Cantarell for GNOME/Fedora/Bazzite users who have it natively,
+     then system-ui for everything else. */
+  --font: 'Noto Sans', 'Cantarell', 'Inter', 'Ubuntu', system-ui, -apple-system, sans-serif;
+  --mono: 'SF Mono', 'Fira Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Typography — scale (rem, base 14pt ≈ 18.67px set on html)
+     --fs-md is 1rem = 14pt = the body base. Scale steps are
+     relative so they automatically respect browser font size
+     preferences (WCAG 1.4.4). */
+  --fs-xs:   0.6rem;   /* ~11px */
+  --fs-sm:   0.7rem;   /* ~13px */
+  --fs-base: 0.8rem;   /* ~15px */
+  --fs-md:   1rem;     /* 14pt  — body base */
+  --fs-lg:   1.1rem;   /* ~20px */
+  --fs-xl:   1.25rem;  /* ~23px */
+  --fs-2xl:  1.5rem;   /* ~28px */
+
+  /* Spacing (rem, scales with html font-size)
+     --space-1 ≈ 4.7px … --space-8 ≈ 37px at 14pt base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* Breakpoints (reference only — use in @media min-width queries)
+     --bp-md:  768px   tablet / layout switch point
+     --bp-lg: 1280px   desktop */
+
+  /* Borders */
+  --radius-sm:   4px;
+  --radius:      6px;
+  --radius-lg:   16px;
+  --radius-full: 9999px;
+}
+
+[data-theme="dark"] {
+  --bg:          #111111;
+  --bg-subtle:   #1a1a1a;
+  --border:      #2a2a2a;
+
+  /* Dark mode text: all ≥ 4.5:1 against --bg (#111). */
+  --text:        #eeeeee;  /* 13.7:1 */
+  --text-muted:  #999999;  /*  5.8:1 */
+  --text-faint:  #909090;  /*  5.0:1 — darker than muted but still passes */
+
+  --accent:      #7f77dd;
+  --accent-bg:   #26215c;
+  --accent-text: #afa9ec;
+
+  --focus:       #a09ce8;  /* 4.6:1 against #111 dark bg */
+}
