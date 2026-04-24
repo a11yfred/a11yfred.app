@@ -40,14 +40,14 @@ export default function ResultList({ results, selected, onSelect, query }) {
             {/* Title + priority badge */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
               <span style={{
-                fontSize: 'var(--fs-body)',
+                fontSize: 'var(--fs-sub)',
                 fontWeight: 500,
                 color: isSelected ? 'var(--accent-text)' : 'var(--text)',
               }}>
                 {defect.title}
               </span>
               <span style={{
-                fontSize: 'var(--fs-small)',
+                fontSize: 'var(--fs-body)',
                 padding: '2px 8px',
                 borderRadius: 'var(--radius-full)',
                 whiteSpace: 'nowrap',
@@ -60,13 +60,13 @@ export default function ResultList({ results, selected, onSelect, query }) {
             </div>
 
             {/* SC label */}
-            <div style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', marginTop: 'var(--space-1)' }}>
+            <div style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginTop: 'var(--space-1)' }}>
               {defect.scLabel}
             </div>
 
             {/* Description preview */}
             <div style={{
-              fontSize: 'var(--fs-small)',
+              fontSize: 'var(--fs-body)',
               color: 'var(--text-faint)',
               marginTop: 'var(--space-1)',
               display: '-webkit-box',
@@ -110,14 +110,14 @@ function NoResults({ query }) {
       </svg>
 
       <p style={{
-        fontSize: 'var(--fs-body)',
+        fontSize: 'var(--fs-sub)',
         fontWeight: 600,
         color: 'var(--text)',
         marginBottom: 'var(--space-2)',
       }}>
         No results for &ldquo;{query}&rdquo;
       </p>
-      <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>
+      <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)' }}>
         Try a component name, element type, or a different phrase.
       </p>
     </section>

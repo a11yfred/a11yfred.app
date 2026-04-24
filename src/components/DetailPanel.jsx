@@ -69,7 +69,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
           <h2
             ref={titleRef}
             tabIndex={-1}
-            style={{ fontSize: 'var(--fs-sub)', fontWeight: 600, color: 'var(--text)', marginBottom: 6, outline: 'none' }}
+            style={{ fontSize: 'var(--fs-heading)', fontWeight: 600, color: 'var(--text)', marginBottom: 6, outline: 'none' }}
           >
             {defect.title}
           </h2>
@@ -81,7 +81,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         <button
           onClick={onClose}
           aria-label="Close defect panel"
-          style={{ fontSize: 'var(--fs-sub)', color: 'var(--text-faint)', lineHeight: 1, padding: 4 }}
+          style={{ fontSize: 'var(--fs-heading)', color: 'var(--text-faint)', lineHeight: 1, padding: 4 }}
         >
           ×
         </button>
@@ -91,7 +91,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
       <div style={{ marginBottom: '1rem' }}>
         <label
           htmlFor="location-prefix"
-          style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+          style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
         >
           Location prefix <span style={{ color: 'var(--text-faint)' }}>(optional)</span>
         </label>
@@ -104,7 +104,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
           style={{
             width: '100%',
             padding: '7px 10px',
-            fontSize: 'var(--fs-body)',
+            fontSize: 'var(--fs-sub)',
             background: 'var(--bg-subtle)',
             border: '1px solid var(--border)',
             borderRadius: 'var(--radius)',
@@ -137,7 +137,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
       <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
         <label
           htmlFor="refine-note"
-          style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+          style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
         >
           Refine
           <span style={{ color: 'var(--text-faint)', fontWeight: 400, marginLeft: 6 }}>
@@ -157,7 +157,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
             style={{
               flex: 1,
               padding: '7px 10px',
-              fontSize: 'var(--fs-body)',
+              fontSize: 'var(--fs-sub)',
               background: 'var(--bg-subtle)',
               border: '1px solid var(--border)',
               borderRadius: 'var(--radius)',
@@ -170,7 +170,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
               disabled={refining || !refineNote.trim()}
               style={{
                 padding: '7px 14px',
-                fontSize: 'var(--fs-body)',
+                fontSize: 'var(--fs-sub)',
                 borderRadius: 'var(--radius)',
                 border: '1px solid var(--accent)',
                 background: 'var(--accent-bg)',
@@ -193,11 +193,11 @@ function Field({ id, label, value, onChange, copied, onCopy }) {
   return (
     <div style={{ marginBottom: '1rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-        <label htmlFor={id} style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>{label}</label>
+        <label htmlFor={id} style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)' }}>{label}</label>
         <button
           onClick={onCopy}
           style={{
-            fontSize: 'var(--fs-small)',
+            fontSize: 'var(--fs-body)',
             padding: '2px 8px',
             borderRadius: 4,
             border: '1px solid var(--border)',
@@ -217,7 +217,7 @@ function Field({ id, label, value, onChange, copied, onCopy }) {
         style={{
           width: '100%',
           padding: '8px 10px',
-          fontSize: 'var(--fs-body)',
+          fontSize: 'var(--fs-sub)',
           lineHeight: 1.6,
           background: 'var(--bg-subtle)',
           border: '1px solid var(--border)',
@@ -235,7 +235,7 @@ function Field({ id, label, value, onChange, copied, onCopy }) {
 function ScBadge({ label, primary }) {
   const href = scToWaiUrl(label)
   const style = {
-    fontSize: 'var(--fs-small)',
+    fontSize: 'var(--fs-body)',
     padding: '2px 8px',
     borderRadius: 20,
     background: primary ? 'var(--accent-bg)' : 'var(--bg-subtle)',

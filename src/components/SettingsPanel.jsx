@@ -9,7 +9,7 @@ const PROVIDERS = [
 ]
 
 const SECTION = {
-  fontSize: 'var(--fs-small)',
+  fontSize: 'var(--fs-body)',
   fontWeight: 600,
   color: 'var(--text-faint)',
   textTransform: 'uppercase',
@@ -77,18 +77,18 @@ export default function SettingsPanel({
           ←
         </button>
         {/* tabIndex={-1} allows programmatic focus without joining tab order */}
-        <h2
+        <h1
           ref={headingRef}
           tabIndex={-1}
           style={{
-            fontSize: 'var(--fs-sub)',
+            fontSize: 'var(--fs-heading)',
             fontWeight: 600,
             color: 'var(--text)',
-            outline: 'none',   /* focus ring suppressed on heading — it's a focus target, not a control */
+            outline: 'none',
           }}
         >
           Settings
-        </h2>
+        </h1>
       </div>
 
       {/* ── Search ─────────────────────────────────── */}
@@ -100,8 +100,8 @@ export default function SettingsPanel({
         marginBottom: 'var(--space-5)',
       }}>
         <div>
-          <p style={{ fontSize: 'var(--fs-body)', fontWeight: 500 }}>Typeahead</p>
-          <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', marginTop: 2 }}>
+          <p style={{ fontSize: 'var(--fs-sub)', fontWeight: 500 }}>Typeahead</p>
+          <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginTop: 2 }}>
             {typeahead ? 'Results appear as you type' : 'Results appear on Search / Enter'}
           </p>
         </div>
@@ -143,15 +143,15 @@ export default function SettingsPanel({
         marginBottom: 'var(--space-4)',
       }}>
         <div>
-          <p style={{ fontSize: 'var(--fs-body)', fontWeight: 500 }}>Enable AI assist</p>
-          <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', marginTop: 2 }}>
+          <p style={{ fontSize: 'var(--fs-sub)', fontWeight: 500 }}>Enable AI assist</p>
+          <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginTop: 2 }}>
             Rewrites text based on your refinement notes
           </p>
         </div>
         <Toggle checked={aiEnabled} onChange={onToggleAi} label="Toggle AI assist" />
       </div>
 
-      <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>
+      <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>
         API keys are stored locally in your browser and never sent to any server.
         You supply your own key — usage is billed to your account.
       </p>
@@ -159,7 +159,7 @@ export default function SettingsPanel({
       <div style={{ marginBottom: 'var(--space-3)' }}>
         <label
           htmlFor="active-provider"
-          style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+          style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
         >
           Active provider
         </label>
@@ -167,14 +167,17 @@ export default function SettingsPanel({
           id="active-provider"
           value={activeProvider}
           onChange={e => setActiveProvider(e.target.value)}
+          disabled={!aiEnabled}
           style={{
             width: '100%',
             padding: '6px 10px',
-            fontSize: 'var(--fs-small)',
+            fontSize: 'var(--fs-body)',
             background: 'var(--bg-subtle)',
             border: '1px solid var(--border)',
             borderRadius: 'var(--radius)',
             color: 'var(--text)',
+            opacity: aiEnabled ? 1 : 0.4,
+            cursor: aiEnabled ? 'default' : 'not-allowed',
           }}
         >
           {PROVIDERS.map(p => (
@@ -183,11 +186,11 @@ export default function SettingsPanel({
         </select>
       </div>
 
-      {PROVIDERS.map(p => (
+      {PROVIDERS.filter(p => p.id === activeProvider).map(p => (
         <div key={p.id} style={{ marginBottom: 'var(--space-2)' }}>
           <label
             htmlFor={`apikey-${p.id}`}
-            style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', display: 'block', marginBottom: 3 }}
+            style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', display: 'block', marginBottom: 3 }}
           >
             {p.label}
           </label>
@@ -200,7 +203,7 @@ export default function SettingsPanel({
             style={{
               width: '100%',
               padding: '6px 10px',
-              fontSize: 'var(--fs-small)',
+              fontSize: 'var(--fs-body)',
               background: 'var(--bg-subtle)',
               border: '1px solid var(--border)',
               borderRadius: 'var(--radius)',
@@ -215,7 +218,7 @@ export default function SettingsPanel({
           onClick={handleSave}
           style={{
             padding: '7px 16px',
-            fontSize: 'var(--fs-small)',
+            fontSize: 'var(--fs-body)',
             borderRadius: 'var(--radius)',
             border: '1px solid var(--accent)',
             background: 'var(--accent-bg)',
@@ -243,7 +246,7 @@ function ThemeChip({ value, label, current, onChange }) {
       background: isActive ? 'var(--accent-bg)' : 'var(--bg-subtle)',
       color: isActive ? 'var(--accent-text)' : 'var(--text-muted)',
       cursor: 'pointer',
-      fontSize: 'var(--fs-small)',
+      fontSize: 'var(--fs-body)',
       fontWeight: isActive ? 500 : 400,
       transition: 'all 0.1s',
     }}>

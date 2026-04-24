@@ -124,7 +124,7 @@ function AppShell() {
 
 function Header({ platform, onPlatformChange, onOpenSettings }) {
   return (
-    <header style={{ position: 'relative', textAlign: 'center', marginBottom: 'var(--space-8)' }}>
+    <header style={{ position: 'relative', textAlign: 'center', marginBottom: 'var(--space-8)', paddingTop: 36 }}>
       <button
         onClick={onOpenSettings}
         aria-label="Open settings"
@@ -150,7 +150,7 @@ function Header({ platform, onPlatformChange, onOpenSettings }) {
       </h1>
 
       <p style={{
-        fontSize: 'var(--fs-small)',
+        fontSize: 'var(--fs-body)',
         color: 'var(--text-muted)',
         marginTop: 'var(--space-1)',
       }}>
@@ -170,7 +170,7 @@ function Header({ platform, onPlatformChange, onOpenSettings }) {
             key={p}
             onClick={() => onPlatformChange(p)}
             style={{
-              fontSize: 'var(--fs-small)',
+              fontSize: 'var(--fs-body)',
               padding: '6px 14px',
               borderRadius: 'var(--radius-sm)',
               background: platform === p ? 'var(--bg)' : 'transparent',
@@ -200,7 +200,7 @@ function Footer() {
       justifyContent: 'space-between',
       gap: 'var(--space-4)',
     }}>
-      <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-faint)' }}>
+      <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-faint)' }}>
         Made by Mikey Ilagan
       </p>
       {/* TODO: update href once the GitHub repo is created */}
@@ -209,7 +209,7 @@ function Footer() {
         target="_blank"
         rel="noreferrer"
         style={{
-          fontSize: 'var(--fs-small)',
+          fontSize: 'var(--fs-body)',
           color: 'var(--text-muted)',
           textDecoration: 'none',
           whiteSpace: 'nowrap',

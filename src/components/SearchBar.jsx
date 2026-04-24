@@ -9,13 +9,13 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
         htmlFor="defect-search"
         style={{
           display: 'block',
-          fontSize: 'var(--fs-small)',
+          fontSize: 'var(--fs-body)',
           fontWeight: 500,
           color: 'var(--text-muted)',
           marginBottom: 'var(--space-2)',
         }}
       >
-        Describe the defect
+        Describe the defect or observation
       </label>
       <div style={{ display: 'flex', gap: 8 }}>
         <input
@@ -32,7 +32,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
             flex: 1,
             minHeight: '3rem',
             padding: 'var(--space-3) var(--space-4)',
-            fontSize: 'var(--fs-body)',
+            fontSize: 'var(--fs-sub)',
             lineHeight: 1.5,
             background: 'var(--bg-subtle)',
             border: '1px solid var(--border)',
@@ -49,7 +49,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
             disabled={query.length < 2}
             style={{
               padding: 'var(--space-3) var(--space-4)',
-              fontSize: 'var(--fs-body)',
+              fontSize: 'var(--fs-sub)',
               fontWeight: 500,
               borderRadius: 'var(--radius)',
               border: '1px solid var(--accent)',
@@ -67,9 +67,9 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
         )}
       </div>
       {query.length === 0 && (
-        <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-faint)', marginTop: 'var(--space-2)' }}>
+        <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-faint)', marginTop: 'var(--space-2)' }}>
           {typeahead
-            ? 'Results appear as you type.'
+            ? 'Results appear as you type. This can be changed from Settings.'
             : 'Type a description and press Search or Enter.'}
         </p>
       )}
