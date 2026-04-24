@@ -19,7 +19,7 @@ The app runs at `http://localhost:5173`.
 
 ## Adding defect entries
 
-The corpus lives in `src/data/defects.json`. Each entry follows this schema:
+The **public** corpus lives in `src/data/corpus.json`. Each entry follows this schema:
 
 ```json
 {
@@ -44,7 +44,7 @@ The corpus lives in `src/data/defects.json`. Each entry follows this schema:
 
 **`keywords`** drive Fuse.js relevance — include the element name, component type, issue type, and any terms an auditor would naturally search for.
 
-Descriptions and remediation should be concise, technical, and written in the same direct voice as existing entries.
+Descriptions and remediation should be concise, technical, and written in the same direct voice as existing entries. Source from publicly available guidance (WCAG Understanding docs, axe-core rules, Deque University, WebAIM).
 
 ---
 
@@ -53,7 +53,7 @@ Descriptions and remediation should be concise, technical, and written in the sa
 1. Fork the repo and create a branch: `git checkout -b add-defect-ath-052`
 2. Make your changes
 3. Open a pull request with a short description of what you added or changed
-4. If adding defects, mention the WCAG success criterion and source/reference if applicable
+4. If adding defects, mention the WCAG success criterion and the public source/reference
 
 ---
 
@@ -65,4 +65,6 @@ Open a GitHub Issue. No template required — just describe what you saw or what
 
 ## What's not in scope
 
-The defect corpus in this repo is the public version, sourced from publicly available accessibility guidance (WCAG, WebAIM, Deque, axe-core). Private audit data is out of scope and will not be accepted.
+The corpus in this repo (`corpus.json`) is the **public** version — entries sourced entirely from publicly available accessibility guidance (WCAG, WebAIM, Deque, axe-core). Private or personal audit data will not be accepted.
+
+A separate personal corpus (`mikeys-corpus.json`) exists for the tool author's private use and is never included in any pull request, release, or public deployment.
