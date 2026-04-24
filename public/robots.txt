@@ -1,0 +1,4 @@
+# Development deployment — block all crawlers until the public release.
+# Remove this file and replace with a permissive robots.txt before Phase 3 launch.
+User-agent: *
+Disallow: /
