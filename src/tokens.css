@@ -11,6 +11,9 @@
   --bg:              #ffffff;
   --bg-subtle:       #f5f5f5;
   --border:          #e0e0e0;
+  /* Minimum-contrast border for enabled UI controls (inputs, toggles, chips).
+     #767676 = 4.5:1 on #fff and 3.6:1 on #f5f5f5 — passes WCAG 1.4.11 (3:1). */
+  --border-control:  #767676;
 
   /* Color — text
      All values checked for ≥ 4.5:1 contrast against --bg (#fff). */
@@ -96,4 +99,6 @@
   --accent-text: #afa9ec;
 
   --focus:       #a09ce8;  /* 4.6:1 against #111 dark bg */
+  /* #686868 = 3.6:1 on #111, 3.1:1 on #1a1a1a */
+  --border-control: #686868;
 }
