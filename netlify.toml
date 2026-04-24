@@ -1,0 +1,42 @@
+[build]
+  publish = "dist"
+  command = "npm run build"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Prevent clickjacking
+    X-Frame-Options = "DENY"
+    # Prevent MIME-type sniffing
+    X-Content-Type-Options = "nosniff"
+    # Control referrer data on external links
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Opt out of browser features this app doesn't use
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    # Content Security Policy:
+    #   - self:           app JS/CSS/HTML
+    #   - fonts.googleapis.com / gstatic.com: Inter font (stylesheet + files)
+    #   - connect-src:    direct browser→AI provider calls (no relay server)
+    #   Note: update connect-src when wiring additional AI providers
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self';
+      style-src 'self' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      connect-src 'self'
+        https://api.anthropic.com
+        https://api.openai.com
+        https://generativelanguage.googleapis.com
+        https://api.cognitive.microsoft.com;
+      img-src 'self' data:;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+    """
+
+# SPA fallback — all routes serve index.html so the hash router works after a
+# hard reload or direct link (e.g. /#/settings)
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
