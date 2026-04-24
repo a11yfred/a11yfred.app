@@ -29,11 +29,11 @@ function AppShell() {
 
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'auto')
   const [aiEnabled, setAiEnabled] = useState(false)
-  const [typeahead, setTypeahead] = useState(true)
+  const [typeahead, setTypeahead] = useState(() => localStorage.getItem('typeahead') !== 'false')
   const [query, setQuery] = useState('')
   const [submittedQuery, setSubmittedQuery] = useState('')
   const [selected, setSelected] = useState(null)
-  const [platform, setPlatform] = useState('web')
+  const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
 
   const activeQuery = typeahead ? query : submittedQuery
   const results = useDefectSearch(activeQuery, platform)
@@ -53,6 +53,9 @@ function AppShell() {
       return () => mq.removeEventListener('change', apply)
     }
   }, [theme])
+
+  useEffect(() => { localStorage.setItem('typeahead', typeahead) }, [typeahead])
+  useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
 
   // WCAG 2.4.3: focus h1 when returning from settings on desktop (page swap).
   // Mobile focus return is handled by OffCanvas. Skip on initial mount.
