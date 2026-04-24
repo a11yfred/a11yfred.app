@@ -17,7 +17,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 ## Corpus
 
 - [ ] **Batch import tooling** `[corpus]` — small script (Node or Python) to convert rows from a CSV/spreadsheet into the `mikeys-corpus.json` schema; run once, review output, delete script
-- [ ] **Custom data source support** `[corpus]` `[ux]` — allow loading a user-supplied JSON file as the corpus; provide a guide in Settings explaining the expected format and schema; useful for contributors running a fork
+- [ ] **Custom data source support** `[corpus]` `[ux]` — allow loading a user-supplied JSON file as the corpus; provide a guide in Settings explaining the expected format and schema; useful for contributors running a fork; if auth is implemented, also support loading from a remote URL or user-owned Supabase table
 - [ ] **Keyword audit** `[corpus]` — after import, review keywords on each entry; these drive Fuse.js relevance more than anything else
 - [ ] **Platform coverage** `[corpus]` — ensure native-only defects are present and flagged correctly (`"platform": "native"`); verify `"both"` entries make sense on each platform
 - [ ] **Related SC links** `[corpus]` — spot-check `related` arrays for accuracy; some starters may be missing secondary SCs
@@ -71,6 +71,17 @@ Target languages: English, Spanish, German, Dutch, French, Japanese, Tagalog/Fil
 - [ ] **Component-level filtering** `[ux]` — filter by UI component type (modal, form, button, heading, etc.) in addition to platform
 - [ ] **Print view** `[ux]` — print-friendly CSS (`@media print`) for physical handoffs
 - [ ] **Customizable results view** `[ux]` `[code]` — let users control how results are displayed: number of visible results, which fields appear in the list (title only, title + SC label, title + description preview), and sort order (relevance, priority, SC number); persist preferences in `localStorage`
+- [ ] **Upvote / downvote results** `[ux]` `[corpus]` — thumbs up / down on each result card; store ratings in `localStorage` keyed by defect ID (no auth required); use ratings to boost or demote results in Fuse.js scoring so frequently used entries bubble up and poor matches sink; if signed in, sync ratings to Supabase so they persist across devices (see Authentication section)
+- [ ] Reset button next to copy
+- [ ] Move web/native toggle to settings with brief description
+- [ ] Create public-facing version of the data using simple language/English
+- [ ] Audio description issue
+- [ ] Closed captions issue
+- [ ] Results found line
+- [ ] Visible indicator for selected result
+- [ ] Primary sc in results header
+- [ ] Secondary sc in results header
+- [ ] Tap into Axe and other open source engines to dynamically create data json
 
 ---
 
@@ -85,6 +96,22 @@ Target languages: English, Spanish, German, Dutch, French, Japanese, Tagalog/Fil
 - [ ] **Dark mode priority badge colors** `[design]` `[a11y]` — current badge colors are light-mode only; verify contrast in dark theme after CSS token migration
 - [ ] **Focus ring design** `[design]` `[a11y]` — explicit `--focus` token is now wired; verify all interactive elements (including custom components like Toggle) show a visible ring on keyboard focus
 - [ ] **Empty state illustration** `[design]` — the pre-search state (before any query is entered) has no visual cue; add a short prompt or illustration explaining what to type
+- [ ] Toggle design enhancement to be more discernible with typical power symbol
+- [ ] Monospace typeface results change
+- [ ] Gear icon change
+- [ ] Favicon
+- [ ] Link heading to home
+- [ ] Textarea focus outline
+- [ ] Put results in bottom sheet
+- [ ] Fix results close button focus order
+- [ ] Tasteful animation, defaults to user pref but can be overriden from this, save persists with cookie
+- [ ] Color theme can be overriden, save persists with cookie - do I need a cookie consent?
+- [ ] Clear button in inputfield
+- [ ] Copy icon on mobile
+- [ ] Reset icon on mobile
+- [ ] Copy and reset icons and text on desktop
+- [ ] Fix chevron placement in dropdown
+- [ ] Selected chip indicator symbol
 
 ---
 
@@ -119,6 +146,18 @@ Features that would set A11yTextHelper apart from other a11y resources:
 - [ ] **Version tracking for WCAG** `[corpus]` — tag each entry with the WCAG version it applies to (2.1 vs 2.2); future-proof for WCAG 2.x and 3.0 when relevant SCs change
 - [ ] **Quick compare mode** `[ux]` — view two defect entries side by side to choose which one fits better; useful when multiple SCs could apply
 - [ ] **Contribution via GitHub** `[corpus]` `[infra]` — "Suggest an edit" link per entry that opens a pre-filled GitHub issue; lowers the barrier for community contribution without requiring a fork
+- [ ] Add tip jar
+
+---
+
+## Authentication and User Data
+
+- [ ] **Auth provider — Google / GitHub OAuth** `[infra]` `[privacy]` — add sign-in via Google or GitHub using Supabase Auth (free tier); auth is optional — the tool continues to work fully without signing in; authenticated state persists across sessions; use Supabase's built-in OAuth helpers so no custom auth server is needed
+- [ ] **Persist upvotes / downvotes to Supabase** `[ux]` `[infra]` — today ratings would only live in `localStorage` (one device, lost on clear); with auth, sync ratings to a `ratings` table (`user_id`, `defect_id`, `vote`); merge with local ratings on sign-in; `dataService.js` already abstracts the data layer so this is a localized change
+- [ ] **User-owned remote data source** `[corpus]` `[infra]` — let signed-in users point the app at their own Supabase table or a remote JSON URL as their corpus; Settings UI: text field for the URL or Supabase connection string; falls back to the built-in corpus if the source is unreachable; private sources require auth so the key is never stored in the URL
+- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — Mikey's private corpus (`mikeys-corpus.json`) should never ship in the public build; with auth in place, serve it from a Supabase RLS-protected table instead of a bundled JSON file; unauthenticated users get `corpus.json` only
+- [ ] **Sign-in UI** `[ux]` — minimal sign-in entry point in Settings (below AI Assist); show avatar + display name when signed in, "Sign in with Google / GitHub" buttons when not; sign-out option; no dedicated auth page needed
+- [ ] Do I need cookie consent?
 
 ---
 
