@@ -4,6 +4,29 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-24 — Maintenance run: bug fixes and full checklist pass
+
+### Bug fixes
+
+- `src/App.jsx` — `typeahead` was never persisted to `localStorage`; initialized with hardcoded `true`; now reads `localStorage.getItem('typeahead') !== 'false'` on mount and a `useEffect` writes the value on every change
+- `src/App.jsx` — `platform` was never persisted to `localStorage`; initialized with hardcoded `'web'`; now reads `localStorage.getItem('platform') || 'web'` on mount and a `useEffect` writes the value on every change
+- `src/components/SettingsPanel.jsx` — privacy disclosure stated "four things in localStorage" and listed typeahead; corrected to five items with platform added: theme, platform, typeahead, active AI provider, API key(s)
+- `src/components/SearchBar.jsx` — clear button `fontSize: 14` (raw px) replaced with `var(--fs-body)`
+- `src/components/SettingsPanel.jsx` — back button `fontSize: 20` (raw px) replaced with `var(--fs-sub)`
+
+### Maintenance checklist findings (2026-04-24)
+
+- Build: clean, 76 kB total gzipped; vendor chunks confirmed (react 45 kB, fuse 9 kB, app 20 kB)
+- `npm audit`: 2 moderate vulns in esbuild/vite (dev-server CORS, not production); fix deferred (requires Vite 8 breaking upgrade)
+- `npm outdated`: all updates are major version bumps (React 18→19, Vite 5→8, ESLint 9→10); deferred
+- `innerHTML`: none found
+- `rel="noreferrer"`: verified on all `target="_blank"` links
+- `localStorage` inventory: 5 keys confirmed after bug fix (theme, typeahead, platform, ai_provider, apikey_*)
+- WCAG code checks: all aria-labels, landmarks, role/aria-checked, announce wiring, lang attr — passed
+- Docs: all files verified current
+
+---
+
 ## 2026-04-24 — Sweeps: accessibility, security, privacy, performance, SEO, code cleanup, docs overhaul
 
 ### Accessibility (WCAG 2.2)
