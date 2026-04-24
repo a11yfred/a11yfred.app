@@ -66,7 +66,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
                 border: 'none',
                 background: 'var(--border)',
                 color: 'var(--text-muted)',
-                fontSize: 14,
+                fontSize: 'var(--fs-body)',
                 lineHeight: 1,
                 cursor: 'pointer',
                 display: 'flex',

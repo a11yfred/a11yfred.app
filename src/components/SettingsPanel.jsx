@@ -74,7 +74,7 @@ export default function SettingsPanel({
           onClick={onClose}
           aria-label="Back to search"
           className="btn-icon"
-          style={{ fontSize: 20, color: 'var(--text-faint)', flexShrink: 0 }}
+          style={{ fontSize: 'var(--fs-sub)', color: 'var(--text-faint)', flexShrink: 0 }}
         >
           ←
         </button>
@@ -190,8 +190,9 @@ export default function SettingsPanel({
         You supply your own key; usage is billed directly to your account.
       </p>
       <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-faint)', marginBottom: 'var(--space-3)' }}>
-        This app stores four things in <code>localStorage</code>: your theme preference,
-        your search mode (typeahead on/off), your active AI provider, and your API key(s).
+        This app stores five things in <code>localStorage</code>: your theme preference,
+        your platform filter (Web/Native), your search mode (typeahead on/off),
+        your active AI provider, and your API key(s).
         No personal data, usage data, or corpus content is collected or transmitted by this app.
       </p>
 
