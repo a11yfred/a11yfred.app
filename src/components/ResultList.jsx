@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { announce } from '../plugins/announce/index.js'
 
-const PRIORITY_COLORS = {
-  Critical:       { color: '#a32d2d', bg: '#fcebeb' },
-  High:           { color: '#854f0b', bg: '#faeeda' },
-  Medium:         { color: '#185fa5', bg: '#e6f1fb' },
-  Low:            { color: '#3b6d11', bg: '#eaf3de' },
-  'Best Practice':{ color: 'var(--text-muted)', bg: 'var(--bg-subtle)' },
+const PRIORITY_VARS = {
+  Critical:        { color: 'var(--priority-critical-text)', bg: 'var(--priority-critical-bg)' },
+  High:            { color: 'var(--priority-high-text)',     bg: 'var(--priority-high-bg)'     },
+  Medium:          { color: 'var(--priority-medium-text)',   bg: 'var(--priority-medium-bg)'   },
+  Low:             { color: 'var(--priority-low-text)',      bg: 'var(--priority-low-bg)'      },
+  'Best Practice': { color: 'var(--text-muted)',             bg: 'var(--bg-subtle)'            },
 }
 
 export default function ResultList({ results, selected, onSelect, query }) {
@@ -18,7 +18,7 @@ export default function ResultList({ results, selected, onSelect, query }) {
     <ul style={{ listStyle: 'none', marginBottom: 'var(--space-6)' }} role="listbox" aria-label="Defect candidates">
       {results.map(defect => {
         const isSelected = selected?.id === defect.id
-        const p = PRIORITY_COLORS[defect.priority] || PRIORITY_COLORS['Best Practice']
+        const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
 
         return (
           <li
