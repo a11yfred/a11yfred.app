@@ -10,10 +10,11 @@ import {
   OffCanvas,
   useMediaQuery,
 } from './plugins/router/index.js'
+import { Announcer } from './plugins/announce/index.js'
 
 export default function App() {
   return (
-    <Router>
+    <Router appName="A11yTextHelper">
       <AppShell />
     </Router>
   )
@@ -66,6 +67,8 @@ function AppShell() {
     onToggleTypeahead: () => setTypeahead(t => !t),
     theme,
     onThemeChange: setTheme,
+    platform,
+    onPlatformChange: setPlatform,
     onClose: () => navigate('/'),
   }
 
@@ -98,10 +101,11 @@ function AppShell() {
 
   return (
     <div className="app-container">
+      <Announcer />
       <Header
-        platform={platform}
-        onPlatformChange={setPlatform}
+        settingsOpen={settingsOpen}
         onOpenSettings={() => navigate('/settings')}
+        onCloseSettings={() => navigate('/')}
       />
 
       {isDesktop ? (
@@ -122,16 +126,16 @@ function AppShell() {
   )
 }
 
-function Header({ platform, onPlatformChange, onOpenSettings }) {
+function Header({ settingsOpen, onOpenSettings, onCloseSettings }) {
   return (
     <header style={{ position: 'relative', textAlign: 'center', marginBottom: 'var(--space-8)', paddingTop: 36 }}>
       <button
-        onClick={onOpenSettings}
-        aria-label="Open settings"
+        onClick={settingsOpen ? onCloseSettings : onOpenSettings}
+        aria-label={settingsOpen ? 'Close settings' : 'Open settings'}
         className="btn-icon"
         style={{ position: 'absolute', top: 0, right: 0, fontSize: 22 }}
       >
-        ⚙
+        {settingsOpen ? '✕' : '⚙'}
       </button>
 
       {/*
@@ -156,34 +160,6 @@ function Header({ platform, onPlatformChange, onOpenSettings }) {
       }}>
         Audit defect descriptions, fast
       </p>
-
-      <div style={{
-        display: 'inline-flex',
-        gap: 4,
-        background: 'var(--bg-subtle)',
-        borderRadius: 'var(--radius)',
-        padding: 3,
-        marginTop: 'var(--space-4)',
-      }}>
-        {['web', 'native'].map(p => (
-          <button
-            key={p}
-            onClick={() => onPlatformChange(p)}
-            style={{
-              fontSize: 'var(--fs-body)',
-              padding: '6px 14px',
-              borderRadius: 'var(--radius-sm)',
-              background: platform === p ? 'var(--bg)' : 'transparent',
-              color: platform === p ? 'var(--text)' : 'var(--text-muted)',
-              border: platform === p ? '1px solid var(--border)' : '1px solid transparent',
-              fontWeight: platform === p ? 600 : 400,
-              transition: 'all 0.1s',
-            }}
-          >
-            {p === 'web' ? 'Web' : 'Native'}
-          </button>
-        ))}
-      </div>
     </header>
   )
 }

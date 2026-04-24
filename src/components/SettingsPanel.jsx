@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useFocusOnMount, useReturnFocus } from '../plugins/router/index.js'
+import { useFocusOnMount, useReturnFocus, usePageTitle } from '../plugins/router/index.js'
+import { announce } from '../plugins/announce/index.js'
 
 const PROVIDERS = [
   { id: 'anthropic', label: 'Anthropic (Claude)', placeholder: 'sk-ant-...' },
@@ -21,11 +22,13 @@ export default function SettingsPanel({
   aiEnabled, onToggleAi,
   typeahead, onToggleTypeahead,
   theme, onThemeChange,
+  platform, onPlatformChange,
   onClose,
 }) {
   // Move focus to the heading on mount; restore it to the trigger on unmount
   const headingRef = useFocusOnMount()
   useReturnFocus()
+  usePageTitle('Settings')
 
   const [keys, setKeys] = useState(() => {
     const saved = {}
@@ -57,6 +60,7 @@ export default function SettingsPanel({
     localStorage.setItem('ai_provider', activeProvider)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
+    announce('Settings: Saved')
   }
 
   return (
@@ -84,7 +88,6 @@ export default function SettingsPanel({
             fontSize: 'var(--fs-heading)',
             fontWeight: 600,
             color: 'var(--text)',
-            outline: 'none',
           }}
         >
           Settings
@@ -93,6 +96,34 @@ export default function SettingsPanel({
 
       {/* ── Search ─────────────────────────────────── */}
       <h3 style={SECTION}>Search</h3>
+
+      {/* Platform */}
+      <div style={{ marginBottom: 'var(--space-5)' }}>
+        <p style={{ fontSize: 'var(--fs-sub)', fontWeight: 500, marginBottom: 2 }}>Platform</p>
+        <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginTop: 2, marginBottom: 'var(--space-3)' }}>
+          {platform === 'web' ? 'Show web-oriented results' : 'Show native-oriented results'}
+        </p>
+        <fieldset style={{ border: 'none', padding: 0 }}>
+          <legend className="sr-only">Platform</legend>
+          <div style={{ display: 'flex', gap: 6 }}>
+            {[
+              { value: 'web',    label: 'Web'    },
+              { value: 'native', label: 'Native' },
+            ].map(({ value, label }) => (
+              <RadioChip
+                key={value}
+                name="platform-setting"
+                value={value}
+                label={label}
+                current={platform}
+                onChange={onPlatformChange}
+              />
+            ))}
+          </div>
+        </fieldset>
+      </div>
+
+      {/* Typeahead */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -120,8 +151,9 @@ export default function SettingsPanel({
             { value: 'auto',  label: 'Auto'  },
             { value: 'dark',  label: 'Dark'  },
           ].map(({ value, label }) => (
-            <ThemeChip
+            <RadioChip
               key={value}
+              name="theme-setting"
               value={value}
               label={label}
               current={theme}
@@ -170,7 +202,7 @@ export default function SettingsPanel({
           disabled={!aiEnabled}
           style={{
             width: '100%',
-            padding: '6px 10px',
+            padding: '6px 14px 6px 10px',
             fontSize: 'var(--fs-body)',
             background: 'var(--bg-subtle)',
             border: '1px solid var(--border)',
@@ -200,6 +232,7 @@ export default function SettingsPanel({
             value={keys[p.id]}
             onChange={e => setKeys(prev => ({ ...prev, [p.id]: e.target.value }))}
             placeholder={p.placeholder}
+            disabled={!aiEnabled}
             style={{
               width: '100%',
               padding: '6px 10px',
@@ -208,6 +241,8 @@ export default function SettingsPanel({
               border: '1px solid var(--border)',
               borderRadius: 'var(--radius)',
               color: 'var(--text)',
+              opacity: aiEnabled ? 1 : 0.4,
+              cursor: aiEnabled ? 'text' : 'not-allowed',
             }}
           />
         </div>
@@ -233,13 +268,15 @@ export default function SettingsPanel({
   )
 }
 
-function ThemeChip({ value, label, current, onChange }) {
+function RadioChip({ name, value, label, current, onChange }) {
   const isActive = current === value
   return (
     <label style={{
       flex: 1,
       display: 'flex',
+      alignItems: 'center',
       justifyContent: 'center',
+      gap: 6,
       padding: '7px 0',
       borderRadius: 'var(--radius)',
       border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border)'}`,
@@ -252,12 +289,21 @@ function ThemeChip({ value, label, current, onChange }) {
     }}>
       <input
         type="radio"
-        name="theme-setting"
+        name={name}
         value={value}
         checked={isActive}
         onChange={() => onChange(value)}
         className="sr-only"
       />
+      <span style={{
+        width: 8,
+        height: 8,
+        borderRadius: '50%',
+        background: isActive ? 'var(--accent-text)' : 'transparent',
+        border: isActive ? 'none' : '1.5px solid var(--text-muted)',
+        flexShrink: 0,
+        transition: 'all 0.1s',
+      }} aria-hidden="true" />
       {label}
     </label>
   )
@@ -281,7 +327,9 @@ function Toggle({ checked, onChange, label }) {
       }}
     >
       <span style={{
-        display: 'block',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         width: 16, height: 16,
         borderRadius: '50%',
         background: '#fff',
@@ -289,7 +337,24 @@ function Toggle({ checked, onChange, label }) {
         top: 3,
         left: checked ? 21 : 3,
         transition: 'left 0.2s',
-      }} />
+      }}>
+        {checked ? (
+          <span aria-hidden="true" style={{
+            display: 'block',
+            width: 2, height: 8,
+            borderRadius: 1,
+            background: 'var(--accent)',
+          }} />
+        ) : (
+          <span aria-hidden="true" style={{
+            display: 'block',
+            width: 8, height: 8,
+            borderRadius: '50%',
+            border: '1.5px solid var(--border)',
+            background: 'transparent',
+          }} />
+        )}
+      </span>
     </button>
   )
 }

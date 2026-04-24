@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { getAiRefinement } from '../services/aiService.js'
-import { useFocusOnMount } from '../plugins/router/index.js'
+import { useFocusOnMount, useMediaQuery } from '../plugins/router/index.js'
 
 // Derives the WAI WCAG 2.2 Understanding URL from a scLabel string
 // e.g. "1.1.1 Non-text Content (Level A)" → ".../non-text-content.html"
@@ -19,7 +19,9 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
   // Move focus to the defect title when a result is selected so keyboard
   // and screen reader users don't have to navigate down manually.
   const titleRef = useFocusOnMount()
+  const isDesktop = useMediaQuery('(width >= 768px)')
 
+  const [titleFocused, setTitleFocused] = useState(false)
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(defect.desc)
   const [remText, setRemText] = useState(defect.rem)
@@ -69,7 +71,17 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
           <h2
             ref={titleRef}
             tabIndex={-1}
-            style={{ fontSize: 'var(--fs-heading)', fontWeight: 600, color: 'var(--text)', marginBottom: 6, outline: 'none' }}
+            onFocus={() => setTitleFocused(true)}
+            onBlur={() => setTitleFocused(false)}
+            style={{
+              fontSize: 'var(--fs-heading)',
+              fontWeight: 600,
+              color: 'var(--text)',
+              marginBottom: 6,
+              outline: titleFocused ? '3px solid var(--focus)' : 'none',
+              outlineOffset: 2,
+              borderRadius: 2,
+            }}
           >
             {defect.title}
           </h2>
@@ -121,6 +133,8 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         onChange={setDescText}
         copied={copiedDesc}
         onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc)}
+        onReset={() => setDescText(defect.desc)}
+        isDesktop={isDesktop}
       />
 
       {/* Remediation */}
@@ -131,6 +145,8 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         onChange={setRemText}
         copied={copiedRem}
         onCopy={() => copy(remText, setCopiedRem)}
+        onReset={() => setRemText(defect.rem)}
+        isDesktop={isDesktop}
       />
 
       {/* Refine */}
@@ -189,25 +205,46 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
   )
 }
 
-function Field({ id, label, value, onChange, copied, onCopy }) {
+function Field({ id, label, value, onChange, copied, onCopy, onReset, isDesktop }) {
   return (
     <div style={{ marginBottom: '1rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
         <label htmlFor={id} style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)' }}>{label}</label>
-        <button
-          onClick={onCopy}
-          style={{
-            fontSize: 'var(--fs-body)',
-            padding: '2px 8px',
-            borderRadius: 4,
-            border: '1px solid var(--border)',
-            color: copied ? 'var(--success)' : 'var(--text-muted)',
-            background: 'transparent',
-            transition: 'color 0.15s',
-          }}
-        >
-          {copied ? 'Copied' : 'Copy'}
-        </button>
+        <div style={{ display: 'flex', gap: 4 }}>
+          <button
+            onClick={onReset}
+            aria-label={`Reset ${label.toLowerCase()}`}
+            style={{
+              fontSize: 'var(--fs-body)',
+              padding: '2px 8px',
+              borderRadius: 4,
+              border: '1px solid var(--border)',
+              color: 'var(--text-muted)',
+              background: 'transparent',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {isDesktop ? '↺ Reset' : '↺'}
+          </button>
+          <button
+            onClick={onCopy}
+            aria-label={copied ? 'Copied to clipboard' : `Copy ${label.toLowerCase()}`}
+            style={{
+              fontSize: 'var(--fs-body)',
+              padding: '2px 8px',
+              borderRadius: 4,
+              border: '1px solid var(--border)',
+              color: copied ? 'var(--success)' : 'var(--text-muted)',
+              background: 'transparent',
+              transition: 'color 0.15s',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {copied
+              ? (isDesktop ? '✓ Copied' : '✓')
+              : (isDesktop ? '⎘ Copy' : '⎘')}
+          </button>
+        </div>
       </div>
       <textarea
         id={id}
@@ -224,8 +261,7 @@ function Field({ id, label, value, onChange, copied, onCopy }) {
           borderRadius: 'var(--radius)',
           color: 'var(--text)',
           resize: 'vertical',
-          outline: 'none',
-          fontFamily: 'inherit',
+          fontFamily: 'ui-monospace, monospace',
         }}
       />
     </div>

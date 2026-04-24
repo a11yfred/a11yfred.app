@@ -7,7 +7,12 @@ const RouterContext = createContext(null)
  * browser's back button works and no server redirect config is needed.
  * Routes are the hash fragment without the '#', e.g. '/' or '/settings'.
  */
-export function Router({ children }) {
+/**
+ * @param {string} [appName] - Base application name used by usePageTitle to
+ *   build "AppName | Page" strings and to restore the title on page unmount.
+ *   Pass once here; every usePageTitle call reads it from context.
+ */
+export function Router({ children, appName = '' }) {
   const getRoute = () => {
     const hash = window.location.hash
     return hash ? hash.slice(1) : '/'
@@ -25,12 +30,17 @@ export function Router({ children }) {
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
 
+  // Initialise the document title to the base app name on first mount.
+  useEffect(() => {
+    if (appName) document.title = appName
+  }, [appName])
+
   const navigate = useCallback((path) => {
     window.location.hash = path
   }, [])
 
   return (
-    <RouterContext.Provider value={{ route, navigate }}>
+    <RouterContext.Provider value={{ route, navigate, appName }}>
       {children}
     </RouterContext.Provider>
   )
