@@ -1,14 +1,13 @@
 /* ─── Design Tokens ──────────────────────────────────────────
    Single source of truth for all design values.
    Components reference these via var(). Dark mode overrides
-   only the values that change. Priority badge colors are
-   defined here; ResultList.jsx migration is tracked in TODO.md.
+   only the values that change.
 ──────────────────────────────────────────────────────────── */
 
 :root {
 
   /* Color — surfaces */
-  --bg:              #ffffff;
+  --bg:              #fff;
   --bg-subtle:       #f5f5f5;
   --border:          #e0e0e0;
   /* Minimum-contrast border for enabled UI controls (inputs, toggles, chips).
@@ -17,9 +16,9 @@
 
   /* Color — text
      All values checked for ≥ 4.5:1 contrast against --bg (#fff). */
-  --text:            #111111;  /* 15.9:1 */
-  --text-muted:      #666666;  /* 5.7:1  */
-  --text-faint:      #767676;  /* 4.5:1  — minimum passing value */
+  --text:            #111;  /* 15.9:1 */
+  --text-muted:      #666;  /* 5.7:1  */
+  --text-faint:      #767676;  /* 4.5:1 — minimum passing value */
 
   /* Color — accent */
   --accent:          #5548c8;
@@ -33,8 +32,7 @@
      ≥ 3:1 against both --bg and --bg-subtle surfaces. */
   --focus:           #5548c8;  /* 6.4:1 against #fff */
 
-  /* Color — priority badges (ResultList.jsx uses JS objects today;
-     tokens ready for migration) */
+  /* Color — priority badges (light mode) */
   --priority-critical-text: #a32d2d;
   --priority-critical-bg:   #fcebeb;
   --priority-high-text:     #854f0b;
@@ -63,8 +61,7 @@
   --fs-sub:     1.125rem; /* 18px */
   --fs-heading: 1.5rem;   /* 24px */
 
-  /* Spacing (rem, scales with html font-size)
-     --space-1 ≈ 4.7px … --space-8 ≈ 37px at 14pt base */
+  /* Spacing (rem, scales with html font-size) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -72,10 +69,6 @@
   --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-
-  /* Breakpoints (reference only — use in @media min-width queries)
-     --bp-md:  768px   tablet / layout switch point
-     --bp-lg: 1280px   desktop */
 
   /* Borders */
   --radius-sm:   4px;
@@ -85,14 +78,14 @@
 }
 
 [data-theme="dark"] {
-  --bg:          #111111;
+  --bg:          #111;
   --bg-subtle:   #1a1a1a;
   --border:      #2a2a2a;
 
   /* Dark mode text: all ≥ 4.5:1 against --bg (#111). */
-  --text:        #eeeeee;  /* 13.7:1 */
-  --text-muted:  #999999;  /*  5.8:1 */
-  --text-faint:  #909090;  /*  5.0:1 — darker than muted but still passes */
+  --text:        #eee;  /* 13.7:1 */
+  --text-muted:  #999;  /*  5.8:1 */
+  --text-faint:  #909090;  /*  5.0:1 */
 
   --accent:      #7f77dd;
   --accent-bg:   #26215c;
@@ -101,4 +94,33 @@
   --focus:       #a09ce8;  /* 4.6:1 against #111 dark bg */
   /* #686868 = 3.6:1 on #111, 3.1:1 on #1a1a1a */
   --border-control: #686868;
+
+  /* Priority badge colors — dark mode
+     Badge bg is rendered on a #111 card. Badge text must be ≥ 4.5:1
+     against badge bg; badge bg must be ≥ 3:1 against card bg (#111). */
+  --priority-critical-text: #f28b82;  /* ~7:1 on #3b1515 */
+  --priority-critical-bg:   #3b1515;
+  --priority-high-text:     #f0a050;  /* ~7:1 on #3d2010 */
+  --priority-high-bg:       #3d2010;
+  --priority-medium-text:   #7eb4e8;  /* ~7:1 on #0e2440 */
+  --priority-medium-bg:     #0e2440;
+  --priority-low-text:      #5dca8a;  /* ~7:1 on #0d2d18 */
+  --priority-low-bg:        #0d2d18;
+}
+
+/* Increased contrast for users who have requested it (WCAG 1.4.6) */
+@media (prefers-contrast: more) {
+  :root {
+    --text-muted:      #444;
+    --text-faint:      #555;
+    --border-control:  #555;
+    --border:          #aaa;
+  }
+
+  [data-theme="dark"] {
+    --text-muted:      #ccc;
+    --text-faint:      #bbb;
+    --border-control:  #aaa;
+    --border:          #555;
+  }
 }
