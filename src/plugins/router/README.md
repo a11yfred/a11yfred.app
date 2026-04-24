@@ -8,7 +8,7 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 ## What's in the box
 
 | Export | Type | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | `Router` | component | Context provider; wraps your app |
 | `useRouter` | hook | `{ route, navigate }` |
 | `Route` | component | Renders children only when `route` matches |
@@ -18,6 +18,8 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 | `useReturnFocus` | hook | Restore focus to the triggering control on unmount |
 | `useFocusTrap` | hook | Restrict Tab focus to a container |
 | `useMediaQuery` | hook | Reactive `window.matchMedia` |
+| `usePageTitle` | hook | Sets `document.title` to `"AppName \| Page"` while mounted |
+| `usePaginationFocus` | hook | Re-focuses a heading when the page index changes inside a modal or sheet |
 
 ---
 
@@ -25,7 +27,7 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 
 ### 1. Copy the plugin folder
 
-```
+```text
 src/
   plugins/
     router/         ← drop this whole folder in
@@ -227,6 +229,54 @@ revealed content; the user will Tab into it naturally. This is the expected beha
 ARIA Accordion pattern.
 
 **Do not** use `useFocusOnMount` inside accordion content panels.
+
+---
+
+### Rule 7 — Pagination within a modal or bottom sheet: focus the page heading
+
+**When:** A modal or bottom sheet contains paginated content (e.g. a multi-step wizard, a
+tabbed flow, or numbered pages) and the user manually advances or changes the page.
+
+**Do:** Move focus to the heading at the top of the newly shown page content, within the
+bounds of the existing focus trap. The container (modal/sheet) stays open and the focus
+trap remains active — only the content inside changes.
+
+Use `usePaginationFocus` with a ref on the page heading and the current page value as the
+second argument. The hook fires on every page change but skips the initial mount, so it
+does not conflict with `useFocusOnMount` handling the initial open.
+
+```jsx
+import { useFocusOnMount, usePaginationFocus } from './plugins/router/index.js'
+
+function WizardModal({ onClose }) {
+  const [page, setPage] = useState(1)
+  const closeRef = useFocusOnMount()      // focuses close button on open
+  const pageHeadingRef = useRef(null)
+  usePaginationFocus(pageHeadingRef, page) // re-focuses heading on each page change
+
+  return (
+    <div role="dialog" aria-modal="true" aria-label="Setup wizard">
+      <button ref={closeRef} onClick={onClose} aria-label="Close">×</button>
+
+      <h2 ref={pageHeadingRef} tabIndex={-1} style={{ outline: 'none' }}>
+        Step {page} of 3
+      </h2>
+
+      {/* page content */}
+
+      <button onClick={() => setPage(p => p + 1)}>Next</button>
+    </div>
+  )
+}
+```
+
+The heading element must have `tabIndex={-1}` so it can receive programmatic focus without
+entering the natural tab order.
+
+**Why not just use `useFocusOnMount`?** `useFocusOnMount` only fires on component mount.
+For pagination the modal stays mounted — only the internal state changes — so you need a
+dependency-tracked alternative. `usePaginationFocus` watches the `page` value and
+re-focuses on every change after the initial render.
 
 ---
 
