@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { getAiRefinement } from '../services/aiService.js'
 import { useFocusOnMount, useMediaQuery } from '../plugins/router/index.js'
+import { announce } from '../plugins/announce/index.js'
 
 // Derives the WAI WCAG 2.2 Understanding URL from a scLabel string
 // e.g. "1.1.1 Non-text Content (Level A)" → ".../non-text-content.html"
@@ -37,9 +38,10 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
     ? `${location.trim().replace(/:?\s*$/, ':')} ${defect.desc}`
     : descText
 
-  const copy = (text, setCopied) => {
+  const copy = (text, setCopied, label) => {
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true)
+      announce(`${label}: Copied to clipboard`)
       setTimeout(() => setCopied(false), 2000)
     })
   }
@@ -93,7 +95,8 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         <button
           onClick={onClose}
           aria-label="Close defect panel"
-          style={{ fontSize: 'var(--fs-heading)', color: 'var(--text-faint)', lineHeight: 1, padding: 4 }}
+          className="btn-icon"
+          style={{ fontSize: 'var(--fs-heading)', color: 'var(--text-faint)', flexShrink: 0 }}
         >
           ×
         </button>
@@ -132,8 +135,8 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         value={location.trim() ? displayDesc : descText}
         onChange={setDescText}
         copied={copiedDesc}
-        onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc)}
-        onReset={() => setDescText(defect.desc)}
+        onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, 'Defect description')}
+        onReset={() => { setDescText(defect.desc); announce('Defect description: Reset to original') }}
         isDesktop={isDesktop}
       />
 
@@ -144,8 +147,8 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         value={remText}
         onChange={setRemText}
         copied={copiedRem}
-        onCopy={() => copy(remText, setCopiedRem)}
-        onReset={() => setRemText(defect.rem)}
+        onCopy={() => copy(remText, setCopiedRem, 'Possible remediation steps')}
+        onReset={() => { setRemText(defect.rem); announce('Possible remediation steps: Reset to original') }}
         isDesktop={isDesktop}
       />
 
