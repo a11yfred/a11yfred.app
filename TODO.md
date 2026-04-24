@@ -11,6 +11,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Populate defect corpus** `[corpus]` — import from audit spreadsheets; target 150–200 entries across web and native; review existing 50 starters for accuracy and voice consistency
 - [ ] **Create GitHub repo** `[infra]` — initialize and push; update the footer "Fork on GitHub" link in `App.jsx`
 - [ ] **Deploy to GitHub Pages** `[infra]` — set base path in `vite.config.js`, build, push `dist/` to `gh-pages` branch
+- [ ] More routing/announcing, when pressing reset or copy they sh ould announce reset or copy text to the aria live
 
 ---
 

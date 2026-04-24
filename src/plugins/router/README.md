@@ -280,6 +280,54 @@ re-focuses on every change after the initial render.
 
 ---
 
+## SPA route-change focus — returning to a prior page
+
+When the user navigates *back* to a previously visited route (e.g. from Settings back to
+Home), focus should land at the top of the newly shown content, not on the gear/trigger
+button that originally opened the previous page.
+
+**Pattern:** give the page's primary heading `tabIndex={-1}` and a `ref`, then drive focus
+there imperatively when the route changes. Skip the initial mount so focus is not stolen on
+first load.
+
+```jsx
+function AppShell() {
+  const { route } = useRouter()
+  const h1Ref = useRef(null)
+  const didMount = useRef(false)
+  const settingsOpen = route === '/settings'
+
+  // Focus the home heading every time we return from settings
+  useEffect(() => {
+    if (!didMount.current) { didMount.current = true; return }
+    if (!settingsOpen) h1Ref.current?.focus()
+  }, [settingsOpen])
+
+  return (
+    <>
+      <h1 ref={h1Ref} tabIndex={-1}>My App</h1>
+      {/* On mobile, pass focusOnClose so OffCanvas uses the heading
+          instead of returning focus to the button that opened it */}
+      <OffCanvas open={settingsOpen} focusOnClose={h1Ref} ...>
+        <SettingsPanel />
+      </OffCanvas>
+    </>
+  )
+}
+```
+
+**`OffCanvas` — `focusOnClose` prop:** if a `focusOnClose` ref is provided, the panel
+focuses that element on close instead of the trigger button that opened it. Omit it when
+the default trigger-return behaviour is correct (e.g. a navigation drawer where returning
+to the triggering link is the right UX).
+
+**`useReturnFocus` in page-level panels:** do *not* add `useReturnFocus` to a settings
+panel or similar full-page component when `focusOnClose`/AppShell focus management already
+handles the return. `useReturnFocus` is for isolated modals (dialogs, alerts) that should
+return focus exactly to their triggering control regardless of the containing route.
+
+---
+
 ## The `OffCanvas` component
 
 `OffCanvas` bundles Rules 3, 4, and 5 for the common off-canvas / slide-in panel pattern.
