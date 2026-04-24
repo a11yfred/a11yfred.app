@@ -184,9 +184,15 @@ export default function SettingsPanel({
         <Toggle checked={aiEnabled} onChange={onToggleAi} label="Toggle AI assist" />
       </div>
 
-      <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>
-        API keys are stored locally in your browser and never sent to any server.
-        You supply your own key — usage is billed to your account.
+      <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginBottom: 'var(--space-2)' }}>
+        API keys are stored locally in your browser (<code>localStorage</code>) and sent only to
+        the AI provider&rsquo;s own API — never to any intermediate server.
+        You supply your own key; usage is billed directly to your account.
+      </p>
+      <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-faint)', marginBottom: 'var(--space-3)' }}>
+        This app stores four things in <code>localStorage</code>: your theme preference,
+        your search mode (typeahead on/off), your active AI provider, and your API key(s).
+        No personal data, usage data, or corpus content is collected or transmitted by this app.
       </p>
 
       <div style={{ marginBottom: 'var(--space-3)' }}>
