@@ -2,7 +2,7 @@
 
 > Audit defect descriptions, fast.
 
-A personal accessibility audit writing assistant. Search your corpus of past defect write-ups by natural language, pick a match, add a location prefix, refine it, and copy it straight into your spreadsheet.
+A personal accessibility audit writing assistant. Search a corpus of WCAG-aligned defect write-ups by natural language, pick a match, optionally add a location prefix, refine the text with AI, and copy it straight into your spreadsheet.
 
 ---
 
@@ -10,24 +10,34 @@ A personal accessibility audit writing assistant. Search your corpus of past def
 
 ```bash
 npm install
-npm run dev
+npm run dev        # http://localhost:5173
 ```
 
 ## Build
 
 ```bash
-npm run build
+npm run build      # output → dist/
 ```
 
-## Deploy to GitHub Pages
+## Deploy to Netlify
 
-1. Set `base` in `vite.config.js` to match your repo name (e.g. `'/a11ytexthelper/'`)
+Connect the GitHub repo to a Netlify site. The `netlify.toml` in the project root handles:
+
+- Build command (`npm run build`) and publish directory (`dist`)
+- Security headers (CSP, X-Frame-Options, Referrer-Policy, Permissions-Policy)
+- SPA fallback redirect so hash routes work on hard reload
+
+No other Netlify configuration is required.
+
+### GitHub Pages (alternative)
+
+1. Uncomment and set `REPO_NAME` in `vite.config.js`
 2. Build: `npm run build`
-3. Push `dist/` to your `gh-pages` branch, or use the `gh-pages` package:
+3. Push `dist/` to your `gh-pages` branch or use the `gh-pages` npm package:
 
 ```bash
 npm install --save-dev gh-pages
-# Add to package.json scripts: "deploy": "gh-pages -d dist"
+# Add to package.json: "deploy": "gh-pages -d dist"
 npm run deploy
 ```
 
@@ -35,31 +45,60 @@ npm run deploy
 
 ## Project structure
 
-```
+```text
 src/
   data/
-    defects.json        # Defect corpus. Add entries here.
+    mikeys-corpus.json  # Personal defect corpus (private — never ships in public build)
+    corpus.json         # Public corpus placeholder for Phase 3
   services/
-    dataService.js      # Data layer. Migration seam for Phase 2.
-    aiService.js        # AI provider abstraction. Anthropic implemented, others stubbed.
+    dataService.js      # Data layer abstraction; migration seam for Supabase (Phase 2+)
+    aiService.js        # AI provider abstraction; Anthropic implemented, others stubbed
   hooks/
-    useDefectSearch.js  # Fuse.js search logic, platform-filtered.
+    useDefectSearch.js  # Fuse.js search with platform filter
   components/
     SearchBar.jsx
     ResultList.jsx
     DetailPanel.jsx
     SettingsPanel.jsx
+  plugins/
+    router/             # Hash-based SPA router + focus-management hooks (zero deps)
+      Router.jsx        # <Router> provider and useRouter hook
+      Route.jsx         # Conditional render by current route
+      Link.jsx          # Hash navigation anchor
+      OffCanvas.jsx     # Slide-in panel with focus trap, Escape, inert
+      useFocusOnMount.js
+      useReturnFocus.js
+      useFocusTrap.js
+      useMediaQuery.js
+      usePageTitle.js
+      usePaginationFocus.js
+      index.js          # Barrel export
+      README.md         # Focus management rules and plugin documentation
+    announce/           # ARIA live region pub/sub (zero deps)
+      Announcer.jsx     # Mounts polite + assertive aria-live regions
+      announce.js       # announce(message, { priority }) — call from anywhere
+      useAnnounce.js    # Hook wrapper
+      index.js          # Barrel export
+      README.md         # Usage guide and screen reader behavior notes
   App.jsx
-  tokens.css            # All design tokens: colors, type scale, spacing, radius.
-  typography.css        # Type scale utilities and base text treatment.
-  index.css             # Reset, base, and layout classes.
+  main.jsx
+  tokens.css            # Design tokens: colors, type scale, spacing, radius, dark mode
+  typography.css        # Type scale utility classes (available for adoption)
+  index.css             # Reset, base styles, layout, off-canvas, focus ring, sr-only
+
+public/
+  robots.txt            # Disallow all crawlers (dev deployment — replace before launch)
+
+index.html              # App shell; SEO meta tags included but commented out for dev
+netlify.toml            # Build settings, security headers, SPA redirect rule
+vite.config.js          # Vite config; vendor chunk splitting for long-term caching
 ```
 
 ---
 
-## Adding defects to the corpus
+## Defect schema
 
-Each entry in `defects.json` follows this schema:
+Each entry in `mikeys-corpus.json` follows this schema:
 
 ```json
 {
@@ -77,24 +116,43 @@ Each entry in `defects.json` follows this schema:
 ```
 
 **`platform`** values:
+
 - `"web"` — only surfaces in Web mode
 - `"native"` — only surfaces in Native app mode
 - `"both"` — surfaces in both modes
 
 **`priority`** values: `Critical` / `High` / `Medium` / `Low` / `Best Practice`
 
-**Keywords** are the most important factor for search relevance. Include the element name, component, issue type, and any terms an auditor would naturally type.
+**Keywords** are the highest-weight search field. Include the element name, component, issue type, and any terms an auditor would naturally type.
 
 ---
 
 ## AI assist
 
-With AI assist toggled on, the Refine field rewrites the description and remediation based on your note. AI is **off by default**.
+With AI assist toggled on, the Refine field rewrites the description and remediation based on a short note. AI is **off by default**.
 
-Open Settings (⚙) to select a provider and add your API key. Keys are stored in your browser's `localStorage` only — never sent to any server other than the provider's own API. You supply your own key; usage is billed directly to your account.
+Open Settings (⚙) to select a provider and add your API key. Keys are stored in `localStorage` only — never sent to any server other than the provider's own API. You supply your own key; usage is billed directly to your account.
 
-Currently implemented: **Anthropic (Claude)**
+Currently implemented: **Anthropic (Claude)**  
 Stubbed (ready to wire up): OpenAI, Google Gemini, Microsoft Copilot
+
+---
+
+## Plugins
+
+### router (`src/plugins/router/`)
+
+Self-contained hash-based SPA router with full WCAG 2.2 focus-management support. Zero dependencies beyond React. Reusable across projects.
+
+Key exports: `Router`, `useRouter`, `Route`, `Link`, `OffCanvas`, `useFocusOnMount`, `useReturnFocus`, `useFocusTrap`, `useMediaQuery`, `usePageTitle`, `usePaginationFocus`.
+
+See [`src/plugins/router/README.md`](src/plugins/router/README.md) for focus-management rules and usage patterns.
+
+### announce (`src/plugins/announce/`)
+
+ARIA live region pub/sub. Mount `<Announcer />` once at the app root, then call `announce(message)` from anywhere in the codebase — no prop drilling or context required. Supports `polite` (default) and `assertive` priorities.
+
+See [`src/plugins/announce/README.md`](src/plugins/announce/README.md) for usage and screen reader behavior notes.
 
 ---
 
@@ -102,11 +160,11 @@ Stubbed (ready to wire up): OpenAI, Google Gemini, Microsoft Copilot
 
 | Phase | Description | Status |
 | ----- | ----------- | ------ |
-| 1 | Personal snippet library — static JSON corpus, GitHub Pages | Current |
+| 1 | Personal snippet library — static JSON corpus, Netlify | Current |
 | 2 | AI assist on any model of choice | Partial (Anthropic done) |
 | 3 | Public version with public data (WAI, WebAIM, Deque, axe) | Planned |
 
-Mikey's private corpus is never part of the public version.
+Mikey's private corpus (`mikeys-corpus.json`) is never part of the public version.
 
 ---
 

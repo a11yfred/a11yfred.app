@@ -4,6 +4,65 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-24 — Sweeps: accessibility, security, privacy, performance, SEO, code cleanup, docs overhaul
+
+### Accessibility (WCAG 2.2)
+
+- `src/components/DetailPanel.jsx` — imported `announce` from the announce plugin; copy buttons now call `announce('Defect description: Copied to clipboard')` and `announce('Possible remediation steps: Copied to clipboard')` on success (WCAG 4.1.3 Status Messages)
+- `src/components/DetailPanel.jsx` — reset buttons now call `announce('Defect description: Reset to original')` and `announce('Possible remediation steps: Reset to original')` (WCAG 4.1.3)
+- `src/components/DetailPanel.jsx` — close button (×) gained `className="btn-icon"`; now meets the 44×44px minimum touch target requirement (WCAG 2.5.5)
+- `src/tokens.css` — dark mode priority badge token overrides added: `--priority-critical/high/medium/low-text/bg` now have dark-mode values that pass ≥ 4.5:1 contrast (badge text on badge bg) and ≥ 3:1 (badge bg on card bg)
+- `src/tokens.css` — `@media (prefers-contrast: more)` block added; increases `--text-muted`, `--text-faint`, `--border-control`, and `--border` in both light and dark themes (WCAG 1.4.6)
+- `src/index.css` — `body { font-size: var(--fs-md) }` corrected to `var(--fs-body)`; `--fs-md` was never defined so body text was silently falling back to the browser default without the correct token
+
+### Token system cleanup
+
+- `src/tokens.css` — full rewrite with shorthand hex throughout (`#ffffff` → `#fff`, etc.) to satisfy the `color-hex-length` stylelint rule
+- `src/tokens.css` — stale comment referencing `ResultList.jsx migration is tracked in TODO.md` removed; migration is now complete
+- `src/tokens.css` — spacing comment updated to remove the inaccurate `14pt base` reference
+
+### Priority badge colors — migration complete
+
+- `src/components/ResultList.jsx` — removed hardcoded `PRIORITY_COLORS` JS object; component now reads `var(--priority-*-text)` and `var(--priority-*-bg)` directly; dark mode automatically applies via the new token overrides
+
+### Security
+
+- `netlify.toml` *(new)* — Netlify configuration with security response headers: `Content-Security-Policy` (restricts scripts to `self`, styles to `self` + Google Fonts, connect to `self` + four AI provider APIs), `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (disables camera, microphone, geolocation, payment)
+- `netlify.toml` — SPA fallback redirect (`/*` → `/index.html` 200) for hash router compatibility on hard reload and direct links
+
+### Privacy
+
+- `src/components/SettingsPanel.jsx` — privacy disclosure expanded; now lists all four `localStorage` keys (theme, typeahead, provider, API keys) explicitly and states that no personal data, usage data, or corpus content is collected or transmitted
+- `public/robots.txt` *(new)* — `Disallow: /` blocks all crawlers on the dev Netlify deployment; replace with a permissive file before Phase 3 launch
+- `public/` *(new directory)* — created as the Vite static assets root
+
+### Performance
+
+- `vite.config.js` — `build.rollupOptions.output.manualChunks` added; splits React/React-DOM (`react` chunk) and Fuse.js (`fuse` chunk) into separately cached vendor chunks; reduces re-download size on app updates
+
+### SEO (all commented out — dev deployment)
+
+- `index.html` — full SEO block added inside an HTML comment: `<meta name="description">`, Open Graph (`og:type`, `og:url`, `og:title`, `og:description`, `og:image`, `og:image:alt`, `og:locale`, `og:site_name`), Twitter Card (`twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`, `twitter:image:alt`), JSON-LD `WebApplication` structured data, canonical link, sitemap link reference
+- `index.html` — `<meta name="robots" content="noindex, nofollow">` active for the dev deployment
+- `index.html` — `<meta name="theme-color">` added for light and dark themes (progressive enhancement; Chrome/Edge/Safari mobile only — Firefox ignores gracefully)
+- `index.html` — `<!-- <link rel="icon"> -->` placeholder commented in for favicon; create `public/favicon.svg` to activate
+
+### Code cleanup
+
+- `src/index.css` — `.modal-overlay`, `.modal-content`, `@keyframes slide-up`, and the `@media (prefers-reduced-motion)` override for the modal animation were all dead code left over from the settings modal; removed
+- `src/typography.css` — scale utilities rewritten; old classes (`.text-xs/sm/base/md/lg/xl/2xl`) referenced the removed 7-token scale; replaced with `.text-small/body/sub/heading` aligned to the current 4-token system
+- `src/App.jsx` — stale `/* TODO: update href … */` comment removed from footer; the GitHub link TODO is tracked in `TODO.md`
+- `src/App.jsx` — verbose focus-management comment on the settings `useEffect` condensed to one line
+
+### Docs
+
+- `README.md` — complete rewrite: corrects `defects.json` → `mikeys-corpus.json`, expands project structure to include `plugins/` and `public/`, adds plugin sections (router, announce), updates deployment section to cover Netlify as the primary target with GitHub Pages as an alternative, adds build and plugin documentation
+- `TODO.md` — full overhaul: all shorthand/paraphrased items expanded into complete actionable statements; new **AI Agent Support** section added with 6 items covering tool use, multi-turn conversation, and model selection; **Internationalization** section expanded and re-tagged; 16 new items resolved and moved to the Resolved section; redundant or duplicate items consolidated
+- `CHANGELOG.md` — this entry
+- `UPDATES.md` — plain-language entry added for this session
+
+---
+
 ## 2026-04-23 — Router plugin, focus management, corpus rename, font migration
 
 ### Router plugin (`src/plugins/router/`)

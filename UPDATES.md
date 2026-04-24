@@ -4,6 +4,56 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 24, 2026 — Accessibility, security, privacy, performance, SEO, and docs overhaul
+
+### Screen readers now hear copy and reset confirmations
+
+When you click the Copy or Reset button on a defect description or remediation, the app now announces the action to screen readers — "Defect description: Copied to clipboard" or "Possible remediation steps: Reset to original." Before this change, assistive technology users had no way of knowing whether the button did anything. This satisfies a WCAG requirement (4.1.3 Status Messages) that has been in the backlog since the tool launched.
+
+### Dark mode priority badges — fixed
+
+The Critical / High / Medium / Low priority badges in the result list now look correct in dark mode. Previously they showed their light-mode colors (white backgrounds, dark text) regardless of the active theme, which looked jarring on the dark card surface. Each badge now uses a dark-mode-appropriate palette that passes the required contrast ratios.
+
+### Higher-contrast mode support
+
+If you have "Increase Contrast" turned on in your OS accessibility settings, the app now responds with slightly darker muted text and stronger borders. This is automatic — no setting to toggle.
+
+### Fixed: body text size wasn't using the right token
+
+A quiet bug: the body font size was referencing a token that doesn't exist, which meant the browser quietly fell back to its own default. This is now corrected and the font size will behave exactly as designed across all browsers.
+
+### Security headers on Netlify
+
+The app now ships with a full set of security response headers when deployed to Netlify: a Content Security Policy that restricts what scripts, styles, and network connections the page can make; click-jacking protection; MIME-type sniffing prevention; and a restrictive permissions policy (no camera, microphone, geolocation, or payment API access). These apply to the production deployment, not the dev server.
+
+### Privacy disclosure expanded
+
+The AI assist section of Settings now lists exactly what is stored in your browser and what isn't. Four things go into `localStorage`: your theme preference, your search mode, your AI provider choice, and your API key(s). Nothing else — no personal data, no usage data, no corpus content.
+
+### Crawlers blocked
+
+A `robots.txt` file has been added that tells all search engines not to index this deployment. The tool isn't ready for public discovery yet, and this ensures it won't accidentally appear in search results while it's still in development.
+
+### Build output is now split for better caching
+
+The production build now puts React and Fuse.js into separate files from the app code. This means if you update the app (which happens often), your browser only needs to re-download the part that changed — not React and Fuse.js again. Faster repeat loads.
+
+### SEO is ready to switch on
+
+All the SEO infrastructure — page description, social sharing previews (Open Graph, Twitter Card), structured data for search engines, and canonical URL — has been written and placed in the HTML. It's all commented out so crawlers won't see it during development. When Phase 3 launches, enabling it is a matter of uncommenting a block and filling in the real URL.
+
+### Dead code removed
+
+The settings used to open in a modal. That modal was replaced with the current slide-in panel several sessions ago, but the CSS for it was still sitting in the stylesheet doing nothing. It's been removed. Typography utility classes that referenced a font size system we retired were also updated to match the current token names.
+
+### Docs completely overhauled
+
+- **README** — updated project structure, correct corpus filename, added sections on the router and announce plugins, updated deployment instructions to cover Netlify
+- **TODO** — every shorthand note expanded into a full, actionable item with enough context to act on it without re-reading the code; a new AI Agent Support section identifies the specific work needed to make the AI Refine feature smarter; a new Internationalization section covers the full i18n plan in detail
+- **CHANGELOG** — this entry
+
+---
+
 ## April 23, 2026 — Settings as its own page, keyboard focus rules, corpus rename
 
 ### Settings is now a real page (and a slide-in panel on mobile)
