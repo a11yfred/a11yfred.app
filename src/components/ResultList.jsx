@@ -1,9 +1,9 @@
 const PRIORITY_COLORS = {
-  Critical: { color: '#a32d2d', bg: '#fcebeb' },
-  High:     { color: '#854f0b', bg: '#faeeda' },
-  Medium:   { color: '#185fa5', bg: '#e6f1fb' },
-  Low:      { color: '#3b6d11', bg: '#eaf3de' },
-  'Best Practice': { color: 'var(--text-muted)', bg: 'var(--bg-subtle)' },
+  Critical:       { color: '#a32d2d', bg: '#fcebeb' },
+  High:           { color: '#854f0b', bg: '#faeeda' },
+  Medium:         { color: '#185fa5', bg: '#e6f1fb' },
+  Low:            { color: '#3b6d11', bg: '#eaf3de' },
+  'Best Practice':{ color: 'var(--text-muted)', bg: 'var(--bg-subtle)' },
 }
 
 export default function ResultList({ results, selected, onSelect, query }) {
@@ -12,7 +12,7 @@ export default function ResultList({ results, selected, onSelect, query }) {
   }
 
   return (
-    <ul style={{ listStyle: 'none', marginBottom: '1.5rem' }} role="listbox" aria-label="Defect candidates">
+    <ul style={{ listStyle: 'none', marginBottom: 'var(--space-6)' }} role="listbox" aria-label="Defect candidates">
       {results.map(defect => {
         const isSelected = selected?.id === defect.id
         const p = PRIORITY_COLORS[defect.priority] || PRIORITY_COLORS['Best Practice']
@@ -26,7 +26,7 @@ export default function ResultList({ results, selected, onSelect, query }) {
             onClick={() => onSelect(defect)}
             onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onSelect(defect)}
             style={{
-              padding: '10px 12px',
+              padding: 'var(--space-3) var(--space-4)',
               marginBottom: 4,
               borderRadius: 'var(--radius)',
               border: `1px solid ${isSelected ? 'var(--accent)' : 'var(--border)'}`,
@@ -37,14 +37,19 @@ export default function ResultList({ results, selected, onSelect, query }) {
             onMouseEnter={e => { if (!isSelected) e.currentTarget.style.borderColor = 'var(--text-faint)' }}
             onMouseLeave={e => { if (!isSelected) e.currentTarget.style.borderColor = 'var(--border)' }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
-              <span style={{ fontSize: 13, fontWeight: 500, color: isSelected ? 'var(--accent-text)' : 'var(--text)' }}>
+            {/* Title + priority badge */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
+              <span style={{
+                fontSize: 'var(--fs-body)',
+                fontWeight: 500,
+                color: isSelected ? 'var(--accent-text)' : 'var(--text)',
+              }}>
                 {defect.title}
               </span>
               <span style={{
-                fontSize: 11,
-                padding: '2px 7px',
-                borderRadius: 20,
+                fontSize: 'var(--fs-small)',
+                padding: '2px 8px',
+                borderRadius: 'var(--radius-full)',
                 whiteSpace: 'nowrap',
                 background: p.bg,
                 color: p.color,
@@ -53,18 +58,22 @@ export default function ResultList({ results, selected, onSelect, query }) {
                 {defect.priority}
               </span>
             </div>
-            <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 3 }}>
+
+            {/* SC label */}
+            <div style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', marginTop: 'var(--space-1)' }}>
               {defect.scLabel}
             </div>
+
+            {/* Description preview */}
             <div style={{
-              fontSize: 12,
+              fontSize: 'var(--fs-small)',
               color: 'var(--text-faint)',
-              marginTop: 4,
+              marginTop: 'var(--space-1)',
               display: '-webkit-box',
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
-              lineHeight: 1.4,
+              lineHeight: 1.5,
             }}>
               {defect.desc}
             </div>
@@ -85,7 +94,6 @@ function NoResults({ query }) {
         marginBottom: 'var(--space-6)',
       }}
     >
-      {/* Magnifying glass with dashed scan lines — suggests "looked, found nothing" */}
       <svg
         aria-hidden="true"
         width="56"
@@ -102,14 +110,14 @@ function NoResults({ query }) {
       </svg>
 
       <p style={{
-        fontSize: 'var(--fs-base)',
+        fontSize: 'var(--fs-body)',
         fontWeight: 600,
         color: 'var(--text)',
         marginBottom: 'var(--space-2)',
       }}>
         No results for &ldquo;{query}&rdquo;
       </p>
-      <p style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-muted)' }}>
+      <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>
         Try a component name, element type, or a different phrase.
       </p>
     </section>

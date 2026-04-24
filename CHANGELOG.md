@@ -4,6 +4,47 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-23 — Router plugin, focus management, corpus rename, font migration
+
+### Router plugin (`src/plugins/router/`)
+
+- New self-contained hash-routing + focus-management plugin; zero deps beyond React
+- `Router` / `useRouter` — hash-based SPA routing; `navigate(path)` sets `window.location.hash`; `hashchange` event drives re-renders; browser Back button works natively
+- `OffCanvas` — slide-in panel with trigger-focus save/restore, Escape handler, `inert` attribute when closed, and built-in `useFocusTrap`
+- `useFocusOnMount` — returns a ref; on mount, calls `.focus()` on the attached element (for headings with `tabIndex={-1}` and modal close buttons)
+- `useReturnFocus` — saves `document.activeElement` on mount, restores it on unmount; handles "return to trigger" for all panel and modal close events
+- `useFocusTrap` — restricts Tab / Shift+Tab to a container while `active`; cycles wrap-around; skips elements inside `[inert]` subtrees; used by `OffCanvas` internally
+- `useMediaQuery` — reactive `window.matchMedia` wrapper; re-renders on breakpoint change
+- `src/plugins/router/README.md` — full plugin documentation with focus-management rules and SPA integration guide
+- `src/plugins/router/index.js` — exports all hooks and components from a single entry point
+
+### Settings as page / off-canvas panel
+
+- `src/App.jsx` — wraps `<Router>`; uses `useRouter` and `useMediaQuery` to render settings as a full-page replacement on desktop (≥ 768px) or as an off-canvas slide from the left on mobile
+- `src/App.jsx` — `navigate('/settings')` / `navigate('/')` replaces the previous modal toggle; browser Back button closes settings automatically
+- Modal classes and `<SettingsModal>` wrapper removed; SettingsPanel renders as a plain block
+
+### Focus management
+
+- `src/components/DetailPanel.jsx` — `useFocusOnMount` added; defect title `<h2>` receives `ref={titleRef}` and `tabIndex={-1}`; focus moves here whenever a result is selected so keyboard and screen reader users don't have to hunt for new content
+- `src/components/SettingsPanel.jsx` — `useFocusOnMount` on Settings heading; `useReturnFocus` restores focus to the ⚙ button on close
+
+### Font scale — final token migration
+
+- `src/index.css` — `html { font-size: 100% }` (revised from 14pt); respects user's browser font-size preferences (WCAG 1.4.4); rem base is typically 16px
+- `src/tokens.css` — font scale reduced from 7 tokens to 4: `--fs-small` (0.75rem/12px), `--fs-body` (1rem/16px), `--fs-sub` (1.125rem/18px), `--fs-heading` (1.5rem/24px); old `--fs-xs/sm/base/md/lg/xl/2xl` removed
+- `src/App.jsx` — h1 uses `clamp(1.75rem, 10.5vw, 2.667rem)`; fills ~85% of a 390px screen, caps at ~32pt on desktop; does not use a token (unique one-off)
+- `src/components/DetailPanel.jsx` — all literal `fontSize: 11/13/14/18` replaced with `var(--fs-small/body/sub)`
+- `src/components/SettingsPanel.jsx` — all `var(--fs-xs/sm/base/md)` replaced with `var(--fs-small/body/sub)`
+
+### Corpus rename
+
+- `src/data/defects.json` renamed to `src/data/mikeys-corpus.json`; Mikey's personal corpus is never exposed in the public deployment
+- `src/data/corpus.json` created as a placeholder for the public/generic corpus with a single example entry documenting the schema
+- `src/services/dataService.js` — import updated to `mikeys-corpus.json`
+
+---
+
 ## 2026-04-23 — Branding, settings overhaul, accessibility pass, and UX polish
 
 ### Settings overhaul

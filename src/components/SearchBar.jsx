@@ -9,7 +9,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
         htmlFor="defect-search"
         style={{
           display: 'block',
-          fontSize: 'var(--fs-sm)',
+          fontSize: 'var(--fs-small)',
           fontWeight: 500,
           color: 'var(--text-muted)',
           marginBottom: 'var(--space-2)',
@@ -32,7 +32,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
             flex: 1,
             minHeight: '3rem',
             padding: 'var(--space-3) var(--space-4)',
-            fontSize: 'var(--fs-md)',
+            fontSize: 'var(--fs-body)',
             lineHeight: 1.5,
             background: 'var(--bg-subtle)',
             border: '1px solid var(--border)',
@@ -49,7 +49,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
             disabled={query.length < 2}
             style={{
               padding: 'var(--space-3) var(--space-4)',
-              fontSize: 'var(--fs-sm)',
+              fontSize: 'var(--fs-body)',
               fontWeight: 500,
               borderRadius: 'var(--radius)',
               border: '1px solid var(--accent)',
@@ -67,7 +67,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
         )}
       </div>
       {query.length === 0 && (
-        <p style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-faint)', marginTop: 'var(--space-2)' }}>
+        <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-faint)', marginTop: 'var(--space-2)' }}>
           {typeahead
             ? 'Results appear as you type.'
             : 'Type a description and press Search or Enter.'}

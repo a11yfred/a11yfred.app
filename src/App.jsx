@@ -4,22 +4,37 @@ import ResultList from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
 import SettingsPanel from './components/SettingsPanel.jsx'
 import useDefectSearch from './hooks/useDefectSearch.js'
+import {
+  Router,
+  useRouter,
+  OffCanvas,
+  useMediaQuery,
+} from './plugins/router/index.js'
 
 export default function App() {
+  return (
+    <Router>
+      <AppShell />
+    </Router>
+  )
+}
+
+function AppShell() {
+  const { route, navigate } = useRouter()
+  const isDesktop = useMediaQuery('(width >= 768px)')
+  const settingsOpen = route === '/settings'
+
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'auto')
   const [aiEnabled, setAiEnabled] = useState(false)
   const [typeahead, setTypeahead] = useState(true)
-  const [showSettings, setShowSettings] = useState(false)
   const [query, setQuery] = useState('')
   const [submittedQuery, setSubmittedQuery] = useState('')
   const [selected, setSelected] = useState(null)
-  const [platform, setPlatform] = useState('web') // 'web' | 'native'
+  const [platform, setPlatform] = useState('web')
 
   const activeQuery = typeahead ? query : submittedQuery
   const results = useDefectSearch(activeQuery, platform)
 
-  // Apply theme to document root. 'auto' follows prefers-color-scheme
-  // and listens for OS-level changes while active.
   useEffect(() => {
     const apply = () => {
       const resolved = theme === 'auto'
@@ -27,18 +42,14 @@ export default function App() {
         : theme
       document.documentElement.setAttribute('data-theme', resolved)
     }
-
     apply()
     localStorage.setItem('theme', theme)
-
     if (theme === 'auto') {
       const mq = window.matchMedia('(prefers-color-scheme: dark)')
       mq.addEventListener('change', apply)
       return () => mq.removeEventListener('change', apply)
     }
   }, [theme])
-
-  const handleSelect = (defect) => setSelected(defect)
 
   const handleQueryChange = (q) => {
     setQuery(q)
@@ -48,59 +59,65 @@ export default function App() {
     }
   }
 
-  const handleSearch = () => {
-    setSubmittedQuery(query)
-    setSelected(null)
+  const settingsProps = {
+    aiEnabled,
+    onToggleAi: () => setAiEnabled(a => !a),
+    typeahead,
+    onToggleTypeahead: () => setTypeahead(t => !t),
+    theme,
+    onThemeChange: setTheme,
+    onClose: () => navigate('/'),
   }
+
+  const searchView = (
+    <>
+      <SearchBar
+        query={query}
+        onChange={handleQueryChange}
+        onSearch={() => { setSubmittedQuery(query); setSelected(null) }}
+        typeahead={typeahead}
+      />
+      {activeQuery.length >= 2 && (
+        <ResultList
+          results={results}
+          selected={selected}
+          onSelect={setSelected}
+          query={activeQuery}
+        />
+      )}
+      {selected && (
+        <DetailPanel
+          key={selected.id}
+          defect={selected}
+          aiEnabled={aiEnabled}
+          onClose={() => setSelected(null)}
+        />
+      )}
+    </>
+  )
 
   return (
     <div className="app-container">
       <Header
         platform={platform}
         onPlatformChange={setPlatform}
-        onOpenSettings={() => setShowSettings(true)}
+        onOpenSettings={() => navigate('/settings')}
       />
 
-      <main style={{ flex: 1 }}>
-        <SearchBar
-          query={query}
-          onChange={handleQueryChange}
-          onSearch={handleSearch}
-          typeahead={typeahead}
-        />
-
-        {activeQuery.length >= 2 && (
-          <ResultList
-            results={results}
-            selected={selected}
-            onSelect={handleSelect}
-            query={activeQuery}
-          />
-        )}
-
-        {selected && (
-          <DetailPanel
-            key={selected.id}
-            defect={selected}
-            aiEnabled={aiEnabled}
-            onClose={() => setSelected(null)}
-          />
-        )}
-      </main>
+      {isDesktop ? (
+        <main style={{ flex: 1 }}>
+          {settingsOpen ? <SettingsPanel {...settingsProps} /> : searchView}
+        </main>
+      ) : (
+        <>
+          <main style={{ flex: 1 }}>{searchView}</main>
+          <OffCanvas open={settingsOpen} onClose={() => navigate('/')} label="Settings">
+            <SettingsPanel {...settingsProps} />
+          </OffCanvas>
+        </>
+      )}
 
       <Footer />
-
-      {showSettings && (
-        <SettingsPanel
-          aiEnabled={aiEnabled}
-          onToggleAi={() => setAiEnabled(a => !a)}
-          typeahead={typeahead}
-          onToggleTypeahead={() => setTypeahead(t => !t)}
-          theme={theme}
-          onThemeChange={setTheme}
-          onClose={() => setShowSettings(false)}
-        />
-      )}
     </div>
   )
 }
@@ -110,7 +127,6 @@ function Header({ platform, onPlatformChange, onOpenSettings }) {
     <header style={{ position: 'relative', textAlign: 'center', marginBottom: 'var(--space-8)' }}>
       <button
         onClick={onOpenSettings}
-        title="Settings"
         aria-label="Open settings"
         className="btn-icon"
         style={{ position: 'absolute', top: 0, right: 0, fontSize: 22 }}
@@ -118,18 +134,23 @@ function Header({ platform, onPlatformChange, onOpenSettings }) {
         ⚙
       </button>
 
+      {/*
+        clamp: min 1.75rem (28px) on tiny screens,
+               scales at 10.5vw to fill ~85% of a 390px mobile screen,
+               max 2.667rem ≈ 32pt on desktop.
+      */}
       <h1 style={{
-        fontSize: 'clamp(22px, 5vw, 32px)',
+        fontSize: 'clamp(1.75rem, 10.5vw, 2.667rem)',
         fontWeight: 700,
         letterSpacing: '-0.02em',
         color: 'var(--text)',
-        lineHeight: 1.2,
+        lineHeight: 1.15,
       }}>
         A11yTextHelper
       </h1>
 
       <p style={{
-        fontSize: 'var(--fs-sm)',
+        fontSize: 'var(--fs-small)',
         color: 'var(--text-muted)',
         marginTop: 'var(--space-1)',
       }}>
@@ -149,13 +170,13 @@ function Header({ platform, onPlatformChange, onOpenSettings }) {
             key={p}
             onClick={() => onPlatformChange(p)}
             style={{
-              fontSize: 'var(--fs-sm)',
-              padding: '6px 12px',
+              fontSize: 'var(--fs-small)',
+              padding: '6px 14px',
               borderRadius: 'var(--radius-sm)',
               background: platform === p ? 'var(--bg)' : 'transparent',
               color: platform === p ? 'var(--text)' : 'var(--text-muted)',
               border: platform === p ? '1px solid var(--border)' : '1px solid transparent',
-              fontWeight: platform === p ? 500 : 400,
+              fontWeight: platform === p ? 600 : 400,
               transition: 'all 0.1s',
             }}
           >
@@ -179,17 +200,16 @@ function Footer() {
       justifyContent: 'space-between',
       gap: 'var(--space-4)',
     }}>
-      <p style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-faint)' }}>
+      <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-faint)' }}>
         Made by Mikey Ilagan
       </p>
-
       {/* TODO: update href once the GitHub repo is created */}
       <a
         href="https://github.com"
         target="_blank"
         rel="noreferrer"
         style={{
-          fontSize: 'var(--fs-xs)',
+          fontSize: 'var(--fs-small)',
           color: 'var(--text-muted)',
           textDecoration: 'none',
           whiteSpace: 'nowrap',

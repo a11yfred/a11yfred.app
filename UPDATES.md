@@ -4,6 +4,37 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 23, 2026 — Settings as its own page, keyboard focus rules, corpus rename
+
+### Settings is now a real page (and a slide-in panel on mobile)
+
+Settings used to open in a modal. Now it's a full page on desktop and a panel that slides in from the left on mobile. On desktop, navigating to Settings replaces the main search view — just like a real page navigation. On mobile, it slides over without hiding the address bar or creating a scroll trap.
+
+The browser Back button closes Settings. No special handling needed.
+
+### Keyboard focus follows you around the screen
+
+A new internal plugin handles all the rules for where keyboard focus should go when the screen changes. The short version:
+
+- **Click a result** → focus jumps to the top of the defect detail, so you don't have to Tab back down to it
+- **Open Settings** → focus jumps to the Settings heading
+- **Close Settings** → focus returns to the ⚙ button you clicked to open it
+- **Tab key can't escape modals or panels** — it wraps around inside the open layer until you close it
+
+These are all WCAG requirements for keyboard and screen reader users. They're now handled automatically by reusable hooks rather than ad-hoc fixes.
+
+### Font sizes are now larger and consistent
+
+The font size base was raised from 14pt to your browser's default (typically 16px). This makes everything slightly larger and — more importantly — means the app respects whatever font size you've set in your browser preferences (a WCAG requirement).
+
+The number of internal font size options was cut from seven down to four: **small**, **body**, **sub-heading**, and **heading**. Nothing on screen uses a font smaller than 12px.
+
+### Your corpus is yours; a public one is coming
+
+The defect data file has been renamed from `defects.json` to `mikeys-corpus.json` to make it clear it's a personal data source. A placeholder file called `corpus.json` has been created for a future public corpus — one that anyone can use without the personal entries. When both exist, the public deployment will only ship the generic version.
+
+---
+
 ## April 23, 2026 — Settings redesign, branding, and accessibility pass
 
 ### Settings panel — now organized into sections

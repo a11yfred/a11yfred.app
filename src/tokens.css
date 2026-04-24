@@ -41,24 +41,24 @@
   --priority-low-text:      #3b6d11;
   --priority-low-bg:        #eaf3de;
 
-  /* Typography — families
-     Noto Sans first (self-hosted, cross-platform open source),
-     Cantarell for GNOME/Fedora/Bazzite users who have it natively,
-     then system-ui for everything else. */
-  --font: 'Noto Sans', 'Cantarell', 'Inter', 'Ubuntu', system-ui, -apple-system, sans-serif;
+  /* Typography — families */
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
   --mono: 'SF Mono', 'Fira Mono', 'Fira Code', 'Consolas', monospace;
 
-  /* Typography — scale (rem, base 14pt ≈ 18.67px set on html)
-     --fs-md is 1rem = 14pt = the body base. Scale steps are
-     relative so they automatically respect browser font size
-     preferences (WCAG 1.4.4). */
-  --fs-xs:   0.6rem;   /* ~11px */
-  --fs-sm:   0.7rem;   /* ~13px */
-  --fs-base: 0.8rem;   /* ~15px */
-  --fs-md:   1rem;     /* 14pt  — body base */
-  --fs-lg:   1.1rem;   /* ~20px */
-  --fs-xl:   1.25rem;  /* ~23px */
-  --fs-2xl:  1.5rem;   /* ~28px */
+  /* Typography — scale (rem, base 16px browser default)
+     4 stops only. Nothing in the UI should use a size below --fs-small.
+
+     --fs-small    12px — metadata, labels, fine print (absolute minimum)
+     --fs-body     16px — body copy, inputs, result titles, button text
+     --fs-sub      18px — card headings, slightly emphasized text
+     --fs-heading  24px — panel / section headings (h2 inside dialogs/panels)
+
+     The page h1 uses clamp() directly (not a token) to fill ~85% of
+     the mobile viewport and cap at 32pt on larger screens. */
+  --fs-small:   0.75rem;  /* 12px */
+  --fs-body:    1rem;     /* 16px */
+  --fs-sub:     1.125rem; /* 18px */
+  --fs-heading: 1.5rem;   /* 24px */
 
   /* Spacing (rem, scales with html font-size)
      --space-1 ≈ 4.7px … --space-8 ≈ 37px at 14pt base */

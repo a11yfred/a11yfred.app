@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { getAiRefinement } from '../services/aiService.js'
+import { useFocusOnMount } from '../plugins/router/index.js'
 
 // Derives the WAI WCAG 2.2 Understanding URL from a scLabel string
 // e.g. "1.1.1 Non-text Content (Level A)" → ".../non-text-content.html"
@@ -15,6 +16,10 @@ function scToWaiUrl(scLabel) {
 }
 
 export default function DetailPanel({ defect, aiEnabled, onClose }) {
+  // Move focus to the defect title when a result is selected so keyboard
+  // and screen reader users don't have to navigate down manually.
+  const titleRef = useFocusOnMount()
+
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(defect.desc)
   const [remText, setRemText] = useState(defect.rem)
@@ -61,7 +66,11 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: 14, fontWeight: 600, color: 'var(--text)', marginBottom: 6 }}>
+          <h2
+            ref={titleRef}
+            tabIndex={-1}
+            style={{ fontSize: 'var(--fs-sub)', fontWeight: 600, color: 'var(--text)', marginBottom: 6, outline: 'none' }}
+          >
             {defect.title}
           </h2>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
@@ -72,7 +81,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         <button
           onClick={onClose}
           aria-label="Close defect panel"
-          style={{ fontSize: 18, color: 'var(--text-faint)', lineHeight: 1, padding: 4 }}
+          style={{ fontSize: 'var(--fs-sub)', color: 'var(--text-faint)', lineHeight: 1, padding: 4 }}
         >
           ×
         </button>
@@ -82,7 +91,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
       <div style={{ marginBottom: '1rem' }}>
         <label
           htmlFor="location-prefix"
-          style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+          style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
         >
           Location prefix <span style={{ color: 'var(--text-faint)' }}>(optional)</span>
         </label>
@@ -95,12 +104,11 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
           style={{
             width: '100%',
             padding: '7px 10px',
-            fontSize: 13,
+            fontSize: 'var(--fs-body)',
             background: 'var(--bg-subtle)',
             border: '1px solid var(--border)',
             borderRadius: 'var(--radius)',
             color: 'var(--text)',
-
           }}
         />
       </div>
@@ -129,7 +137,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
       <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
         <label
           htmlFor="refine-note"
-          style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+          style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
         >
           Refine
           <span style={{ color: 'var(--text-faint)', fontWeight: 400, marginLeft: 6 }}>
@@ -149,12 +157,11 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
             style={{
               flex: 1,
               padding: '7px 10px',
-              fontSize: 13,
+              fontSize: 'var(--fs-body)',
               background: 'var(--bg-subtle)',
               border: '1px solid var(--border)',
               borderRadius: 'var(--radius)',
               color: 'var(--text)',
-  
             }}
           />
           {aiEnabled && (
@@ -163,7 +170,7 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
               disabled={refining || !refineNote.trim()}
               style={{
                 padding: '7px 14px',
-                fontSize: 13,
+                fontSize: 'var(--fs-body)',
                 borderRadius: 'var(--radius)',
                 border: '1px solid var(--accent)',
                 background: 'var(--accent-bg)',
@@ -186,11 +193,11 @@ function Field({ id, label, value, onChange, copied, onCopy }) {
   return (
     <div style={{ marginBottom: '1rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-        <label htmlFor={id} style={{ fontSize: 11, color: 'var(--text-muted)' }}>{label}</label>
+        <label htmlFor={id} style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>{label}</label>
         <button
           onClick={onCopy}
           style={{
-            fontSize: 11,
+            fontSize: 'var(--fs-small)',
             padding: '2px 8px',
             borderRadius: 4,
             border: '1px solid var(--border)',
@@ -210,7 +217,7 @@ function Field({ id, label, value, onChange, copied, onCopy }) {
         style={{
           width: '100%',
           padding: '8px 10px',
-          fontSize: 13,
+          fontSize: 'var(--fs-body)',
           lineHeight: 1.6,
           background: 'var(--bg-subtle)',
           border: '1px solid var(--border)',
@@ -228,7 +235,7 @@ function Field({ id, label, value, onChange, copied, onCopy }) {
 function ScBadge({ label, primary }) {
   const href = scToWaiUrl(label)
   const style = {
-    fontSize: 11,
+    fontSize: 'var(--fs-small)',
     padding: '2px 8px',
     borderRadius: 20,
     background: primary ? 'var(--accent-bg)' : 'var(--bg-subtle)',

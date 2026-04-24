@@ -1,0 +1,14 @@
+[
+  {
+    "id": "CORPUS-001",
+    "title": "Example Defect Entry",
+    "sc": "1.1.1",
+    "scLabel": "1.1.1 Non-text Content (Level A)",
+    "related": [],
+    "priority": "Critical",
+    "platform": "both",
+    "keywords": ["example", "template", "placeholder"],
+    "desc": "This is a placeholder corpus file for the public version of A11yTextHelper. Replace this file with your own defect entries following the same schema.",
+    "rem": "See mikeys-corpus.json for a complete example of the data format. Each entry requires: id, title, sc, scLabel, related, priority, platform, keywords, desc, rem."
+  }
+]

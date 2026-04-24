@@ -16,7 +16,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ## Corpus
 
-- [ ] **Batch import tooling** `[corpus]` — small script (Node or Python) to convert rows from a CSV/spreadsheet into the `defects.json` schema; run once, review output, delete script
+- [ ] **Batch import tooling** `[corpus]` — small script (Node or Python) to convert rows from a CSV/spreadsheet into the `mikeys-corpus.json` schema; run once, review output, delete script
 - [ ] **Custom data source support** `[corpus]` `[ux]` — allow loading a user-supplied JSON file as the corpus; provide a guide in Settings explaining the expected format and schema; useful for contributors running a fork
 - [ ] **Keyword audit** `[corpus]` — after import, review keywords on each entry; these drive Fuse.js relevance more than anything else
 - [ ] **Platform coverage** `[corpus]` — ensure native-only defects are present and flagged correctly (`"platform": "native"`); verify `"both"` entries make sense on each platform
@@ -35,7 +35,7 @@ Target languages: English, Spanish, German, Dutch, French, Japanese, Tagalog/Fil
 - [ ] **UI string locale files** `[code]` — create `src/locales/{en,es,de,nl,fr,ja,fil}/translation.json`; extract all UI strings from components into the EN baseline; stub other languages with EN keys
 - [ ] **Language selector in Settings** `[ux]` — add language dropdown to SettingsPanel; persist selection to `localStorage`; switch locale via `i18next.changeLanguage()`
 - [ ] **Translation service** `[ai]` — create `src/services/translationService.js` following the `aiService.js` pattern; implement Google Cloud Translation API (covers all 7 languages including Filipino — `fil`); user supplies their own key in Settings
-- [ ] **Corpus pre-translation** `[corpus]` — run Google Translate API once against all `defects.json` entries; store results per-language in a `translations` object on each entry: `{ "es": { "desc": "...", "rem": "..." }, ... }`; data service returns the right language based on active locale
+- [ ] **Corpus pre-translation** `[corpus]` — run Google Translate API once against all `mikeys-corpus.json` entries; store results per-language in a `translations` object on each entry: `{ "es": { "desc": "...", "rem": "..." }, ... }`; data service returns the right language based on active locale
 - [ ] **Runtime translation of AI refinements** `[ai]` — after an AI refinement rewrites desc/rem, pass the result through the translation service if the active locale is not English
 - [ ] **`lang` attribute on `<html>`** `[a11y]` — update dynamically when locale changes (WCAG 3.1.1)
 - [ ] **Translation review** `[corpus]` — machine translation of WCAG technical terms (accessible name, focus trap, landmark, live region) may not match established a11y terminology in each language; flag entries that use specialized vocabulary for human review
@@ -58,7 +58,7 @@ Target languages: English, Spanish, German, Dutch, French, Japanese, Tagalog/Fil
 - [ ] **How to use page** `[ux]` — onboarding modal or help page explaining the workflow: search → select → prefix → refine → copy; trigger on first visit or via a Help button
 - [ ] **Email results** `[ux]` — button to email yourself the selected defect description and remediation; implement via `mailto:` link with a pre-populated subject and body; no server required
 - [ ] **Keyboard navigation in result list** `[ux]` `[a11y]` — arrow keys to move between results, Enter to select; the list has `role="listbox"` / `role="option"` but no keyboard handler yet
-- [ ] **Focus management on select** `[ux]` `[a11y]` — when a result is selected, move focus to the DetailPanel heading so screen reader users don't have to navigate there manually
+- [x] **Focus management on select** `[ux]` `[a11y]` — `useFocusOnMount` added to DetailPanel; defect `<h2>` receives focus on every result selection
 - [ ] **Clear button on search** `[ux]` — small × to clear the query field without reaching for backspace
 - [ ] **Persist last selected defect** `[ux]` — restore the selected defect if the user refreshes mid-session (sessionStorage)
 - [ ] **Copy both fields at once** `[ux]` — single button that copies description + remediation as formatted text (e.g. for pasting into a report)
@@ -70,6 +70,7 @@ Target languages: English, Spanish, German, Dutch, French, Japanese, Tagalog/Fil
 - [ ] **Audit report builder** `[ux]` — multi-select defects, add counts and severity, export a formatted accessibility audit report (Markdown or plain text)
 - [ ] **Component-level filtering** `[ux]` — filter by UI component type (modal, form, button, heading, etc.) in addition to platform
 - [ ] **Print view** `[ux]` — print-friendly CSS (`@media print`) for physical handoffs
+- [ ] **Customizable results view** `[ux]` `[code]` — let users control how results are displayed: number of visible results, which fields appear in the list (title only, title + SC label, title + description preview), and sort order (relevance, priority, SC number); persist preferences in `localStorage`
 
 ---
 
@@ -133,7 +134,7 @@ Features that would set A11yTextHelper apart from other a11y resources:
 ## Code Quality
 
 - [ ] **Migrate priority colors to CSS tokens** `[code]` — `ResultList.jsx` uses a hardcoded `PRIORITY_COLORS` JS object; tokens are defined in `tokens.css`; update to use `var(--priority-*-text/bg)`
-- [ ] **Migrate inline font sizes to tokens** `[code]` — components use literal `11`–`18` px values; replace with `var(--fs-*)` references
+- [x] **Migrate inline font sizes to tokens** `[code]` — all literal `11`–`18` px values replaced with `var(--fs-small/body/sub/heading)` across DetailPanel, SettingsPanel, SearchBar, ResultList, App
 - [ ] **Migrate inline spacing to tokens** `[code]` — spacing values scattered in inline styles; replace with `var(--space-*)`
 - [ ] **CSS Modules or utility classes** `[code]` — inline styles work for now; consider migrating to CSS Modules for better tooling (autocomplete, dead-code detection) as the component count grows
 - [ ] **PR template** `[code]` — `.github/PULL_REQUEST_TEMPLATE.md` created; reference it in README
@@ -142,6 +143,14 @@ Features that would set A11yTextHelper apart from other a11y resources:
 
 ## Resolved
 
+- [x] Router plugin — `src/plugins/router/` with hash routing, OffCanvas, useFocusOnMount, useReturnFocus, useFocusTrap, useMediaQuery; reusable across future projects; documented in `src/plugins/router/README.md`
+- [x] Settings as own page / off-canvas panel — desktop: full-page swap; mobile: slide-in from left; browser Back button closes; no modal
+- [x] Focus trap — `useFocusTrap` hook restricts Tab to open modals and panels (WCAG 2.1.2); used internally by OffCanvas
+- [x] Result-click focus management — DetailPanel h2 gets `useFocusOnMount`; focus moves there on every selection
+- [x] Settings focus management — heading focus on open; trigger-button focus restored on close
+- [x] Font scale simplified — 7 tokens → 4 (`--fs-small/body/sub/heading`); `html { font-size: 100% }` (browser default); h1 uses `clamp(1.75rem, 10.5vw, 2.667rem)`
+- [x] Font token migration — all inline literal px values replaced across all components
+- [x] Corpus renamed — `defects.json` → `mikeys-corpus.json`; public placeholder `corpus.json` created
 - [x] Mobile-first layout — `.app-container` class, 768px breakpoint
 - [x] Touch targets — `.btn-icon` (44×44px), platform toggle padding bump
 - [x] Design token system — `tokens.css`

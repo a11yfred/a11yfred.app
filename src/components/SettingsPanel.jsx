@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useFocusOnMount, useReturnFocus } from '../plugins/router/index.js'
 
 const PROVIDERS = [
   { id: 'anthropic', label: 'Anthropic (Claude)', placeholder: 'sk-ant-...' },
@@ -8,7 +9,7 @@ const PROVIDERS = [
 ]
 
 const SECTION = {
-  fontSize: 11,
+  fontSize: 'var(--fs-small)',
   fontWeight: 600,
   color: 'var(--text-faint)',
   textTransform: 'uppercase',
@@ -22,6 +23,10 @@ export default function SettingsPanel({
   theme, onThemeChange,
   onClose,
 }) {
+  // Move focus to the heading on mount; restore it to the trigger on unmount
+  const headingRef = useFocusOnMount()
+  useReturnFocus()
+
   const [keys, setKeys] = useState(() => {
     const saved = {}
     PROVIDERS.forEach(p => {
@@ -34,10 +39,11 @@ export default function SettingsPanel({
   )
   const [saved, setSaved] = useState(false)
 
+  // Escape key — OffCanvas also listens on mobile; harmless double-fire
   useEffect(() => {
-    const handleKey = (e) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', handleKey)
-    return () => document.removeEventListener('keydown', handleKey)
+    const handler = (e) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
   }, [onClose])
 
   const handleSave = () => {
@@ -54,147 +60,171 @@ export default function SettingsPanel({
   }
 
   return (
-    <div className="modal-overlay">
-      <div
-        className="modal-content"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="settings-title"
-      >
-        {/* Dialog header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-5)' }}>
-          <h2 id="settings-title" style={{ fontSize: 'var(--fs-md)', fontWeight: 600 }}>Settings</h2>
-          <button
-            onClick={onClose}
-            aria-label="Close settings"
-            className="btn-icon"
-            style={{ fontSize: 24, color: 'var(--text-faint)' }}
-          >
-            ×
-          </button>
+    <div>
+      {/* Page / panel header */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 'var(--space-3)',
+        marginBottom: 'var(--space-6)',
+      }}>
+        <button
+          onClick={onClose}
+          aria-label="Back to search"
+          className="btn-icon"
+          style={{ fontSize: 20, color: 'var(--text-faint)', flexShrink: 0 }}
+        >
+          ←
+        </button>
+        {/* tabIndex={-1} allows programmatic focus without joining tab order */}
+        <h2
+          ref={headingRef}
+          tabIndex={-1}
+          style={{
+            fontSize: 'var(--fs-sub)',
+            fontWeight: 600,
+            color: 'var(--text)',
+            outline: 'none',   /* focus ring suppressed on heading — it's a focus target, not a control */
+          }}
+        >
+          Settings
+        </h2>
+      </div>
+
+      {/* ── Search ─────────────────────────────────── */}
+      <h3 style={SECTION}>Search</h3>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 'var(--space-5)',
+      }}>
+        <div>
+          <p style={{ fontSize: 'var(--fs-body)', fontWeight: 500 }}>Typeahead</p>
+          <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', marginTop: 2 }}>
+            {typeahead ? 'Results appear as you type' : 'Results appear on Search / Enter'}
+          </p>
         </div>
+        <Toggle checked={typeahead} onChange={onToggleTypeahead} label="Toggle typeahead search" />
+      </div>
 
-        {/* ── Search ─────────────────────────────────── */}
-        <h3 style={SECTION}>Search</h3>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-5)' }}>
-          <div>
-            <p style={{ fontSize: 'var(--fs-base)', fontWeight: 500 }}>Typeahead</p>
-            <p style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-muted)', marginTop: 2 }}>
-              {typeahead ? 'Results appear as you type' : 'Results appear on Search / Enter'}
-            </p>
-          </div>
-          <Toggle checked={typeahead} onChange={onToggleTypeahead} label="Toggle typeahead search" />
+      {/* ── Appearance ──────────────────────────────── */}
+      <h3 style={{ ...SECTION, borderTop: '1px solid var(--border)', paddingTop: 'var(--space-4)' }}>
+        Appearance
+      </h3>
+      <fieldset style={{ border: 'none', padding: 0, marginBottom: 'var(--space-5)' }}>
+        <legend className="sr-only">Theme</legend>
+        <div style={{ display: 'flex', gap: 6 }}>
+          {[
+            { value: 'light', label: 'Light' },
+            { value: 'auto',  label: 'Auto'  },
+            { value: 'dark',  label: 'Dark'  },
+          ].map(({ value, label }) => (
+            <ThemeChip
+              key={value}
+              value={value}
+              label={label}
+              current={theme}
+              onChange={onThemeChange}
+            />
+          ))}
         </div>
+      </fieldset>
 
-        {/* ── Appearance ──────────────────────────────── */}
-        <h3 style={{ ...SECTION, borderTop: '1px solid var(--border)', paddingTop: 'var(--space-4)' }}>Appearance</h3>
-        <fieldset style={{ border: 'none', padding: 0, marginBottom: 'var(--space-5)' }}>
-          <legend className="sr-only">Theme</legend>
-          <div style={{ display: 'flex', gap: 6 }}>
-            {[
-              { value: 'light', label: 'Light' },
-              { value: 'auto',  label: 'Auto'  },
-              { value: 'dark',  label: 'Dark'  },
-            ].map(({ value, label }) => (
-              <ThemeChip
-                key={value}
-                value={value}
-                label={label}
-                current={theme}
-                onChange={onThemeChange}
-              />
-            ))}
-          </div>
-        </fieldset>
+      {/* ── AI Assist ───────────────────────────────── */}
+      <h3 style={{ ...SECTION, borderTop: '1px solid var(--border)', paddingTop: 'var(--space-4)' }}>
+        AI Assist
+      </h3>
 
-        {/* ── AI Assist ───────────────────────────────── */}
-        <h3 style={{ ...SECTION, borderTop: '1px solid var(--border)', paddingTop: 'var(--space-4)' }}>AI Assist</h3>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-4)' }}>
-          <div>
-            <p style={{ fontSize: 'var(--fs-base)', fontWeight: 500 }}>Enable AI assist</p>
-            <p style={{ fontSize: 'var(--fs-sm)', color: 'var(--text-muted)', marginTop: 2 }}>
-              Rewrites text based on your refinement notes
-            </p>
-          </div>
-          <Toggle checked={aiEnabled} onChange={onToggleAi} label="Toggle AI assist" />
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 'var(--space-4)',
+      }}>
+        <div>
+          <p style={{ fontSize: 'var(--fs-body)', fontWeight: 500 }}>Enable AI assist</p>
+          <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', marginTop: 2 }}>
+            Rewrites text based on your refinement notes
+          </p>
         </div>
+        <Toggle checked={aiEnabled} onChange={onToggleAi} label="Toggle AI assist" />
+      </div>
 
-        <p style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>
-          API keys are stored locally in your browser and never sent to any server.
-          You supply your own key — usage is billed to your account.
-        </p>
+      <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>
+        API keys are stored locally in your browser and never sent to any server.
+        You supply your own key — usage is billed to your account.
+      </p>
 
-        <div style={{ marginBottom: 'var(--space-3)' }}>
+      <div style={{ marginBottom: 'var(--space-3)' }}>
+        <label
+          htmlFor="active-provider"
+          style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+        >
+          Active provider
+        </label>
+        <select
+          id="active-provider"
+          value={activeProvider}
+          onChange={e => setActiveProvider(e.target.value)}
+          style={{
+            width: '100%',
+            padding: '6px 10px',
+            fontSize: 'var(--fs-small)',
+            background: 'var(--bg-subtle)',
+            border: '1px solid var(--border)',
+            borderRadius: 'var(--radius)',
+            color: 'var(--text)',
+          }}
+        >
+          {PROVIDERS.map(p => (
+            <option key={p.id} value={p.id}>{p.label}</option>
+          ))}
+        </select>
+      </div>
+
+      {PROVIDERS.map(p => (
+        <div key={p.id} style={{ marginBottom: 'var(--space-2)' }}>
           <label
-            htmlFor="active-provider"
-            style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+            htmlFor={`apikey-${p.id}`}
+            style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)', display: 'block', marginBottom: 3 }}
           >
-            Active provider
+            {p.label}
           </label>
-          <select
-            id="active-provider"
-            value={activeProvider}
-            onChange={e => setActiveProvider(e.target.value)}
+          <input
+            id={`apikey-${p.id}`}
+            type="password"
+            value={keys[p.id]}
+            onChange={e => setKeys(prev => ({ ...prev, [p.id]: e.target.value }))}
+            placeholder={p.placeholder}
             style={{
               width: '100%',
               padding: '6px 10px',
-              fontSize: 'var(--fs-sm)',
+              fontSize: 'var(--fs-small)',
               background: 'var(--bg-subtle)',
               border: '1px solid var(--border)',
               borderRadius: 'var(--radius)',
               color: 'var(--text)',
             }}
-          >
-            {PROVIDERS.map(p => (
-              <option key={p.id} value={p.id}>{p.label}</option>
-            ))}
-          </select>
+          />
         </div>
+      ))}
 
-        {PROVIDERS.map(p => (
-          <div key={p.id} style={{ marginBottom: 'var(--space-2)' }}>
-            <label
-              htmlFor={`apikey-${p.id}`}
-              style={{ fontSize: 'var(--fs-xs)', color: 'var(--text-muted)', display: 'block', marginBottom: 3 }}
-            >
-              {p.label}
-            </label>
-            <input
-              id={`apikey-${p.id}`}
-              type="password"
-              value={keys[p.id]}
-              onChange={e => setKeys(prev => ({ ...prev, [p.id]: e.target.value }))}
-              placeholder={p.placeholder}
-              style={{
-                width: '100%',
-                padding: '6px 10px',
-                fontSize: 'var(--fs-sm)',
-                background: 'var(--bg-subtle)',
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius)',
-                color: 'var(--text)',
-              }}
-            />
-          </div>
-        ))}
-
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--space-4)' }}>
-          <button
-            onClick={handleSave}
-            style={{
-              padding: '7px 16px',
-              fontSize: 'var(--fs-sm)',
-              borderRadius: 'var(--radius)',
-              border: '1px solid var(--accent)',
-              background: 'var(--accent-bg)',
-              color: 'var(--accent-text)',
-              fontWeight: 500,
-            }}
-          >
-            {saved ? 'Saved' : 'Save'}
-          </button>
-        </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--space-4)' }}>
+        <button
+          onClick={handleSave}
+          style={{
+            padding: '7px 16px',
+            fontSize: 'var(--fs-small)',
+            borderRadius: 'var(--radius)',
+            border: '1px solid var(--accent)',
+            background: 'var(--accent-bg)',
+            color: 'var(--accent-text)',
+            fontWeight: 500,
+          }}
+        >
+          {saved ? 'Saved ✓' : 'Save'}
+        </button>
       </div>
     </div>
   )
@@ -213,7 +243,7 @@ function ThemeChip({ value, label, current, onChange }) {
       background: isActive ? 'var(--accent-bg)' : 'var(--bg-subtle)',
       color: isActive ? 'var(--accent-text)' : 'var(--text-muted)',
       cursor: 'pointer',
-      fontSize: 'var(--fs-sm)',
+      fontSize: 'var(--fs-small)',
       fontWeight: isActive ? 500 : 400,
       transition: 'all 0.1s',
     }}>

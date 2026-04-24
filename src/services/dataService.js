@@ -17,9 +17,9 @@
  *   }
  */
 
-import defectsData from '../data/defects.json'
+import corpusData from '../data/mikeys-corpus.json'
 
 export async function getDefects() {
   // Simulate async to make Supabase migration a drop-in swap
-  return Promise.resolve(defectsData)
+  return Promise.resolve(corpusData)
 }
