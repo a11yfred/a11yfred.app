@@ -54,12 +54,8 @@ function AppShell() {
     }
   }, [theme])
 
-  // When navigating home from settings, focus the page h1 so keyboard and
-  // screen reader users land at the top of the new content (WCAG 2.4.3).
-  // Skip on initial mount — focus should not move on first load.
-  // Desktop only: settings is a page swap, so focus the h1 of the newly
-  // shown content on close. On mobile settings is an OffCanvas overlay and
-  // focus returns to the trigger via OffCanvas's built-in behavior.
+  // WCAG 2.4.3: focus h1 when returning from settings on desktop (page swap).
+  // Mobile focus return is handled by OffCanvas. Skip on initial mount.
   useEffect(() => {
     if (!didMount.current) { didMount.current = true; return }
     if (!settingsOpen && isDesktop) h1Ref.current?.focus()
@@ -142,7 +138,7 @@ function AppShell() {
 
 function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings }) {
   return (
-    <header style={{ position: 'relative', textAlign: 'center', marginBottom: 'var(--space-8)', paddingTop: 36 }}>
+    <header style={{ position: 'relative', textAlign: 'center', marginBottom: 'var(--space-8)', paddingTop: 48 }}>
       <button
         onClick={settingsOpen ? onCloseSettings : onOpenSettings}
         aria-label={settingsOpen ? 'Close settings' : 'Open settings'}
@@ -198,7 +194,6 @@ function Footer() {
       <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-faint)' }}>
         Made by Mikey Ilagan
       </p>
-      {/* TODO: update href once the GitHub repo is created */}
       <a
         href="https://github.com"
         target="_blank"
