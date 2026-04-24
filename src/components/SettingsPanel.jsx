@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useFocusOnMount, useReturnFocus, usePageTitle } from '../plugins/router/index.js'
+import { useFocusOnMount, usePageTitle } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 
 const PROVIDERS = [
@@ -25,9 +25,7 @@ export default function SettingsPanel({
   platform, onPlatformChange,
   onClose,
 }) {
-  // Move focus to the heading on mount; restore it to the trigger on unmount
   const headingRef = useFocusOnMount()
-  useReturnFocus()
   usePageTitle('Settings')
 
   const [keys, setKeys] = useState(() => {
@@ -81,7 +79,7 @@ export default function SettingsPanel({
           ←
         </button>
         {/* tabIndex={-1} allows programmatic focus without joining tab order */}
-        <h1
+        <h2
           ref={headingRef}
           tabIndex={-1}
           style={{
@@ -91,7 +89,7 @@ export default function SettingsPanel({
           }}
         >
           Settings
-        </h1>
+        </h2>
       </div>
 
       {/* ── Search ─────────────────────────────────── */}
@@ -116,7 +114,10 @@ export default function SettingsPanel({
                 value={value}
                 label={label}
                 current={platform}
-                onChange={onPlatformChange}
+                onChange={(val) => {
+                  onPlatformChange(val)
+                  announce(val === 'web' ? 'Platform: Show web-oriented results' : 'Platform: Show native-oriented results')
+                }}
               />
             ))}
           </div>
@@ -205,7 +206,7 @@ export default function SettingsPanel({
             padding: '6px 14px 6px 10px',
             fontSize: 'var(--fs-body)',
             background: 'var(--bg-subtle)',
-            border: '1px solid var(--border)',
+            border: `1px solid ${aiEnabled ? 'var(--border-control)' : 'var(--border)'}`,
             borderRadius: 'var(--radius)',
             color: 'var(--text)',
             opacity: aiEnabled ? 1 : 0.4,
@@ -238,7 +239,7 @@ export default function SettingsPanel({
               padding: '6px 10px',
               fontSize: 'var(--fs-body)',
               background: 'var(--bg-subtle)',
-              border: '1px solid var(--border)',
+              border: `1px solid ${aiEnabled ? 'var(--border-control)' : 'var(--border)'}`,
               borderRadius: 'var(--radius)',
               color: 'var(--text)',
               opacity: aiEnabled ? 1 : 0.4,
@@ -270,23 +271,30 @@ export default function SettingsPanel({
 
 function RadioChip({ name, value, label, current, onChange }) {
   const isActive = current === value
+  const [focused, setFocused] = useState(false)
   return (
-    <label style={{
-      flex: 1,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 6,
-      padding: '7px 0',
-      borderRadius: 'var(--radius)',
-      border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border)'}`,
-      background: isActive ? 'var(--accent-bg)' : 'var(--bg-subtle)',
-      color: isActive ? 'var(--accent-text)' : 'var(--text-muted)',
-      cursor: 'pointer',
-      fontSize: 'var(--fs-body)',
-      fontWeight: isActive ? 500 : 400,
-      transition: 'all 0.1s',
-    }}>
+    <label
+      onFocus={() => setFocused(true)}
+      onBlur={() => setFocused(false)}
+      style={{
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
+        padding: '7px 0',
+        borderRadius: 'var(--radius)',
+        border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border-control)'}`,
+        background: isActive ? 'var(--accent-bg)' : 'var(--bg-subtle)',
+        color: isActive ? 'var(--accent-text)' : 'var(--text-muted)',
+        cursor: 'pointer',
+        fontSize: 'var(--fs-body)',
+        fontWeight: isActive ? 500 : 400,
+        transition: 'all 0.1s',
+        outline: focused ? '2px solid var(--focus)' : 'none',
+        outlineOffset: focused ? 2 : 0,
+      }}
+    >
       <input
         type="radio"
         name={name}
@@ -320,7 +328,7 @@ function Toggle({ checked, onChange, label }) {
         width: 40, height: 22,
         borderRadius: 11,
         background: checked ? 'var(--accent)' : 'var(--border)',
-        border: 'none',
+        border: '1px solid var(--border-control)',
         position: 'relative',
         transition: 'background 0.2s',
         flexShrink: 0,
@@ -333,10 +341,12 @@ function Toggle({ checked, onChange, label }) {
         width: 16, height: 16,
         borderRadius: '50%',
         background: '#fff',
+        outline: checked ? 'none' : '1.5px solid var(--border-control)',
+        outlineOffset: 0,
         position: 'absolute',
         top: 3,
         left: checked ? 21 : 3,
-        transition: 'left 0.2s',
+        transition: 'left 0.2s, outline 0.2s',
       }}>
         {checked ? (
           <span aria-hidden="true" style={{
@@ -350,7 +360,7 @@ function Toggle({ checked, onChange, label }) {
             display: 'block',
             width: 8, height: 8,
             borderRadius: '50%',
-            border: '1.5px solid var(--border)',
+            border: '1.5px solid var(--border-control)',
             background: 'transparent',
           }} />
         )}

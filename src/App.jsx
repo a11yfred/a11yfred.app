@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
@@ -24,6 +24,8 @@ function AppShell() {
   const { route, navigate } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
   const settingsOpen = route === '/settings'
+  const h1Ref = useRef(null)
+  const didMount = useRef(false)
 
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'auto')
   const [aiEnabled, setAiEnabled] = useState(false)
@@ -51,6 +53,17 @@ function AppShell() {
       return () => mq.removeEventListener('change', apply)
     }
   }, [theme])
+
+  // When navigating home from settings, focus the page h1 so keyboard and
+  // screen reader users land at the top of the new content (WCAG 2.4.3).
+  // Skip on initial mount — focus should not move on first load.
+  // Desktop only: settings is a page swap, so focus the h1 of the newly
+  // shown content on close. On mobile settings is an OffCanvas overlay and
+  // focus returns to the trigger via OffCanvas's built-in behavior.
+  useEffect(() => {
+    if (!didMount.current) { didMount.current = true; return }
+    if (!settingsOpen && isDesktop) h1Ref.current?.focus()
+  }, [settingsOpen, isDesktop])
 
   const handleQueryChange = (q) => {
     setQuery(q)
@@ -103,6 +116,7 @@ function AppShell() {
     <div className="app-container">
       <Announcer />
       <Header
+        h1Ref={h1Ref}
         settingsOpen={settingsOpen}
         onOpenSettings={() => navigate('/settings')}
         onCloseSettings={() => navigate('/')}
@@ -126,16 +140,17 @@ function AppShell() {
   )
 }
 
-function Header({ settingsOpen, onOpenSettings, onCloseSettings }) {
+function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings }) {
   return (
     <header style={{ position: 'relative', textAlign: 'center', marginBottom: 'var(--space-8)', paddingTop: 36 }}>
       <button
         onClick={settingsOpen ? onCloseSettings : onOpenSettings}
         aria-label={settingsOpen ? 'Close settings' : 'Open settings'}
+        title={settingsOpen ? 'Close settings' : 'Open settings'}
         className="btn-icon"
         style={{ position: 'absolute', top: 0, right: 0, fontSize: 22 }}
       >
-        {settingsOpen ? '✕' : '⚙'}
+        {settingsOpen ? '✕' : '⚙️'}
       </button>
 
       {/*
@@ -143,13 +158,17 @@ function Header({ settingsOpen, onOpenSettings, onCloseSettings }) {
                scales at 10.5vw to fill ~85% of a 390px mobile screen,
                max 2.667rem ≈ 32pt on desktop.
       */}
-      <h1 style={{
-        fontSize: 'clamp(1.75rem, 10.5vw, 2.667rem)',
-        fontWeight: 700,
-        letterSpacing: '-0.02em',
-        color: 'var(--text)',
-        lineHeight: 1.15,
-      }}>
+      <h1
+        ref={h1Ref}
+        tabIndex={-1}
+        style={{
+          fontSize: 'clamp(1.75rem, 10.5vw, 2.667rem)',
+          fontWeight: 700,
+          letterSpacing: '-0.02em',
+          color: 'var(--text)',
+          lineHeight: 1.15,
+        }}
+      >
         A11yTextHelper
       </h1>
 

@@ -1,7 +1,9 @@
+import { useRef } from 'react'
 import { useRouter } from '../plugins/router/index.js'
 
 export default function SearchBar({ query, onChange, onSearch, typeahead }) {
   const { navigate } = useRouter()
+  const inputRef = useRef(null)
 
   const handleKeyDown = (e) => {
     if (!typeahead && e.key === 'Enter') onSearch()
@@ -24,6 +26,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
       <div style={{ display: 'flex', gap: 8 }}>
         <div style={{ position: 'relative', flex: 1 }}>
           <input
+            ref={inputRef}
             id="defect-search"
             type="text"
             value={query}
@@ -39,18 +42,18 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
               fontSize: 'var(--fs-sub)',
               lineHeight: 1.5,
               background: 'var(--bg-subtle)',
-              border: '1px solid var(--border)',
+              border: '1px solid var(--border-control)',
               borderRadius: 'var(--radius)',
               color: 'var(--text)',
               transition: 'border-color 0.15s',
               boxSizing: 'border-box',
             }}
             onFocus={e => e.target.style.borderColor = 'var(--focus)'}
-            onBlur={e => e.target.style.borderColor = 'var(--border)'}
+            onBlur={e => e.target.style.borderColor = 'var(--border-control)'}
           />
           {query && (
             <button
-              onClick={() => onChange('')}
+              onClick={() => { onChange(''); inputRef.current?.focus() }}
               aria-label="Clear search"
               style={{
                 position: 'absolute',

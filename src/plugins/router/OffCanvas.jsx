@@ -19,20 +19,29 @@ import { useFocusTrap } from './useFocusTrap.js'
  *   label     string   — aria-label for the dialog (default: 'Settings')
  *   children  node     — rendered inside the panel only when open
  */
-export default function OffCanvas({ open, onClose, label = 'Settings', children }) {
+/**
+ * @param {React.RefObject} [focusOnClose] - If provided, this element receives
+ *   focus when the panel closes instead of the element that triggered the open.
+ *   Use this when closing the panel should land focus on a page heading rather
+ *   than the control that opened it (e.g. navigating from a settings panel back
+ *   to the home page heading).
+ */
+export default function OffCanvas({ open, onClose, label = 'Settings', children, focusOnClose }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
 
   useFocusTrap(panelRef, open)
 
-  // Save trigger element when opening; restore focus when closing
+  // Save trigger element when opening; restore focus when closing.
+  // If focusOnClose ref is provided, use that target instead of the trigger.
   useEffect(() => {
     if (open) {
       triggerRef.current = document.activeElement
-    } else if (triggerRef.current) {
-      triggerRef.current.focus()
+    } else {
+      const target = focusOnClose?.current ?? triggerRef.current
+      target?.focus()
     }
-  }, [open])
+  }, [open, focusOnClose])
 
   // Escape key
   useEffect(() => {

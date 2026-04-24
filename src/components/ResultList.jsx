@@ -1,3 +1,6 @@
+import { useEffect } from 'react'
+import { announce } from '../plugins/announce/index.js'
+
 const PRIORITY_COLORS = {
   Critical:       { color: '#a32d2d', bg: '#fcebeb' },
   High:           { color: '#854f0b', bg: '#faeeda' },
@@ -85,6 +88,10 @@ export default function ResultList({ results, selected, onSelect, query }) {
 }
 
 function NoResults({ query }) {
+  useEffect(() => {
+    announce(`No results for "${query}". Try a component name, element type, or a different phrase.`)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional: announce only on first appearance, not every keystroke
+
   return (
     <section
       aria-label="No results"
