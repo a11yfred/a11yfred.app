@@ -106,6 +106,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` wired into all components. `en.json` is the source of truth. RTL locales (`ar-PS`, `ug`) automatically set `dir="rtl"` on `<html>`.
 
 - [ ] **String coverage** — any new UI text must use `t('key')` from `src/i18n/en.json`; never hardcode English strings in components
+- [ ] **Translate new UI strings** — after adding any new keys to `en.json`, provide proper translations (not English fallbacks) for all 49 non-English locale files; use the same machine-translation approach used in prior batches and apply capitalization conventions (sentence case for Romance/Germanic, no change for caseless scripts); this must run as part of every maintenance pass when `en.json` was modified since the last pass
 - [ ] **Locale file parity** — all keys in `en.json` must exist in every other locale file; add missing keys with an English fallback value when adding new strings; run before release:
 
   ```sh
