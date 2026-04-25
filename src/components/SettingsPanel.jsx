@@ -302,7 +302,7 @@ export default function SettingsPanel({
           onClick={() => setPrivacyOpen(true)}
           className="settings-privacy-btn"
         >
-          <Info size={14} aria-hidden="true" />
+          <Info size={14} aria-hidden="true" style={{ flexShrink: 0 }} />
           {t('settings.privacy_button')}
         </button>
         <button onClick={handleSave} className="btn-accent settings-save-btn">
@@ -336,8 +336,8 @@ export default function SettingsPanel({
         onClose={() => setRhgPending(false)}
         heading="Rohingya (Ruáingga)"
         actions={[
-          { label: 'Cancel',     onClick: () => setRhgPending(false),                                       className: 'btn-ghost' },
           { label: 'Use anyway', onClick: () => { onLanguageChange('rhg'); setRhgPending(false) }, className: 'btn-accent' },
+          { label: 'Cancel',     onClick: () => setRhgPending(false),                              className: 'btn-ghost'  },
         ]}
       >
         <p>This translation was AI-generated and has not been reviewed by native Rohingya speakers.</p>
