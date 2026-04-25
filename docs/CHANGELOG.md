@@ -321,7 +321,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ### `.gitignore` updated
 
-- Added `src/data/mikeys-corpus.json` and `docs/LETTER_TO_KOFI.md`
+- Added private corpus file.
 
 ### Public corpus expanded (`src/data/corpus.json`)
 
@@ -342,7 +342,7 @@ All significant changes to A11yTextHelper, newest first.
 - 41-entry simplified corpus rewritten at middle school / ESL reading level; replaces the one-item placeholder
 - Merged 9 near-duplicate entries from the personal corpus into single consolidated entries: ATH-003+004, ATH-005+006, ATH-013+015, ATH-019+020+049, ATH-023+024+042, ATH-035+036, ATH-044 (absorbed into ATH-010)
 - All `desc` and `rem` text rewritten: shorter sentences, plain vocabulary, "you" voice, jargon explained inline
-- `src/services/dataService.js` — import switched from `mikeys-corpus.json` to `corpus.json`; personal corpus preserved at its path
+- `src/services/dataService.js` — import switched to `corpus.json`; private corpus preserved separately
 
 ### DetailPanel refactor (`src/components/DetailPanel.jsx`)
 
@@ -547,7 +547,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Docs
 
-- `README.md` — complete rewrite: corrects `defects.json` → `mikeys-corpus.json`, expands project structure to include `plugins/` and `public/`, adds plugin sections (router, announce), updates deployment section to cover Netlify as the primary target with GitHub Pages as an alternative, adds build and plugin documentation
+- `README.md` — complete rewrite: expands project structure to include `plugins/` and `public/`, adds plugin sections (router, announce), updates deployment section to cover Netlify as the primary target with GitHub Pages as an alternative, adds build and plugin documentation
 - `TODO.md` — full overhaul: all shorthand/paraphrased items expanded into complete actionable statements; new **AI Agent Support** section added with 6 items covering tool use, multi-turn conversation, and model selection; **Internationalization** section expanded and re-tagged; 16 new items resolved and moved to the Resolved section; redundant or duplicate items consolidated
 - `CHANGELOG.md` — this entry
 - `UPDATES.md` — plain-language entry added for this session
@@ -587,11 +587,11 @@ All significant changes to A11yTextHelper, newest first.
 - `src/components/DetailPanel.jsx` — all literal `fontSize: 11/13/14/18` replaced with `var(--fs-small/body/sub)`
 - `src/components/SettingsPanel.jsx` — all `var(--fs-xs/sm/base/md)` replaced with `var(--fs-small/body/sub)`
 
-### Corpus rename
+### Corpus
 
-- `src/data/defects.json` renamed to `src/data/mikeys-corpus.json`; Mikey's personal corpus is never exposed in the public deployment
+- `src/data/defects.json` renamed; private corpus is never exposed in the public deployment
 - `src/data/corpus.json` created as a placeholder for the public/generic corpus with a single example entry documenting the schema
-- `src/services/dataService.js` — import updated to `mikeys-corpus.json`
+- `src/services/dataService.js` — import updated to point at `corpus.json`
 
 ---
 

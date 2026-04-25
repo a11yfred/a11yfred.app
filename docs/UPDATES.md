@@ -344,7 +344,7 @@ The number of internal font size options was cut from seven down to four: **smal
 
 ### Your corpus is yours; a public one is coming
 
-The defect data file has been renamed from `defects.json` to `mikeys-corpus.json` to make it clear it's a personal data source. A placeholder file called `corpus.json` has been created for a future public corpus — one that anyone can use without the personal entries. When both exist, the public deployment will only ship the generic version.
+A placeholder file called `corpus.json` has been created for a future public corpus — one that anyone can use. The public deployment ships only the generic version.
 
 ---
 

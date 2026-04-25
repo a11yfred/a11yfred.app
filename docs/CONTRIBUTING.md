@@ -72,5 +72,3 @@ A PR template lives at `.github/PULL_REQUEST_TEMPLATE.md` and loads automaticall
 ## What's not in scope
 
 The corpus in this repo (`corpus.json`) is the **public** version — entries sourced entirely from publicly available accessibility guidance (WCAG, WebAIM, Deque, axe-core). Private or personal audit data will not be accepted.
-
-A separate personal corpus (`mikeys-corpus.json`) exists for the tool author's private use and is never included in any pull request, release, or public deployment.

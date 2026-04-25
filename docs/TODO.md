@@ -25,11 +25,11 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ## Corpus
 
-- [ ] **Batch import tooling** `[corpus]` — write a small Node.js or Python script that reads rows from a CSV or Excel export of your audit spreadsheets and converts them to the `mikeys-corpus.json` schema; run once, review the output for voice consistency and keyword coverage, then delete the script
+- [ ] **Batch import tooling** `[corpus]` — write a small Node.js or Python script that reads rows from a CSV or Excel export of your audit spreadsheets and converts them to the corpus JSON schema; run once, review the output for voice consistency and keyword coverage, then delete the script
 - [ ] **Keyword audit** `[corpus]` — after the batch import, review the `keywords` array on every entry; keywords drive Fuse.js relevance more than any other field, and imported entries from spreadsheets often need additional synonyms and component names added
 - [ ] **Platform coverage** `[corpus]` — verify that native-only defects are flagged `"platform": "native"` and that `"both"` entries make sense on each platform; aim for roughly 40% native or both entries to make the Native filter useful
 - [ ] **Related SC links** `[corpus]` — spot-check the `related` arrays for accuracy; some starter entries are missing secondary success criteria that are commonly cited alongside the primary SC
-- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — add a toggle in Settings to switch between the personal corpus (`mikeys-corpus.json`) and the generic public corpus (`corpus.json`); the two files are already separate; the toggle should persist to `localStorage` and only appear if both files are available
+- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — add a toggle in Settings to switch between the private corpus and the generic public corpus (`corpus.json`); the two files are already separate; the toggle should persist to `localStorage` and only appear if both files are available
 - [ ] **Public corpus bootstrap** `[corpus]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as the personal corpus
 - [ ] **Corpus provenance field** `[corpus]` — add a `source` field to each defect entry indicating origin (e.g. `"personal"`, `"WAI"`, `"axe"`, `"Deque"`); helps contributors understand where an entry came from and what style to follow when adding similar entries
 - [ ] **Custom data source** `[corpus]` `[ux]` — allow Settings to accept a URL or file path pointing to a user-supplied JSON corpus; validate the schema on load, fall back to the built-in corpus if the source is unreachable or malformed; document the expected schema in a help tooltip
@@ -218,7 +218,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [x] **Settings save button divider** `[design]` — `border-top` added above the Save button row
 - [x] **Footer: "Made by" → "A project by"** `[design]`
 - [x] **Ko-fi accessibility letter** `[a11y]` — `docs/LETTER_TO_KOFI.md` created; added to `.gitignore`
-- [x] **`.gitignore` updated** `[infra]` — added `src/data/mikeys-corpus.json` and `docs/LETTER_TO_KOFI.md`
+- [x] **`.gitignore` updated** `[infra]` — added private corpus file and `docs/LETTER_TO_KOFI.md`
 - [x] **Public corpus expanded to 54 entries** `[corpus]` — 13 new entries (ATH-051–063) added from axe, WCAG Understanding docs, WebAIM; topics include captions, audio description, live regions, error suggestions, gesture alternatives, and more
 - [x] **Public corpus seeded** `[corpus]` — 41 simplified entries at middle school/ESL reading level; 9 near-duplicates consolidated; all `desc`/`rem` rewritten in plain language; `dataService.js` now points to `corpus.json` as the default
 - [x] **DetailPanel SC text links** `[design]` `[a11y]` — SC pill badges replaced with inline text links; format is "Fails: 1.1.1 …" and "Related: …, …"; `ScBadge` component removed; `.sc-badge` / `.badge-group` CSS removed
@@ -273,7 +273,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [x] Settings focus management — heading focus on open; trigger-button focus restored on close
 - [x] Font scale simplified — 7 tokens → 4 (`--fs-small/body/sub/heading`); `html { font-size: 100% }` (browser default); h1 uses `clamp(1.75rem, 10.5vw, 2.667rem)`
 - [x] Font token migration — all inline literal px values replaced across all components
-- [x] Corpus renamed — `defects.json` → `mikeys-corpus.json`; public placeholder `corpus.json` created
+- [x] Corpus renamed from `defects.json`; public placeholder `corpus.json` created
 - [x] Mobile-first layout — `.app-container` class, 768px breakpoint
 - [x] Touch targets — `.btn-icon` (44×44px), platform toggle padding bump
 - [x] Design token system — `tokens.css`
