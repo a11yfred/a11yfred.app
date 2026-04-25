@@ -11,6 +11,14 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Populate defect corpus** `[corpus]` — import from audit spreadsheets; target 150–200 entries across web and native; review existing 50 starters for accuracy and voice consistency
 - [ ] **Deploy to Netlify** `[infra]` — connect the GitHub repo to Netlify; set the build command to `npm run build` and publish directory to `dist`; the `netlify.toml` is already configured with headers and the SPA redirect rule
 - [ ] **Add favicon** `[design]` `[infra]` — create a `favicon.svg` in `public/` and uncomment the `<link rel="icon">` tag in `index.html`; the favicon should be a simple accessible "A" mark or magnifying glass glyph using the accent color `#5548c8`
+- [ ] reset and copy icons need to be aligned with settings saved
+- [ ] move search button up ever so slightly so it vertically aligns with input, better yet, match heights
+- [ ] add a space char in the span that shows up next to refine because screen readers are not picking up on the break and also the font changes color so that needs to be fixed
+- [ ] Instead of maade by mikey ilagan maybe project by mikey ilagan to recognize there are contributors
+- [ ] I feel like we should create a system of modals to put information like this: > API keys are stored locally in your browser (localStorage) and sent only to the AI provider’s own API — never to any intermediate server. You supply your own key; usage is billed directly to your account.
+This app stores five things in localStorage: your theme preference, your platform filter (Web/Native), your search mode (typeahead on/off), your active AI provider, and your API key(s). No personal data, usage data, or corpus content is collected or transmitted by this app.
+- [ ] Revisit animation stuff
+- [ ] mobile in general will need some gutter to account for the support me button
 
 ---
 
