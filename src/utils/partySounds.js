@@ -1,3 +1,5 @@
+import { isSongPlaying } from './partySongs.js'
+
 let audioCtx = null
 let masterGain = null
 
@@ -259,6 +261,7 @@ export function playSqueak() {
 }
 
 export function playPartySound() {
+  if (isSongPlaying()) return
   try {
     SOUNDS[Math.floor(Math.random() * SOUNDS.length)]()
   } catch {

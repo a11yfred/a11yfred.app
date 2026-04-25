@@ -156,6 +156,9 @@ function scheduleLoop(ctx, dest, startTime, beat) {
   return startTime + 4 * bar
 }
 
+let _playing = false
+export const isSongPlaying = () => _playing
+
 export function startSong2() {
   const ctx = getCtx()
   const master = ctx.createGain()
@@ -168,6 +171,7 @@ export function startSong2() {
   let stopped = false
   let timer = null
   let nextStart = ctx.currentTime + 0.05
+  _playing = true
 
   function loop() {
     if (stopped) return
@@ -179,6 +183,7 @@ export function startSong2() {
 
   return function stop() {
     stopped = true
+    _playing = false
     clearTimeout(timer)
     master.gain.setValueAtTime(master.gain.value, ctx.currentTime)
     master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.2)
