@@ -166,7 +166,7 @@ All significant changes to A11yTextHelper, newest first.
 - New `language` state in `AppShell`; defaults to `navigator.language` (browser/OS language), falls back to `'en'`
 - Persisted to `localStorage` as `'language'`; applied to `document.documentElement.lang` on change
 - Language selector added to SettingsPanel under Appearance (English, Español, Français, Deutsch, Nederlands, 日本語, Filipino)
-- Note: full UI string translation requires react-i18next integration (tracked in TODO)
+- Note: language selector and lang attribute were wired in this session; full UI translation completed in a subsequent commit (see i18n entry above)
 
 ### Settings section reorder and polish (`src/components/SettingsPanel.jsx`, `src/index.css`)
 

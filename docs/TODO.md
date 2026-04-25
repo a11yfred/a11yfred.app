@@ -193,7 +193,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [x] **SC lines as bulleted list** `[design]` — "Fails:" and "Related:" now rendered as `<ul>` with disc bullets and indent instead of plain `<p>` elements
 - [x] **Rewrite button size fix** `[design]` — padding overrides `field-btn` to match the adjacent input height; `align-items: flex-start` on the refine row
 - [x] **"Typeahead" renamed to "Live search"** `[ux]` — code: `typeahead` → `liveSearch`; localStorage key: `typeahead` → `liveSearch`; UI labels and hint text updated
-- [x] **Language selector** `[i18n]` `[ux]` `[a11y]` — selector in Settings (Appearance section); defaults to OS/browser language; persists to localStorage; updates `html lang` attribute; 7 target languages listed
+- [x] **Language selector** `[i18n]` `[ux]` `[a11y]` — selector in Settings (Appearance section); defaults to OS/browser language; persists to localStorage; updates `html lang` attribute; 10 languages listed (en, es, fr, de, nl, sv, zh, ko, ja, tl)
 - [x] **Settings section order** `[ux]` `[design]` — Appearance (Theme, Language) moved before Search (Platform, Live search)
 - [x] **SearchBar hint text improved** `[ux]` — shows current platform and AI provider name; "Settings" is a button, not the whole hint
 - [x] **Non-AI refine hint links to Settings** `[ux]` — "Enable AI in Settings" is now a real button that navigates to Settings and preserves the defect panel
