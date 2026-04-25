@@ -50,6 +50,11 @@ src/
   data/
     mikeys-corpus.json  # Personal defect corpus (private — never ships in public build)
     corpus.json         # Public corpus — 54 plain-language entries; default data source
+  i18n/
+    index.jsx           # I18nProvider + useT() hook (zero-dep, React Context)
+    en.json             # Source of truth (~93 keys)
+    es.json fr.json de.json nl.json sv.json
+    zh.json ko.json ja.json tl.json
   services/
     dataService.js      # Data layer abstraction; migration seam for Supabase (Phase 2+)
     aiService.js        # AI provider abstraction; Anthropic implemented, others stubbed
@@ -150,7 +155,9 @@ Settings includes Light, Auto, Dark, and **Party Mode?** theme options. Party Mo
 
 ## Language
 
-Settings includes a Language selector (defaults to your browser's language). Supported languages listed: English, Español, Français, Deutsch, Nederlands, 日本語, Filipino. Full UI translations require react-i18next integration (Phase 3).
+Settings includes a Language selector (defaults to your browser's language). 10 languages are fully translated: English, Español, Français, Deutsch, Nederlands, Svenska, 中文（简体）, 日本語, 한국어, Filipino (Tagalog).
+
+Translations were generated with AI and may contain errors. No user-entered data is sent anywhere for translation. The `src/i18n/` directory contains one flat-key JSON file per locale; `src/i18n/en.json` is the source of truth.
 
 ---
 
