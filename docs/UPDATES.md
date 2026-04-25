@@ -4,6 +4,34 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 25, 2026 — About panel improvements and settings footer fix
+
+### The About panel is now a proper drawer
+
+The About panel now slides in the same way as Settings — from the left on mobile, replacing the main view on desktop. The Info button in the header works as a toggle (click to open, click again to close). The panel has a back button, section dividers, and a Privacy & Storage link at the bottom.
+
+### Reset All is fixed
+
+The Reset All button in Settings is now properly styled and always sits right next to the Save button.
+
+---
+
+## April 25, 2026 — About panel, Reset All, performance fixes
+
+### There is now an About page
+
+Click the ⓘ button in the header (next to the gear) to open an About panel explaining what the app is for, how to use it in four steps, what the notable features are, and what's coming next.
+
+### You can now reset all settings at once
+
+A "Reset All" button has been added to the Settings footer, next to the Save button. Clicking it opens a confirmation prompt, then clears everything — theme, language, platform filter, live search preference, AI provider, and all API keys — and returns to defaults. This is useful if you want to start fresh or if something gets into a weird state.
+
+### Under-the-hood: performance and Phase 2 groundwork
+
+Translation overlays for non-English locales are now cached after first load so switching back to a previously used language is instant. The app also has groundwork for Phase 2 features laid out: Supabase database schema, Google and GitHub sign-in stubs, and a data layer that's ready for user-owned custom defect entries.
+
+---
+
 ## April 25, 2026 — The app now speaks 10 languages
 
 ### Interface translated into 10 languages

@@ -58,8 +58,10 @@ src/
     ar-PS.json ug.json  # RTL locales — sets dir="rtl" on <html>
     # + 40+ more locale files (see src/i18n/ for full list)
   services/
-    dataService.js      # Data layer abstraction; migration seam for Supabase (Phase 2+)
+    dataService.js      # Data layer abstraction; Phase 2 stubs: getUserDefects, syncSettings
     aiService.js        # AI provider abstraction; Anthropic implemented, others stubbed
+    supabaseClient.js   # Supabase client stub — Phase 2; see file for setup + schema
+    authService.js      # Auth stub — Google + GitHub OAuth via Supabase; Phase 2
   hooks/
     useDefectSearch.js  # Fuse.js search with platform filter
   utils/

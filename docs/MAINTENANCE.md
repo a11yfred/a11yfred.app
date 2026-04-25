@@ -8,6 +8,8 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 | Date | Passed | Failed | Deferred | N/A | Notes |
 | ---- | ------ | ------ | -------- | --- | ----- |
+| 2026-04-25 | 17 | 0 | 3 | 4 | About panel → Drawer pattern; settings footer Reset+Save paired; section dividers; Privacy btn in About; MAINTENANCE.md parity command + stale items fixed; N/A: font self-hosting, bundle size, Umami, favicon |
+| 2026-04-25 | 16 | 0 | 3 | 4 | About panel; Settings Reset All; Phase 2 stubs (Supabase/auth); i18n parity (all 49 locales); dataService mergedCache perf; privacy text updated; btn-secondary added; ESLint argsIgnorePattern; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-25 | 15 | 0 | 3 | 4 | i18n: 10-language support, I18nProvider, useT(), all components wired; privacy button layout; CONTRIBUTING.md PR template reference; localStorage count updated to 6; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-25 | 14 | 0 | 3 | 4 | Party mode sounds (SFX), sparkles, music player, radial gradient fix, banner animation, chip stars, cursor size, assertive announce hold; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-25 | 14 | 0 | 3 | 4 | Party mode, confetti, copy guard, LinkedIn footer, search label/hint/icon, rewrite btn height; N/A: font self-hosting, bundle size, Umami, favicon |
@@ -55,8 +57,8 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 - [ ] **API key handling** — keys in `localStorage` only; never logged; never in any fetch body except the provider's own endpoint
 - [ ] **`rel` audit** — all `target="_blank"` links have `rel="noreferrer"`
 - [ ] **No `innerHTML`** — search codebase; all DOM content goes through React JSX
-- [ ] **`localStorage` inventory** — exactly six keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `apikey_<provider>`
-- [ ] **Privacy disclosure** — SettingsPanel disclosure lists all six keys accurately
+- [ ] **`localStorage` inventory** — keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, plus one `apikey_<provider>` per configured AI provider; total count grows with providers; verify count in SettingsPanel privacy disclosure matches reality
+- [ ] **Privacy disclosure** — SettingsPanel disclosure accurately lists all stored keys; update `settings.privacy_body_2` in `en.json` (and propagate to all locale files) whenever storage changes
 - [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget is currently disabled; re-enable only when console errors are resolved and selector patches are verified against live DOM
 - [ ] **Dependency audit** — run `npm audit`; resolve high/critical before release
 - [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates
@@ -104,7 +106,23 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` wired into all components. `en.json` is the source of truth. RTL locales (`ar-PS`, `ug`) automatically set `dir="rtl"` on `<html>`.
 
 - [ ] **String coverage** — any new UI text must use `t('key')` from `src/i18n/en.json`; never hardcode English strings in components
-- [ ] **Locale file parity** — all keys in `en.json` must exist in every other locale file; add missing keys with an English fallback value when adding new strings; run the parity check script or compare key counts manually before release
+- [ ] **Locale file parity** — all keys in `en.json` must exist in every other locale file; add missing keys with an English fallback value when adding new strings; run before release:
+
+  ```sh
+  node -e "
+  const fs=require('fs'),path=require('path');
+  const dir='src/i18n';
+  const en=JSON.parse(fs.readFileSync(path.join(dir,'en.json'),'utf8'));
+  const keys=Object.keys(en);
+  fs.readdirSync(dir).filter(f=>f.endsWith('.json')&&f!=='en.json').forEach(f=>{
+    const loc=JSON.parse(fs.readFileSync(path.join(dir,f),'utf8'));
+    const missing=keys.filter(k=>!(k in loc));
+    if(missing.length) console.log(f,missing);
+  });
+  console.log('parity check done');
+  "
+  ```
+
 - [ ] **Announce string audit** — verify that all `announce()` call strings are pulled from `t()` and that every locale file has the corresponding key translated (not just English fallback)
 - [ ] **Corpus translation coverage** — defect descriptions and remediation steps in `corpus.json` should have locale-specific overlays; when `scripts/translate.js` is written, re-run it whenever entries are added or edited; WCAG SC names and codes (`1.1.1`, `aria-label`, etc.) should remain in English in all locales
 - [ ] **Technical term review** — after any machine translation batch, flag corpus entries using WCAG-specific terms (accessible name, focus trap, landmark, live region, ARIA role) for human review; machine translation of these terms is unreliable
@@ -121,3 +139,5 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
 - [ ] **README.md** — project structure matches actual files; phase table updated if status changes
 - [ ] **docs/CONTRIBUTING.md** — defect schema matches `corpus.json`; update if fields are added or renamed
 - [ ] **docs/MAINTENANCE.md** — add a row to the run log above; add/retire sections as systems change
+- [ ] **About panel content** — verify "Coming Soon" section reflects current roadmap; remove items that have shipped; update feature descriptions as capabilities expand
+- [ ] **Phase 2 stubs review** (before activating Supabase) — re-read `src/services/authService.js` and `src/services/supabaseClient.js` comments against the current Supabase SDK docs; confirm OAuth provider slugs, table names, and RLS policy examples are still accurate

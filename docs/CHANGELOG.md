@@ -4,6 +4,76 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-25 — About panel as drawer, settings footer fix, section dividers, MAINTENANCE.md
+
+### About panel redesign
+
+- `AboutPanel.jsx` — converted from BottomSheet to Drawer (same pattern as Settings); back button header matches Settings; `onClose` prop wired
+- Desktop: `AboutPanel` renders in `<main>` (same slot as SettingsPanel) when `isDesktop && aboutOpen`
+- Mobile: dedicated `<Drawer>` for About; replaced BottomSheet
+- Info button in header now toggles (shows X when aboutOpen, Info when closed); `aboutOpen` and `onCloseAbout` props added to `Header`
+- Privacy & Storage button added inside About panel (reuses settings privacy sheet)
+- Section dividers added via CSS (`border-top` on `+ .about-section` sibling); each section has `padding-bottom: var(--space-6)`; last section has `5rem` bottom for future Ko-fi button
+- `.about-header` + `.about-title` CSS added (mirrors `.settings-header`/`.settings-title`)
+- Removed double padding: `.about-panel` no longer has `padding`; parent container (Drawer or `app-container`) provides it
+- `backgroundInert` updated: desktop about is inline content (no inert needed); mobile about uses Drawer path
+- Defect BottomSheet suppressed while `aboutOpen` (`open={... && !aboutOpen}`)
+- `.about-privacy-btn` CSS added
+
+### Settings footer
+
+- `settings-footer-actions` wrapper div groups Reset All + Save buttons as a flex row — always adjacent
+- Mobile layout: Privacy link above the button pair; desktop: Privacy left, button pair right
+- `.settings-reset-btn` now shares padding/border-radius declaration with `.settings-save-btn`; no more unstyled appearance
+- Save button no longer `width: 100%` on mobile; both buttons size to content within their flex row
+
+### MAINTENANCE.md
+
+- `localStorage` inventory item updated: removed stale "exactly six keys" count; explains variable `apikey_*` count
+- Privacy disclosure item updated: notes to propagate `privacy_body_2` changes to all locale files
+- Locale file parity item: runnable node one-liner added for CI/pre-release check
+- Docs section: About panel content review + Phase 2 stubs review items added
+
+---
+
+## 2026-04-25 — Phase 2 stubs, About panel, Settings reset, i18n parity, perf
+
+### About panel
+
+- `AboutPanel.jsx` — new bottom sheet component; covers what the app is, 4-step how-to, notable features, and a "Coming Soon" section for auth and custom defects
+- Info button (`<Info size={20}>`) added to header, left of the gear; wrapped both header action buttons in `.page-header__actions` flex container
+- `aboutOpen` state in `AppContent`; `backgroundInert` updated to include `aboutOpen`
+- `header.open_about`, `about.*` keys added to `en.json` (29 new keys)
+
+### Settings: Reset All
+
+- "Reset All" button added to settings footer row (left of Save on desktop, stacked on mobile)
+- Confirmation modal: `settings.confirm_reset_all_*` keys; uses existing `Modal` component
+- `handleResetAll` in `App.jsx` — calls `localStorage.clear()`, resets all React state to defaults, navigates to `/`
+- `onReset` prop added to `SettingsPanel`; calls `onReset?.()` after confirmation
+
+### Button system: `.btn-secondary`
+
+- `.btn-secondary` added to `index.css` as a named alias for the secondary/outlined button treatment (same visual style as `.btn-ghost`, kept for back-compat); use `.btn-secondary` in all new code
+
+### Phase 2 stubs — Supabase, auth
+
+- `supabaseClient.js` — Supabase client stub with full setup instructions, DB schema (SQL), and `.env.local` configuration comments
+- `authService.js` — Google + GitHub OAuth stubs via Supabase Auth; includes commented-out Phase 2 implementation; all functions safe to call today (return null / empty array / throw informative errors)
+- `dataService.js` — `getUserDefects()`, `saveUserDefect()`, `deleteUserDefect()`, `syncSettings()`, `getRemoteSettings()` stubs added; merged result cache (`mergedCache`) prevents re-mapping corpus on repeated locale switches; `en-*` locales short-circuited to skip overlay lookup; `OVERLAY_FALLBACKS` map adds `pt` → `pt-BR` fallback
+
+### i18n parity
+
+- 6 missing keys added to all 49 non-English locale files: `common.close`, `settings.privacy_subhead_storage`, `settings.privacy_subhead_translations`, `notfound.heading`, `notfound.body`, `notfound.button`
+- `pir.json` only needed the 3 shared keys (already had `notfound.*`)
+- `settings.privacy_body_2` updated: "six things" replaced with accurate language about variable number of API keys
+
+### ESLint
+
+- `argsIgnorePattern: '^_'` added to `no-unused-vars` rule in `eslint.config.js`; allows `_callback`, `_userId` etc. in stub functions without lint errors
+
+---
+
 ## 2026-04-25 — 50+ locales, priority i18n, RTL, 404 page, a11y fixes, lint sweep
 
 ### Internationalization — 50+ locales
