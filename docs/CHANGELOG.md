@@ -4,6 +4,276 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-25 — Party mode enhancements: sounds, sparkles, music, visual polish
+
+### Party mode sound effects (`src/utils/partySounds.js`, `src/App.jsx`)
+
+- New `partySounds.js` utility synthesizes six sounds via the Web Audio API (zero external dependencies): goose honk, cat hiss, cat meow, fart noise, descending ahooga car horn, wolf whistle; snare drum added as a seventh
+- Fart noise synthesized from resonant lowpass-filtered noise + low sawtooth oscillator with pitch sweep; slightly randomized duration for variety; appears 3 slots in the random pool vs 2 for others (1.5× more likely)
+- Snare drum synthesized from body (sine with pitch drop) + buzz (highpass-filtered noise)
+- All sounds route through a shared master gain node at 0.5
+- `playPartySound()` triggers on clicks of `button`, `[role="button"]`, input submit/button, checkbox, radio, and select elements
+- `playSqueak()` (squeaky shoe: sine gliding ~650–1500 Hz, random base per press) fires every 3rd keypress in `#defect-search` in party mode; modifier keys (Shift, Ctrl, Alt, Meta, Tab, CapsLock, Escape) excluded
+
+### Party mode sparkle effect (`src/components/PartySparkles.jsx`, `src/index.css`)
+
+- `PartySparkles.jsx`: fixed canvas, z-index 199, `pointer-events: none`; listens for `click` on document; each click spawns 14 particles (circles and 5-point stars) that burst outward, fall with gravity, and fade
+- Entirely skipped when `prefers-reduced-motion: reduce` is on
+
+### Party mode floating music player (`src/utils/partySongs.js`, `src/components/PartyMusicPlayer.jsx`)
+
+- `partySongs.js`: synthesizes a looping approximation of Blur's "Song 2" — distorted sawtooth power chords (root + 5th + octave via WaveShaper), triangle-wave bass, kick/snare/hihat drums; 4-bar loop at 132 BPM; scheduled with a `setTimeout` look-ahead approach; master gain 0.22; stop function fades out and disconnects
+- `PartyMusicPlayer.jsx`: fixed circular play/pause button at a random `top`/`left` position; moves to a new random position on each route change (via `useRouter`); `aria-label` and `aria-pressed` update with play state; stops when party mode deactivates; z-index 195
+
+### Party mode visual polish (`src/App.jsx`, `src/index.css`, `src/tokens.css`)
+
+- **Radial gradient**: `[data-theme="party"] body` now uses `radial-gradient(ellipse at var(--party-grad-x) var(--party-grad-y), ...)` with `background-attachment: fixed; background-size: cover; background-repeat: no-repeat` — fixes the tiling artifact from the previous linear-gradient; `--party-grad-x`/`--party-grad-y` (random 10–90%) generated in `generatePartyPalette()` and cleaned up via `PARTY_KEYS`
+- **Party banner animation**: bounces for 5 s then stops (`.party-banner--still { animation: none }`); `mouseenter` restarts the 5 s countdown via `setTimeout`; `pointer-events: none` removed so hover fires
+- **Radio chip stars**: `[data-theme="party"] .radio-chip__indicator::before` renders `☆` (inactive) or `★` (active) replacing the circle dot
+- **Magic wand cursor**: SVG resized 32×32 → 64×64; all path coordinates doubled; hotspot adjusted `10 2` → `20 4`
+
+---
+
+## 2026-04-25 — Party mode, copy guard, search polish, LinkedIn footer
+
+### Party Mode theme (`src/components/SettingsPanel.jsx`, `src/App.jsx`, `src/tokens.css`, `src/index.css`, `src/components/Confetti.jsx`)
+
+- "Party Mode?" added as a fourth chip option in the Theme fieldset (Light / Auto / Dark / Party Mode?)
+- On activation, `generatePartyPalette()` produces a random complementary color palette (random base hue, complementary and triadic derived hues) and applies it as inline style overrides on `document.documentElement`; priority badge colors are kept fixed to preserve accessibility
+- `PARTY_KEYS` array in `App.jsx` ensures all inline overrides are removed when switching to any other theme
+- `[data-theme="party"]` in `tokens.css` overrides `--font` to Comic Sans and sets a magic wand SVG cursor (star at the tip, hotspot at star point)
+- Confetti canvas (`Confetti.jsx`) renders 110 particles for 5 seconds then fades over 800 ms; uses `requestAnimationFrame`; entirely skipped when `prefers-reduced-motion: reduce` is set
+- Screen reader receives an assertive `announce()` on activation: describes confetti, or notes that it was skipped if reduced motion is on
+- Reduced-motion disclosure note shown at the very bottom of SettingsPanel whenever `window.matchMedia('(prefers-reduced-motion: reduce)').matches` is true
+
+### Copy guard (`src/components/DetailPanel.jsx`)
+
+- Copying an empty field now shows a "Nothing to copy" modal with an OK button instead of silently calling `navigator.clipboard.writeText('')`
+
+### Search bar polish (`src/components/SearchBar.jsx`, `src/index.css`)
+
+- "Describe the defect or observation" label color changed from `--text-muted` to `--text` to match other form labels
+- Search hint: "AI assist is on" corrected to "AI assist is active"
+- Clear-search button icon changed from `<X>` (Lucide) to the `↺` reset symbol to match Field reset buttons; `lucide-react` `X` import removed from `SearchBar.jsx`
+
+### Rewrite button height fix (`src/index.css`)
+
+- `.detail-refine-row` changed to `align-items: stretch`; `.detail-rewrite-btn` uses `align-self: stretch` and `padding: 0 12px` so the button grows to the same height as the adjacent refine input
+
+### Footer update (`src/App.jsx`)
+
+- Bluesky link replaced with LinkedIn (`https://www.linkedin.com/in/mikeyil`) and LinkedIn SVG icon
+
+### TODO update
+
+- `docs/TODO.md` — "About / data sources page" item added to UX section; describes what to include when an About page is created (corpus compilation method, sources, credit)
+
+---
+
+## 2026-04-25 — Settings navigation, UX polish, i18n groundwork, corpus expansion
+
+### Settings ↔ defect panel navigation (`src/App.jsx`, `src/plugins/router/BottomSheet.jsx`)
+
+- Opening Settings while a defect panel is selected no longer clears the selection; the panel state (including edits) is preserved via a new `keepMounted` prop on `BottomSheet`
+- Closing Settings restores the defect panel and returns keyboard focus to the panel heading via a `focusTrigger` prop in `DetailPanel`
+- `backgroundInert` formula fixed: `(!isDesktop && settingsOpen) || (!!selected && !settingsOpen)` — prevents the settings drawer from ever being inside an inert subtree
+- `returnToPanelRef` and `panelFocusTrigger` state added to `AppShell`
+- `onOpenSettings` no longer calls `setSelected(null)`
+
+### Reset confirmation modal (`src/components/DetailPanel.jsx`, `src/plugins/router/Modal.jsx`)
+
+- Modal now accepts an `actions` prop: `[{ label, onClick, className }]`; defaults to a single OK button when omitted
+- `editDistance` (Levenshtein) and `isSignificantlyChanged` helpers added to `DetailPanel`
+- When >70% of a textarea's original text has been changed, clicking Reset opens a "Are you sure?" confirmation modal instead of resetting immediately
+- Stacked "Yes, reset" (primary) / "No, nevermind" (ghost) button layout in the modal footer
+- DRY: `handleReset` extracts the shared reset + announce + flag pattern used for both desc and rem fields
+
+### BottomSheet chrome layout fix (`src/plugins/router/BottomSheet.jsx`, `src/index.css`)
+
+- Close button moved from `position: absolute` (which caused it to be half-clipped above the panel) to normal flex flow at the right end of the chrome row
+- Drag handle re-centered via `position: absolute` on the handle instead of on the button
+- Mobile-only full-width "Close" button added at the bottom of the sheet content area (hidden on desktop via `@media (width >= 768px)`)
+
+### SC list now bulleted (`src/components/DetailPanel.jsx`, `src/index.css`)
+
+- "Fails:" and "Related:" lines changed from `<p>` inside a `<div>` to `<li>` inside a `<ul>` with `list-style: disc` and indent — more visually prominent
+- CSS: `.detail-sc` / `.detail-sc-line` replaced by `.detail-sc-list` / `.detail-sc-item`
+
+### Rewrite button sizing fix (`src/index.css`)
+
+- `.detail-rewrite-btn` padding overrides `field-btn` to `6px 10px` — matches the adjacent input height
+- `.detail-refine-row` changed from `align-items: stretch` to `align-items: flex-start`
+
+### Search button height fix (`src/index.css`)
+
+- `.search-submit-btn` changed from `align-self: flex-end` to `align-self: stretch` so it fills the row height and stays flush with the input
+
+### "Typeahead" renamed to "Live search" everywhere
+
+- Code: `typeahead` state / prop → `liveSearch`; localStorage key: `typeahead` → `liveSearch`
+- User-facing: toggle label "Typeahead" → "Live search"; SearchBar hint updated
+- Privacy modal text updated to reflect the new key name (now six stored keys)
+
+### Language selector (`src/App.jsx`, `src/components/SettingsPanel.jsx`)
+
+- New `language` state in `AppShell`; defaults to `navigator.language` (browser/OS language), falls back to `'en'`
+- Persisted to `localStorage` as `'language'`; applied to `document.documentElement.lang` on change
+- Language selector added to SettingsPanel under Appearance (English, Español, Français, Deutsch, Nederlands, 日本語, Filipino)
+- Note: full UI string translation requires react-i18next integration (tracked in TODO)
+
+### Settings section reorder and polish (`src/components/SettingsPanel.jsx`, `src/index.css`)
+
+- Sections reordered: Appearance (Theme + Language) → Search (Platform + Live search) → AI Assist
+- Save button row now has a `border-top` divider above it
+- Drawer bottom padding increased to `5rem` on mobile so the Ko-fi floating button does not overlap settings content
+
+### SearchBar hint text improved (`src/components/SearchBar.jsx`)
+
+- Hint now shows current platform focus ("web-based" / "native mobile") and AI provider name if AI is enabled
+- "Change in Settings" button separated into plain text + inline "Settings" button
+
+### Modal improvements (`src/index.css`)
+
+- `max-height` changed from `90dvh` to `calc(100dvh - 2 * var(--space-6))` — ensures the top of the modal is always at least `--space-6` from the viewport top regardless of content height
+- `.modal-heading` — `line-height: 1em` added
+- `.modal-footer` — `display: flex; flex-direction: column; gap: var(--space-2)` for stacked action buttons
+
+### Ghost button style added (`src/index.css`)
+
+- `.btn-ghost` — neutral border, transparent background, muted text; used for secondary/cancel modal actions
+
+### Footer text (`src/App.jsx`)
+
+- "Made by" → "A project by"
+
+### `.gitignore` updated
+
+- Added `src/data/mikeys-corpus.json` and `docs/LETTER_TO_KOFI.md`
+
+### Public corpus expanded (`src/data/corpus.json`)
+
+- 13 new entries added (ATH-051 – ATH-063) sourced from axe-core rules, WCAG 2.2 Understanding docs, and WebAIM guidance
+- Topics: figure without description, conflicting form labels, unlabeled select/dropdown, layout breaks at 200% text size, vague link text, audio/video without transcript, form group without legend, list content without list markup, live region not announcing, multi-point gesture without alternative, vague error messages, missing closed captions (1.2.2), missing audio description (1.2.5)
+- Total: 54 entries
+
+### Ko-fi accessibility letter (`docs/LETTER_TO_KOFI.md`)
+
+- Created with full documentation of all 6 accessibility issues patched in the widget and recommended fixes for each
+
+---
+
+## 2026-04-25 — Public corpus, DetailPanel refactor, Ko-fi a11y expansion
+
+### Public corpus (`src/data/corpus.json`)
+
+- 41-entry simplified corpus rewritten at middle school / ESL reading level; replaces the one-item placeholder
+- Merged 9 near-duplicate entries from the personal corpus into single consolidated entries: ATH-003+004, ATH-005+006, ATH-013+015, ATH-019+020+049, ATH-023+024+042, ATH-035+036, ATH-044 (absorbed into ATH-010)
+- All `desc` and `rem` text rewritten: shorter sentences, plain vocabulary, "you" voice, jargon explained inline
+- `src/services/dataService.js` — import switched from `mikeys-corpus.json` to `corpus.json`; personal corpus preserved at its path
+
+### DetailPanel refactor (`src/components/DetailPanel.jsx`)
+
+- **Priority badge** added to the title row (`detail-title-row`); uses the same `priority-badge` token colors as the result list
+- **SC links** — `ScBadge` pill component replaced with inline `ScLink` text links; format now reads `Fails: 1.1.1 Non-text Content (Level A)` and `Related: 4.1.2 Name, Role, Value (Level A)` (comma-separated when multiple)
+- **Refine hint** — `detail-label-hint` span replaced with `detail-refine-hint` paragraph below the label; non-AI text now fully describes both manual and AI-assisted workflows; AI text links to Settings via `detail-settings-link` button (inline text-link appearance)
+- **Rewrite button** — `detail-rewrite-btn` class removed; button now uses `btn-accent field-btn` to match Reset/Copy buttons; `↗` removed; Lucide `<Sparkles size={12}>` added before "Rewrite" text; `aria-label` added for screen readers
+- `PRIORITY_VARS` constant duplicated from `ResultList.jsx` into `DetailPanel.jsx` (avoids coupling or a shared file for one constant)
+- `useRouter` import added to support the Settings navigation link inside the AI hint
+
+### CSS changes (`src/index.css`)
+
+- `.sc-badge` and `.sc-badge--primary` removed (no longer used)
+- `.badge-group` removed (replaced by `.detail-title-row` + `.detail-sc`)
+- `.detail-rewrite-btn` removed (replaced by `field-btn`)
+- `.detail-label-hint` removed (replaced by `.detail-refine-hint`)
+- **New classes**: `.detail-title-row` (flex row for title + priority), `.detail-sc` / `.detail-sc-line` / `.detail-sc-label` / `.detail-sc-link` (text-link SC display), `.detail-refine-hint` (secondary help text), `.detail-settings-link` (inline button styled as underlined link)
+
+### BottomSheet close button and focus ring fix (`src/index.css`)
+
+- `.sheet-chrome` padding-top increased from `var(--space-3)` (12px) to `var(--space-4)` (16px) — matches `--radius-lg`, pushing the close button below the border-radius clip zone
+- `.sheet-close-btn` `right` increased from `var(--space-5)` (20px) to `var(--space-6)` (24px) — more breathing room from the panel edge
+
+### Ko-fi a11y patches expanded (`src/App.jsx`)
+
+- **Tooltip icons** — `<i rel="tooltip">` elements now receive `tabindex="0"`, `role="button"`, `aria-label="More information"`, and keyboard handlers; `focus` / `blur` dispatch `mouseenter` / `mouseleave` to activate the existing tooltip behavior
+- **Visible form labels** — any Ko-fi overlay `<input>` or `<textarea>` using placeholder text as its only label now gets a programmatically associated `<label>` element injected above it with `display: block`
+- **Contrast override** — a `<style id="kofi-a11y-styles">` tag is injected that forces `color: #1a1a1a` on text within the Ko-fi floating chat wrapper and overlay, ensuring minimum 4.5:1 contrast; the tag is removed on component unmount
+
+---
+
+## 2026-04-25 — BottomSheet, Drawer rename, full CSS migration, Ko-fi widget
+
+### BottomSheet component (`src/plugins/router/BottomSheet.jsx`)
+
+- New plugin component; slides up from bottom of viewport on all breakpoints (not mobile-only)
+- Sticky chrome row: centered drag-handle pill + Lucide `<X>` close button top-right
+- Full focus management: saves `document.activeElement` on open, restores on close; `useFocusTrap` restricts Tab; Escape handler; `inert` attribute blocks interaction when closed
+- Children only mount while `open` is true — `useFocusOnMount` in child components fires fresh each time
+- `App.jsx` — `DetailPanel` moved out of `searchView` and into `BottomSheet` at AppShell root level so it covers all viewports; selection cleared at event source (`onOpenSettings` handler) rather than in a `useEffect` to avoid cascading renders
+- `src/components/DetailPanel.jsx` — close row (`×` button) removed; BottomSheet chrome handles close; `onClose` dead prop removed from function signature and all call sites; `.detail-title` font-size bumped to `var(--fs-h1)`, weight to 700
+
+### OffCanvas renamed to Drawer
+
+- `src/plugins/router/OffCanvas.jsx` → `src/plugins/router/Drawer.jsx`; function renamed `OffCanvas` → `Drawer`; default label changed from `'Settings'` to `'Menu'`
+- `src/plugins/router/index.js` — export updated
+- `src/index.css` — CSS classes `.offcanvas-backdrop` / `.offcanvas-panel` → `.drawer-backdrop` / `.drawer-panel`; section comment updated
+- `src/App.jsx` — import and JSX updated; all inline comments updated
+
+### Full CSS migration (completed prior session, logged here)
+
+- All inline styles removed from `SearchBar.jsx`, `ResultList.jsx`, `SettingsPanel.jsx`, `DetailPanel.jsx`, `Announcer.jsx`
+- `onMouseEnter` / `onMouseLeave` removed everywhere; `:hover` in CSS handles all hover states
+- `onFocus` / `onBlur` removed; `:focus` / `:focus-visible` in CSS handles focus border-color changes
+- `Toggle` — JS `hovered` state eliminated; CSS `:has(.toggle__input:checked) .toggle__track` and `:hover:has(...)` handle all visual states
+- `RadioChip` — JS `focused` state eliminated; CSS `.radio-chip:has(:focus-visible)` handles focus ring; full-chip hit target (`input.radio-chip__input` with `position: absolute; inset: 0; opacity: 0`) merged from contributor PR
+- `SettingsPanel` — disabled label muting added: `.settings-provider-group:has(:disabled) .settings-field-label` uses `--text-faint` with reduced opacity; verified ≥ 4.5:1 contrast
+- `.stylelintrc.json` — `selector-class-pattern` added with BEM-compatible regex allowing `__` element and `--` modifier notation
+- `src/index.css` specificity fix — `input[type="text"]` (0,1,1) was overriding `.search-input` (0,1,0); fixed by qualifying as `input.search-input`, `input.search-input--has-value`, `input.search-input:focus`
+
+### Ko-fi widget and accessibility patches
+
+- `App.jsx` — `KofiWidget` component loads Ko-fi overlay script; `patchKofiA11y` function attaches a `MutationObserver` that adds `aria-label` to the trigger button, `role="dialog"` / `aria-modal` / `aria-label` to the popup overlay, `title` to Ko-fi iframes, and an Escape handler that clicks Ko-fi's close button and returns focus to the trigger
+- `src/index.css` — `padding-bottom: 5rem` added to `.page-footer` on `@media (width < 768px)` to clear the floating Ko-fi button
+
+### Header and footer restructure
+
+- GitHub "Fork on GitHub" link moved to header top-left; hides when settings is open (compact header mode) alongside the h1
+- Footer collapsed to a single centered line: "Made by **Mikey Ilagan** · @mikeyil.bsky.social"
+- Ko-fi widget replaced the Ko-fi footer link entirely
+
+### New token: overlay background
+
+- `src/tokens.css` — `--overlay-bg: rgb(0 0 0 / 0.45)` added; was hardcoded in both `.drawer-backdrop` and `.sheet-backdrop`; both now reference the token
+
+### SettingsPanel on desktop
+
+- `SettingsPanel` wrapped in `React.lazy()` + `Suspense`; settings bundle deferred until first open
+- Settings heading uses `var(--fs-h1)` to match page h1 and BottomSheet detail heading
+- Drawer panel covers full screen on mobile (`inset: 0; width: 100%`)
+- Header button spacing: gear icon and GitHub link closer to viewport edge; more visual space between buttons and h1
+
+### Plugin documentation
+
+- `src/plugins/router/README.md` — complete rewrite: `Drawer` and `BottomSheet` each have a full section with props table and required CSS class list; new Rule 6 documents Escape key handling and the intentional double-fire pattern; `inert` added to the modal-from-scratch checklist; event-source state rule added
+- `src/plugins/announce/README.md` — auto-clear behavior (messages cleared ~1 s after announcement) documented; pre-existing lint warnings resolved (table pipe spacing, code fence language tags, list blank lines)
+
+### Dead code and stale props
+
+- `src/components/DetailPanel.jsx` — `onClose` prop removed (dead after BottomSheet took over close responsibility)
+- `src/index.css` — `.detail-panel__close-row` and `.detail-panel__close-btn` CSS removed; `.detail-panel` border-top and margin-top removed (no longer rendered inline in page flow)
+- `src/App.jsx` — stale `useEffect` for clearing selection replaced with direct `setSelected(null)` call in the settings open handler
+
+### Maintenance pass (2026-04-25)
+
+- Build: clean, 82 kB total gzipped (up 2 kB from BottomSheet + Drawer); well within 200 kB target
+- Token audit: `--overlay-bg` token added; Ko-fi brand colors left hardcoded (not design system values); `#fff` toggle thumb intentional (must stay white in dark mode for contrast)
+- Dead code: `onClose` prop removed from `DetailPanel`; `detail-panel__close-*` CSS removed
+- `rel="noreferrer"` audit: all `target="_blank"` links pass
+- `innerHTML`: none found
+- `localStorage` inventory: 5 keys confirmed
+
+---
+
 ## 2026-04-24 — GitHub link, docs folder, disabled control styling, h1 focus fix
 
 ### Footer

@@ -49,23 +49,31 @@ npm run deploy
 src/
   data/
     mikeys-corpus.json  # Personal defect corpus (private — never ships in public build)
-    corpus.json         # Public corpus placeholder for Phase 3
+    corpus.json         # Public corpus — 54 plain-language entries; default data source
   services/
     dataService.js      # Data layer abstraction; migration seam for Supabase (Phase 2+)
     aiService.js        # AI provider abstraction; Anthropic implemented, others stubbed
   hooks/
     useDefectSearch.js  # Fuse.js search with platform filter
+  utils/
+    partySounds.js        # Web Audio API SFX: goose honk, cat sounds, fart, ahooga, wolf whistle, snare
+    partySongs.js         # Web Audio API music: looping Song 2 (Blur) approximation
   components/
     SearchBar.jsx
     ResultList.jsx
     DetailPanel.jsx
     SettingsPanel.jsx
+    Confetti.jsx          # Party mode canvas confetti animation (5 s, rAF loop)
+    PartySparkles.jsx     # Party mode click sparkles — burst of stars/circles from cursor
+    PartyMusicPlayer.jsx  # Party mode floating play/pause button; random position per route
   plugins/
     router/             # Hash-based SPA router + focus-management hooks (zero deps)
       Router.jsx        # <Router> provider and useRouter hook
       Route.jsx         # Conditional render by current route
       Link.jsx          # Hash navigation anchor
-      OffCanvas.jsx     # Slide-in panel with focus trap, Escape, inert
+      Drawer.jsx        # Slide-in panel with focus trap, Escape, inert
+      BottomSheet.jsx   # Slide-up sheet with focus trap, Escape, inert
+      Modal.jsx         # Centered dialog; stacks above Drawer/BottomSheet
       useFocusOnMount.js
       useReturnFocus.js
       useFocusTrap.js
@@ -82,7 +90,7 @@ src/
       README.md         # Usage guide and screen reader behavior notes
   App.jsx
   main.jsx
-  tokens.css            # Design tokens: colors, type scale, spacing, radius, dark mode
+  tokens.css            # Design tokens: colors, type scale, spacing, radius, dark mode, party mode
   typography.css        # Type scale utility classes (available for adoption)
   index.css             # Reset, base styles, layout, off-canvas, focus ring, sr-only
 
@@ -136,6 +144,14 @@ Open Settings (⚙) to select a provider and add your API key. Keys are stored i
 Currently implemented: **Anthropic (Claude)**  
 Stubbed (ready to wire up): OpenAI, Google Gemini, Microsoft Copilot
 
+## Themes
+
+Settings includes Light, Auto, Dark, and **Party Mode?** theme options. Party Mode generates a random complementary color palette on each activation, switches the font to Comic Sans, shows a 5-second confetti animation (skipped when `prefers-reduced-motion` is on), and changes the cursor to a magic wand. Screen readers receive a full description of the changes via `announce()`.
+
+## Language
+
+Settings includes a Language selector (defaults to your browser's language). Supported languages listed: English, Español, Français, Deutsch, Nederlands, 日本語, Filipino. Full UI translations require react-i18next integration (Phase 3).
+
 ---
 
 ## Plugins
@@ -144,7 +160,7 @@ Stubbed (ready to wire up): OpenAI, Google Gemini, Microsoft Copilot
 
 Self-contained hash-based SPA router with full WCAG 2.2 focus-management support. Zero dependencies beyond React. Reusable across projects.
 
-Key exports: `Router`, `useRouter`, `Route`, `Link`, `OffCanvas`, `useFocusOnMount`, `useReturnFocus`, `useFocusTrap`, `useMediaQuery`, `usePageTitle`, `usePaginationFocus`.
+Key exports: `Router`, `useRouter`, `Route`, `Link`, `Drawer`, `BottomSheet`, `Modal`, `useFocusOnMount`, `useReturnFocus`, `useFocusTrap`, `useMediaQuery`, `usePageTitle`, `usePaginationFocus`.
 
 See [`src/plugins/router/README.md`](src/plugins/router/README.md) for focus-management rules and usage patterns.
 

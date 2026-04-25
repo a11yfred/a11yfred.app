@@ -8,6 +8,10 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 | Date | Passed | Failed | Deferred | N/A | Notes |
 | ---- | ------ | ------ | -------- | --- | ----- |
+| 2026-04-25 | 14 | 0 | 3 | 4 | Party mode sounds (SFX), sparkles, music player, radial gradient fix, banner animation, chip stars, cursor size, assertive announce hold; N/A: font self-hosting, bundle size, Umami, favicon |
+| 2026-04-25 | 14 | 0 | 3 | 4 | Party mode, confetti, copy guard, LinkedIn footer, search label/hint/icon, rewrite btn height; N/A: font self-hosting, bundle size, Umami, favicon |
+| 2026-04-25 | 15 | 0 | 4 | 4 | Settings↔panel navigation; reset confirmation modal; BottomSheet chrome fix; SC bullets; liveSearch rename; language selector; corpus expanded to 54; Ko-fi letter; N/A: font self-hosting, bundle size, Umami, favicon |
+| 2026-04-25 | 12 | 0 | 4 | 4 | Public corpus live; DetailPanel SC/priority/refine refactored; Modal component added; Ko-fi tooltip+label+contrast patches; close button spacing fixed; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-24 | 14 | 0 | 2 | — | typeahead/platform persist bug fixed; 2 esbuild vulns deferred (Vite 8 breaking change) |
 
 ---
@@ -50,8 +54,8 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 - [ ] **API key handling** — keys in `localStorage` only; never logged; never in any fetch body except the provider's own endpoint
 - [ ] **`rel` audit** — all `target="_blank"` links have `rel="noreferrer"`
 - [ ] **No `innerHTML`** — search codebase; all DOM content goes through React JSX
-- [ ] **`localStorage` inventory** — exactly five keys: `theme`, `typeahead`, `platform`, `ai_provider`, `apikey_<provider>`
-- [ ] **Privacy disclosure** — SettingsPanel disclosure lists all five keys accurately
+- [ ] **`localStorage` inventory** — exactly six keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `apikey_<provider>`
+- [ ] **Privacy disclosure** — SettingsPanel disclosure lists all six keys accurately
 - [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget (`storage.ko-fi.com`) is a known exception — tip functionality only, not analytics
 - [ ] **Dependency audit** — run `npm audit`; resolve high/critical before release
 - [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates

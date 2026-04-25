@@ -4,6 +4,195 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 25, 2026 — Party mode goes wild: sounds, sparkles, music, and more
+
+### Sounds when you click things
+
+In party mode, clicking buttons, toggles, and dropdowns now plays a random sound — a goose honk, cat hiss, cat meow, fart noise, descending ahooga car horn, wolf whistle, or snare drum. The fart has a 1.5× higher chance of appearing. Each fart is slightly different in length.
+
+### Squeaky shoes while you type
+
+Typing in the search field in party mode plays a squeaky shoe sound every third keystroke. The pitch is randomized slightly each time so it doesn't feel robotic.
+
+### Click sparkles
+
+Clicking anywhere in party mode shoots a burst of 14 colorful stars and circles from your cursor. They fly outward, fall, and fade. Skipped entirely if you have Reduce Motion turned on in your OS.
+
+### Floating music player
+
+A small round play button appears randomly on the page. Click it to play a synthesized loop approximating the guitar-and-drums riff from Blur's "Song 2" — it loops continuously until you click pause. The button wanders to a new random position whenever you navigate to a different part of the app.
+
+### Party banner settles down
+
+The bouncing "~*~ PARTY MODE ENABLED ~*~" banner now stops after 5 seconds. Hover over it to restart the bounce for another 5 seconds.
+
+### Stars instead of circles on chips
+
+The small dot inside each selection chip is now a ☆ or ★ star in party mode instead of a circle.
+
+### Bigger magic wand cursor
+
+The custom magic wand cursor is now twice the size (64×64 instead of 32×32).
+
+### Gradient background fixed
+
+The party mode background was tiling visually in some cases. It now uses a fixed radial gradient covering the full viewport, centered at a random position each time — no tiling.
+
+### Screen reader announcement improved
+
+The party mode activation announcement is already sent as an assertive alert, which interrupts any current speech. The text now stays in the DOM long enough for longer messages to finish reading before being cleared.
+
+---
+
+## April 25, 2026 — Party mode, copy guard, search and button fixes, LinkedIn
+
+### Party Mode — a fourth theme option in Settings
+
+Settings now has a "Party Mode?" chip alongside Light, Auto, and Dark. Selecting it changes everything: the font switches to Comic Sans, the entire color palette shifts to a random complementary set of bright colors (different every time you activate it), colorful confetti falls from the top of the screen in an assortment of shapes and colors for five seconds, and the mouse cursor turns into a magic wand.
+
+If you have "Reduce Motion" turned on in your operating system, the confetti is skipped and you will see a note at the bottom of Settings confirming that the app saw your setting and respected it.
+
+Screen readers hear a description of everything that changed when Party Mode turns on.
+
+### Copying an empty field now says so
+
+If you click Copy on a description or remediation field that has been cleared out, the app now shows a small popup that reads "Nothing to copy" instead of silently doing nothing.
+
+### Search field label is now black
+
+The "Describe the defect or observation" label above the search field was a lighter grey. It is now the same dark color as all other field labels on the page.
+
+### Search hint: "AI assist is active"
+
+The hint text below the search field now says "AI assist is active" instead of "AI assist is on."
+
+### Clear search button matches Reset
+
+The small button that clears your search text now shows ↺ (the same reset symbol used in the description and remediation fields) instead of an ✕. The behavior is the same — it clears the field and returns focus.
+
+### Rewrite button grows to match the input
+
+The Rewrite button that appears next to the refinement note field was not always the same height as the input it sits beside. It now stretches to match the input height regardless of your font size settings.
+
+### Footer: LinkedIn
+
+The Bluesky link in the footer has been replaced with a link to LinkedIn (linkedin.com/in/mikeyil).
+
+---
+
+## April 25, 2026 — Panel improvements, settings navigation, translations groundwork, more defects
+
+### Defect panel close button is fixed
+
+The × close button on the defect panel was visually clipped — half of it was hidden behind the rounded corner of the sheet. It now sits clearly inside the panel in the top-right corner. On mobile, there is also a full-width "Close" button at the bottom of the sheet so you do not have to scroll back up.
+
+### Opening Settings from inside a defect panel now preserves your work
+
+If you tap the settings gear while you have a defect open (and you have made edits to the description or remediation), your edits are kept. When you close Settings, the defect panel comes right back with everything you typed still there.
+
+### Reset now asks before throwing away big changes
+
+If you have made significant changes to a description or remediation field and then click Reset, the app now asks "Are you sure?" before wiping your edits. If you have barely changed the text, it resets immediately without asking — same as before.
+
+### WCAG success criteria now appear as a bulleted list
+
+The "Fails:" and "Related:" lines in the defect detail panel are now a proper bulleted list, making them easier to scan at a glance.
+
+### "Typeahead" is now called "Live search"
+
+The toggle in Settings was labeled "Typeahead", which is a technical term that most people do not know. It is now called "Live search", which describes what it does — results appear as you type.
+
+### Search hint tells you what mode you are in
+
+The hint text below the search field now tells you whether you are searching web or native results, and whether AI assist is on. You no longer have to open Settings to remember what you set.
+
+### Language selector added to Settings
+
+Settings now has a Language option under Appearance. It defaults to your browser's language. You can change it to English, Español, Français, Deutsch, Nederlands, 日本語, or Filipino. Full translations of the interface are still in progress — this sets up the selector so it is ready when translations arrive.
+
+### Appearance settings moved to the top of Settings
+
+The Appearance section (theme and language) now appears before the Search section. This matches the typical priority order users expect when opening settings.
+
+### Settings panel has a visual divider above the Save button
+
+The Save button now has a separator line above it, making it easier to spot at the bottom of the settings form.
+
+### "Made by" → "A project by" in the footer
+
+Small wording update to better reflect that the tool is open source and accepts contributions.
+
+### 13 new accessibility defect entries
+
+The public defect library grew from 41 to 54 entries. New topics include: missing audio descriptions, missing closed captions, vague link text, figures without descriptions, conflicting form labels, unlabeled dropdowns, layout breaking at larger text sizes, form groups without labels, lists not using list markup, live regions not announcing updates, multi-touch gestures without alternatives, and vague error messages.
+
+---
+
+## April 25, 2026 — Simplified public defect library, cleaner detail panel, Ko-fi fixes
+
+### Simplified public defect library
+
+A fresh set of 41 defect entries replaces the placeholder in the public data file. These are written at a plain reading level — shorter sentences, common words, no assumed knowledge of WCAG jargon. The goal is for any developer or QA engineer to read a description and immediately understand the problem and the fix, even if they've never done accessibility work before.
+
+Near-duplicate entries from the internal library were consolidated into single entries. For example, "No Visible Focus" and "Poor Focus Indicator" are now one entry. "Form Field Missing Label," "No Label Association," and "Unlabeled Form Inputs" are now one entry. The result is a tighter, less repetitive list.
+
+The original internal corpus is unchanged and still loads in the development environment.
+
+### Defect detail panel — cleaner layout and better info
+
+A few things changed in the defect detail panel (the sheet that slides up when you pick a result):
+
+- **Priority badge** now appears next to the defect title. It was already shown on the result card but missing from the detail view.
+- **WCAG success criteria** are now plain text links instead of pill-shaped badges. Each entry now reads as "Fails: 1.1.1 Non-text Content (Level A)" and "Related: 4.1.2 Name, Role, Value (Level A)" — comma-separated when there are multiple related criteria.
+- **Refine field** has a proper explanatory sentence below the label instead of a short inline hint. The non-AI version tells you to edit directly or jot a note. The AI version describes what AI will do and links straight to Settings so you can change your model.
+- **Rewrite button** is smaller and less visually dominant, matching the Reset and Copy buttons. The arrow icon is gone; a small sparkle icon is in its place to indicate AI involvement.
+
+### Close button spacing and focus ring fix
+
+The × close button on the defect panel was sitting too close to the right edge of the sheet. It now has a bit more breathing room, and the keyboard focus ring around it is no longer clipped by the panel's rounded corners.
+
+### Ko-fi widget — more accessibility patches
+
+Three more fixes were added on top of the existing Ko-fi accessibility patches:
+
+- Tooltip trigger icons inside the widget are now keyboard-focusable. Tabbing to them and pressing Enter or Space activates the tooltip, the same as hovering would.
+- Inputs inside the Ko-fi panel that used only placeholder text as labels now have a real visible label injected above them.
+- Text inside the Ko-fi widget now has a forced minimum contrast override applied so it's readable regardless of whatever color scheme Ko-fi happens to use.
+
+---
+
+## April 25, 2026 — Defect detail as a bottom sheet, Ko-fi widget, naming cleanup
+
+### Defect detail now slides up from the bottom
+
+Clicking a result used to open the detail inline below the search results. It now slides up from the bottom of the screen as a bottom sheet — the same pattern you'd see in a maps or settings app. This works the same way on mobile and desktop.
+
+The detail stays up while you read it, and you can close it with the × button, the Escape key, or by clicking the backdrop behind it. When it closes, keyboard focus returns to the result you clicked.
+
+This also fixes an issue where opening Settings from within the detail would cause both to be open at the same time. Settings now dismisses the detail when it opens.
+
+### Ko-fi support widget and accessibility fixes
+
+A Ko-fi "Support me" floating button has been added to the app. When clicked it opens Ko-fi's donation overlay.
+
+Ko-fi's widget has some accessibility gaps out of the box — the trigger button has no accessible label, the popup has no dialog semantics, and the iframe inside has no title. The app now silently patches all of those when the widget loads, without modifying Ko-fi's own code. Keyboard and screen reader users can use the widget the same way as mouse users.
+
+On mobile the footer text was being hidden behind the floating Ko-fi button. Extra padding has been added to keep the footer clear of it.
+
+### Internal rename: "OffCanvas" is now "Drawer"
+
+The slide-in settings panel was internally called "OffCanvas" — a legacy implementation term. It's been renamed to "Drawer" throughout, which is the standard name used across Material Design, Ant Design, Chakra, and Radix. This is a code-only change; nothing on screen looks different.
+
+### Token cleanup
+
+The dark backdrop that appears behind the settings drawer and the defect bottom sheet was a hardcoded color value duplicated in two places. It's now a single named token (`--overlay-bg`) referenced in both. If we ever want to adjust the overlay tint, it's one change.
+
+### Plugin and focus management documentation updated
+
+The router plugin README has been fully rewritten to cover the Drawer and BottomSheet components and their props, the required CSS class names for each, and a complete reference for the focus management rules: when to trap focus, when to return it to the trigger, how Escape key handling works across layered panels, and why children are only mounted while a panel is open. Anyone dropping these components into a new project should have everything they need from the README alone.
+
+---
+
 ## April 24, 2026 — Footer link, docs folder, and settings fixes
 
 ### GitHub link in the footer now works
