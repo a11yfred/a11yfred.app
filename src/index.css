@@ -428,6 +428,12 @@ select:focus-visible {
   text-align: center;
 }
 
+/* ─── Party mode overrides ───────────────────────────────── */
+
+[data-theme="party"] :focus-visible {
+  outline-style: dotted;
+}
+
 /* ─── Confetti canvas (party mode) ───────────────────────── */
 
 .confetti-canvas {
