@@ -4,22 +4,23 @@ import { getDefects } from '../services/dataService.js'
 
 const FUSE_OPTIONS = {
   keys: [
-    { name: 'title',    weight: 0.45 },
-    { name: 'keywords', weight: 0.35 },
-    { name: 'desc',     weight: 0.15 },
-    { name: 'rem',      weight: 0.05 },
+    { name: 'title',     weight: 0.32 },  // translated title
+    { name: '_title_en', weight: 0.28 },  // English title — cross-language search
+    { name: 'keywords',  weight: 0.30 },  // always English
+    { name: 'desc',      weight: 0.07 },
+    { name: 'rem',       weight: 0.03 },
   ],
-  threshold: 0.4,        // 0 = exact, 1 = match anything
+  threshold: 0.4,
   minMatchCharLength: 2,
   includeScore: true,
 }
 
-export default function useDefectSearch(query, platform, searchKey = 0) {
+export default function useDefectSearch(query, platform, locale = 'en', searchKey = 0) {
   const [allDefects, setAllDefects] = useState([])
 
   useEffect(() => {
-    getDefects().then(setAllDefects)
-  }, [])
+    getDefects(locale).then(setAllDefects)
+  }, [locale])
 
   const platformFiltered = useMemo(() => {
     if (!platform || platform === 'web') {
@@ -39,7 +40,7 @@ export default function useDefectSearch(query, platform, searchKey = 0) {
       .search(query.trim())
       .slice(0, 8)
       .map(r => r.item)
-  }, [fuse, query, searchKey])
+  }, [fuse, query, searchKey]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return results
 }

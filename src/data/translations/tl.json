@@ -1,0 +1,272 @@
+{
+  "ATH-001": {
+    "title": "Walang Accessible na Pangalan ang Button o Link",
+    "desc": "Ang isang button o link ay walang accessible na pangalan. Inihahayag ito ng mga screen reader bilang \"button\" o \"link\" nang walang konteksto, kaya hindi malaman ng mga gumagamit kung ano ang ginagawa nito.",
+    "rem": "Magdagdag ng nakikitang label o aria-label na katangian na naglalarawan ng ginagawa ng kontrol. Halimbawa, ang isang close button sa loob ng modal ay dapat sabihing \"Isara\" o \"Isara ang dialog\", hindi lang magpakita ng X na icon."
+  },
+  "ATH-002": {
+    "title": "Hindi Inililipat ang Focus Kapag Nagbubukas ng Bagong Nilalaman",
+    "desc": "Kapag nagbukas ang isang modal, dialog, o drawer, nananatili ang keyboard focus sa dating posisyon nito. Hindi madaling maaabot ng mga gumagamit ng screen reader at keyboard ang bagong nilalaman.",
+    "rem": "Ilipat ang focus sa unang elemento sa loob ng bagong nilalaman kapag ito ay nagbukas. Gamitin ang tabindex=\"-1\" sa isang heading kung ang unang focusable na elemento ay lumitaw sa ibang pagkakataon. I-trap ang focus sa loob habang ito ay bukas, at ibalik ang focus sa trigger button kapag ito ay nagsara."
+  },
+  "ATH-003": {
+    "title": "Wala o Hindi Nakikita ang Focus Indicator",
+    "desc": "Hindi makikita ng mga gumagamit ng keyboard kung aling elemento ang nakatutok. Maaaring inalis ang default na focus outline, o masyadong mahinang kulay ang custom focus style para malinaw na makita.",
+    "rem": "Tiyaking nagpapakita ng malinaw na focus outline ang bawat elemento na maaaring i-focus ng keyboard. Huwag itakda ang outline: none nang hindi nagbibigay ng custom focus style na nakikita. Ang focus indicator ay dapat may contrast ratio na hindi bababa sa 3:1 laban sa mga kalapit na kulay."
+  },
+  "ATH-005": {
+    "title": "Hindi Accessible sa Keyboard ang Elemento",
+    "desc": "Ang kontrol ay magagamit lamang sa pamamagitan ng mouse. Hindi maaari ng mga gumagamit ng keyboard na i-focus o i-activate ito. Ang mga custom na elemento na ginawa gamit ang div o span ay walang role din, kaya hindi alam ng mga screen reader kung ano ang kontrol.",
+    "rem": "Gumamit ng native na HTML na elemento tulad ng button o a kung kailan man posible — accessible ang mga ito sa keyboard at may mga built-in na role. Kung kailangang gumamit ng custom na elemento, magdagdag ng tabindex=\"0\", angkop na ARIA role, at mga keyboard event handler para sa Enter at Space."
+  },
+  "ATH-007": {
+    "title": "Masyadong Mababang Contrast ng Teksto",
+    "desc": "Ang teksto ay walang sapat na contrast laban sa background nito. Maaaring hindi mabasahan ito ng mga taong may mababang paningin o color blindness.",
+    "rem": "Baguhin ang kulay ng teksto, background na kulay, o pareho upang ang contrast ratio ay hindi bababa sa 4.5:1. Gumamit ng color contrast checker tool para ma-verify."
+  },
+  "ATH-008": {
+    "title": "Masyadong Mababang Contrast ng Hindi Tekstwal na Elemento",
+    "desc": "Ang mga icon, hangganan ng form input, o gilid ng UI component ay walang sapat na contrast laban sa mga kalapit na kulay. Maaaring hindi makita o makilala ang mga ito ng mga taong may mababang paningin.",
+    "rem": "I-update ang kulay ng elemento upang magkaroon ng contrast ratio na hindi bababa sa 3:1 laban sa mga kulay na katabi nito."
+  },
+  "ATH-009": {
+    "title": "Kulang, Mali, o Hindi Kailangan ang Alt Text",
+    "desc": "Ang isang larawan ay walang alt text, may alt text na hindi naglalarawan ng layunin ng larawan, o may alt text na inuulit ang malapit na nakikitang teksto.",
+    "rem": "Tukuyin kung ang larawan ay nagdadala ng kahulugan o puro dekorasyon lang. Ang mga makabuluhang larawan ay nangangailangan ng maikling, naglalarawang alt text na nagpapaliwanag ng layunin. Ang mga dekoratibong larawan ay dapat gumamit ng alt=\"\" upang laktawan ng mga screen reader."
+  },
+  "ATH-010": {
+    "title": "Inilalarawan ng Label ng Kontrol ang Hitsura, Hindi ang Layunin",
+    "desc": "Ang accessible na pangalan ng kontrol ay naglalarawan ng hitsura nito sa halip na kung ano ang ginagawa nito. Halimbawa, ang isang button na may label na \"magnifying glass icon\" ay dapat sabihing \"Hanapin\" sa halip.",
+    "rem": "Sumulat ng mga label na naglalarawan ng aksyon o destinasyon ng kontrol, hindi ang visual na hitsura nito. Baguhin ang mga label tulad ng \"arrow icon\" sa \"Susunod na pahina\" o \"Search icon\" sa \"Hanapin\"."
+  },
+  "ATH-011": {
+    "title": "Walang Skip Link",
+    "desc": "Walang skip link sa tuktok ng pahina. Ang mga gumagamit ng keyboard ay kailangang mag-tab sa lahat ng navigation link sa bawat pahina bago maabot ang pangunahing nilalaman.",
+    "rem": "Magdagdag ng \"Skip to main content\" na link bilang unang focusable na elemento sa pahina. Gawing nakikita ito kapag naka-focus, at ilipat ang focus sa simula ng pangunahing nilalaman."
+  },
+  "ATH-012": {
+    "title": "Hindi Nakikita ang Skip Link Kapag May Focus",
+    "desc": "Mayroon skip link ngunit nakatago ito mula sa mga sighted keyboard user. Kapag nag-tab ang isang keyboard user dito, walang lumabas sa screen.",
+    "rem": "Ipakita ang skip link sa screen kapag natanggap nito ang keyboard focus. Maaari itong itago sa labas ng screen bilang default, ngunit dapat itong maging visible kapag naka-focus."
+  },
+  "ATH-013": {
+    "title": "Mali ang Istraktura ng Heading",
+    "desc": "Ang teksto na mukhang heading ay hindi minarkahan bilang isa, o ang mga antas ng heading ay lumaktaw ng mga numero (halimbawa, tumalon mula sa h1 patungong h3). Ang mga gumagamit ng screen reader ay nag-navigate sa mga pahina ayon sa mga heading, kaya ang sirang istraktura ay nagpapahirap sa paghanap ng nilalaman.",
+    "rem": "Gumamit ng mga elemento na h1 hanggang h6 para sa lahat ng pamagat ng seksyon. Huwag lumaktaw ng antas — ang bawat subseksyon ay dapat gumamit ng susunod na antas ng heading. Huwag gumamit ng mga heading element para gawing mas malaki o mas matapang ang teksto lamang."
+  },
+  "ATH-014": {
+    "title": "Walang H1 sa Pahina",
+    "desc": "Ang pahina ay walang h1 heading. Ang h1 ang pangunahing pamagat ng pahina at tumutulong sa mga gumagamit ng screen reader na maunawaan kung nasaan sila.",
+    "rem": "Magdagdag ng iisang h1 elemento sa bawat pahina na naglalarawan ng pangunahing paksa ng pahina. Lahat ng iba pang heading ay dapat sundan sa pagkakasunud-sunod sa ibaba nito."
+  },
+  "ATH-016": {
+    "title": "Hindi Ipinaliliwanag ang Asterisk para sa mga Kinakailangang Field",
+    "desc": "Gumagamit ang form ng mga asterisk (*) para markahan ang mga kinakailangang field, ngunit hindi kailanman ipinaliliwanag ang kahulugan ng asterisk. Maaaring hindi malaman ng ilang gumagamit kung ano ang ibig sabihin nito.",
+    "rem": "Magdagdag ng tala sa tuktok ng form na nagpapaliwanag ng asterisk, tulad ng \"Ang mga field na may * ay kinakailangan.\" Markahan din ang mga kinakailangang field sa pamamagitan ng required o aria-required na katangian."
+  },
+  "ATH-017": {
+    "title": "Hindi Naka-link ang mga Error ng Form sa Kani-kanilang Field",
+    "desc": "Kapag nagpapakita ang form ng mensahe ng error, hindi ito inihahayag ng mga screen reader dahil hindi ito programmatically na naka-link sa input field.",
+    "rem": "Gamitin ang aria-describedby para ikonekta ang mensahe ng error sa input field nito. Kapag lumabas ang mga error, ilipat ang keyboard focus sa unang field na may error upang malaman ng lahat ng gumagamit kung saan dapat ayusin ang problema."
+  },
+  "ATH-018": {
+    "title": "Walang Status na Mensahe Pagkatapos ng Aksyon",
+    "desc": "Pagkatapos ng aksyon ng gumagamit tulad ng pag-submit ng form o pag-load ng mga resulta, walang inihahayag sa mga gumagamit ng screen reader. Hindi nila alam kung nagtagumpay ang aksyon.",
+    "rem": "Gumamit ng role=\"status\" o aria-live=\"polite\" sa isang container na tumatanggap ng mensahe ng resulta. Nagbibigay-daan ito sa mga screen reader na ihayag ang mga update nang hindi inililipat ang focus. Gumamit lamang ng aria-live=\"assertive\" o role=\"alert\" para sa mahahalagang mensahe."
+  },
+  "ATH-019": {
+    "title": "Mali ang Paggamit ng ARIA",
+    "desc": "Ang mga katangian ng ARIA ay hindi tamang inilapat. Mga karaniwang problema: ang aria-hidden ay inilalagay sa isang focusable na elemento, ang role=\"alert\" ay ginagamit para sa mga pangkaraniwang mensahe, o ang mga ARIA role ay sumasalungat sa native na gawi ng elemento.",
+    "rem": "Sundin nang maingat ang ARIA specification. Huwag kailanman ilagay ang aria-hidden sa isang elemento na focusable o naglalaman ng mga focusable na anak. Gamitin ang role=\"alert\" para lamang sa mga apurahan at time-sensitive na mensahe — gamitin ang aria-live=\"polite\" para sa lahat ng iba pa."
+  },
+  "ATH-021": {
+    "title": "Kulay Lang ang Tanging Visual na Tagapagpahiwatig",
+    "desc": "Ang impormasyon ay ipinapaabot gamit ang kulay lamang. Halimbawa, ang isang kinakailangang field ay naka-highlight sa pula ngunit walang ibang tagapagpahiwatig. Ang mga taong may color blindness o hindi makakilala ng mga kulay ay maaaring mapalamagad ng impormasyong ito.",
+    "rem": "Laging ipares ang kulay sa pangalawang visual na tagapagpahiwatig — tulad ng underline, matapang na teksto, icon, o text label. Tiyaking ang anumang pagbabago sa estado ay ipinapaabot din sa assistive technology."
+  },
+  "ATH-022": {
+    "title": "Pinigilan ang Zoom o Pinch-to-Zoom",
+    "desc": "Pinipigilan ng pahina ang mga gumagamit na mag-zoom gamit ang browser o pinch gesture. Umaasa ang mga taong may mababang paningin sa pag-zoom para mabasahan ang nilalaman.",
+    "rem": "Alisin ang user-scalable=\"no\" mula sa viewport meta tag. Huwag itakda ang maximum-scale na mas mababa sa 2. Hayaan ang mga gumagamit na mag-zoom nang malaya."
+  },
+  "ATH-023": {
+    "title": "Walang Label ang Form Field",
+    "desc": "Ang isang form field ay walang nakikitang label, o ang label nito ay hindi programmatically na naka-link sa field. Ang placeholder text ay nawawala kapag nagsimulang mag-type ang gumagamit at hindi ito kapalit ng maayos na label.",
+    "rem": "Magbigay sa bawat form field ng nakikitang label na elemento na naglalarawan ng dapat ipasok. I-link ang label sa input gamit ang magkatugmang for at id na katangian. Iwasang gumamit ng placeholder text bilang tanging label."
+  },
+  "ATH-025": {
+    "title": "Nababasa pa rin ng Screen Reader ang Nakatagong Nilalaman",
+    "desc": "Ang visual na nakatagong nilalaman (tulad ng saradong dropdown o naka-collapse na panel) ay nababasa pa rin ng mga screen reader. Maaaring marinig ng mga gumagamit ang nilalaman na tila walang konteksto.",
+    "rem": "Gamitin ang display: none o visibility: hidden para itago ang nilalaman mula sa parehong visual at screen reader na mga gumagamit. O gamitin ang aria-hidden=\"true\" sa nilalaman na dapat maging hindi nakikita sa mga screen reader. Tiyaking ang napiling paraan ay tunay na nagtatago ng nilalaman mula sa assistive technology."
+  },
+  "ATH-026": {
+    "title": "Masyadong Siksik ang Text Spacing",
+    "desc": "Hindi sinusuportahan ng pahina ang minimum na text spacing. Kapag nag-apply ang mga gumagamit ng custom na spacing sa pamamagitan ng mga setting ng browser, nasisira o nagiging hindi mabasa ang nilalaman.",
+    "rem": "Mag-disenyo at mag-code upang gumana pa rin ang pahina gamit ang mga halagang ito: line height na hindi bababa sa 1.5× ng font size, paragraph spacing na hindi bababa sa 2× ng font size, letter spacing na hindi bababa sa 0.12× ng font size, word spacing na hindi bababa sa 0.16× ng font size."
+  },
+  "ATH-027": {
+    "title": "Hindi Tumutugma ang Accessible na Pangalan sa Nakikitang Label",
+    "desc": "Ang accessible na pangalan ng kontrol ay naiiba sa nakikitang text label nito. Binibigkas ng mga gumagamit ng voice input ang nakikitang label para i-activate ang kontrol, ngunit hindi ito tumutugma sa talagang pangalan ng kontrol.",
+    "rem": "Tiyaking nagsisimula ang accessible na pangalan sa o naglalaman ng nakikitang label text. Alisin ang mga aria-label na halaga na nagpapalit ng nakikitang teksto — hayaan ang nakikitang teksto na maging accessible na pangalan."
+  },
+  "ATH-028": {
+    "title": "Pattern ng ARIA Tabs",
+    "desc": "Gumagamit ang component ng ARIA tabs, na nangangailangan ng arrow key navigation na hindi inaasahan ng maraming gumagamit. Ang mga ARIA tab pattern ay madaling masira at mahirap ipatupad nang tama.",
+    "rem": "Isaalang-alang ang pagpapalit ng ARIA tabs ng mas simpleng pattern. Ang mga accordion, link, o istraktura ng button-panel ay kadalasang nagbibigay ng parehong nilalaman nang walang karagdagang kumplikasyon."
+  },
+  "ATH-029": {
+    "title": "Naka-include sa Tab Order ang Hindi Interactive na Elemento",
+    "desc": "Ang isang hindi interactive na elemento (tulad ng div, talata, o progress bar) ay nasa tab order. Maaaring mag-tab ang mga gumagamit ng keyboard dito ngunit hindi magagawa ang anumang bagay, na nakakagulo.",
+    "rem": "Alisin ang tabindex na katangian mula sa mga hindi interactive na elemento. Ang mga native interactive na elemento o mga elementong nangangailangan ng programmatic na focus (tulad ng mga heading ng dialog) lamang ang dapat tumatanggap ng focus."
+  },
+  "ATH-030": {
+    "title": "Paulit-ulit na mga Link sa Parehong Destinasyon",
+    "desc": "Ang isang content block ay may maraming hiwalay na link o button na pumupunta sa parehong lugar — halimbawa, isang card na may naka-link na larawan, naka-link na pamagat, at \"Magbasa pa\" na button. Kailangang mag-tab ang mga gumagamit ng keyboard sa lahat ng ito, at maririnig ng mga gumagamit ng screen reader ang paulit-ulit na mga anunsyo.",
+    "rem": "Pagsamahin ang mga ito sa isang link. Markahan ang larawan bilang dekoratibo (alt=\"\") at gamitin ang teksto bilang label ng link. O balutin ang buong card sa isang link na elemento."
+  },
+  "ATH-031": {
+    "title": "Hindi Minarkahan sa HTML ang Pagbabago ng Wika",
+    "desc": "Ang pahina ay naglalaman ng teksto sa mahigit isang wika, ngunit ang pagbabago ng wika ay hindi minarkahan sa HTML. Maaaring basahin ng mga screen reader ang mga dayuhang salita gamit ang maling pagbigkas.",
+    "rem": "Magdagdag ng lang na katangian sa elemento na nagbabalot ng teksto sa ibang wika. Halimbawa: <span lang=\"es\">Hola</span>."
+  },
+  "ATH-032": {
+    "title": "Hindi Itinakda ang Wika ng Pahina",
+    "desc": "Ang html na elemento ay walang lang na katangian. Maaaring gumamit ang mga screen reader ng maling language profile para basahin ang pahina, na nagdudulot ng maling pagbigkas.",
+    "rem": "Magdagdag ng lang na katangian sa html na elemento na tumutugma sa pangunahing wika ng pahina. Halimbawa: <html lang=\"tl\">."
+  },
+  "ATH-033": {
+    "title": "Walang Alternatibo sa Keyboard para sa Drag Action",
+    "desc": "Nangangailangan ang isang feature na i-drag ng gumagamit ang isang elemento gamit ang pointer. Walang keyboard-accessible na paraan para gawin ang parehong aksyon.",
+    "rem": "Magbigay ng mga keyboard-accessible na kontrol (tulad ng mga button) na gumaganap ng parehong aksyon tulad ng pag-drag. Dapat makapag-complete ang mga gumagamit ng keyboard ng bawat gawain nang walang mouse."
+  },
+  "ATH-034": {
+    "title": "Hindi Maaaring I-pause ang Paulit-ulit na Animation",
+    "desc": "Awtomatikong nagsisimula at nag-uulit ang isang animation o gumagalaw na elemento nang walang tigil. Walang paraan para sa gumagamit na i-pause, ihinto, o itago ito. Maaari itong makagambala o makapinsala sa mga taong may ilang kondisyon.",
+    "rem": "Magbigay ng nakikita at keyboard-accessible na button para i-pause o ihinto ang animation. O itakda ito na awtomatikong tumitigil sa loob ng 5 segundo. Kung ang animation ay nagpapaabot ng live data (tulad ng news ticker), kinakailangan ang pause button."
+  },
+  "ATH-035": {
+    "title": "Nawawala o Mali ang mga Page Landmark",
+    "desc": "Ang nilalaman ng pahina ay hindi organisado sa loob ng mga HTML landmark na elemento. Hindi makakalipat ang mga gumagamit ng screen reader sa pagitan ng mga seksyon ng pahina — kailangan nilang basahin ang lahat mula sa simula.",
+    "rem": "Balutin ang lahat ng nilalaman ng pahina sa mga semantikong HTML na elemento: header, nav, main, aside, at footer. Bawat pahina ay nangangailangan ng hindi bababa sa isang main na elemento. Gumamit ng ARIA landmark role lamang kapag ang tamang HTML na elemento ay hindi available."
+  },
+  "ATH-037": {
+    "title": "Hindi Nagbabago ang Pamagat ng Pahina sa Pagitan ng mga Pahina",
+    "desc": "Ang pamagat ng pahina (na ipinapakita sa browser tab) ay nananatiling pareho sa lahat ng pahina. Hindi matukoy ng mga gumagamit kung saang pahina sila batay sa tab lamang.",
+    "rem": "I-update ang document title sa bawat pahina para ilarawan ang nilalaman ng pahina. Halimbawa: \"Cart — Aking Tindahan\" o \"Mga Setting — Pangalan ng App\". Sa isang single-page app, i-update ang title sa bawat pagbabago ng route."
+  },
+  "ATH-038": {
+    "title": "Keyboard Trap",
+    "desc": "Naiipit ang keyboard focus sa loob ng isang component. Kapag nag-tab ang isang gumagamit ng keyboard dito, walang paraan palabas gamit ang keyboard lamang.",
+    "rem": "Tiyaking palaging makakalab ang mga gumagamit ng keyboard mula sa anumang component. Kung ang isang modal o dialog ay sadyang nag-ti-trap ng focus, magdagdag ng Escape key handler at nakikitang close button upang makalabas ang mga gumagamit."
+  },
+  "ATH-039": {
+    "title": "Walang Text Alternative ang Chart o Graph",
+    "desc": "Ang mga chart at graph ay nagpapaabot ng data nang biswal ngunit walang text alternative. Hindi maabot ng mga gumagamit ng screen reader ang impormasyong naglalaman ang chart.",
+    "rem": "Magbigay ng text summary na naglalarawan ng ipinapakita ng chart — ang uri nito, mga pangunahing trend, at mga pangunahing konklusyon. Kung posible, ibigay din ang pinagbabatayan na data sa isang table."
+  },
+  "ATH-040": {
+    "title": "Hindi Gumagamit ng Table Markup ang Data ng Talahanayan",
+    "desc": "Ang data na nakaayos sa mga hanay at kolum ay hindi gumagamit ng HTML table markup. Hindi mauunawaan ng mga gumagamit ng screen reader ang relasyon sa pagitan ng mga column header at data cell.",
+    "rem": "Gumamit ng maayos na table markup na may table, thead, tbody, tr, th, at td na elemento. Tiyaking gumagamit ang mga column at row header ng th na elemento na may angkop na scope na katangian."
+  },
+  "ATH-041": {
+    "title": "Hindi Accessible sa Keyboard ang Tooltip o Hover Content",
+    "desc": "Lumalabas lamang ang karagdagang nilalaman kapag nag-hover ang gumagamit gamit ang mouse. Hindi maaaring i-trigger o mabasa ng mga gumagamit ng keyboard at screen reader ang nilalamang ito.",
+    "rem": "Gawing lumalabas din ang hover content kapag natanggap ng elemento ang keyboard focus. Dapat maaring i-dismiss ito ng mga gumagamit nang hindi inililipat ang focus (halimbawa, gamit ang Escape). Dapat manatiling nakikita ang nilalaman hanggang mailipat ng gumagamit ang focus."
+  },
+  "ATH-043": {
+    "title": "Hindi Tumutugma ang Tab Order sa Visual na Pagkakasunud-sunod",
+    "desc": "Kapag nag-tab sa pahina, tumalon ang focus sa pagkakasunud-sunod na hindi tumutugma sa ipinakikita sa screen. Nakakagulo ito para sa mga gumagamit ng keyboard.",
+    "rem": "Itugma ang pagkakasunud-sunod ng HTML source sa visual na layout. Iwasang gumamit ng positibong tabindex na halaga para kontrolin ang tab order — nagdudulot ito ng mga problema sa pagpapanatili at kadalasang nagpapalala ng sitwasyon."
+  },
+  "ATH-045": {
+    "title": "Nakatagong Nilalaman na May Kahulugan mula sa mga Screen Reader",
+    "desc": "Ang nilalamangt nagdadala ng kahulugan (tulad ng star rating o status icon) ay nakatago mula sa mga screen reader gamit ang aria-hidden. Hindi maabot ng mga gumagamit ng screen reader ang impormasyong iyon.",
+    "rem": "Alisin ang aria-hidden mula sa nilalaman na may kahulugan. Magdagdag ng accessible na pangalan o karagdagang teksto na nagpapaabot ng parehong impormasyon. Halimbawa, sa halip na itago ang star rating, magdagdag ng nakatagong teksto tulad ng \"Rating: 4 sa 5 bituin\"."
+  },
+  "ATH-046": {
+    "title": "Walang Babala Bago Buksan ang Bagong Window",
+    "desc": "Nagbubukas ng bagong browser window o tab ang isang link o button nang walang babala. Nakakagambala ito, lalo na para sa mga gumagamit ng screen reader na maaaring hindi mapagtanto na nagbago ang konteksto.",
+    "rem": "Magdagdag ng babala sa link text o accessible na pangalan. Halimbawa: \"Taunang Ulat (magbubukas sa bagong tab)\". Maaari ka ring magdagdag ng icon na may alt text para ipahiwatig na magbubukas ang bagong window."
+  },
+  "ATH-047": {
+    "title": "Nagdudulot ng Hindi Inaasahang Pagbabago ang Pagtanggap ng Focus",
+    "desc": "Kapag natanggap ng elemento ang keyboard o pointer focus, nagbabago ang pahina — halimbawa, nagsa-submit ang isang form o nag-lo-load ang bagong pahina. Ito ay hindi inaasahan at nakakagambala.",
+    "rem": "Huwag mag-trigger ng anumang aksyon kapag natanggap ng elemento ang focus. Dapat lamang mangyari ang mga aksyon kapag sadyang ina-activate ng gumagamit ang isang kontrol (halimbawa, sa pamamagitan ng pagpindot sa Enter, Space, o pag-click)."
+  },
+  "ATH-048": {
+    "title": "Nagdudulot ng Hindi Inaasahang Pagbabago ang Pagbabago ng Input",
+    "desc": "Ang pagpili ng opsyon sa dropdown o pagbabago ng form value ay awtomatikong nagdudulot ng pag-reload o pag-navigate ng pahina. Ang mga gumagamit na kumikibord sa listahan ng mga opsyon ay maaaring mag-trigger ng hindi sinasadyang pagbabago.",
+    "rem": "Huwag mag-trigger ng mga pagbabago sa antas ng pahina kapag nagbago ang form value ng gumagamit. Sa halip, hintayin ang sadyang aksyon ng pagsusumite — tulad ng pagpindot sa \"Pumunta\" button — bago kumilos sa pagpili."
+  },
+  "ATH-050": {
+    "title": "Mali ang Pagbasa ng Screen Reader sa Nilalaman",
+    "desc": "Ang nilalaman ay naformat sa paraan na nagiging dahilan ng maling pagbasa ng mga screen reader. Halimbawa, ang presyo na \"$1,200\" ay maaaring mabasa bilang magulo o hindi malinaw na teksto depende sa markup.",
+    "rem": "Suriin kung paano nakaistraktura ang nilalaman sa HTML at subukan gamit ang screen reader. Ayusin ang markup o pag-format upang ang inihahayag na teksto ay tumpak na nagpapaabot ng nilalayong kahulugan."
+  },
+  "ATH-051": {
+    "title": "Walang Paglalarawan ang Figure o Ilustrasyon",
+    "desc": "Ang isang larawan o diagram ay gumagamit ng figure na elemento ngunit walang figcaption o accessible na paglalarawan. Naririnig ng mga gumagamit ng screen reader ang pangalan ng image file o isang pangkaraniwang anunsyo sa halip na kung ano ang ipinapakita ng larawan.",
+    "rem": "Magdagdag ng figcaption na elemento sa loob ng figure na nagpapaliwanag ng ipinapakita ng larawan o bakit ito mahalaga. Para sa mas kumplikadong visual, mag-link sa mas mahabang text description sa malapit."
+  },
+  "ATH-052": {
+    "title": "May Magkasalungat na mga Label ang Form Field",
+    "desc": "Ang isang form field ay may parehong nakikitang label at aria-label na nagsasabi ng magkaibang bagay. Naririnig ng mga gumagamit ng screen reader ang aria-label habang binabasa ng mga sighted na gumagamit ang nakikitang label, na nagdudulot ng kalituhan.",
+    "rem": "Gumamit ng iisang paraan ng pag-label, o tiyaking pareho ang sinasabi ng parehong label. Ang accessible na pangalan (aria-label o aria-labelledby) ay dapat maglaman ng nakikitang label text."
+  },
+  "ATH-053": {
+    "title": "Walang Label ang Dropdown o Select",
+    "desc": "Ang isang dropdown menu o select na elemento ay walang label. Hindi alam ng mga gumagamit ng screen reader kung anong pagpili ang ginagawa nila.",
+    "rem": "Magdagdag ng nakikitang label na elemento na may for na katangian na tumutugma sa id ng select na elemento. Kung hindi mo mailagay ang nakikitang label, gamitin ang aria-label o aria-labelledby sa halip."
+  },
+  "ATH-054": {
+    "title": "Nasisisira ang Layout Kapag Pinalaki ang Teksto",
+    "desc": "Kapag pinapalaki ng mga gumagamit ang laki ng teksto sa kanilang browser sa 200%, nasisira ang layout ng pahina. Nag-o-overlap ang teksto sa ibang nilalaman, natatanggal, o nawawala. Hindi mababasa ng mga gumagamit na may mababang paningin na umaasa sa mas malaking teksto ang pahina.",
+    "rem": "Gumamit ng mga flexible na layout at relative na yunit (rem, em, %) sa halip ng fixed pixel na taas. Subukan ang pahina sa 200% na laki ng teksto sa mga setting ng browser upang tiyaking nananatiling nababasa ang lahat at walang content na overflow."
+  },
+  "ATH-055": {
+    "title": "Malabo o Pangkaraniwan ang Link Text",
+    "desc": "Gumagamit ang mga link ng pangkaraniwang teksto tulad ng \"I-click dito\", \"Magbasa pa\", o \"Matuto pa\". Hindi matukoy ng mga gumagamit ng screen reader na nag-na-navigate ayon sa mga link kung saan patungo ang bawat link.",
+    "rem": "Sumulat ng link text na naglalarawan ng destinasyon o aksyon. Sa halip ng \"I-click dito\", gamitin ang \"I-download ang checklist ng accessibility\" o \"Basahin ang buong paliwanag ng WCAG 1.1.1\"."
+  },
+  "ATH-056": {
+    "title": "Walang Transcript o Captions ang Audio o Video",
+    "desc": "Ang isang video o audio recording ay walang captions o transcript. Hindi maabot ng mga Deaf at mahirap madinig na gumagamit ang sinasalitang nilalaman.",
+    "rem": "Para sa audio-only na nilalaman, magbigay ng buong text transcript. Para sa video na may audio, magbigay ng mga synchronized na caption. Ilagay ang transcript malapit sa media o mag-link dito nang malinaw. Ang mga auto-generated na caption ay dapat suriin at itama bago mag-publish."
+  },
+  "ATH-057": {
+    "title": "Walang Group Label ang Form Group",
+    "desc": "Ang isang grupo ng mga kaugnay na form control (tulad ng mga radio button o checkbox) ay walang group label. Naririnig ng mga gumagamit ng screen reader ang bawat opsyon nang hindi naiintindihan kung anong tanong ang sinasagot nito.",
+    "rem": "Balutin ang grupo sa isang fieldset na elemento at magdagdag ng legend bilang unang anak nito. Ang legend text ay dapat ang tanong o kategorya na kinabibilangan ng grupo. Halimbawa: \"Piliin ang iyong preferred na paraan ng pakikipag-ugnayan\"."
+  },
+  "ATH-058": {
+    "title": "Hindi Gumagamit ng List Markup ang Listahang Nilalaman",
+    "desc": "Ang nilalaman na mukhang listahan — tulad ng mga navigation link, hakbang, o opsyon — ay ginawa gamit ang mga div o talata sa halip ng HTML list na elemento. Hindi maaaring ihayag ng mga screen reader kung ilang item ang nasa listahan.",
+    "rem": "Gumamit ng ul para sa mga hindi nakaayos na listahan, ol para sa mga numeradong listahan, at dl para sa mga listahang may kahulugan. Ipares ang bawat listahan sa mga item na li o dt/dd. Nakakatulong din ito para sa mga navigation menu at sunud-sunod na tagubilin."
+  },
+  "ATH-059": {
+    "title": "Hindi Inihahayag ng Live Region ang mga Update",
+    "desc": "Ang nilalamangt dynamic na nag-a-update — tulad ng bilang ng search result, update sa progreso, o notification — ay hindi inihahayag ng mga screen reader dahil ang live region ay nawawala o hindi tama ang setup.",
+    "rem": "Magdagdag ng aria-live=\"polite\" sa isang container na tatanggap ng na-update na teksto. Gumamit ng aria-live=\"assertive\" para lamang sa mga apuradong alerto. Mag-inject ng mensahe sa live region pagkatapos nito ay nasa DOM na — ang pag-inject ng region at mensahe nang sabay-sabay ay maaaring hindi ihayag."
+  },
+  "ATH-060": {
+    "title": "Walang Single-Pointer Alternative ang Multi-Point Gesture",
+    "desc": "Nangangailangan ang isang feature ng multi-finger gesture — tulad ng pinch-to-zoom o two-finger swipe — nang walang single-tap o keyboard alternative. Naiipit ang mga gumagamit na may motor disability na hindi makapagsagawa ng multi-touch gesture.",
+    "rem": "Magbigay ng single-pointer alternative para sa bawat multi-point gesture. Halimbawa, magdagdag ng plus at minus na zoom button kasama ang pinch-to-zoom. Ang lahat ng gesture ay dapat may keyboard-accessible na katumbas."
+  },
+  "ATH-061": {
+    "title": "Hindi Nagpapaliwanag ng Paraan ng Pagwawasto ang Error Message",
+    "desc": "Nagpapakita ng error ang form kapag nag-submit ang gumagamit, ngunit hindi sinasabi ng mensahe kung paano ito ayusin. Halimbawa, maaari itong magsabi ng \"Di-wastong input\" nang hindi nagpapaliwanag kung anong format ang inaasahan.",
+    "rem": "Sumulat ng mga tiyak at maiaksyunan na mensahe ng error. Sabihin sa mga gumagamit kung ano ang nangyaring mali at kung paano ito itama. Halimbawa: \"Ang numero ng telepono ay dapat may 10 digit, mga numero lamang\" sa halip ng \"Di-wastong numero ng telepono\"."
+  },
+  "ATH-062": {
+    "title": "Walang Closed Caption ang Video",
+    "desc": "Ang isang pre-recorded na video ay may sinasalitang audio ngunit walang caption. Hindi maabot ng mga Deaf at mahirap madinig na gumagamit ang sinasalitang nilalaman, at hindi rin makasabay ang mga gumagamit na nanonood sa maingay o tahimik na kapaligiran.",
+    "rem": "Magdagdag ng tumpak na caption sa bawat pre-recorded na video na may sinasalitang audio track. Ang mga caption ay dapat na naka-synchronize sa audio, may kasamang pagkakakilanlan ng nagsasalita kung saan may kaugnayan, at naglalarawan ng mahahalagang hindi pagsasalitang tunog (tulad ng [palakpak] o [doorbell]). Suriin ang mga auto-generated na caption para sa katumpakan bago mag-publish."
+  },
+  "ATH-063": {
+    "title": "Walang Audio Description ang Video",
+    "desc": "Ang isang pre-recorded na video ay naglalaman ng visual na impormasyon na hindi inilarawan sa audio — tulad ng on-screen na teksto, mga aksyon, o diagram. Ganap na naapipisahan ang mga bulag at mahirap makakita na gumagamit ng nilalamang ito.",
+    "rem": "Magdagdag ng audio description track na nagkukuwento ng mga pangunahing visual na nilalaman sa panahon ng natural na pahinga sa diyalogo. Kung walang sapat na pahinga, gumawa ng extended audio description na bersyon na napapahinto ang video sa mga may kaugnayan na sandali. Isang alternatibo ay isang buong text description, ngunit mas gusto ang audio track."
+  }
+}
