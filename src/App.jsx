@@ -4,6 +4,8 @@ import SearchBar from './components/SearchBar.jsx'
 import ResultList from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
 import Confetti from './components/Confetti.jsx'
+import PartySparkles from './components/PartySparkles.jsx'
+import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
 import useDefectSearch from './hooks/useDefectSearch.js'
 import {
   Router,
@@ -13,6 +15,7 @@ import {
   useMediaQuery,
 } from './plugins/router/index.js'
 import { Announcer, announce } from './plugins/announce/index.js'
+import { playPartySound, playSqueak } from './utils/partySounds.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 
@@ -26,6 +29,7 @@ const PARTY_KEYS = [
   '--priority-high-text', '--priority-high-bg',
   '--priority-medium-text', '--priority-medium-bg',
   '--priority-low-text', '--priority-low-bg',
+  '--party-grad-x', '--party-grad-y',
 ]
 
 function generatePartyPalette() {
@@ -56,6 +60,8 @@ function generatePartyPalette() {
     '--priority-medium-bg':     '#e6f1fb',
     '--priority-low-text':      '#3b6d11',
     '--priority-low-bg':        '#eaf3de',
+    '--party-grad-x':    `${Math.floor(Math.random() * 80) + 10}%`,
+    '--party-grad-y':    `${Math.floor(Math.random() * 80) + 10}%`,
   }
 }
 
@@ -306,6 +312,30 @@ function AppShell() {
   }, [theme])
 
   useEffect(() => {
+    if (theme !== 'party') return
+    function handleClick(e) {
+      const el = e.target.closest('button, [role="button"], input[type="submit"], input[type="button"], input[type="checkbox"], input[type="radio"], select')
+      if (el) playPartySound()
+    }
+    document.addEventListener('click', handleClick)
+    return () => document.removeEventListener('click', handleClick)
+  }, [theme])
+
+  useEffect(() => {
+    if (theme !== 'party') return
+    const IGNORED_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLock', 'Escape'])
+    let count = 0
+    function handleKeyDown(e) {
+      if (e.target.id === 'defect-search' && !IGNORED_KEYS.has(e.key)) {
+        count++
+        if (count % 3 === 0) playSqueak()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [theme])
+
+  useEffect(() => {
     document.documentElement.lang = language
     localStorage.setItem('language', language)
   }, [language])
@@ -388,6 +418,8 @@ function AppShell() {
     <div className="app-container">
       <Announcer />
       <Confetti active={theme === 'party'} />
+      <PartySparkles active={theme === 'party'} />
+      <PartyMusicPlayer active={theme === 'party'} />
       {theme === 'party' && <PartyBanner />}
 
       {/* eslint-disable-next-line react/no-unknown-property */}
@@ -487,8 +519,27 @@ function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDeskto
 }
 
 function PartyBanner() {
+  const [animating, setAnimating] = useState(true)
+  const timerRef = useRef(null)
+
+  useEffect(() => {
+    timerRef.current = setTimeout(() => setAnimating(false), 5000)
+    return () => clearTimeout(timerRef.current)
+  }, [])
+
+  function handleMouseEnter() {
+    clearTimeout(timerRef.current)
+    setAnimating(true)
+    timerRef.current = setTimeout(() => setAnimating(false), 5000)
+  }
+
   return (
-    <div className="party-banner" aria-live="off" aria-hidden="true">
+    <div
+      className={`party-banner${animating ? '' : ' party-banner--still'}`}
+      aria-live="off"
+      aria-hidden="true"
+      onMouseEnter={handleMouseEnter}
+    >
       ~*~ PARTY MODE ENABLED ~*~
     </div>
   )
