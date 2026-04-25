@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Qhawariychis pantay willakuykuna, usqhayta",
-
   "header.github": "GitHub-pi qhaway",
   "header.open_settings": "Ruwaykuykuna kichay",
   "header.close_settings": "Ruwaykuykuna wichqay",
-
   "search.aria_label": "Pantay maskay",
   "search.label": "Pantayta imaynatan willakuy",
   "search.placeholder": "kayhinata: modal wichqay taqe sutiyuq kachkaspa",
@@ -17,13 +15,11 @@
   "search.hint_ai": "IA yanapay llank'achkaspa ({provider}).",
   "search.hint_change_in": "Kay tikrariyta atikunmi",
   "search.hint_settings_link": "Ruwaykuykunapi",
-
   "results.aria_label": "Pantay kamachikuykuna",
   "results.no_results_announce": "\"{query}\" nisqanchikpaq mana ima kanchu. Wakin suti, ima kaq, utaq suk ñiqin kallpachiy.",
   "results.no_results_aria": "Mana ima kanchu",
   "results.no_results_heading": "\"{query}\" nisqanchikpaq mana ima kanchu",
   "results.no_results_body": "Wakin suti, ima kaq, utaq suk ñiqin kallpachiy.",
-
   "detail.fails": "Pantay:",
   "detail.related": "Chaywan tupaq:",
   "detail.location_label": "Tiyay qallariynin",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — pantay sutinchasqa",
   "detail.sheet_default": "Pantay sutinchasqa",
-
   "settings.drawer_label": "Ruwaykuykuna",
   "settings.back": "Maskayman kutiy",
   "settings.heading": "Ruwaykuykuna",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Ruwaykuykuna: Waqaychasqa",
   "settings.platform_web_announce": "Plataforma: Web resultanata rikuchiy",
   "settings.platform_native_announce": "Plataforma: Masinchik resultanata rikuchiy",
-
   "footer.credit": "Mikey Ilagan ruwasqan proyecto",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ FIESTA ÑIQIN KALLPASQA ~*~",
   "party.play": "Fiesta takiyta ñawpaqman",
   "party.stop": "Fiesta takiyta saqiy",
   "party.announce_full": "Fiesta ñiqin kallarisqa! Qillqa ñiqin Comic Sans-man tikrasqa. Killukunam puka-q'ellu-q'omer ñiqinman tikrasqa. Ñuqaq konfetikuna pantalla patanmanta urmarimuchkan. Ratón cursor magico varana.",
   "party.announce_reduced": "Fiesta ñiqin kallarisqa! Qillqa ñiqin Comic Sans-man tikrasqa. Killukunam puka-q'ellu-q'omer ñiqinman tikrasqa. Ratón cursor magico varana. Konfeti brincakusqa huyñuy iskayniykiman kasqanrayku.",
-
   "kofi.support": "Yanapaway",
   "kofi.aria": "Mikeyta Ko-fi-pi yanapa (panel kicharikun)",
   "kofi.title": "Ko-fi qoypura widget",
-  "kofi.tooltip": "Astawan willakuy"
+  "kofi.tooltip": "Astawan willakuy",
+  "priority.critical": "Sinchi",
+  "priority.high": "Hatun",
+  "priority.medium": "Chawpi",
+  "priority.low": "Llika",
+  "priority.best_practice": "Allinta Rurai"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Pirri-pirri nipaluna pakana palawa kani, makara",
-
   "header.github": "Nayri GitHub",
   "header.open_settings": "Kani takayna",
   "header.close_settings": "Puni takayna",
-
   "search.aria_label": "Pirri-pirri nayri",
   "search.label": "Pirri-pirri takayna nayri",
   "search.placeholder": "timara: modal puni button rika mana",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI kani ({provider}).",
   "search.hint_change_in": "Pakana kani",
   "search.hint_settings_link": "Takayna",
-
   "results.aria_label": "Pirri-pirri liyini",
   "results.no_results_announce": "\"{query}\" mana liyini. Rika nayri kani.",
   "results.no_results_aria": "Mana liyini",
   "results.no_results_heading": "\"{query}\" mana liyini",
   "results.no_results_body": "Rika nayri kani.",
-
   "detail.fails": "Pirri:",
   "detail.related": "Pakana:",
   "detail.location_label": "Nayri takayna",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — pirri-pirri kani",
   "detail.sheet_default": "Pirri-pirri kani",
-
   "settings.drawer_label": "Takayna",
   "settings.back": "Nayri pakana",
   "settings.heading": "Takayna",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Takayna: Kani pakana",
   "settings.platform_web_announce": "Platform: Web liyini",
   "settings.platform_native_announce": "Platform: Pakana liyini",
-
   "footer.credit": "Mikey Ilagan kani",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ PAKANA WARA KANI ~*~",
   "party.play": "Pakana wara liyini",
   "party.stop": "Pakana wara puni",
   "party.announce_full": "Pakana wara kani! Takayna Comic Sans. Nayri pakana liyini. Confetti kani. Cursor magic wara.",
   "party.announce_reduced": "Pakana wara kani! Takayna Comic Sans. Nayri pakana liyini. Cursor magic wara. Confetti mana liyini kani.",
-
   "kofi.support": "Kani pakana",
   "kofi.aria": "Mikey Ko-fi kani (panel liyini)",
   "kofi.title": "Ko-fi kani widget",
-  "kofi.tooltip": "Liyini pakana"
+  "kofi.tooltip": "Liyini pakana",
+  "priority.critical": "Parna",
+  "priority.high": "Truwana",
+  "priority.medium": "Murrung",
+  "priority.low": "Lylunga",
+  "priority.best_practice": "Mina Parnawan"
 }

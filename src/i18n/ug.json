@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "ئېرىشكىلىك نۇقسانى چۈشەندۈرمەلىرىنى تەكشۈر، تېز",
-
   "header.github": "GitHub دا كۆرۈش",
   "header.open_settings": "تەڭشەكلەرنى ئاچ",
   "header.close_settings": "تەڭشەكلەرنى تاق",
-
   "search.aria_label": "نۇقسان ئىزدەش",
   "search.label": "نۇقسان ياكى كۆزەتمىنى چۈشەندۈر",
   "search.placeholder": "مەسىلەن: modal تاقاش كونۇپكىسىنىڭ بەلگىسى يوق",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI ياردىمى ئاكتىپ ({provider}).",
   "search.hint_change_in": "بۇنى مۇنداق ئۆزگەرتكىلى بولىدۇ",
   "search.hint_settings_link": "تەڭشەكلەردە",
-
   "results.aria_label": "نۇقسان نامزاتلىرى",
   "results.no_results_announce": "\"{query}\" ئۈچۈن نەتىجە يوق. بىرلەشمە ئىسمى، ئېلېمېنت تۈرى ياكى باشقا ئىبارە سىناڭ.",
   "results.no_results_aria": "نەتىجە يوق",
   "results.no_results_heading": "\"{query}\" ئۈچۈن نەتىجە يوق",
   "results.no_results_body": "بىرلەشمە ئىسمى، ئېلېمېنت تۈرى ياكى باشقا ئىبارە سىناڭ.",
-
   "detail.fails": "مەغلۇب بولدى:",
   "detail.related": "مۇناسىۋەتلىك:",
   "detail.location_label": "ئورۇن ئالدىنقى قوشۇمچىسى",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — نۇقسان تەپسىلاتى",
   "detail.sheet_default": "نۇقسان تەپسىلاتى",
-
   "settings.drawer_label": "تەڭشەكلەر",
   "settings.back": "ئىزدەشكە قايت",
   "settings.heading": "تەڭشەكلەر",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "تەڭشەكلەر: ساقلاندى",
   "settings.platform_web_announce": "سۇپا: تور يۆنىلىشلىك نەتىجىلەرنى كۆرسەت",
   "settings.platform_native_announce": "سۇپا: تەبىئىي يۆنىلىشلىك نەتىجىلەرنى كۆرسەت",
-
   "footer.credit": "Mikey Ilagan نىڭ لايىھىسى",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ مەيرەم ھالىتى ئاچىلدى ~*~",
   "party.play": "مەيرەم مۇزىكىسىنى ئوينا",
   "party.stop": "مەيرەم مۇزىكىسىنى توختات",
   "party.announce_full": "مەيرەم ھالىتى ئاچىلدى! خەت شەكلى Comic Sans غا ئۆزگىردى. رەڭلەر ئىختىيارى ئوچۇق رەڭ تەخسىگە ئۆزگىردى. رەڭلىك كونفېتتى ئېكراننىڭ يۇقىرىسىدىن تۆۋەنگە چۈشۈۋاتىدۇ. چاشقانچا كۇرسورى سېھرى تايىغىغا ئايلاندى.",
   "party.announce_reduced": "مەيرەم ھالىتى ئاچىلدى! خەت شەكلى Comic Sans غا ئۆزگىردى. رەڭلەر ئىختىيارى ئوچۇق رەڭ تەخسىگە ئۆزگىردى. چاشقانچا كۇرسورى سېھرى تايىغىغا ئايلاندى. قوزغىلىشنى ئازايتىش ئوچۇق بولغاچقا كونفېتتى ئاتلاندى.",
-
   "kofi.support": "مىنى قوللا",
   "kofi.aria": "Ko-fi دا Mikey نى قوللا (تاختا ئاچىلىدۇ)",
   "kofi.title": "Ko-fi مۇئاۋەنە ۋىدجىتى",
-  "kofi.tooltip": "تېخىمۇ كۆپ ئۇچۇر"
+  "kofi.tooltip": "تېخىمۇ كۆپ ئۇچۇر",
+  "priority.critical": "مۇھىم",
+  "priority.high": "يۇقىرى",
+  "priority.medium": "ئوتتۇرا",
+  "priority.low": "تۆۋەن",
+  "priority.best_practice": "ئەڭ ياخشى ئەمەلىيەت"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "एक्सेसिबिलिटी दोष विवरण की त्वरित समीक्षा करें",
-
   "header.github": "GitHub पर देखें",
   "header.open_settings": "सेटिंग खोलें",
   "header.close_settings": "सेटिंग बंद करें",
-
   "search.aria_label": "दोष खोज",
   "search.label": "दोष या अवलोकन का वर्णन करें",
   "search.placeholder": "जैसे मॉडल बंद बटन पर कोई लेबल नहीं",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI सहायता सक्रिय है ({provider})।",
   "search.hint_change_in": "इसे बदला जा सकता है",
   "search.hint_settings_link": "सेटिंग",
-
   "results.aria_label": "दोष उम्मीदवार",
   "results.no_results_announce": "\"{query}\" के लिए कोई परिणाम नहीं। कोई घटक नाम, तत्व प्रकार, या अलग वाक्यांश आज़माएं।",
   "results.no_results_aria": "कोई परिणाम नहीं",
   "results.no_results_heading": "\"{query}\" के लिए कोई परिणाम नहीं",
   "results.no_results_body": "कोई घटक नाम, तत्व प्रकार, या अलग वाक्यांश आज़माएं।",
-
   "detail.fails": "विफल:",
   "detail.related": "संबंधित:",
   "detail.location_label": "स्थान उपसर्ग",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — दोष विवरण",
   "detail.sheet_default": "दोष विवरण",
-
   "settings.drawer_label": "सेटिंग",
   "settings.back": "खोज पर वापस जाएं",
   "settings.heading": "सेटिंग",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "सेटिंग: सहेज ली गई",
   "settings.platform_web_announce": "प्लेटफ़ॉर्म: वेब-केंद्रित परिणाम दिखाएं",
   "settings.platform_native_announce": "प्लेटफ़ॉर्म: नेटिव-केंद्रित परिणाम दिखाएं",
-
   "footer.credit": "Mikey Ilagan का एक प्रोजेक्ट",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ पार्टी मोड सक्रिय ~*~",
   "party.play": "पार्टी संगीत चलाएं",
   "party.stop": "पार्टी संगीत रोकें",
   "party.announce_full": "पार्टी मोड सक्रिय हो गया! फ़ॉन्ट Comic Sans में बदल गया है। रंग एक यादृच्छिक चमकीले रंग पैलेट में बदल गए हैं। रंगीन कन्फेटी विभिन्न रंगों और आकारों में स्क्रीन के शीर्ष से गिर रही है। माउस कर्सर अब एक जादू की छड़ी है।",
   "party.announce_reduced": "पार्टी मोड सक्रिय हो गया! फ़ॉन्ट Comic Sans में बदल गया है। रंग एक यादृच्छिक चमकीले रंग पैलेट में बदल गए हैं। माउस कर्सर अब एक जादू की छड़ी है। गति कम करना सक्षम होने के कारण कन्फेटी छोड़ दी गई।",
-
   "kofi.support": "मुझे सपोर्ट करें",
   "kofi.aria": "Ko-fi पर Mikey को सपोर्ट करें (पैनल खुलता है)",
   "kofi.title": "Ko-fi दान विजेट",
-  "kofi.tooltip": "अधिक जानकारी"
+  "kofi.tooltip": "अधिक जानकारी",
+  "priority.critical": "गंभीर",
+  "priority.high": "उच्च",
+  "priority.medium": "मध्यम",
+  "priority.low": "निम्न",
+  "priority.best_practice": "सर्वोत्तम अभ्यास"
 }

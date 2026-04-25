@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Révisez les descriptions de défauts d'accessibilité, rapidement",
-
   "header.github": "Voir sur GitHub",
   "header.open_settings": "Ouvrir les paramètres",
   "header.close_settings": "Fermer les paramètres",
-
   "search.aria_label": "Recherche de défauts",
   "search.label": "Décrivez le défaut ou l'observation",
   "search.placeholder": "p. ex. bouton de fermeture de modal sans étiquette",
@@ -17,13 +15,11 @@
   "search.hint_ai": "L'assistance IA est active ({provider}).",
   "search.hint_change_in": "Cela peut être modifié dans",
   "search.hint_settings_link": "Paramètres",
-
   "results.aria_label": "Candidats de défauts",
   "results.no_results_announce": "Aucun résultat pour \"{query}\". Essaie un nom de composant, un type d'élément ou une autre formulation.",
   "results.no_results_aria": "Aucun résultat",
   "results.no_results_heading": "Aucun résultat pour \"{query}\"",
   "results.no_results_body": "Essaie un nom de composant, un type d'élément ou une autre formulation.",
-
   "detail.fails": "Échoue :",
   "detail.related": "Connexe :",
   "detail.location_label": "Préfixe de localisation",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — détail du défaut",
   "detail.sheet_default": "Détail du défaut",
-
   "settings.drawer_label": "Paramètres",
   "settings.back": "Retour à la recherche",
   "settings.heading": "Paramètres",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Paramètres : Sauvegardé",
   "settings.platform_web_announce": "Plateforme : Afficher les résultats orientés web",
   "settings.platform_native_announce": "Plateforme : Afficher les résultats orientés natif",
-
   "footer.credit": "Un projet de Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ MODE FÊTE ACTIVÉ ~*~",
   "party.play": "Jouer de la musique de fête",
   "party.stop": "Arrêter la musique de fête",
   "party.announce_full": "Mode fête activé ! La police a changé pour Comic Sans. Les couleurs ont changé pour une palette de couleurs vives aléatoire. Des confettis colorés tombent maintenant du haut de l'écran dans une variété de couleurs et de formes. Le curseur de la souris est maintenant une baguette magique.",
   "party.announce_reduced": "Mode fête activé ! La police a changé pour Comic Sans. Les couleurs ont changé pour une palette de couleurs vives aléatoire. Le curseur de la souris est maintenant une baguette magique. Les confettis ont été ignorés car la réduction de mouvement est activée.",
-
   "kofi.support": "Soutiens-moi",
   "kofi.aria": "Soutenir Mikey sur Ko-fi (ouvre un panneau)",
   "kofi.title": "Widget de don Ko-fi",
-  "kofi.tooltip": "Plus d'informations"
+  "kofi.tooltip": "Plus d'informations",
+  "priority.critical": "Critique",
+  "priority.high": "Élevé",
+  "priority.medium": "Moyen",
+  "priority.low": "Faible",
+  "priority.best_practice": "Bonne pratique"
 }

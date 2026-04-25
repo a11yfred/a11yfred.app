@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Hekávo mba'e'ỹva jehechaukárã ñepyrũha, pya'e",
-
   "header.github": "Hecha GitHub-pe",
   "header.open_settings": "Jegua ñoha'ãnguéra",
   "header.close_settings": "Mboty ñoha'ãnguéra",
-
   "search.aria_label": "Mba'e'ỹva jeheka",
   "search.label": "Eñe'ẽ mba'e'ỹva rehegua térã jehechakuaa rehegua",
   "search.placeholder": "techapyrã: tembipuru mboty modal ñe'ẽtéi'ỹre",
@@ -17,13 +15,11 @@
   "search.hint_ai": "IA pytyvõ oikohápe ({provider}).",
   "search.hint_change_in": "Ikatu oñemohenda",
   "search.hint_settings_link": "Ñoha'ãnguéra",
-
   "results.aria_label": "Mba'e'ỹva ñemyatyrõrã",
   "results.no_results_announce": "Ndaipóri mba'eguarã \"{query}\" rehegua. Eha'ã tembipuru réra, mba'e motenondeharã térã ambue ñe'ẽ.",
   "results.no_results_aria": "Ndaipóri mba'eguarã",
   "results.no_results_heading": "Ndaipóri mba'eguarã \"{query}\" rehegua",
   "results.no_results_body": "Eha'ã tembipuru réra, mba'e motenondeharã térã ambue ñe'ẽ.",
-
   "detail.fails": "Oguejy:",
   "detail.related": "Oñondivekuaava:",
   "detail.location_label": "Tendápe ñepyrũ",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — mba'e'ỹva porã",
   "detail.sheet_default": "Mba'e'ỹva porã",
-
   "settings.drawer_label": "Ñoha'ãnguéra",
   "settings.back": "Ejey jehekápe",
   "settings.heading": "Ñoha'ãnguéra",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Ñoha'ãnguéra: Oñongatu",
   "settings.platform_web_announce": "Platafórma: Hecha web mba'eguarã",
   "settings.platform_native_announce": "Platafórma: Hecha maranduhára mba'eguarã",
-
   "footer.credit": "Mikey Ilagan ojapo hagua",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ FIESTA MODUS OÑEPYRŨ ~*~",
   "party.play": "Emoñepyrũ fiesta ñemurã",
   "party.stop": "Emboty fiesta ñemurã",
   "party.announce_full": "Fiesta modus oñepyrũ! Kuatia ñe'ẽpoty oñemohenda Comic Sans-pe. Sa'y oñemohenda pyta'yjoja atỹ hepyse-pe. Konfeti sa'yju oguejy kuatia yvate guive sa'y ha jeveroha mboyve. Ñepytyvõ araka'e peteĩ tembipuru mágico.",
   "party.announce_reduced": "Fiesta modus oñepyrũ! Kuatia ñe'ẽpoty oñemohenda Comic Sans-pe. Sa'y oñemohenda pyta'yjoja atỹ hepyse-pe. Ñepytyvõ araka'e peteĩ tembipuru mágico. Konfeti oñeikutu jeike puku oñepyrũháre.",
-
   "kofi.support": "Pytyvõ che",
   "kofi.aria": "Pytyvõ Mikey Ko-fi-pe (ohai okẽ)",
   "kofi.title": "Ko-fi ñemba'apo widget",
-  "kofi.tooltip": "Marandu hetave"
+  "kofi.tooltip": "Marandu hetave",
+  "priority.critical": "Tuvicha",
+  "priority.high": "Yvate",
+  "priority.medium": "Mbytépe",
+  "priority.low": "Mbyky",
+  "priority.best_practice": "Tembiapo Porã"
 }

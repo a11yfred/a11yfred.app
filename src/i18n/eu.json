@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Ikuskatu irisgarritasun-akats deskribapenak, azkar",
-
   "header.github": "Ikusi GitHub-en",
   "header.open_settings": "Ireki ezarpenak",
   "header.close_settings": "Itxi ezarpenak",
-
   "search.aria_label": "Akats bilaketa",
   "search.label": "Deskribatu akatsa edo behaketa",
   "search.placeholder": "adib. modal itxi botoia etiketa gabe",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI laguntza aktibo dago ({provider}).",
   "search.hint_change_in": "Hau alda daiteke",
   "search.hint_settings_link": "Ezarpenetan",
-
   "results.aria_label": "Akats hautagaiak",
   "results.no_results_announce": "Ez dago emaitzarik \"{query}\" bilaketarako. Saiatu osagaiaren izena, elementu mota edo beste esaldi bat.",
   "results.no_results_aria": "Ez dago emaitzarik",
   "results.no_results_heading": "Ez dago emaitzarik \"{query}\" bilaketarako",
   "results.no_results_body": "Saiatu osagaiaren izena, elementu mota edo beste esaldi bat.",
-
   "detail.fails": "Huts egiten du:",
   "detail.related": "Erlazionatuta:",
   "detail.location_label": "Kokapenaren aurrizkia",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — akats xehetasuna",
   "detail.sheet_default": "Akats xehetasuna",
-
   "settings.drawer_label": "Ezarpenak",
   "settings.back": "Itzuli bilaketara",
   "settings.heading": "Ezarpenak",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Ezarpenak: Gordeta",
   "settings.platform_web_announce": "Plataforma: Erakutsi web-orientatutako emaitzak",
   "settings.platform_native_announce": "Plataforma: Erakutsi natibo-orientatutako emaitzak",
-
   "footer.credit": "Mikey Ilaganen proiektua",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ JAI MODUA AKTIBATUTA ~*~",
   "party.play": "Jo jai musika",
   "party.stop": "Gelditu jai musika",
   "party.announce_full": "Jai modua aktibatuta! Letra-tipoa Comic Sans-era aldatu da. Koloreak ausazko kolore-paleta distiratsu batera aldatu dira. Koloretako konfettia pantailaren goitik erortzen ari da hainbat kolore eta formatan. Saguaren kurtsorea orain magia makila bat da.",
   "party.announce_reduced": "Jai modua aktibatuta! Letra-tipoa Comic Sans-era aldatu da. Koloreak ausazko kolore-paleta distiratsu batera aldatu dira. Saguaren kurtsorea orain magia makila bat da. Konfettia saltatuta izan da mugimendua murriztuta dagoelako.",
-
   "kofi.support": "Lagundu iezadazu",
   "kofi.aria": "Lagundu Mikey Ko-fi-n (panela irekitzen da)",
   "kofi.title": "Ko-fi dohaintza tresna",
-  "kofi.tooltip": "Informazio gehiago"
+  "kofi.tooltip": "Informazio gehiago",
+  "priority.critical": "Kritikoa",
+  "priority.high": "Altua",
+  "priority.medium": "Ertaina",
+  "priority.low": "Baxua",
+  "priority.best_practice": "Praktika Onena"
 }

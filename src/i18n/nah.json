@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Titlahtoa tlapantlahtzolli iaxcatzin tlaneltoquiliz, yohuic",
-
   "header.github": "Tlachia GitHub-pan",
   "header.open_settings": "Tlapehua tlatequitiliz",
   "header.close_settings": "Tlatzihua tlatequitiliz",
-
   "search.aria_label": "Tlapantlahtzolli temoa",
   "search.label": "Tlahtoa tlapantlahtzolli iaxca ihuan tlaittaliztli",
   "search.placeholder": "yolihca: xihuitl tzacuani modal amo itoca",
@@ -17,13 +15,11 @@
   "search.hint_ai": "IA temachtilli tlapoa ({provider}).",
   "search.hint_change_in": "Inin yeliztica tlapohualoni",
   "search.hint_settings_link": "Tlatequitiliz",
-
   "results.aria_label": "Tlapantlahtzolli temachilli",
   "results.no_results_announce": "Ayac tlahtlacolli \"{query}\" itech. Xiquihtoa itoca maquixtilli, tlahco iaxca, inozo oc ce tlatlahtoliztica.",
   "results.no_results_aria": "Ayac tlahtlacolli",
   "results.no_results_heading": "Ayac tlahtlacolli \"{query}\" itech",
   "results.no_results_body": "Xiquihtoa itoca maquixtilli, tlahco iaxca, inozo oc ce tlatlahtoliztica.",
-
   "detail.fails": "Poloa:",
   "detail.related": "Nohmatca:",
   "detail.location_label": "Yecoa tlatzequeliztli",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — tlapantlahtzolli pormenor",
   "detail.sheet_default": "Tlapantlahtzolli pormenor",
-
   "settings.drawer_label": "Tlatequitiliz",
   "settings.back": "Cuepani temoa",
   "settings.heading": "Tlatequitiliz",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Tlatequitiliz: Pixcalli",
   "settings.platform_web_announce": "Plataforma: Necia web tlahtlacolli",
   "settings.platform_native_announce": "Plataforma: Necia tlatoctilli tlahtlacolli",
-
   "footer.credit": "Mikey Ilagan itlatequitil",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ PACHOA MODOS TLAPOA ~*~",
   "party.play": "Xihuitl pachoa cuica",
   "party.stop": "Tlatza pachoa cuica",
   "party.announce_full": "Pachoa modos tlapolli! Tlahcuilolli pochtic Comic Sans cuepilli. Tlapaltin cuepilli cuicatl tlapalhuiliztli-pan. Konfetti tlapaltetzauhtli ihciuhca tlami ixpan pantalla cuetzalan. Ratontzin cursor axan tlahtoa magico.",
   "party.announce_reduced": "Pachoa modos tlapolli! Tlahcuilolli pochtic Comic Sans cuepilli. Tlapaltin cuepilli cuicatl tlapalhuiliztli-pan. Ratontzin cursor axan tlahtoa magico. Konfetti amo necia nemiliztli tepoztli quipoa.",
-
   "kofi.support": "Xinechmaca",
   "kofi.aria": "Mikey xinechmaca Ko-fi-pan (panel tlapehua)",
   "kofi.title": "Ko-fi tlaneltoquiliztli widget",
-  "kofi.tooltip": "Miac tlahtlacolli"
+  "kofi.tooltip": "Miac tlahtlacolli",
+  "priority.critical": "Temamauhti",
+  "priority.high": "Hueyitl",
+  "priority.medium": "Tlanepantla",
+  "priority.low": "Tepitl",
+  "priority.best_practice": "Cualli Tlamachtiliztli"
 }

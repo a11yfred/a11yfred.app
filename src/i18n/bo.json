@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "མྱུར་དུ་འཛོལ་བའི་བཀོད་སྒྲིག་གི་འགྲེལ་བཤད་ཞིབ་འཇུག་བྱེད།",
-
   "header.github": "GitHub-ར་ལྟོས།",
   "header.open_settings": "སྒྲིག་གཞིར་འཛུལ།",
   "header.close_settings": "སྒྲིག་གཞི་རྒྱག་བཀག",
-
   "search.aria_label": "འཛོལ་བ་འཚོལ།",
   "search.label": "འཛོལ་བའམ་གཟིགས་བཤེར་འགྲེལ་བཤད།",
   "search.placeholder": "དཔེར་ན། modal ཁ་བཤིག་ལྡེ་མིག་ལ་མིང་མེད།",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI རོགས་རམ་འབྱུང་གི་ཡོད། ({provider}).",
   "search.hint_change_in": "འདི་ལ་འགྱུར་བ་གཏོང་ཆོག",
   "search.hint_settings_link": "སྒྲིག་གཞི",
-
   "results.aria_label": "འཛོལ་བ་ཚོ།",
   "results.no_results_announce": "\"{query}\"ལ་འབྲས་བུ་མེད། ཟུར་འཛིན་མིང་ཡང་ན་ཁ་གསལ་གཞན་ཞིག་བསམ་རོགས།",
   "results.no_results_aria": "འབྲས་བུ་མེད།",
   "results.no_results_heading": "\"{query}\"ལ་འབྲས་བུ་མེད།",
   "results.no_results_body": "ཟུར་འཛིན་མིང་ཡང་ན་ཁ་གསལ་གཞན་ཞིག་བསམ་རོགས།",
-
   "detail.fails": "ལོག་པ།",
   "detail.related": "འབྲེལ་བ་ཡོད།",
   "detail.location_label": "གནས་ས་ངོས་འདེབས།",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — འཛོལ་བ་ཞིབ་ཕྲ།",
   "detail.sheet_default": "འཛོལ་བ་ཞིབ་ཕྲ།",
-
   "settings.drawer_label": "སྒྲིག་གཞི།",
   "settings.back": "འཚོལ་ཞིབ་ལ་ལོག",
   "settings.heading": "སྒྲིག་གཞི།",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "སྒྲིག་གཞི། གསོག་འཇོག་བྱས།",
   "settings.platform_web_announce": "མཐུན་ལམ། དྲ་ལམ་གྱི་འབྲས་བུ་བསྟན།",
   "settings.platform_native_announce": "མཐུན་ལམ། རང་བཞིན་གྱི་འབྲས་བུ་བསྟན།",
-
   "footer.credit": "Mikey Ilagan གྱི་ལས་གཞི།",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ གར་རོལ་སྒྲིག་གཞི་བཀྲོལ། ~*~",
   "party.play": "གར་རོལ་གཞས་ལེན།",
   "party.stop": "གར་རོལ་གཞས་བཀག",
   "party.announce_full": "གར་རོལ་སྒྲིག་གཞི་བཀྲོལ། ཡིག་གཟུགས་Comic Sans-ར་བཀྱུར། ཚོན་མདོག་རྟེ་མོར་འགྱུར། confetti མར་ལྷུང་། mouse cursor ལུ་གུ་ལ་འགྱུར།",
   "party.announce_reduced": "གར་རོལ་སྒྲིག་གཞི་བཀྲོལ། ཡིག་གཟུགས་Comic Sans-ར་བཀྱུར། ཚོན་མདོག་རྟེ་མོར་འགྱུར། mouse cursor ལུ་གུ་ལ་འགྱུར། confetti མི་མངོན། འགུལ་བ་ཉུང་སྒྲིག་ཡིན་པར།",
-
   "kofi.support": "རོགས་རམ་བྱེད།",
   "kofi.aria": "Ko-fi-ར་Mikey-ལ་རོགས་རམ། （panel་ཁ་འབྱེད།）",
   "kofi.title": "Ko-fi བཀའ་འབུལ་widget།",
-  "kofi.tooltip": "ཆ་འཕྲིན་མང་བ།"
+  "kofi.tooltip": "ཆ་འཕྲིན་མང་བ།",
+  "priority.critical": "གལ་ཆེ་ཤོས།",
+  "priority.high": "མཐོ།",
+  "priority.medium": "འབྲིང་།",
+  "priority.low": "དམའ།",
+  "priority.best_practice": "ལག་ལེན་བཟང་ཤོས།"
 }

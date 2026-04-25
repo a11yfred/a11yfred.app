@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Revisa descripciones de defectos de accesibilidad, rápido",
-
   "header.github": "Ver en GitHub",
   "header.open_settings": "Abrir configuración",
   "header.close_settings": "Cerrar configuración",
-
   "search.aria_label": "Búsqueda de defectos",
   "search.label": "Describe el defecto o la observación",
   "search.placeholder": "ej. botón cerrar modal sin etiqueta",
@@ -17,13 +15,11 @@
   "search.hint_ai": "La asistencia de IA está activa ({provider}).",
   "search.hint_change_in": "Esto se puede cambiar en",
   "search.hint_settings_link": "Configuración",
-
   "results.aria_label": "Candidatos a defecto",
   "results.no_results_announce": "Sin resultados para \"{query}\". Prueba con un nombre de componente, tipo de elemento u otra frase.",
   "results.no_results_aria": "Sin resultados",
   "results.no_results_heading": "Sin resultados para \"{query}\"",
   "results.no_results_body": "Prueba con un nombre de componente, tipo de elemento u otra frase.",
-
   "detail.fails": "Falla:",
   "detail.related": "Relacionado:",
   "detail.location_label": "Prefijo de ubicación",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — detalle del defecto",
   "detail.sheet_default": "Detalle del defecto",
-
   "settings.drawer_label": "Configuración",
   "settings.back": "Volver a la búsqueda",
   "settings.heading": "Configuración",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Configuración: Guardado",
   "settings.platform_web_announce": "Plataforma: Mostrar resultados orientados a web",
   "settings.platform_native_announce": "Plataforma: Mostrar resultados orientados a nativo",
-
   "footer.credit": "Un proyecto de Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ MODO FIESTA ACTIVADO ~*~",
   "party.play": "Reproducir música de fiesta",
   "party.stop": "Detener música de fiesta",
   "party.announce_full": "¡Modo fiesta activado! La fuente ha cambiado a Comic Sans. Los colores han cambiado a una paleta de colores aleatoria y brillante. Confeti colorido cae desde la parte superior de la pantalla en una variedad de colores y formas. El cursor del mouse es ahora una varita mágica.",
   "party.announce_reduced": "¡Modo fiesta activado! La fuente ha cambiado a Comic Sans. Los colores han cambiado a una paleta de colores aleatoria y brillante. El cursor del mouse es ahora una varita mágica. El confeti se ha omitido porque la reducción de movimiento está activada.",
-
   "kofi.support": "Apóyame",
   "kofi.aria": "Apoya a Mikey en Ko-fi (abre panel)",
   "kofi.title": "Widget de donación Ko-fi",
-  "kofi.tooltip": "Más información"
+  "kofi.tooltip": "Más información",
+  "priority.critical": "Kritikal",
+  "priority.high": "Mataas",
+  "priority.medium": "Katamtaman",
+  "priority.low": "Mababa",
+  "priority.best_practice": "Pinakamahusay na Gawi"
 }

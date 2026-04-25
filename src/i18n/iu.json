@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Tautuinnaarnissaq pillugit oqaatigineqarsinnaanissaminnik nalunaarusiorfigineqarsinnaassusiat, atugarissaarumavara",
-
   "header.github": "GitHub-imi takuguk",
   "header.open_settings": "Nalunaarusiorfigineqarsinnaassusiat atugarissaarfiginninnissaminnik",
   "header.close_settings": "Nalunaarusiorfigineqarsinnaassusiat matuminninnissaminnik",
-
   "search.aria_label": "Tautuinnaarneqarsinnaanngikkaluarluni nalilersorneqarsinnaassoq",
   "search.label": "Tautuinnaarneqarsinnaanngikkaluarluni pillugit oqaatsit",
   "search.placeholder": "ataasiinnaat: modal matuersinnaanngitsoq sumiiffillu atorneqarsinnaanngikkaluarluni",
@@ -17,13 +15,11 @@
   "search.hint_ai": "IA atorneqarpoq ({provider}).",
   "search.hint_change_in": "Tamanna allaquersorneqarsinnaappoq",
   "search.hint_settings_link": "Nalunaarusiorfigineqarsinnaassusianni",
-
   "results.aria_label": "Nalilersorneqarsinnaassoq nassatarisassaq",
   "results.no_results_announce": "\"{query}\" pillugit nassatarisassaq nalilersorneqanngikkaluarpoq. Atorsimasoq atorsinnaanngilaq, ima ataatsimiittarisinnaanngikkaluarluni.",
   "results.no_results_aria": "Nassatarisassaq nalilersorneqanngikkaluarpoq",
   "results.no_results_heading": "\"{query}\" pillugit nassatarisassaq nalilersorneqanngikkaluarpoq",
   "results.no_results_body": "Atorsimasoq atorsinnaanngilaq, ima ataatsimiittarisinnaanngikkaluarluni.",
-
   "detail.fails": "Nalilersorneqarsinnaanngikkaluarpoq:",
   "detail.related": "Atorsinnaanngilaq:",
   "detail.location_label": "Sumiiffillu atorneqarpoq",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — nalilersorneqarsinnaassoq",
   "detail.sheet_default": "Nalilersorneqarsinnaassoq",
-
   "settings.drawer_label": "Nalunaarusiorfigineqarsinnaassusiat",
   "settings.back": "Nalilersorneqarsinnaassusiamminnik",
   "settings.heading": "Nalunaarusiorfigineqarsinnaassusiat",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Nalunaarusiorfigineqarsinnaassusiat: Nalunaarusiorfigineqarpoq",
   "settings.platform_web_announce": "Platforma: Web nalilersorneqarsinnaassoq",
   "settings.platform_native_announce": "Platforma: Nalilersorneqarsinnaassoq",
-
   "footer.credit": "Mikey Ilagan suliassarsiorissavaa",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ NALILERSORNEQ ISIKKUA ATORNEQARPOQ ~*~",
   "party.play": "Nalilersorneq isikkua musiikkikkut",
   "party.stop": "Nalilersorneq isikkua atorsinnaanngikkaluarpoq",
   "party.announce_full": "Nalilersorneq isikkua atorneqarpoq! Oqaatsit Comic Sans. Nalilersorneqarsinnaassusiat allaaserisarisinnaapput. Konfetti pantalla-mi. Ratón cursor magic.",
   "party.announce_reduced": "Nalilersorneq isikkua atorneqarpoq! Oqaatsit Comic Sans. Nalilersorneqarsinnaassusiat allaaserisarisinnaapput. Ratón cursor magic. Konfetti atorsinnaanngikkaluarpoq.",
-
   "kofi.support": "Atorsinnaassoq",
   "kofi.aria": "Mikey Ko-fi-mi (panel atorsinnaassoq)",
   "kofi.title": "Ko-fi suliassarsiorissavaa widget",
-  "kofi.tooltip": "Nalunaarusiorfigineqarsinnaassusiat"
+  "kofi.tooltip": "Nalunaarusiorfigineqarsinnaassusiat",
+  "priority.critical": "Angirutit",
+  "priority.high": "Qanuittuq",
+  "priority.medium": "Akitujuq",
+  "priority.low": "Nakuunngitsoq",
+  "priority.best_practice": "Pigiariannginnami"
 }

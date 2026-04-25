@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Nānā i nā wehewehe hewa kūpono, māmā",
-
   "header.github": "Nānā ma GitHub",
   "header.open_settings": "Wehe nā hoʻonohonoho",
   "header.close_settings": "Pani nā hoʻonohonoho",
-
   "search.aria_label": "Huli hewa",
   "search.label": "Wehewehe i ka hewa a i ʻole ka nānā ʻana",
   "search.placeholder": "p.h. pihi pani modal me ka inoa ʻole",
@@ -17,13 +15,11 @@
   "search.hint_ai": "Ke kōkua nei ka AI ({provider}).",
   "search.hint_change_in": "Hiki ke hoʻololi ma",
   "search.hint_settings_link": "Nā hoʻonohonoho",
-
   "results.aria_label": "Nā hewa i loaʻa",
   "results.no_results_announce": "ʻAʻohe hopena no \"{query}\". E hoʻāʻo i ka inoa o ke ʻano, ke ʻano o ka mea, a i ʻole he māhele ʻē aʻe.",
   "results.no_results_aria": "ʻAʻohe hopena",
   "results.no_results_heading": "ʻAʻohe hopena no \"{query}\"",
   "results.no_results_body": "E hoʻāʻo i ka inoa o ke ʻano, ke ʻano o ka mea, a i ʻole he māhele ʻē aʻe.",
-
   "detail.fails": "Hāʻule:",
   "detail.related": "Pili ana:",
   "detail.location_label": "Kahua inoa",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — kikoʻī hewa",
   "detail.sheet_default": "Kikoʻī hewa",
-
   "settings.drawer_label": "Nā hoʻonohonoho",
   "settings.back": "Hoʻi i ka huli",
   "settings.heading": "Nā hoʻonohonoho",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Nā hoʻonohonoho: Ua mālama ʻia",
   "settings.platform_web_announce": "Paepae: Hōʻike i nā hopena pūnaewele",
   "settings.platform_native_announce": "Paepae: Hōʻike i nā hopena maoli",
-
   "footer.credit": "He papahana a Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ KE ʻANO PĀʻINA UA HOʻĀ ʻIA ~*~",
   "party.play": "Hoʻokani i ka mele pāʻina",
   "party.stop": "Hoʻōki i ka mele pāʻina",
   "party.announce_full": "Ua hoʻā ʻia ke ʻano pāʻina! Ua loli ka hua palapala i Comic Sans. Ua loli nā waihoʻoluʻu i kahi papa waihoʻoluʻu ʻōlinolino ʻōpiopio. Ke haule nei nā confetti waihoʻoluʻu mai luna o ka pale i nā waihoʻoluʻu a me nā hiʻohiʻona like ʻole. He koolau kupanaha ka iʻoa ʻumeke i kēia manawa.",
   "party.announce_reduced": "Ua hoʻā ʻia ke ʻano pāʻina! Ua loli ka hua palapala i Comic Sans. Ua loli nā waihoʻoluʻu i kahi papa waihoʻoluʻu ʻōlinolino ʻōpiopio. He koolau kupanaha ka iʻoa ʻumeke i kēia manawa. Ua ʻaluʻalu ʻia nā confetti no ka mea ua hoʻā ʻia ka hōʻemi neʻe.",
-
   "kofi.support": "Kōkua mai iaʻu",
   "kofi.aria": "Kōkua iā Mikey ma Ko-fi (wehe ʻia ka pahu)",
   "kofi.title": "Ko-fi haawi widget",
-  "kofi.tooltip": "ʻIke hou aku"
+  "kofi.tooltip": "ʻIke hou aku",
+  "priority.critical": "Koʻikoʻi Loa",
+  "priority.high": "Koʻikoʻi",
+  "priority.medium": "Waena",
+  "priority.low": "Haʻahaʻa",
+  "priority.best_practice": "ʻAno Maʻamau Maikaʻi"
 }

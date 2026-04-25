@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Suroten dagiti deskripsyon ti depekto iti aksesibilidad, nadaras",
-
   "header.github": "Kitaen iti GitHub",
   "header.open_settings": "Abriren dagiti setting",
   "header.close_settings": "Isarrado dagiti setting",
-
   "search.aria_label": "Bilangen ti depekto",
   "search.label": "Ihulagway ti depekto wenno obserbasyon",
   "search.placeholder": "halimbawa. modal close nga buton awan label",
@@ -17,13 +15,11 @@
   "search.hint_ai": "Aktibo ti tulong ti AI ({provider}).",
   "search.hint_change_in": "Mabalin a maublaw daytoy iti",
   "search.hint_settings_link": "Mga Setting",
-
   "results.aria_label": "Dagiti kandidato ti depekto",
   "results.no_results_announce": "Awan ti resulta para iti \"{query}\". Subukan ti nagan ti component, tipo ti elemento, wenno sabali nga pariparok.",
   "results.no_results_aria": "Awan ti resulta",
   "results.no_results_heading": "Awan ti resulta para iti \"{query}\"",
   "results.no_results_body": "Subukan ti nagan ti component, tipo ti elemento, wenno sabali nga pariparok.",
-
   "detail.fails": "Nabigo:",
   "detail.related": "Mainaig:",
   "detail.location_label": "Prefix ti Lokasyon",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — Detalye ti Depekto",
   "detail.sheet_default": "Detalye ti Depekto",
-
   "settings.drawer_label": "Dagiti Setting",
   "settings.back": "Agsubli iti Bilang",
   "settings.heading": "Dagiti Setting",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Dagiti Setting: Nadulin",
   "settings.platform_web_announce": "Platform: Ipakita dagiti resulta nga nakasentro iti web",
   "settings.platform_native_announce": "Platform: Ipakita dagiti resulta nga nakasentro iti native",
-
   "footer.credit": "Usa nga proyekto ni Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ PARTY MODE AKTIBO ~*~",
   "party.play": "I-play ti musika ti party",
   "party.stop": "Ipatulod ti musika ti party",
   "party.announce_full": "Na-aktibo ti party mode! Ti font nabalio iti Comic Sans. Dagiti kolor nabalio iti random nga nalamiis nga palette. Dagiti kolor nga confetti agbagsak iti ngato ti screen iti adu nga kolor ken porma. Ti cursor ti mouse ita usa nga magic wand.",
   "party.announce_reduced": "Na-aktibo ti party mode! Ti font nabalio iti Comic Sans. Dagiti kolor nabalio iti random nga nalamiis nga palette. Ti cursor ti mouse ita usa nga magic wand. Napreskip ti confetti ta napalubos ti reduced motion.",
-
   "kofi.support": "Suportaram ak",
   "kofi.aria": "Suportaran ni Mikey iti Ko-fi (magbuksan ti panel)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "Adu pay impormasyon"
+  "kofi.tooltip": "Adu pay impormasyon",
+  "priority.critical": "Kritikal",
+  "priority.high": "Nataas",
+  "priority.medium": "Tengnga",
+  "priority.low": "Nababa",
+  "priority.best_practice": "Kabestoan a Aramid"
 }

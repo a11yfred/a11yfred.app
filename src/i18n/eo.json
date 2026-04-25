@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Revizii alireblec difektopriskribaĵojn, rapide",
-
   "header.github": "Vidi en GitHub",
   "header.open_settings": "Malfermi agordojn",
   "header.close_settings": "Fermi agordojn",
-
   "search.aria_label": "Difektoserĉo",
   "search.label": "Priskribu la difekton aŭ observaĵon",
   "search.placeholder": "ekz. fenestro-ferma butono sen etikedo",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI-helpo estas aktiva ({provider}).",
   "search.hint_change_in": "Ĉi tion eblas ŝanĝi en",
   "search.hint_settings_link": "Agordoj",
-
   "results.aria_label": "Difektokandidatoj",
   "results.no_results_announce": "Neniu rezulto por \"{query}\". Provu komponantan nomon, elementa tipon aŭ alian frazon.",
   "results.no_results_aria": "Neniu rezulto",
   "results.no_results_heading": "Neniu rezulto por \"{query}\"",
   "results.no_results_body": "Provu komponantan nomon, elementa tipon aŭ alian frazon.",
-
   "detail.fails": "Malsukcesas:",
   "detail.related": "Rilata:",
   "detail.location_label": "Loka prefikso",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — difekta detaloj",
   "detail.sheet_default": "Difekta detaloj",
-
   "settings.drawer_label": "Agordoj",
   "settings.back": "Reen al serĉo",
   "settings.heading": "Agordoj",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Agordoj: Konservita",
   "settings.platform_web_announce": "Platformo: Montri TTT-orientajn rezultojn",
   "settings.platform_native_announce": "Platformo: Montri indiĝenajn rezultojn",
-
   "footer.credit": "Projekto de Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ FESTA REĜIMO ŜALTITA ~*~",
   "party.play": "Ludi festan muzikon",
   "party.stop": "Ĉesigi festan muzikon",
   "party.announce_full": "Festa reĝimo aktivigita! La tiparo ŝanĝiĝis al Comic Sans. La koloroj ŝanĝiĝis al hazarda hela kolorpaleto. Multkolora konfeto falas de la supro de la ekrano en diversaj koloroj kaj formoj. La musa kursoro estas nun magia bastono.",
   "party.announce_reduced": "Festa reĝimo aktivigita! La tiparo ŝanĝiĝis al Comic Sans. La koloroj ŝanĝiĝis al hazarda hela kolorpaleto. La musa kursoro estas nun magia bastono. Konfeto estis preterlasita ĉar reduktita movado estas ŝaltita.",
-
   "kofi.support": "Subtenu min",
   "kofi.aria": "Subteni Mikey en Ko-fi (malfermas panelon)",
   "kofi.title": "Ko-fi donacvidgeto",
-  "kofi.tooltip": "Pli da informo"
+  "kofi.tooltip": "Pli da informo",
+  "priority.critical": "Kritika",
+  "priority.high": "Alta",
+  "priority.medium": "Meza",
+  "priority.low": "Malalta",
+  "priority.best_practice": "Plej Bona Praktiko"
 }

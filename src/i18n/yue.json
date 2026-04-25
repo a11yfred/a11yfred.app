@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "快速稽核無障礙缺陷描述",
-
   "header.github": "喺GitHub睇",
   "header.open_settings": "開啟設定",
   "header.close_settings": "關閉設定",
-
   "search.aria_label": "缺陷搜尋",
   "search.label": "描述缺陷或觀察",
   "search.placeholder": "例如：modal 關閉按鈕冇標籤",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI輔助已啟動（{provider}）。",
   "search.hint_change_in": "可以喺以下更改",
   "search.hint_settings_link": "設定",
-
   "results.aria_label": "缺陷候選",
   "results.no_results_announce": "「{query}」冇結果。試下組件名稱、元素類型或其他描述。",
   "results.no_results_aria": "冇結果",
   "results.no_results_heading": "「{query}」冇結果",
   "results.no_results_body": "試下組件名稱、元素類型或其他描述。",
-
   "detail.fails": "失敗：",
   "detail.related": "相關：",
   "detail.location_label": "位置前綴",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — 缺陷詳情",
   "detail.sheet_default": "缺陷詳情",
-
   "settings.drawer_label": "設定",
   "settings.back": "返回搜尋",
   "settings.heading": "設定",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "設定：已儲存",
   "settings.platform_web_announce": "平台：顯示網頁相關結果",
   "settings.platform_native_announce": "平台：顯示原生相關結果",
-
   "footer.credit": "伊拉根·米基的項目",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ 派對模式已啟動 ~*~",
   "party.play": "播放派對音樂",
   "party.stop": "停止派對音樂",
   "party.announce_full": "派對模式已啟動！字體已更改為Comic Sans。顏色已更改為隨機鮮豔調色板。彩色紙屑從屏幕頂部飄落，呈現各種顏色和形狀。滑鼠游標現在係魔法棒。",
   "party.announce_reduced": "派對模式已啟動！字體已更改為Comic Sans。顏色已更改為隨機鮮豔調色板。滑鼠游標現在係魔法棒。紙屑已跳過，因為減少動畫已開啟。",
-
   "kofi.support": "支持我",
   "kofi.aria": "喺Ko-fi支持Mikey（開啟面板）",
   "kofi.title": "Ko-fi捐款小工具",
-  "kofi.tooltip": "更多資訊"
+  "kofi.tooltip": "更多資訊",
+  "priority.critical": "嚴重",
+  "priority.high": "高",
+  "priority.medium": "中",
+  "priority.low": "低",
+  "priority.best_practice": "最佳實踐"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Gaa-windamaagoziying gidoodaasiwin gegoo, mii dash gaa-onji-ozhibii'igeyang",
-
   "header.github": "Waabandan GitHub-ing",
   "header.open_settings": "Giigidood mazinaigan",
   "header.close_settings": "Giigidood mazinaigan giizhiitaa",
-
   "search.aria_label": "Nanda-wiindamaagewin",
   "search.label": "Wiindamaaw gegoo gaa-maanenimad",
   "search.placeholder": "akawe: modal giigidood giin gaa-pizindang",
@@ -17,13 +15,11 @@
   "search.hint_ai": "IA wiindamaagewin ({provider}).",
   "search.hint_change_in": "Mii ow asemaa gaa-izhi",
   "search.hint_settings_link": "Mazinaigan-ing",
-
   "results.aria_label": "Wiindamaagewin bi-izhi",
   "results.no_results_announce": "\"{query}\" mii gaawiin gegoo. Nanda-wiindamaage giin, giigidood gaye.",
   "results.no_results_aria": "Gaawiin gegoo",
   "results.no_results_heading": "\"{query}\" mii gaawiin gegoo",
   "results.no_results_body": "Nanda-wiindamaage giin, giigidood gaye.",
-
   "detail.fails": "Maanenimad:",
   "detail.related": "Wiindamaagewin:",
   "detail.location_label": "Wiindamaagewin gaa-onji-maanenimad",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — maanenimad",
   "detail.sheet_default": "Maanenimad",
-
   "settings.drawer_label": "Mazinaigan",
   "settings.back": "Nanda-wiindamaage",
   "settings.heading": "Mazinaigan",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Mazinaigan: Ajijaak",
   "settings.platform_web_announce": "Platforma: Web wiindamaagewin",
   "settings.platform_native_announce": "Platforma: Anishinaabe wiindamaagewin",
-
   "footer.credit": "Mikey Ilagan gii-ozhitood",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ MIINAAWAA-NIIMI'IDING GIIZHIITAA ~*~",
   "party.play": "Miinaawaa-niimi'iding nagamon",
   "party.stop": "Miinaawaa-niimi'iding giizhiitaa",
   "party.announce_full": "Miinaawaa-niimi'iding giizhiitaa! Ozhibii'an Comic Sans. Tema gii-izhi. Konfetti pantalla-ing. Ratón cursor magic.",
   "party.announce_reduced": "Miinaawaa-niimi'iding giizhiitaa! Ozhibii'an Comic Sans. Tema gii-izhi. Ratón cursor magic. Konfetti gaawiin.",
-
   "kofi.support": "Wiiji'an",
   "kofi.aria": "Mikey Ko-fi (panel giigidood)",
   "kofi.title": "Ko-fi widget",
-  "kofi.tooltip": "Geyaabi wiindamaagewin"
+  "kofi.tooltip": "Geyaabi wiindamaagewin",
+  "priority.critical": "Gitchi Zanagi",
+  "priority.high": "Ishpiming",
+  "priority.medium": "Akina Ogaa",
+  "priority.low": "Aapiji Nishke",
+  "priority.best_practice": "Mino-bimaadiziwin"
 }

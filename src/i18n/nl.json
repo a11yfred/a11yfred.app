@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Controleer defectbeschrijvingen, snel",
-
   "header.github": "Bekijk op GitHub",
   "header.open_settings": "Instellingen openen",
   "header.close_settings": "Instellingen sluiten",
-
   "search.aria_label": "Defectzoekfunctie",
   "search.label": "Beschrijf het defect of de observatie",
   "search.placeholder": "bijv. modaal sluitknop zonder label",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI-assistent actief ({provider}).",
   "search.hint_change_in": "Dit kan worden gewijzigd in",
   "search.hint_settings_link": "Instellingen",
-
   "results.aria_label": "Defectkandidaten",
   "results.no_results_announce": "Geen resultaten voor \"{query}\". Probeer een componentnaam, elementtype of een andere formulering.",
   "results.no_results_aria": "Geen resultaten",
   "results.no_results_heading": "Geen resultaten voor \"{query}\"",
   "results.no_results_body": "Probeer een componentnaam, elementtype of een andere formulering.",
-
   "detail.fails": "Mislukt:",
   "detail.related": "Gerelateerd:",
   "detail.location_label": "Locatieprefix",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — defectdetail",
   "detail.sheet_default": "Defectdetail",
-
   "settings.drawer_label": "Instellingen",
   "settings.back": "Terug naar zoeken",
   "settings.heading": "Instellingen",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Instellingen: Opgeslagen",
   "settings.platform_web_announce": "Platform: Webgerichte resultaten weergeven",
   "settings.platform_native_announce": "Platform: Systeemeigen resultaten weergeven",
-
   "footer.credit": "Een project van Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ FEESTMODUS GEACTIVEERD ~*~",
   "party.play": "Feestmuziek afspelen",
   "party.stop": "Feestmuziek stoppen",
   "party.announce_full": "Feestmodus geactiveerd! Het lettertype is veranderd in Comic Sans. De kleuren zijn veranderd naar een willekeurig helder kleurenpalet. Kleurrijk confetti valt nu van de bovenkant van het scherm in een verscheidenheid aan kleuren en vormen. De muisaanwijzer is nu een toverstaf.",
   "party.announce_reduced": "Feestmodus geactiveerd! Het lettertype is veranderd in Comic Sans. De kleuren zijn veranderd naar een willekeurig helder kleurenpalet. De muisaanwijzer is nu een toverstaf. Confetti werd overgeslagen omdat verminderde beweging is ingeschakeld.",
-
   "kofi.support": "Steun mij",
   "kofi.aria": "Steun Mikey op Ko-fi (opent paneel)",
   "kofi.title": "Ko-fi donatie-widget",
-  "kofi.tooltip": "Meer informatie"
+  "kofi.tooltip": "Meer informatie",
+  "priority.critical": "Kritiek",
+  "priority.high": "Hoog",
+  "priority.medium": "Gemiddeld",
+  "priority.low": "Laag",
+  "priority.best_practice": "Beste Praktijk"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Azubar biyaan hoñarar biboron taikki joçça zçe, gela gela",
-
   "header.github": "GitHub tuán dek",
   "header.open_settings": "Taijing khula",
   "header.close_settings": "Taijing bondoh",
-
   "search.aria_label": "Hoñar bilañ",
   "search.label": "Hoñar wá nozor biboron di",
   "search.placeholder": "domola: modal bondoh button label naai",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI madot çalu ase ({provider}).",
   "search.hint_change_in": "Eita bodolaibo",
   "search.hint_settings_link": "Taijing",
-
   "results.aria_label": "Hoñar natija",
   "results.no_results_announce": "\"{query}\" loi natija naai. Component naam, element dhora wá ainder frase try kor.",
   "results.no_results_aria": "Natija naai",
   "results.no_results_heading": "\"{query}\" loi natija naai",
   "results.no_results_body": "Component naam, element dhora wá ainder frase try kor.",
-
   "detail.fails": "Hoñar:",
   "detail.related": "Somporkit:",
   "detail.location_label": "Jaiga prefix",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — hoñar biboron",
   "detail.sheet_default": "Hoñar biboron",
-
   "settings.drawer_label": "Taijing",
   "settings.back": "Bilañ-e phera",
   "settings.heading": "Taijing",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Taijing: Rikkhha hoise",
   "settings.platform_web_announce": "Platform: Web natija dekhai",
   "settings.platform_native_announce": "Platform: Nijor app natija dekhai",
-
   "footer.credit": "Mikey Ilagan-er project",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ UTSHOB MODE ÇALU ~*~",
   "party.play": "Utshob gaan çalu kor",
   "party.stop": "Utshob gaan bondoh kor",
   "party.announce_full": "Utshob mode çalu! Font Comic Sans-e gese. Rong random ujjol palette-e gese. Rangçin confetti ekran-er upor theke pore. Mouse cursor magic wand hoise.",
   "party.announce_reduced": "Utshob mode çalu! Font Comic Sans-e gese. Rong random ujjol palette-e gese. Mouse cursor magic wand hoise. Confetti opaç hoise karon motion kom korise.",
-
   "kofi.support": "Amake support kor",
   "kofi.aria": "Ko-fi-e Mikey-ke support kor (panel khule)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "Aar tottho"
+  "kofi.tooltip": "Aar tottho",
+  "priority.critical": "Bohu Dorkar",
+  "priority.high": "Beçi Dorkar",
+  "priority.medium": "Maijjam",
+  "priority.low": "Òm",
+  "priority.best_practice": "Balo Kaida"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Accessibility Defects yInej — nom!",
-
   "header.github": "GitHub yIlegh",
   "header.open_settings": "qawHaq yIpoSmoH",
   "header.close_settings": "qawHaq yISoQmoH",
-
   "search.aria_label": "Defect nejwI'",
   "search.label": "Defect yIghItlh",
   "search.placeholder": "p.ex: modal SoQmoHwI' pong tu'lu'be'",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI QaH chu' ({provider}).",
   "search.hint_change_in": "choHlaH",
   "search.hint_settings_link": "qawHaq",
-
   "results.aria_label": "Defect namzetmey",
   "results.no_results_announce": "\"{query}\" — pagh tu'lu'. pong, Hap moj, pagh latlh mu' yIwIv.",
   "results.no_results_aria": "pagh tu'lu'",
   "results.no_results_heading": "\"{query}\" — pagh tu'lu'",
   "results.no_results_body": "pong, Hap moj, pagh latlh mu' yIwIv.",
-
   "detail.fails": "Qapbe':",
   "detail.related": "mISwI':",
   "detail.location_label": "DoS nagh",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — Defect ghItlh",
   "detail.sheet_default": "Defect ghItlh",
-
   "settings.drawer_label": "qawHaq",
   "settings.back": "Nej yIchegh",
   "settings.heading": "qawHaq",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "qawHaq: pollu'",
   "settings.platform_web_announce": "tengchaH: HaSta Defects Dalegh",
   "settings.platform_native_announce": "tengchaH: ngoq Defects Dalegh",
-
   "footer.credit": "Mikey Ilagan mIwvaD",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ QujwI' reH chu' ~*~",
   "party.play": "Quj bom yIQuj",
   "party.stop": "bom yImev",
   "party.announce_full": "QujwI' reH chu'! Font Comic Sans. rIn choH. Hoch 'entepray'Daq bIQ vogh vogh. cursor taj.",
   "party.announce_reduced": "QujwI' reH chu'! Font Comic Sans. rIn choH. cursor taj. bIQ mev — motion Qo'.",
-
   "kofi.support": "yIQaH",
   "kofi.aria": "Ko-fi Mikey yIQaH (panel poSmoH)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "latlh De'"
+  "kofi.tooltip": "latlh De'",
+  "priority.critical": "Daj Qup",
+  "priority.high": "HoS Daj",
+  "priority.medium": "Daj",
+  "priority.low": "puj",
+  "priority.best_practice": "nuH QaQ"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "அணுகல் குறைபாடு விவரங்களை விரைவாக மதிப்பாய்வு செய்யுங்கள்",
-
   "header.github": "GitHub-ல் பார்க்க",
   "header.open_settings": "அமைப்புகளை திற",
   "header.close_settings": "அமைப்புகளை மூடு",
-
   "search.aria_label": "குறைபாடு தேடல்",
   "search.label": "குறைபாடு அல்லது கவனிப்பை விவரிக்கவும்",
   "search.placeholder": "எ.கா. மாடல் மூடும் பொத்தானில் லேபல் இல்லை",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI உதவி செயலில் உள்ளது ({provider}).",
   "search.hint_change_in": "இதை மாற்றலாம்",
   "search.hint_settings_link": "அமைப்புகளில்",
-
   "results.aria_label": "குறைபாடு வேட்பாளர்கள்",
   "results.no_results_announce": "\"{query}\" க்கு முடிவுகள் இல்லை. கூறு பெயர், உறுப்பு வகை அல்லது வேறு சொற்றொடரை முயற்சிக்கவும்.",
   "results.no_results_aria": "முடிவுகள் இல்லை",
   "results.no_results_heading": "\"{query}\" க்கு முடிவுகள் இல்லை",
   "results.no_results_body": "கூறு பெயர், உறுப்பு வகை அல்லது வேறு சொற்றொடரை முயற்சிக்கவும்.",
-
   "detail.fails": "தோல்வி:",
   "detail.related": "தொடர்புடையது:",
   "detail.location_label": "இருப்பிட முன்னொட்டு",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — குறைபாடு விவரங்கள்",
   "detail.sheet_default": "குறைபாடு விவரங்கள்",
-
   "settings.drawer_label": "அமைப்புகள்",
   "settings.back": "தேடலுக்கு திரும்பு",
   "settings.heading": "அமைப்புகள்",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "அமைப்புகள்: சேமிக்கப்பட்டது",
   "settings.platform_web_announce": "தளம்: வலை சார்ந்த முடிவுகளைக் காட்டு",
   "settings.platform_native_announce": "தளம்: நேட்டிவ் சார்ந்த முடிவுகளைக் காட்டு",
-
   "footer.credit": "Mikey Ilagan-ஆல் ஒரு திட்டம்",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ பார்ட்டி பயன்முறை இயக்கப்பட்டது ~*~",
   "party.play": "பார்ட்டி இசையை இயக்கு",
   "party.stop": "பார்ட்டி இசையை நிறுத்து",
   "party.announce_full": "பார்ட்டி பயன்முறை இயக்கப்பட்டது! எழுத்துரு Comic Sans-ஆக மாறியது. வண்ணங்கள் சீரற்ற பிரகாசமான வண்ண சாயலுக்கு மாறின. வண்ணமயமான confetti திரையின் மேலிருந்து கீழே விழுகிறது. சுட்டியின் கர்சர் இப்போது மாய கைவடி ஆனது.",
   "party.announce_reduced": "பார்ட்டி பயன்முறை இயக்கப்பட்டது! எழுத்துரு Comic Sans-ஆக மாறியது. வண்ணங்கள் சீரற்ற பிரகாசமான வண்ண சாயலுக்கு மாறின. சுட்டியின் கர்சர் இப்போது மாய கைவடி ஆனது. குறைக்கப்பட்ட இயக்கம் இயக்கப்பட்டதால் confetti தவிர்க்கப்பட்டது.",
-
   "kofi.support": "என்னை ஆதரிக்கவும்",
   "kofi.aria": "Ko-fi-ல் Mikey-ஐ ஆதரிக்கவும் (பலகை திறக்கும்)",
   "kofi.title": "Ko-fi நன்கொடை widget",
-  "kofi.tooltip": "மேலும் தகவல்"
+  "kofi.tooltip": "மேலும் தகவல்",
+  "priority.critical": "மிக முக்கியமான",
+  "priority.high": "அதிகம்",
+  "priority.medium": "நடுத்தரம்",
+  "priority.low": "குறைவு",
+  "priority.best_practice": "சிறந்த நடைமுறை"
 }

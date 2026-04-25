@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Revize deskripsyon defò aksesibilite yo, rapidman",
-
   "header.github": "Wè sou GitHub",
   "header.open_settings": "Ouvri paramèt yo",
   "header.close_settings": "Fèmen paramèt yo",
-
   "search.aria_label": "Rechèch defò",
   "search.label": "Dekri defò a oswa obsèvasyon an",
   "search.placeholder": "pa egzanp. bouton fèmen modal san etikèt",
@@ -17,13 +15,11 @@
   "search.hint_ai": "Asistans IA aktif ({provider}).",
   "search.hint_change_in": "Sa ka chanje nan",
   "search.hint_settings_link": "Paramèt",
-
   "results.aria_label": "Kandida defò",
   "results.no_results_announce": "Pa gen rezilta pou \"{query}\". Eseye yon non konponant, tip eleman, oswa yon lòt ekspresyon.",
   "results.no_results_aria": "Pa gen rezilta",
   "results.no_results_heading": "Pa gen rezilta pou \"{query}\"",
   "results.no_results_body": "Eseye yon non konponant, tip eleman, oswa yon lòt ekspresyon.",
-
   "detail.fails": "Echwe :",
   "detail.related": "Rapòte :",
   "detail.location_label": "Prefiks lokasyon",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — detay defò",
   "detail.sheet_default": "Detay defò",
-
   "settings.drawer_label": "Paramèt",
   "settings.back": "Retounen nan rechèch",
   "settings.heading": "Paramèt",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Paramèt : Sove",
   "settings.platform_web_announce": "Platfòm : Montre rezilta entènèt",
   "settings.platform_native_announce": "Platfòm : Montre rezilta natif natal",
-
   "footer.credit": "Yon pwojè pa Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ MÒD FÈT AKTIVE ~*~",
   "party.play": "Jwe mizik fèt",
   "party.stop": "Kanpe mizik fèt",
   "party.announce_full": "Mòd fèt aktive ! Fon an chanje pou Comic Sans. Koulè yo chanje pou yon palèt koulè briyan aleatwa. Konfeti koulè ap tonbe kounye a nan tèt ekran an nan yon varyete koulè ak fòm. Kursè sourit la se kounye a yon bagèt majik.",
   "party.announce_reduced": "Mòd fèt aktive ! Fon an chanje pou Comic Sans. Koulè yo chanje pou yon palèt koulè briyan aleatwa. Kursè sourit la se kounye a yon bagèt majik. Konfeti yo te evite paske reduksyon mouvman aktive.",
-
   "kofi.support": "Sipòte m",
   "kofi.aria": "Sipòte Mikey sou Ko-fi (ouvri panno)",
   "kofi.title": "Widget don Ko-fi",
-  "kofi.tooltip": "Plis enfòmasyon"
+  "kofi.tooltip": "Plis enfòmasyon",
+  "priority.critical": "Kritik",
+  "priority.high": "Wo",
+  "priority.medium": "Mwayen",
+  "priority.low": "Ba",
+  "priority.best_practice": "Pratik Ki Pi Bon"
 }

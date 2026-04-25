@@ -112,5 +112,10 @@
   "kofi.support": "Support me",
   "kofi.aria": "Support Mikey on Ko-fi (opens panel)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "More information"
+  "kofi.tooltip": "More information",
+  "priority.critical": "Critical",
+  "priority.high": "High",
+  "priority.medium": "Medium",
+  "priority.low": "Low",
+  "priority.best_practice": "Best Practice"
 }

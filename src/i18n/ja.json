@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "不具合の説明を素早く確認",
-
   "header.github": "GitHubで見る",
   "header.open_settings": "設定を開く",
   "header.close_settings": "設定を閉じる",
-
   "search.aria_label": "不具合検索",
   "search.label": "不具合または観察内容を説明してください",
   "search.placeholder": "例：モーダルの閉じるボタンにラベルなし",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AIアシストが有効です（{provider}）。",
   "search.hint_change_in": "これは変更できます",
   "search.hint_settings_link": "設定",
-
   "results.aria_label": "不具合候補",
   "results.no_results_announce": "「{query}」の結果はありません。コンポーネント名、要素タイプ、または別のフレーズで試してください。",
   "results.no_results_aria": "結果なし",
   "results.no_results_heading": "「{query}」の結果はありません",
   "results.no_results_body": "コンポーネント名、要素タイプ、または別のフレーズで試してください。",
-
   "detail.fails": "失敗：",
   "detail.related": "関連：",
   "detail.location_label": "場所のプレフィックス",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — 不具合詳細",
   "detail.sheet_default": "不具合詳細",
-
   "settings.drawer_label": "設定",
   "settings.back": "検索に戻る",
   "settings.heading": "設定",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "設定：保存しました",
   "settings.platform_web_announce": "プラットフォーム：ウェブ向けの結果を表示",
   "settings.platform_native_announce": "プラットフォーム：ネイティブ向けの結果を表示",
-
   "footer.credit": "イラガン ミキのプロジェクト",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ パーティモード有効 ~*~",
   "party.play": "パーティミュージックを再生",
   "party.stop": "パーティミュージックを停止",
   "party.announce_full": "パーティモードが有効になりました！フォントがComic Sansに変わりました。カラーがランダムな明るいカラーパレットに変わりました。色とりどりの紙吹雪がさまざまな色と形で画面の上から落ちています。マウスカーソルが魔法の杖になりました。",
   "party.announce_reduced": "パーティモードが有効になりました！フォントがComic Sansに変わりました。カラーがランダムな明るいカラーパレットに変わりました。マウスカーソルが魔法の杖になりました。モーションの軽減が有効なため、紙吹雪はスキップされました。",
-
   "kofi.support": "サポートする",
   "kofi.aria": "Ko-fiでMikeyをサポート（パネルを開く）",
   "kofi.title": "Ko-fi寄付ウィジェット",
-  "kofi.tooltip": "詳細情報"
+  "kofi.tooltip": "詳細情報",
+  "priority.critical": "重大",
+  "priority.high": "高",
+  "priority.medium": "中",
+  "priority.low": "低",
+  "priority.best_practice": "ベストプラクティス"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Erişkenlik qusurı açıqlamalarını tez közetmek",
-
   "header.github": "GitHub'da baqmaq",
   "header.open_settings": "Ayarlarını aç",
   "header.close_settings": "Ayarlarını qapat",
-
   "search.aria_label": "Qusur arama",
   "search.label": "Qusurnı yaki müşahädeñni añlat",
   "search.placeholder": "meselen: modal qapatma düğmesiniñ etiketi yoq",
@@ -17,13 +15,11 @@
   "search.hint_ai": "YZ yardımı faal ({provider}).",
   "search.hint_change_in": "Bunu özgertmek mümkün",
   "search.hint_settings_link": "Ayarlarda",
-
   "results.aria_label": "Qusur namzetleri",
   "results.no_results_announce": "\"{query}\" için netije yoq. Bileşen adı, element türü ya başqa söz deneñ.",
   "results.no_results_aria": "Netije yoq",
   "results.no_results_heading": "\"{query}\" için netije yoq",
   "results.no_results_body": "Bileşen adı, element türü ya başqa söz deneñ.",
-
   "detail.fails": "Başarısız:",
   "detail.related": "Bağlantılı:",
   "detail.location_label": "Yer önek",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — qusur tafsilat",
   "detail.sheet_default": "Qusur tafsilat",
-
   "settings.drawer_label": "Ayarlar",
   "settings.back": "Aramağa qayt",
   "settings.heading": "Ayarlar",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Ayarlar: Saqlaqlandı",
   "settings.platform_web_announce": "Platforma: Ağ yönlü neticelerni köster",
   "settings.platform_native_announce": "Platforma: Yerli yönlü neticelerni köster",
-
   "footer.credit": "Mikey Ilagan tarafından bir proje",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ BAYRAM REJİMİ ETKİNLEŞTİRİLDİ ~*~",
   "party.play": "Bayram müziği çal",
   "party.stop": "Bayram müziğini durdur",
   "party.announce_full": "Bayram rejimi etkinleştirildi! Yazı tipi Comic Sans'a değişti. Renkler rastgele parlak bir palete değişti. Renkli konfetiler ekranın üstünden çeşitli renk ve şekillerde düşüyor. Fare imleci şimdi bir sihirli değnek.",
   "party.announce_reduced": "Bayram rejimi etkinleştirildi! Yazı tipi Comic Sans'a değişti. Renkler rastgele parlak bir pallete değişti. Fare imleci şimdi bir sihirli değnek. Azaltılmış hareket etkin olduğundan konfetti atlandı.",
-
   "kofi.support": "Beni destekle",
   "kofi.aria": "Ko-fi'de Mikey'yi destekle (panel açılır)",
   "kofi.title": "Ko-fi bağış widget'ı",
-  "kofi.tooltip": "Daha fazla bilgi"
+  "kofi.tooltip": "Daha fazla bilgi",
+  "priority.critical": "Kritik",
+  "priority.high": "Yüksek",
+  "priority.medium": "Orta",
+  "priority.low": "Alçaq",
+  "priority.best_practice": "Eñ Yahşı Adet"
 }

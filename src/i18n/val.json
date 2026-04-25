@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Accessibility qrīdrughon udra vēttergon — sōna",
-
   "header.github": "GitHub naejot jorrāelan",
   "header.open_settings": "Gevion tepagon",
   "header.close_settings": "Gevion sōvēgon",
-
   "search.aria_label": "Qrīdruhor urnēbian",
   "search.label": "Qrīdruhor udra sīkudagon",
   "search.placeholder": "p.ex: modal sōvēs tolmiot gīmīla sȳz issa daor",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI āeksion aktīvys issa ({provider}).",
   "search.hint_change_in": "Bē gevionot sīkudon kessa",
   "search.hint_settings_link": "Gevion",
-
   "results.aria_label": "Qrīdruhor nāgrī",
   "results.no_results_announce": "\"{query}\" syt nāgrī issa daor. Skoros tolmiot, hen skoros, pōlio urnēbian.",
   "results.no_results_aria": "Nāgrī issa daor",
   "results.no_results_heading": "\"{query}\" syt nāgrī issa daor",
   "results.no_results_body": "Skoros tolmiot, hen skoros, pōlio urnēbian.",
-
   "detail.fails": "Sȳz issa daor:",
   "detail.related": "Jorrāelys:",
   "detail.location_label": "Bē skoros",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — Qrīdruhor udra",
   "detail.sheet_default": "Qrīdruhor udra",
-
   "settings.drawer_label": "Gevion",
   "settings.back": "Urnēbian arlī",
   "settings.heading": "Gevion",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Gevion: Morghugiles",
   "settings.platform_web_announce": "Ñāqos: HaSta qrīdrughon leghis",
   "settings.platform_native_announce": "Ñāqos: Taolis qrīdrughon leghis",
-
   "footer.credit": "Mikey Ilagan — Qrīdruhor Āeksion",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ QRĪDRUGHON ĀEKSION TEPILES ~*~",
   "party.play": "Āeksion bom tepagon",
   "party.stop": "Āeksion bom sōvēgon",
   "party.announce_full": "Qrīdrughon āeksion tepiles! Font Comic Sans issa. Kostys ñāqis arlī kessas. Vēzos rōvys skoro gīmīlas. Cursor āeksio issa.",
   "party.announce_reduced": "Qrīdrughon āeksion tepiles! Font Comic Sans issa. Kostys ñāqis arlī kessas. Cursor āeksio issa. Vēzos sōvēgon — motion issa daor.",
-
   "kofi.support": "Nyke Jorrāelan",
   "kofi.aria": "Ko-fi Mikey jorrāelan (panel tepagon)",
   "kofi.title": "Ko-fi nāgrī widget",
-  "kofi.tooltip": "Rōva De'"
+  "kofi.tooltip": "Rōva De'",
+  "priority.critical": "Crític",
+  "priority.high": "Alt",
+  "priority.medium": "Mitjà",
+  "priority.low": "Baix",
+  "priority.best_practice": "Millor pràctica"
 }

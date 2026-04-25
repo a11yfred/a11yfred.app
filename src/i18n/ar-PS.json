@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "مراجعة أوصاف عيوب إمكانية الوصول، بسرعة",
-
   "header.github": "عرض على GitHub",
   "header.open_settings": "فتح الإعدادات",
   "header.close_settings": "إغلاق الإعدادات",
-
   "search.aria_label": "البحث عن عيوب",
   "search.label": "صف العيب أو الملاحظة",
   "search.placeholder": "مثال: زر إغلاق النافذة المنبثقة بلا تسمية",
@@ -17,13 +15,11 @@
   "search.hint_ai": "مساعدة الذكاء الاصطناعي نشطة ({provider}).",
   "search.hint_change_in": "يمكن تغيير ذلك في",
   "search.hint_settings_link": "الإعدادات",
-
   "results.aria_label": "مرشحو العيوب",
   "results.no_results_announce": "لا نتائج لـ \"{query}\". جرّب اسم مكوّن أو نوع عنصر أو عبارة مختلفة.",
   "results.no_results_aria": "لا نتائج",
   "results.no_results_heading": "لا نتائج لـ \"{query}\"",
   "results.no_results_body": "جرّب اسم مكوّن أو نوع عنصر أو عبارة مختلفة.",
-
   "detail.fails": "يفشل في:",
   "detail.related": "ذو صلة:",
   "detail.location_label": "بادئة الموقع",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — تفاصيل العيب",
   "detail.sheet_default": "تفاصيل العيب",
-
   "settings.drawer_label": "الإعدادات",
   "settings.back": "العودة إلى البحث",
   "settings.heading": "الإعدادات",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "الإعدادات: تم الحفظ",
   "settings.platform_web_announce": "المنصة: عرض نتائج موجهة للويب",
   "settings.platform_native_announce": "المنصة: عرض نتائج موجهة للتطبيقات الأصلية",
-
   "footer.credit": "مشروع من إعداد Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ وضع الحفلة مفعّل ~*~",
   "party.play": "تشغيل موسيقى الحفلة",
   "party.stop": "إيقاف موسيقى الحفلة",
   "party.announce_full": "تم تفعيل وضع الحفلة! تغيّر الخط إلى Comic Sans. تغيّرت الألوان إلى لوحة ألوان زاهية عشوائية. تتساقط قصاصات الورق الملونة من أعلى الشاشة بألوان وأشكال متنوعة. مؤشر الماوس أصبح عصا سحرية.",
   "party.announce_reduced": "تم تفعيل وضع الحفلة! تغيّر الخط إلى Comic Sans. تغيّرت الألوان إلى لوحة ألوان زاهية عشوائية. مؤشر الماوس أصبح عصا سحرية. تم تخطي القصاصات الورقية لأن تقليل الحركة مفعّل.",
-
   "kofi.support": "ادعمني",
   "kofi.aria": "ادعم Mikey على Ko-fi (يفتح لوحة)",
   "kofi.title": "أداة التبرع Ko-fi",
-  "kofi.tooltip": "مزيد من المعلومات"
+  "kofi.tooltip": "مزيد من المعلومات",
+  "priority.critical": "حرج",
+  "priority.high": "مرتفع",
+  "priority.medium": "متوسط",
+  "priority.low": "منخفض",
+  "priority.best_practice": "أفضل الممارسات"
 }

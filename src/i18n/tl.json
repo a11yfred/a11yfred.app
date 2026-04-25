@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "I-audit ang mga paglalarawan ng depekto, mabilis",
-
   "header.github": "Tingnan sa GitHub",
   "header.open_settings": "Buksan ang mga setting",
   "header.close_settings": "Isara ang mga setting",
-
   "search.aria_label": "Paghahanap ng depekto",
   "search.label": "Ilarawan ang depekto o obserbasyon",
   "search.placeholder": "hal. modal close button walang label",
@@ -17,13 +15,11 @@
   "search.hint_ai": "Aktibo ang AI assist ({provider}).",
   "search.hint_change_in": "Maaari itong baguhin sa",
   "search.hint_settings_link": "Mga Setting",
-
   "results.aria_label": "Mga kandidato ng depekto",
   "results.no_results_announce": "Walang resulta para sa \"{query}\". Subukan ang pangalan ng component, uri ng elemento, o ibang parirala.",
   "results.no_results_aria": "Walang resulta",
   "results.no_results_heading": "Walang resulta para sa \"{query}\"",
   "results.no_results_body": "Subukan ang pangalan ng component, uri ng elemento, o ibang parirala.",
-
   "detail.fails": "Nabigo:",
   "detail.related": "Kaugnay:",
   "detail.location_label": "Prefix ng Lokasyon",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — Detalye ng Depekto",
   "detail.sheet_default": "Detalye ng Depekto",
-
   "settings.drawer_label": "Mga Setting",
   "settings.back": "Bumalik sa Paghahanap",
   "settings.heading": "Mga Setting",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Mga Setting: Na-save",
   "settings.platform_web_announce": "Platform: Ipakita ang mga resulta na nakatuon sa web",
   "settings.platform_native_announce": "Platform: Ipakita ang mga resulta na nakatuon sa native",
-
   "footer.credit": "Isang proyekto ni Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ NAKA-ENABLE ANG PARTY MODE ~*~",
   "party.play": "I-play ang party music",
   "party.stop": "Ihinto ang party music",
   "party.announce_full": "Na-activate ang party mode! Nagbago ang font sa Comic Sans. Nagbago ang mga kulay sa random na maliwanag na palette ng kulay. Kulay-kulay na confetti ang bumabagsak mula sa itaas ng screen sa iba't ibang kulay at hugis. Magic wand na ang mouse cursor.",
   "party.announce_reduced": "Na-activate ang party mode! Nagbago ang font sa Comic Sans. Nagbago ang mga kulay sa random na maliwanag na palette ng kulay. Magic wand na ang mouse cursor. Nilaktawan ang confetti dahil naka-on ang reduced motion.",
-
   "kofi.support": "Suportahan ako",
   "kofi.aria": "Suportahan si Mikey sa Ko-fi (nagbubukas ng panel)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "Karagdagang impormasyon"
+  "kofi.tooltip": "Karagdagang impormasyon",
+  "priority.critical": "Kritikal",
+  "priority.high": "Mataas",
+  "priority.medium": "Katamtaman",
+  "priority.low": "Mababa",
+  "priority.best_practice": "Pinakamahusay na Gawi"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Fehlerbeschreibungen prüfen, schnell",
-
   "header.github": "Auf GitHub ansehen",
   "header.open_settings": "Einstellungen öffnen",
   "header.close_settings": "Einstellungen schließen",
-
   "search.aria_label": "Fehlersuche",
   "search.label": "Beschreibe den Fehler oder die Beobachtung",
   "search.placeholder": "z. B. Modal-Schließen-Schaltfläche ohne Beschriftung",
@@ -17,13 +15,11 @@
   "search.hint_ai": "KI-Assistent aktiv ({provider}).",
   "search.hint_change_in": "Dies kann geändert werden in",
   "search.hint_settings_link": "Einstellungen",
-
   "results.aria_label": "Fehlerkandidaten",
   "results.no_results_announce": "Keine Ergebnisse für \"{query}\". Versuche einen Komponentennamen, Elementtyp oder eine andere Formulierung.",
   "results.no_results_aria": "Keine Ergebnisse",
   "results.no_results_heading": "Keine Ergebnisse für \"{query}\"",
   "results.no_results_body": "Versuche einen Komponentennamen, Elementtyp oder eine andere Formulierung.",
-
   "detail.fails": "Schlägt fehl:",
   "detail.related": "Verwandt:",
   "detail.location_label": "Standortpräfix",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — Fehlerdetail",
   "detail.sheet_default": "Fehlerdetail",
-
   "settings.drawer_label": "Einstellungen",
   "settings.back": "Zurück zur Suche",
   "settings.heading": "Einstellungen",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Einstellungen: Gespeichert",
   "settings.platform_web_announce": "Plattform: Weborientierte Ergebnisse anzeigen",
   "settings.platform_native_announce": "Plattform: Native-orientierte Ergebnisse anzeigen",
-
   "footer.credit": "Ein Projekt von Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ PARTY-MODUS AKTIVIERT ~*~",
   "party.play": "Partymusik abspielen",
   "party.stop": "Partymusik stoppen",
   "party.announce_full": "Party-Modus aktiviert! Die Schriftart hat sich auf Comic Sans geändert. Die Farben haben sich auf eine zufällige helle Farbpalette geändert. Buntes Konfetti fällt vom oberen Bildschirmrand in einer Vielzahl von Farben und Formen. Der Mauszeiger ist jetzt ein Zauberstab.",
   "party.announce_reduced": "Party-Modus aktiviert! Die Schriftart hat sich auf Comic Sans geändert. Die Farben haben sich auf eine zufällige helle Farbpalette geändert. Der Mauszeiger ist jetzt ein Zauberstab. Konfetti wurde übersprungen, da reduzierte Bewegung aktiviert ist.",
-
   "kofi.support": "Unterstütze mich",
   "kofi.aria": "Mikey auf Ko-fi unterstützen (öffnet Panel)",
   "kofi.title": "Ko-fi-Spendenwidget",
-  "kofi.tooltip": "Weitere Informationen"
+  "kofi.tooltip": "Weitere Informationen",
+  "priority.critical": "Kritisch",
+  "priority.high": "Hoch",
+  "priority.medium": "Mittel",
+  "priority.low": "Niedrig",
+  "priority.best_practice": "Best Practice"
 }

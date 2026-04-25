@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Arotakehia ngā whakaahuatanga hapa whakaūngia, tere",
-
   "header.github": "Tiro ki GitHub",
   "header.open_settings": "Tuwhera ngā tautuhinga",
   "header.close_settings": "Kati ngā tautuhinga",
-
   "search.aria_label": "Rapunga hapa",
   "search.label": "Whakaahuatia te hapa, te mātai rānei",
   "search.placeholder": "hei tauira: pātene kati modal kore ingoa",
@@ -17,13 +15,11 @@
   "search.hint_ai": "Kei te mahi te āwhina AI ({provider}).",
   "search.hint_change_in": "Ka āhei te huri i",
   "search.hint_settings_link": "Ngā Tautuhinga",
-
   "results.aria_label": "Ngā kaitono hapa",
   "results.no_results_announce": "Kāore he hua mō \"{query}\". Whakamātauria he ingoa tūāhua, momo huānga, kupu kē rānei.",
   "results.no_results_aria": "Kāore he hua",
   "results.no_results_heading": "Kāore he hua mō \"{query}\"",
   "results.no_results_body": "Whakamātauria he ingoa tūāhua, momo huānga, kupu kē rānei.",
-
   "detail.fails": "Ka hapa:",
   "detail.related": "E hono ana:",
   "detail.location_label": "Tāpiritanga wāhi",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — taipitopito hapa",
   "detail.sheet_default": "Taipitopito hapa",
-
   "settings.drawer_label": "Ngā Tautuhinga",
   "settings.back": "Hoki ki te rapu",
   "settings.heading": "Ngā Tautuhinga",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Ngā Tautuhinga: Kua tiakina",
   "settings.platform_web_announce": "Pūranga: Whakaaturia ngā hua ipurangi",
   "settings.platform_native_announce": "Pūranga: Whakaaturia ngā hua taketake",
-
   "footer.credit": "He kaupeka nā Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ KUA WHAKAHOHEA TE ARATAU PĀTI ~*~",
   "party.play": "Whakatangia te puoro pāti",
   "party.stop": "Whakamutia te puoro pāti",
   "party.announce_full": "Kua whakahohea te aratau pāti! Kua huri te momotuhi ki Comic Sans. Kua huri ngā tae ki he ōrite tae mārohirohi matapōkere. Ka hinga confetti kōura mai i runga o te mata i ngā tae me ngā āhua huhua. He mea māhoe ināianei te ihu rākau.",
   "party.announce_reduced": "Kua whakahohea te aratau pāti! Kua huri te momotuhi ki Comic Sans. Kua huri ngā tae ki he ōrite tae mārohirohi matapōkere. He mea māhoe ināianei te ihu rākau. I tāwhewhewhe te confetti i te mea kua whakahohea te huri iti.",
-
   "kofi.support": "Tautokohia ahau",
   "kofi.aria": "Tautokohia a Mikey ki Ko-fi (ka tuwhera te papa)",
   "kofi.title": "Ko-fi hoiho takoha widget",
-  "kofi.tooltip": "He kōrero anō"
+  "kofi.tooltip": "He kōrero anō",
+  "priority.critical": "Tino Nui",
+  "priority.high": "Nui",
+  "priority.medium": "Waenganui",
+  "priority.low": "Iti",
+  "priority.best_practice": "Tikanga Pai"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Hersien toeganklikheidsgebrekbeskrywings, vinnig",
-
   "header.github": "Bekyk op GitHub",
   "header.open_settings": "Instellings oopmaak",
   "header.close_settings": "Instellings toemaak",
-
   "search.aria_label": "Gebreksoektog",
   "search.label": "Beskryf die gebrek of waarneming",
   "search.placeholder": "bv. modaalsluitknoppie geen etiket",
@@ -17,13 +15,11 @@
   "search.hint_ai": "KI-bystand is aktief ({provider}).",
   "search.hint_change_in": "Dit kan verander word in",
   "search.hint_settings_link": "Instellings",
-
   "results.aria_label": "Gebrekkandinate",
   "results.no_results_announce": "Geen resultate vir \"{query}\". Probeer 'n komponentnaam, elementtipe of 'n ander frase.",
   "results.no_results_aria": "Geen resultate",
   "results.no_results_heading": "Geen resultate vir \"{query}\"",
   "results.no_results_body": "Probeer 'n komponentnaam, elementtipe of 'n ander frase.",
-
   "detail.fails": "Misluk:",
   "detail.related": "Verwant:",
   "detail.location_label": "Liggingsvoorvoegsel",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — gebrekinligting",
   "detail.sheet_default": "Gebrekinligting",
-
   "settings.drawer_label": "Instellings",
   "settings.back": "Terug na soektog",
   "settings.heading": "Instellings",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Instellings: Gestoor",
   "settings.platform_web_announce": "Platform: Wys webgerigte resultate",
   "settings.platform_native_announce": "Platform: Wys inheemsgerigte resultate",
-
   "footer.credit": "'n Projek van Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ PARTYMODUS GEAKTIVEER ~*~",
   "party.play": "Speel partytjiemusiek",
   "party.stop": "Stop partytjiemusiek",
   "party.announce_full": "Partymodus geaktiveer! Die lettertipe het na Comic Sans verander. Die kleure het na 'n ewekansige helder kleurpalet verander. Kleurvolle konfetti val nou van die bokant van die skerm in 'n verskeidenheid kleure en vorms. Die muiswyser is nou 'n towerstokkie.",
   "party.announce_reduced": "Partymodus geaktiveer! Die lettertipe het na Comic Sans verander. Die kleure het na 'n ewekansige helder kleurpalet verander. Die muiswyser is nou 'n towerstokkie. Konfetti is oorgeslaan omdat verminderde beweging aangeskakel is.",
-
   "kofi.support": "Ondersteun my",
   "kofi.aria": "Ondersteun Mikey op Ko-fi (maak paneel oop)",
   "kofi.title": "Ko-fi-skenkingswidget",
-  "kofi.tooltip": "Meer inligting"
+  "kofi.tooltip": "Meer inligting",
+  "priority.critical": "Kritiek",
+  "priority.high": "Hoog",
+  "priority.medium": "Medium",
+  "priority.low": "Laag",
+  "priority.best_practice": "Beste Praktyk"
 }

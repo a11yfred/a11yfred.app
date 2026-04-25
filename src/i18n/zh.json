@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "快速审查无障碍缺陷描述",
-
   "header.github": "在GitHub上查看",
   "header.open_settings": "打开设置",
   "header.close_settings": "关闭设置",
-
   "search.aria_label": "缺陷搜索",
   "search.label": "描述缺陷或观察结果",
   "search.placeholder": "例：模态框关闭按钮无标签",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI辅助已激活（{provider}）。",
   "search.hint_change_in": "可在此更改",
   "search.hint_settings_link": "设置",
-
   "results.aria_label": "缺陷候选",
   "results.no_results_announce": "\"{query}\"无结果。请尝试组件名称、元素类型或其他短语。",
   "results.no_results_aria": "无结果",
   "results.no_results_heading": "\"{query}\"无结果",
   "results.no_results_body": "请尝试组件名称、元素类型或其他短语。",
-
   "detail.fails": "失败：",
   "detail.related": "相关：",
   "detail.location_label": "位置前缀",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — 缺陷详情",
   "detail.sheet_default": "缺陷详情",
-
   "settings.drawer_label": "设置",
   "settings.back": "返回搜索",
   "settings.heading": "设置",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "设置：已保存",
   "settings.platform_web_announce": "平台：显示面向Web的结果",
   "settings.platform_native_announce": "平台：显示面向原生的结果",
-
   "footer.credit": "伊拉根·米基的项目",
   "footer.linkedin": "领英",
-
   "party.banner": "~*~ 派对模式已启用 ~*~",
   "party.play": "播放派对音乐",
   "party.stop": "停止派对音乐",
   "party.announce_full": "派对模式已激活！字体已更改为Comic Sans。颜色已更改为随机明亮的调色板。五彩纸屑正从屏幕顶部以各种颜色和形状飘落。鼠标光标现在是一根魔法棒。",
   "party.announce_reduced": "派对模式已激活！字体已更改为Comic Sans。颜色已更改为随机明亮的调色板。鼠标光标现在是一根魔法棒。由于已启用减少动画，彩纸已被跳过。",
-
   "kofi.support": "支持我",
   "kofi.aria": "在Ko-fi上支持Mikey（打开面板）",
   "kofi.title": "Ko-fi捐赠小部件",
-  "kofi.tooltip": "更多信息"
+  "kofi.tooltip": "更多信息",
+  "priority.critical": "严重",
+  "priority.high": "高",
+  "priority.medium": "中",
+  "priority.low": "低",
+  "priority.best_practice": "最佳实践"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "ⵙⵙⵓⴼⵖ ⵉⵙⵏⵓⴱⴳ ⵏ ⵜⵎⵙⵙⵓⴳⵜ ⵏ ⵜⵙⵏⵉⵍⴰⴼⵜ, ⵣⵉⵣ",
-
   "header.github": "ⵥⵕ ⵖ GitHub",
   "header.open_settings": "ⵔⵣⵎ ⵜⴰⵙⵏⵉⴼⵍⵜ",
   "header.close_settings": "ⵔⵇⵇⵎ ⵜⴰⵙⵏⵉⴼⵍⵜ",
-
   "search.aria_label": "ⵔⵣⵓ ⵖ ⵉⵙⵏⵓⴱⴳ",
   "search.label": "ⵙⵏⴼⵍ ⴰⵙⵏⵓⴱⴳ ⵏⵖ ⵜⵉⴱⵓⵔⵉ",
   "search.placeholder": "ⴰⵎⴷ: ⴰⵜⵔⴰⵔ ⵏ ⵓⵙⴱⵛⵛⵉ ⵏ modal ⵙ ⵓⵔ ⵉⵙⵎ",
@@ -17,13 +15,11 @@
   "search.hint_ai": "ⵜⴰⵎⵜⵜⴰ ⵏ AI ⵜⴹⴼⴰⵕ ({provider}).",
   "search.hint_change_in": "ⵉⵖⵢ ⴰⴷ ⵢⵜⵜⵓⴱⴷⴷⵍ ⵖ",
   "search.hint_settings_link": "ⵜⴰⵙⵏⵉⴼⵍⵜ",
-
   "results.aria_label": "ⵉⵎⵙⵙⵓⴳⵏ ⵉⵎⵣⵔⴰⵢⵏ",
   "results.no_results_announce": "ⵓⵔ ⵍⵍⴰⵏⵜ ⵜⵉⵏⵜⴰⵎⵉⵏ ⵉ \"{query}\". ⵙⵙⵓⴷⵙ ⴰⵙⵎⵔⵙ ⵏⵖ ⵉⵎⵉⵔ ⵏ ⵓⵙⵏⴼⵍ.",
   "results.no_results_aria": "ⵓⵔ ⵍⵍⴰⵏⵜ ⵜⵉⵏⵜⴰⵎⵉⵏ",
   "results.no_results_heading": "ⵓⵔ ⵍⵍⴰⵏⵜ ⵜⵉⵏⵜⴰⵎⵉⵏ ⵉ \"{query}\"",
   "results.no_results_body": "ⵙⵙⵓⴷⵙ ⴰⵙⵎⵔⵙ ⵏⵖ ⵉⵎⵉⵔ ⵏ ⵓⵙⵏⴼⵍ.",
-
   "detail.fails": "ⵉⵅⵙⴰⵔ:",
   "detail.related": "ⵉⵜⵜⵓⵙⵏⴽⴰⴷ:",
   "detail.location_label": "ⵜⴰⵏⵙⴰ ⵜⵉⵜⵔⴰⵔⵜ",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — ⵜⴰⴼⵙⵏⵉⵡⵜ ⵏ ⵓⵙⵏⵓⴱⴳ",
   "detail.sheet_default": "ⵜⴰⴼⵙⵏⵉⵡⵜ ⵏ ⵓⵙⵏⵓⴱⴳ",
-
   "settings.drawer_label": "ⵜⴰⵙⵏⵉⴼⵍⵜ",
   "settings.back": "ⴽⵓⵍ ⵖⵔ ⵓⵔⵣⵓ",
   "settings.heading": "ⵜⴰⵙⵏⵉⴼⵍⵜ",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "ⵜⴰⵙⵏⵉⴼⵍⵜ: ⵉⵜⵜⵓⵙⴽⵛⵎ",
   "settings.platform_web_announce": "ⵜⴰⴼⵙⵏⵉⵡⵜ: ⵙⴽⵏ ⵜⵉⵏⵜⴰⵎⵉⵏ ⵏ web",
   "settings.platform_native_announce": "ⵜⴰⴼⵙⵏⵉⵡⵜ: ⵙⴽⵏ ⵜⵉⵏⵜⴰⵎⵉⵏ ⵜⵉⵎⴰⵣⵉⵖⵉⵏ",
-
   "footer.credit": "ⴰⵙⵏⵜⵍ ⵏ Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ ⴰⵣⴰⵎⵓⵍ ⵏ ⵜⴼⴰⵙⴽⴰ ⵉⵙⴳⵎⴹ ~*~",
   "party.play": "ⵙⵙⵎⵔⵙ ⵓⵏⵖⵎⵉⵙ ⵏ ⵜⴼⴰⵙⴽⴰ",
   "party.stop": "ⵔⵇⵇⵎ ⵓⵏⵖⵎⵉⵙ ⵏ ⵜⴼⴰⵙⴽⴰ",
   "party.announce_full": "ⴰⵣⴰⵎⵓⵍ ⵏ ⵜⴼⴰⵙⴽⴰ ⵉⵙⴳⵎⴹ! ⵉⴱⴷⴷⵍ ⵓⵏⵖⵎⵉⵙ ⵉ Comic Sans. ⵉⴱⴷⴷⵍⵏ ⵉⵔⵉⵖⵏ. ⵜⵜⵓⵙⴽⵛⵎ confetti. ⵉⴱⴷⴷⵍ cursor ⵏ ratón ⵉ tizza n usihap.",
   "party.announce_reduced": "ⴰⵣⴰⵎⵓⵍ ⵏ ⵜⴼⴰⵙⴽⴰ ⵉⵙⴳⵎⴹ! ⵉⴱⴷⴷⵍ ⵓⵏⵖⵎⵉⵙ ⵉ Comic Sans. ⵉⴱⴷⴷⵍⵏ ⵉⵔⵉⵖⵏ. ⵉⴱⴷⴷⵍ cursor ⵏ ratón. ⵉⵜⵜⵓⵇⵇⴰⴷ confetti ⵖ ⵓⵙⵉⵡⴹ ⵉⵍⵍⴰ.",
-
   "kofi.support": "ⵙⵙⵏⴼ ⵢⵉ",
   "kofi.aria": "ⵙⵙⵏⴼ Mikey ⵖ Ko-fi (ⵜⵜⵓⵔⵣⵎ panel)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "ⵉⵎⵣⴷⴰⵢⵏ ⵢⴰⴹⵏ"
+  "kofi.tooltip": "ⵉⵎⵣⴷⴰⵢⵏ ⵢⴰⴹⵏ",
+  "priority.critical": "Azzigzayen",
+  "priority.high": "Ameqqran",
+  "priority.medium": "Alemmas",
+  "priority.low": "Amectuḥ",
+  "priority.best_practice": "Tarmit Igerẓen"
 }

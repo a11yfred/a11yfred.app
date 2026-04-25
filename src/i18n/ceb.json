@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Susihon ang mga depekto sa aksesibilidad, dali-dali",
-
   "header.github": "Tan-awa sa GitHub",
   "header.open_settings": "Ablihi ang mga setting",
   "header.close_settings": "Siradhi ang mga setting",
-
   "search.aria_label": "Pangita og depekto",
   "search.label": "Ihulagway ang depekto o obserbasyon",
   "search.placeholder": "pananglitan. modal close nga buton walay label",
@@ -17,13 +15,11 @@
   "search.hint_ai": "Aktibo ang tabang sa AI ({provider}).",
   "search.hint_change_in": "Mahimong buhaton kini sa",
   "search.hint_settings_link": "Mga Setting",
-
   "results.aria_label": "Mga kandidato sa depekto",
   "results.no_results_announce": "Walay resulta para sa \"{query}\". Sulayi ang ngalan sa component, uri sa elemento, o lain pang pahayag.",
   "results.no_results_aria": "Walay resulta",
   "results.no_results_heading": "Walay resulta para sa \"{query}\"",
   "results.no_results_body": "Sulayi ang ngalan sa component, uri sa elemento, o lain pang pahayag.",
-
   "detail.fails": "Napalya:",
   "detail.related": "Nalambigit:",
   "detail.location_label": "Prefix sa Lokasyon",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — Detalye sa Depekto",
   "detail.sheet_default": "Detalye sa Depekto",
-
   "settings.drawer_label": "Mga Setting",
   "settings.back": "Balik sa Pagpangita",
   "settings.heading": "Mga Setting",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Mga Setting: Na-save",
   "settings.platform_web_announce": "Platform: Ipakita ang mga resulta nga nakatuon sa web",
   "settings.platform_native_announce": "Platform: Ipakita ang mga resulta nga nakatuon sa native",
-
   "footer.credit": "Usa ka proyekto ni Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ PARTY MODE AKTIBO ~*~",
   "party.play": "I-play ang musika sa party",
   "party.stop": "Ihunong ang musika sa party",
   "party.announce_full": "Na-activate ang party mode! Ang font giusab sa Comic Sans. Ang mga kulay giusab ngadto sa usa ka random nga maliwanag nga palette. Ang mga kolor nga confetti naghulog gikan sa ibabaw sa screen sa lainlaing mga kolor ug porma. Ang cursor sa mouse karon usa ka magic wand.",
   "party.announce_reduced": "Na-activate ang party mode! Ang font giusab sa Comic Sans. Ang mga kulay giusab ngadto sa usa ka random nga maliwanag nga palette. Ang cursor sa mouse karon usa ka magic wand. Ang confetti gipreskip tungod kay ang reduced motion gi-on.",
-
   "kofi.support": "Suportahan ako",
   "kofi.aria": "Suportahan si Mikey sa Ko-fi (magbukas og panel)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "Dugang impormasyon"
+  "kofi.tooltip": "Dugang impormasyon",
+  "priority.critical": "Kritikal",
+  "priority.high": "Taas",
+  "priority.medium": "Kasarangang",
+  "priority.low": "Ubos",
+  "priority.best_practice": "Labing Maayong Buhat"
 }

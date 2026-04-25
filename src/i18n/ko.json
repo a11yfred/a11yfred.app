@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "접근성 결함 설명을 빠르게 감사하기",
-
   "header.github": "GitHub에서 보기",
   "header.open_settings": "설정 열기",
   "header.close_settings": "설정 닫기",
-
   "search.aria_label": "결함 검색",
   "search.label": "결함 또는 관찰 내용을 설명하세요",
   "search.placeholder": "예: 모달 닫기 버튼 레이블 없음",
@@ -17,13 +15,11 @@
   "search.hint_ai": "AI 지원이 활성화되었습니다 ({provider}).",
   "search.hint_change_in": "다음에서 변경할 수 있습니다",
   "search.hint_settings_link": "설정",
-
   "results.aria_label": "결함 후보",
   "results.no_results_announce": "\"{query}\"에 대한 결과 없음. 구성 요소 이름, 요소 유형 또는 다른 문구를 시도해 보세요.",
   "results.no_results_aria": "결과 없음",
   "results.no_results_heading": "\"{query}\"에 대한 결과 없음",
   "results.no_results_body": "구성 요소 이름, 요소 유형 또는 다른 문구를 시도해 보세요.",
-
   "detail.fails": "실패:",
   "detail.related": "관련:",
   "detail.location_label": "위치 접두어",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — 결함 상세",
   "detail.sheet_default": "결함 상세",
-
   "settings.drawer_label": "설정",
   "settings.back": "검색으로 돌아가기",
   "settings.heading": "설정",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "설정: 저장됨",
   "settings.platform_web_announce": "플랫폼: 웹 중심 결과 표시",
   "settings.platform_native_announce": "플랫폼: 네이티브 중심 결과 표시",
-
   "footer.credit": "이라간 미키의 프로젝트",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ 파티 모드 활성화됨 ~*~",
   "party.play": "파티 음악 재생",
   "party.stop": "파티 음악 중지",
   "party.announce_full": "파티 모드가 활성화되었습니다! 글꼴이 Comic Sans로 변경되었습니다. 색상이 무작위 밝은 색상 팔레트로 변경되었습니다. 형형색색의 색종이가 다양한 색상과 모양으로 화면 상단에서 떨어지고 있습니다. 마우스 커서가 마법 지팡이로 변경되었습니다.",
   "party.announce_reduced": "파티 모드가 활성화되었습니다! 글꼴이 Comic Sans로 변경되었습니다. 색상이 무작위 밝은 색상 팔레트로 변경되었습니다. 마우스 커서가 마법 지팡이로 변경되었습니다. 모션 감소가 켜져 있어 색종이를 건너뜠습니다.",
-
   "kofi.support": "후원하기",
   "kofi.aria": "Ko-fi에서 Mikey 후원하기 (패널 열림)",
   "kofi.title": "Ko-fi 기부 위젯",
-  "kofi.tooltip": "자세한 정보"
+  "kofi.tooltip": "자세한 정보",
+  "priority.critical": "심각",
+  "priority.high": "높음",
+  "priority.medium": "보통",
+  "priority.low": "낮음",
+  "priority.best_practice": "모범 사례"
 }

@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Tânisi kâ-ohci-pimipayit ôma mîna kâ-wîhtamâk, mêkwâc",
-
   "header.github": "Wâpahta GitHub ohci",
   "header.open_settings": "Pahkisin kihci-masinahikan",
   "header.close_settings": "Kipah kihci-masinahikan",
-
   "search.aria_label": "Nâtamihk mâmitonêyihcikan",
   "search.label": "Wîhtam kâ-wanihtâyêk kâ-wî-isi-nâtamihk",
   "search.placeholder": "mêkwâc: modal sîpêhikêwin kahkiyaw kâ-nôhtê-misi-kîsikâk",
@@ -17,13 +15,11 @@
   "search.hint_ai": "IA âpacihtâwin ({provider}).",
   "search.hint_change_in": "Ôma kîsikâwihikêwin",
   "search.hint_settings_link": "Kihci-masinahikanihk",
-
   "results.aria_label": "Kâ-nâtamihkwak âpacihtâwina",
   "results.no_results_announce": "\"{query}\" ohci namôya kikway. Nâtamihk tipiyaw-isihcikêwin, kîsikâwihikêwin askihkos kâ-âpacihtâyan.",
   "results.no_results_aria": "Namôya kikway",
   "results.no_results_heading": "\"{query}\" ohci namôya kikway",
   "results.no_results_body": "Nâtamihk tipiyaw-isihcikêwin, kîsikâwihikêwin askihkos kâ-âpacihtâyan.",
-
   "detail.fails": "Kâ-wanihtâk:",
   "detail.related": "Kâ-mâmiskôtamihk:",
   "detail.location_label": "Tânêhki ohci kî-âpacihtânêhk",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — kâ-wanihtâk",
   "detail.sheet_default": "Kâ-wanihtâk",
-
   "settings.drawer_label": "Kihci-masinahikan",
   "settings.back": "Nâtamihk",
   "settings.heading": "Kihci-masinahikan",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Kihci-masinahikan: Nakatêyihtam",
   "settings.platform_web_announce": "Platforma: Web kâ-wâpahcikêyan",
   "settings.platform_native_announce": "Platforma: Nêhiyaw kâ-wâpahcikêyan",
-
   "footer.credit": "Mikey Ilagan ôma tôtam",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ MÎNA-MÊTAWÊWIN KÎSIKAW ~*~",
   "party.play": "Mîna-mêtawêwin nikamowin",
   "party.stop": "Kipah mîna-mêtawêwin nikamowin",
   "party.announce_full": "Mîna-mêtawêwin kîsikaw! Masinahikêwin Comic Sans. Kîsikâwihikêwin nistam. Konfetti wâpahcikêwin pantalla ohci. Ratón cursor magic.",
   "party.announce_reduced": "Mîna-mêtawêwin kîsikaw! Masinahikêwin Comic Sans. Kîsikâwihikêwin nistam. Ratón cursor magic. Konfetti namôya kâ-ispayik.",
-
   "kofi.support": "Wîcihik",
   "kofi.aria": "Mikey Ko-fi (panel pahkisin)",
   "kofi.title": "Ko-fi widget",
-  "kofi.tooltip": "Nistam tânisi"
+  "kofi.tooltip": "Nistam tânisi",
+  "priority.critical": "ᒫᒪᐃᑕᑌᓐ",
+  "priority.high": "ᒪᐦᒋᑣᐤ",
+  "priority.medium": "ᒣᒀᒡ",
+  "priority.low": "ᒥᒋᓯᒧ",
+  "priority.best_practice": "ᒥᓇ ᑕᐸᓯᓯᐃᒋ"
 }

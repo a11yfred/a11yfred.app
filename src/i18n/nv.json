@@ -1,11 +1,9 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Ałk'idą́ą́' ágó ánílnééh yázhí binahji' naaltsoos, t'áá ákwéé'",
-
   "header.github": "GitHub-gi naaltsoos",
   "header.open_settings": "Bee haz'áanii ayóo",
   "header.close_settings": "Bee haz'áanii tsédooltt'ąłí",
-
   "search.aria_label": "Ałk'idą́ą́' ágó naaltsoos neikaad",
   "search.label": "Ałk'idą́ą́' ágó ánílnééh binahji' hane'",
   "search.placeholder": "áko: modal tsin bee yisdáhí léi' da bich'i' yáłti'ígíí ádát'é",
@@ -17,13 +15,11 @@
   "search.hint_ai": "IA bá 'ádahwíí'áaji' hólǫ́ ({provider}).",
   "search.hint_change_in": "Éí nihéé'ástáago áhoolzhiizh",
   "search.hint_settings_link": "Bee haz'áaniigi",
-
   "results.aria_label": "Ałk'idą́ą́' ágó bił 'ánálwod",
   "results.no_results_announce": "\"{query}\" ádi t'áadoo le'é yee hólǫ́ da. Tsin bee 'ólta'í bídin, naalyéhé bee 'ádá'áłchíní, doodaii' łahji' naninééh.",
   "results.no_results_aria": "T'áadoo le'é yee hólǫ́ da",
   "results.no_results_heading": "\"{query}\" ádi t'áadoo le'é yee hólǫ́ da",
   "results.no_results_body": "Tsin bee 'ólta'í bídin, naalyéhé bee 'ádá'áłchíní, doodaii' łahji' naninééh.",
-
   "detail.fails": "Ałhosh:",
   "detail.related": "Nee'eełí:",
   "detail.location_label": "Haz'á bíighahgi",
@@ -65,7 +61,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — ałk'idą́ą́' ágó t'áá íłíí",
   "detail.sheet_default": "Ałk'idą́ą́' ágó t'áá íłíí",
-
   "settings.drawer_label": "Bee haz'áanii",
   "settings.back": "Neikaadji' ałhosh",
   "settings.heading": "Bee haz'áanii",
@@ -107,18 +102,20 @@
   "settings.saved_announce": "Bee haz'áanii: Bich'ah yikáá'",
   "settings.platform_web_announce": "Plataforma: Web bídahwiinít'i' nááhaazt'i'",
   "settings.platform_native_announce": "Plataforma: Diné bídahwiinít'i' nááhaazt'i'",
-
   "footer.credit": "Mikey Ilagan bił haz'á",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ NA'NÍZHOOZHÍ MODE HÓLǪ́ ~*~",
   "party.play": "Na'nízhoozhí dah diyingo",
   "party.stop": "Na'nízhoozhí tsédooltt'ąłí",
   "party.announce_full": "Na'nízhoozhí mode hólǫ́! Saad Comic Sans. Bee 'ílíní náábididoolchił. Konfetti tłahnáhóółt'eezh pantalla bita'. Ratón cursor bee magic.",
   "party.announce_reduced": "Na'nízhoozhí mode hólǫ́! Saad Comic Sans. Bee 'ílíní náábididoolchił. Ratón cursor bee magic. Konfetti doo nit'éé' nahalzhiizh bee.",
-
   "kofi.support": "Shíká 'anályá",
   "kofi.aria": "Mikey Ko-fi-gi (panel ayóo)",
   "kofi.title": "Ko-fi naalyéhé widget",
-  "kofi.tooltip": "T'ááłá'í hane'"
+  "kofi.tooltip": "T'ááłá'í hane'",
+  "priority.critical": "Ayóó Ánóshní",
+  "priority.high": "Nitsaa",
+  "priority.medium": "Átʼéego",
+  "priority.low": "Yázhí",
+  "priority.best_practice": "Hózhó Nahasdlíí"
 }
