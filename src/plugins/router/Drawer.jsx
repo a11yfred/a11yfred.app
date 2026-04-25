@@ -10,7 +10,7 @@ import { useFocusTrap } from './useFocusTrap.js'
  * - Announces itself as a dialog to screen readers
  *
  * CSS classes expected in index.css:
- *   .drawer-backdrop   .drawer-backdrop.is-open
+ *   .overlay-backdrop  .overlay-backdrop.is-open  (shared with BottomSheet/Modal)
  *   .drawer-panel      .drawer-panel.is-open
  *
  * Props:
@@ -50,7 +50,7 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
     <>
       {/* Backdrop — click to dismiss */}
       <div
-        className={`drawer-backdrop${open ? ' is-open' : ''}`}
+        className={`overlay-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
       />

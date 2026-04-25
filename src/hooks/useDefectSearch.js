@@ -14,7 +14,7 @@ const FUSE_OPTIONS = {
   includeScore: true,
 }
 
-export default function useDefectSearch(query, platform) {
+export default function useDefectSearch(query, platform, searchKey = 0) {
   const [allDefects, setAllDefects] = useState([])
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function useDefectSearch(query, platform) {
       .search(query.trim())
       .slice(0, 8)
       .map(r => r.item)
-  }, [fuse, query])
+  }, [fuse, query, searchKey])
 
   return results
 }

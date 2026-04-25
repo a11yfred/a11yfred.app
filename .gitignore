@@ -1,2 +1,4 @@
 node_modules
 dist/
+src/data/mikeys-corpus.json
+docs/LETTER_TO_KOFI.md

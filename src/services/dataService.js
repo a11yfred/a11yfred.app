@@ -17,7 +17,7 @@
  *   }
  */
 
-import corpusData from '../data/mikeys-corpus.json'
+import corpusData from '../data/corpus.json'
 
 export async function getDefects() {
   // Simulate async to make Supabase migration a drop-in swap

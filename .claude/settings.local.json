@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npm outdated *)",
       "Bash(npm run *)",
-      "Bash(npm audit *)"
+      "Bash(npm audit *)",
+      "Bash(node -e \"const c=require\\('./src/data/corpus.json'\\); const ids=c.map\\(e=>e.id\\).sort\\(\\); console.log\\('Count:',c.length,'Max ID:',ids[ids.length-1],'IDs:',ids.join\\(', '\\)\\)\")",
+      "Bash(node -e \"const c=require\\('./src/data/corpus.json'\\); c.forEach\\(e=>console.log\\(e.id, e.sc, e.title\\)\\)\")"
     ]
   }
 }

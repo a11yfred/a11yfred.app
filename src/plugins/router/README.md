@@ -15,6 +15,7 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 | `Link` | component | Hash-link anchor |
 | `Drawer` | component | Slide-in panel from the left; full focus management built in |
 | `BottomSheet` | component | Slide-up sheet from the bottom; full focus management built in |
+| `Modal` | component | Centered dialog; stacks above Drawer/BottomSheet; Escape intercepts before underlying panels |
 | `useFocusOnMount` | hook | Move focus to an element when it mounts |
 | `useReturnFocus` | hook | Restore focus to the triggering control on unmount |
 | `useFocusTrap` | hook | Restrict Tab focus to a container |
@@ -230,7 +231,86 @@ leaving the container. It is a no-op when `active` is false.
 
 ---
 
-### Rule 6 — Escape key: every dismissible layer handles its own
+### Rule 6 — Background content must be `inert` when a panel is open
+
+**When:** A modal, drawer, or bottom sheet is open.
+
+**Do:** Apply the `inert` attribute to all background content — everything the user should
+not be able to reach while the panel is open.
+
+A focus trap (Rule 5) stops Tab from leaving the panel, but it does not stop screen reader
+users from navigating with their **virtual/reading cursor** (arrow keys in NVDA Browse mode,
+JAWS Virtual PC Cursor, VoiceOver arrow navigation). These reading modes let users move
+through the accessibility tree independently of keyboard focus. Without `inert`, a screen
+reader user can arrow out of the panel and read background content even though it is visually
+hidden behind a dim overlay.
+
+`inert` addresses both problems at once:
+
+- Removes the subtree from the accessibility tree (screen reader cannot navigate into it)
+- Removes it from the tab order (redundant with the focus trap, but makes the trap bulletproof)
+- Blocks pointer events (clicks on background elements do nothing)
+
+**Pattern:** wrap all background content in a single container element and set `inert` on
+that wrapper. Keep the panel(s) as siblings — never inside the `inert` wrapper.
+
+```jsx
+function App() {
+  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [sheetOpen, setSheetOpen] = useState(false)
+
+  const backgroundInert = drawerOpen || sheetOpen
+
+  return (
+    <div className="app-container">
+      {/* Announcer is always accessible — keep it outside the inert wrapper */}
+      <Announcer />
+
+      {/* Background: inert while any panel is open */}
+      <div
+        className="app-background"
+        // eslint-disable-next-line react/no-unknown-property
+        inert={backgroundInert ? '' : undefined}
+      >
+        <Header />
+        <main>...</main>
+        <Footer />
+      </div>
+
+      {/* Panels are siblings to the background — they never get inert here */}
+      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} label="Menu">
+        ...
+      </Drawer>
+      <BottomSheet open={sheetOpen} onClose={() => setSheetOpen(false)} label="Detail">
+        ...
+      </BottomSheet>
+    </div>
+  )
+}
+```
+
+**Why `Announcer` stays outside the wrapper:** live regions (`aria-live`, `role="status"`,
+`role="alert"`) stop working when `inert` is applied to their container. The announcer must
+always be reachable by the browser's accessibility engine regardless of panel state.
+
+**The `inert` value:** React passes the string `''` to produce the valueless HTML attribute
+(`inert` with no value). `undefined` removes the attribute entirely. Do not use `true`/`false`
+— HTML boolean attributes must be either present (any value) or absent.
+
+**CSS class for the wrapper:** give the wrapper `flex: 1; display: flex; flex-direction: column`
+so it acts as a transparent pass-through in a flex-column layout:
+
+```css
+.app-background {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+```
+
+---
+
+### Rule 7 — Escape key: every dismissible layer handles its own
 
 **When:** A modal, drawer, or bottom sheet is open.
 
@@ -267,7 +347,7 @@ useEffect(() => {
 
 ---
 
-### Rule 7 — Accordions: keep focus on the trigger
+### Rule 8 — Accordions: keep focus on the trigger
 
 **When:** An accordion item expands or collapses.
 
@@ -279,7 +359,7 @@ ARIA Accordion pattern.
 
 ---
 
-### Rule 8 — Pagination within a modal or bottom sheet: focus the page heading
+### Rule 9 — Pagination within a modal or bottom sheet: focus the page heading
 
 **When:** A modal or bottom sheet contains paginated content (e.g. a multi-step wizard, a
 tabbed flow, or numbered pages) and the user manually advances or changes the page.
@@ -420,10 +500,10 @@ function App() {
 ### Drawer CSS classes
 
 ```css
-.drawer-backdrop        /* fixed overlay; opacity 0, pointer-events none */
-.drawer-backdrop.is-open   /* opacity 1, pointer-events auto */
-.drawer-panel           /* the panel; transform: translateX(-100%) */
-.drawer-panel.is-open   /* transform: translateX(0) */
+.overlay-backdrop          /* shared backdrop; opacity 0, pointer-events none */
+.overlay-backdrop.is-open  /* opacity 1, pointer-events auto */
+.drawer-panel              /* the panel; transform: translateX(-100%) */
+.drawer-panel.is-open      /* transform: translateX(0) */
 ```
 
 See `index.css` in this project for the reference implementation including transitions,
@@ -476,14 +556,14 @@ function App() {
 ### BottomSheet CSS classes
 
 ```css
-.sheet-backdrop         /* fixed overlay; opacity 0, pointer-events none */
-.sheet-backdrop.is-open    /* opacity 1, pointer-events auto */
-.sheet-panel            /* fixed panel; transform: translateY(100%) */
-.sheet-panel.is-open    /* transform: translateY(0) */
-.sheet-chrome           /* sticky header row inside the panel */
-.sheet-handle           /* drag-handle pill (decorative) */
-.sheet-close-btn        /* close button positioned absolute right */
-.sheet-content          /* content wrapper with horizontal padding */
+.overlay-backdrop          /* shared backdrop; opacity 0, pointer-events none */
+.overlay-backdrop.is-open  /* opacity 1, pointer-events auto */
+.sheet-panel               /* fixed panel; transform: translateX(-50%) translateY(100%) */
+.sheet-panel.is-open       /* transform: translateX(-50%) translateY(0) */
+.sheet-chrome              /* chrome row at top; position:relative anchors close button */
+.sheet-handle              /* drag-handle pill (decorative) */
+.sheet-close-btn           /* close button; position:absolute right */
+.sheet-content             /* scrollable content area; flex:1 overflow-y:auto */
 ```
 
 See `index.css` in this project for the reference implementation.
@@ -510,13 +590,14 @@ Minimal checklist — use this when you need a dialog that isn't covered by `Dra
 `BottomSheet`:
 
 1. Wrap modal content in `<div role="dialog" aria-modal="true" aria-label="…">`
-2. Set `inert` on the container when closed to block pointer and keyboard interaction
-3. Put the close button first in DOM order
-4. Add `useFocusOnMount` to the close button ref (or heading ref if no close button)
-5. Add `useReturnFocus()` at the top of the modal component
-6. Add `useFocusTrap(containerRef, isOpen)` with a ref on the container
-7. Add an Escape key listener (see Rule 6) that calls the close handler
-8. Suppress the focus ring on `tabIndex={-1}` elements via CSS (`outline: none`)
+2. Set `inert` on the modal container when closed to block pointer and keyboard interaction
+3. Apply `inert` to the background content wrapper while the modal is open (Rule 6)
+4. Put the close button first in DOM order
+5. Add `useFocusOnMount` to the close button ref (or heading ref if no close button)
+6. Add `useReturnFocus()` at the top of the modal component
+7. Add `useFocusTrap(containerRef, isOpen)` with a ref on the container
+8. Add an Escape key listener (see Rule 7) that calls the close handler
+9. Suppress the focus ring on `tabIndex={-1}` elements via CSS (`outline: none`)
 
 ---
 
