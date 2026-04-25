@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useFocusTrap } from './useFocusTrap.js'
 
 /**
- * Off-canvas panel that slides in from the left on mobile.
+ * Drawer panel that slides in from the left on mobile.
  * - Manages its own Escape key handler
  * - Saves focus to the trigger element on open; restores on close
  * - Traps Tab focus within the panel while open (WCAG 2.1.2)
@@ -10,23 +10,18 @@ import { useFocusTrap } from './useFocusTrap.js'
  * - Announces itself as a dialog to screen readers
  *
  * CSS classes expected in index.css:
- *   .offcanvas-backdrop   .offcanvas-backdrop.is-open
- *   .offcanvas-panel      .offcanvas-panel.is-open
+ *   .drawer-backdrop   .drawer-backdrop.is-open
+ *   .drawer-panel      .drawer-panel.is-open
  *
  * Props:
- *   open      boolean  — whether the panel is visible
- *   onClose   fn       — called on Escape or backdrop click
- *   label     string   — aria-label for the dialog (default: 'Settings')
- *   children  node     — rendered inside the panel only when open
+ *   open         boolean           — whether the panel is visible
+ *   onClose      fn                — called on Escape or backdrop click
+ *   label        string            — aria-label for the dialog (default: 'Menu')
+ *   focusOnClose React.RefObject   — if provided, receives focus on close instead
+ *                                    of the triggering element (e.g. a page heading)
+ *   children     node              — rendered inside the panel only when open
  */
-/**
- * @param {React.RefObject} [focusOnClose] - If provided, this element receives
- *   focus when the panel closes instead of the element that triggered the open.
- *   Use this when closing the panel should land focus on a page heading rather
- *   than the control that opened it (e.g. navigating from a settings panel back
- *   to the home page heading).
- */
-export default function OffCanvas({ open, onClose, label = 'Settings', children, focusOnClose }) {
+export default function Drawer({ open, onClose, label = 'Menu', children, focusOnClose }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
 
@@ -55,7 +50,7 @@ export default function OffCanvas({ open, onClose, label = 'Settings', children,
     <>
       {/* Backdrop — click to dismiss */}
       <div
-        className={`offcanvas-backdrop${open ? ' is-open' : ''}`}
+        className={`drawer-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
       />
@@ -63,7 +58,7 @@ export default function OffCanvas({ open, onClose, label = 'Settings', children,
       {/* Panel */}
       <div
         ref={panelRef}
-        className={`offcanvas-panel${open ? ' is-open' : ''}`}
+        className={`drawer-panel${open ? ' is-open' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label={label}

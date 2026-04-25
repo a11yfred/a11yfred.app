@@ -13,7 +13,8 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 | `useRouter` | hook | `{ route, navigate }` |
 | `Route` | component | Renders children only when `route` matches |
 | `Link` | component | Hash-link anchor |
-| `OffCanvas` | component | Slide-in panel with built-in focus management |
+| `Drawer` | component | Slide-in panel from the left; full focus management built in |
+| `BottomSheet` | component | Slide-up sheet from the bottom; full focus management built in |
 | `useFocusOnMount` | hook | Move focus to an element when it mounts |
 | `useReturnFocus` | hook | Restore focus to the triggering control on unmount |
 | `useFocusTrap` | hook | Restrict Tab focus to a container |
@@ -94,7 +95,7 @@ function SettingsPage() {
 
   return (
     <section>
-      <h2 ref={headingRef} tabIndex={-1} style={{ outline: 'none' }}>
+      <h2 ref={headingRef} tabIndex={-1} className="your-outline-none-class">
         Settings
       </h2>
       {/* ... */}
@@ -108,7 +109,7 @@ function SettingsPage() {
 ### Rule 2 — New inline content: focus the content heading
 
 **When:** Content is added to the page without a full navigation (e.g. clicking a result card
-reveals a detail panel below the list).
+reveals a detail panel below the list, or a bottom sheet opens with detail content).
 
 **Do:** Same as Rule 1 — `useFocusOnMount` on the heading of the newly revealed content.
 This prevents keyboard and screen reader users from having to hunt for the new content.
@@ -119,7 +120,7 @@ function DetailPanel({ defect }) {
 
   return (
     <div>
-      <h2 ref={titleRef} tabIndex={-1} style={{ outline: 'none' }}>
+      <h2 ref={titleRef} tabIndex={-1} className="your-outline-none-class">
         {defect.title}
       </h2>
       {/* ... */}
@@ -131,6 +132,15 @@ function DetailPanel({ defect }) {
 **Rule:** Any time focus is placed on an element that is not natively focusable (headings,
 divs, spans, paragraphs), use `tabIndex={-1}`. Never use `tabIndex={0}` on non-interactive
 elements — that inserts the element into the tab order unexpectedly.
+
+**Note on `tabIndex={-1}` and focus rings:** Suppress the browser's default focus outline on
+these elements via CSS (`outline: none`) — the element is not keyboard-navigable by the user,
+so showing a focus ring here is misleading. Use a CSS class rather than `style={{ outline: 'none' }}`
+so the rule can be overridden by `prefers-contrast: more` if needed.
+
+**Why children-only-when-open matters:** Both `Drawer` and `BottomSheet` only mount children
+while `open` is true. This means `useFocusOnMount` inside a child fires fresh on every open
+with no stale ref or manual reset — the component remounts each time.
 
 ---
 
@@ -192,7 +202,7 @@ focus moves to the document body as it would after a page refresh.
 
 ### Rule 5 — Focus trap: restrict Tab to the open layer
 
-**When:** A modal dialog or bottom sheet / off-canvas panel is open.
+**When:** A modal dialog, drawer, or bottom sheet is open.
 
 **Do:** Prevent Tab from escaping the overlay. Use `useFocusTrap` with a ref pointing to
 the container element.
@@ -216,11 +226,48 @@ function Modal({ open, onClose, children }) {
 the user reaches the last (or first) focusable element, the next Tab wraps around instead of
 leaving the container. It is a no-op when `active` is false.
 
-The `OffCanvas` component uses `useFocusTrap` internally — you do not need to add it again.
+`Drawer` and `BottomSheet` both use `useFocusTrap` internally — you do not need to add it again.
 
 ---
 
-### Rule 6 — Accordions: keep focus on the trigger
+### Rule 6 — Escape key: every dismissible layer handles its own
+
+**When:** A modal, drawer, or bottom sheet is open.
+
+**Do:** Each dismissible component adds its own `keydown` listener for `Escape` while open,
+and removes it on cleanup. This keeps each layer self-contained and independent.
+
+```jsx
+useEffect(() => {
+  if (!open) return
+  const handler = (e) => { if (e.key === 'Escape') onClose() }
+  document.addEventListener('keydown', handler)
+  return () => document.removeEventListener('keydown', handler)
+}, [open, onClose])
+```
+
+`Drawer` and `BottomSheet` both handle Escape internally. You do not need to add it again
+for those components.
+
+**Double-fire is harmless.** If a content component inside a `Drawer` or `BottomSheet` also
+listens for Escape independently (e.g. a `SettingsPanel` that wants to close itself), both
+handlers fire on the same keypress. As long as both call the same `onClose`, this is
+intentional and harmless — the panel closes once regardless.
+
+```jsx
+// SettingsPanel.jsx — adds its own Escape listener
+useEffect(() => {
+  const handler = (e) => { if (e.key === 'Escape') onClose() }
+  document.addEventListener('keydown', handler)
+  return () => document.removeEventListener('keydown', handler)
+}, [onClose])
+
+// Drawer also listens for Escape — both fire, panel closes once. Fine.
+```
+
+---
+
+### Rule 7 — Accordions: keep focus on the trigger
 
 **When:** An accordion item expands or collapses.
 
@@ -232,7 +279,7 @@ ARIA Accordion pattern.
 
 ---
 
-### Rule 7 — Pagination within a modal or bottom sheet: focus the page heading
+### Rule 8 — Pagination within a modal or bottom sheet: focus the page heading
 
 **When:** A modal or bottom sheet contains paginated content (e.g. a multi-step wizard, a
 tabbed flow, or numbered pages) and the user manually advances or changes the page.
@@ -258,7 +305,7 @@ function WizardModal({ onClose }) {
     <div role="dialog" aria-modal="true" aria-label="Setup wizard">
       <button ref={closeRef} onClick={onClose} aria-label="Close">×</button>
 
-      <h2 ref={pageHeadingRef} tabIndex={-1} style={{ outline: 'none' }}>
+      <h2 ref={pageHeadingRef} tabIndex={-1} className="your-outline-none-class">
         Step {page} of 3
       </h2>
 
@@ -269,9 +316,6 @@ function WizardModal({ onClose }) {
   )
 }
 ```
-
-The heading element must have `tabIndex={-1}` so it can receive programmatic focus without
-entering the natural tab order.
 
 **Why not just use `useFocusOnMount`?** `useFocusOnMount` only fires on component mount.
 For pagination the modal stays mounted — only the internal state changes — so you need a
@@ -306,17 +350,17 @@ function AppShell() {
   return (
     <>
       <h1 ref={h1Ref} tabIndex={-1}>My App</h1>
-      {/* On mobile, pass focusOnClose so OffCanvas uses the heading
+      {/* On mobile, pass focusOnClose so Drawer uses the heading
           instead of returning focus to the button that opened it */}
-      <OffCanvas open={settingsOpen} focusOnClose={h1Ref} ...>
+      <Drawer open={settingsOpen} focusOnClose={h1Ref} ...>
         <SettingsPanel />
-      </OffCanvas>
+      </Drawer>
     </>
   )
 }
 ```
 
-**`OffCanvas` — `focusOnClose` prop:** if a `focusOnClose` ref is provided, the panel
+**`Drawer` — `focusOnClose` prop:** if a `focusOnClose` ref is provided, the panel
 focuses that element on close instead of the trigger button that opened it. Omit it when
 the default trigger-return behaviour is correct (e.g. a navigation drawer where returning
 to the triggering link is the right UX).
@@ -326,43 +370,123 @@ panel or similar full-page component when `focusOnClose`/AppShell focus manageme
 handles the return. `useReturnFocus` is for isolated modals (dialogs, alerts) that should
 return focus exactly to their triggering control regardless of the containing route.
 
----
-
-## The `OffCanvas` component
-
-`OffCanvas` bundles Rules 3, 4, and 5 for the common off-canvas / slide-in panel pattern.
-You do not need to wire the hooks manually.
+**Clearing state when settings opens:** if opening the drawer or sheet should dismiss another
+overlay (e.g. close an open bottom sheet when the drawer opens), do it at the event source —
+inside the click/navigate handler — not in a `useEffect`. Calling `setState` synchronously
+inside a `useEffect` causes cascading renders and triggers linter warnings.
 
 ```jsx
-import { OffCanvas } from './plugins/router/index.js'
+// ✓ clear at the event source
+<button onClick={() => { navigate('/settings'); setSelected(null) }}>Settings</button>
+
+// ✗ do not use useEffect to react to the state change you just caused
+useEffect(() => { if (settingsOpen) setSelected(null) }, [settingsOpen])
+```
+
+---
+
+## The `Drawer` component
+
+`Drawer` bundles Rules 3, 4, 5, and 6 for the slide-in drawer pattern.
+You do not need to wire the hooks or Escape listener manually.
+
+```jsx
+import { Drawer } from './plugins/router/index.js'
 
 function App() {
   const [open, setOpen] = useState(false)
 
   return (
     <>
-      <button onClick={() => setOpen(true)}>Open panel</button>
-      <OffCanvas open={open} onClose={() => setOpen(false)} label="Navigation">
-        <NavPanel onClose={() => setOpen(false)} />
-      </OffCanvas>
+      <button onClick={() => setOpen(true)}>Open settings</button>
+      <Drawer open={open} onClose={() => setOpen(false)} label="Settings">
+        <SettingsPanel onClose={() => setOpen(false)} />
+      </Drawer>
     </>
   )
 }
 ```
 
-`OffCanvas` requires two CSS classes in your stylesheet (see `index.css` for the reference
-implementation):
+### Drawer props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | boolean | — | Whether the drawer is visible |
+| `onClose` | fn | — | Called on Escape, backdrop click |
+| `label` | string | `'Menu'` | `aria-label` for the dialog element |
+| `focusOnClose` | React.RefObject | — | If provided, receives focus on close instead of the triggering element |
+| `children` | node | — | Rendered inside the panel only while open |
+
+### Drawer CSS classes
 
 ```css
-.offcanvas-backdrop   /* fixed overlay behind the panel */
-.offcanvas-panel      /* the panel itself; slides from left */
-
-.offcanvas-backdrop.is-open  /* opacity 1, pointer-events auto */
-.offcanvas-panel.is-open     /* translateX(0) */
+.drawer-backdrop        /* fixed overlay; opacity 0, pointer-events none */
+.drawer-backdrop.is-open   /* opacity 1, pointer-events auto */
+.drawer-panel           /* the panel; transform: translateX(-100%) */
+.drawer-panel.is-open   /* transform: translateX(0) */
 ```
 
 Children are only mounted while `open` is true, which means `useFocusOnMount` inside a
 child component fires fresh on every open — no stale ref or manual reset needed.
+
+`Drawer` also sets `inert` on the panel element when closed, which blocks all pointer and
+keyboard interaction with the hidden content without removing it from the DOM.
+
+---
+
+## The `BottomSheet` component
+
+`BottomSheet` bundles Rules 3, 4, 5, and 6 for the slide-up sheet pattern. It renders its
+own sticky chrome — a drag-handle pill at the top center and a close button at the top right —
+so the content component only needs to handle `useFocusOnMount` on its heading.
+
+```jsx
+import { BottomSheet } from './plugins/router/index.js'
+
+function App() {
+  const [selected, setSelected] = useState(null)
+
+  return (
+    <>
+      {/* result list — clicking an item sets selected */}
+      <BottomSheet
+        open={!!selected}
+        onClose={() => setSelected(null)}
+        label={selected ? `${selected.title} — detail` : 'Detail'}
+      >
+        {selected && <DetailPanel item={selected} />}
+      </BottomSheet>
+    </>
+  )
+}
+```
+
+### BottomSheet props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | boolean | — | Whether the sheet is visible |
+| `onClose` | fn | — | Called on Escape, backdrop click, or the chrome close button |
+| `label` | string | `'Detail'` | `aria-label` for the dialog element |
+| `children` | node | — | Rendered inside the sheet only while open |
+
+### BottomSheet CSS classes
+
+```css
+.sheet-backdrop         /* fixed overlay; opacity 0, pointer-events none */
+.sheet-backdrop.is-open    /* opacity 1, pointer-events auto */
+.sheet-panel            /* fixed panel; transform: translateY(100%) */
+.sheet-panel.is-open    /* transform: translateY(0) */
+.sheet-chrome           /* sticky header row inside the panel */
+.sheet-handle           /* drag-handle pill (decorative) */
+.sheet-close-btn        /* close button positioned absolute right */
+.sheet-content          /* content wrapper with horizontal padding */
+```
+
+See `index.css` in this project for the reference implementation.
+
+Like `Drawer`, `BottomSheet` sets `inert` on the panel when closed and only mounts children
+while open — `useFocusOnMount` in child components fires fresh on each open.
 
 ---
 
@@ -377,17 +501,19 @@ const isDesktop = useMediaQuery('(width >= 768px)')
 
 ---
 
-## Adding a modal to an existing component
+## Adding a modal from scratch
 
-Minimal checklist:
+Minimal checklist — use this when you need a dialog that isn't covered by `Drawer` or
+`BottomSheet`:
 
 1. Wrap modal content in `<div role="dialog" aria-modal="true" aria-label="…">`
-2. Put the close button first in DOM order
-3. Add `useFocusOnMount` to the close button ref
-4. Add `useReturnFocus()` at the top of the modal component
-5. Add `useFocusTrap(containerRef, isOpen)` with a ref on the container
-6. Add an Escape key listener that calls the close handler
-7. Suppress focus ring on `tabIndex={-1}` elements with `style={{ outline: 'none' }}`
+2. Set `inert` on the container when closed to block pointer and keyboard interaction
+3. Put the close button first in DOM order
+4. Add `useFocusOnMount` to the close button ref (or heading ref if no close button)
+5. Add `useReturnFocus()` at the top of the modal component
+6. Add `useFocusTrap(containerRef, isOpen)` with a ref on the container
+7. Add an Escape key listener (see Rule 6) that calls the close handler
+8. Suppress the focus ring on `tabIndex={-1}` elements via CSS (`outline: none`)
 
 ---
 

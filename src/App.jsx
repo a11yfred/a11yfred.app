@@ -7,7 +7,8 @@ import useDefectSearch from './hooks/useDefectSearch.js'
 import {
   Router,
   useRouter,
-  OffCanvas,
+  Drawer,
+  BottomSheet,
   useMediaQuery,
 } from './plugins/router/index.js'
 import { Announcer } from './plugins/announce/index.js'
@@ -80,7 +81,7 @@ function AppShell() {
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
 
   // WCAG 2.4.3: focus h1 when returning from settings on desktop (page swap).
-  // Mobile focus return is handled by OffCanvas. Skip on initial mount.
+  // Mobile focus return is handled by Drawer. Skip on initial mount.
   useEffect(() => {
     if (!didMount.current) { didMount.current = true; return }
     if (!settingsOpen && isDesktop) h1Ref.current?.focus()
@@ -139,7 +140,7 @@ function AppShell() {
       <Header
         h1Ref={h1Ref}
         settingsOpen={settingsOpen}
-        onOpenSettings={() => navigate('/settings')}
+        onOpenSettings={() => { navigate('/settings'); setSelected(null) }}
         onCloseSettings={() => navigate('/')}
         isDesktop={isDesktop}
       />
@@ -153,13 +154,27 @@ function AppShell() {
       ) : (
         <>
           <main className="app-main">{searchView}</main>
-          <OffCanvas open={settingsOpen} onClose={() => navigate('/')} label="Settings">
+          <Drawer open={settingsOpen} onClose={() => navigate('/')} label="Settings">
             <Suspense fallback={null}>
               <SettingsPanel {...settingsProps} />
             </Suspense>
-          </OffCanvas>
+          </Drawer>
         </>
       )}
+
+      <BottomSheet
+        open={!!selected}
+        onClose={() => setSelected(null)}
+        label={selected ? `${selected.title} — defect detail` : 'Defect detail'}
+      >
+        {selected && (
+          <DetailPanel
+            key={selected.id}
+            defect={selected}
+            aiEnabled={aiEnabled}
+          />
+        )}
+      </BottomSheet>
 
       <Footer />
     </div>

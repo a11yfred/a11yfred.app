@@ -33,7 +33,7 @@ export default function SettingsPanel({
   )
   const [saved, setSaved] = useState(false)
 
-  // Escape key — OffCanvas also listens on mobile; harmless double-fire
+  // Escape key — Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
     const handler = (e) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', handler)
