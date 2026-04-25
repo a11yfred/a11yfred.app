@@ -44,7 +44,7 @@ The **public** corpus lives in `src/data/corpus.json`. Each entry follows this s
 
 **`keywords`** drive Fuse.js relevance — include the element name, component type, issue type, and any terms an auditor would naturally search for.
 
-Descriptions and remediation should be concise, technical, and written in the same direct voice as existing entries. Source from publicly available guidance (WCAG Understanding docs, axe-core rules, Deque University, WebAIM).
+Descriptions and remediation should be written at a plain reading level — short sentences, common words, no jargon without explanation. Write as if explaining the issue to a developer who has never done accessibility work before. Source from publicly available guidance (WCAG Understanding docs, axe-core rules, Deque University, WebAIM).
 
 ---
 

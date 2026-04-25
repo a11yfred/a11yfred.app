@@ -11,14 +11,15 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Populate defect corpus** `[corpus]` — import from audit spreadsheets; target 150–200 entries across web and native; review existing 50 starters for accuracy and voice consistency
 - [ ] **Deploy to Netlify** `[infra]` — connect the GitHub repo to Netlify; set the build command to `npm run build` and publish directory to `dist`; the `netlify.toml` is already configured with headers and the SPA redirect rule
 - [ ] **Add favicon** `[design]` `[infra]` — create a `favicon.svg` in `public/` and uncomment the `<link rel="icon">` tag in `index.html`; the favicon should be a simple accessible "A" mark or magnifying glass glyph using the accent color `#5548c8`
-- [ ] reset and copy icons need to be aligned with settings saved
-- [ ] move search button up ever so slightly so it vertically aligns with input, better yet, match heights
-- [ ] add a space char in the span that shows up next to refine because screen readers are not picking up on the break and also the font changes color so that needs to be fixed
-- [ ] Instead of maade by mikey ilagan maybe project by mikey ilagan to recognize there are contributors
-- [ ] I feel like we should create a system of modals to put information like this: > API keys are stored locally in your browser (localStorage) and sent only to the AI provider’s own API — never to any intermediate server. You supply your own key; usage is billed directly to your account.
-This app stores five things in localStorage: your theme preference, your platform filter (Web/Native), your search mode (typeahead on/off), your active AI provider, and your API key(s). No personal data, usage data, or corpus content is collected or transmitted by this app.
-- [ ] Revisit animation stuff
-- [ ] mobile in general will need some gutter to account for the support me button
+- [ ] **Standardize DetailPanel action icons** `[design]` `[a11y]` — the Reset (↺) and Copy (⎘) symbol characters in `DetailPanel` are not vertically aligned with the Lucide `<Check>` icon used in the Settings "Saved" state; switch all three to Lucide icons (`RotateCcw`, `Clipboard`, `Check`) so they share the same size, baseline, and stroke weight across buttons
+- [x] **Search button height — match input** `[design]` — fixed: `align-self: stretch` on `.search-submit-btn`
+- [ ] **Verify Ko-fi a11y patch selectors (follow-up)** `[a11y]` — the tooltip selector `i[rel="tooltip"]` and input selectors within `.kofi-overlay-widget-overlay` were added without live DOM verification; open the deployed app with Ko-fi loaded and confirm the selectors match the real markup before shipping
+- [x] **Footer credit wording** `[design]` — changed to "A project by Mikey Ilagan"
+- [ ] **Offline-first PWA** `[infra]` — add a Service Worker that caches the app shell and corpus JSON so the app works fully without an internet connection after the first load; use Vite's `vite-plugin-pwa` or a hand-rolled `service-worker.js`; add a Web App Manifest so it can be installed to the home screen; test on mobile Chrome
+- [ ] **Verify Ko-fi a11y patch selectors** `[a11y]` — `patchKofiA11y` in `App.jsx` uses CSS selectors that were guessed from Ko-fi’s known class conventions (`.floatingchat-container-wrap`, `.kofi-overlay-widget-overlay`); open the deployed app with Ko-fi loaded, inspect the actual injected DOM in DevTools, and update the selectors and Escape-key close-button targeting to match the real markup
+- [ ] **Revisit animations** `[ux]` `[a11y]` — several transitions are missing or inconsistent: the BottomSheet has a slide-up entrance but no slide-down exit animation; the result list appears instantly with no stagger; SettingsPanel on desktop switches without any transition; bundle all animation improvements into one pass and verify every new animation is disabled under `prefers-reduced-motion: reduce`
+- [ ] **Result list keyboard navigation** `[ux]` `[a11y]` — the result list uses `role="listbox"` / `role="option"` but does not implement Up/Down/Home/End arrow key navigation; add `onKeyDown` handler to the list container to complete the ARIA listbox keyboard contract (WCAG 2.1.1)
+- [ ] **Search results heading and count** `[a11y]` `[ux]` — add a visually present `<h2>` above the result list that reads "X results" (e.g. "12 results") when results are shown; move keyboard focus to this heading when a new result set appears so screen reader users hear the count without having to navigate into the list; the heading should disappear when the query is cleared
 
 ---
 
@@ -39,10 +40,10 @@ This app stores five things in localStorage: your theme preference, your platfor
 
 Target languages: English, Spanish, German, Dutch, French, Japanese, Tagalog/Filipino.
 
-- [ ] **Install react-i18next** `[i18n]` `[code]` — run `npm install react-i18next i18next`; create `src/i18n.js` with language detection and fallback to English; wrap `<App>` in `<I18nextProvider>` in `main.jsx`
+- [ ] **Install react-i18next** `[i18n]` `[code]` — run `npm install react-i18next i18next`; create `src/i18n.js` with language detection and fallback to English; wrap `<App>` in `<I18nextProvider>` in `main.jsx`; the language selector and `localStorage` key (`language`) are already in place
 - [ ] **UI string extraction** `[i18n]` `[code]` — audit every JSX component and extract all visible English strings into `src/locales/en/translation.json`; replace hardcoded strings with `t('key')` calls; stub all other locale files with English keys as placeholders
-- [ ] **Language selector in Settings** `[i18n]` `[ux]` — add a Language dropdown to the Search section of SettingsPanel below the Platform toggle; persist the selection to `localStorage` as `locale`; switch via `i18next.changeLanguage()` so the UI updates without a reload
-- [ ] **Dynamic `lang` attribute** `[i18n]` `[a11y]` — update `document.documentElement.lang` whenever the locale changes so screen readers announce content in the correct language (WCAG 3.1.1); initialize from the persisted locale on load
+- [x] **Language selector in Settings** `[i18n]` `[ux]` — selector added under Appearance; persists to `localStorage` as `'language'`; defaults to `navigator.language`; applies to `document.documentElement.lang`
+- [x] **Dynamic `lang` attribute** `[i18n]` `[a11y]` — `document.documentElement.lang` updates on language change in `App.jsx`
 - [ ] **Translation service** `[i18n]` `[ai]` — create `src/services/translationService.js` following the same pattern as `aiService.js`; implement Google Cloud Translation API (supports all 7 target languages including Filipino/`fil`); user supplies their own Google Cloud API key in Settings; the service translates a string to the active locale on demand
 - [ ] **Corpus pre-translation** `[i18n]` `[corpus]` — run the translation service once against all `mikeys-corpus.json` entries and store results per-language as a `translations` object on each entry: `{ "es": { "desc": "...", "rem": "..." }, "de": {...}, ... }`; `dataService.js` returns the translated fields when the active locale is not English
 - [ ] **AI refinement translation pass** `[i18n]` `[ai]` — after `getAiRefinement` rewrites `desc` and `rem`, if the active locale is not English, pass the results through `translationService` automatically before updating the component state
@@ -78,6 +79,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 - [ ] **Result list arrow key navigation** `[ux]` `[a11y]` — the result list uses `role="listbox"` and `role="option"` but does not yet implement arrow key navigation; add `onKeyDown` handlers to the list container so that pressing Down/Up moves focus between options, and pressing Home/End jumps to the first/last option; this completes the ARIA listbox keyboard contract (WCAG 2.1.1)
 - [ ] **How to use page** `[ux]` — add an onboarding modal or help page that explains the workflow: search → select → add location prefix → refine → copy; trigger it on first visit (check a `localStorage` flag) or via a Help button in the header; the content should be brief enough to read in under 30 seconds
+- [ ] **About / data sources page** `[ux]` `[corpus]` — when an About or How-to page is created, include a section describing how the public corpus was compiled and the sources used: WCAG 2.2 Understanding docs (W3C/WAI), axe-core rule descriptions (Deque), WebAIM articles, and Deque University; explain that entries are written in plain language and near-duplicates are consolidated; this gives users confidence in the data and gives proper credit to the source organizations
 - [ ] **Email results** `[ux]` — add a button to email the selected defect description and remediation to yourself using a `mailto:` link with a pre-populated subject and body; no server required; useful for quickly forwarding a defect write-up from a phone
 - [ ] **Persist last selected defect** `[ux]` — save the selected defect's `id` to `sessionStorage` when it is selected; restore the selection on page reload so the user does not lose their place mid-session; clear on tab close (session scoped, not persistent)
 - [ ] **Copy both fields at once** `[ux]` — add a single "Copy all" button to the `DetailPanel` header that copies the description and remediation together as formatted plain text (e.g. `Description: …\n\nRemediation: …`); useful for pasting into email or a report
@@ -94,7 +96,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Accessibility and Design
 
-- [ ] **Screen reader test** `[a11y]` — test the full workflow with NVDA + Firefox and VoiceOver + Safari; verify: result list announcements when a search fires, DetailPanel heading focus on select, copy/reset announcements (now wired via `announce()`), Settings open/close focus, and the OffCanvas focus trap on mobile
+- [ ] **Screen reader test** `[a11y]` — test the full workflow with NVDA + Firefox and VoiceOver + Safari; verify: result list announcements when a search fires, BottomSheet heading focus on select, copy/reset announcements (via `announce()`), Settings open/close focus, and the Drawer focus trap on mobile
 - [ ] **Contrast audit — priority badges** `[a11y]` `[design]` — run the axe DevTools extension or Colour Contrast Analyser on the priority badge colors in both light and dark themes; dark mode token values were added in this session but should be verified against the actual rendered colors
 - [ ] **Reflow at 400% zoom** `[a11y]` — open the app in Chrome at 400% zoom (browser zoom, not OS scale); confirm no horizontal scrolling is required and no content is cut off or hidden (WCAG 1.4.10)
 - [ ] **`prefers-contrast: more` visual check** `[a11y]` `[design]` — enable "Increase Contrast" in macOS Accessibility settings or use Chrome DevTools to emulate `prefers-contrast: more`; verify the token overrides in `tokens.css` improve legibility without breaking the layout
@@ -106,12 +108,12 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Visible selection indicator** `[design]` `[a11y]` — the selected result card uses an accent border; add a secondary visual cue (e.g. a filled accent left-edge bar or a checkmark) so the selection is unmistakable, especially for users with color vision deficiencies
 - [ ] **Empty state before search** `[design]` — the pre-search state (before any query is entered) shows only the search label and a help hint; add a short prompt, illustration, or sample query to make the tool feel more inviting and explain what to type
 - [ ] **Favicon** `[design]` `[infra]` — see Immediate section above
-- [ ] Remove divider above defects panel
-- [ ] Make both close x buttons match exactly on defects panel and settings
-- [ ] Add Primary WCAG SC: and Also related: to the WCAG SC that comes up in the defects panel
-- [ ] On search results, add Search results heading and put focus there when results are shown
-- [ ] in smaller subheading text put "# results"
-- [ ] Add Kofi Link
+- [ ] **Remove divider above defects panel** `[design]`
+- [ ] **Make both close × buttons match exactly** `[design]` — defects panel close button and settings close button should use the same size and placement
+- [ ] **Search results heading and count** `[a11y]` `[ux]` — add an h2 "X results" above the list; move focus there when results appear (already in Immediate above)
+- [ ] **Ko-fi link in footer or settings** `[ux]` — add a Ko-fi link alongside the Bluesky footer link or in Settings
+- [ ] **react-i18next integration** `[i18n]` `[code]` — install and wire up the library; extract UI strings; the selector and localStorage key are ready
+- [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
 
 ---
 
@@ -140,7 +142,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Bug tracker integration** `[ux]` `[infra]` — add pre-populated deep links to Jira and Linear that open a new ticket with the defect description and remediation already filled in; no API key or auth required for deep links; document the URL format for each tracker
 - [ ] **WCAG version tagging** `[corpus]` — add a `wcagVersion` field to each corpus entry (`"2.1"` or `"2.2"`); display the version tag on the result card and in DetailPanel; useful when auditing against a specific version requirement
 - [ ] **Compare mode** `[ux]` — allow the user to open two defect entries side by side to decide which fits better; implement as a split view in the main content area; useful when multiple success criteria could apply to the same observation
-- [ ] **Tip jar** `[infra]` — add a Ko-fi or GitHub Sponsors link to the footer for Phase 3; omit from Phase 1 personal deployment
+- [ ] **GitHub Sponsors** `[infra]` — set up GitHub Sponsors as a secondary tip option alongside the Ko-fi widget for Phase 3
 
 ---
 
@@ -163,6 +165,12 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ---
 
+## Plugins
+
+- [ ] **Ko-fi a11y patch as standalone plugin** `[code]` `[a11y]` — extract `patchKofiA11y` from `App.jsx` into `src/plugins/kofi/KofiWidget.jsx` and `src/plugins/kofi/index.js`; the plugin should be drop-in for any React project that embeds the Ko-fi overlay widget; include a self-contained CSS file (`kofi.css`) that applies accessible styling patches — focus ring on the trigger button, visible outline on the popup container, improved close-button target size — since Ko-fi's widget is visually styled outside our control and CSS patches are the safest lever we have; document selectors used and note they may need updating if Ko-fi changes its markup
+
+---
+
 ## Code Quality
 
 - [ ] **Migrate inline spacing to tokens** `[code]` — audit all components for raw pixel or rem values in inline styles that are not referencing `var(--space-*)`; replace with the nearest token; this is the last major inline-value migration after font sizes (done) and priority colors (done in this session)
@@ -172,6 +180,44 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 ---
 
 ## Resolved
+
+- [x] **Settings ↔ defect panel navigation** `[ux]` `[a11y]` — opening Settings while a panel is selected preserves the panel state via `keepMounted`; closing Settings restores the panel with edits intact and returns keyboard focus via `focusTrigger`
+- [x] **Reset confirmation modal** `[ux]` — if >70% of a textarea's original text has changed, Reset opens a "Are you sure?" confirmation modal; uses `isSignificantlyChanged` (Levenshtein-based); stacked Yes/No buttons using `.btn-ghost` secondary style
+- [x] **BottomSheet close button layout fix** `[design]` — button was half-clipped by `overflow: hidden` at the rounded corner due to `position: absolute`; moved to normal flex flow; handle re-centered via absolute on the handle instead; mobile bottom Close button added
+- [x] **SC lines as bulleted list** `[design]` — "Fails:" and "Related:" now rendered as `<ul>` with disc bullets and indent instead of plain `<p>` elements
+- [x] **Rewrite button size fix** `[design]` — padding overrides `field-btn` to match the adjacent input height; `align-items: flex-start` on the refine row
+- [x] **"Typeahead" renamed to "Live search"** `[ux]` — code: `typeahead` → `liveSearch`; localStorage key: `typeahead` → `liveSearch`; UI labels and hint text updated
+- [x] **Language selector** `[i18n]` `[ux]` `[a11y]` — selector in Settings (Appearance section); defaults to OS/browser language; persists to localStorage; updates `html lang` attribute; 7 target languages listed
+- [x] **Settings section order** `[ux]` `[design]` — Appearance (Theme, Language) moved before Search (Platform, Live search)
+- [x] **SearchBar hint text improved** `[ux]` — shows current platform and AI provider name; "Settings" is a button, not the whole hint
+- [x] **Non-AI refine hint links to Settings** `[ux]` — "Enable AI in Settings" is now a real button that navigates to Settings and preserves the defect panel
+- [x] **Modal heading line-height: 1em** `[design]`
+- [x] **Modal actions prop** `[code]` — Modal now supports a custom `actions` array for stacked footer buttons
+- [x] **Ghost button style** `[design]` `[code]` — `.btn-ghost` added; used for secondary/cancel modal buttons
+- [x] **Modal top-overflow fix** `[design]` — `max-height` formula changed so modal top is always ≥ `--space-6` from viewport top
+- [x] **Drawer bottom padding** `[design]` — `padding-bottom: 5rem` added to `.drawer-panel` so Ko-fi floating button does not cover settings content
+- [x] **Party Mode theme** `[design]` `[ux]` `[a11y]` — fourth theme chip in Settings; random complementary color palette applied as inline CSS custom properties on each activation; Comic Sans font, magic wand cursor (star tip, angled); 5-second confetti animation (Confetti.jsx); skipped when `prefers-reduced-motion: reduce`; assertive `announce()` describes all changes on activation; reduced-motion disclosure note at bottom of Settings
+- [x] **Copy guard** `[ux]` — copying an empty field now shows a "Nothing to copy" Modal instead of silently writing nothing
+- [x] **Search label color** `[design]` — "Describe the defect or observation" label changed from `--text-muted` to `--text` to match other labels
+- [x] **"AI assist is active" wording** `[ux]` — corrected from "AI assist is on" in search hint
+- [x] **Clear search icon** `[design]` — X replaced with ↺ reset symbol to match Field reset buttons
+- [x] **Rewrite button height** `[design]` — `align-self: stretch` so button matches adjacent input height; `align-items: stretch` on row
+- [x] **LinkedIn footer** `[design]` — Bluesky replaced with LinkedIn (linkedin.com/in/mikeyil)
+- [x] **Settings save button divider** `[design]` — `border-top` added above the Save button row
+- [x] **Footer: "Made by" → "A project by"** `[design]`
+- [x] **Ko-fi accessibility letter** `[a11y]` — `docs/LETTER_TO_KOFI.md` created; added to `.gitignore`
+- [x] **`.gitignore` updated** `[infra]` — added `src/data/mikeys-corpus.json` and `docs/LETTER_TO_KOFI.md`
+- [x] **Public corpus expanded to 54 entries** `[corpus]` — 13 new entries (ATH-051–063) added from axe, WCAG Understanding docs, WebAIM; topics include captions, audio description, live regions, error suggestions, gesture alternatives, and more
+- [x] **Public corpus seeded** `[corpus]` — 41 simplified entries at middle school/ESL reading level; 9 near-duplicates consolidated; all `desc`/`rem` rewritten in plain language; `dataService.js` now points to `corpus.json` as the default
+- [x] **DetailPanel SC text links** `[design]` `[a11y]` — SC pill badges replaced with inline text links; format is "Fails: 1.1.1 …" and "Related: …, …"; `ScBadge` component removed; `.sc-badge` / `.badge-group` CSS removed
+- [x] **Priority badge in DetailPanel** `[design]` — priority badge added to title row alongside the defect heading; uses same token colors as the result list
+- [x] **Refine section hint text** `[a11y]` `[ux]` — descriptive paragraph now appears below "Refine" label; non-AI text explains manual editing; AI text explains AI behavior and links to Settings
+- [x] **Rewrite button restyled** `[design]` `[a11y]` — button now uses `field-btn` class to match Reset/Copy buttons; Lucide `Sparkles` icon added; arrow removed; height matches adjacent input via `align-self: stretch`
+- [x] **BottomSheet close button spacing** `[design]` — right padding increased from `--space-5` to `--space-6`; chrome top padding increased to `--space-4` to clear the border-radius clip zone for the focus ring
+- [x] **Privacy modal** `[ux]` `[design]` — `Modal` component added to `src/plugins/router/`; SettingsPanel inline privacy paragraphs replaced with a "Privacy & storage information" button that opens the modal; modal uses `stopImmediatePropagation` on Escape so it doesn't cascade to the underlying Drawer
+- [x] **Ko-fi tooltip keyboard access** `[a11y]` — `<i rel="tooltip">` icons patched: `tabindex`, `role="button"`, `aria-label`, `focus`/`blur` events dispatch `mouseenter`/`mouseleave` to activate existing tooltip behavior
+- [x] **Ko-fi input labels** `[a11y]` — visible `<label>` elements injected above any Ko-fi overlay input/textarea that uses only placeholder text as a label
+- [x] **Ko-fi contrast override** `[a11y]` — CSS injected at runtime forcing minimum `#1a1a1a` text color inside Ko-fi floating chat wrapper and overlay
 
 - [x] **Announce copy and reset actions** `[a11y]` — `announce()` is now called from `DetailPanel` on copy success ("Description: Copied to clipboard") and on reset ("Description: Reset to original"); same for remediation; satisfies WCAG 4.1.3 Status Messages
 - [x] **Priority badge colors migrated to CSS tokens** `[code]` — `PRIORITY_COLORS` JS object removed from `ResultList.jsx`; component now reads `var(--priority-*-text/bg)`; dark mode overrides added to `tokens.css`
@@ -191,10 +237,27 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [x] **Docs reorganized into `docs/` folder** `[infra]` — CHANGELOG.md, UPDATES.md, TODO.md, MAINTENANCE.md, CONTRIBUTING.md moved to `docs/`; README.md stays at root; internal links updated
 - [x] **Disabled form control text consistency** `[design]` `[a11y]` — `--text-disabled` token added to `tokens.css`; `select:disabled { opacity: 1 }` added to `index.css` to prevent browser opacity on the select; both the provider `<select>` and API key `<input>` now use `var(--text-disabled)` when AI assist is off — same text color, same border crispness
 - [x] **SPA redirect rule** `[infra]` — `netlify.toml` includes a `/*` → `/index.html` 200 redirect so direct links and hard reloads work correctly with the hash router
-- [x] Router plugin — `src/plugins/router/` with hash routing, OffCanvas, useFocusOnMount, useReturnFocus, useFocusTrap, useMediaQuery; reusable across future projects; documented in `src/plugins/router/README.md`
-- [x] Settings as own page / off-canvas panel — desktop: full-page swap; mobile: slide-in from left; browser Back button closes; no modal
-- [x] Focus trap — `useFocusTrap` hook restricts Tab to open modals and panels (WCAG 2.1.2); used internally by OffCanvas
-- [x] Result-click focus management — DetailPanel h2 gets `useFocusOnMount`; focus moves there on every selection
+- [x] **CSS full migration** `[code]` — all inline styles removed from every component; `onMouseEnter`/`onMouseLeave` replaced by CSS `:hover`; `onFocus`/`onBlur` replaced by CSS `:focus`; disabled state by CSS `:has(:disabled)`; Toggle hover state and RadioChip focus ring both moved to CSS `:has()` selectors; BEM class naming throughout; stylelint updated with custom `selector-class-pattern` to allow `__` and `--`
+- [x] **Ko-fi floating widget embedded** `[ux]` — `KofiWidget` component added to `App.jsx`; loads the Ko-fi overlay widget script; users can support without leaving the page; a11y patches applied via `patchKofiA11y` MutationObserver
+- [x] **Ko-fi mobile footer clearance** `[design]` — `padding-bottom: 5rem` added to `.page-footer` on mobile via `@media (width < 768px)`; the floating Ko-fi button no longer overlaps the footer credit text
+- [x] **Header and footer redesign** `[design]` — GitHub link moved to header top-left (hides with h1 when settings open); footer collapsed to single line with Bluesky handle; Ko-fi widget replaced the Ko-fi footer link; all footer content centered
+- [x] **Lazy load SettingsPanel** `[perf]` — `React.lazy()` + `Suspense` wraps the settings import so the settings bundle is only fetched the first time settings opens
+- [x] **Drawer (OffCanvas rename)** `[code]` — `OffCanvas` renamed to `Drawer` across all files (component, CSS classes `.drawer-*`, index export, App.jsx, comments, README); "off-canvas" is an implementation term; "drawer" is the design-system standard
+- [x] **BottomSheet plugin** `[ux]` `[a11y]` — `BottomSheet` component added to `src/plugins/router/`; slides up from bottom on all viewports; sticky chrome with drag handle pill and Lucide X close button; full focus trap, focus save/restore, Escape, `inert`, children-only-when-open; wraps DetailPanel in `App.jsx`
+- [x] **DetailPanel heading to `--fs-h1`** `[design]` — `.detail-title` bumped from `--fs-heading` to `--fs-h1` to match page h1 and Settings heading scale; font-weight bumped to 700
+- [x] **Settings heading to `--fs-h1`** `[design]` — `.settings-title` uses `var(--fs-h1)` to match the page h1 at all viewports
+- [x] **Settings full-screen on mobile** `[ux]` — Drawer panel uses `inset: 0; width: 100%` on mobile; no partial background visible behind settings
+- [x] **Close button standardized** `[design]` `[a11y]` — both DetailPanel and Settings close buttons now use Lucide `<X size={20}>` with `btn-icon btn-icon-accent`; the old `×` character was removed from DetailPanel when the BottomSheet chrome took over
+- [x] **`--overlay-bg` design token** `[code]` — `rgb(0 0 0 / 0.45)` was hardcoded in both backdrop rules; extracted to `--overlay-bg` in `tokens.css` and referenced in both `.drawer-backdrop` and `.sheet-backdrop`
+- [x] **Dead prop removed from DetailPanel** `[code]` — `onClose` prop was accepted but never used after the BottomSheet took over close responsibility; removed from the function signature and all call sites
+- [x] **CSS specificity fix — search input** `[code]` — `input[type="text"]` selector (specificity 0,1,1) was overriding `.search-input` (0,1,0) causing unexpected margin inheritance; fixed by qualifying as `input.search-input`
+- [x] **Disabled label muting via CSS** `[design]` `[a11y]` — `.settings-provider-group:has(:disabled) .settings-field-label` and similar rules added; labels for disabled controls use `--text-faint` at reduced opacity; verified ≥ 4.5:1 contrast ratio maintained
+- [x] **Router README — complete rewrite** `[code]` — added `Drawer` and `BottomSheet` sections (props, CSS classes), new Escape key rule documenting the double-fire pattern, `inert` added to modal checklist, event-source state rule, `tabIndex={-1}` outline guidance, and children-only-when-open note
+- [x] **Announcer README updates** `[code]` — auto-clear behavior documented (messages cleared ~1 s after announcement); all lint warnings resolved (table pipe spacing, code fence language tags, list blank lines)
+- [x] Router plugin — `src/plugins/router/` with hash routing, Drawer, BottomSheet, useFocusOnMount, useReturnFocus, useFocusTrap, useMediaQuery; reusable across future projects; documented in `src/plugins/router/README.md`
+- [x] Settings as own page / drawer panel — desktop: full-page swap; mobile: slide-in from left; browser Back button closes; no modal
+- [x] Focus trap — `useFocusTrap` hook restricts Tab to open modals and panels (WCAG 2.1.2); used internally by Drawer and BottomSheet
+- [x] Result-click focus management — BottomSheet opens and DetailPanel h2 gets `useFocusOnMount`; focus moves there on every selection
 - [x] Settings focus management — heading focus on open; trigger-button focus restored on close
 - [x] Font scale simplified — 7 tokens → 4 (`--fs-small/body/sub/heading`); `html { font-size: 100% }` (browser default); h1 uses `clamp(1.75rem, 10.5vw, 2.667rem)`
 - [x] Font token migration — all inline literal px values replaced across all components
