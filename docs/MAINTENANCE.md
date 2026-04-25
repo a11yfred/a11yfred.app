@@ -52,7 +52,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 - [ ] **No `innerHTML`** — search codebase; all DOM content goes through React JSX
 - [ ] **`localStorage` inventory** — exactly five keys: `theme`, `typeahead`, `platform`, `ai_provider`, `apikey_<provider>`
 - [ ] **Privacy disclosure** — SettingsPanel disclosure lists all five keys accurately
-- [ ] **No analytics** — no third-party scripts, pixels, or beacons; Umami placeholder remains commented out
+- [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget (`storage.ko-fi.com`) is a known exception — tip functionality only, not analytics
 - [ ] **Dependency audit** — run `npm audit`; resolve high/critical before release
 - [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates
 

@@ -18,8 +18,28 @@ export default function App() {
   return (
     <Router appName="A11yTextHelper">
       <AppShell />
+      <KofiWidget />
     </Router>
   )
+}
+
+function KofiWidget() {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = 'https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'
+    script.async = true
+    script.onload = () => {
+      window.kofiWidgetOverlay?.draw('mikeyil', {
+        'type': 'floating-chat',
+        'floating-chat.donateButton.text': 'Support me',
+        'floating-chat.donateButton.background-color': '#434190',
+        'floating-chat.donateButton.text-color': '#ffffff',
+      })
+    }
+    document.body.appendChild(script)
+    return () => { document.body.removeChild(script) }
+  }, [])
+  return null
 }
 
 function AppShell() {
@@ -201,8 +221,9 @@ function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDeskto
 function Footer() {
   return (
     <footer className="page-footer">
-      <p className="footer-credit">Made by Mikey Ilagan</p>
-      <p className="footer-links">
+      <p className="footer-credit">
+        Made by <strong>Mikey Ilagan</strong>
+        {' · '}
         <a
           href="https://bsky.app/profile/mikeyil.bsky.social"
           target="_blank"
@@ -220,25 +241,6 @@ function Footer() {
             <path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z" />
           </svg>
           @mikeyil.bsky.social
-        </a>
-        {' · '}
-        <a
-          href="https://ko-fi.com/mikeyil"
-          target="_blank"
-          rel="noreferrer"
-          className="footer-link"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            className="inline-icon"
-          >
-            <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z" />
-          </svg>
-          Ko-fi
         </a>
       </p>
     </footer>
