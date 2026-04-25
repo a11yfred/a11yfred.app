@@ -26,7 +26,10 @@ export function Announcer() {
         clearTimeout(assertiveTimer.current)
         assertiveTimer.current = setTimeout(() => {
           setAssertiveMsg(message)
-          assertiveTimer.current = setTimeout(() => setAssertiveMsg(''), 1000)
+          // Longer hold for assertive messages so screen readers finish reading
+          // before the DOM text is cleared — 50ms per character, min 2500ms
+          const hold = Math.max(2500, message.length * 50)
+          assertiveTimer.current = setTimeout(() => setAssertiveMsg(''), hold)
         }, 50)
       } else {
         setPoliteMsg('')
