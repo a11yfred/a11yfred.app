@@ -249,7 +249,7 @@ function AppShell() {
   const [language, setLanguage] = useState(() => {
     const saved = localStorage.getItem('language')
     if (saved) return saved
-    return navigator.language?.split('-')[0] || 'en'
+    return navigator.language || 'en'
   })
   const [aiEnabled, setAiEnabled] = useState(false)
   const [liveSearch, setLiveSearch] = useState(() => localStorage.getItem('liveSearch') !== 'false')
@@ -389,6 +389,16 @@ function AppContent({
   }, [settingsOpen, isDesktop]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleQueryChange = (q) => {
+    const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val' }
+    const egg = EASTER_EGGS[q.trim().toLowerCase()]
+    if (egg) {
+      setLanguage(egg)
+      setQuery('')
+      setSelected(null)
+      returnToPanelRef.current = false
+      setSubmittedQuery('')
+      return
+    }
     setQuery(q)
     if (q === '') {
       setSelected(null)
@@ -581,11 +591,17 @@ function PartyBanner() {
 function Footer() {
   const t = useT()
   const credit = t('footer.credit')
-  const [before, after] = credit.split('Mikey Ilagan')
+  const nameIdx = credit.indexOf('Mikey Ilagan')
   return (
     <footer className="page-footer">
       <p className="footer-credit">
-        {before}<strong>Mikey Ilagan</strong>{after ?? ''}
+        {nameIdx >= 0 ? (
+          <>
+            {credit.slice(0, nameIdx)}
+            <strong>Mikey Ilagan</strong>
+            {credit.slice(nameIdx + 12)}
+          </>
+        ) : credit}
         {' · '}
         <a
           href="https://www.linkedin.com/in/mikeyil"

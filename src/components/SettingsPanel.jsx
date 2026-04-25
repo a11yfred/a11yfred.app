@@ -12,16 +12,57 @@ const PROVIDERS = [
 ]
 
 const LANGUAGES = [
-  { value: 'en', label: 'English' },
-  { value: 'es', label: 'Español' },
-  { value: 'fr', label: 'Français' },
-  { value: 'de', label: 'Deutsch' },
-  { value: 'nl', label: 'Nederlands' },
-  { value: 'sv', label: 'Svenska' },
-  { value: 'zh', label: '中文（简体）' },
-  { value: 'ja', label: '日本語' },
-  { value: 'ko', label: '한국어' },
-  { value: 'tl', label: 'Filipino (Tagalog)' },
+  // English
+  { value: 'en',    label: 'English' },
+  { value: 'en-AU', label: 'English (Australian)' },
+  { value: 'en-GB', label: 'English (British)' },
+  { value: 'en-IN', label: 'English (Indian)' },
+  { value: 'en-ZA', label: 'English (South African)' },
+  // European
+  { value: 'af',    label: 'Afrikaans' },
+  { value: 'de',    label: 'Deutsch' },
+  { value: 'eo',    label: 'Esperanto' },
+  { value: 'es',    label: 'Español (Latinoamérica)' },
+  { value: 'es-ES', label: 'Español (España)' },
+  { value: 'es-PH', label: 'Español (Filipinas)' },
+  { value: 'eu',    label: 'Euskara' },
+  { value: 'fr',    label: 'Français' },
+  { value: 'fr-CA', label: 'Français (Canada)' },
+  { value: 'ht',    label: 'Kreyòl Ayisyen' },
+  { value: 'nl',    label: 'Nederlands' },
+  { value: 'pt',    label: 'Português' },
+  { value: 'pt-BR', label: 'Português (Brasil)' },
+  { value: 'sv',    label: 'Svenska' },
+  // Asian & Pacific
+  { value: 'bo',    label: 'བོད་སྐད།' },
+  { value: 'cbk',   label: 'Chabacano' },
+  { value: 'ceb',   label: 'Cebuano' },
+  { value: 'tl',    label: 'Filipino (Tagalog)' },
+  { value: 'haw',   label: 'ʻŌlelo Hawaiʻi' },
+  { value: 'hi',    label: 'हिन्दी' },
+  { value: 'ilo',   label: 'Ilokano' },
+  { value: 'ja',    label: '日本語' },
+  { value: 'ko',    label: '한국어' },
+  { value: 'mi',    label: 'Te Reo Māori' },
+  { value: 'ta',    label: 'தமிழ்' },
+  { value: 'vi',    label: 'Tiếng Việt' },
+  { value: 'yue',   label: '粵語（繁體）' },
+  { value: 'zh',    label: '中文（简体）' },
+  // Middle East / Central Asia / Africa
+  { value: 'ar-PS', label: 'العربية الفلسطينية' },
+  { value: 'crh',   label: 'Qırımtatarca' },
+  { value: 'ug',    label: 'ئۇيغۇرچە' },
+  { value: 'zgh',   label: 'ⵜⴰⵎⴰⵣⵉⵖⵜ' },
+  // Indigenous & other
+  { value: 'cr',    label: 'Nêhiyawêwin' },
+  { value: 'gn',    label: "Avañe'ẽ" },
+  { value: 'iu',    label: 'Inuktitut' },
+  { value: 'nah',   label: 'Nāhuatlahtōlli' },
+  { value: 'nv',    label: 'Diné bizaad' },
+  { value: 'oj',    label: 'Anishinaabemowin' },
+  { value: 'pjt',   label: 'Palawa kani' },
+  { value: 'qu',    label: 'Runasimi' },
+  { value: 'rhg',   label: 'Ruáingga' },
 ]
 
 export default function SettingsPanel({
@@ -50,6 +91,7 @@ export default function SettingsPanel({
   )
   const [saved, setSaved] = useState(false)
   const [privacyOpen, setPrivacyOpen] = useState(false)
+  const [rhgPending, setRhgPending] = useState(false)
 
   // Escape key — Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
@@ -119,7 +161,10 @@ export default function SettingsPanel({
         <div className="settings-select-wrap">
           <select
             value={language}
-            onChange={e => onLanguageChange(e.target.value)}
+            onChange={e => {
+              if (e.target.value === 'rhg') { setRhgPending(true) }
+              else { onLanguageChange(e.target.value) }
+            }}
             className="settings-select"
             aria-label={t('settings.language_aria')}
           >
@@ -259,9 +304,24 @@ export default function SettingsPanel({
         onClose={() => setPrivacyOpen(false)}
         heading={t('settings.privacy_heading')}
       >
+        <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_storage')}</h3>
         <p>{t('settings.privacy_body_1')}</p>
         <p>{t('settings.privacy_body_2')}</p>
+        <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_translations')}</h3>
         <p>{t('settings.privacy_body_translations')}</p>
+      </Modal>
+
+      <Modal
+        open={rhgPending}
+        onClose={() => setRhgPending(false)}
+        heading="Rohingya (Ruáingga)"
+        actions={[
+          { label: 'Cancel',     onClick: () => setRhgPending(false),                                       className: 'btn-ghost' },
+          { label: 'Use anyway', onClick: () => { onLanguageChange('rhg'); setRhgPending(false) }, className: 'btn-accent' },
+        ]}
+      >
+        <p>This translation was AI-generated and has not been reviewed by native Rohingya speakers.</p>
+        <p>The Rohingya people have endured genocide and forced displacement. Please use this translation with care, and consider contributing corrections if you are able.</p>
       </Modal>
     </div>
   )

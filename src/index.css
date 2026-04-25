@@ -963,6 +963,14 @@ input.search-input:focus {
   margin-bottom: 0;
 }
 
+.settings-modal-subhead {
+  font-size: var(--fs-sub);
+  font-weight: 600;
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-1);
+  color: var(--text);
+}
+
 .settings-privacy-btn {
   display: inline-flex;
   align-items: center;
