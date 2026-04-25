@@ -120,6 +120,7 @@ function AppShell() {
         settingsOpen={settingsOpen}
         onOpenSettings={() => navigate('/settings')}
         onCloseSettings={() => navigate('/')}
+        isDesktop={isDesktop}
       />
 
       {isDesktop ? (
@@ -140,45 +141,52 @@ function AppShell() {
   )
 }
 
-function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings }) {
+function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDesktop }) {
   return (
-    <header style={{ position: 'relative', textAlign: 'center', marginBottom: 'var(--space-8)', paddingTop: 48 }}>
+    <header style={{
+      position: 'relative',
+      textAlign: 'center',
+      marginBottom: isDesktop && settingsOpen ? 'var(--space-2)' : 'var(--space-8)',
+      paddingTop: isDesktop && settingsOpen ? 0 : 48,
+    }}>
       <button
         onClick={settingsOpen ? onCloseSettings : onOpenSettings}
         aria-label={settingsOpen ? 'Close settings' : 'Open settings'}
         title={settingsOpen ? 'Close settings' : 'Open settings'}
-        className="btn-icon"
+        className="btn-icon btn-icon-accent"
         style={{ position: 'absolute', top: 0, right: 0, fontSize: 22 }}
       >
-        {settingsOpen ? '✕' : '⚙️'}
+        {settingsOpen
+          ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
+          : <Settings size={20} strokeWidth={2} aria-hidden="true" />
+        }
       </button>
 
-      {/*
-        clamp: min 1.75rem (28px) on tiny screens,
-               scales at 10.5vw to fill ~85% of a 390px mobile screen,
-               max 2.667rem ≈ 32pt on desktop.
-      */}
       <h1
         ref={h1Ref}
         tabIndex={-1}
         style={{
-          fontSize: 'clamp(1.75rem, 10.5vw, 2.667rem)',
+          fontSize: 'var(--fs-h1)',
           fontWeight: 700,
           letterSpacing: '-0.02em',
           color: 'var(--text)',
           lineHeight: 1.15,
+          outline: 'none',
+          ...(isDesktop && settingsOpen && { position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }),
         }}
       >
         A11yTextHelper
       </h1>
 
-      <p style={{
-        fontSize: 'var(--fs-body)',
-        color: 'var(--text-muted)',
-        marginTop: 'var(--space-1)',
-      }}>
-        Audit defect descriptions, fast
-      </p>
+      {!(isDesktop && settingsOpen) && (
+        <p style={{
+          fontSize: 'var(--fs-body)',
+          color: 'var(--text-muted)',
+          marginTop: 'var(--space-1)',
+        }}>
+          Audit defect descriptions, fast
+        </p>
+      )}
     </header>
   )
 }

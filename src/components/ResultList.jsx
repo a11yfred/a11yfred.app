@@ -30,7 +30,7 @@ export default function ResultList({ results, selected, onSelect, query }) {
             onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onSelect(defect)}
             style={{
               padding: 'var(--space-3) var(--space-4)',
-              marginBottom: 4,
+              marginBottom: '1em',
               borderRadius: 'var(--radius)',
               border: `1px solid ${isSelected ? 'var(--accent)' : 'var(--border)'}`,
               background: isSelected ? 'var(--accent-bg)' : 'var(--bg)',
@@ -43,10 +43,22 @@ export default function ResultList({ results, selected, onSelect, query }) {
             {/* Title + priority badge */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
               <span style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
                 fontSize: 'var(--fs-sub)',
                 fontWeight: 500,
                 color: isSelected ? 'var(--accent-text)' : 'var(--text)',
               }}>
+                {isSelected && (
+                  <span aria-hidden="true" style={{
+                    width: 8,
+                    height: 8,
+                    borderRadius: '50%',
+                    background: 'var(--accent-text)',
+                    flexShrink: 0,
+                  }} />
+                )}
                 {defect.title}
               </span>
               <span style={{
@@ -70,7 +82,7 @@ export default function ResultList({ results, selected, onSelect, query }) {
             {/* Description preview */}
             <div style={{
               fontSize: 'var(--fs-body)',
-              color: 'var(--text-faint)',
+              color: isSelected ? 'var(--text-muted)' : 'var(--text-faint)',
               marginTop: 'var(--space-1)',
               display: '-webkit-box',
               WebkitLineClamp: 2,

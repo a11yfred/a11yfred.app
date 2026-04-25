@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { getAiRefinement } from '../services/aiService.js'
 import { useFocusOnMount, useMediaQuery } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -22,13 +22,14 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
   const titleRef = useFocusOnMount()
   const isDesktop = useMediaQuery('(width >= 768px)')
 
-  const [titleFocused, setTitleFocused] = useState(false)
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(defect.desc)
   const [remText, setRemText] = useState(defect.rem)
   const [refineNote, setRefineNote] = useState('')
   const [copiedDesc, setCopiedDesc] = useState(false)
   const [copiedRem, setCopiedRem] = useState(false)
+  const [resetDesc, setResetDesc] = useState(false)
+  const [resetRem, setResetRem] = useState(false)
   const [refining, setRefining] = useState(false)
 
   // State resets automatically when defect changes because App.jsx
@@ -67,46 +68,43 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
       paddingTop: '1.5rem',
       marginTop: '0.5rem',
     }}>
-      {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-        <div>
-          <h2
-            ref={titleRef}
-            tabIndex={-1}
-            onFocus={() => setTitleFocused(true)}
-            onBlur={() => setTitleFocused(false)}
-            style={{
-              fontSize: 'var(--fs-heading)',
-              fontWeight: 600,
-              color: 'var(--text)',
-              marginBottom: 6,
-              outline: titleFocused ? '3px solid var(--focus)' : 'none',
-              outlineOffset: 2,
-              borderRadius: 2,
-            }}
-          >
-            {defect.title}
-          </h2>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            <ScBadge label={defect.scLabel} primary />
-            {defect.related.map(r => <ScBadge key={r} label={r} />)}
-          </div>
-        </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <button
           onClick={onClose}
           aria-label="Close defect panel"
-          className="btn-icon"
-          style={{ fontSize: 'var(--fs-heading)', color: 'var(--text-faint)', flexShrink: 0 }}
+          className="btn-icon btn-icon-accent"
+          style={{ fontSize: 'var(--fs-heading)' }}
         >
           ×
         </button>
+      </div>
+
+      {/* Header */}
+      <div style={{ marginBottom: '1rem' }}>
+        <h2
+          ref={titleRef}
+          tabIndex={-1}
+          style={{
+            fontSize: 'var(--fs-heading)',
+            fontWeight: 600,
+            color: 'var(--text)',
+            marginBottom: 6,
+            outline: 'none',
+          }}
+        >
+          {defect.title}
+        </h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: '2em' }}>
+          <ScBadge label={defect.scLabel} primary />
+          {defect.related.map(r => <ScBadge key={r} label={r} />)}
+        </div>
       </div>
 
       {/* Location prefix */}
       <div style={{ marginBottom: '1rem' }}>
         <label
           htmlFor="location-prefix"
-          style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+          style={{ fontSize: 'var(--fs-body)', color: 'var(--text)', display: 'block', marginBottom: 4 }}
         >
           Location prefix <span style={{ color: 'var(--text-faint)' }}>(optional)</span>
         </label>
@@ -118,8 +116,8 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
           placeholder="e.g. Global: / Cart: / Product details pages:"
           style={{
             width: '100%',
-            padding: '7px 10px',
-            fontSize: 'var(--fs-sub)',
+            padding: '6px 10px',
+            fontSize: 'var(--fs-body)',
             background: 'var(--bg-subtle)',
             border: '1px solid var(--border-control)',
             borderRadius: 'var(--radius)',
@@ -136,7 +134,8 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         onChange={setDescText}
         copied={copiedDesc}
         onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, 'Defect description')}
-        onReset={() => { setDescText(defect.desc); announce('Defect description: Reset to original') }}
+        reset={resetDesc}
+        onReset={() => { setDescText(defect.desc); announce('Defect description: Reset to original'); setResetDesc(true); setTimeout(() => setResetDesc(false), 2000) }}
         isDesktop={isDesktop}
       />
 
@@ -148,15 +147,16 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
         onChange={setRemText}
         copied={copiedRem}
         onCopy={() => copy(remText, setCopiedRem, 'Possible remediation steps')}
-        onReset={() => { setRemText(defect.rem); announce('Possible remediation steps: Reset to original') }}
+        reset={resetRem}
+        onReset={() => { setRemText(defect.rem); announce('Possible remediation steps: Reset to original'); setResetRem(true); setTimeout(() => setResetRem(false), 2000) }}
         isDesktop={isDesktop}
       />
 
       {/* Refine */}
-      <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
+      <div style={{ marginTop: '1rem' }}>
         <label
           htmlFor="refine-note"
-          style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', display: 'block', marginBottom: 4 }}
+          style={{ fontSize: 'var(--fs-body)', color: 'var(--text)', display: 'block', marginBottom: 4 }}
         >
           Refine
           <span style={{ color: 'var(--text-faint)', fontWeight: 400, marginLeft: 6 }}>
@@ -175,8 +175,8 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
             placeholder={aiEnabled ? 'e.g. this is specific to mobile, element is a tooltip' : 'note for your own reference'}
             style={{
               flex: 1,
-              padding: '7px 10px',
-              fontSize: 'var(--fs-sub)',
+              padding: '6px 10px',
+              fontSize: 'var(--fs-body)',
               background: 'var(--bg-subtle)',
               border: '1px solid var(--border-control)',
               borderRadius: 'var(--radius)',
@@ -187,13 +187,11 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
             <button
               onClick={handleRefine}
               disabled={refining || !refineNote.trim()}
+              className="btn-accent"
               style={{
                 padding: '7px 14px',
                 fontSize: 'var(--fs-sub)',
                 borderRadius: 'var(--radius)',
-                border: '1px solid var(--accent)',
-                background: 'var(--accent-bg)',
-                color: 'var(--accent-text)',
                 opacity: (refining || !refineNote.trim()) ? 0.5 : 1,
                 cursor: (refining || !refineNote.trim()) ? 'not-allowed' : 'pointer',
                 whiteSpace: 'nowrap',
@@ -208,39 +206,50 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
   )
 }
 
-function Field({ id, label, value, onChange, copied, onCopy, onReset, isDesktop }) {
+function Field({ id, label, value, onChange, copied, onCopy, reset, onReset, isDesktop }) {
+  const taRef = useRef(null)
+
+  useEffect(() => {
+    const el = taRef.current
+    if (!el) return
+    const style = getComputedStyle(el)
+    const lineHeight = parseFloat(style.lineHeight)
+    const maxHeight = 5 * lineHeight + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+    el.style.height = 'auto'
+    el.style.height = Math.min(el.scrollHeight, maxHeight) + 'px'
+  }, [value])
+
   return (
     <div style={{ marginBottom: '1rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
-        <label htmlFor={id} style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)' }}>{label}</label>
-        <div style={{ display: 'flex', gap: 4 }}>
+        <label htmlFor={id} style={{ fontSize: 'var(--fs-body)', color: 'var(--text)' }}>{label}</label>
+        <div style={{ display: 'flex', gap: 4, marginBottom: '0.5em' }}>
           <button
             onClick={onReset}
-            aria-label={`Reset ${label.toLowerCase()}`}
+            aria-label={reset ? `${label} reset` : `Reset ${label.toLowerCase()}`}
+            className="btn-accent"
             style={{
               fontSize: 'var(--fs-body)',
               padding: '2px 8px',
               borderRadius: 4,
-              border: '1px solid var(--border-control)',
-              color: 'var(--text-muted)',
-              background: 'transparent',
               whiteSpace: 'nowrap',
+              ...(reset && { color: 'var(--success)', borderColor: 'var(--success)' }),
             }}
           >
-            {isDesktop ? '↺ Reset' : '↺'}
+            {reset
+              ? (isDesktop ? '✓ Reset' : '✓')
+              : (isDesktop ? '↺ Reset' : '↺')}
           </button>
           <button
             onClick={onCopy}
             aria-label={copied ? 'Copied to clipboard' : `Copy ${label.toLowerCase()}`}
+            className="btn-accent"
             style={{
               fontSize: 'var(--fs-body)',
               padding: '2px 8px',
               borderRadius: 4,
-              border: '1px solid var(--border-control)',
-              color: copied ? 'var(--success)' : 'var(--text-muted)',
-              background: 'transparent',
-              transition: 'color 0.15s',
               whiteSpace: 'nowrap',
+              ...(copied && { color: 'var(--success)', borderColor: 'var(--success)' }),
             }}
           >
             {copied
@@ -250,20 +259,21 @@ function Field({ id, label, value, onChange, copied, onCopy, onReset, isDesktop 
         </div>
       </div>
       <textarea
+        ref={taRef}
         id={id}
         value={value}
         onChange={e => onChange(e.target.value)}
-        rows={3}
         style={{
           width: '100%',
           padding: '8px 10px',
-          fontSize: 'var(--fs-sub)',
+          fontSize: 'var(--fs-body)',
           lineHeight: 1.6,
           background: 'var(--bg-subtle)',
           border: '1px solid var(--border-control)',
           borderRadius: 'var(--radius)',
           color: 'var(--text)',
-          resize: 'vertical',
+          resize: 'none',
+          overflowY: 'auto',
           fontFamily: 'ui-monospace, monospace',
         }}
       />

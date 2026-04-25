@@ -48,6 +48,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
               color: 'var(--text)',
               transition: 'border-color 0.15s',
               boxSizing: 'border-box',
+              marginBottom: 0,
             }}
             onFocus={e => e.target.style.borderColor = 'var(--focus)'}
             onBlur={e => e.target.style.borderColor = 'var(--border-control)'}
@@ -56,6 +57,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
             <button
               onClick={() => { onChange(''); inputRef.current?.focus() }}
               aria-label="Clear search"
+              className="btn-accent"
               style={{
                 position: 'absolute',
                 right: 8,
@@ -64,9 +66,6 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
                 width: 24,
                 height: 24,
                 borderRadius: '50%',
-                border: 'none',
-                background: 'var(--border)',
-                color: 'var(--text-muted)',
                 fontSize: 'var(--fs-body)',
                 lineHeight: 1,
                 cursor: 'pointer',
@@ -75,7 +74,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
                 justifyContent: 'center',
               }}
             >
-              ✕
+              <X size={12} strokeWidth={2.5} aria-hidden="true" />
             </button>
           )}
         </div>
@@ -118,6 +117,8 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
                   cursor: 'pointer',
                   textDecoration: 'underline',
                 }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--accent-text)'}
               >
                 Settings
               </button>.

@@ -19,6 +19,7 @@
   --text:            #111;  /* 15.9:1 */
   --text-muted:      #666;  /* 5.7:1  */
   --text-faint:      #767676;  /* 4.5:1 — minimum passing value */
+  --text-disabled:   #b5b5b5;  /* intentionally below 4.5:1 — disabled controls (WCAG 1.4.3 exception) */
 
   /* Color — accent */
   --accent:          #5548c8;
@@ -54,12 +55,12 @@
      --fs-sub      18px — card headings, slightly emphasized text
      --fs-heading  24px — panel / section headings (h2 inside dialogs/panels)
 
-     The page h1 uses clamp() directly (not a token) to fill ~85% of
-     the mobile viewport and cap at 32pt on larger screens. */
+     The page h1 uses --fs-h1, overridden on desktop below. */
   --fs-small:   0.75rem;  /* 12px */
   --fs-body:    1rem;     /* 16px */
   --fs-sub:     1.125rem; /* 18px */
   --fs-heading: 1.5rem;   /* 24px */
+  --fs-h1:      clamp(1.75rem, 10.5vw, 2.667rem);
 
   /* Spacing (rem, scales with html font-size) */
   --space-1: 0.25rem;
@@ -83,13 +84,16 @@
   --border:      #2a2a2a;
 
   /* Dark mode text: all ≥ 4.5:1 against --bg (#111). */
-  --text:        #eee;  /* 13.7:1 */
-  --text-muted:  #999;  /*  5.8:1 */
-  --text-faint:  #909090;  /*  5.0:1 */
+  --text:          #eee;  /* 13.7:1 */
+  --text-muted:    #999;  /*  5.8:1 */
+  --text-faint:    #909090;  /*  5.0:1 */
+  --text-disabled: #505050;  /* intentionally below 4.5:1 — disabled controls (WCAG 1.4.3 exception) */
 
   --accent:      #7f77dd;
   --accent-bg:   #26215c;
   --accent-text: #afa9ec;
+
+  --success:     #5dca8a;  /* 6.4:1 on #26215c dark accent-bg; 4.5:1 on #111 base bg */
 
   --focus:       #a09ce8;  /* 4.6:1 against #111 dark bg */
   /* #686868 = 3.6:1 on #111, 3.1:1 on #1a1a1a */
@@ -106,6 +110,14 @@
   --priority-medium-bg:     #0e2440;
   --priority-low-text:      #5dca8a;  /* ~7:1 on #0d2d18 */
   --priority-low-bg:        #0d2d18;
+}
+
+@media (width >= 768px) {
+  :root {
+    --fs-sub:     1.5rem;   /* 24px (up from 18px) */
+    --fs-heading: 2.5rem;   /* 40px (up from 24px) */
+    --fs-h1:      3.5rem;   /* 56px */
+  }
 }
 
 /* Increased contrast for users who have requested it (WCAG 1.4.6) */

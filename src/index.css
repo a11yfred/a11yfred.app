@@ -28,10 +28,21 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+p {
+  line-height: 1.5em;
+  margin-bottom: 2em;
+}
+
 input, textarea, button, select {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  margin-bottom: 2em;
 }
 
 button {
@@ -49,6 +60,17 @@ button {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
+}
+
+/* Toggle: show focus ring on the visual track when the hidden checkbox is focused */
+input[role="switch"] {
+  outline: none;
+}
+
+input[role="switch"]:focus-visible + span {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 11px;
 }
 
 /* Suppress the default outline only on elements that supply
@@ -141,6 +163,41 @@ select:focus-visible {
   min-width: 44px;
   min-height: 44px;
   color: var(--text-muted);
+}
+
+/* ─── Accent button (Save, Reset, Copy, Rewrite) ─────────── */
+
+.btn-icon-accent {
+  color: var(--accent-text);
+  transition: color 0.15s;
+}
+
+.btn-icon-accent:hover {
+  color: var(--accent);
+}
+
+.btn-accent {
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.btn-accent:not(:disabled):hover {
+  background: var(--accent-text);
+  color: var(--accent-bg);
+  border-color: var(--accent-text);
+}
+
+/* ─── Disabled form controls ─────────────────────────────────
+   Browsers apply automatic opacity to disabled <select> elements
+   but not <input>, causing visual inconsistency. Force opacity:1
+   on selects so border and text color are controlled entirely by
+   the component's inline styles (which already use --text-disabled). */
+
+select:disabled {
+  opacity: 1;
 }
 
 /* ─── Form control placeholder ──────────────────────────────── */
