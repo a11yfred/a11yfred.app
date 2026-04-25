@@ -1,44 +1,49 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { useFocusTrap } from './useFocusTrap.js'
 
 /**
  * Centered dialog modal.
- * - Centered in the viewport, 50% of the main container width (max 360px)
- * - Scrollable content area, max 90dvh height
- * - Full-width OK / close button at the bottom
- * - Saves focus to the trigger element on open; restores on close
- * - Traps Tab focus within the modal while open (WCAG 2.1.2)
- * - Dismisses on Escape (intercepts before underlying panels) or OK button
- * - Uses the HTML `inert` attribute to block interaction when closed
+ * Rendered via a portal at document.body so that a transformed ancestor
+ * (e.g. the Drawer using translateX) does not break position: fixed.
  *
- * CSS classes expected in index.css:
- *   .modal-backdrop  .modal-backdrop.is-open
- *   .modal-panel     .modal-panel.is-open
- *   .modal-body      .modal-heading    .modal-content    .modal-footer
+ * - Centers in the viewport regardless of scroll or ancestor transforms
+ * - Focuses the heading (tabIndex -1) on open; scrolls it into view as fallback
+ * - Restores focus to the trigger element on close
+ * - Traps Tab focus within the modal while open (WCAG 2.1.2)
+ * - Dismisses on Escape (capture phase, before underlying panels) or action buttons
  *
  * Props:
- *   open      boolean                    — whether the modal is visible
- *   onClose   fn                         — called on Escape or default OK button
- *   heading   string                     — visible heading and aria-label for the dialog
- *   actions   [{ label, onClick, className }]  — custom footer buttons; defaults to a single OK button
- *   children  node                       — rendered inside the modal body only while open
+ *   open      boolean                              — whether the modal is visible
+ *   onClose   fn                                   — called on Escape or default OK button
+ *   heading   string                               — visible heading and aria-label for the dialog
+ *   actions   [{ label, onClick, className }]      — footer buttons; defaults to a single OK button
+ *   children  node                                 — rendered inside the modal body
  */
 export default function Modal({ open, onClose, heading = 'Information', actions, children }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
+  const headingRef = useRef(null)
 
   useFocusTrap(panelRef, open)
 
+  // Save trigger on open; focus the heading (tabIndex -1) so screen readers announce the dialog.
+  // Scroll into view as a fallback in case the panel somehow sits outside the viewport.
   useEffect(() => {
     if (open) {
       triggerRef.current = document.activeElement
+      requestAnimationFrame(() => {
+        if (headingRef.current) {
+          headingRef.current.focus()
+          headingRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+        }
+      })
     } else {
       triggerRef.current?.focus()
     }
   }, [open])
 
-  // Use capture phase + stopImmediatePropagation so this handler fires before
-  // any underlying panel (Drawer, BottomSheet) also listening to Escape on document.
+  // Escape — capture phase so this fires before Drawer / BottomSheet Escape handlers
   useEffect(() => {
     if (!open) return
     const handler = (e) => {
@@ -51,7 +56,7 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
     return () => document.removeEventListener('keydown', handler, true)
   }, [open, onClose])
 
-  return (
+  return createPortal(
     <>
       {/* Backdrop */}
       <div
@@ -66,14 +71,21 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
         className={`modal-panel${open ? ' is-open' : ''}`}
         role="dialog"
         aria-modal="true"
-        aria-label={heading}
+        aria-labelledby="modal-heading"
         // eslint-disable-next-line react/no-unknown-property
         inert={!open ? '' : undefined}
       >
         {open && (
           <>
             <div className="modal-body">
-              <h2 className="modal-heading">{heading}</h2>
+              <h2
+                id="modal-heading"
+                ref={headingRef}
+                className="modal-heading"
+                tabIndex={-1}
+              >
+                {heading}
+              </h2>
               <div className="modal-content">{children}</div>
             </div>
             <div className="modal-footer">
@@ -92,6 +104,7 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
           </>
         )}
       </div>
-    </>
+    </>,
+    document.body
   )
 }

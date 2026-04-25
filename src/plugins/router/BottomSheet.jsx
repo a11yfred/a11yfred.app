@@ -1,22 +1,17 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import { useFocusTrap } from './useFocusTrap.js'
 
 /**
  * Bottom sheet that slides up from the bottom of the viewport.
- * - Covers the full viewport (all breakpoints)
- * - Sticky chrome: drag handle pill centered, close (×) button top-right
- * - Saves focus to the trigger element on open; restores on close
- * - Traps Tab focus within the panel while open (WCAG 2.1.2)
- * - Dismisses on Escape key or backdrop click
- * - Uses the HTML `inert` attribute to block interaction when closed
+ * Rendered via a portal at document.body so that a transformed ancestor
+ * (e.g. the Drawer using translateX) does not break position: fixed.
  *
- * CSS classes expected in index.css:
- *   .overlay-backdrop  .overlay-backdrop.is-open  (shared with Drawer/Modal)
- *   .sheet-panel       .sheet-panel.is-open
- *   .sheet-chrome      .sheet-handle
- *   .sheet-close-btn   .sheet-content
- *   .sheet-close-bottom  .sheet-close-bottom-btn
+ * - Scroll-locks the body while open
+ * - Swipe-to-dismiss: drag down from the chrome area to close
+ * - Traps Tab focus within the panel while open (WCAG 2.1.2)
+ * - Dismisses on Escape or backdrop click
  *
  * Props:
  *   open         boolean  — whether the sheet is visible
@@ -28,6 +23,8 @@ import { useFocusTrap } from './useFocusTrap.js'
 export default function BottomSheet({ open, onClose, label = 'Detail', keepMounted = false, children }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
+  const dragStartY = useRef(null)
+  const dragDelta = useRef(0)
 
   useFocusTrap(panelRef, open)
 
@@ -48,7 +45,53 @@ export default function BottomSheet({ open, onClose, label = 'Detail', keepMount
     return () => document.removeEventListener('keydown', handler)
   }, [open, onClose])
 
-  return (
+  // Scroll lock — prevent background from scrolling when sheet is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [open])
+
+  // Swipe-to-dismiss: drag the sheet down from the chrome area to close
+  const handleTouchStart = (e) => {
+    const panel = panelRef.current
+    if (!panel) return
+    const panelTop = panel.getBoundingClientRect().top
+    const touchY = e.touches[0].clientY
+    if (touchY - panelTop > 56) return
+    dragStartY.current = touchY
+    dragDelta.current = 0
+  }
+
+  const handleTouchMove = (e) => {
+    if (dragStartY.current === null) return
+    const delta = e.touches[0].clientY - dragStartY.current
+    if (delta <= 0) return
+    dragDelta.current = delta
+    if (panelRef.current) {
+      panelRef.current.style.transform = `translateX(-50%) translateY(${delta}px)`
+      panelRef.current.style.transition = 'none'
+    }
+  }
+
+  const handleTouchEnd = () => {
+    if (dragStartY.current === null) return
+    const DISMISS_THRESHOLD = 100
+    if (dragDelta.current > DISMISS_THRESHOLD) {
+      onClose()
+    }
+    if (panelRef.current) {
+      panelRef.current.style.transform = ''
+      panelRef.current.style.transition = ''
+    }
+    dragStartY.current = null
+    dragDelta.current = 0
+  }
+
+  return createPortal(
     <>
       {/* Backdrop — click to dismiss */}
       <div
@@ -64,10 +107,13 @@ export default function BottomSheet({ open, onClose, label = 'Detail', keepMount
         role="dialog"
         aria-modal="true"
         aria-label={label}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         // eslint-disable-next-line react/no-unknown-property
         inert={!open ? '' : undefined}
       >
-        {/* Chrome: drag handle centered (absolute), close button in flow at right */}
+        {/* Chrome: drag handle centered, close button top-right */}
         <div className="sheet-chrome">
           <div className="sheet-handle" aria-hidden="true" />
           <button
@@ -79,7 +125,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', keepMount
           </button>
         </div>
 
-        {/* Content area — keepMounted keeps children alive so state is preserved */}
+        {/* Content area */}
         <div className="sheet-content">
           {(open || keepMounted) && (
             <>
@@ -93,6 +139,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', keepMount
           )}
         </div>
       </div>
-    </>
+    </>,
+    document.body
   )
 }

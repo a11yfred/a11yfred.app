@@ -205,14 +205,13 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
               </>}
         </p>
         <div className="detail-refine-row">
-          <input
+          <textarea
             id="refine-note"
-            type="text"
             value={refineNote}
             onChange={e => setRefineNote(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleRefine()}
             placeholder={aiEnabled ? t('detail.refine_placeholder_ai') : t('detail.refine_placeholder_no_ai')}
-            className="detail-input"
+            className="detail-input detail-input--textarea"
+            rows={3}
           />
           {aiEnabled && (
             <button

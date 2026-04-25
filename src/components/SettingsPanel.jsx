@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronDown, Check, Info } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, useMediaQuery, Modal } from '../plugins/router/index.js'
+import { useFocusOnMount, usePageTitle, useMediaQuery, Modal, BottomSheet } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -317,17 +317,17 @@ export default function SettingsPanel({
         </p>
       )}
 
-      <Modal
+      <BottomSheet
         open={privacyOpen}
         onClose={() => setPrivacyOpen(false)}
-        heading={t('settings.privacy_heading')}
+        label={t('settings.privacy_heading')}
       >
         <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_storage')}</h3>
         <p>{t('settings.privacy_body_1')}</p>
         <p>{t('settings.privacy_body_2')}</p>
         <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_translations')}</h3>
         <p>{t('settings.privacy_body_translations')}</p>
-      </Modal>
+      </BottomSheet>
 
       <Modal
         open={rhgPending}

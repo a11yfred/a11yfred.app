@@ -1052,8 +1052,6 @@ input.search-input:focus {
 
 .settings-footer-row .settings-save-btn {
   order: -1;
-  align-self: flex-end;
-  width: auto;
 }
 
 .settings-footer-row .settings-privacy-btn {
@@ -1094,7 +1092,7 @@ input.search-input:focus {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 7px 0;
+  padding: 7px 4px;
   border-radius: var(--radius);
   border: 1px solid var(--border-control);
   background: var(--bg-subtle);
@@ -1102,6 +1100,8 @@ input.search-input:focus {
   cursor: pointer;
   font-size: var(--fs-body);
   font-weight: 400;
+  line-height: 1em;
+  text-align: center;
   transition: all var(--duration-fast);
 }
 
@@ -1361,6 +1361,13 @@ input.search-input:focus {
   border-radius: var(--radius);
   color: var(--text);
   margin-bottom: 0;
+}
+
+.detail-input--textarea {
+  resize: vertical;
+  min-height: 72px;
+  line-height: 1.5;
+  font-family: inherit;
 }
 
 .detail-refine {
