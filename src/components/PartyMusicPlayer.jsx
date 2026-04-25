@@ -16,7 +16,7 @@ export default function PartyMusicPlayer({ active }) {
   const stopRef = useRef(null)
 
   useEffect(() => {
-    setPos(rndPos())
+    setPos(rndPos()) // eslint-disable-line react-hooks/set-state-in-effect
     stopRef.current?.()
     stopRef.current = null
     setPlaying(false)
@@ -26,7 +26,7 @@ export default function PartyMusicPlayer({ active }) {
     if (!active) {
       stopRef.current?.()
       stopRef.current = null
-      setPlaying(false)
+      setPlaying(false) // eslint-disable-line react-hooks/set-state-in-effect
     }
   }, [active])
 

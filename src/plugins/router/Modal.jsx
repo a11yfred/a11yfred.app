@@ -74,7 +74,6 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-heading"
-        // eslint-disable-next-line react/no-unknown-property
         inert={!open ? '' : undefined}
       >
         {open && (

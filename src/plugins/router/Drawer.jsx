@@ -62,9 +62,6 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
         role="dialog"
         aria-modal="true"
         aria-label={label}
-        // inert blocks all interaction when closed; React 18 passes unknown
-        // HTML attributes through to the DOM so this works without a polyfill.
-        // eslint-disable-next-line react/no-unknown-property
         inert={!open ? '' : undefined}
       >
         {/* Only mount children while open — useFocusOnMount fires on each open */}

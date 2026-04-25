@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, ChevronDown, Check, Info } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, useMediaQuery, Modal, BottomSheet, useDir } from '../plugins/router/index.js'
+import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -92,7 +92,6 @@ export default function SettingsPanel({
   const headingRef = useFocusOnMount()
   const t = useT()
   usePageTitle(t('settings.heading'))
-  const isDesktop = useMediaQuery('(width >= 768px)')
   const dir = useDir()
   const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches

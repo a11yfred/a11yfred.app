@@ -187,6 +187,6 @@ export function startSong2() {
     clearTimeout(timer)
     master.gain.setValueAtTime(master.gain.value, ctx.currentTime)
     master.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.2)
-    setTimeout(() => { try { master.disconnect() } catch {} }, 350)
+    setTimeout(() => { try { master.disconnect() } catch (e) { void e } }, 350)
   }
 }

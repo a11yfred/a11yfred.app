@@ -14,7 +14,8 @@ export function useMediaQuery(query) {
 
   useEffect(() => {
     const mq = window.matchMedia(query)
-    setMatches(mq.matches)
+    // Re-read when query changes so stale value from previous query doesn't linger.
+    setMatches(mq.matches) // eslint-disable-line react-hooks/set-state-in-effect
     const handler = (e) => setMatches(e.matches)
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)

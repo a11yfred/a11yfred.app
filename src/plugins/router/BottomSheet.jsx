@@ -112,7 +112,6 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        // eslint-disable-next-line react/no-unknown-property
         inert={!open ? '' : undefined}
       >
         {/* Chrome: drag handle centered, close button top-right */}
