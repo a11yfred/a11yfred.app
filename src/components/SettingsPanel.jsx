@@ -217,7 +217,7 @@ function RadioChip({ name, value, label, current, onChange }) {
         value={value}
         checked={isActive}
         onChange={() => onChange(value)}
-        className="sr-only"
+        className="radio-chip__input"
       />
       <span className="radio-chip__indicator" aria-hidden="true" />
       {label}
