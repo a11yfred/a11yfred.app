@@ -364,7 +364,7 @@ function RadioChip({ name, value, label, current, onChange }) {
         className="radio-chip__input"
       />
       <span className="radio-chip__indicator" aria-hidden="true" />
-      {label}
+      {label.split('\n').flatMap((part, i) => i === 0 ? [part] : [<br key={i} />, part])}
     </label>
   )
 }

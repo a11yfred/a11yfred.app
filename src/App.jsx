@@ -78,7 +78,7 @@ export default function App() {
   return (
     <Router appName="A11yTextHelper">
       <AppShell />
-      <KofiWidget />
+      {/* <KofiWidget /> — disabled: third-party script causing console errors */}
     </Router>
   )
 }
@@ -294,6 +294,7 @@ function AppContent({
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
   const settingsOpen = route === '/settings'
+  const isNotFound = route !== '/' && route !== '/settings'
   const h1Ref = useRef(null)
   const didMount = useRef(false)
   // Tracks whether settings was opened while a defect panel was selected,
@@ -494,7 +495,9 @@ function AppContent({
         />
         <main className="app-main">
           <Suspense fallback={null}>
-            {isDesktop && settingsOpen ? <SettingsPanel {...settingsProps} /> : searchView}
+            {isNotFound
+              ? <NotFoundPage />
+              : (isDesktop && settingsOpen ? <SettingsPanel {...settingsProps} /> : searchView)}
           </Suspense>
         </main>
         <Footer />
@@ -571,7 +574,7 @@ function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDeskto
         tabIndex={-1}
         className={compact ? 'sr-only' : 'page-title'}
       >
-        {t('app.name')}
+        <a href="/" className="page-title-link">{t('app.name')}</a>
       </h1>
 
       {!compact && (
@@ -605,6 +608,23 @@ function PartyBanner() {
       onMouseEnter={handleMouseEnter}
     >
       {t('party.banner')}
+    </div>
+  )
+}
+
+function NotFoundPage() {
+  const t = useT()
+  const { navigate } = useRouter()
+  return (
+    <div className="not-found">
+      <h2 className="not-found__heading">{t('notfound.heading')}</h2>
+      <p className="not-found__body">{t('notfound.body')}</p>
+      <button
+        onClick={() => navigate('/')}
+        className="btn-accent not-found__btn"
+      >
+        {t('notfound.button')}
+      </button>
     </div>
   )
 }
