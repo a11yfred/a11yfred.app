@@ -57,7 +57,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 - [ ] **No `innerHTML`** — search codebase; all DOM content goes through React JSX
 - [ ] **`localStorage` inventory** — exactly six keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `apikey_<provider>`
 - [ ] **Privacy disclosure** — SettingsPanel disclosure lists all six keys accurately
-- [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget (`storage.ko-fi.com`) is a known exception — tip functionality only, not analytics
+- [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget is currently disabled; re-enable only when console errors are resolved and selector patches are verified against live DOM
 - [ ] **Dependency audit** — run `npm audit`; resolve high/critical before release
 - [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates
 
@@ -101,12 +101,14 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 ## i18n
 
-The custom i18n system (`src/i18n/`) is live with 10 locale files and `useT()` wired into all components.
+The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` wired into all components. `en.json` is the source of truth. RTL locales (`ar-PS`, `ug`) automatically set `dir="rtl"` on `<html>`.
 
 - [ ] **String coverage** — any new UI text must use `t('key')` from `src/i18n/en.json`; never hardcode English strings in components
-- [ ] **Locale file parity** — all keys in `en.json` must exist in every other locale file (`es`, `fr`, `de`, `nl`, `sv`, `zh`, `ko`, `ja`, `tl`); add missing keys with an English fallback value when adding new strings
-- [ ] **Corpus translation sync** — when `scripts/translate.js` is written, re-run it whenever corpus entries are added or edited; review WCAG terminology in translated output before committing
-- [ ] **Technical term review** — after any machine translation batch, flag corpus entries using WCAG-specific terms (accessible name, focus trap, landmark, live region, ARIA role) for human review
+- [ ] **Locale file parity** — all keys in `en.json` must exist in every other locale file; add missing keys with an English fallback value when adding new strings; run the parity check script or compare key counts manually before release
+- [ ] **Announce string audit** — verify that all `announce()` call strings are pulled from `t()` and that every locale file has the corresponding key translated (not just English fallback)
+- [ ] **Corpus translation coverage** — defect descriptions and remediation steps in `corpus.json` should have locale-specific overlays; when `scripts/translate.js` is written, re-run it whenever entries are added or edited; WCAG SC names and codes (`1.1.1`, `aria-label`, etc.) should remain in English in all locales
+- [ ] **Technical term review** — after any machine translation batch, flag corpus entries using WCAG-specific terms (accessible name, focus trap, landmark, live region, ARIA role) for human review; machine translation of these terms is unreliable
+- [ ] **Capitalization conventions** — English variants use NYT title case; Romance/Germanic use sentence case; caseless scripts (CJK, Arabic, Uyghur, Tamil, Devanagari) receive no capitalization changes; apply this when adding keys or updating existing ones
 - [ ] **`lang` attribute** — `<html lang>` updates correctly when user switches language; verify with screen reader after any changes to `App.jsx` language effect
 
 ---

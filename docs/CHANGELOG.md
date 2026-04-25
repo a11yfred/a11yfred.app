@@ -4,6 +4,62 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-25 — 50+ locales, priority i18n, RTL, 404 page, a11y fixes, lint sweep
+
+### Internationalization — 50+ locales
+
+- Expanded from 10 to 50+ locale files covering English variants, Romance/Germanic, CJK, Southeast Asian, Indigenous languages (Nahuatl, Navajo, Ojibwe, Plains Cree, Māori, Hawaiian, Guaraní, Quechua, Pitjantjatjara), constructed languages (Esperanto, Pig Latin, Klingon, Valyrian), Easter egg locales (Pirate, Pig Latin, Klingon, Valyrian), and minority languages (Rohingya, Tibetan, Uyghur, Tamazight, Crimean Tatar, Basque, Valencian)
+- Title-case conventions applied by language: NYT rules for English variants and Filipino; sentence case for Romance/Germanic; no changes for caseless scripts (CJK, Arabic, Uyghur, Tamil, Devanagari)
+- RTL support: Palestinian Arabic (`ar-PS`) and Uyghur (`ug`) set `document.documentElement.dir = "rtl"`; entire layout mirrors including Drawer direction, back chevron, chip corner radii, and toggle thumb; driven by CSS `[dir="rtl"]` overrides
+- `useDir` hook added to router plugin: reactive MutationObserver on `<html dir>`; used by SettingsPanel for back chevron direction
+
+### Priority/severity labels translated
+
+- `PRIORITY_VARS` in `ResultList.jsx` and `DetailPanel.jsx` extended with `key` field pointing to `priority.*` i18n keys
+- Badge displays `t(p.key)` instead of hardcoded `defect.priority` string
+- `priority.critical/high/medium/low/best_practice` keys added to `en.json` and all 48 other locale files
+- Pirate translations: "Abandon Ship!" / "Batten Down!" / "Listing, Cap'n" / "Calm Waters" / "Old Salt's Wisdom"
+
+### Pirate chip line breaks
+
+- `\n` in translation string values renders as `<br>` elements in `RadioChip`; pirate chip labels "Sunny\nSeas", "Dead o'\nNight", "Treasure\nMode?" intentionally break to fit narrow screens
+- `white-space: nowrap` removed from `.radio-chip`; `min-height: 3rem` added to keep all chips the same height
+
+### 404 page
+
+- `NotFoundPage` component renders for any hash route other than `/` and `/settings`
+- "Back to Home" button navigates to `#/`; i18n keys added (`notfound.heading/body/button`) in all locales
+
+### "Native App" rename
+
+- All instances of platform label "Native" renamed to "Native App" across all 50+ locale files
+
+### Accessibility fixes
+
+- `useAriaHide` fixed: now moves focus into the panel before setting `aria-hidden` on `#root`, eliminating WAI-ARIA violation warning when trigger button is still focused on overlay open
+- `.btn-icon:focus-visible` gets `border-radius: 50%` — keyboard focus ring is now a perfect circle on close buttons and gear icon
+
+### UI/design
+
+- Fork on GitHub link: `text-decoration: underline` added; underline offset normalized to match LinkedIn link
+- Gear icon (settings button): hover background highlight via `var(--bg-subtle)`
+- App title links to `#/` homepage
+- Ko-fi widget disabled (third-party script causing console reload loop); code moved to `src/components/KofiWidget.jsx` for potential re-enable
+- Settings back button: tighter to edge and less gap on mobile via `@media (width < 768px)` override
+- Chips, save button, and bottom sheet close button all share `padding: var(--space-3) var(--space-4)` for consistent 48px height
+- `margin-bottom: var(--space-4)` added under the Refine row before the bottom close button
+- `settings.privacy_subhead_storage` and `settings.privacy_subhead_translations` subheadings added in English
+
+### Lint sweep
+
+- Zero errors, zero warnings across ESLint and Stylelint
+- Removed unused `isDesktop` variable from SettingsPanel
+- Removed stale `eslint-disable` comments for `react/no-unknown-property` (inert is now recognized)
+- Extracted `KofiWidget` and `patchKofiA11y` from App.jsx into `src/components/KofiWidget.jsx`
+- Fixed empty catch block in `partySongs.js`
+
+---
+
 ## 2026-04-25 — Internationalization: 10-language UI support, I18nProvider, privacy button layout
 
 ### I18n system (`src/i18n/index.jsx`, `src/i18n/en.json`, …)

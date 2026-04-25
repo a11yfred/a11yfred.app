@@ -52,9 +52,11 @@ src/
     corpus.json         # Public corpus — 54 plain-language entries; default data source
   i18n/
     index.jsx           # I18nProvider + useT() hook (zero-dep, React Context)
-    en.json             # Source of truth (~93 keys)
-    es.json fr.json de.json nl.json sv.json
-    zh.json ko.json ja.json tl.json
+    en.json             # Source of truth (~100 keys)
+    es.json fr.json de.json nl.json sv.json  # Romance/Germanic
+    zh.json yue.json ko.json ja.json tl.json # CJK + Filipino
+    ar-PS.json ug.json  # RTL locales — sets dir="rtl" on <html>
+    # + 40+ more locale files (see src/i18n/ for full list)
   services/
     dataService.js      # Data layer abstraction; migration seam for Supabase (Phase 2+)
     aiService.js        # AI provider abstraction; Anthropic implemented, others stubbed
@@ -71,6 +73,7 @@ src/
     Confetti.jsx          # Party mode canvas confetti animation (5 s, rAF loop)
     PartySparkles.jsx     # Party mode click sparkles — burst of stars/circles from cursor
     PartyMusicPlayer.jsx  # Party mode floating play/pause button; random position per route
+    KofiWidget.jsx        # Ko-fi donation widget + a11y patch (currently disabled)
   plugins/
     router/             # Hash-based SPA router + focus-management hooks (zero deps)
       Router.jsx        # <Router> provider and useRouter hook
@@ -155,9 +158,9 @@ Settings includes Light, Auto, Dark, and **Party Mode?** theme options. Party Mo
 
 ## Language
 
-Settings includes a Language selector (defaults to your browser's language). 10 languages are fully translated: English, Español, Français, Deutsch, Nederlands, Svenska, 中文（简体）, 日本語, 한국어, Filipino (Tagalog).
+Settings includes a Language selector (defaults to your browser's language). 50+ languages ship in UI translations, including English, Español, Français, Deutsch, Nederlands, Svenska, 中文, 日本語, 한국어, Filipino, Arabic (Palestinian), Māori, Hawaiian, Navajo, Ojibwe, Plains Cree, Tibetan, Tamil, Uyghur, Rohingya, Classical Nahuatl, Esperanto, Basque, Guaraní, Quechua, Pig Latin, Klingon, Valyrian, Pirate speak, and more. Selecting Palestinian Arabic or Uyghur switches the entire layout to RTL.
 
-Translations were generated with AI and may contain errors. No user-entered data is sent anywhere for translation. The `src/i18n/` directory contains one flat-key JSON file per locale; `src/i18n/en.json` is the source of truth.
+Translations were generated with AI and may contain errors. No user-entered data is sent anywhere for translation. The `src/i18n/` directory contains one flat-key JSON file per locale; `src/i18n/en.json` is the source of truth. Title-case conventions follow NYT rules for English variants; sentence case for Romance/Germanic languages; no capitalization changes for scripts that lack the distinction.
 
 ---
 
@@ -167,7 +170,7 @@ Translations were generated with AI and may contain errors. No user-entered data
 
 Self-contained hash-based SPA router with full WCAG 2.2 focus-management support. Zero dependencies beyond React. Reusable across projects.
 
-Key exports: `Router`, `useRouter`, `Route`, `Link`, `Drawer`, `BottomSheet`, `Modal`, `useFocusOnMount`, `useReturnFocus`, `useFocusTrap`, `useMediaQuery`, `usePageTitle`, `usePaginationFocus`.
+Key exports: `Router`, `useRouter`, `Route`, `Link`, `Drawer`, `BottomSheet`, `Modal`, `useFocusOnMount`, `useReturnFocus`, `useFocusTrap`, `useAriaHide`, `useDir`, `useMediaQuery`, `usePageTitle`, `usePaginationFocus`.
 
 See [`src/plugins/router/README.md`](src/plugins/router/README.md) for focus-management rules and usage patterns.
 

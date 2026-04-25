@@ -20,6 +20,7 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 | `useReturnFocus` | hook | Restore focus to the triggering control on unmount |
 | `useFocusTrap` | hook | Restrict Tab focus to a container |
 | `useAriaHide` | hook | Hide all other body children from the AT tree while the overlay is open |
+| `useDir` | hook | Returns the current `document.documentElement.dir` value, updates reactively on change |
 | `useMediaQuery` | hook | Reactive `window.matchMedia` |
 | `usePageTitle` | hook | Sets `document.title` to `"AppName \| Page"` while mounted |
 | `usePaginationFocus` | hook | Re-focuses a heading when the page index changes inside a modal or sheet |
@@ -270,7 +271,6 @@ function App() {
       {/* Background: inert while any panel is open */}
       <div
         className="app-background"
-        // eslint-disable-next-line react/no-unknown-property
         inert={backgroundInert ? '' : undefined}
       >
         <Header />
