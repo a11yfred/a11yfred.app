@@ -1126,8 +1126,27 @@ input.search-input:focus {
   color: var(--text-muted);
 }
 
+.settings-language-row {
+  display: flex;
+  gap: var(--space-2);
+  align-items: stretch;
+}
+
 .settings-select-wrap {
   position: relative;
+}
+
+.settings-select-wrap--language {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-language-set-btn {
+  padding: 6px var(--space-3);
+  font-size: var(--fs-body);
+  border-radius: var(--radius);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .settings-select {
@@ -1790,7 +1809,9 @@ input.search-input:focus {
   align-items: center;
   gap: var(--space-2);
   margin-top: var(--space-4);
-  padding: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  width: 100%;
   background: none;
   border: none;
   font-size: var(--fs-body);
