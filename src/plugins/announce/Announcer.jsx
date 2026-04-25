@@ -8,6 +8,10 @@ import { _subscribe } from './announce.js'
  *
  * <Announcer /> must be mounted before any announce() call fires.
  * Mounting it in App.jsx satisfies this for all app-level flows.
+ *
+ * Each message is cleared from the DOM ~1 s after it is announced so that
+ * screen reader users navigating the page do not encounter stale announcement
+ * text sitting in the live region.
  */
 export function Announcer() {
   const [politeMsg, setPoliteMsg] = useState('')
@@ -18,15 +22,19 @@ export function Announcer() {
   useEffect(() => {
     const unsub = _subscribe((message, priority) => {
       if (priority === 'assertive') {
-        // Clear first so screen readers re-announce even if the text is
-        // identical to the previous message, then set after a paint.
         setAssertiveMsg('')
         clearTimeout(assertiveTimer.current)
-        assertiveTimer.current = setTimeout(() => setAssertiveMsg(message), 50)
+        assertiveTimer.current = setTimeout(() => {
+          setAssertiveMsg(message)
+          assertiveTimer.current = setTimeout(() => setAssertiveMsg(''), 1000)
+        }, 50)
       } else {
         setPoliteMsg('')
         clearTimeout(politeTimer.current)
-        politeTimer.current = setTimeout(() => setPoliteMsg(message), 50)
+        politeTimer.current = setTimeout(() => {
+          setPoliteMsg(message)
+          politeTimer.current = setTimeout(() => setPoliteMsg(''), 1000)
+        }, 50)
       }
     })
     return () => {
