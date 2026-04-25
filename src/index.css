@@ -524,7 +524,7 @@ select:focus-visible {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0 0 0 / 0.35);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.35);
   transition: transform 0.12s ease, background 0.12s ease;
   translate: -50% -50%;
 }
@@ -538,31 +538,6 @@ select:focus-visible {
 .party-player:focus-visible {
   outline: 2px dotted var(--focus);
   outline-offset: 3px;
-}
-
-/* ─── Radio chip stars (party mode) ──────────────────────── */
-
-[data-theme="party"] .radio-chip__indicator {
-  border: none;
-  border-radius: 0;
-  background: transparent;
-  width: auto;
-  height: auto;
-  font-size: 10px;
-  line-height: 1;
-  color: var(--text-muted);
-}
-
-[data-theme="party"] .radio-chip__indicator::before {
-  content: '☆';
-}
-
-[data-theme="party"] .radio-chip--active .radio-chip__indicator {
-  color: var(--accent-text);
-}
-
-[data-theme="party"] .radio-chip--active .radio-chip__indicator::before {
-  content: '★';
 }
 
 /* ─── Overlay motion — reduced motion override ────────────── */
@@ -1162,6 +1137,31 @@ input.search-input:focus {
 .radio-chip--active .radio-chip__indicator {
   background: var(--accent-text);
   border: none;
+}
+
+/* ─── Radio chip stars (party mode) ──────────────────────── */
+
+[data-theme="party"] .radio-chip__indicator {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  width: auto;
+  height: auto;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--text-muted);
+}
+
+[data-theme="party"] .radio-chip__indicator::before {
+  content: '☆';
+}
+
+[data-theme="party"] .radio-chip--active .radio-chip__indicator {
+  color: var(--accent-text);
+}
+
+[data-theme="party"] .radio-chip--active .radio-chip__indicator::before {
+  content: '★';
 }
 
 /* ─── Segmented chip group on mobile ─────────────────────────
