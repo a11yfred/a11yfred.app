@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import { ChevronLeft, ChevronDown, Check, Info } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, useMediaQuery, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
+import { useT } from '../i18n/index.jsx'
 
 const PROVIDERS = [
-  { id: 'anthropic', label: 'Anthropic (Claude)', placeholder: 'sk-ant-...' },
-  { id: 'openai',    label: 'OpenAI (GPT)',        placeholder: 'sk-...' },
-  { id: 'google',    label: 'Google (Gemini)',      placeholder: 'AIza...' },
-  { id: 'microsoft', label: 'Microsoft (Copilot)', placeholder: 'Paste API key' },
+  { id: 'anthropic', label: 'Anthropic (Claude)', placeholderKey: 'settings.api_placeholder_anthropic' },
+  { id: 'openai',    label: 'OpenAI (GPT)',        placeholderKey: 'settings.api_placeholder_openai'    },
+  { id: 'google',    label: 'Google (Gemini)',      placeholderKey: 'settings.api_placeholder_google'    },
+  { id: 'microsoft', label: 'Microsoft (Copilot)', placeholderKey: 'settings.api_placeholder_default'   },
 ]
 
 const LANGUAGES = [
@@ -16,8 +17,11 @@ const LANGUAGES = [
   { value: 'fr', label: 'Français' },
   { value: 'de', label: 'Deutsch' },
   { value: 'nl', label: 'Nederlands' },
+  { value: 'sv', label: 'Svenska' },
+  { value: 'zh', label: '中文（简体）' },
   { value: 'ja', label: '日本語' },
-  { value: 'tl', label: 'Filipino' },
+  { value: 'ko', label: '한국어' },
+  { value: 'tl', label: 'Filipino (Tagalog)' },
 ]
 
 export default function SettingsPanel({
@@ -29,7 +33,8 @@ export default function SettingsPanel({
   onClose,
 }) {
   const headingRef = useFocusOnMount()
-  usePageTitle('Settings')
+  const t = useT()
+  usePageTitle(t('settings.heading'))
   const isDesktop = useMediaQuery('(width >= 768px)')
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -64,7 +69,7 @@ export default function SettingsPanel({
     localStorage.setItem('ai_provider', activeProvider)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
-    announce('Settings: Saved')
+    announce(t('settings.saved_announce'))
   }
 
   return (
@@ -72,34 +77,34 @@ export default function SettingsPanel({
       <div className="settings-header">
         <button
           onClick={onClose}
-          aria-label="Back to search"
+          aria-label={t('settings.back')}
           className="btn-icon btn-icon-accent"
         >
           <ChevronLeft size={22} strokeWidth={2.5} aria-hidden="true" />
         </button>
         <h2 ref={headingRef} tabIndex={-1} className="settings-title">
-          Settings
+          {t('settings.heading')}
         </h2>
       </div>
 
       {/* ── Appearance ──────────────────────────────── */}
-      <h3 className="settings-section-heading">Appearance</h3>
+      <h3 className="settings-section-heading">{t('settings.appearance')}</h3>
 
       {/* Theme */}
       <fieldset className="settings-fieldset">
-        <legend className="sr-only">Theme</legend>
+        <legend className="sr-only">{t('settings.theme_legend')}</legend>
         <div className="radio-chip-group">
           {[
-            { value: 'light', label: 'Light'       },
-            { value: 'auto',  label: 'Auto'        },
-            { value: 'dark',  label: 'Dark'        },
-            { value: 'party', label: 'Party Mode?' },
-          ].map(({ value, label }) => (
+            { value: 'light', labelKey: 'settings.theme_light' },
+            { value: 'auto',  labelKey: 'settings.theme_auto'  },
+            { value: 'dark',  labelKey: 'settings.theme_dark'  },
+            { value: 'party', labelKey: 'settings.theme_party' },
+          ].map(({ value, labelKey }) => (
             <RadioChip
               key={value}
               name="theme-setting"
               value={value}
-              label={label}
+              label={t(labelKey)}
               current={theme}
               onChange={onThemeChange}
             />
@@ -109,16 +114,14 @@ export default function SettingsPanel({
 
       {/* Language */}
       <div className="settings-group">
-        <p className="settings-group__label">Language</p>
-        <p className="settings-group__desc">
-          Defaults to your browser&rsquo;s language. Full translations are in progress.
-        </p>
+        <p className="settings-group__label">{t('settings.language_label')}</p>
+        <p className="settings-group__desc">{t('settings.language_desc')}</p>
         <div className="settings-select-wrap">
           <select
             value={language}
             onChange={e => onLanguageChange(e.target.value)}
             className="settings-select"
-            aria-label="Language"
+            aria-label={t('settings.language_aria')}
           >
             {LANGUAGES.map(lang => (
               <option key={lang.value} value={lang.value}>{lang.label}</option>
@@ -129,30 +132,32 @@ export default function SettingsPanel({
       </div>
 
       {/* ── Search ──────────────────────────────────── */}
-      <h3 className="settings-section-heading settings-section-heading--divided">Search</h3>
+      <h3 className="settings-section-heading settings-section-heading--divided">
+        {t('settings.search_section')}
+      </h3>
 
       {/* Platform */}
       <div className="settings-group">
-        <p className="settings-group__label">Platform</p>
+        <p className="settings-group__label">{t('settings.platform_label')}</p>
         <p className="settings-group__desc">
-          {platform === 'web' ? 'Show web-oriented results' : 'Show native-oriented results'}
+          {platform === 'web' ? t('settings.platform_web_desc') : t('settings.platform_native_desc')}
         </p>
         <fieldset className="settings-fieldset">
-          <legend className="sr-only">Platform</legend>
+          <legend className="sr-only">{t('settings.platform_legend')}</legend>
           <div className="radio-chip-group">
             {[
-              { value: 'web',    label: 'Web'    },
-              { value: 'native', label: 'Native' },
-            ].map(({ value, label }) => (
+              { value: 'web',    labelKey: 'settings.platform_web'    },
+              { value: 'native', labelKey: 'settings.platform_native' },
+            ].map(({ value, labelKey }) => (
               <RadioChip
                 key={value}
                 name="platform-setting"
                 value={value}
-                label={label}
+                label={t(labelKey)}
                 current={platform}
                 onChange={(val) => {
                   onPlatformChange(val)
-                  announce(val === 'web' ? 'Platform: Show web-oriented results' : 'Platform: Show native-oriented results')
+                  announce(t(val === 'web' ? 'settings.platform_web_announce' : 'settings.platform_native_announce'))
                 }}
               />
             ))}
@@ -163,55 +168,34 @@ export default function SettingsPanel({
       {/* Live search */}
       <div className="settings-toggle-row">
         <div>
-          <label htmlFor="toggle-live-search" className="settings-toggle-label">Live search</label>
+          <label htmlFor="toggle-live-search" className="settings-toggle-label">
+            {t('settings.live_search_label')}
+          </label>
           <p className="settings-toggle-desc">
-            {liveSearch ? 'Results appear as you type' : 'Results appear on Search / Enter'}
+            {liveSearch ? t('settings.live_search_on') : t('settings.live_search_off')}
           </p>
         </div>
         <Toggle id="toggle-live-search" checked={liveSearch} onChange={onToggleLiveSearch} />
       </div>
 
       {/* ── AI Assist ───────────────────────────────── */}
-      <h3 className="settings-section-heading settings-section-heading--divided">AI Assist</h3>
+      <h3 className="settings-section-heading settings-section-heading--divided">
+        {t('settings.ai_heading')}
+      </h3>
 
       <div className="settings-toggle-row settings-toggle-row--sm">
         <div>
-          <label htmlFor="toggle-ai" className="settings-toggle-label">Enable AI assist</label>
-          <p className="settings-toggle-desc">Rewrites text based on your refinement notes</p>
+          <label htmlFor="toggle-ai" className="settings-toggle-label">
+            {t('settings.ai_enable_label')}
+          </label>
+          <p className="settings-toggle-desc">{t('settings.ai_enable_desc')}</p>
         </div>
         <Toggle id="toggle-ai" checked={aiEnabled} onChange={onToggleAi} />
       </div>
 
-      <button
-        type="button"
-        onClick={() => setPrivacyOpen(true)}
-        className="settings-privacy-btn"
-      >
-        <Info size={14} aria-hidden="true" />
-        Privacy &amp; storage information
-      </button>
-
-      <Modal
-        open={privacyOpen}
-        onClose={() => setPrivacyOpen(false)}
-        heading="Privacy & Storage"
-      >
-        <p>
-          API keys are stored locally in your browser (<code>localStorage</code>) and sent only to
-          the AI provider&rsquo;s own API — never to any intermediate server.
-          You supply your own key; usage is billed directly to your account.
-        </p>
-        <p>
-          This app stores six things in <code>localStorage</code>: your theme preference,
-          your language preference, your platform filter (Web/Native), your live search setting,
-          your active AI provider, and your API key(s).
-          No personal data, usage data, or corpus content is collected or transmitted by this app.
-        </p>
-      </Modal>
-
       <div className="settings-provider-group">
         <label htmlFor="active-provider" className="settings-field-label">
-          Active provider
+          {t('settings.provider_label')}
         </label>
         <div className="settings-select-wrap">
           <select
@@ -239,29 +223,46 @@ export default function SettingsPanel({
             type="password"
             value={keys[p.id]}
             onChange={e => setKeys(prev => ({ ...prev, [p.id]: e.target.value }))}
-            placeholder={p.placeholder}
+            placeholder={t(p.placeholderKey)}
             disabled={!aiEnabled}
             className="settings-key-input"
           />
         </div>
       ))}
 
-      <div className="settings-save-row">
+      {/* ── Footer row: privacy (left) + save (right) on desktop; save then privacy on mobile ── */}
+      <div className="settings-footer-row">
+        <button
+          type="button"
+          onClick={() => setPrivacyOpen(true)}
+          className="settings-privacy-btn"
+        >
+          <Info size={14} aria-hidden="true" />
+          {t('settings.privacy_button')}
+        </button>
         <button onClick={handleSave} className="btn-accent settings-save-btn">
           {saved
-            ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />Saved</>
-            : 'Save'
+            ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
+            : t('settings.save')
           }
         </button>
       </div>
 
       {prefersReducedMotion && (
         <p className="settings-reduced-motion-note">
-          You have reduced motion turned on, and we are actively acknowledging
-          that system setting. Animations like confetti will be skipped until
-          you change it in your OS accessibility settings.
+          {t('settings.reduced_motion_note')}
         </p>
       )}
+
+      <Modal
+        open={privacyOpen}
+        onClose={() => setPrivacyOpen(false)}
+        heading={t('settings.privacy_heading')}
+      >
+        <p>{t('settings.privacy_body_1')}</p>
+        <p>{t('settings.privacy_body_2')}</p>
+        <p>{t('settings.privacy_body_translations')}</p>
+      </Modal>
     </div>
   )
 }

@@ -1,26 +1,22 @@
 import { useRef } from 'react'
 import { useRouter } from '../plugins/router/index.js'
+import { useT } from '../i18n/index.jsx'
 
 export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName }) {
   const { navigate } = useRouter()
+  const t = useT()
   const inputRef = useRef(null)
 
   const handleKeyDown = (e) => {
     if (!liveSearch && e.key === 'Enter') onSearch()
   }
 
-  const platformLabel = platform === 'web' ? 'web-based' : 'native mobile'
-
-  const hintParts = [
-    liveSearch ? 'Results appear as you type.' : 'Type a description and press Search or Enter.',
-    `Currently focusing on ${platformLabel} issues.`,
-    aiEnabled && providerName ? `AI assist is active (${providerName}).` : null,
-  ].filter(Boolean)
+  const platformLabel = platform === 'web' ? t('settings.platform_web') : t('settings.platform_native')
 
   return (
-    <search aria-label="Defect search" className="search-bar">
+    <search aria-label={t('search.aria_label')} className="search-bar">
       <label htmlFor="defect-search" className="search-label">
-        Describe the defect or observation
+        {t('search.label')}
       </label>
       <div className="search-row">
         <div className="search-input-wrap">
@@ -31,7 +27,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
             value={query}
             onChange={e => onChange(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="e.g. modal close button no label"
+            placeholder={t('search.placeholder')}
             autoComplete="off"
             spellCheck={false}
             className={`search-input${query ? ' search-input--has-value' : ''}`}
@@ -39,7 +35,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {query && (
             <button
               onClick={() => { onChange(''); inputRef.current?.focus() }}
-              aria-label="Clear search"
+              aria-label={t('search.clear_aria')}
               className="btn-accent search-clear-btn"
             >
               ↺
@@ -52,16 +48,20 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
             disabled={query.length < 2}
             className="btn-accent search-submit-btn"
           >
-            Search
+            {t('search.button')}
           </button>
         )}
       </div>
       {query.length === 0 && (
         <p className="search-hint">
-          {hintParts.join(' ')}{' '}
-          This can be changed in{' '}
+          {liveSearch ? t('search.hint_live') : t('search.hint_submit')}
+          {' '}
+          {t('search.hint_platform', { platform: platformLabel })}
+          {aiEnabled && providerName ? ` ${t('search.hint_ai', { provider: providerName })}` : ''}
+          {' '}
+          {t('search.hint_change_in')}{' '}
           <button onClick={() => navigate('/settings')} className="search-hint-link">
-            Settings
+            {t('search.hint_settings_link')}
           </button>.
         </p>
       )}

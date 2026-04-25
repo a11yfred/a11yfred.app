@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { announce } from '../plugins/announce/index.js'
+import { useT } from '../i18n/index.jsx'
 
 const PRIORITY_VARS = {
   Critical:        { color: 'var(--priority-critical-text)', bg: 'var(--priority-critical-bg)' },
@@ -10,12 +11,14 @@ const PRIORITY_VARS = {
 }
 
 export default function ResultList({ results, selected, onSelect, query }) {
+  const t = useT()
+
   if (results.length === 0) {
     return <NoResults query={query} />
   }
 
   return (
-    <ul className="result-list" role="listbox" aria-label="Defect candidates">
+    <ul className="result-list" role="listbox" aria-label={t('results.aria_label')}>
       {results.map(defect => {
         const isSelected = selected?.id === defect.id
         const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
@@ -51,12 +54,14 @@ export default function ResultList({ results, selected, onSelect, query }) {
 }
 
 function NoResults({ query }) {
+  const t = useT()
+
   useEffect(() => {
-    announce(`No results for "${query}". Try a component name, element type, or a different phrase.`)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional: announce only on first appearance, not every keystroke
+    announce(t('results.no_results_announce', { query }))
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional: announce only on first appearance
 
   return (
-    <section aria-label="No results" className="no-results">
+    <section aria-label={t('results.no_results_aria')} className="no-results">
       <svg
         aria-hidden="true"
         width="56"
@@ -73,10 +78,10 @@ function NoResults({ query }) {
       </svg>
 
       <p className="no-results__heading">
-        No results for &ldquo;{query}&rdquo;
+        {t('results.no_results_heading', { query })}
       </p>
       <p className="no-results__body">
-        Try a component name, element type, or a different phrase.
+        {t('results.no_results_body')}
       </p>
     </section>
   )

@@ -16,6 +16,7 @@ import {
 } from './plugins/router/index.js'
 import { Announcer, announce } from './plugins/announce/index.js'
 import { playPartySound, playSqueak } from './utils/partySounds.js'
+import { I18nProvider, useT } from './i18n/index.jsx'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 
@@ -241,21 +242,13 @@ function patchKofiA11y() {
   }
 }
 
+// AppShell manages state and provides the i18n context.
+// AppContent is the inner component that consumes it.
 function AppShell() {
-  const { route, navigate } = useRouter()
-  const isDesktop = useMediaQuery('(width >= 768px)')
-  const settingsOpen = route === '/settings'
-  const h1Ref = useRef(null)
-  const didMount = useRef(false)
-  // Tracks whether settings was opened while a defect panel was selected,
-  // so the panel is restored (with edits) when settings closes.
-  const returnToPanelRef = useRef(false)
-
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'auto')
   const [language, setLanguage] = useState(() => {
     const saved = localStorage.getItem('language')
     if (saved) return saved
-    // Default to the browser/OS language, falling back to English
     return navigator.language?.split('-')[0] || 'en'
   })
   const [aiEnabled, setAiEnabled] = useState(false)
@@ -266,6 +259,46 @@ function AppShell() {
   const [selected, setSelected] = useState(null)
   const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
   const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
+
+  return (
+    <I18nProvider locale={language}>
+      <AppContent
+        theme={theme} setTheme={setTheme}
+        language={language} setLanguage={setLanguage}
+        aiEnabled={aiEnabled} setAiEnabled={setAiEnabled}
+        liveSearch={liveSearch} setLiveSearch={setLiveSearch}
+        query={query} setQuery={setQuery}
+        submittedQuery={submittedQuery} setSubmittedQuery={setSubmittedQuery}
+        searchKey={searchKey} setSearchKey={setSearchKey}
+        selected={selected} setSelected={setSelected}
+        platform={platform} setPlatform={setPlatform}
+        panelFocusTrigger={panelFocusTrigger} setPanelFocusTrigger={setPanelFocusTrigger}
+      />
+    </I18nProvider>
+  )
+}
+
+function AppContent({
+  theme, setTheme,
+  language, setLanguage,
+  aiEnabled, setAiEnabled,
+  liveSearch, setLiveSearch,
+  query, setQuery,
+  submittedQuery, setSubmittedQuery,
+  searchKey, setSearchKey,
+  selected, setSelected,
+  platform, setPlatform,
+  panelFocusTrigger, setPanelFocusTrigger,
+}) {
+  const { route, navigate } = useRouter()
+  const isDesktop = useMediaQuery('(width >= 768px)')
+  const t = useT()
+  const settingsOpen = route === '/settings'
+  const h1Ref = useRef(null)
+  const didMount = useRef(false)
+  // Tracks whether settings was opened while a defect panel was selected,
+  // so the panel is restored (with edits) when settings closes.
+  const returnToPanelRef = useRef(false)
 
   const activeQuery = liveSearch ? query : submittedQuery
   const results = useDefectSearch(activeQuery, platform, searchKey)
@@ -288,9 +321,7 @@ function AppShell() {
       localStorage.setItem('theme', theme)
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       announce(
-        prefersReduced
-          ? 'Party mode activated! The font has changed to Comic Sans. The colors have changed to a random bright color palette. The mouse cursor is now a magic wand. Confetti was skipped because reduced motion is turned on.'
-          : 'Party mode activated! The font has changed to Comic Sans. The colors have changed to a random bright color palette. Colorful confetti is now falling from the top of the screen in an assortment of colors and shapes. The mouse cursor is now a magic wand.',
+        prefersReduced ? t('party.announce_reduced') : t('party.announce_full'),
         { priority: 'assertive' }
       )
       return
@@ -309,7 +340,7 @@ function AppShell() {
       mq.addEventListener('change', apply)
       return () => mq.removeEventListener('change', apply)
     }
-  }, [theme])
+  }, [theme]) // eslint-disable-line react-hooks/exhaustive-deps -- t is intentionally excluded; party announce on theme change only
 
   useEffect(() => {
     if (theme !== 'party') return
@@ -349,13 +380,13 @@ function AppShell() {
     if (!didMount.current) { didMount.current = true; return }
     if (!settingsOpen) {
       if (returnToPanelRef.current) {
-        setPanelFocusTrigger(t => t + 1)
+        setPanelFocusTrigger(n => n + 1)
         returnToPanelRef.current = false
       } else if (isDesktop) {
         h1Ref.current?.focus()
       }
     }
-  }, [settingsOpen, isDesktop])
+  }, [settingsOpen, isDesktop]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleQueryChange = (q) => {
     setQuery(q)
@@ -440,7 +471,7 @@ function AppShell() {
       </div>
 
       {!isDesktop && (
-        <Drawer open={settingsOpen} onClose={() => navigate('/')} label="Settings">
+        <Drawer open={settingsOpen} onClose={() => navigate('/')} label={t('settings.drawer_label')}>
           <Suspense fallback={null}>
             <SettingsPanel {...settingsProps} />
           </Suspense>
@@ -451,7 +482,7 @@ function AppShell() {
         open={!!selected && !settingsOpen}
         onClose={() => { setSelected(null); returnToPanelRef.current = false }}
         keepMounted={settingsOpen && !!selected}
-        label={selected ? `${selected.title} — defect detail` : 'Defect detail'}
+        label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
       >
         {selected && (
           <DetailPanel
@@ -467,6 +498,7 @@ function AppShell() {
 }
 
 function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDesktop }) {
+  const t = useT()
   const compact = isDesktop && settingsOpen
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
@@ -487,14 +519,14 @@ function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDeskto
           >
             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12z" />
           </svg>
-          Fork on GitHub
+          {t('header.github')}
         </a>
       )}
 
       <button
         onClick={settingsOpen ? onCloseSettings : onOpenSettings}
-        aria-label={settingsOpen ? 'Close settings' : 'Open settings'}
-        title={settingsOpen ? 'Close settings' : 'Open settings'}
+        aria-label={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
+        title={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
         className="btn-icon btn-icon-accent page-header__settings-btn"
       >
         {settingsOpen
@@ -508,17 +540,18 @@ function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDeskto
         tabIndex={-1}
         className={compact ? 'sr-only' : 'page-title'}
       >
-        A11yTextHelper
+        {t('app.name')}
       </h1>
 
       {!compact && (
-        <p className="page-tagline">Audit defect descriptions, fast</p>
+        <p className="page-tagline">{t('app.tagline')}</p>
       )}
     </header>
   )
 }
 
 function PartyBanner() {
+  const t = useT()
   const [animating, setAnimating] = useState(true)
   const timerRef = useRef(null)
 
@@ -540,16 +573,19 @@ function PartyBanner() {
       aria-hidden="true"
       onMouseEnter={handleMouseEnter}
     >
-      ~*~ PARTY MODE ENABLED ~*~
+      {t('party.banner')}
     </div>
   )
 }
 
 function Footer() {
+  const t = useT()
+  const credit = t('footer.credit')
+  const [before, after] = credit.split('Mikey Ilagan')
   return (
     <footer className="page-footer">
       <p className="footer-credit">
-        A project by <strong>Mikey Ilagan</strong>
+        {before}<strong>Mikey Ilagan</strong>{after ?? ''}
         {' · '}
         <a
           href="https://www.linkedin.com/in/mikeyil"
@@ -567,7 +603,7 @@ function Footer() {
           >
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
           </svg>
-          LinkedIn
+          {t('footer.linkedin')}
         </a>
       </p>
     </footer>

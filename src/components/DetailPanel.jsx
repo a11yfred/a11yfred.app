@@ -3,6 +3,7 @@ import { Sparkles } from 'lucide-react'
 import { getAiRefinement } from '../services/aiService.js'
 import { useFocusOnMount, useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
+import { useT } from '../i18n/index.jsx'
 
 const PRIORITY_VARS = {
   Critical:        { color: 'var(--priority-critical-text)', bg: 'var(--priority-critical-bg)' },
@@ -47,6 +48,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
   const titleRef = useFocusOnMount()
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
+  const t = useT()
 
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(defect.desc)
@@ -76,7 +78,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
     }
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true)
-      announce(`${label}: Copied to clipboard`)
+      announce(t('detail.copied_announce', { label }))
       setTimeout(() => setCopied(false), 2000)
     })
   }
@@ -86,7 +88,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
   const handleReset = (original, current, setText, setFlag, label) => {
     const doReset = () => {
       setText(original)
-      announce(`${label}: Reset to original`)
+      announce(t('detail.reset_announce', { label }))
       setFlag(true)
       setTimeout(() => setFlag(false), 2000)
     }
@@ -113,6 +115,8 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
   }
 
   const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
+  const descLabel = t('detail.desc_label')
+  const remLabel = t('detail.rem_label')
 
   return (
     <div className="detail-panel">
@@ -128,12 +132,12 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
 
         <ul className="detail-sc-list">
           <li className="detail-sc-item">
-            <span className="detail-sc-label">Fails:</span>{' '}
+            <span className="detail-sc-label">{t('detail.fails')}</span>{' '}
             <ScLink label={defect.scLabel} />
           </li>
           {defect.related.length > 0 && (
             <li className="detail-sc-item">
-              <span className="detail-sc-label">Related:</span>{' '}
+              <span className="detail-sc-label">{t('detail.related')}</span>{' '}
               {defect.related.map((r, i) => (
                 <span key={r}>
                   {i > 0 && ', '}
@@ -147,56 +151,57 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
 
       <div className="detail-field-row">
         <label htmlFor="location-prefix" className="detail-label">
-          Location prefix <span className="detail-optional">(optional)</span>
+          {t('detail.location_label')}{' '}
+          <span className="detail-optional">{t('detail.location_optional')}</span>
         </label>
         <input
           id="location-prefix"
           type="text"
           value={location}
           onChange={e => setLocation(e.target.value)}
-          placeholder="e.g. Global: / Cart: / Product details pages:"
+          placeholder={t('detail.location_placeholder')}
           className="detail-input"
         />
       </div>
 
       <Field
         id="defect-desc"
-        label="Defect description"
+        label={descLabel}
         value={location.trim() ? displayDesc : descText}
         onChange={setDescText}
         copied={copiedDesc}
-        onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, 'Defect description')}
+        onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel)}
         reset={resetDesc}
-        onReset={() => handleReset(defect.desc, descText, setDescText, setResetDesc, 'Defect description')}
+        onReset={() => handleReset(defect.desc, descText, setDescText, setResetDesc, descLabel)}
         isDesktop={isDesktop}
       />
 
       <Field
         id="defect-rem"
-        label="Possible remediation steps"
+        label={remLabel}
         value={remText}
         onChange={setRemText}
         copied={copiedRem}
-        onCopy={() => copy(remText, setCopiedRem, 'Possible remediation steps')}
+        onCopy={() => copy(remText, setCopiedRem, remLabel)}
         reset={resetRem}
-        onReset={() => handleReset(defect.rem, remText, setRemText, setResetRem, 'Possible remediation steps')}
+        onReset={() => handleReset(defect.rem, remText, setRemText, setResetRem, remLabel)}
         isDesktop={isDesktop}
       />
 
       <div className="detail-refine">
-        <label htmlFor="refine-note" className="detail-label">Refine</label>
+        <label htmlFor="refine-note" className="detail-label">{t('detail.refine_label')}</label>
         <p className="detail-refine-hint">
           {aiEnabled
-            ? <>Describe what to change and AI will rewrite and incorporate your updates. Change your AI model in{' '}
+            ? <>{t('detail.refine_hint_ai')}{' '}
                 <button type="button" className="detail-settings-link" onClick={() => navigate('/settings')}>
-                  Settings
+                  {t('detail.refine_hint_ai_settings')}
                 </button>.
               </>
-            : <>Edit the fields above directly, or note changes here. Enable AI in{' '}
+            : <>{t('detail.refine_hint_no_ai')}{' '}
                 <button type="button" className="detail-settings-link" onClick={() => navigate('/settings')}>
-                  Settings
+                  {t('detail.refine_hint_no_ai_settings')}
                 </button>{' '}
-                and it will rewrite based on your notes.
+                {t('detail.refine_hint_no_ai_suffix')}
               </>}
         </p>
         <div className="detail-refine-row">
@@ -206,7 +211,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
             value={refineNote}
             onChange={e => setRefineNote(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && handleRefine()}
-            placeholder={aiEnabled ? 'e.g. this is specific to mobile, element is a tooltip' : 'note for your own reference'}
+            placeholder={aiEnabled ? t('detail.refine_placeholder_ai') : t('detail.refine_placeholder_no_ai')}
             className="detail-input"
           />
           {aiEnabled && (
@@ -214,11 +219,11 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
               onClick={handleRefine}
               disabled={refining || !refineNote.trim()}
               className="btn-accent field-btn detail-rewrite-btn"
-              aria-label={refining ? 'Rewriting with AI' : 'Rewrite with AI'}
+              aria-label={refining ? t('detail.rewriting_aria') : t('detail.rewrite_aria')}
             >
               {refining
-                ? 'Rewriting…'
-                : <><Sparkles size={12} aria-hidden="true" strokeWidth={2} />{' '}Rewrite</>}
+                ? t('detail.rewriting_text')
+                : <><Sparkles size={12} aria-hidden="true" strokeWidth={2} />{' '}{t('detail.rewrite_text')}</>}
             </button>
           )}
         </div>
@@ -227,35 +232,36 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
       <Modal
         open={nothingToCopy}
         onClose={() => setNothingToCopy(false)}
-        heading="Nothing to copy"
+        heading={t('detail.nothing_to_copy_heading')}
       >
-        <p>This field is empty. There is nothing to copy.</p>
+        <p>{t('detail.nothing_to_copy_body')}</p>
       </Modal>
 
       <Modal
         open={!!confirmReset}
         onClose={() => setConfirmReset(null)}
-        heading="Are you sure?"
+        heading={t('detail.confirm_reset_heading')}
         actions={[
           {
-            label: 'Yes, reset',
+            label: t('detail.confirm_reset_yes'),
             onClick: () => { confirmReset?.doReset(); setConfirmReset(null) },
             className: 'btn-accent modal-ok-btn',
           },
           {
-            label: 'No, nevermind',
+            label: t('detail.confirm_reset_no'),
             onClick: () => setConfirmReset(null),
             className: 'btn-ghost modal-ok-btn',
           },
         ]}
       >
-        <p>{"You've made significant changes to this text. Resetting will remove all of your edits."}</p>
+        <p>{t('detail.confirm_reset_body')}</p>
       </Modal>
     </div>
   )
 }
 
 function Field({ id, label, value, onChange, copied, onCopy, reset, onReset, isDesktop }) {
+  const t = useT()
   const taRef = useRef(null)
 
   useEffect(() => {
@@ -275,21 +281,21 @@ function Field({ id, label, value, onChange, copied, onCopy, reset, onReset, isD
         <div className="field__actions">
           <button
             onClick={onReset}
-            aria-label={reset ? `${label} reset` : `Reset ${label.toLowerCase()}`}
+            aria-label={reset ? t('detail.reset_done_aria', { label }) : t('detail.reset_aria', { label })}
             className={`btn-accent field-btn${reset ? ' field-btn--success' : ''}`}
           >
             {reset
-              ? (isDesktop ? '✓ Reset' : '✓')
-              : (isDesktop ? '↺ Reset' : '↺')}
+              ? (isDesktop ? t('detail.reset_done_desktop') : t('detail.reset_done_mobile'))
+              : (isDesktop ? t('detail.reset_desktop') : t('detail.reset_mobile'))}
           </button>
           <button
             onClick={onCopy}
-            aria-label={copied ? 'Copied to clipboard' : `Copy ${label.toLowerCase()}`}
+            aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
             className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
           >
             {copied
-              ? (isDesktop ? '✓ Copied' : '✓')
-              : (isDesktop ? '⎘ Copy' : '⎘')}
+              ? (isDesktop ? t('detail.copied_desktop') : t('detail.copied_mobile'))
+              : (isDesktop ? t('detail.copy_desktop') : t('detail.copy_mobile'))}
           </button>
         </div>
       </div>
