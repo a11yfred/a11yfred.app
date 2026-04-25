@@ -99,6 +99,12 @@ select:focus-visible {
   }
 }
 
+.app-background {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
 .app-main {
   flex: 1;
 }
@@ -187,6 +193,7 @@ select:focus-visible {
 .footer-link {
   color: var(--accent-text);
   text-decoration: underline;
+  white-space: nowrap;
 }
 
 .footer-link:hover {
@@ -201,23 +208,24 @@ select:focus-visible {
   margin-right: 0.25em;
 }
 
-/* ─── Drawer (slide-in panel, mobile settings) ────────────── */
+/* ─── Overlay backdrop (shared by Drawer, BottomSheet, Modal) ── */
 
-/* Backdrop */
-.drawer-backdrop {
+.overlay-backdrop {
   position: fixed;
   inset: 0;
   background: var(--overlay-bg);
   z-index: 199;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
-.drawer-backdrop.is-open {
+.overlay-backdrop.is-open {
   opacity: 1;
   pointer-events: auto;
 }
+
+/* ─── Drawer (slide-in panel, mobile settings) ────────────── */
 
 /* Panel — slides in from the left */
 .drawer-panel {
@@ -229,11 +237,11 @@ select:focus-visible {
   border-right: 1px solid var(--border);
   overflow-y: auto;
   padding: var(--space-6) var(--space-5);
+  /* Extra bottom clearance on mobile so the Ko-fi floating button doesn't overlap */
+  padding-bottom: 5rem;
   transform: translateX(-100%);
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--duration-base) var(--ease-in-out);
   will-change: transform;
-  /* Suppress the default focus ring on the panel container itself;
-     focus is managed programmatically onto the heading inside. */
   outline: none;
 }
 
@@ -241,63 +249,52 @@ select:focus-visible {
   transform: translateX(0);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .drawer-backdrop,
-  .drawer-panel {
-    transition: none;
-  }
-}
-
 /* ─── Bottom sheet ─────────────────────────────────────────── */
 
-.sheet-backdrop {
-  position: fixed;
-  inset: 0;
-  background: var(--overlay-bg);
-  z-index: 199;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-}
-
-.sheet-backdrop.is-open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Panel slides up from bottom, rounded top corners */
+/* Panel slides up from bottom; centered and width-capped to match .app-container.
+   overflow:hidden clips children to the border-radius (no scrollbar bleeds).
+   Flex column: chrome is a fixed-height row at top, content scrolls below it. */
 .sheet-panel {
   position: fixed;
-  inset-inline: 0;
+  left: 50%;
   bottom: 0;
+  width: 100%;
+  max-width: 720px;
   max-height: 92dvh;
   z-index: 200;
   background: var(--bg);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  overflow-y: auto;
-  transform: translateY(100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-50%) translateY(100%);
+  transition: transform var(--duration-base) var(--ease-in-out);
   will-change: transform;
   outline: none;
 }
 
 .sheet-panel.is-open {
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0);
 }
 
-/* Chrome sticks to top as content scrolls */
+/* Chrome row — handle centered via absolute positioning; close button in normal
+   flex flow at the right. padding-top ≥ --radius-lg keeps the button's focus
+   ring clear of the top-corner clip zone on the panel. */
 .sheet-chrome {
-  position: sticky;
-  top: 0;
+  flex-shrink: 0;
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: var(--space-3) var(--space-4) var(--space-2);
+  justify-content: flex-end;
+  padding: var(--space-4) var(--space-4) var(--space-2);
   background: var(--bg);
-  z-index: 1;
 }
 
 .sheet-handle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   width: 2.5rem;
   height: 4px;
   background: var(--border-control);
@@ -306,19 +303,139 @@ select:focus-visible {
 }
 
 .sheet-close-btn {
-  position: absolute;
-  right: var(--space-4);
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
 }
 
+/* Scrollable content area — min-height:0 lets flex children shrink below content size */
 .sheet-content {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
   padding: 0 var(--space-5) var(--space-8);
 }
 
+/* Full-width Close button at the bottom of the sheet — mobile only */
+.sheet-close-bottom {
+  display: none;
+  padding-top: var(--space-4);
+}
+
+@media (width < 768px) {
+  .sheet-close-bottom {
+    display: block;
+  }
+}
+
+.sheet-close-bottom-btn {
+  display: block;
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ─── Modal (centered dialog) ─────────────────────────────── */
+
+/* Higher z-index than Drawer/BottomSheet (200) so it stacks above them */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.96);
+  /* 50% of the 720px app container; shrinks gracefully on narrow viewports.
+     max-height uses calc so the panel is always ≥ --space-6 from each viewport
+     edge: with top:50% and max-height:(100dvh - 2*--space-6), the panel's top
+     edge = 50dvh - (at most 50dvh - --space-6) = at least --space-6 from top. */
+  width: min(360px, calc(100vw - var(--space-8)));
+  max-height: calc(100dvh - 2 * var(--space-6));
+  z-index: 301;
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+  outline: none;
+}
+
+.modal-panel.is-open {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: var(--space-6) var(--space-6) var(--space-4);
+}
+
+.modal-heading {
+  font-size: var(--fs-heading);
+  line-height: 1em;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--space-4);
+}
+
+.modal-content {
+  font-size: var(--fs-body);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.modal-content p + p {
+  margin-top: 0.75em;
+}
+
+.modal-footer {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6) var(--space-6);
+}
+
+.modal-ok-btn {
+  display: block;
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ─── Overlay motion — reduced motion override ────────────── */
+
 @media (prefers-reduced-motion: reduce) {
-  .sheet-backdrop,
-  .sheet-panel {
+  .overlay-backdrop,
+  .modal-backdrop,
+  .drawer-panel,
+  .sheet-panel,
+  .modal-panel {
     transition: none;
   }
 }
@@ -342,11 +459,34 @@ select:focus-visible {
   color: var(--text-muted);
 }
 
+/* ─── Ghost button (secondary / cancel actions) ─────────────
+   Shares the same box model as .btn-accent but uses a neutral
+   border and muted text instead of the accent color.          */
+
+.btn-ghost {
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.btn-ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost:not(:disabled):hover {
+  background: var(--bg-subtle);
+  color: var(--text);
+  border-color: var(--text-faint);
+}
+
 /* ─── Accent button (Save, Reset, Copy, Rewrite) ─────────── */
 
 .btn-icon-accent {
   color: var(--accent-text);
-  transition: color 0.15s;
+  transition: color var(--duration-fast);
 }
 
 .btn-icon-accent:hover {
@@ -358,7 +498,7 @@ select:focus-visible {
   background: var(--accent-bg);
   color: var(--accent-text);
   font-weight: 500;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
 }
 
 .btn-accent:disabled {
@@ -413,7 +553,7 @@ select:disabled {
   border: 1px solid var(--border);
   background: var(--bg);
   cursor: pointer;
-  transition: border-color 0.1s;
+  transition: border-color var(--duration-fast);
 }
 
 .result-item:hover:not(.result-item--selected) {
@@ -545,7 +685,7 @@ input.search-input {
   border: 1px solid var(--border-control);
   border-radius: var(--radius);
   color: var(--text);
-  transition: border-color 0.15s;
+  transition: border-color var(--duration-fast);
   box-sizing: border-box;
   margin-bottom: 0;
 }
@@ -578,7 +718,7 @@ input.search-input:focus {
   font-size: var(--fs-sub);
   border-radius: var(--radius);
   white-space: nowrap;
-  align-self: flex-end;
+  align-self: stretch;
   min-height: 3rem;
 }
 
@@ -686,6 +826,21 @@ input.search-input:focus {
   margin-bottom: 0;
 }
 
+.settings-privacy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--accent-text);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .settings-provider-group {
   margin-bottom: 2em;
 }
@@ -757,6 +912,8 @@ input.search-input:focus {
   display: flex;
   justify-content: flex-end;
   margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
 }
 
 .settings-save-btn {
@@ -789,7 +946,7 @@ input.search-input:focus {
   cursor: pointer;
   font-size: var(--fs-body);
   font-weight: 400;
-  transition: all 0.1s;
+  transition: all var(--duration-fast);
 }
 
 .radio-chip__input {
@@ -818,7 +975,7 @@ input.search-input:focus {
   background: transparent;
   border: 1.5px solid var(--text-muted);
   flex-shrink: 0;
-  transition: all 0.1s;
+  transition: all var(--duration-fast);
 }
 
 .radio-chip--active .radio-chip__indicator {
@@ -854,7 +1011,7 @@ input.search-input:focus {
   background: var(--border);
   border: 1px solid var(--border-control);
   position: relative;
-  transition: background 0.15s, border-color 0.15s;
+  transition: background var(--duration-fast), border-color var(--duration-fast);
   pointer-events: none;
 }
 
@@ -881,7 +1038,7 @@ input.search-input:focus {
   position: absolute;
   top: 3px;
   left: 3px;
-  transition: left 0.2s, outline-color 0.2s;
+  transition: left var(--duration-fast), outline-color var(--duration-fast);
 }
 
 .toggle:has(.toggle__input:checked) .toggle__thumb {
@@ -921,18 +1078,55 @@ input.search-input:focus {
 }
 
 .detail-title {
-  font-size: var(--fs-h1);
+  font-size: var(--fs-heading);
+  line-height: 1em;
   font-weight: 700;
   color: var(--text);
   margin-bottom: 6px;
   outline: none;
 }
 
-.badge-group {
+@media (width >= 768px) {
+  .detail-title {
+    font-size: var(--fs-h1);
+  }
+}
+
+.detail-title-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 2em;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: 6px;
+}
+
+.detail-title-row .detail-title {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.detail-sc-list {
+  list-style: disc;
+  padding-left: var(--space-5);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-sc-item {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.detail-sc-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.detail-sc-link {
+  color: var(--accent-text);
+  text-decoration: underline;
 }
 
 .detail-field-row {
@@ -965,21 +1159,31 @@ input.search-input:focus {
   margin-top: 1rem;
 }
 
-.detail-label-hint {
+.detail-refine-hint {
+  font-size: var(--fs-body);
   color: var(--text-faint);
-  font-weight: 400;
-  margin-left: 6px;
+  margin-bottom: var(--space-2);
+}
+
+.detail-settings-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: var(--accent-text);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .detail-refine-row {
   display: flex;
+  align-items: flex-start;
   gap: 8px;
 }
 
 .detail-rewrite-btn {
-  padding: 7px 14px;
-  font-size: var(--fs-sub);
-  border-radius: var(--radius);
+  /* Override field-btn padding to match detail-input height */
+  padding: 6px 10px;
   white-space: nowrap;
 }
 
@@ -1034,20 +1238,3 @@ input.search-input:focus {
   margin-bottom: 0;
 }
 
-/* ─── SC badge ────────────────────────────────────────────── */
-
-.sc-badge {
-  font-size: var(--fs-body);
-  padding: 2px 8px;
-  border-radius: 20px;
-  background: var(--bg-subtle);
-  color: var(--text-muted);
-  border: 1px solid var(--border);
-  text-decoration: none;
-}
-
-.sc-badge--primary {
-  background: var(--accent-bg);
-  color: var(--accent-text);
-  border-color: var(--accent-bg);
-}

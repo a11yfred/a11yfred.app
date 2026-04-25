@@ -79,6 +79,18 @@
 
   /* Overlay */
   --overlay-bg: rgb(0 0 0 / 0.45);
+
+  /* Motion — duration and easing for all transitions.
+     Use --duration-fast for micro-interactions (color, border).
+     Use --duration-base for panel and element transitions.
+     Use --duration-slow for larger, more deliberate animations. */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 350ms;
+
+  --ease-out:    cubic-bezier(0.16, 1,   0.3,  1);  /* spring-y; good for slides entering */
+  --ease-in:     cubic-bezier(0.4,  0,   1,    1);  /* accelerating; good for exits */
+  --ease-in-out: cubic-bezier(0.4,  0,   0.2,  1);  /* balanced; good for state toggles */
 }
 
 [data-theme="dark"] {
