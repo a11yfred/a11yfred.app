@@ -8,7 +8,7 @@
   "header.close_settings": "Close settings",
   "header.open_about": "About this app",
 
-  "about.sheet_label": "About A11yTextHelper",
+  "about.sheet_label": "About",
   "about.what_heading": "What Is This?",
   "about.what_body": "A personal accessibility audit writing assistant. Search a library of WCAG-aligned defect write-ups, pick one that matches your finding, customize it, and copy it straight into your audit report.",
   "about.how_heading": "How to Use It",
