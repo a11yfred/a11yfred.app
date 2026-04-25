@@ -300,6 +300,7 @@ function RadioChip({ name, value, label, current, onChange }) {
         transition: 'all 0.1s',
         outline: focused ? '2px solid var(--focus)' : 'none',
         outlineOffset: focused ? 2 : 0,
+        position: 'relative'
       }}
     >
       <input
@@ -308,7 +309,14 @@ function RadioChip({ name, value, label, current, onChange }) {
         value={value}
         checked={isActive}
         onChange={() => onChange(value)}
-        className="sr-only"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          opacity: 0
+        }}
       />
       <span style={{
         width: 8,
