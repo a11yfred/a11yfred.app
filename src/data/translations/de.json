@@ -1,0 +1,272 @@
+{
+  "ATH-001": {
+    "title": "Schaltfläche oder Link ohne zugänglichen Namen",
+    "desc": "Eine Schaltfläche oder ein Link hat keinen zugänglichen Namen. Screenreader kündigen es als „Schaltfläche" oder „Link" ohne Kontext an, sodass Nutzende nicht erkennen können, was es tut.",
+    "rem": "Fügen Sie ein sichtbares Label oder ein aria-label-Attribut hinzu, das beschreibt, was das Steuerelement tut. Zum Beispiel sollte eine Schließen-Schaltfläche in einem Modal „Schließen" oder „Dialog schließen" sagen und nicht nur ein X-Symbol anzeigen."
+  },
+  "ATH-002": {
+    "title": "Fokus wird nicht verschoben, wenn neuer Inhalt geöffnet wird",
+    "desc": "Wenn ein Modal, Dialog oder eine Schublade geöffnet wird, bleibt der Tastaturfokus an der vorherigen Stelle. Screenreader- und Tastaturnutzende können den neuen Inhalt nicht ohne Weiteres erreichen.",
+    "rem": "Verschieben Sie den Fokus auf das erste Element im neuen Inhalt, wenn dieser geöffnet wird. Verwenden Sie tabindex=\"-1\" auf einer Überschrift, wenn das erste fokussierbare Element später kommt. Halten Sie den Fokus darin, während es geöffnet ist, und geben Sie den Fokus an die auslösende Schaltfläche zurück, wenn es geschlossen wird."
+  },
+  "ATH-003": {
+    "title": "Fokusindikator fehlt oder ist nicht sichtbar",
+    "desc": "Tastaturnutzende können nicht sehen, welches Element fokussiert ist. Der standardmäßige Fokusrahmen wurde möglicherweise entfernt, oder der benutzerdefinierte Fokusstil ist zu schwach, um klar erkannt zu werden.",
+    "rem": "Stellen Sie sicher, dass jedes per Tastatur fokussierbare Element einen deutlichen Fokusrahmen anzeigt. Setzen Sie outline: none nicht, ohne einen sichtbaren benutzerdefinierten Fokusstil bereitzustellen. Der Fokusindikator muss ein Kontrastverhältnis von mindestens 3:1 zu den umgebenden Farben haben."
+  },
+  "ATH-005": {
+    "title": "Element nicht per Tastatur zugänglich",
+    "desc": "Das Steuerelement kann nur mit einer Maus verwendet werden. Tastaturnutzende können es nicht fokussieren oder aktivieren. Mit div oder span erstellte benutzerdefinierte Elemente haben zudem keine Rolle, sodass Screenreader nicht wissen, was das Steuerelement ist.",
+    "rem": "Verwenden Sie nach Möglichkeit native HTML-Elemente wie button oder a – sie sind per Tastatur zugänglich und haben integrierte Rollen. Wenn ein benutzerdefiniertes Element verwendet werden muss, fügen Sie tabindex=\"0\", eine passende ARIA-Rolle und Tastaturereignishandler für Enter und Leertaste hinzu."
+  },
+  "ATH-007": {
+    "title": "Zu geringer Textkontrast",
+    "desc": "Text hat nicht genug Kontrast zu seinem Hintergrund. Menschen mit Sehschwäche oder Farbenblindheit können ihn möglicherweise nicht lesen.",
+    "rem": "Ändern Sie die Textfarbe, Hintergrundfarbe oder beides, sodass das Kontrastverhältnis mindestens 4,5:1 beträgt. Verwenden Sie ein Farbkontrast-Prüfwerkzeug zur Verifizierung."
+  },
+  "ATH-008": {
+    "title": "Zu geringer Kontrast bei Nicht-Text-Elementen",
+    "desc": "Symbole, Eingaberahmen oder Ränder von UI-Komponenten haben nicht genug Kontrast zu den umgebenden Farben. Menschen mit Sehschwäche können sie möglicherweise nicht sehen oder erkennen.",
+    "rem": "Aktualisieren Sie die Farbe des Elements so, dass es ein Kontrastverhältnis von mindestens 3:1 zu den angrenzenden Farben hat."
+  },
+  "ATH-009": {
+    "title": "Alt-Text fehlt, ist falsch oder unnötig",
+    "desc": "Ein Bild hat keinen Alt-Text, hat Alt-Text, der den Zweck des Bildes nicht beschreibt, oder hat Alt-Text, der nahe gelegenen sichtbaren Text wiederholt.",
+    "rem": "Entscheiden Sie, ob das Bild eine Bedeutung trägt oder rein dekorativ ist. Bedeutungsvolle Bilder benötigen kurzen, beschreibenden Alt-Text, der den Zweck erklärt. Dekorative Bilder sollten alt=\"\" verwenden, damit Screenreader sie überspringen."
+  },
+  "ATH-010": {
+    "title": "Steuerelement-Label beschreibt Aussehen, nicht den Zweck",
+    "desc": "Der zugängliche Name eines Steuerelements beschreibt, wie es aussieht, und nicht, was es tut. Zum Beispiel sollte eine Schaltfläche mit der Bezeichnung „Lupen-Symbol" stattdessen „Suche" sagen.",
+    "rem": "Schreiben Sie Labels, die die Aktion oder das Ziel des Steuerelements beschreiben, nicht sein visuelles Erscheinungsbild. Ändern Sie Labels wie „Pfeil-Symbol" in „Nächste Seite" oder „Such-Symbol" in „Suche"."
+  },
+  "ATH-011": {
+    "title": "Kein Skip-Link vorhanden",
+    "desc": "Es gibt keinen Skip-Link oben auf der Seite. Tastaturnutzende müssen auf jeder Seite durch alle Navigationslinks tabben, bevor sie den Hauptinhalt erreichen.",
+    "rem": "Fügen Sie einen „Zum Hauptinhalt springen"-Link als erstes fokussierbares Element auf der Seite hinzu. Machen Sie ihn beim Fokussieren sichtbar und lassen Sie ihn den Fokus auf den Beginn des Hauptinhaltsbereichs verschieben."
+  },
+  "ATH-012": {
+    "title": "Skip-Link nicht sichtbar wenn fokussiert",
+    "desc": "Ein Skip-Link ist vorhanden, aber für sehende Tastaturnutzende verborgen. Wenn eine Person per Tastatur darauf navigiert, erscheint nichts auf dem Bildschirm.",
+    "rem": "Lassen Sie den Skip-Link auf dem Bildschirm erscheinen, wenn er Tastaturfokus erhält. Er kann standardmäßig außerhalb des Bildschirms verborgen sein, muss aber sichtbar werden, wenn er fokussiert ist."
+  },
+  "ATH-013": {
+    "title": "Überschriftenstruktur fehlerhaft",
+    "desc": "Text, der wie eine Überschrift aussieht, ist nicht als solche ausgezeichnet, oder Überschriftenebenen überspringen Nummern (z. B. Sprung von h1 zu h3). Screenreader-Nutzende navigieren Seiten über Überschriften, daher erschwert eine fehlerhafte Struktur das Auffinden von Inhalten.",
+    "rem": "Verwenden Sie h1–h6-Elemente für alle Abschnittstitel. Überspringen Sie keine Ebenen – jeder Unterabschnitt sollte die nächste Überschriftenebene verwenden. Verwenden Sie Überschriftenelemente nicht nur, um Text größer oder fetter zu machen."
+  },
+  "ATH-014": {
+    "title": "Keine H1 auf der Seite",
+    "desc": "Die Seite hat keine h1-Überschrift. Das h1 ist der Haupttitel der Seite und hilft Screenreader-Nutzenden zu verstehen, wo sie sich befinden.",
+    "rem": "Fügen Sie jeder Seite ein einzelnes h1-Element hinzu, das das Hauptthema der Seite beschreibt. Alle anderen Überschriften sollten in Reihenfolge darunter folgen."
+  },
+  "ATH-016": {
+    "title": "Sternchen für Pflichtfelder nicht erklärt",
+    "desc": "Das Formular verwendet Sternchen (*), um Pflichtfelder zu kennzeichnen, aber die Bedeutung des Sternchens wird nie erklärt. Einige Nutzende wissen möglicherweise nicht, was es bedeutet.",
+    "rem": "Fügen Sie oben im Formular einen Hinweis hinzu, der das Sternchen erklärt, z. B. „Felder mit * sind Pflichtfelder." Markieren Sie Pflichtfelder auch programmgesteuert mit dem Attribut required oder aria-required."
+  },
+  "ATH-017": {
+    "title": "Formularfehler nicht mit ihren Feldern verknüpft",
+    "desc": "Wenn ein Formular eine Fehlermeldung anzeigt, kündigen Screenreader sie nicht an, weil sie nicht programmgesteuert mit dem Eingabefeld verknüpft ist.",
+    "rem": "Verwenden Sie aria-describedby, um die Fehlermeldung mit ihrem Eingabefeld zu verbinden. Wenn Fehler auftreten, verschieben Sie den Tastaturfokus auf das erste Feld mit einem Fehler, damit alle Nutzenden wissen, wo sie das Problem beheben müssen."
+  },
+  "ATH-018": {
+    "title": "Keine Statusmeldung nach einer Aktion",
+    "desc": "Nach einer Nutzeraktion, wie dem Absenden eines Formulars oder dem Laden von Ergebnissen, wird Screenreader-Nutzenden nichts mitgeteilt. Sie wissen nicht, ob die Aktion funktioniert hat.",
+    "rem": "Verwenden Sie role=\"status\" oder aria-live=\"polite\" auf einem Container, der die Ergebnismeldung erhält. Dies ermöglicht es Screenreadern, Aktualisierungen anzukündigen, ohne den Fokus zu verschieben. Verwenden Sie aria-live=\"assertive\" oder role=\"alert\" nur für dringende Meldungen."
+  },
+  "ATH-019": {
+    "title": "ARIA falsch verwendet",
+    "desc": "ARIA-Attribute werden falsch angewendet. Häufige Probleme: aria-hidden wird auf einem fokussierbaren Element platziert, role=\"alert\" wird für Routinemeldungen verwendet, oder ARIA-Rollen stehen im Widerspruch zum nativen Verhalten des Elements.",
+    "rem": "Befolgen Sie die ARIA-Spezifikation genau. Setzen Sie aria-hidden niemals auf ein Element, das fokussierbar ist oder fokussierbare Kindelemente enthält. Verwenden Sie role=\"alert\" nur für dringende, zeitkritische Meldungen – für alles andere verwenden Sie aria-live=\"polite\"."
+  },
+  "ATH-021": {
+    "title": "Farbe als einziger visueller Indikator",
+    "desc": "Informationen werden ausschließlich durch Farbe übermittelt. Zum Beispiel ist ein Pflichtfeld rot hervorgehoben, hat aber keinen anderen Indikator. Menschen, die farbenblind sind oder keine Farben sehen können, verpassen diese Information.",
+    "rem": "Kombinieren Sie Farbe immer mit einem zweiten visuellen Indikator – zum Beispiel einer Unterstreichung, fettem Text, einem Symbol oder einem Textlabel. Stellen Sie sicher, dass Zustandsänderungen auch an unterstützende Technologien kommuniziert werden."
+  },
+  "ATH-022": {
+    "title": "Zoom oder Pinch-to-Zoom deaktiviert",
+    "desc": "Die Seite verhindert, dass Nutzende mit einem Browser oder einer Pinch-Geste hineinzoomen. Menschen mit Sehschwäche sind auf das Zoomen angewiesen, um Inhalte zu lesen.",
+    "rem": "Entfernen Sie user-scalable=\"no\" aus dem viewport-Meta-Tag. Setzen Sie maximum-scale nicht unter 2. Erlauben Sie den Nutzenden, frei zu zoomen."
+  },
+  "ATH-023": {
+    "title": "Formularfeld ohne Label",
+    "desc": "Ein Formularfeld hat kein sichtbares Label, oder sein Label ist nicht programmgesteuert mit dem Feld verknüpft. Platzhaltertext verschwindet, wenn Nutzende zu tippen beginnen, und ist kein Ersatz für ein ordentliches Label.",
+    "rem": "Geben Sie jedem Formularfeld ein sichtbares label-Element, das beschreibt, was eingegeben werden soll. Verknüpfen Sie das Label mit dem Eingabefeld über passende for- und id-Attribute. Vermeiden Sie die Verwendung von Platzhaltertext als einziges Label."
+  },
+  "ATH-025": {
+    "title": "Verborgener Inhalt noch für Screenreader lesbar",
+    "desc": "Inhalte, die visuell verborgen sind (wie ein geschlossenes Dropdown oder ein zugeklapptes Panel), sind für Screenreader noch lesbar. Nutzende können Inhalte hören, die scheinbar keinen Kontext haben.",
+    "rem": "Verwenden Sie display: none oder visibility: hidden, um Inhalte sowohl vor visuellen als auch vor Screenreader-Nutzenden zu verbergen. Oder verwenden Sie aria-hidden=\"true\" auf Inhalten, die für Screenreader unsichtbar sein sollen. Stellen Sie sicher, dass die gewählte Methode den Inhalt tatsächlich vor unterstützender Technologie verbirgt."
+  },
+  "ATH-026": {
+    "title": "Textabstand zu eng",
+    "desc": "Die Seite unterstützt keinen minimalen Textabstand. Wenn Nutzende benutzerdefinierte Abstände über Browsereinstellungen anwenden, bricht der Inhalt oder wird unleserlich.",
+    "rem": "Gestalten und codieren Sie die Seite so, dass sie mit diesen Werten funktioniert: Zeilenhöhe mindestens 1,5× die Schriftgröße, Absatzabstand mindestens 2× die Schriftgröße, Buchstabenabstand mindestens 0,12× die Schriftgröße, Wortabstand mindestens 0,16× die Schriftgröße."
+  },
+  "ATH-027": {
+    "title": "Zugänglicher Name stimmt nicht mit sichtbarem Label überein",
+    "desc": "Der zugängliche Name eines Steuerelements unterscheidet sich von seinem sichtbaren Textlabel. Nutzende mit Spracheingabe sprechen das sichtbare Label aus, um das Steuerelement zu aktivieren, aber es stimmt nicht mit dem tatsächlichen Namen überein.",
+    "rem": "Stellen Sie sicher, dass der zugängliche Name mit dem sichtbaren Labeltext beginnt oder ihn enthält. Entfernen Sie aria-label-Werte, die den sichtbaren Text ersetzen – lassen Sie den sichtbaren Text als zugänglichen Namen dienen."
+  },
+  "ATH-028": {
+    "title": "ARIA-Tabs-Muster",
+    "desc": "Die Komponente verwendet ARIA-Tabs, die eine Pfeiltastennavigation erfordern, die viele Nutzende nicht erwarten. ARIA-Tab-Muster sind leicht zu beschädigen und schwer korrekt zu implementieren.",
+    "rem": "Erwägen Sie, ARIA-Tabs durch ein einfacheres Muster zu ersetzen. Akkordeon, Links oder eine Schaltflächen-Panel-Struktur bieten oft denselben Inhalt ohne die zusätzliche Komplexität."
+  },
+  "ATH-029": {
+    "title": "Nicht-interaktives Element in der Tab-Reihenfolge",
+    "desc": "Ein nicht-interaktives Element (wie ein div, Absatz oder Fortschrittsbalken) befindet sich in der Tab-Reihenfolge. Tastaturnutzende navigieren darauf, können aber nichts damit tun, was verwirrend ist.",
+    "rem": "Entfernen Sie das tabindex-Attribut von nicht-interaktiven Elementen. Nur native interaktive Elemente oder Elemente, die programmatischen Fokus benötigen (wie Dialog-Überschriften), sollten Fokus erhalten."
+  },
+  "ATH-030": {
+    "title": "Wiederholte Links zum selben Ziel",
+    "desc": "Ein Inhaltsblock hat mehrere separate Links oder Schaltflächen, die alle zum gleichen Ziel führen – zum Beispiel eine Karte mit einem verknüpften Bild, einem verknüpften Titel und einer „Mehr lesen"-Schaltfläche. Tastaturnutzende müssen durch alle tabben, und Screenreader-Nutzende hören wiederholte Ankündigungen.",
+    "rem": "Kombinieren Sie sie zu einem einzigen Link. Markieren Sie das Bild als dekorativ (alt=\"\") und verwenden Sie den Text als Link-Label. Oder umschließen Sie die gesamte Karte mit einem Link-Element."
+  },
+  "ATH-031": {
+    "title": "Sprachwechsel nicht im HTML gekennzeichnet",
+    "desc": "Die Seite enthält Text in mehr als einer Sprache, aber der Sprachwechsel ist nicht im HTML gekennzeichnet. Screenreader lesen möglicherweise fremdsprachige Wörter mit falscher Aussprache.",
+    "rem": "Fügen Sie ein lang-Attribut zu dem Element hinzu, das den Text in einer anderen Sprache umschließt. Zum Beispiel: <span lang=\"es\">Hola</span>."
+  },
+  "ATH-032": {
+    "title": "Seitensprache nicht festgelegt",
+    "desc": "Das html-Element hat kein lang-Attribut. Screenreader können das falsche Sprachprofil verwenden, um die Seite zu lesen, was zu falscher Aussprache führt.",
+    "rem": "Fügen Sie dem html-Element ein lang-Attribut hinzu, das der Hauptsprache der Seite entspricht. Zum Beispiel: <html lang=\"en\">."
+  },
+  "ATH-033": {
+    "title": "Ziehen ohne Tastaturalternative",
+    "desc": "Eine Funktion erfordert, dass Nutzende ein Element mit einem Zeigegerät ziehen. Es gibt keine per Tastatur zugängliche Möglichkeit, dieselbe Aktion auszuführen.",
+    "rem": "Stellen Sie per Tastatur zugängliche Steuerelemente (wie Schaltflächen) bereit, die dieselbe Aktion wie Ziehen ausführen. Tastaturnutzende sollten jede Aufgabe ohne Maus erledigen können."
+  },
+  "ATH-034": {
+    "title": "Schleifende Animation kann nicht pausiert werden",
+    "desc": "Eine Animation oder ein sich bewegendes Element startet automatisch und läuft ohne Unterbrechung in einer Schleife. Es gibt keine Möglichkeit für Nutzende, sie zu pausieren, zu stoppen oder zu verbergen. Dies kann für Menschen mit bestimmten Erkrankungen ablenkend oder schädlich sein.",
+    "rem": "Stellen Sie eine sichtbare, per Tastatur zugängliche Schaltfläche zum Pausieren oder Stoppen der Animation bereit. Oder lassen Sie sie innerhalb von 5 Sekunden automatisch stoppen. Wenn die Animation Live-Daten übermittelt (wie ein Nachrichtenticker), ist eine Pause-Schaltfläche erforderlich."
+  },
+  "ATH-035": {
+    "title": "Seitenlandmarks fehlen oder sind falsch",
+    "desc": "Seiteninhalt ist nicht in HTML-Landmark-Elementen organisiert. Screenreader-Nutzende können nicht zwischen Abschnitten der Seite springen – sie müssen alles von Anfang an lesen.",
+    "rem": "Umschließen Sie alle Seiteninhalte in semantischen HTML-Elementen: header, nav, main, aside und footer. Jede Seite benötigt mindestens ein main-Element. Verwenden Sie ARIA-Landmark-Rollen nur, wenn das richtige HTML-Element nicht verfügbar ist."
+  },
+  "ATH-037": {
+    "title": "Seitentitel ändert sich nicht zwischen Seiten",
+    "desc": "Der Seitentitel (im Browser-Tab angezeigt) bleibt auf allen Seiten gleich. Nutzende können nicht am Tab allein erkennen, auf welcher Seite sie sich befinden.",
+    "rem": "Aktualisieren Sie den Dokumenttitel auf jeder Seite, um zu beschreiben, worum es auf dieser Seite geht. Zum Beispiel: „Warenkorb – Mein Shop" oder „Einstellungen – App-Name". Aktualisieren Sie in einer Single-Page-App den Titel bei jedem Routenwechsel."
+  },
+  "ATH-038": {
+    "title": "Tastaturfalle",
+    "desc": "Der Tastaturfokus steckt in einer Komponente fest. Sobald Tastaturnutzende hineintabben, gibt es keinen Ausweg mit der Tastatur.",
+    "rem": "Stellen Sie sicher, dass Tastaturnutzende immer aus einer Komponente heraus tabben können. Wenn ein Modal oder Dialog den Fokus absichtlich einfängt, fügen Sie einen Escape-Tastenhandler und eine sichtbare Schließen-Schaltfläche hinzu, damit Nutzende es verlassen können."
+  },
+  "ATH-039": {
+    "title": "Diagramm oder Graph ohne Textalternative",
+    "desc": "Diagramme und Graphen vermitteln Daten visuell, haben aber keine Textalternative. Screenreader-Nutzende können nicht auf die im Diagramm enthaltenen Informationen zugreifen.",
+    "rem": "Stellen Sie eine Textzusammenfassung bereit, die beschreibt, was das Diagramm zeigt – seinen Typ, wichtige Trends und wichtigste Erkenntnisse. Wenn möglich, stellen Sie auch die zugrunde liegenden Daten in einer Tabelle bereit."
+  },
+  "ATH-040": {
+    "title": "Tabellendaten ohne Tabellen-Markup",
+    "desc": "In Zeilen und Spalten organisierte Daten verwenden kein HTML-Tabellen-Markup. Screenreader-Nutzende können die Beziehung zwischen Spaltenüberschriften und Datenzellen nicht verstehen.",
+    "rem": "Verwenden Sie korrektes Tabellen-Markup mit den Elementen table, thead, tbody, tr, th und td. Stellen Sie sicher, dass Spalten- und Zeilenüberschriften th-Elemente mit geeigneten scope-Attributen verwenden."
+  },
+  "ATH-041": {
+    "title": "Tooltip oder Hover-Inhalt nicht per Tastatur zugänglich",
+    "desc": "Zusätzlicher Inhalt erscheint nur, wenn Nutzende mit einer Maus darüberfahren. Tastaturnutzende und Screenreader-Nutzende können diesen Inhalt nicht auslösen oder lesen.",
+    "rem": "Lassen Sie Hover-Inhalt auch erscheinen, wenn das Element den Tastaturfokus erhält. Nutzende müssen ihn schließen können, ohne den Fokus zu verschieben (z. B. mit Escape). Der Inhalt sollte sichtbar bleiben, bis Nutzende den Fokus wegbewegen."
+  },
+  "ATH-043": {
+    "title": "Tab-Reihenfolge entspricht nicht der visuellen Reihenfolge",
+    "desc": "Beim Tabben durch die Seite springt der Fokus in einer Reihenfolge, die nicht dem Bildschirminhalt entspricht. Dies ist für Tastaturnutzende verwirrend.",
+    "rem": "Passen Sie die HTML-Quellreihenfolge an das visuelle Layout an. Vermeiden Sie die Verwendung positiver tabindex-Werte zur Steuerung der Tab-Reihenfolge – sie erzeugen Wartungsprobleme und verschlechtern die Situation meist."
+  },
+  "ATH-045": {
+    "title": "Informativer Inhalt vor Screenreadern verborgen",
+    "desc": "Inhalte mit Bedeutung (wie eine Sternbewertung oder ein Status-Symbol) werden vor Screenreadern durch aria-hidden verborgen. Screenreader-Nutzende können nicht auf diese Informationen zugreifen.",
+    "rem": "Entfernen Sie aria-hidden von Inhalten mit Bedeutung. Fügen Sie einen zugänglichen Namen oder ergänzenden Text hinzu, der dieselbe Information vermittelt. Zum Beispiel: Statt eine Sternbewertung zu verbergen, fügen Sie verborgenen Text wie „Bewertung: 4 von 5 Sternen" hinzu."
+  },
+  "ATH-046": {
+    "title": "Keine Warnung vor dem Öffnen eines neuen Fensters",
+    "desc": "Ein Link oder eine Schaltfläche öffnet ein neues Browserfenster oder einen neuen Tab ohne Vorwarnung. Dies ist desorientierend, besonders für Screenreader-Nutzende, die möglicherweise nicht bemerken, dass sich der Kontext geändert hat.",
+    "rem": "Fügen Sie eine Warnung im Linktext oder zugänglichen Namen hinzu. Zum Beispiel: „Jahresbericht (öffnet sich in einem neuen Tab)". Sie können auch ein Symbol mit Alt-Text hinzufügen, um anzuzeigen, dass ein neues Fenster geöffnet wird."
+  },
+  "ATH-047": {
+    "title": "Fokuserhalt verursacht unerwartete Änderung",
+    "desc": "Wenn ein Element den Tastatur- oder Zeigerfokus erhält, ändert sich die Seite – zum Beispiel wird ein Formular abgesendet oder eine neue Seite geladen. Dies ist unerwartet und desorientierend.",
+    "rem": "Lösen Sie keine Aktionen aus, wenn ein Element den Fokus erhält. Aktionen sollten nur ausgelöst werden, wenn Nutzende ein Steuerelement absichtlich aktivieren (z. B. durch Drücken von Enter, Leertaste oder Klicken)."
+  },
+  "ATH-048": {
+    "title": "Ändern einer Eingabe verursacht unerwartete Änderung",
+    "desc": "Das Auswählen einer Option in einem Dropdown oder das Ändern eines Formularwerts führt automatisch dazu, dass die Seite neu geladen oder navigiert wird. Nutzende, die per Tastatur durch eine Liste von Optionen gehen, können eine unbeabsichtigte Änderung auslösen.",
+    "rem": "Lösen Sie keine seitenweiten Änderungen aus, wenn Nutzende einen Formularwert ändern. Warten Sie stattdessen auf eine bewusste Sendeaktion – wie das Drücken einer „Los"-Schaltfläche – bevor Sie auf die Auswahl reagieren."
+  },
+  "ATH-050": {
+    "title": "Inhalt von Screenreadern falsch angekündigt",
+    "desc": "Inhalte sind so formatiert, dass Screenreader sie falsch lesen. Zum Beispiel kann ein Preis von „1.200 €" je nach Markup als unverständlicher Text vorgelesen werden.",
+    "rem": "Überprüfen Sie, wie der Inhalt im HTML strukturiert ist, und testen Sie mit einem Screenreader. Korrigieren Sie das Markup oder die Formatierung, damit der angekündigte Text die beabsichtigte Bedeutung korrekt vermittelt."
+  },
+  "ATH-051": {
+    "title": "Abbildung oder Illustration ohne Beschreibung",
+    "desc": "Ein Bild oder Diagramm verwendet ein figure-Element, hat aber keine figcaption oder zugängliche Beschreibung. Screenreader-Nutzende hören den Bilddateinamen oder eine generische Ankündigung statt dessen, was das Bild zeigt.",
+    "rem": "Fügen Sie ein figcaption-Element innerhalb des figure ein, das erklärt, was das Bild zeigt oder warum es wichtig ist. Für komplexere Bilder verlinken Sie auf eine längere Textbeschreibung in der Nähe."
+  },
+  "ATH-052": {
+    "title": "Formularfeld hat widersprüchliche Labels",
+    "desc": "Ein Formularfeld hat sowohl ein sichtbares Label als auch ein aria-label, die verschiedenes sagen. Screenreader-Nutzende hören das aria-label, während sehende Nutzende das sichtbare Label lesen, was zu Verwirrung führt.",
+    "rem": "Verwenden Sie nur eine Beschriftungsmethode, oder stellen Sie sicher, dass beide Labels dasselbe sagen. Der zugängliche Name (aria-label oder aria-labelledby) muss den sichtbaren Labeltext enthalten."
+  },
+  "ATH-053": {
+    "title": "Dropdown oder Select ohne Label",
+    "desc": "Ein Dropdown-Menü oder Select-Element hat kein Label. Screenreader-Nutzende wissen nicht, welche Auswahl sie treffen.",
+    "rem": "Fügen Sie ein sichtbares label-Element mit einem for-Attribut hinzu, das der ID des Select-Elements entspricht. Wenn Sie kein sichtbares Label anzeigen können, verwenden Sie stattdessen aria-label oder aria-labelledby."
+  },
+  "ATH-054": {
+    "title": "Layout bricht bei Textvergrößerung",
+    "desc": "Wenn Nutzende die Textgröße in ihrem Browser auf 200 % erhöhen, bricht das Seitenlayout. Text überlappt andere Inhalte, wird abgeschnitten oder verschwindet. Sehbehinderte Nutzende, die auf größeren Text angewiesen sind, können die Seite nicht lesen.",
+    "rem": "Verwenden Sie flexible Layouts und relative Einheiten (rem, em, %) statt fester Pixelhöhen. Testen Sie die Seite mit 200 % Textgröße in Ihren Browsereinstellungen, um sicherzustellen, dass alles lesbar bleibt und nichts überläuft."
+  },
+  "ATH-055": {
+    "title": "Vager oder generischer Linktext",
+    "desc": "Links verwenden generischen Text wie „Hier klicken", „Mehr erfahren" oder „Weiterlesen". Screenreader-Nutzende, die per Links navigieren, können nicht erkennen, wohin jeder Link führt.",
+    "rem": "Schreiben Sie Linktext, der das Ziel oder die Aktion beschreibt. Statt „Hier klicken" verwenden Sie „Barrierefreiheitscheckliste herunterladen" oder „Die vollständige Erklärung zu WCAG 1.1.1 lesen"."
+  },
+  "ATH-056": {
+    "title": "Audio oder Video ohne Transkript oder Untertitel",
+    "desc": "Eine Video- oder Audioaufnahme hat keine Untertitel oder kein Transkript. Gehörlose und schwerhörige Nutzende können nicht auf den gesprochenen Inhalt zugreifen.",
+    "rem": "Stellen Sie für reine Audioinhalte ein vollständiges Texttranskript bereit. Für Videos mit Audio stellen Sie synchronisierte Untertitel bereit. Platzieren Sie das Transkript nah am Medium oder verlinken Sie deutlich darauf. Automatisch generierte Untertitel müssen vor der Veröffentlichung überprüft und korrigiert werden."
+  },
+  "ATH-057": {
+    "title": "Formulargruppe ohne Gruppenlabel",
+    "desc": "Eine Gruppe zusammengehöriger Formularelemente (wie Optionsfelder oder Kontrollkästchen) hat kein Gruppenlabel. Screenreader-Nutzende hören jede Option, ohne zu verstehen, welche Frage sie beantwortet.",
+    "rem": "Umschließen Sie die Gruppe mit einem fieldset-Element und fügen Sie eine legend als erstes Kindelement hinzu. Der Legendentext sollte die Frage oder Kategorie sein, zu der die Gruppe gehört. Zum Beispiel: „Wählen Sie Ihre bevorzugte Kontaktmethode"."
+  },
+  "ATH-058": {
+    "title": "Listeninhalte ohne Listen-Markup",
+    "desc": "Inhalte, die wie eine Liste aussehen – z. B. Navigationslinks, Schritte oder Optionen – sind mit divs oder Absätzen statt HTML-Listenelementen erstellt. Screenreader können nicht ankündigen, wie viele Elemente in der Liste sind.",
+    "rem": "Verwenden Sie ul für ungeordnete Listen, ol für nummerierte Listen und dl für definitionsartige Listen. Fügen Sie li- oder dt/dd-Elemente zu jeder Liste hinzu. Dies hilft auch bei Navigationsmenüs und Schritt-für-Schritt-Anweisungen."
+  },
+  "ATH-059": {
+    "title": "Live-Region kündigt keine Aktualisierungen an",
+    "desc": "Inhalte, die sich dynamisch aktualisieren – wie eine Suchergebnisanzahl, eine Fortschrittsaktualisierung oder eine Benachrichtigung – werden von Screenreadern nicht angekündigt, weil die Live-Region fehlt oder falsch eingerichtet ist.",
+    "rem": "Fügen Sie aria-live=\"polite\" zu einem Container hinzu, der den aktualisierten Text erhalten wird. Verwenden Sie aria-live=\"assertive\" nur für dringende Benachrichtigungen. Fügen Sie die Meldung in die Live-Region ein, nachdem sie bereits im DOM ist – das gleichzeitige Einfügen von Region und Meldung wird möglicherweise nicht angekündigt."
+  },
+  "ATH-060": {
+    "title": "Multi-Punkt-Geste ohne Einzel-Zeiger-Alternative",
+    "desc": "Eine Funktion erfordert eine Mehrfinger-Geste – wie Pinch-to-Zoom oder ein Zwei-Finger-Wischen – ohne Einzel-Tipp- oder Tastaturalternative. Nutzende mit motorischen Einschränkungen, die keine Multi-Touch-Gesten ausführen können, werden ausgesperrt.",
+    "rem": "Stellen Sie für jede Multi-Punkt-Geste eine Einzelzeigeralternative bereit. Fügen Sie zum Beispiel Plus- und Minus-Zoom-Schaltflächen neben Pinch-to-Zoom hinzu. Alle Gesten müssen eine per Tastatur zugängliche Entsprechung haben."
+  },
+  "ATH-061": {
+    "title": "Fehlermeldung erklärt nicht, wie das Problem behoben werden kann",
+    "desc": "Ein Formular zeigt beim Absenden einen Fehler, aber die Meldung sagt nicht, wie er behoben werden kann. Sie sagt zum Beispiel „Ungültige Eingabe", ohne das erwartete Format zu erklären.",
+    "rem": "Schreiben Sie spezifische, handlungsorientierte Fehlermeldungen. Sagen Sie den Nutzenden genau, was falsch gelaufen ist und wie sie es korrigieren können. Zum Beispiel: „Telefonnummer muss 10 Ziffern, nur Zahlen, enthalten" statt „Ungültige Telefonnummer"."
+  },
+  "ATH-062": {
+    "title": "Video ohne Untertitel",
+    "desc": "Ein voraufgezeichnetes Video hat gesprochenes Audio, aber keine Untertitel. Gehörlose und schwerhörige Nutzende können nicht auf den gesprochenen Inhalt zugreifen, und Nutzende in lauten oder lautempfindlichen Umgebungen können nicht folgen.",
+    "rem": "Fügen Sie genaue Untertitel zu jedem voraufgezeichneten Video hinzu, das einen gesprochenen Audiotrack hat. Untertitel müssen mit dem Audio synchronisiert sein, eine Sprecheridentifikation einschließen, wo relevant, und wichtige nicht-sprachliche Geräusche beschreiben (wie [Applaus] oder [Türklingel]). Überprüfen Sie automatisch generierte Untertitel auf Genauigkeit vor der Veröffentlichung."
+  },
+  "ATH-063": {
+    "title": "Video ohne Audiobeschreibung",
+    "desc": "Ein voraufgezeichnetes Video enthält visuelle Informationen, die im Audio nicht beschrieben werden – wie eingeblendeter Text, Aktionen oder Diagramme. Blinde und sehbehinderte Nutzende verpassen diesen Inhalt völlig.",
+    "rem": "Fügen Sie einen Audiobeschreibungstrack hinzu, der wichtige visuelle Inhalte während natürlicher Pausen im Dialog kommentiert. Wenn nicht genügend Pausen vorhanden sind, erstellen Sie eine erweiterte Audiobeschreibungsversion, bei der das Video an relevanten Stellen angehalten wird. Als Alternative kann eine vollständige Textbeschreibung dienen, aber ein Audiotrack wird bevorzugt."
+  }
+}

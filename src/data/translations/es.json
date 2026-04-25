@@ -1,0 +1,272 @@
+{
+  "ATH-001": {
+    "title": "Botón o enlace sin etiqueta",
+    "desc": "Un botón o enlace no tiene nombre accesible. Los lectores de pantalla lo anuncian como \"botón\" o \"enlace\" sin contexto, por lo que los usuarios no pueden saber qué hace.",
+    "rem": "Agrega una etiqueta visible o un atributo aria-label que describa lo que hace el control. Por ejemplo, un botón de cierre dentro de un modal debe decir \"Cerrar\" o \"Cerrar diálogo\", no solo mostrar un ícono de X."
+  },
+  "ATH-002": {
+    "title": "El foco no se mueve al abrir contenido nuevo",
+    "desc": "Cuando se abre un modal, diálogo o panel deslizable, el foco del teclado permanece donde estaba. Los usuarios de teclado y lectores de pantalla no pueden acceder fácilmente al nuevo contenido.",
+    "rem": "Mueve el foco al primer elemento dentro del nuevo contenido cuando se abre. Usa tabindex=\"-1\" en un encabezado si el primer elemento enfocable aparece más adelante. Atrapa el foco dentro mientras está abierto, y regresa el foco al botón disparador cuando se cierre."
+  },
+  "ATH-003": {
+    "title": "Indicador de foco ausente o no visible",
+    "desc": "Los usuarios de teclado no pueden ver qué elemento tiene el foco. El contorno de foco predeterminado puede haber sido eliminado, o el estilo de foco personalizado es demasiado tenue para verse claramente.",
+    "rem": "Asegúrate de que cada elemento enfocable por teclado muestre un contorno de foco claro. No uses outline: none sin proporcionar un estilo de foco visible personalizado. El indicador de foco debe tener una relación de contraste de al menos 3:1 respecto a los colores cercanos."
+  },
+  "ATH-005": {
+    "title": "Elemento no accesible por teclado",
+    "desc": "El control solo puede usarse con un ratón. Los usuarios de teclado no pueden enfocarlo ni activarlo. Los elementos personalizados construidos con div o span tampoco tienen un role, por lo que los lectores de pantalla no saben qué tipo de control es.",
+    "rem": "Usa elementos HTML nativos como button o a siempre que sea posible: son accesibles por teclado y tienen roles integrados. Si debe usarse un elemento personalizado, agrega tabindex=\"0\", un role ARIA apropiado y manejadores de eventos de teclado para Enter y Space."
+  },
+  "ATH-007": {
+    "title": "Contraste de texto insuficiente",
+    "desc": "El texto no tiene suficiente contraste respecto a su fondo. Las personas con baja visión o daltonismo pueden no ser capaces de leerlo.",
+    "rem": "Cambia el color del texto, el fondo, o ambos, para que la relación de contraste sea de al menos 4.5:1. Usa una herramienta de verificación de contraste de color para confirmarlo."
+  },
+  "ATH-008": {
+    "title": "Contraste insuficiente en elementos no textuales",
+    "desc": "Íconos, bordes de campos de formulario o bordes de componentes de interfaz no tienen suficiente contraste respecto a los colores cercanos. Las personas con baja visión pueden no poder verlos o identificarlos.",
+    "rem": "Actualiza el color del elemento para que tenga una relación de contraste de al menos 3:1 respecto a los colores adyacentes."
+  },
+  "ATH-009": {
+    "title": "Texto alternativo ausente, incorrecto o innecesario",
+    "desc": "Una imagen no tiene texto alternativo, tiene texto alternativo que no describe el propósito de la imagen, o tiene texto alternativo que repite el texto visible cercano.",
+    "rem": "Determina si la imagen transmite significado o es puramente decorativa. Las imágenes con significado necesitan texto alternativo breve y descriptivo que explique el propósito. Las imágenes decorativas deben usar alt=\"\" para que los lectores de pantalla las omitan."
+  },
+  "ATH-010": {
+    "title": "La etiqueta del control describe la apariencia, no el propósito",
+    "desc": "El nombre accesible de un control describe cómo se ve en lugar de lo que hace. Por ejemplo, un botón etiquetado como \"ícono de lupa\" debería decir \"Buscar\".",
+    "rem": "Escribe etiquetas que describan la acción o destino del control, no su apariencia visual. Cambia etiquetas como \"ícono de flecha\" por \"Página siguiente\" o \"ícono de búsqueda\" por \"Buscar\"."
+  },
+  "ATH-011": {
+    "title": "Sin enlace de salto",
+    "desc": "No hay enlace de salto al inicio de la página. Los usuarios de teclado deben navegar por todos los enlaces de navegación en cada página antes de llegar al contenido principal.",
+    "rem": "Agrega un enlace \"Ir al contenido principal\" como primer elemento enfocable de la página. Hazlo visible cuando reciba el foco, y haz que mueva el foco al inicio del área de contenido principal."
+  },
+  "ATH-012": {
+    "title": "El enlace de salto no es visible al enfocarse",
+    "desc": "Existe un enlace de salto pero está oculto para los usuarios de teclado con visión. Cuando un usuario de teclado navega hasta él, nada aparece en pantalla.",
+    "rem": "Haz que el enlace de salto aparezca en pantalla cuando reciba el foco del teclado. Puede estar oculto fuera de pantalla por defecto, pero debe hacerse visible al enfocarse."
+  },
+  "ATH-013": {
+    "title": "Estructura de encabezados incorrecta",
+    "desc": "El texto que parece un encabezado no está marcado como tal, o los niveles de encabezado saltan números (por ejemplo, pasando de h1 a h3). Los usuarios de lectores de pantalla navegan por encabezados, por lo que una estructura incorrecta dificulta encontrar el contenido.",
+    "rem": "Usa elementos h1–h6 para todos los títulos de sección. No saltes niveles: cada subsección debe usar el siguiente nivel de encabezado. No uses elementos de encabezado solo para hacer el texto más grande o en negrita."
+  },
+  "ATH-014": {
+    "title": "Sin H1 en la página",
+    "desc": "La página no tiene encabezado h1. El h1 es el título principal de la página y ayuda a los usuarios de lectores de pantalla a entender dónde están.",
+    "rem": "Agrega un único elemento h1 a cada página que describa el tema principal. Todos los demás encabezados deben seguir en orden debajo de él."
+  },
+  "ATH-016": {
+    "title": "El asterisco para campos requeridos no está explicado",
+    "desc": "El formulario usa asteriscos (*) para marcar campos requeridos, pero el significado del asterisco nunca se explica. Algunos usuarios pueden no saber qué significa.",
+    "rem": "Agrega una nota al inicio del formulario que explique el asterisco, como \"Los campos marcados con * son obligatorios\". También marca los campos requeridos programáticamente usando el atributo required o aria-required."
+  },
+  "ATH-017": {
+    "title": "Los errores del formulario no están vinculados a sus campos",
+    "desc": "Cuando un formulario muestra un mensaje de error, los lectores de pantalla no lo anuncian porque no está vinculado programáticamente al campo de entrada.",
+    "rem": "Usa aria-describedby para conectar el mensaje de error con su campo de entrada. Cuando aparezcan errores, mueve el foco del teclado al primer campo con error para que todos los usuarios sepan dónde corregir el problema."
+  },
+  "ATH-018": {
+    "title": "Sin mensaje de estado después de una acción",
+    "desc": "Tras una acción del usuario, como enviar un formulario o cargar resultados, nada se anuncia a los usuarios de lectores de pantalla. No saben si la acción funcionó.",
+    "rem": "Usa role=\"status\" o aria-live=\"polite\" en un contenedor que reciba el mensaje de resultado. Esto permite que los lectores de pantalla anuncien actualizaciones sin mover el foco. Solo usa aria-live=\"assertive\" o role=\"alert\" para mensajes urgentes."
+  },
+  "ATH-019": {
+    "title": "ARIA usado incorrectamente",
+    "desc": "Los atributos ARIA se aplican de forma incorrecta. Problemas comunes: aria-hidden colocado en un elemento enfocable, role=\"alert\" usado para mensajes de rutina, o roles ARIA que entran en conflicto con el comportamiento nativo del elemento.",
+    "rem": "Sigue la especificación ARIA cuidadosamente. Nunca pongas aria-hidden en un elemento que sea enfocable o que contenga hijos enfocables. Usa role=\"alert\" solo para mensajes urgentes y sensibles al tiempo: usa aria-live=\"polite\" para todo lo demás."
+  },
+  "ATH-021": {
+    "title": "El color es el único indicador visual",
+    "desc": "La información se comunica usando solo color. Por ejemplo, un campo requerido se resalta en rojo pero no tiene otro indicador. Las personas con daltonismo o que no pueden ver colores perderán esta información.",
+    "rem": "Siempre combina el color con un segundo indicador visual, como subrayado, texto en negrita, un ícono o una etiqueta de texto. Asegúrate de que los cambios de estado también se comuniquen a la tecnología de asistencia."
+  },
+  "ATH-022": {
+    "title": "El zoom o pellizco para ampliar está desactivado",
+    "desc": "La página impide que los usuarios hagan zoom usando el navegador o gestos de pellizco. Las personas con baja visión dependen del zoom para leer el contenido.",
+    "rem": "Elimina user-scalable=\"no\" de la etiqueta meta viewport. No establezcas maximum-scale por debajo de 2. Permite que los usuarios hagan zoom libremente."
+  },
+  "ATH-023": {
+    "title": "Campo de formulario sin etiqueta",
+    "desc": "Un campo de formulario no tiene etiqueta visible, o su etiqueta no está vinculada programáticamente al campo. El texto de marcador de posición desaparece cuando el usuario comienza a escribir y no es sustituto de una etiqueta adecuada.",
+    "rem": "Dale a cada campo de formulario una etiqueta visible que describa qué ingresar. Vincula la etiqueta con la entrada usando atributos for e id coincidentes. Evita usar solo texto de marcador de posición como etiqueta."
+  },
+  "ATH-025": {
+    "title": "El contenido oculto sigue siendo legible por lectores de pantalla",
+    "desc": "El contenido visualmente oculto (como un menú desplegable cerrado o un panel colapsado) sigue siendo legible por los lectores de pantalla. Los usuarios pueden escuchar contenido que parece no tener contexto.",
+    "rem": "Usa display: none o visibility: hidden para ocultar contenido tanto de usuarios visuales como de lectores de pantalla. O usa aria-hidden=\"true\" en contenido que debe ser invisible para lectores de pantalla. Asegúrate de que el método elegido realmente oculte el contenido de la tecnología de asistencia."
+  },
+  "ATH-026": {
+    "title": "Espaciado de texto demasiado ajustado",
+    "desc": "La página no admite el espaciado de texto mínimo. Cuando los usuarios aplican espaciado personalizado a través de la configuración del navegador, el contenido se rompe o se vuelve ilegible.",
+    "rem": "Diseña y codifica para que la página siga funcionando con estos valores: altura de línea de al menos 1.5× el tamaño de fuente, espaciado de párrafo de al menos 2× el tamaño de fuente, espaciado de letras de al menos 0.12× el tamaño de fuente, espaciado de palabras de al menos 0.16× el tamaño de fuente."
+  },
+  "ATH-027": {
+    "title": "El nombre accesible no coincide con la etiqueta visible",
+    "desc": "El nombre accesible de un control es diferente de su etiqueta de texto visible. Los usuarios de entrada por voz dicen la etiqueta visible para activar el control, pero no coincide con el nombre real del control.",
+    "rem": "Asegúrate de que el nombre accesible comience con o contenga el texto de la etiqueta visible. Elimina valores de aria-label que reemplacen el texto visible: deja que el texto visible sirva como nombre accesible."
+  },
+  "ATH-028": {
+    "title": "Patrón de pestañas ARIA",
+    "desc": "El componente usa pestañas ARIA, que requieren navegación con teclas de flecha que muchos usuarios no esperan. Los patrones de pestañas ARIA son fáciles de romper y difíciles de implementar correctamente.",
+    "rem": "Considera reemplazar las pestañas ARIA con un patrón más simple. Un acordeón, enlaces o una estructura de botón-panel a menudo ofrecen el mismo contenido sin la complejidad adicional."
+  },
+  "ATH-029": {
+    "title": "Elemento no interactivo en el orden de tabulación",
+    "desc": "Un elemento no interactivo (como un div, párrafo o barra de progreso) está en el orden de tabulación. Los usuarios de teclado navegan hasta él pero no pueden hacer nada, lo cual es confuso.",
+    "rem": "Elimina el atributo tabindex de los elementos no interactivos. Solo los elementos nativos interactivos o los que necesitan foco programático (como encabezados de diálogo) deben recibir el foco."
+  },
+  "ATH-030": {
+    "title": "Enlaces repetidos al mismo destino",
+    "desc": "Un bloque de contenido tiene múltiples enlaces o botones separados que van al mismo lugar: por ejemplo, una tarjeta con una imagen enlazada, un título enlazado y un botón \"Leer más\". Los usuarios de teclado deben tabular por todos ellos y los usuarios de lectores de pantalla escuchan anuncios repetidos.",
+    "rem": "Combínalos en un único enlace. Marca la imagen como decorativa (alt=\"\") y usa el texto como etiqueta del enlace. O envuelve toda la tarjeta en un elemento de enlace."
+  },
+  "ATH-031": {
+    "title": "El cambio de idioma no está marcado en el HTML",
+    "desc": "La página contiene texto en más de un idioma, pero el cambio de idioma no está marcado en el HTML. Los lectores de pantalla pueden leer palabras extranjeras con la pronunciación incorrecta.",
+    "rem": "Agrega un atributo lang al elemento que contiene el texto en un idioma diferente. Por ejemplo: <span lang=\"es\">Hola</span>."
+  },
+  "ATH-032": {
+    "title": "El idioma de la página no está configurado",
+    "desc": "El elemento html no tiene atributo lang. Los lectores de pantalla pueden usar el perfil de idioma incorrecto para leer la página, causando pronunciación incorrecta.",
+    "rem": "Agrega un atributo lang al elemento html que coincida con el idioma principal de la página. Por ejemplo: <html lang=\"es\">."
+  },
+  "ATH-033": {
+    "title": "La acción de arrastrar no tiene alternativa de teclado",
+    "desc": "Una función requiere que el usuario arrastre un elemento con el puntero. No hay forma accesible por teclado de realizar la misma acción.",
+    "rem": "Proporciona controles accesibles por teclado (como botones) que realicen la misma acción que arrastrar. Los usuarios de teclado deben poder completar cada tarea sin un ratón."
+  },
+  "ATH-034": {
+    "title": "La animación en bucle no se puede pausar",
+    "desc": "Una animación o elemento en movimiento comienza automáticamente y se repite sin detenerse. No hay forma de que el usuario la pause, detenga u oculte. Esto puede ser distractor o dañino para personas con ciertas condiciones.",
+    "rem": "Proporciona un botón visible y accesible por teclado para pausar o detener la animación. O configúrala para que se detenga automáticamente en 5 segundos. Si la animación transmite datos en vivo (como un ticker de noticias), se requiere un botón de pausa."
+  },
+  "ATH-035": {
+    "title": "Puntos de referencia de la página ausentes o incorrectos",
+    "desc": "El contenido de la página no está organizado dentro de elementos de referencia HTML. Los usuarios de lectores de pantalla no pueden saltar entre secciones de la página y deben leerlo todo desde el principio.",
+    "rem": "Envuelve todo el contenido de la página en elementos HTML semánticos: header, nav, main, aside y footer. Cada página necesita al menos un elemento main. Usa roles de referencia ARIA solo cuando el elemento HTML correcto no esté disponible."
+  },
+  "ATH-037": {
+    "title": "El título de la página no cambia entre páginas",
+    "desc": "El título de la página (mostrado en la pestaña del navegador) permanece igual en todas las páginas. Los usuarios no pueden saber en qué página están solo mirando la pestaña.",
+    "rem": "Actualiza el título del documento en cada página para describir su contenido. Por ejemplo: \"Carrito — Mi Tienda\" o \"Configuración — Nombre de App\". En una app de página única, actualiza el título en cada cambio de ruta."
+  },
+  "ATH-038": {
+    "title": "Trampa de teclado",
+    "desc": "El foco del teclado queda atrapado dentro de un componente. Una vez que un usuario de teclado entra en él, no hay forma de salir usando solo el teclado.",
+    "rem": "Asegúrate de que los usuarios de teclado siempre puedan salir de cualquier componente con Tab. Si un modal o diálogo atrapa el foco intencionalmente, agrega un manejador para la tecla Escape y un botón de cierre visible para que los usuarios puedan salir."
+  },
+  "ATH-039": {
+    "title": "Gráfico o diagrama sin alternativa textual",
+    "desc": "Los gráficos y diagramas transmiten datos visualmente pero no tienen alternativa textual. Los usuarios de lectores de pantalla no pueden acceder a la información que contiene el gráfico.",
+    "rem": "Proporciona un resumen textual que describa lo que muestra el gráfico: su tipo, tendencias clave y principales conclusiones. Cuando sea posible, también proporciona los datos subyacentes en una tabla."
+  },
+  "ATH-040": {
+    "title": "Los datos de tabla no usan marcado de tabla",
+    "desc": "Los datos organizados en filas y columnas no usan marcado de tabla HTML. Los usuarios de lectores de pantalla no pueden entender la relación entre los encabezados de columna y las celdas de datos.",
+    "rem": "Usa marcado de tabla adecuado con elementos table, thead, tbody, tr, th y td. Asegúrate de que los encabezados de columna y fila usen elementos th con atributos scope apropiados."
+  },
+  "ATH-041": {
+    "title": "Contenido emergente o tooltip no accesible por teclado",
+    "desc": "El contenido extra aparece solo cuando el usuario pasa el cursor. Los usuarios de teclado y lectores de pantalla no pueden activar ni leer este contenido.",
+    "rem": "Haz que el contenido emergente también aparezca cuando el elemento recibe el foco del teclado. Los usuarios deben poder descartarlo sin mover el foco (por ejemplo, con Escape). El contenido debe permanecer visible hasta que el usuario mueva el foco."
+  },
+  "ATH-043": {
+    "title": "El orden de tabulación no coincide con el orden visual",
+    "desc": "Al navegar con Tab por la página, el foco salta en un orden que no coincide con lo que se muestra en pantalla. Esto es confuso para los usuarios de teclado.",
+    "rem": "Haz que el orden del código fuente HTML coincida con el diseño visual. Evita usar valores positivos de tabindex para controlar el orden de tabulación: crean problemas de mantenimiento y generalmente empeoran las cosas."
+  },
+  "ATH-045": {
+    "title": "Contenido informativo oculto de los lectores de pantalla",
+    "desc": "El contenido que tiene significado (como una calificación con estrellas o un ícono de estado) está oculto de los lectores de pantalla usando aria-hidden. Los usuarios de lectores de pantalla no pueden acceder a esa información.",
+    "rem": "Elimina aria-hidden del contenido que tiene significado. Agrega un nombre accesible o texto suplementario que transmita la misma información. Por ejemplo, en lugar de ocultar una calificación con estrellas, agrega texto oculto como \"Calificación: 4 de 5 estrellas\"."
+  },
+  "ATH-046": {
+    "title": "Sin advertencia antes de abrir una nueva ventana",
+    "desc": "Un enlace o botón abre una nueva ventana o pestaña del navegador sin advertencia. Esto es desorientador, especialmente para los usuarios de lectores de pantalla que pueden no darse cuenta de que el contexto ha cambiado.",
+    "rem": "Agrega una advertencia en el texto del enlace o nombre accesible. Por ejemplo: \"Informe Anual (se abre en una nueva pestaña)\". También puedes agregar un ícono con texto alternativo para indicar que se abrirá una nueva ventana."
+  },
+  "ATH-047": {
+    "title": "Recibir el foco provoca un cambio inesperado",
+    "desc": "Cuando un elemento recibe el foco de teclado o puntero, la página cambia: por ejemplo, un formulario se envía o carga una nueva página. Esto es inesperado y desorientador.",
+    "rem": "No actives ninguna acción cuando un elemento recibe el foco. Las acciones solo deben ocurrir cuando el usuario activa deliberadamente un control (por ejemplo, presionando Enter, Space o haciendo clic)."
+  },
+  "ATH-048": {
+    "title": "Cambiar una entrada provoca un cambio inesperado",
+    "desc": "Seleccionar una opción en un menú desplegable o cambiar un valor de formulario hace que la página se recargue o navegue automáticamente. Los usuarios que navegan con teclado por una lista de opciones pueden activar un cambio no deseado.",
+    "rem": "No actives cambios a nivel de página cuando el usuario cambie un valor de formulario. Espera a una acción de envío deliberada, como presionar un botón \"Ir\", antes de actuar sobre la selección."
+  },
+  "ATH-050": {
+    "title": "El contenido es anunciado incorrectamente por los lectores de pantalla",
+    "desc": "El contenido está formateado de una manera que hace que los lectores de pantalla lo lean incorrectamente. Por ejemplo, un precio de \"$1.200\" puede leerse como texto confuso según cómo esté marcado.",
+    "rem": "Revisa cómo está estructurado el contenido en el HTML y prueba con un lector de pantalla. Corrige el marcado o formato para que el texto anunciado transmita el significado correcto."
+  },
+  "ATH-051": {
+    "title": "La figura o ilustración no tiene descripción",
+    "desc": "Una imagen o diagrama usa un elemento figure pero no tiene figcaption ni descripción accesible. Los usuarios de lectores de pantalla escuchan el nombre del archivo de imagen o un anuncio genérico en lugar de lo que muestra la imagen.",
+    "rem": "Agrega un elemento figcaption dentro del figure que explique qué muestra la imagen o por qué importa. Para imágenes más complejas, vincula a una descripción textual más extensa cerca."
+  },
+  "ATH-052": {
+    "title": "El campo de formulario tiene etiquetas en conflicto",
+    "desc": "Un campo de formulario tiene tanto una etiqueta visible como un aria-label que dicen cosas diferentes. Los usuarios de lectores de pantalla escuchan el aria-label mientras los usuarios con visión leen la etiqueta visible, lo que genera confusión.",
+    "rem": "Usa solo un método de etiquetado, o asegúrate de que ambas etiquetas digan lo mismo. El nombre accesible (aria-label o aria-labelledby) debe contener el texto de la etiqueta visible."
+  },
+  "ATH-053": {
+    "title": "El menú desplegable o select no tiene etiqueta",
+    "desc": "Un menú desplegable o elemento select no tiene etiqueta. Los usuarios de lectores de pantalla no saben qué elección están haciendo.",
+    "rem": "Agrega un elemento label visible con un atributo for que coincida con el id del elemento select. Si no puedes mostrar una etiqueta visible, usa aria-label o aria-labelledby en su lugar."
+  },
+  "ATH-054": {
+    "title": "El diseño se rompe al ampliar el texto",
+    "desc": "Cuando los usuarios aumentan el tamaño del texto en su navegador al 200%, el diseño de la página se rompe. El texto se superpone a otro contenido, se corta o desaparece. Los usuarios con baja visión que dependen de texto más grande no pueden leer la página.",
+    "rem": "Usa diseños flexibles y unidades relativas (rem, em, %) en lugar de alturas de píxel fijas. Prueba la página con texto al 200% en la configuración de tu navegador para asegurarte de que todo sea legible y nada se desborde."
+  },
+  "ATH-055": {
+    "title": "Texto de enlace vago o genérico",
+    "desc": "Los enlaces usan texto genérico como \"Haz clic aquí\", \"Leer más\" o \"Más información\". Los usuarios de lectores de pantalla que navegan por enlaces no pueden saber a dónde lleva cada enlace.",
+    "rem": "Escribe texto de enlace que describa el destino o la acción. En lugar de \"Haz clic aquí\", usa \"Descargar la lista de verificación de accesibilidad\" o \"Leer la explicación completa de WCAG 1.1.1\"."
+  },
+  "ATH-056": {
+    "title": "El audio o video no tiene transcripción ni subtítulos",
+    "desc": "Un video o grabación de audio no tiene subtítulos ni transcripción. Los usuarios sordos y con dificultades auditivas no pueden acceder al contenido hablado.",
+    "rem": "Para contenido solo de audio, proporciona una transcripción textual completa. Para video con audio, proporciona subtítulos sincronizados. Coloca la transcripción cerca del medio o vincúlala claramente. Los subtítulos generados automáticamente deben revisarse y corregirse antes de publicarse."
+  },
+  "ATH-057": {
+    "title": "El grupo de formulario no tiene etiqueta de grupo",
+    "desc": "Un grupo de controles de formulario relacionados (como botones de radio o casillas de verificación) no tiene etiqueta de grupo. Los usuarios de lectores de pantalla escuchan cada opción sin entender qué pregunta responde.",
+    "rem": "Envuelve el grupo en un elemento fieldset y agrega un legend como su primer hijo. El texto del legend debe ser la pregunta o categoría a la que pertenece el grupo. Por ejemplo: \"Elige tu método de contacto preferido\"."
+  },
+  "ATH-058": {
+    "title": "El contenido de lista no usa marcado de lista",
+    "desc": "El contenido que parece una lista, como enlaces de navegación, pasos u opciones, está construido con divs o párrafos en lugar de elementos de lista HTML. Los lectores de pantalla no pueden anunciar cuántos elementos hay en la lista.",
+    "rem": "Usa ul para listas desordenadas, ol para listas numeradas y dl para listas de definición. Empareja cada lista con elementos li o dt/dd. Esto también aplica a menús de navegación e instrucciones paso a paso."
+  },
+  "ATH-059": {
+    "title": "La región en vivo no anuncia las actualizaciones",
+    "desc": "El contenido que se actualiza dinámicamente, como un recuento de resultados de búsqueda, una actualización de progreso o una notificación, no es anunciado por los lectores de pantalla porque la región en vivo falta o está configurada incorrectamente.",
+    "rem": "Agrega aria-live=\"polite\" a un contenedor que recibirá el texto actualizado. Usa aria-live=\"assertive\" solo para alertas urgentes. Inyecta el mensaje en la región en vivo después de que ya esté en el DOM: inyectar la región y el mensaje al mismo tiempo puede no ser anunciado."
+  },
+  "ATH-060": {
+    "title": "El gesto multipunto no tiene alternativa de puntero único",
+    "desc": "Una función requiere un gesto de varios dedos, como pellizcar para hacer zoom o un deslizamiento de dos dedos, sin alternativa de toque único o teclado. Los usuarios con discapacidades motoras que no pueden realizar gestos multitáctiles quedan excluidos.",
+    "rem": "Proporciona una alternativa de puntero único para cada gesto multipoint. Por ejemplo, agrega botones de más y menos para hacer zoom junto con el gesto de pellizco. Todos los gestos deben tener un equivalente accesible por teclado."
+  },
+  "ATH-061": {
+    "title": "El mensaje de error no explica cómo corregir el problema",
+    "desc": "Un formulario muestra un error cuando el usuario envía, pero el mensaje no dice cómo corregirlo. Por ejemplo, puede decir \"Entrada no válida\" sin explicar qué formato se espera.",
+    "rem": "Escribe mensajes de error específicos y accionables. Diles a los usuarios exactamente qué salió mal y cómo corregirlo. Por ejemplo: \"El número de teléfono debe tener 10 dígitos, solo números\" en lugar de \"Número de teléfono no válido\"."
+  },
+  "ATH-062": {
+    "title": "El video no tiene subtítulos cerrados",
+    "desc": "Un video pregrabado tiene audio hablado pero no tiene subtítulos. Los usuarios sordos y con dificultades auditivas no pueden acceder al contenido hablado, y los usuarios que ven en entornos ruidosos o silenciosos no pueden seguirlo.",
+    "rem": "Agrega subtítulos precisos a cada video pregrabado que tenga pista de audio hablado. Los subtítulos deben estar sincronizados con el audio, incluir identificación del hablante cuando sea relevante, y describir sonidos no verbales importantes (como [aplausos] o [timbre]). Revisa los subtítulos generados automáticamente antes de publicar."
+  },
+  "ATH-063": {
+    "title": "El video no tiene audiodescripción",
+    "desc": "Un video pregrabado contiene información visual que no se describe en el audio, como texto en pantalla, acciones o diagramas. Los usuarios ciegos y con baja visión pierden completamente este contenido.",
+    "rem": "Agrega una pista de audiodescripción que narre el contenido visual clave durante las pausas naturales en el diálogo. Si no hay suficientes pausas, crea una versión extendida de audiodescripción con el video pausado en los momentos relevantes. Una alternativa es una descripción textual completa, pero se prefiere la pista de audio."
+  }
+}
