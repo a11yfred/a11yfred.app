@@ -283,8 +283,8 @@ function AppShell() {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       announce(
         prefersReduced
-          ? 'Party mode activated! Confetti skipped — reduced motion is on.'
-          : 'Party mode activated! Confetti is falling.',
+          ? 'Party mode activated! The font has changed to Comic Sans. The colors have changed to a random bright color palette. The mouse cursor is now a magic wand. Confetti was skipped because reduced motion is turned on.'
+          : 'Party mode activated! The font has changed to Comic Sans. The colors have changed to a random bright color palette. Colorful confetti is now falling from the top of the screen in an assortment of colors and shapes. The mouse cursor is now a magic wand.',
         { priority: 'assertive' }
       )
       return

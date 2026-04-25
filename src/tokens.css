@@ -132,7 +132,7 @@
 [data-theme="party"] {
   --font: "Comic Sans MS", "Comic Sans", cursive;
 
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cline x1='5' y1='27' x2='18' y2='12' stroke='%238B6914' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='4' cy='28' r='2' fill='%23654321'/%3E%3Cpolygon fill='%23FFD700' stroke='%23FFFACD' stroke-width='1' points='22,2 23,6 27,6 24,8 25,12 22,9 19,12 20,8 17,6 21,6'/%3E%3Cline x1='28' y1='3' x2='28' y2='6' stroke='%23FFD700' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='26.5' y1='4.5' x2='29.5' y2='4.5' stroke='%23FFD700' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") 22 2, auto;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Cline x1='27' y1='27' x2='14' y2='12' stroke='%238B6914' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='28' cy='28' r='2' fill='%23654321'/%3E%3Cpolygon fill='%23FFD700' stroke='%23FFFACD' stroke-width='1' points='10,2 11,6 15,6 12,8 13,12 10,9 7,12 8,8 5,6 9,6'/%3E%3Cline x1='3' y1='3' x2='3' y2='6' stroke='%23FFD700' stroke-width='1.5' stroke-linecap='round'/%3E%3Cline x1='1.5' y1='4.5' x2='4.5' y2='4.5' stroke='%23FFD700' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") 10 2, auto;
 }
 
 @media (width >= 768px) {
