@@ -1175,6 +1175,7 @@ input.search-input:focus {
   .radio-chip {
     border-radius: 0;
     margin-left: -1px;
+    font-size: var(--fs-small);
   }
 
   .radio-chip:first-child {
