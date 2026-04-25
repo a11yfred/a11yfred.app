@@ -1,11 +1,10 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Chart the seas o' accessibility blights, post-haste",
-
+  "common.close": "Batten down",
   "header.github": "Spy the code on GitHub",
   "header.open_settings": "Hoist the Captain's Quarters",
   "header.close_settings": "Batten down the Captain's Quarters",
-
   "search.aria_label": "Hunt fer scurvy blights",
   "search.label": "Describe the blight or yer keen observation",
   "search.placeholder": "arr: modal close button, no name on the wretched thing",
@@ -17,19 +16,16 @@
   "search.hint_ai": "Ye AI first mate be at yer service ({provider}).",
   "search.hint_change_in": "This be changeable in",
   "search.hint_settings_link": "Captain's Quarters",
-
   "results.aria_label": "Blight candidates",
   "results.no_results_announce": "No plunder fer \"{query}\". Try a component name, element type, or a different shanty.",
   "results.no_results_aria": "No plunder found",
   "results.no_results_heading": "No plunder fer \"{query}\"",
   "results.no_results_body": "Try a component name, element type, or a different shanty.",
-
   "priority.critical": "Abandon Ship!",
   "priority.high": "Batten Down!",
   "priority.medium": "Listing, Cap'n",
   "priority.low": "Calm Waters",
   "priority.best_practice": "Old Salt's Wisdom",
-
   "detail.fails": "Fails the code of the sea:",
   "detail.related": "Shares waters with:",
   "detail.location_label": "Ship's bearing",
@@ -71,7 +67,6 @@
   "detail.copy_mobile": "⎘",
   "detail.sheet_label": "{title} — blight details, arrr",
   "detail.sheet_default": "Blight details",
-
   "settings.drawer_label": "Captain's Quarters",
   "settings.back": "Back to the hunt",
   "settings.heading": "Captain's Quarters",
@@ -99,6 +94,8 @@
   "settings.ai_enable_desc": "Rewrites text based on yer orders.",
   "settings.privacy_button": "Privacy & cargo manifest",
   "settings.privacy_heading": "Privacy & Cargo Manifest",
+  "settings.privacy_subhead_storage": "What's in the Hold",
+  "settings.privacy_subhead_translations": "Translations, Matey",
   "settings.privacy_body_1": "API keys be stowed locally in yer browser (localStorage) an' sent only to the AI provider's API — never to any middleman. Ye can scuttle 'em any time.",
   "settings.privacy_body_2": "This app stows six things in localStorage: yer ship's colors, yer tongue, yer vessel filter (Web/Native), yer live hunt setting, yer active AI provider, an' yer API keys. No other cargo be stowed or sent.",
   "settings.privacy_body_translations": "UI translations an' base corpus translations were drawn up by AI an' may contain errors. No custom or user-entered cargo is ever sent out for translation.",
@@ -113,20 +110,16 @@
   "settings.saved_announce": "Captain's Quarters: Stowed",
   "settings.platform_web_announce": "Vessel: Show web-vessel results",
   "settings.platform_native_announce": "Vessel: Show native-vessel results",
-
   "notfound.heading": "404 — Charted No Waters Here!",
   "notfound.body": "Ye've sailed off the map, matey. Let's chart a course back to port.",
   "notfound.button": "Back to Port",
-
   "footer.credit": "A voyage by Mikey Ilagan",
   "footer.linkedin": "LinkedIn",
-
   "party.banner": "~*~ TREASURE MODE UNLOCKED, ARRR ~*~",
   "party.play": "Play the sea shanty",
   "party.stop": "Silence the shanty",
   "party.announce_full": "Treasure mode activated, arrr! The font has changed to Comic Sans. The colors have changed to a blazin' bright palette. Colorful confetti be fallin' from the crow's nest in all manner of colors and shapes. The mouse cursor is now a cutlass.",
   "party.announce_reduced": "Treasure mode activated, arrr! The font has changed to Comic Sans. The colors have changed to a blazin' bright palette. The mouse cursor is now a cutlass. Confetti walked the plank because reduced motion be turned on.",
-
   "kofi.support": "Fill me coffers",
   "kofi.aria": "Support Mikey on Ko-fi (opens the hatch)",
   "kofi.title": "Ko-fi donation widget",
