@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Settings, X } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'

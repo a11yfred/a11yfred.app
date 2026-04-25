@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { X } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 
 export default function SearchBar({ query, onChange, onSearch, typeahead }) {
