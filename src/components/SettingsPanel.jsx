@@ -12,57 +12,73 @@ const PROVIDERS = [
 ]
 
 const LANGUAGES = [
-  // English
-  { value: 'en',    label: 'English' },
+  // A
+  { value: 'af',    label: 'Afrikaans' },
+  { value: 'ar-PS', label: 'العربية الفلسطينية' },
+  // B
+  { value: 'eu',    label: 'Euskara' },
+  // C
+  { value: 'yue',   label: '粵語（繁體）' },
+  { value: 'ceb',   label: 'Cebuano' },
+  { value: 'cbk',   label: 'Chabacano' },
+  { value: 'zh',    label: '中文（简体）' },
+  { value: 'cr',    label: 'Nêhiyawêwin' },
+  { value: 'crh',   label: 'Qırımtatarca' },
+  // D
+  { value: 'nl',    label: 'Nederlands' },
+  // E
   { value: 'en-AU', label: 'English (Australian)' },
   { value: 'en-GB', label: 'English (British)' },
   { value: 'en-IN', label: 'English (Indian)' },
   { value: 'en-ZA', label: 'English (South African)' },
-  // European
-  { value: 'af',    label: 'Afrikaans' },
-  { value: 'de',    label: 'Deutsch' },
+  { value: 'en',    label: 'English (US)' },
   { value: 'eo',    label: 'Esperanto' },
-  { value: 'es',    label: 'Español (Latinoamérica)' },
-  { value: 'es-ES', label: 'Español (España)' },
-  { value: 'es-PH', label: 'Español (Filipinas)' },
-  { value: 'eu',    label: 'Euskara' },
+  // F
+  { value: 'tl',    label: 'Filipino (Tagalog)' },
   { value: 'fr',    label: 'Français' },
   { value: 'fr-CA', label: 'Français (Canada)' },
+  // G
+  { value: 'de',    label: 'Deutsch' },
+  { value: 'gn',    label: "Avañe'ẽ" },
+  // H
   { value: 'ht',    label: 'Kreyòl Ayisyen' },
-  { value: 'nl',    label: 'Nederlands' },
-  { value: 'pt',    label: 'Português' },
-  { value: 'pt-BR', label: 'Português (Brasil)' },
-  { value: 'sv',    label: 'Svenska' },
-  // Asian & Pacific
-  { value: 'bo',    label: 'བོད་སྐད།' },
-  { value: 'cbk',   label: 'Chabacano' },
-  { value: 'ceb',   label: 'Cebuano' },
-  { value: 'tl',    label: 'Filipino (Tagalog)' },
   { value: 'haw',   label: 'ʻŌlelo Hawaiʻi' },
   { value: 'hi',    label: 'हिन्दी' },
+  // I
   { value: 'ilo',   label: 'Ilokano' },
-  { value: 'ja',    label: '日本語' },
-  { value: 'ko',    label: '한국어' },
-  { value: 'mi',    label: 'Te Reo Māori' },
-  { value: 'ta',    label: 'தமிழ்' },
-  { value: 'vi',    label: 'Tiếng Việt' },
-  { value: 'yue',   label: '粵語（繁體）' },
-  { value: 'zh',    label: '中文（简体）' },
-  // Middle East / Central Asia / Africa
-  { value: 'ar-PS', label: 'العربية الفلسطينية' },
-  { value: 'crh',   label: 'Qırımtatarca' },
-  { value: 'ug',    label: 'ئۇيغۇرچە' },
-  { value: 'zgh',   label: 'ⵜⴰⵎⴰⵣⵉⵖⵜ' },
-  // Indigenous & other
-  { value: 'cr',    label: 'Nêhiyawêwin' },
-  { value: 'gn',    label: "Avañe'ẽ" },
   { value: 'iu',    label: 'Inuktitut' },
+  // J
+  { value: 'ja',    label: '日本語' },
+  // K
+  { value: 'ko',    label: '한국어' },
+  // M
+  { value: 'mi',    label: 'Te Reo Māori' },
+  // N
   { value: 'nah',   label: 'Nāhuatlahtōlli' },
   { value: 'nv',    label: 'Diné bizaad' },
+  // O
   { value: 'oj',    label: 'Anishinaabemowin' },
+  // P
   { value: 'pjt',   label: 'Palawa kani' },
+  { value: 'pt',    label: 'Português' },
+  { value: 'pt-BR', label: 'Português (Brasil)' },
+  // Q
   { value: 'qu',    label: 'Runasimi' },
+  // R
   { value: 'rhg',   label: 'Ruáingga' },
+  // S
+  { value: 'es',    label: 'Español (Latinoamérica)' },
+  { value: 'es-PH', label: 'Español (Filipinas)' },
+  { value: 'es-ES', label: 'Español (España)' },
+  { value: 'sv',    label: 'Svenska' },
+  // T
+  { value: 'zgh',   label: 'ⵜⴰⵎⴰⵣⵉⵖⵜ' },
+  { value: 'ta',    label: 'தமிழ்' },
+  { value: 'bo',    label: 'བོད་སྐད།' },
+  // U
+  { value: 'ug',    label: 'ئۇيغۇرچە' },
+  // V
+  { value: 'vi',    label: 'Tiếng Việt' },
 ]
 
 export default function SettingsPanel({
@@ -109,6 +125,8 @@ export default function SettingsPanel({
       }
     })
     localStorage.setItem('ai_provider', activeProvider)
+    // Apply the displayed language — resets any active easter egg locale
+    onLanguageChange(language)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
     announce(t('settings.saved_announce'))

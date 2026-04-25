@@ -1164,6 +1164,33 @@ input.search-input:focus {
   border: none;
 }
 
+/* ─── Segmented chip group on mobile ─────────────────────────
+   Collapse the gap and share a single-pixel border between chips,
+   rounding only the outer corners of the first and last chip.    */
+@media (width < 768px) {
+  .radio-chip-group {
+    gap: 0;
+  }
+
+  .radio-chip {
+    border-radius: 0;
+    margin-left: -1px;
+  }
+
+  .radio-chip:first-child {
+    border-radius: var(--radius) 0 0 var(--radius);
+    margin-left: 0;
+  }
+
+  .radio-chip:last-child {
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .radio-chip:focus-within {
+    z-index: 1;
+  }
+}
+
 /* ─── Toggle ──────────────────────────────────────────────── */
 
 .toggle {

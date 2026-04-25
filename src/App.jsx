@@ -301,7 +301,7 @@ function AppContent({
   const returnToPanelRef = useRef(false)
 
   const activeQuery = liveSearch ? query : submittedQuery
-  const results = useDefectSearch(activeQuery, platform, searchKey)
+  const results = useDefectSearch(activeQuery, platform, language, searchKey)
 
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
@@ -366,10 +366,14 @@ function AppContent({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [theme])
 
+  const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val'])
+
   useEffect(() => {
     document.documentElement.lang = language
-    localStorage.setItem('language', language)
-  }, [language])
+    if (!EASTER_EGG_LOCALES.has(language)) {
+      localStorage.setItem('language', language)
+    }
+  }, [language]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { localStorage.setItem('liveSearch', liveSearch) }, [liveSearch])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
@@ -388,16 +392,20 @@ function AppContent({
     }
   }, [settingsOpen, isDesktop]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val' }
+
+  const activateEasterEgg = (egg) => {
+    setLanguage(egg)
+    setQuery('')
+    setSelected(null)
+    returnToPanelRef.current = false
+    setSubmittedQuery('')
+  }
+
   const handleQueryChange = (q) => {
-    const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val' }
-    const egg = EASTER_EGGS[q.trim().toLowerCase()]
-    if (egg) {
-      setLanguage(egg)
-      setQuery('')
-      setSelected(null)
-      returnToPanelRef.current = false
-      setSubmittedQuery('')
-      return
+    if (liveSearch) {
+      const egg = EASTER_EGGS[q.trim().toLowerCase()]
+      if (egg) { activateEasterEgg(egg); return }
     }
     setQuery(q)
     if (q === '') {
@@ -407,12 +415,22 @@ function AppContent({
     }
   }
 
+  const handleSearch = () => {
+    const egg = EASTER_EGGS[query.trim().toLowerCase()]
+    if (egg) { activateEasterEgg(egg); return }
+    setSubmittedQuery(query)
+    setSearchKey(k => k + 1)
+    setSelected(null)
+  }
+
   const handleOpenSettings = () => {
     // Track whether a panel was open when settings launched so we can restore it
     returnToPanelRef.current = !!selected
     navigate('/settings')
     // Do NOT clear selected here — keepMounted preserves the panel state
   }
+
+  const settingsLanguage = EASTER_EGG_LOCALES.has(language) ? 'en' : language
 
   const settingsProps = {
     aiEnabled,
@@ -421,7 +439,7 @@ function AppContent({
     onToggleLiveSearch: () => setLiveSearch(s => !s),
     theme,
     onThemeChange: setTheme,
-    language,
+    language: settingsLanguage,
     onLanguageChange: setLanguage,
     platform,
     onPlatformChange: setPlatform,
@@ -438,7 +456,7 @@ function AppContent({
       <SearchBar
         query={query}
         onChange={handleQueryChange}
-        onSearch={() => { setSubmittedQuery(query); setSearchKey(k => k + 1); setSelected(null) }}
+        onSearch={handleSearch}
         liveSearch={liveSearch}
         platform={platform}
         aiEnabled={aiEnabled}
