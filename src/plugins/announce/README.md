@@ -11,7 +11,7 @@ Drop it into any project under `src/plugins/announce/`.
 ## What's in the box
 
 | Export | Type | Purpose |
-|---|---|---|
+| --- | --- | --- |
 | `Announcer` | component | Mounts the live regions. Mount once in your app. |
 | `announce` | function | Pushes a message. Call it anywhere — no hooks required. |
 | `useAnnounce` | hook | Returns `announce`. Convenience alias for hook-style codebases. |
@@ -22,7 +22,7 @@ Drop it into any project under `src/plugins/announce/`.
 
 ### 1. Copy the plugin folder
 
-```
+```text
 src/
   plugins/
     announce/       ← drop this whole folder in
@@ -83,7 +83,7 @@ Screen reader announcements are read without visual context. A bare "Saved"
 tells the user something was saved, but not what. Prefix every message with
 the name of the component or section that produced it:
 
-```
+```text
 "Settings: Saved"         ✓  clear
 "Saved"                   ✗  ambiguous — saved what?
 
@@ -107,7 +107,7 @@ announce('Error: API key is invalid', { priority: 'assertive' })
 ```
 
 | Priority | aria-live value | Behaviour |
-|---|---|---|
+| --- | --- | --- |
 | `'polite'` | `polite` | Waits for a natural pause in the current utterance, then reads. |
 | `'assertive'` | `assertive` | Interrupts the current utterance immediately. |
 
@@ -116,12 +116,23 @@ Reserve it for errors, destructive action confirmations, and time-sensitive
 alerts where the delay of `polite` would cause confusion.
 
 Good candidates for `assertive`:
+
 - Validation errors after form submission
 - Session expiry warnings
 - Network errors that prevent the current action from completing
 
 Everything else — success confirmations, counts, status changes — should be
 `polite`.
+
+---
+
+## Auto-clear after announcement
+
+After each message is read, `Announcer` clears the live region ~1 second later.
+This prevents stale announcement text from sitting in the DOM where a screen
+reader user navigating the page might encounter it out of context.
+
+You do not need to call anything to trigger the clear — it is automatic.
 
 ---
 
@@ -228,7 +239,7 @@ the message is replaced rather than appended.
 ## Known screen reader behaviour
 
 | Screen reader | `polite` | `assertive` | Notes |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | NVDA + Firefox | ✓ | ✓ | Most reliable combination for testing. |
 | JAWS + Chrome | ✓ | ✓ | May delay polite announcements by 1–2 words. |
 | VoiceOver + Safari (macOS) | ✓ | ✓ | — |

@@ -426,6 +426,9 @@ function App() {
 .drawer-panel.is-open   /* transform: translateX(0) */
 ```
 
+See `index.css` in this project for the reference implementation including transitions,
+`will-change`, and `prefers-reduced-motion` overrides.
+
 Children are only mounted while `open` is true, which means `useFocusOnMount` inside a
 child component fires fresh on every open — no stale ref or manual reset needed.
 
