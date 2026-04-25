@@ -2,13 +2,21 @@ import { useRef } from 'react'
 import { X } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 
-export default function SearchBar({ query, onChange, onSearch, typeahead }) {
+export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName }) {
   const { navigate } = useRouter()
   const inputRef = useRef(null)
 
   const handleKeyDown = (e) => {
-    if (!typeahead && e.key === 'Enter') onSearch()
+    if (!liveSearch && e.key === 'Enter') onSearch()
   }
+
+  const platformLabel = platform === 'web' ? 'web-based' : 'native mobile'
+
+  const hintParts = [
+    liveSearch ? 'Results appear as you type.' : 'Type a description and press Search or Enter.',
+    `Currently focusing on ${platformLabel} issues.`,
+    aiEnabled && providerName ? `AI assist is on (${providerName}).` : null,
+  ].filter(Boolean)
 
   return (
     <search aria-label="Defect search" className="search-bar">
@@ -39,7 +47,7 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
             </button>
           )}
         </div>
-        {!typeahead && (
+        {!liveSearch && (
           <button
             onClick={onSearch}
             disabled={query.length < 2}
@@ -51,19 +59,11 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
       </div>
       {query.length === 0 && (
         <p className="search-hint">
-          {typeahead ? (
-            <>
-              Results appear as you type. This can be changed from{' '}
-              <button
-                onClick={() => navigate('/settings')}
-                className="search-hint-link"
-              >
-                Settings
-              </button>.
-            </>
-          ) : (
-            'Type a description and press Search or Enter.'
-          )}
+          {hintParts.join(' ')}{' '}
+          This can be changed in{' '}
+          <button onClick={() => navigate('/settings')} className="search-hint-link">
+            Settings
+          </button>.
         </p>
       )}
     </search>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronDown, Check } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, useMediaQuery } from '../plugins/router/index.js'
+import { ChevronLeft, ChevronDown, Check, Info } from 'lucide-react'
+import { useFocusOnMount, usePageTitle, useMediaQuery, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 
 const PROVIDERS = [
@@ -10,10 +10,21 @@ const PROVIDERS = [
   { id: 'microsoft', label: 'Microsoft (Copilot)', placeholder: 'Paste API key' },
 ]
 
+const LANGUAGES = [
+  { value: 'en', label: 'English' },
+  { value: 'es', label: 'Español' },
+  { value: 'fr', label: 'Français' },
+  { value: 'de', label: 'Deutsch' },
+  { value: 'nl', label: 'Nederlands' },
+  { value: 'ja', label: '日本語' },
+  { value: 'tl', label: 'Filipino' },
+]
+
 export default function SettingsPanel({
   aiEnabled, onToggleAi,
-  typeahead, onToggleTypeahead,
+  liveSearch, onToggleLiveSearch,
   theme, onThemeChange,
+  language, onLanguageChange,
   platform, onPlatformChange,
   onClose,
 }) {
@@ -32,6 +43,7 @@ export default function SettingsPanel({
     () => localStorage.getItem('ai_provider') || 'anthropic'
   )
   const [saved, setSaved] = useState(false)
+  const [privacyOpen, setPrivacyOpen] = useState(false)
 
   // Escape key — Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
@@ -64,14 +76,58 @@ export default function SettingsPanel({
         >
           <ChevronLeft size={22} strokeWidth={2.5} aria-hidden="true" />
         </button>
-        {/* tabIndex={-1} allows programmatic focus without joining tab order */}
         <h2 ref={headingRef} tabIndex={-1} className="settings-title">
           Settings
         </h2>
       </div>
 
-      {/* ── Search ─────────────────────────────────── */}
-      <h3 className="settings-section-heading">Search</h3>
+      {/* ── Appearance ──────────────────────────────── */}
+      <h3 className="settings-section-heading">Appearance</h3>
+
+      {/* Theme */}
+      <fieldset className="settings-fieldset">
+        <legend className="sr-only">Theme</legend>
+        <div className="radio-chip-group">
+          {[
+            { value: 'light', label: 'Light' },
+            { value: 'auto',  label: 'Auto'  },
+            { value: 'dark',  label: 'Dark'  },
+          ].map(({ value, label }) => (
+            <RadioChip
+              key={value}
+              name="theme-setting"
+              value={value}
+              label={label}
+              current={theme}
+              onChange={onThemeChange}
+            />
+          ))}
+        </div>
+      </fieldset>
+
+      {/* Language */}
+      <div className="settings-group">
+        <p className="settings-group__label">Language</p>
+        <p className="settings-group__desc">
+          Defaults to your browser&rsquo;s language. Full translations are in progress.
+        </p>
+        <div className="settings-select-wrap">
+          <select
+            value={language}
+            onChange={e => onLanguageChange(e.target.value)}
+            className="settings-select"
+            aria-label="Language"
+          >
+            {LANGUAGES.map(lang => (
+              <option key={lang.value} value={lang.value}>{lang.label}</option>
+            ))}
+          </select>
+          <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
+        </div>
+      </div>
+
+      {/* ── Search ──────────────────────────────────── */}
+      <h3 className="settings-section-heading settings-section-heading--divided">Search</h3>
 
       {/* Platform */}
       <div className="settings-group">
@@ -102,38 +158,16 @@ export default function SettingsPanel({
         </fieldset>
       </div>
 
-      {/* Typeahead */}
+      {/* Live search */}
       <div className="settings-toggle-row">
         <div>
-          <label htmlFor="toggle-typeahead" className="settings-toggle-label">Typeahead</label>
+          <label htmlFor="toggle-live-search" className="settings-toggle-label">Live search</label>
           <p className="settings-toggle-desc">
-            {typeahead ? 'Results appear as you type' : 'Results appear on Search / Enter'}
+            {liveSearch ? 'Results appear as you type' : 'Results appear on Search / Enter'}
           </p>
         </div>
-        <Toggle id="toggle-typeahead" checked={typeahead} onChange={onToggleTypeahead} />
+        <Toggle id="toggle-live-search" checked={liveSearch} onChange={onToggleLiveSearch} />
       </div>
-
-      {/* ── Appearance ──────────────────────────────── */}
-      <h3 className="settings-section-heading settings-section-heading--divided">Appearance</h3>
-      <fieldset className="settings-fieldset">
-        <legend className="sr-only">Theme</legend>
-        <div className="radio-chip-group">
-          {[
-            { value: 'light', label: 'Light' },
-            { value: 'auto',  label: 'Auto'  },
-            { value: 'dark',  label: 'Dark'  },
-          ].map(({ value, label }) => (
-            <RadioChip
-              key={value}
-              name="theme-setting"
-              value={value}
-              label={label}
-              current={theme}
-              onChange={onThemeChange}
-            />
-          ))}
-        </div>
-      </fieldset>
 
       {/* ── AI Assist ───────────────────────────────── */}
       <h3 className="settings-section-heading settings-section-heading--divided">AI Assist</h3>
@@ -146,17 +180,32 @@ export default function SettingsPanel({
         <Toggle id="toggle-ai" checked={aiEnabled} onChange={onToggleAi} />
       </div>
 
-      <p>
-        API keys are stored locally in your browser (<code>localStorage</code>) and sent only to
-        the AI provider&rsquo;s own API — never to any intermediate server.
-        You supply your own key; usage is billed directly to your account.
-      </p>
-      <p>
-        This app stores five things in <code>localStorage</code>: your theme preference,
-        your platform filter (Web/Native), your search mode (typeahead on/off),
-        your active AI provider, and your API key(s).
-        No personal data, usage data, or corpus content is collected or transmitted by this app.
-      </p>
+      <button
+        type="button"
+        onClick={() => setPrivacyOpen(true)}
+        className="settings-privacy-btn"
+      >
+        <Info size={14} aria-hidden="true" />
+        Privacy &amp; storage information
+      </button>
+
+      <Modal
+        open={privacyOpen}
+        onClose={() => setPrivacyOpen(false)}
+        heading="Privacy & Storage"
+      >
+        <p>
+          API keys are stored locally in your browser (<code>localStorage</code>) and sent only to
+          the AI provider&rsquo;s own API — never to any intermediate server.
+          You supply your own key; usage is billed directly to your account.
+        </p>
+        <p>
+          This app stores six things in <code>localStorage</code>: your theme preference,
+          your language preference, your platform filter (Web/Native), your live search setting,
+          your active AI provider, and your API key(s).
+          No personal data, usage data, or corpus content is collected or transmitted by this app.
+        </p>
+      </Modal>
 
       <div className="settings-provider-group">
         <label htmlFor="active-provider" className="settings-field-label">
