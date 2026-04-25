@@ -38,9 +38,66 @@ function KofiWidget() {
       })
     }
     document.body.appendChild(script)
-    return () => { document.body.removeChild(script) }
+    const cleanupA11y = patchKofiA11y()
+    return () => {
+      document.body.removeChild(script)
+      cleanupA11y()
+    }
   }, [])
   return null
+}
+
+function patchKofiA11y() {
+  let triggerButton = null
+
+  const observer = new MutationObserver(() => {
+    // Patch the floating trigger button with a meaningful label
+    if (!triggerButton) {
+      triggerButton = document.querySelector('.floatingchat-container-wrap button, [class*="kofi"] button')
+      if (triggerButton && !triggerButton.dataset.a11yPatched) {
+        triggerButton.dataset.a11yPatched = 'true'
+        if (!triggerButton.getAttribute('aria-label')) {
+          triggerButton.setAttribute('aria-label', 'Support Mikey on Ko-fi (opens panel)')
+        }
+      }
+    }
+
+    // Patch the popup overlay/dialog container
+    const overlay = document.querySelector(
+      '.kofi-overlay-widget-overlay, [id*="kofi"][class*="overlay"], [class*="kofi"][class*="iframe"]'
+    )
+    if (overlay && !overlay.dataset.a11yPatched) {
+      overlay.dataset.a11yPatched = 'true'
+      overlay.setAttribute('role', 'dialog')
+      overlay.setAttribute('aria-modal', 'true')
+      overlay.setAttribute('aria-label', 'Support on Ko-fi')
+    }
+
+    // Give any Ko-fi iframes a title so screen readers announce them
+    document.querySelectorAll('iframe[src*="ko-fi.com"]:not([title])').forEach(iframe => {
+      iframe.setAttribute('title', 'Ko-fi donation widget')
+    })
+  })
+
+  observer.observe(document.body, { childList: true, subtree: true })
+
+  // Escape key: close Ko-fi popup if open
+  const handleEsc = (e) => {
+    if (e.key !== 'Escape') return
+    const closeBtn = document.querySelector(
+      '[class*="kofi-close"], [id*="kofi-close"], .floatingchat-container-wrap .close'
+    )
+    if (closeBtn) {
+      closeBtn.click()
+      triggerButton?.focus()
+    }
+  }
+  document.addEventListener('keydown', handleEsc)
+
+  return () => {
+    observer.disconnect()
+    document.removeEventListener('keydown', handleEsc)
+  }
 }
 
 function AppShell() {
@@ -79,6 +136,7 @@ function AppShell() {
 
   useEffect(() => { localStorage.setItem('typeahead', typeahead) }, [typeahead])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
+
 
   // WCAG 2.4.3: focus h1 when returning from settings on desktop (page swap).
   // Mobile focus return is handled by Drawer. Skip on initial mount.
@@ -121,14 +179,6 @@ function AppShell() {
           selected={selected}
           onSelect={setSelected}
           query={activeQuery}
-        />
-      )}
-      {selected && (
-        <DetailPanel
-          key={selected.id}
-          defect={selected}
-          aiEnabled={aiEnabled}
-          onClose={() => setSelected(null)}
         />
       )}
     </>

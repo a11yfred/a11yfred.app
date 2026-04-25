@@ -171,6 +171,13 @@ select:focus-visible {
   text-align: center;
 }
 
+/* Extra bottom clearance on mobile so the Ko-fi floating button doesn't overlap */
+@media (width < 768px) {
+  .page-footer {
+    padding-bottom: 5rem;
+  }
+}
+
 .footer-credit {
   font-size: var(--fs-body);
   color: var(--text-faint);
@@ -194,7 +201,7 @@ select:focus-visible {
   margin-right: 0.25em;
 }
 
-/* ─── Off-canvas panel (mobile settings) ─────────────────── */
+/* ─── Drawer (slide-in panel, mobile settings) ────────────── */
 
 /* Backdrop */
 .drawer-backdrop {
@@ -906,18 +913,7 @@ input.search-input:focus {
 /* ─── Detail panel ────────────────────────────────────────── */
 
 .detail-panel {
-  border-top: 1px solid var(--border);
-  padding-top: 1.5rem;
-  margin-top: 0.5rem;
-}
-
-.detail-panel__close-row {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.detail-panel__close-btn {
-  font-size: var(--fs-heading);
+  padding-top: var(--space-2);
 }
 
 .detail-header {
@@ -925,8 +921,8 @@ input.search-input:focus {
 }
 
 .detail-title {
-  font-size: var(--fs-heading);
-  font-weight: 600;
+  font-size: var(--fs-h1);
+  font-weight: 700;
   color: var(--text);
   margin-bottom: 6px;
   outline: none;

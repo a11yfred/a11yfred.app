@@ -16,7 +16,7 @@ function scToWaiUrl(scLabel) {
   return `https://www.w3.org/WAI/WCAG22/Understanding/${slug}.html`
 }
 
-export default function DetailPanel({ defect, aiEnabled, onClose }) {
+export default function DetailPanel({ defect, aiEnabled }) {
   // Move focus to the defect title when a result is selected so keyboard
   // and screen reader users don't have to navigate down manually.
   const titleRef = useFocusOnMount()
@@ -64,16 +64,6 @@ export default function DetailPanel({ defect, aiEnabled, onClose }) {
 
   return (
     <div className="detail-panel">
-      <div className="detail-panel__close-row">
-        <button
-          onClick={onClose}
-          aria-label="Close defect panel"
-          className="btn-icon btn-icon-accent detail-panel__close-btn"
-        >
-          ×
-        </button>
-      </div>
-
       <div className="detail-header">
         <h2 ref={titleRef} tabIndex={-1} className="detail-title">
           {defect.title}
