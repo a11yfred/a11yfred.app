@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import { useFocusTrap } from './useFocusTrap.js'
+import { useAriaHide } from './useAriaHide.js'
 
 /**
  * Bottom sheet that slides up from the bottom of the viewport.
@@ -20,13 +21,14 @@ import { useFocusTrap } from './useFocusTrap.js'
  *   keepMounted  boolean  — keep children mounted while closed (preserves state)
  *   children     node     — rendered inside the sheet
  */
-export default function BottomSheet({ open, onClose, label = 'Detail', keepMounted = false, children }) {
+export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, children }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
   const dragStartY = useRef(null)
   const dragDelta = useRef(0)
 
   useFocusTrap(panelRef, open)
+  useAriaHide(panelRef, open)
 
   // Save the triggering element on open; restore focus on close
   useEffect(() => {
@@ -95,7 +97,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', keepMount
     <>
       {/* Backdrop — click to dismiss */}
       <div
-        className={`overlay-backdrop${open ? ' is-open' : ''}`}
+        className={`sheet-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
       />
@@ -118,7 +120,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', keepMount
           <div className="sheet-handle" aria-hidden="true" />
           <button
             onClick={onClose}
-            aria-label="Close"
+            aria-label={closeLabel}
             className="btn-icon btn-icon-accent sheet-close-btn"
           >
             <X size={20} strokeWidth={2.5} aria-hidden="true" />
@@ -132,7 +134,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', keepMount
               {children}
               <div className="sheet-close-bottom">
                 <button onClick={onClose} className="btn-accent sheet-close-bottom-btn">
-                  Close
+                  {closeLabel}
                 </button>
               </div>
             </>

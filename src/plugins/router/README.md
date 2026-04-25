@@ -19,6 +19,7 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 | `useFocusOnMount` | hook | Move focus to an element when it mounts |
 | `useReturnFocus` | hook | Restore focus to the triggering control on unmount |
 | `useFocusTrap` | hook | Restrict Tab focus to a container |
+| `useAriaHide` | hook | Hide all other body children from the AT tree while the overlay is open |
 | `useMediaQuery` | hook | Reactive `window.matchMedia` |
 | `usePageTitle` | hook | Sets `document.title` to `"AppName \| Page"` while mounted |
 | `usePaginationFocus` | hook | Re-focuses a heading when the page index changes inside a modal or sheet |
@@ -310,7 +311,50 @@ so it acts as a transparent pass-through in a flex-column layout:
 
 ---
 
-### Rule 7 — Escape key: every dismissible layer handles its own
+### Rule 7 — Portaled overlays must also `aria-hide` background content
+
+**When:** A modal or bottom sheet renders via `createPortal` to `document.body`.
+
+**Why `inert` alone is not sufficient for portaled overlays:** The `inert` attribute on `.app-background` (Rule 6) hides the app content container from AT. However, portaled panels appear as direct siblings of `#root` at the `document.body` level, outside the app container hierarchy. Screen readers that traverse the body directly — VoiceOver in some reading modes, certain NVDA cursor behaviours — may still navigate into `#root` even while the portaled overlay is open. Setting `aria-hidden="true"` on `#root` (and any other body siblings) closes that gap.
+
+**Do:** Call `useAriaHide(panelRef, open)` inside any portaled overlay component. The hook hides all `document.body` children except the one containing the panel, then restores them on close.
+
+```jsx
+import { useFocusTrap, useAriaHide } from './plugins/router/index.js'
+
+function MyModal({ open, onClose, children }) {
+  const panelRef = useRef(null)
+  useFocusTrap(panelRef, open)
+  useAriaHide(panelRef, open)   // ← adds this
+
+  return createPortal(
+    <div ref={panelRef} role="dialog" aria-modal="true" aria-label="…">
+      {children}
+    </div>,
+    document.body
+  )
+}
+```
+
+`Modal` and `BottomSheet` both call `useAriaHide` internally — you do not need to add it again when using those components.
+
+**Stacking behaviour:** If two overlays are open simultaneously, the hook only removes `aria-hidden` from elements *it personally added the marker to*. An element already hidden by an earlier overlay will not be prematurely restored when the inner overlay closes.
+
+**Non-portaled overlays (Drawer):** The Drawer renders inside `#root`, so `el.contains(panel)` always returns `true` for `#root` — the hook has nothing to hide. For non-portaled overlays, set `aria-hidden` directly on the background content wrapper alongside `inert`:
+
+```jsx
+<div
+  className="app-background"
+  inert={backgroundInert ? '' : undefined}
+  aria-hidden={backgroundInert ? true : undefined}
+>
+  ...
+</div>
+```
+
+---
+
+### Rule 8 — Escape key: every dismissible layer handles its own
 
 **When:** A modal, drawer, or bottom sheet is open.
 

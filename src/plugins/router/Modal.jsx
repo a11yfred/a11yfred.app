@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useFocusTrap } from './useFocusTrap.js'
+import { useAriaHide } from './useAriaHide.js'
 
 /**
  * Centered dialog modal.
@@ -26,6 +27,7 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
   const headingRef = useRef(null)
 
   useFocusTrap(panelRef, open)
+  useAriaHide(panelRef, open)
 
   // Save trigger on open; focus the heading (tabIndex -1) so screen readers announce the dialog.
   // Scroll into view as a fallback in case the panel somehow sits outside the viewport.
