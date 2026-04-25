@@ -1,8 +1,8 @@
 {
   "ATH-001": {
     "title": "Schaltfläche oder Link ohne zugänglichen Namen",
-    "desc": "Eine Schaltfläche oder ein Link hat keinen zugänglichen Namen. Screenreader kündigen es als „Schaltfläche" oder „Link" ohne Kontext an, sodass Nutzende nicht erkennen können, was es tut.",
-    "rem": "Fügen Sie ein sichtbares Label oder ein aria-label-Attribut hinzu, das beschreibt, was das Steuerelement tut. Zum Beispiel sollte eine Schließen-Schaltfläche in einem Modal „Schließen" oder „Dialog schließen" sagen und nicht nur ein X-Symbol anzeigen."
+    "desc": "Eine Schaltfläche oder ein Link hat keinen zugänglichen Namen. Screenreader kündigen es als „Schaltfläche“ oder „Link“ ohne Kontext an, sodass Nutzende nicht erkennen können, was es tut.",
+    "rem": "Fügen Sie ein sichtbares Label oder ein aria-label-Attribut hinzu, das beschreibt, was das Steuerelement tut. Zum Beispiel sollte eine Schließen-Schaltfläche in einem Modal „Schließen“ oder „Dialog schließen“ sagen und nicht nur ein X-Symbol anzeigen."
   },
   "ATH-002": {
     "title": "Fokus wird nicht verschoben, wenn neuer Inhalt geöffnet wird",
@@ -36,13 +36,13 @@
   },
   "ATH-010": {
     "title": "Steuerelement-Label beschreibt Aussehen, nicht den Zweck",
-    "desc": "Der zugängliche Name eines Steuerelements beschreibt, wie es aussieht, und nicht, was es tut. Zum Beispiel sollte eine Schaltfläche mit der Bezeichnung „Lupen-Symbol" stattdessen „Suche" sagen.",
-    "rem": "Schreiben Sie Labels, die die Aktion oder das Ziel des Steuerelements beschreiben, nicht sein visuelles Erscheinungsbild. Ändern Sie Labels wie „Pfeil-Symbol" in „Nächste Seite" oder „Such-Symbol" in „Suche"."
+    "desc": "Der zugängliche Name eines Steuerelements beschreibt, wie es aussieht, und nicht, was es tut. Zum Beispiel sollte eine Schaltfläche mit der Bezeichnung „Lupen-Symbol“ stattdessen „Suche“ sagen.",
+    "rem": "Schreiben Sie Labels, die die Aktion oder das Ziel des Steuerelements beschreiben, nicht sein visuelles Erscheinungsbild. Ändern Sie Labels wie „Pfeil-Symbol“ in „Nächste Seite“ oder „Such-Symbol“ in „Suche“."
   },
   "ATH-011": {
     "title": "Kein Skip-Link vorhanden",
     "desc": "Es gibt keinen Skip-Link oben auf der Seite. Tastaturnutzende müssen auf jeder Seite durch alle Navigationslinks tabben, bevor sie den Hauptinhalt erreichen.",
-    "rem": "Fügen Sie einen „Zum Hauptinhalt springen"-Link als erstes fokussierbares Element auf der Seite hinzu. Machen Sie ihn beim Fokussieren sichtbar und lassen Sie ihn den Fokus auf den Beginn des Hauptinhaltsbereichs verschieben."
+    "rem": "Fügen Sie einen „Zum Hauptinhalt springen“-Link als erstes fokussierbares Element auf der Seite hinzu. Machen Sie ihn beim Fokussieren sichtbar und lassen Sie ihn den Fokus auf den Beginn des Hauptinhaltsbereichs verschieben."
   },
   "ATH-012": {
     "title": "Skip-Link nicht sichtbar wenn fokussiert",
@@ -62,7 +62,7 @@
   "ATH-016": {
     "title": "Sternchen für Pflichtfelder nicht erklärt",
     "desc": "Das Formular verwendet Sternchen (*), um Pflichtfelder zu kennzeichnen, aber die Bedeutung des Sternchens wird nie erklärt. Einige Nutzende wissen möglicherweise nicht, was es bedeutet.",
-    "rem": "Fügen Sie oben im Formular einen Hinweis hinzu, der das Sternchen erklärt, z. B. „Felder mit * sind Pflichtfelder." Markieren Sie Pflichtfelder auch programmgesteuert mit dem Attribut required oder aria-required."
+    "rem": "Fügen Sie oben im Formular einen Hinweis hinzu, der das Sternchen erklärt, z. B. „Felder mit * sind Pflichtfelder.“ Markieren Sie Pflichtfelder auch programmgesteuert mit dem Attribut required oder aria-required."
   },
   "ATH-017": {
     "title": "Formularfehler nicht mit ihren Feldern verknüpft",
@@ -121,7 +121,7 @@
   },
   "ATH-030": {
     "title": "Wiederholte Links zum selben Ziel",
-    "desc": "Ein Inhaltsblock hat mehrere separate Links oder Schaltflächen, die alle zum gleichen Ziel führen – zum Beispiel eine Karte mit einem verknüpften Bild, einem verknüpften Titel und einer „Mehr lesen"-Schaltfläche. Tastaturnutzende müssen durch alle tabben, und Screenreader-Nutzende hören wiederholte Ankündigungen.",
+    "desc": "Ein Inhaltsblock hat mehrere separate Links oder Schaltflächen, die alle zum gleichen Ziel führen – zum Beispiel eine Karte mit einem verknüpften Bild, einem verknüpften Titel und einer „Mehr lesen“-Schaltfläche. Tastaturnutzende müssen durch alle tabben, und Screenreader-Nutzende hören wiederholte Ankündigungen.",
     "rem": "Kombinieren Sie sie zu einem einzigen Link. Markieren Sie das Bild als dekorativ (alt=\"\") und verwenden Sie den Text als Link-Label. Oder umschließen Sie die gesamte Karte mit einem Link-Element."
   },
   "ATH-031": {
@@ -152,7 +152,7 @@
   "ATH-037": {
     "title": "Seitentitel ändert sich nicht zwischen Seiten",
     "desc": "Der Seitentitel (im Browser-Tab angezeigt) bleibt auf allen Seiten gleich. Nutzende können nicht am Tab allein erkennen, auf welcher Seite sie sich befinden.",
-    "rem": "Aktualisieren Sie den Dokumenttitel auf jeder Seite, um zu beschreiben, worum es auf dieser Seite geht. Zum Beispiel: „Warenkorb – Mein Shop" oder „Einstellungen – App-Name". Aktualisieren Sie in einer Single-Page-App den Titel bei jedem Routenwechsel."
+    "rem": "Aktualisieren Sie den Dokumenttitel auf jeder Seite, um zu beschreiben, worum es auf dieser Seite geht. Zum Beispiel: „Warenkorb – Mein Shop“ oder „Einstellungen – App-Name“. Aktualisieren Sie in einer Single-Page-App den Titel bei jedem Routenwechsel."
   },
   "ATH-038": {
     "title": "Tastaturfalle",
@@ -182,12 +182,12 @@
   "ATH-045": {
     "title": "Informativer Inhalt vor Screenreadern verborgen",
     "desc": "Inhalte mit Bedeutung (wie eine Sternbewertung oder ein Status-Symbol) werden vor Screenreadern durch aria-hidden verborgen. Screenreader-Nutzende können nicht auf diese Informationen zugreifen.",
-    "rem": "Entfernen Sie aria-hidden von Inhalten mit Bedeutung. Fügen Sie einen zugänglichen Namen oder ergänzenden Text hinzu, der dieselbe Information vermittelt. Zum Beispiel: Statt eine Sternbewertung zu verbergen, fügen Sie verborgenen Text wie „Bewertung: 4 von 5 Sternen" hinzu."
+    "rem": "Entfernen Sie aria-hidden von Inhalten mit Bedeutung. Fügen Sie einen zugänglichen Namen oder ergänzenden Text hinzu, der dieselbe Information vermittelt. Zum Beispiel: Statt eine Sternbewertung zu verbergen, fügen Sie verborgenen Text wie „Bewertung: 4 von 5 Sternen“ hinzu."
   },
   "ATH-046": {
     "title": "Keine Warnung vor dem Öffnen eines neuen Fensters",
     "desc": "Ein Link oder eine Schaltfläche öffnet ein neues Browserfenster oder einen neuen Tab ohne Vorwarnung. Dies ist desorientierend, besonders für Screenreader-Nutzende, die möglicherweise nicht bemerken, dass sich der Kontext geändert hat.",
-    "rem": "Fügen Sie eine Warnung im Linktext oder zugänglichen Namen hinzu. Zum Beispiel: „Jahresbericht (öffnet sich in einem neuen Tab)". Sie können auch ein Symbol mit Alt-Text hinzufügen, um anzuzeigen, dass ein neues Fenster geöffnet wird."
+    "rem": "Fügen Sie eine Warnung im Linktext oder zugänglichen Namen hinzu. Zum Beispiel: „Jahresbericht (öffnet sich in einem neuen Tab)“. Sie können auch ein Symbol mit Alt-Text hinzufügen, um anzuzeigen, dass ein neues Fenster geöffnet wird."
   },
   "ATH-047": {
     "title": "Fokuserhalt verursacht unerwartete Änderung",
@@ -197,11 +197,11 @@
   "ATH-048": {
     "title": "Ändern einer Eingabe verursacht unerwartete Änderung",
     "desc": "Das Auswählen einer Option in einem Dropdown oder das Ändern eines Formularwerts führt automatisch dazu, dass die Seite neu geladen oder navigiert wird. Nutzende, die per Tastatur durch eine Liste von Optionen gehen, können eine unbeabsichtigte Änderung auslösen.",
-    "rem": "Lösen Sie keine seitenweiten Änderungen aus, wenn Nutzende einen Formularwert ändern. Warten Sie stattdessen auf eine bewusste Sendeaktion – wie das Drücken einer „Los"-Schaltfläche – bevor Sie auf die Auswahl reagieren."
+    "rem": "Lösen Sie keine seitenweiten Änderungen aus, wenn Nutzende einen Formularwert ändern. Warten Sie stattdessen auf eine bewusste Sendeaktion – wie das Drücken einer „Los“-Schaltfläche – bevor Sie auf die Auswahl reagieren."
   },
   "ATH-050": {
     "title": "Inhalt von Screenreadern falsch angekündigt",
-    "desc": "Inhalte sind so formatiert, dass Screenreader sie falsch lesen. Zum Beispiel kann ein Preis von „1.200 €" je nach Markup als unverständlicher Text vorgelesen werden.",
+    "desc": "Inhalte sind so formatiert, dass Screenreader sie falsch lesen. Zum Beispiel kann ein Preis von „1.200 €“ je nach Markup als unverständlicher Text vorgelesen werden.",
     "rem": "Überprüfen Sie, wie der Inhalt im HTML strukturiert ist, und testen Sie mit einem Screenreader. Korrigieren Sie das Markup oder die Formatierung, damit der angekündigte Text die beabsichtigte Bedeutung korrekt vermittelt."
   },
   "ATH-051": {
@@ -226,8 +226,8 @@
   },
   "ATH-055": {
     "title": "Vager oder generischer Linktext",
-    "desc": "Links verwenden generischen Text wie „Hier klicken", „Mehr erfahren" oder „Weiterlesen". Screenreader-Nutzende, die per Links navigieren, können nicht erkennen, wohin jeder Link führt.",
-    "rem": "Schreiben Sie Linktext, der das Ziel oder die Aktion beschreibt. Statt „Hier klicken" verwenden Sie „Barrierefreiheitscheckliste herunterladen" oder „Die vollständige Erklärung zu WCAG 1.1.1 lesen"."
+    "desc": "Links verwenden generischen Text wie „Hier klicken“, „Mehr erfahren“ oder „Weiterlesen“. Screenreader-Nutzende, die per Links navigieren, können nicht erkennen, wohin jeder Link führt.",
+    "rem": "Schreiben Sie Linktext, der das Ziel oder die Aktion beschreibt. Statt „Hier klicken“ verwenden Sie „Barrierefreiheitscheckliste herunterladen“ oder „Die vollständige Erklärung zu WCAG 1.1.1 lesen“."
   },
   "ATH-056": {
     "title": "Audio oder Video ohne Transkript oder Untertitel",
@@ -237,7 +237,7 @@
   "ATH-057": {
     "title": "Formulargruppe ohne Gruppenlabel",
     "desc": "Eine Gruppe zusammengehöriger Formularelemente (wie Optionsfelder oder Kontrollkästchen) hat kein Gruppenlabel. Screenreader-Nutzende hören jede Option, ohne zu verstehen, welche Frage sie beantwortet.",
-    "rem": "Umschließen Sie die Gruppe mit einem fieldset-Element und fügen Sie eine legend als erstes Kindelement hinzu. Der Legendentext sollte die Frage oder Kategorie sein, zu der die Gruppe gehört. Zum Beispiel: „Wählen Sie Ihre bevorzugte Kontaktmethode"."
+    "rem": "Umschließen Sie die Gruppe mit einem fieldset-Element und fügen Sie eine legend als erstes Kindelement hinzu. Der Legendentext sollte die Frage oder Kategorie sein, zu der die Gruppe gehört. Zum Beispiel: „Wählen Sie Ihre bevorzugte Kontaktmethode“."
   },
   "ATH-058": {
     "title": "Listeninhalte ohne Listen-Markup",
@@ -256,8 +256,8 @@
   },
   "ATH-061": {
     "title": "Fehlermeldung erklärt nicht, wie das Problem behoben werden kann",
-    "desc": "Ein Formular zeigt beim Absenden einen Fehler, aber die Meldung sagt nicht, wie er behoben werden kann. Sie sagt zum Beispiel „Ungültige Eingabe", ohne das erwartete Format zu erklären.",
-    "rem": "Schreiben Sie spezifische, handlungsorientierte Fehlermeldungen. Sagen Sie den Nutzenden genau, was falsch gelaufen ist und wie sie es korrigieren können. Zum Beispiel: „Telefonnummer muss 10 Ziffern, nur Zahlen, enthalten" statt „Ungültige Telefonnummer"."
+    "desc": "Ein Formular zeigt beim Absenden einen Fehler, aber die Meldung sagt nicht, wie er behoben werden kann. Sie sagt zum Beispiel „Ungültige Eingabe“, ohne das erwartete Format zu erklären.",
+    "rem": "Schreiben Sie spezifische, handlungsorientierte Fehlermeldungen. Sagen Sie den Nutzenden genau, was falsch gelaufen ist und wie sie es korrigieren können. Zum Beispiel: „Telefonnummer muss 10 Ziffern, nur Zahlen, enthalten“ statt „Ungültige Telefonnummer“."
   },
   "ATH-062": {
     "title": "Video ohne Untertitel",
