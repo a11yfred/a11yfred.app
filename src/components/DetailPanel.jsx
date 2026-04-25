@@ -1,10 +1,17 @@
 import { useState, useRef, useEffect } from 'react'
+import { Sparkles } from 'lucide-react'
 import { getAiRefinement } from '../services/aiService.js'
-import { useFocusOnMount, useMediaQuery } from '../plugins/router/index.js'
+import { useFocusOnMount, useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 
-// Derives the WAI WCAG 2.2 Understanding URL from a scLabel string
-// e.g. "1.1.1 Non-text Content (Level A)" → ".../non-text-content.html"
+const PRIORITY_VARS = {
+  Critical:        { color: 'var(--priority-critical-text)', bg: 'var(--priority-critical-bg)' },
+  High:            { color: 'var(--priority-high-text)',     bg: 'var(--priority-high-bg)'     },
+  Medium:          { color: 'var(--priority-medium-text)',   bg: 'var(--priority-medium-bg)'   },
+  Low:             { color: 'var(--priority-low-text)',      bg: 'var(--priority-low-bg)'      },
+  'Best Practice': { color: 'var(--text-muted)',             bg: 'var(--bg-subtle)'            },
+}
+
 function scToWaiUrl(scLabel) {
   const match = scLabel?.match(/^\d+\.\d+\.\d+\s+(.+?)\s+\(Level/)
   if (!match) return null
@@ -16,11 +23,30 @@ function scToWaiUrl(scLabel) {
   return `https://www.w3.org/WAI/WCAG22/Understanding/${slug}.html`
 }
 
-export default function DetailPanel({ defect, aiEnabled }) {
-  // Move focus to the defect title when a result is selected so keyboard
-  // and screen reader users don't have to navigate down manually.
+// Levenshtein edit distance for the reset-confirmation threshold check
+function editDistance(a, b) {
+  const m = a.length, n = b.length
+  const dp = Array.from({ length: m + 1 }, (_, i) => [i])
+  for (let j = 1; j <= n; j++) dp[0][j] = j
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i - 1] === b[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+    }
+  }
+  return dp[m][n]
+}
+
+function isSignificantlyChanged(original, current, threshold = 0.7) {
+  if (!original || original === current) return false
+  return editDistance(original, current) / original.length > threshold
+}
+
+export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
   const titleRef = useFocusOnMount()
   const isDesktop = useMediaQuery('(width >= 768px)')
+  const { navigate } = useRouter()
 
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(defect.desc)
@@ -31,9 +57,12 @@ export default function DetailPanel({ defect, aiEnabled }) {
   const [resetDesc, setResetDesc] = useState(false)
   const [resetRem, setResetRem] = useState(false)
   const [refining, setRefining] = useState(false)
+  const [confirmReset, setConfirmReset] = useState(null)
 
-  // State resets automatically when defect changes because App.jsx
-  // passes key={defect.id}, which remounts this component.
+  // Refocus the panel title when returning from settings (focusTrigger increments)
+  useEffect(() => {
+    if (focusTrigger > 0) titleRef.current?.focus()
+  }, [focusTrigger]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const displayDesc = location.trim()
     ? `${location.trim().replace(/:?\s*$/, ':')} ${defect.desc}`
@@ -45,6 +74,22 @@ export default function DetailPanel({ defect, aiEnabled }) {
       announce(`${label}: Copied to clipboard`)
       setTimeout(() => setCopied(false), 2000)
     })
+  }
+
+  // DRY reset handler — checks significance and either resets immediately or
+  // opens the confirmation modal when the user has made substantial edits.
+  const handleReset = (original, current, setText, setFlag, label) => {
+    const doReset = () => {
+      setText(original)
+      announce(`${label}: Reset to original`)
+      setFlag(true)
+      setTimeout(() => setFlag(false), 2000)
+    }
+    if (isSignificantlyChanged(original, current)) {
+      setConfirmReset({ doReset })
+    } else {
+      doReset()
+    }
   }
 
   const handleRefine = async () => {
@@ -62,16 +107,37 @@ export default function DetailPanel({ defect, aiEnabled }) {
     }
   }
 
+  const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
+
   return (
     <div className="detail-panel">
       <div className="detail-header">
-        <h2 ref={titleRef} tabIndex={-1} className="detail-title">
-          {defect.title}
-        </h2>
-        <div className="badge-group">
-          <ScBadge label={defect.scLabel} primary />
-          {defect.related.map(r => <ScBadge key={r} label={r} />)}
+        <div className="detail-title-row">
+          <h2 ref={titleRef} tabIndex={-1} className="detail-title">
+            {defect.title}
+          </h2>
+          <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
+            {defect.priority}
+          </span>
         </div>
+
+        <ul className="detail-sc-list">
+          <li className="detail-sc-item">
+            <span className="detail-sc-label">Fails:</span>{' '}
+            <ScLink label={defect.scLabel} />
+          </li>
+          {defect.related.length > 0 && (
+            <li className="detail-sc-item">
+              <span className="detail-sc-label">Related:</span>{' '}
+              {defect.related.map((r, i) => (
+                <span key={r}>
+                  {i > 0 && ', '}
+                  <ScLink label={r} />
+                </span>
+              ))}
+            </li>
+          )}
+        </ul>
       </div>
 
       <div className="detail-field-row">
@@ -96,7 +162,7 @@ export default function DetailPanel({ defect, aiEnabled }) {
         copied={copiedDesc}
         onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, 'Defect description')}
         reset={resetDesc}
-        onReset={() => { setDescText(defect.desc); announce('Defect description: Reset to original'); setResetDesc(true); setTimeout(() => setResetDesc(false), 2000) }}
+        onReset={() => handleReset(defect.desc, descText, setDescText, setResetDesc, 'Defect description')}
         isDesktop={isDesktop}
       />
 
@@ -108,19 +174,26 @@ export default function DetailPanel({ defect, aiEnabled }) {
         copied={copiedRem}
         onCopy={() => copy(remText, setCopiedRem, 'Possible remediation steps')}
         reset={resetRem}
-        onReset={() => { setRemText(defect.rem); announce('Possible remediation steps: Reset to original'); setResetRem(true); setTimeout(() => setResetRem(false), 2000) }}
+        onReset={() => handleReset(defect.rem, remText, setRemText, setResetRem, 'Possible remediation steps')}
         isDesktop={isDesktop}
       />
 
       <div className="detail-refine">
-        <label htmlFor="refine-note" className="detail-label">
-          Refine
-          <span className="detail-label-hint">
-            {aiEnabled
-              ? 'describe what to change — AI will rewrite'
-              : 'edit the fields above directly, or note changes here'}
-          </span>
-        </label>
+        <label htmlFor="refine-note" className="detail-label">Refine</label>
+        <p className="detail-refine-hint">
+          {aiEnabled
+            ? <>Describe what to change and AI will rewrite and incorporate your updates. Change your AI model in{' '}
+                <button type="button" className="detail-settings-link" onClick={() => navigate('/settings')}>
+                  Settings
+                </button>.
+              </>
+            : <>Edit the fields above directly, or note changes here. Enable AI in{' '}
+                <button type="button" className="detail-settings-link" onClick={() => navigate('/settings')}>
+                  Settings
+                </button>{' '}
+                and it will rewrite based on your notes.
+              </>}
+        </p>
         <div className="detail-refine-row">
           <input
             id="refine-note"
@@ -135,13 +208,36 @@ export default function DetailPanel({ defect, aiEnabled }) {
             <button
               onClick={handleRefine}
               disabled={refining || !refineNote.trim()}
-              className="btn-accent detail-rewrite-btn"
+              className="btn-accent field-btn detail-rewrite-btn"
+              aria-label={refining ? 'Rewriting with AI' : 'Rewrite with AI'}
             >
-              {refining ? 'Rewriting…' : 'Rewrite ↗'}
+              {refining
+                ? 'Rewriting…'
+                : <><Sparkles size={12} aria-hidden="true" strokeWidth={2} />{' '}Rewrite</>}
             </button>
           )}
         </div>
       </div>
+
+      <Modal
+        open={!!confirmReset}
+        onClose={() => setConfirmReset(null)}
+        heading="Are you sure?"
+        actions={[
+          {
+            label: 'Yes, reset',
+            onClick: () => { confirmReset?.doReset(); setConfirmReset(null) },
+            className: 'btn-accent modal-ok-btn',
+          },
+          {
+            label: 'No, nevermind',
+            onClick: () => setConfirmReset(null),
+            className: 'btn-ghost modal-ok-btn',
+          },
+        ]}
+      >
+        <p>{"You've made significant changes to this text. Resetting will remove all of your edits."}</p>
+      </Modal>
     </div>
   )
 }
@@ -195,15 +291,14 @@ function Field({ id, label, value, onChange, copied, onCopy, reset, onReset, isD
   )
 }
 
-function ScBadge({ label, primary }) {
+function ScLink({ label }) {
   const href = scToWaiUrl(label)
-  const cls = `sc-badge${primary ? ' sc-badge--primary' : ''}`
   if (href) {
     return (
-      <a href={href} target="_blank" rel="noreferrer" className={cls}>
+      <a href={href} target="_blank" rel="noreferrer" className="detail-sc-link">
         {label}
       </a>
     )
   }
-  return <span className={cls}>{label}</span>
+  return <span>{label}</span>
 }

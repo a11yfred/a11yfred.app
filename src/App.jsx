@@ -15,6 +15,14 @@ import { Announcer } from './plugins/announce/index.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 
+// Provider display names for the search hint
+const PROVIDER_NAMES = {
+  anthropic: 'Claude',
+  openai: 'GPT',
+  google: 'Gemini',
+  microsoft: 'Copilot',
+}
+
 export default function App() {
   return (
     <Router appName="A11yTextHelper">
@@ -49,20 +57,56 @@ function KofiWidget() {
 
 function patchKofiA11y() {
   let triggerButton = null
+  let cleanupFocusTrap = null
+
+  function trapFocus(element) {
+    const sel = [
+      'a[href]', 'button:not([disabled])', 'input:not([disabled])',
+      'select:not([disabled])', 'textarea:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(',')
+    const handler = (e) => {
+      if (e.key !== 'Tab') return
+      const focusable = [...element.querySelectorAll(sel)]
+        .filter(el => el.offsetParent !== null)
+      if (!focusable.length) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus() }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus() }
+      }
+    }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }
 
   const observer = new MutationObserver(() => {
-    // Patch the floating trigger button with a meaningful label
     if (!triggerButton) {
       triggerButton = document.querySelector('.floatingchat-container-wrap button, [class*="kofi"] button')
+      if (!triggerButton) {
+        triggerButton = document.querySelector('.floatingchat-container-wrap [class*="trigger"], .floatingchat-container-wrap [class*="chat"]')
+      }
       if (triggerButton && !triggerButton.dataset.a11yPatched) {
         triggerButton.dataset.a11yPatched = 'true'
         if (!triggerButton.getAttribute('aria-label')) {
           triggerButton.setAttribute('aria-label', 'Support Mikey on Ko-fi (opens panel)')
         }
+        const tag = triggerButton.tagName.toLowerCase()
+        const isNativeButton = tag === 'button' || tag === 'a'
+        if (!isNativeButton) {
+          triggerButton.setAttribute('tabindex', '0')
+          if (!triggerButton.getAttribute('role')) triggerButton.setAttribute('role', 'button')
+          triggerButton.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerButton.click() }
+          })
+        } else if (triggerButton.getAttribute('tabindex') === '-1') {
+          triggerButton.setAttribute('tabindex', '0')
+        }
       }
     }
 
-    // Patch the popup overlay/dialog container
     const overlay = document.querySelector(
       '.kofi-overlay-widget-overlay, [id*="kofi"][class*="overlay"], [class*="kofi"][class*="iframe"]'
     )
@@ -71,17 +115,62 @@ function patchKofiA11y() {
       overlay.setAttribute('role', 'dialog')
       overlay.setAttribute('aria-modal', 'true')
       overlay.setAttribute('aria-label', 'Support on Ko-fi')
+      cleanupFocusTrap = trapFocus(overlay)
     }
 
-    // Give any Ko-fi iframes a title so screen readers announce them
+    if (!overlay && cleanupFocusTrap) {
+      cleanupFocusTrap()
+      cleanupFocusTrap = null
+    }
+
     document.querySelectorAll('iframe[src*="ko-fi.com"]:not([title])').forEach(iframe => {
       iframe.setAttribute('title', 'Ko-fi donation widget')
     })
+
+    document.querySelectorAll('i[rel="tooltip"]:not([data-a11y-patched])').forEach(tip => {
+      tip.dataset.a11yPatched = 'true'
+      tip.setAttribute('tabindex', '0')
+      if (!tip.getAttribute('role')) tip.setAttribute('role', 'button')
+      if (!tip.getAttribute('aria-label')) tip.setAttribute('aria-label', 'More information')
+      tip.addEventListener('focus', () => tip.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true })))
+      tip.addEventListener('blur', () => tip.dispatchEvent(new MouseEvent('mouseleave', { bubbles: true })))
+      tip.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tip.click() }
+      })
+    })
+
+    document.querySelectorAll(
+      '.kofi-overlay-widget-overlay input[placeholder]:not([data-a11y-label-patched]),' +
+      '.kofi-overlay-widget-overlay textarea[placeholder]:not([data-a11y-label-patched])'
+    ).forEach(input => {
+      input.dataset.a11yLabelPatched = 'true'
+      const placeholder = input.getAttribute('placeholder')
+      if (!placeholder) return
+      if (!input.id) input.id = `kofi-input-${Math.random().toString(36).slice(2, 8)}`
+      const lbl = document.createElement('label')
+      lbl.setAttribute('for', input.id)
+      lbl.textContent = placeholder
+      lbl.style.cssText = 'display:block;font-size:0.85em;font-weight:500;margin-bottom:4px;'
+      input.parentNode.insertBefore(lbl, input)
+    })
+
+    if (!document.getElementById('kofi-a11y-styles')) {
+      const style = document.createElement('style')
+      style.id = 'kofi-a11y-styles'
+      style.textContent = [
+        '.floatingchat-container-wrap { color: #1a1a1a !important; }',
+        '.floatingchat-container-wrap * { color: inherit; }',
+        '.floatingchat-container-wrap a { color: #1a1a1a !important; }',
+        '.kofi-overlay-widget-overlay { color: #1a1a1a !important; }',
+        '.kofi-overlay-widget-overlay p, .kofi-overlay-widget-overlay span,',
+        '.kofi-overlay-widget-overlay label, .kofi-overlay-widget-overlay a { color: #1a1a1a !important; }',
+      ].join('\n')
+      document.head.appendChild(style)
+    }
   })
 
   observer.observe(document.body, { childList: true, subtree: true })
 
-  // Escape key: close Ko-fi popup if open
   const handleEsc = (e) => {
     if (e.key !== 'Escape') return
     const closeBtn = document.querySelector(
@@ -96,7 +185,9 @@ function patchKofiA11y() {
 
   return () => {
     observer.disconnect()
+    cleanupFocusTrap?.()
     document.removeEventListener('keydown', handleEsc)
+    document.getElementById('kofi-a11y-styles')?.remove()
   }
 }
 
@@ -106,17 +197,33 @@ function AppShell() {
   const settingsOpen = route === '/settings'
   const h1Ref = useRef(null)
   const didMount = useRef(false)
+  // Tracks whether settings was opened while a defect panel was selected,
+  // so the panel is restored (with edits) when settings closes.
+  const returnToPanelRef = useRef(false)
 
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'auto')
+  const [language, setLanguage] = useState(() => {
+    const saved = localStorage.getItem('language')
+    if (saved) return saved
+    // Default to the browser/OS language, falling back to English
+    return navigator.language?.split('-')[0] || 'en'
+  })
   const [aiEnabled, setAiEnabled] = useState(false)
-  const [typeahead, setTypeahead] = useState(() => localStorage.getItem('typeahead') !== 'false')
+  const [liveSearch, setLiveSearch] = useState(() => localStorage.getItem('liveSearch') !== 'false')
   const [query, setQuery] = useState('')
   const [submittedQuery, setSubmittedQuery] = useState('')
+  const [searchKey, setSearchKey] = useState(0)
   const [selected, setSelected] = useState(null)
   const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
+  const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
 
-  const activeQuery = typeahead ? query : submittedQuery
-  const results = useDefectSearch(activeQuery, platform)
+  const activeQuery = liveSearch ? query : submittedQuery
+  const results = useDefectSearch(activeQuery, platform, searchKey)
+
+  // Background is inert when an overlay panel is active.
+  // When selected AND settings is open (mobile), the background is inert due
+  // to the settings drawer — exclude the panel from triggering it separately.
+  const backgroundInert = (!isDesktop && settingsOpen) || (!!selected && !settingsOpen)
 
   useEffect(() => {
     const apply = () => {
@@ -134,44 +241,73 @@ function AppShell() {
     }
   }, [theme])
 
-  useEffect(() => { localStorage.setItem('typeahead', typeahead) }, [typeahead])
+  useEffect(() => {
+    document.documentElement.lang = language
+    localStorage.setItem('language', language)
+  }, [language])
+
+  useEffect(() => { localStorage.setItem('liveSearch', liveSearch) }, [liveSearch])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
 
-
   // WCAG 2.4.3: focus h1 when returning from settings on desktop (page swap).
-  // Mobile focus return is handled by Drawer. Skip on initial mount.
+  // On mobile or when returning to a defect panel, restore panel focus instead.
   useEffect(() => {
     if (!didMount.current) { didMount.current = true; return }
-    if (!settingsOpen && isDesktop) h1Ref.current?.focus()
+    if (!settingsOpen) {
+      if (returnToPanelRef.current) {
+        setPanelFocusTrigger(t => t + 1)
+        returnToPanelRef.current = false
+      } else if (isDesktop) {
+        h1Ref.current?.focus()
+      }
+    }
   }, [settingsOpen, isDesktop])
 
   const handleQueryChange = (q) => {
     setQuery(q)
     if (q === '') {
       setSelected(null)
+      returnToPanelRef.current = false
       setSubmittedQuery('')
     }
+  }
+
+  const handleOpenSettings = () => {
+    // Track whether a panel was open when settings launched so we can restore it
+    returnToPanelRef.current = !!selected
+    navigate('/settings')
+    // Do NOT clear selected here — keepMounted preserves the panel state
   }
 
   const settingsProps = {
     aiEnabled,
     onToggleAi: () => setAiEnabled(a => !a),
-    typeahead,
-    onToggleTypeahead: () => setTypeahead(t => !t),
+    liveSearch,
+    onToggleLiveSearch: () => setLiveSearch(s => !s),
     theme,
     onThemeChange: setTheme,
+    language,
+    onLanguageChange: setLanguage,
     platform,
     onPlatformChange: setPlatform,
     onClose: () => navigate('/'),
   }
+
+  // Provider name for the search hint (read from localStorage; updates on next render after save)
+  const providerName = aiEnabled
+    ? (PROVIDER_NAMES[localStorage.getItem('ai_provider')] || 'AI')
+    : null
 
   const searchView = (
     <>
       <SearchBar
         query={query}
         onChange={handleQueryChange}
-        onSearch={() => { setSubmittedQuery(query); setSelected(null) }}
-        typeahead={typeahead}
+        onSearch={() => { setSubmittedQuery(query); setSearchKey(k => k + 1); setSelected(null) }}
+        liveSearch={liveSearch}
+        platform={platform}
+        aiEnabled={aiEnabled}
+        providerName={providerName}
       />
       {activeQuery.length >= 2 && (
         <ResultList
@@ -187,34 +323,36 @@ function AppShell() {
   return (
     <div className="app-container">
       <Announcer />
-      <Header
-        h1Ref={h1Ref}
-        settingsOpen={settingsOpen}
-        onOpenSettings={() => { navigate('/settings'); setSelected(null) }}
-        onCloseSettings={() => navigate('/')}
-        isDesktop={isDesktop}
-      />
 
-      {isDesktop ? (
+      {/* eslint-disable-next-line react/no-unknown-property */}
+      <div className="app-background" inert={backgroundInert ? '' : undefined}>
+        <Header
+          h1Ref={h1Ref}
+          settingsOpen={settingsOpen}
+          onOpenSettings={handleOpenSettings}
+          onCloseSettings={() => navigate('/')}
+          isDesktop={isDesktop}
+        />
         <main className="app-main">
           <Suspense fallback={null}>
-            {settingsOpen ? <SettingsPanel {...settingsProps} /> : searchView}
+            {isDesktop && settingsOpen ? <SettingsPanel {...settingsProps} /> : searchView}
           </Suspense>
         </main>
-      ) : (
-        <>
-          <main className="app-main">{searchView}</main>
-          <Drawer open={settingsOpen} onClose={() => navigate('/')} label="Settings">
-            <Suspense fallback={null}>
-              <SettingsPanel {...settingsProps} />
-            </Suspense>
-          </Drawer>
-        </>
+        <Footer />
+      </div>
+
+      {!isDesktop && (
+        <Drawer open={settingsOpen} onClose={() => navigate('/')} label="Settings">
+          <Suspense fallback={null}>
+            <SettingsPanel {...settingsProps} />
+          </Suspense>
+        </Drawer>
       )}
 
       <BottomSheet
-        open={!!selected}
-        onClose={() => setSelected(null)}
+        open={!!selected && !settingsOpen}
+        onClose={() => { setSelected(null); returnToPanelRef.current = false }}
+        keepMounted={settingsOpen && !!selected}
         label={selected ? `${selected.title} — defect detail` : 'Defect detail'}
       >
         {selected && (
@@ -222,11 +360,10 @@ function AppShell() {
             key={selected.id}
             defect={selected}
             aiEnabled={aiEnabled}
+            focusTrigger={panelFocusTrigger}
           />
         )}
       </BottomSheet>
-
-      <Footer />
     </div>
   )
 }
@@ -287,7 +424,7 @@ function Footer() {
   return (
     <footer className="page-footer">
       <p className="footer-credit">
-        Made by <strong>Mikey Ilagan</strong>
+        A project by <strong>Mikey Ilagan</strong>
         {' · '}
         <a
           href="https://bsky.app/profile/mikeyil.bsky.social"
