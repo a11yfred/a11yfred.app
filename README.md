@@ -170,7 +170,7 @@ Mikey's private corpus (`mikeys-corpus.json`) is never part of the public versio
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for how to fork, run locally, add defect entries, and submit a pull request.
+See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to fork, run locally, add defect entries, and submit a pull request.
 
 ---
 
@@ -178,11 +178,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how to fork, run locally, add defect 
 
 | File | Purpose |
 | ---- | ------- |
-| [CHANGELOG.md](CHANGELOG.md) | Technical record of all code changes |
-| [UPDATES.md](UPDATES.md) | Plain-language summary of what changed and why |
-| [TODO.md](TODO.md) | Personal backlog |
-| [MAINTENANCE.md](MAINTENANCE.md) | Recurring sweep checklists |
-| [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute |
+| [docs/CHANGELOG.md](docs/CHANGELOG.md) | Technical record of all code changes |
+| [docs/UPDATES.md](docs/UPDATES.md) | Plain-language summary of what changed and why |
+| [docs/TODO.md](docs/TODO.md) | Personal backlog |
+| [docs/MAINTENANCE.md](docs/MAINTENANCE.md) | Recurring sweep checklists |
+| [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to contribute |
 
 ---
 
