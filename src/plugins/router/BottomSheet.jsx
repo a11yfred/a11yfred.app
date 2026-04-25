@@ -12,18 +12,20 @@ import { useFocusTrap } from './useFocusTrap.js'
  * - Uses the HTML `inert` attribute to block interaction when closed
  *
  * CSS classes expected in index.css:
- *   .sheet-backdrop    .sheet-backdrop.is-open
+ *   .overlay-backdrop  .overlay-backdrop.is-open  (shared with Drawer/Modal)
  *   .sheet-panel       .sheet-panel.is-open
  *   .sheet-chrome      .sheet-handle
  *   .sheet-close-btn   .sheet-content
+ *   .sheet-close-bottom  .sheet-close-bottom-btn
  *
  * Props:
- *   open      boolean  — whether the sheet is visible
- *   onClose   fn       — called on Escape, backdrop click, or close button
- *   label     string   — aria-label for the dialog
- *   children  node     — rendered inside the sheet only while open
+ *   open         boolean  — whether the sheet is visible
+ *   onClose      fn       — called on Escape, backdrop click, or close button
+ *   label        string   — aria-label for the dialog
+ *   keepMounted  boolean  — keep children mounted while closed (preserves state)
+ *   children     node     — rendered inside the sheet
  */
-export default function BottomSheet({ open, onClose, label = 'Detail', children }) {
+export default function BottomSheet({ open, onClose, label = 'Detail', keepMounted = false, children }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
 
@@ -50,7 +52,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', children 
     <>
       {/* Backdrop — click to dismiss */}
       <div
-        className={`sheet-backdrop${open ? ' is-open' : ''}`}
+        className={`overlay-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
       />
@@ -65,7 +67,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', children 
         // eslint-disable-next-line react/no-unknown-property
         inert={!open ? '' : undefined}
       >
-        {/* Chrome: drag handle + close button — sticky so it stays visible while scrolling */}
+        {/* Chrome: drag handle centered (absolute), close button in flow at right */}
         <div className="sheet-chrome">
           <div className="sheet-handle" aria-hidden="true" />
           <button
@@ -77,9 +79,18 @@ export default function BottomSheet({ open, onClose, label = 'Detail', children 
           </button>
         </div>
 
-        {/* Content — only mounts while open so useFocusOnMount fires on each open */}
+        {/* Content area — keepMounted keeps children alive so state is preserved */}
         <div className="sheet-content">
-          {open && children}
+          {(open || keepMounted) && (
+            <>
+              {children}
+              <div className="sheet-close-bottom">
+                <button onClick={onClose} className="btn-accent sheet-close-bottom-btn">
+                  Close
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
