@@ -31,6 +31,7 @@ export default function SettingsPanel({
   const headingRef = useFocusOnMount()
   usePageTitle('Settings')
   const isDesktop = useMediaQuery('(width >= 768px)')
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   const [keys, setKeys] = useState(() => {
     const saved = {}
@@ -89,9 +90,10 @@ export default function SettingsPanel({
         <legend className="sr-only">Theme</legend>
         <div className="radio-chip-group">
           {[
-            { value: 'light', label: 'Light' },
-            { value: 'auto',  label: 'Auto'  },
-            { value: 'dark',  label: 'Dark'  },
+            { value: 'light', label: 'Light'       },
+            { value: 'auto',  label: 'Auto'        },
+            { value: 'dark',  label: 'Dark'        },
+            { value: 'party', label: 'Party Mode?' },
           ].map(({ value, label }) => (
             <RadioChip
               key={value}
@@ -252,6 +254,14 @@ export default function SettingsPanel({
           }
         </button>
       </div>
+
+      {prefersReducedMotion && (
+        <p className="settings-reduced-motion-note">
+          You have reduced motion turned on, and we are actively acknowledging
+          that system setting. Animations like confetti will be skipped until
+          you change it in your OS accessibility settings.
+        </p>
+      )}
     </div>
   )
 }

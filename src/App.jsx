@@ -3,6 +3,7 @@ import { Settings, X } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
+import Confetti from './components/Confetti.jsx'
 import useDefectSearch from './hooks/useDefectSearch.js'
 import {
   Router,
@@ -11,9 +12,52 @@ import {
   BottomSheet,
   useMediaQuery,
 } from './plugins/router/index.js'
-import { Announcer } from './plugins/announce/index.js'
+import { Announcer, announce } from './plugins/announce/index.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
+
+// CSS custom properties overridden when party mode is active.
+// Cleaned up when switching to any other theme.
+const PARTY_KEYS = [
+  '--bg', '--bg-subtle', '--border', '--border-control',
+  '--text', '--text-muted', '--text-faint', '--text-disabled',
+  '--accent', '--accent-bg', '--accent-text', '--focus', '--success', '--overlay-bg',
+  '--priority-critical-text', '--priority-critical-bg',
+  '--priority-high-text', '--priority-high-bg',
+  '--priority-medium-text', '--priority-medium-bg',
+  '--priority-low-text', '--priority-low-bg',
+]
+
+function generatePartyPalette() {
+  const h = Math.floor(Math.random() * 360)
+  const comp = (h + 180) % 360
+  const tri = (h + 120) % 360
+  return {
+    '--bg':              `hsl(${h},    85%, 88%)`,
+    '--bg-subtle':       `hsl(${h},    75%, 80%)`,
+    '--border':          `hsl(${h},    50%, 68%)`,
+    '--border-control':  `hsl(${comp}, 55%, 30%)`,
+    '--text':            `hsl(${comp}, 70%,  8%)`,
+    '--text-muted':      `hsl(${comp}, 45%, 22%)`,
+    '--text-faint':      `hsl(${comp}, 35%, 32%)`,
+    '--text-disabled':   `hsl(${comp}, 20%, 58%)`,
+    '--accent':          `hsl(${tri},  85%, 38%)`,
+    '--accent-bg':       `hsl(${tri},  75%, 88%)`,
+    '--accent-text':     `hsl(${tri},  80%, 22%)`,
+    '--focus':           `hsl(${tri},  85%, 38%)`,
+    '--success':         'hsl(140, 60%, 30%)',
+    '--overlay-bg':      `hsla(${h}, 40%, 15%, 0.55)`,
+    // Priority badge colors stay fixed so they remain accessible
+    '--priority-critical-text': '#a32d2d',
+    '--priority-critical-bg':   '#fcebeb',
+    '--priority-high-text':     '#854f0b',
+    '--priority-high-bg':       '#faeeda',
+    '--priority-medium-text':   '#185fa5',
+    '--priority-medium-bg':     '#e6f1fb',
+    '--priority-low-text':      '#3b6d11',
+    '--priority-low-bg':        '#eaf3de',
+  }
+}
 
 // Provider display names for the search hint
 const PROVIDER_NAMES = {
@@ -226,6 +270,26 @@ function AppShell() {
   const backgroundInert = (!isDesktop && settingsOpen) || (!!selected && !settingsOpen)
 
   useEffect(() => {
+    // Clean up any palette inline styles from a previous party activation
+    PARTY_KEYS.forEach(k => document.documentElement.style.removeProperty(k))
+
+    if (theme === 'party') {
+      document.documentElement.setAttribute('data-theme', 'party')
+      const palette = generatePartyPalette()
+      Object.entries(palette).forEach(([k, v]) =>
+        document.documentElement.style.setProperty(k, v)
+      )
+      localStorage.setItem('theme', theme)
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      announce(
+        prefersReduced
+          ? 'Party mode activated! Confetti skipped — reduced motion is on.'
+          : 'Party mode activated! Confetti is falling.',
+        { priority: 'assertive' }
+      )
+      return
+    }
+
     const apply = () => {
       const resolved = theme === 'auto'
         ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
@@ -323,6 +387,7 @@ function AppShell() {
   return (
     <div className="app-container">
       <Announcer />
+      <Confetti active={theme === 'party'} />
 
       {/* eslint-disable-next-line react/no-unknown-property */}
       <div className="app-background" inert={backgroundInert ? '' : undefined}>
@@ -427,7 +492,7 @@ function Footer() {
         A project by <strong>Mikey Ilagan</strong>
         {' · '}
         <a
-          href="https://bsky.app/profile/mikeyil.bsky.social"
+          href="https://www.linkedin.com/in/mikeyil"
           target="_blank"
           rel="noreferrer"
           className="footer-link"
@@ -440,9 +505,9 @@ function Footer() {
             fill="currentColor"
             className="inline-icon"
           >
-            <path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z" />
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
           </svg>
-          @mikeyil.bsky.social
+          LinkedIn
         </a>
       </p>
     </footer>

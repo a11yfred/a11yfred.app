@@ -58,6 +58,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
   const [resetRem, setResetRem] = useState(false)
   const [refining, setRefining] = useState(false)
   const [confirmReset, setConfirmReset] = useState(null)
+  const [nothingToCopy, setNothingToCopy] = useState(false)
 
   // Refocus the panel title when returning from settings (focusTrigger increments)
   useEffect(() => {
@@ -69,6 +70,10 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
     : descText
 
   const copy = (text, setCopied, label) => {
+    if (!text?.trim()) {
+      setNothingToCopy(true)
+      return
+    }
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true)
       announce(`${label}: Copied to clipboard`)
@@ -218,6 +223,14 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
           )}
         </div>
       </div>
+
+      <Modal
+        open={nothingToCopy}
+        onClose={() => setNothingToCopy(false)}
+        heading="Nothing to copy"
+      >
+        <p>This field is empty. There is nothing to copy.</p>
+      </Modal>
 
       <Modal
         open={!!confirmReset}

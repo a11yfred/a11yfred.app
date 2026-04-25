@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { X } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 
 export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName }) {
@@ -15,7 +14,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
   const hintParts = [
     liveSearch ? 'Results appear as you type.' : 'Type a description and press Search or Enter.',
     `Currently focusing on ${platformLabel} issues.`,
-    aiEnabled && providerName ? `AI assist is on (${providerName}).` : null,
+    aiEnabled && providerName ? `AI assist is active (${providerName}).` : null,
   ].filter(Boolean)
 
   return (
@@ -43,7 +42,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
               aria-label="Clear search"
               className="btn-accent search-clear-btn"
             >
-              <X size={12} strokeWidth={2.5} aria-hidden="true" />
+              ↺
             </button>
           )}
         </div>
