@@ -324,6 +324,7 @@ export default function SettingsPanel({
         onClose={() => setPrivacyOpen(false)}
         label={t('settings.privacy_heading')}
       >
+        <h2 className="sheet-heading">{t('settings.privacy_heading')}</h2>
         <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_storage')}</h3>
         <p>{t('settings.privacy_body_1')}</p>
         <p>{t('settings.privacy_body_2')}</p>

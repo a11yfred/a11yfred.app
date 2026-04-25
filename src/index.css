@@ -245,6 +245,12 @@ select:focus-visible {
   outline: none;
 }
 
+/* Lock drawer scroll whenever a sheet or modal is in the foreground */
+body:has(.sheet-panel.is-open) .drawer-panel,
+body:has(.modal-panel.is-open) .drawer-panel {
+  overflow-y: hidden;
+}
+
 .drawer-panel.is-open {
   transform: translateX(0);
 }
@@ -304,6 +310,13 @@ select:focus-visible {
 
 .sheet-close-btn {
   flex-shrink: 0;
+}
+
+.sheet-heading {
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: var(--space-4);
 }
 
 /* Scrollable content area — min-height:0 lets flex children shrink below content size */
