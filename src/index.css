@@ -676,6 +676,10 @@ body:has(.modal-panel.is-open) .drawer-panel {
   color: var(--text-muted);
 }
 
+.btn-icon:focus-visible {
+  border-radius: 50%;
+}
+
 /* ─── Ghost button (secondary / cancel actions) ─────────────
    Shares the same box model as .btn-accent but uses a neutral
    border and muted text instead of the accent color.          */
@@ -967,6 +971,16 @@ input.search-input:focus {
   align-items: center;
   gap: var(--space-3);
   margin-bottom: var(--space-6);
+}
+
+@media (width < 768px) {
+  .settings-header {
+    gap: var(--space-1);
+  }
+
+  .settings-header .btn-icon {
+    margin-inline-start: calc(var(--space-2) * -1);
+  }
 }
 
 .settings-title {

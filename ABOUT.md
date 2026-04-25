@@ -29,11 +29,11 @@ The app ships UI translations for 50+ languages. The obvious ones (Spanish, Fren
 
 Activating a language changes the entire app, not just the chrome. The corpus entries (defect titles, descriptions, remediations) load a locale-specific overlay at runtime. English keywords are preserved on each record in a hidden field so that typing "button" in the Japanese locale still finds the right defects — cross-language Fuse.js search.
 
-## The KoFi Widget Accessibility Patch
+## The KoFi Widget Accessibility Patch (Now Disabled)
 
-The app embeds a Ko-fi donation widget. It's a third-party script that injects its own DOM and is, predictably, not particularly accessible. Rather than just including it and moving on, the app watches for it to mount via MutationObserver, then adds `role="dialog"`, `aria-modal="true"`, `aria-label`, and a full Tab focus trap. The trigger button gets an `aria-label` if it doesn't have one.
+The app embedded a Ko-fi donation widget. It's a third-party script that injects its own DOM and is, predictably, not particularly accessible. Rather than just including it and moving on, the app watched for it to mount via MutationObserver, then added `role="dialog"`, `aria-modal="true"`, `aria-label`, and a full Tab focus trap. The trigger button got an `aria-label` if it didn't have one.
 
-It's a little absurd that an accessibility tool ships with an inaccessible widget, so patching it felt necessary.
+It's a little absurd that an accessibility tool ships with an inaccessible widget, so patching it felt necessary. The widget was eventually disabled anyway — it started causing console errors and forcing dev-server hot-reloads in a loop. The patch code is still in `src/components/KofiWidget.jsx` if it ever gets re-enabled.
 
 ## Modals That Actually Stay in the Viewport
 
@@ -48,6 +48,30 @@ It's about 40 lines of touch event handling. It works like native iOS bottom she
 ## The Reset Confirmation Threshold
 
 When you edit a defect description and then hit Reset, the app checks whether your edits are significant enough to warrant a confirmation modal. It runs a Levenshtein edit distance calculation and compares the result against the original string length. If more than 70% of the original has been changed, you get a "are you sure?" prompt. Minor typo fixes reset silently.
+
+## RTL: The Whole Layout Flips
+
+Two locales — Palestinian Arabic (`ar-PS`) and Uyghur (`ug`) — are right-to-left scripts. When either is active the app sets `document.documentElement.dir = "rtl"` and the entire layout mirrors: the settings drawer slides in from the right instead of the left, the back chevron points the other way, the selected-chip border radii flip corners, and the toggle thumb repositions. All of this is CSS-driven via `[dir="rtl"]` overrides co-located with their base rules. A `useDir` plugin hook provides a reactive `dir` value to any component that needs to make structural decisions in JS.
+
+## Priority Labels Are Fully Translated
+
+Severity badges ("Critical", "High", "Medium", "Low", "Best Practice") are now i18n keys, not hardcoded strings. Every locale provides its own translations. In pirate mode: "Abandon Ship!" (Critical), "Batten Down!" (High), "Listing, Cap'n" (Medium), "Calm Waters" (Low), "Old Salt's Wisdom" (Best Practice). The badge still carries its CSS color variables — the English priority value is kept on the defect record as the semantic key; the display label is looked up via `t(p.key)` at render time.
+
+## Line Breaks Inside Translation Strings
+
+Pirate chip labels ("Sunny Seas", "Dead o' Night", "Treasure Mode?") are written with `\n` in the JSON translation file. `RadioChip` splits on `\n` and renders `<br>` elements between segments. This lets narrow-screen translations intentionally wrap without triggering unwanted wrapping in other locales — `white-space: nowrap` was removed from the chip only after this was in place, and a `min-height: 3rem` ensures all chips in a group stay the same height regardless of how many lines they wrap to.
+
+## Language Capitalization Philosophy
+
+Across 50+ locales the app follows language-appropriate title case conventions rather than applying a single rule everywhere. English variants (en, en-GB, en-AU, en-IN, en-ZA) and Filipino (tl) use NYT-style title case for headings and labels. Romance and Germanic languages (Spanish, French, German, Portuguese, Italian, Dutch, and others) follow sentence case — capitalizing only the first word and proper nouns — which is the grammatically correct convention for those languages. Scripts that don't have a capitalization distinction at all — Japanese, Korean, Chinese, Arabic, Uyghur, Tamil, Devanagari-script languages — are left untouched.
+
+## The `useAriaHide` Hook
+
+When any overlay is open (settings drawer, bottom sheet, confirmation dialog), `useAriaHide` sets `aria-hidden="true"` on every sibling of the overlay in `document.body`. It uses a `data-overlay-aria-hidden` attribute as a marker to track which elements it hid, so it can restore exactly those elements when the overlay closes — and so that multiple nested overlays don't accidentally un-hide siblings that a parent overlay is still hiding.
+
+## 404 for Unknown Routes
+
+The router is hash-based. Valid routes are `#/` (search) and `#/settings`. Anything else renders a `NotFoundPage` component with a "Back to Home" button that navigates to `#/`. There's no server-side routing involved — it's all a single `const isNotFound = route !== '/' && route !== '/settings'` check in `AppContent`.
 
 ## Architectural Choices Worth Noting
 
