@@ -551,7 +551,28 @@ function App() {
 | `open` | boolean | — | Whether the sheet is visible |
 | `onClose` | fn | — | Called on Escape, backdrop click, or the chrome close button |
 | `label` | string | `'Detail'` | `aria-label` for the dialog element |
-| `children` | node | — | Rendered inside the sheet only while open |
+| `keepMounted` | boolean | `false` | Keep children in the DOM while the sheet is visually closed. Use when you need to preserve React state (e.g. text edits) while a secondary panel covers the sheet. The sheet is still `inert` when closed; only the state is preserved. |
+| `children` | node | — | Rendered inside the sheet only while open (unless `keepMounted` is true) |
+
+**`keepMounted` use case — settings ↔ detail panel navigation:**
+
+When the user opens Settings while a defect detail sheet is open, you want to hide the
+sheet visually but keep the user's edits alive. Pass `keepMounted={settingsOpen && !!selected}`
+so children stay mounted while settings is covering the sheet:
+
+```jsx
+<BottomSheet
+  open={!!selected && !settingsOpen}
+  onClose={() => setSelected(null)}
+  keepMounted={settingsOpen && !!selected}
+  label="Defect detail"
+>
+  {selected && <DetailPanel defect={selected} />}
+</BottomSheet>
+```
+
+When settings closes, restore focus to the panel heading via a `focusTrigger` prop pattern
+(increment a counter in state; `useEffect` in the panel watches it and calls `ref.current?.focus()`).
 
 ### BottomSheet CSS classes
 
@@ -560,16 +581,99 @@ function App() {
 .overlay-backdrop.is-open  /* opacity 1, pointer-events auto */
 .sheet-panel               /* fixed panel; transform: translateX(-50%) translateY(100%) */
 .sheet-panel.is-open       /* transform: translateX(-50%) translateY(0) */
-.sheet-chrome              /* chrome row at top; position:relative anchors close button */
-.sheet-handle              /* drag-handle pill (decorative) */
-.sheet-close-btn           /* close button; position:absolute right */
+.sheet-chrome              /* chrome row at top; flex row; close button at right end */
+.sheet-handle              /* drag-handle pill; position:absolute centered in chrome row */
+.sheet-close-btn           /* close button; flex-shrink:0 in the chrome flow */
 .sheet-content             /* scrollable content area; flex:1 overflow-y:auto */
+.sheet-close-bottom        /* full-width Close button at bottom — mobile only */
+.sheet-close-bottom-btn    /* button inside .sheet-close-bottom */
 ```
 
 See `index.css` in this project for the reference implementation.
 
 Like `Drawer`, `BottomSheet` sets `inert` on the panel when closed and only mounts children
-while open — `useFocusOnMount` in child components fires fresh on each open.
+while open — `useFocusOnMount` in child components fires fresh on each open (unless
+`keepMounted` is true, in which case children remain mounted and focus management is driven
+externally via `focusTrigger`).
+
+---
+
+## The `Modal` component
+
+`Modal` is a centered dialog that stacks above both `Drawer` and `BottomSheet` (z-index 301
+vs 200). It bundles its own backdrop, focus management, Escape handling, and `inert` state.
+
+```jsx
+import { Modal } from './plugins/router/index.js'
+
+function MyComponent() {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <button onClick={() => setOpen(true)}>Open</button>
+      <Modal open={open} onClose={() => setOpen(false)} heading="Confirm">
+        <p>Are you sure you want to do this?</p>
+      </Modal>
+    </>
+  )
+}
+```
+
+### Modal with custom action buttons
+
+Pass an `actions` array to replace the default OK button with any combination of buttons.
+Buttons are rendered stacked in the modal footer, top to bottom:
+
+```jsx
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  heading="Are you sure?"
+  actions={[
+    {
+      label: 'Yes, delete',
+      onClick: () => { handleDelete(); setOpen(false) },
+      className: 'btn-accent modal-ok-btn',
+    },
+    {
+      label: 'No, cancel',
+      onClick: () => setOpen(false),
+      className: 'btn-ghost modal-ok-btn',
+    },
+  ]}
+>
+  <p>This action cannot be undone.</p>
+</Modal>
+```
+
+When `actions` is omitted, a single "OK" button that calls `onClose` is shown by default.
+
+### Modal props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `open` | boolean | — | Whether the modal is visible |
+| `onClose` | fn | — | Called on Escape or backdrop click |
+| `heading` | string | `'Information'` | Displayed as an `<h2>` at the top of the modal |
+| `actions` | `Array<{label, onClick, className?}>` | `[{ label: 'OK', onClick: onClose, className: 'btn-accent modal-ok-btn' }]` | Footer buttons, rendered top-to-bottom |
+| `children` | node | — | Modal body content |
+
+### Modal CSS classes
+
+```css
+.modal-backdrop            /* full-viewport backdrop; z-index 300 */
+.modal-backdrop.is-open    /* opacity 1, pointer-events auto */
+.modal-panel               /* centered panel; transform: translate(-50%,-50%) scale(0.96) */
+.modal-panel.is-open       /* scale(1), opacity 1 */
+.modal-body                /* scrollable content area */
+.modal-heading             /* h2 inside .modal-body */
+.modal-content             /* wraps children inside .modal-body */
+.modal-footer              /* flex-column button row */
+.modal-ok-btn              /* full-width block button; applies to all action buttons */
+```
+
+The `.btn-ghost` class is available for secondary/cancel actions (neutral border, muted text).
 
 ---
 
