@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronDown, Check, Info } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, useMediaQuery, Modal, BottomSheet } from '../plugins/router/index.js'
+import { ChevronLeft, ChevronRight, ChevronDown, Check, Info } from 'lucide-react'
+import { useFocusOnMount, usePageTitle, useMediaQuery, Modal, BottomSheet, useDir } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -93,6 +93,8 @@ export default function SettingsPanel({
   const t = useT()
   usePageTitle(t('settings.heading'))
   const isDesktop = useMediaQuery('(width >= 768px)')
+  const dir = useDir()
+  const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   const [keys, setKeys] = useState(() => {
@@ -140,7 +142,7 @@ export default function SettingsPanel({
           aria-label={t('settings.back')}
           className="btn-icon btn-icon-accent"
         >
-          <ChevronLeft size={22} strokeWidth={2.5} aria-hidden="true" />
+          <BackChevron size={22} strokeWidth={2.5} aria-hidden="true" />
         </button>
         <h2 ref={headingRef} tabIndex={-1} className="settings-title">
           {t('settings.heading')}
@@ -323,6 +325,7 @@ export default function SettingsPanel({
         open={privacyOpen}
         onClose={() => setPrivacyOpen(false)}
         label={t('settings.privacy_heading')}
+        closeLabel={t('common.close')}
       >
         <h2 className="sheet-heading">{t('settings.privacy_heading')}</h2>
         <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_storage')}</h3>

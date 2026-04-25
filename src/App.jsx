@@ -367,9 +367,11 @@ function AppContent({
   }, [theme])
 
   const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val'])
+  const RTL_LOCALES = new Set(['ar-PS', 'ug'])
 
   useEffect(() => {
     document.documentElement.lang = language
+    document.documentElement.dir = RTL_LOCALES.has(language) ? 'rtl' : 'ltr'
     if (!EASTER_EGG_LOCALES.has(language)) {
       localStorage.setItem('language', language)
     }
@@ -482,7 +484,7 @@ function AppContent({
       {theme === 'party' && <PartyBanner />}
 
       {/* eslint-disable-next-line react/no-unknown-property */}
-      <div className="app-background" inert={backgroundInert ? '' : undefined}>
+      <div className="app-background" inert={backgroundInert ? '' : undefined} aria-hidden={backgroundInert ? true : undefined}>
         <Header
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}
@@ -511,6 +513,7 @@ function AppContent({
         onClose={() => { setSelected(null); returnToPanelRef.current = false }}
         keepMounted={settingsOpen && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
+        closeLabel={t('common.close')}
       >
         {selected && (
           <DetailPanel

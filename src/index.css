@@ -130,6 +130,11 @@ select:focus-visible {
   font-size: 22px;
 }
 
+[dir="rtl"] .page-header__settings-btn {
+  right: auto;
+  left: 0;
+}
+
 .header-github-link {
   position: absolute;
   top: 0;
@@ -141,6 +146,11 @@ select:focus-visible {
   color: var(--accent-text);
   text-decoration: none;
   min-height: 44px;
+}
+
+[dir="rtl"] .header-github-link {
+  left: auto;
+  right: 0;
 }
 
 .header-github-link:hover {
@@ -245,17 +255,47 @@ select:focus-visible {
   outline: none;
 }
 
+.drawer-panel.is-open {
+  transform: translateX(0);
+}
+
+/* RTL: drawer slides in from the right; explicit .is-open override wins over
+   the base [dir="rtl"] .drawer-panel rule when the panel is open */
+[dir="rtl"] .drawer-panel {
+  transform: translateX(100%);
+  border-right: none;
+  border-left: 1px solid var(--border);
+}
+
+[dir="rtl"] .drawer-panel.is-open {
+  transform: translateX(0);
+}
+
 /* Lock drawer scroll whenever a sheet or modal is in the foreground */
 body:has(.sheet-panel.is-open) .drawer-panel,
 body:has(.modal-panel.is-open) .drawer-panel {
   overflow-y: hidden;
 }
 
-.drawer-panel.is-open {
-  transform: translateX(0);
+/* ─── Bottom sheet ─────────────────────────────────────────── */
+
+/* Dedicated backdrop for BottomSheet — sits above the Drawer (z 200)
+   so the sheet properly dims the drawer when stacked on top of it.
+   The shared .overlay-backdrop (z 199) is reserved for the Drawer only. */
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  z-index: 201;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out);
 }
 
-/* ─── Bottom sheet ─────────────────────────────────────────── */
+.sheet-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 /* Panel slides up from bottom; centered and width-capped to match .app-container.
    overflow:hidden clips children to the border-radius (no scrollbar bleeds).
@@ -267,7 +307,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   width: 100%;
   max-width: 720px;
   max-height: 92dvh;
-  z-index: 200;
+  z-index: 202;
   background: var(--bg);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   overflow: hidden;
@@ -319,12 +359,13 @@ body:has(.modal-panel.is-open) .drawer-panel {
   margin-bottom: var(--space-4);
 }
 
-/* Scrollable content area — min-height:0 lets flex children shrink below content size */
+/* Scrollable content area — min-height:0 lets flex children shrink below content size.
+   5rem bottom padding matches the Drawer and clears the Ko-fi floating button. */
 .sheet-content {
   flex: 1;
   overflow-y: auto;
   min-height: 0;
-  padding: 0 var(--space-5) var(--space-8);
+  padding: 0 var(--space-5) 5rem;
 }
 
 /* Full-width Close button at the bottom of the sheet — mobile only */
@@ -561,6 +602,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 @media (prefers-reduced-motion: reduce) {
   .overlay-backdrop,
+  .sheet-backdrop,
   .modal-backdrop,
   .drawer-panel,
   .sheet-panel,
@@ -883,6 +925,7 @@ input.search-input:focus {
 
 .settings-title {
   font-size: var(--fs-h1);
+  line-height: 1em;
   font-weight: 700;
   color: var(--text);
   outline: none;
@@ -1208,6 +1251,21 @@ input.search-input:focus {
   .radio-chip:focus-within {
     z-index: 1;
   }
+
+  /* RTL: outer corner radii and overlap margins flip to match reading direction */
+  [dir="rtl"] .radio-chip {
+    margin-left: 0;
+    margin-right: -1px;
+  }
+
+  [dir="rtl"] .radio-chip:first-child {
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-right: 0;
+  }
+
+  [dir="rtl"] .radio-chip:last-child {
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
 }
 
 /* ─── Toggle ──────────────────────────────────────────────── */
@@ -1268,9 +1326,20 @@ input.search-input:focus {
   transition: left var(--duration-fast), outline-color var(--duration-fast);
 }
 
+/* RTL: thumb travels from right to left; position from right edge */
+[dir="rtl"] .toggle__thumb {
+  left: auto;
+  right: 3px;
+  transition: right var(--duration-fast), outline-color var(--duration-fast);
+}
+
 .toggle:has(.toggle__input:checked) .toggle__thumb {
   left: 21px;
   outline-color: var(--accent);
+}
+
+[dir="rtl"] .toggle:has(.toggle__input:checked) .toggle__thumb {
+  right: 21px;
 }
 
 .toggle__check {

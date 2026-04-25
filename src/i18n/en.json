@@ -1,6 +1,7 @@
 {
   "app.name": "A11yTextHelper",
   "app.tagline": "Audit defect descriptions, fast",
+  "common.close": "Close",
 
   "header.github": "Fork on GitHub",
   "header.open_settings": "Open settings",
