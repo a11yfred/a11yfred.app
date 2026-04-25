@@ -388,6 +388,7 @@ function AppShell() {
     <div className="app-container">
       <Announcer />
       <Confetti active={theme === 'party'} />
+      {theme === 'party' && <PartyBanner />}
 
       {/* eslint-disable-next-line react/no-unknown-property */}
       <div className="app-background" inert={backgroundInert ? '' : undefined}>
@@ -482,6 +483,14 @@ function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDeskto
         <p className="page-tagline">Audit defect descriptions, fast</p>
       )}
     </header>
+  )
+}
+
+function PartyBanner() {
+  return (
+    <div className="party-banner" aria-live="off" aria-hidden="true">
+      ~*~ PARTY MODE ENABLED ~*~
+    </div>
   )
 }
 

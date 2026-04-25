@@ -434,6 +434,43 @@ select:focus-visible {
   outline-style: dotted;
 }
 
+/* Fixed lower-right badge shown only in party mode */
+.party-banner {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  z-index: 190;
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-full);
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  white-space: nowrap;
+  animation: party-badge-bounce 1.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes party-badge-bounce {
+  0%, 100% {
+    translate: 0 0;
+    rotate: -1deg;
+  }
+
+  50% {
+    translate: 0 -4px;
+    rotate: 1deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .party-banner {
+    animation: none;
+  }
+}
+
 /* ─── Confetti canvas (party mode) ───────────────────────── */
 
 .confetti-canvas {
