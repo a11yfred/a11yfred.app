@@ -88,6 +88,7 @@ export default function SettingsPanel({
   language, onLanguageChange,
   platform, onPlatformChange,
   onClose,
+  onReset,
 }) {
   const headingRef = useFocusOnMount()
   const t = useT()
@@ -109,6 +110,7 @@ export default function SettingsPanel({
   const [saved, setSaved] = useState(false)
   const [privacyOpen, setPrivacyOpen] = useState(false)
   const [rhgPending, setRhgPending] = useState(false)
+  const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
 
   // Escape key — Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
@@ -296,7 +298,7 @@ export default function SettingsPanel({
         </div>
       ))}
 
-      {/* ── Footer row: privacy (left) + save (right) on desktop; save then privacy on mobile ── */}
+      {/* ── Footer: privacy link above buttons on mobile; privacy left / buttons right on desktop ── */}
       <div className="settings-footer-row">
         <button
           type="button"
@@ -306,12 +308,21 @@ export default function SettingsPanel({
           <Info size={14} aria-hidden="true" style={{ flexShrink: 0 }} />
           {t('settings.privacy_button')}
         </button>
-        <button onClick={handleSave} className="btn-accent settings-save-btn">
-          {saved
-            ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
-            : t('settings.save')
-          }
-        </button>
+        <div className="settings-footer-actions">
+          <button
+            type="button"
+            onClick={() => setResetConfirmOpen(true)}
+            className="btn-secondary settings-reset-btn"
+          >
+            {t('settings.reset_all')}
+          </button>
+          <button onClick={handleSave} className="btn-accent settings-save-btn">
+            {saved
+              ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
+              : t('settings.save')
+            }
+          </button>
+        </div>
       </div>
 
       {prefersReducedMotion && (
@@ -345,6 +356,26 @@ export default function SettingsPanel({
       >
         <p>This translation was AI-generated and has not been reviewed by native Rohingya speakers.</p>
         <p>The Rohingya people have endured genocide and forced displacement. Please use this translation with care, and consider contributing corrections if you are able.</p>
+      </Modal>
+
+      <Modal
+        open={resetConfirmOpen}
+        onClose={() => setResetConfirmOpen(false)}
+        heading={t('settings.confirm_reset_all_heading')}
+        actions={[
+          {
+            label: t('settings.confirm_reset_all_yes'),
+            onClick: () => { setResetConfirmOpen(false); onReset?.() },
+            className: 'btn-accent',
+          },
+          {
+            label: t('settings.confirm_reset_all_no'),
+            onClick: () => setResetConfirmOpen(false),
+            className: 'btn-ghost',
+          },
+        ]}
+      >
+        <p>{t('settings.confirm_reset_all_body')}</p>
       </Modal>
     </div>
   )

@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
-import { Settings, X } from 'lucide-react'
+import { Settings, X, Info } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
+import AboutPanel from './components/AboutPanel.jsx'
 import Confetti from './components/Confetti.jsx'
 import PartySparkles from './components/PartySparkles.jsx'
 import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
@@ -138,6 +139,9 @@ function AppContent({
   const isNotFound = route !== '/' && route !== '/settings'
   const h1Ref = useRef(null)
   const didMount = useRef(false)
+  const [aboutOpen, setAboutOpen] = useState(false)
+  const handleOpenAbout = () => { if (settingsOpen) navigate('/'); setAboutOpen(true) }
+  const handleCloseAbout = () => setAboutOpen(false)
   // Tracks whether settings was opened while a defect panel was selected,
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
@@ -148,7 +152,7 @@ function AppContent({
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
   // to the settings drawer — exclude the panel from triggering it separately.
-  const backgroundInert = (!isDesktop && settingsOpen) || (!!selected && !settingsOpen)
+  const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!!selected && !settingsOpen && !aboutOpen)
 
   useEffect(() => {
     // Clean up any palette inline styles from a previous party activation
@@ -276,6 +280,22 @@ function AppContent({
 
   const settingsLanguage = EASTER_EGG_LOCALES.has(language) ? 'en' : language
 
+  const handleResetAll = () => {
+    const defaultLang = navigator.language || 'en'
+    // Clear all persisted data
+    localStorage.clear()
+    // Reset React state to defaults
+    setTheme('auto')
+    setLanguage(defaultLang)
+    setPlatform('web')
+    setLiveSearch(true)
+    setAiEnabled(false)
+    setQuery('')
+    setSubmittedQuery('')
+    setSelected(null)
+    navigate('/')
+  }
+
   const settingsProps = {
     aiEnabled,
     onToggleAi: () => setAiEnabled(a => !a),
@@ -288,6 +308,7 @@ function AppContent({
     platform,
     onPlatformChange: setPlatform,
     onClose: () => navigate('/'),
+    onReset: handleResetAll,
   }
 
   // Provider name for the search hint (read from localStorage; updates on next render after save)
@@ -329,15 +350,22 @@ function AppContent({
         <Header
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}
+          aboutOpen={aboutOpen}
           onOpenSettings={handleOpenSettings}
           onCloseSettings={() => navigate('/')}
+          onOpenAbout={handleOpenAbout}
+          onCloseAbout={handleCloseAbout}
           isDesktop={isDesktop}
         />
         <main className="app-main">
           <Suspense fallback={null}>
             {isNotFound
               ? <NotFoundPage />
-              : (isDesktop && settingsOpen ? <SettingsPanel {...settingsProps} /> : searchView)}
+              : isDesktop && settingsOpen
+                ? <SettingsPanel {...settingsProps} />
+                : isDesktop && aboutOpen
+                  ? <AboutPanel onClose={handleCloseAbout} />
+                  : searchView}
           </Suspense>
         </main>
         <Footer />
@@ -351,10 +379,16 @@ function AppContent({
         </Drawer>
       )}
 
+      {!isDesktop && (
+        <Drawer open={aboutOpen} onClose={handleCloseAbout} label={t('about.sheet_label')}>
+          <AboutPanel onClose={handleCloseAbout} />
+        </Drawer>
+      )}
+
       <BottomSheet
-        open={!!selected && !settingsOpen}
+        open={!!selected && !settingsOpen && !aboutOpen}
         onClose={() => { setSelected(null); returnToPanelRef.current = false }}
-        keepMounted={settingsOpen && !!selected}
+        keepMounted={(settingsOpen || aboutOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
       >
@@ -371,7 +405,7 @@ function AppContent({
   )
 }
 
-function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDesktop }) {
+function Header({ h1Ref, settingsOpen, aboutOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, isDesktop }) {
   const t = useT()
   const compact = isDesktop && settingsOpen
   return (
@@ -397,17 +431,32 @@ function Header({ h1Ref, settingsOpen, onOpenSettings, onCloseSettings, isDeskto
         </a>
       )}
 
-      <button
-        onClick={settingsOpen ? onCloseSettings : onOpenSettings}
-        aria-label={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
-        title={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
-        className="btn-icon btn-icon-accent page-header__settings-btn"
-      >
-        {settingsOpen
-          ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
-          : <Settings size={20} strokeWidth={2} aria-hidden="true" />
-        }
-      </button>
+      <div className="page-header__actions">
+        {!compact && (
+          <button
+            onClick={aboutOpen ? onCloseAbout : onOpenAbout}
+            aria-label={aboutOpen ? t('common.close') : t('header.open_about')}
+            title={aboutOpen ? t('common.close') : t('header.open_about')}
+            className="btn-icon btn-icon-accent page-header__about-btn"
+          >
+            {aboutOpen
+              ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
+              : <Info size={20} strokeWidth={2} aria-hidden="true" />
+            }
+          </button>
+        )}
+        <button
+          onClick={settingsOpen ? onCloseSettings : onOpenSettings}
+          aria-label={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
+          title={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
+          className="btn-icon btn-icon-accent page-header__settings-btn"
+        >
+          {settingsOpen
+            ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
+            : <Settings size={20} strokeWidth={2} aria-hidden="true" />
+          }
+        </button>
+      </div>
 
       <h1
         ref={h1Ref}

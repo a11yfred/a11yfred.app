@@ -40,6 +40,9 @@ export default [
       // autoFocus is intentional on the search input — single-purpose tool where
       // search is always the first action. Downgraded to warn, not suppressed.
       'jsx-a11y/no-autofocus': 'warn',
+
+      // Allow _-prefixed parameters in stubs and intentionally unused args
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
   },
 
