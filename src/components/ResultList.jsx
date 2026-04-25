@@ -15,7 +15,7 @@ export default function ResultList({ results, selected, onSelect, query }) {
   }
 
   return (
-    <ul style={{ listStyle: 'none', marginBottom: 'var(--space-6)' }} role="listbox" aria-label="Defect candidates">
+    <ul className="result-list" role="listbox" aria-label="Defect candidates">
       {results.map(defect => {
         const isSelected = selected?.id === defect.id
         const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
@@ -28,70 +28,21 @@ export default function ResultList({ results, selected, onSelect, query }) {
             tabIndex={0}
             onClick={() => onSelect(defect)}
             onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onSelect(defect)}
-            style={{
-              padding: 'var(--space-3) var(--space-4)',
-              marginBottom: '1em',
-              borderRadius: 'var(--radius)',
-              border: `1px solid ${isSelected ? 'var(--accent)' : 'var(--border)'}`,
-              background: isSelected ? 'var(--accent-bg)' : 'var(--bg)',
-              cursor: 'pointer',
-              transition: 'border-color 0.1s',
-            }}
-            onMouseEnter={e => { if (!isSelected) e.currentTarget.style.borderColor = 'var(--text-faint)' }}
-            onMouseLeave={e => { if (!isSelected) e.currentTarget.style.borderColor = 'var(--border)' }}
+            className={`result-item${isSelected ? ' result-item--selected' : ''}`}
           >
-            {/* Title + priority badge */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--space-2)' }}>
-              <span style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                fontSize: 'var(--fs-sub)',
-                fontWeight: 500,
-                color: isSelected ? 'var(--accent-text)' : 'var(--text)',
-              }}>
-                {isSelected && (
-                  <span aria-hidden="true" style={{
-                    width: 8,
-                    height: 8,
-                    borderRadius: '50%',
-                    background: 'var(--accent-text)',
-                    flexShrink: 0,
-                  }} />
-                )}
+            <div className="result-item__header">
+              <span className="result-item__title">
+                {isSelected && <span aria-hidden="true" className="result-item__dot" />}
                 {defect.title}
               </span>
-              <span style={{
-                fontSize: 'var(--fs-body)',
-                padding: '2px 8px',
-                borderRadius: 'var(--radius-full)',
-                whiteSpace: 'nowrap',
-                background: p.bg,
-                color: p.color,
-                flexShrink: 0,
-              }}>
+              <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
                 {defect.priority}
               </span>
             </div>
 
-            {/* SC label */}
-            <div style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginTop: 'var(--space-1)' }}>
-              {defect.scLabel}
-            </div>
+            <div className="result-item__sc">{defect.scLabel}</div>
 
-            {/* Description preview */}
-            <div style={{
-              fontSize: 'var(--fs-body)',
-              color: isSelected ? 'var(--text-muted)' : 'var(--text-faint)',
-              marginTop: 'var(--space-1)',
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              lineHeight: 1.5,
-            }}>
-              {defect.desc}
-            </div>
+            <div className="result-item__desc">{defect.desc}</div>
           </li>
         )
       })}
@@ -105,21 +56,14 @@ function NoResults({ query }) {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional: announce only on first appearance, not every keystroke
 
   return (
-    <section
-      aria-label="No results"
-      style={{
-        textAlign: 'center',
-        padding: 'var(--space-8) var(--space-4)',
-        marginBottom: 'var(--space-6)',
-      }}
-    >
+    <section aria-label="No results" className="no-results">
       <svg
         aria-hidden="true"
         width="56"
         height="56"
         viewBox="0 0 56 56"
         fill="none"
-        style={{ marginBottom: 'var(--space-4)', display: 'inline-block' }}
+        className="no-results__icon"
       >
         <circle cx="22" cy="22" r="14" stroke="var(--border)" strokeWidth="2.5"/>
         <line x1="33" y1="33" x2="47" y2="47" stroke="var(--border)" strokeWidth="2.5" strokeLinecap="round"/>
@@ -128,15 +72,10 @@ function NoResults({ query }) {
         <line x1="14" y1="27" x2="24" y2="27" stroke="var(--text-faint)" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="1 3"/>
       </svg>
 
-      <p style={{
-        fontSize: 'var(--fs-sub)',
-        fontWeight: 600,
-        color: 'var(--text)',
-        marginBottom: 'var(--space-2)',
-      }}>
+      <p className="no-results__heading">
         No results for &ldquo;{query}&rdquo;
       </p>
-      <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)' }}>
+      <p className="no-results__body">
         Try a component name, element type, or a different phrase.
       </p>
     </section>

@@ -10,15 +10,6 @@ const PROVIDERS = [
   { id: 'microsoft', label: 'Microsoft (Copilot)', placeholder: 'Paste API key' },
 ]
 
-const SECTION = {
-  fontSize: 'var(--fs-body)',
-  fontWeight: 600,
-  color: 'var(--text-faint)',
-  textTransform: 'uppercase',
-  letterSpacing: '0.08em',
-  marginBottom: 'var(--space-3)',
-}
-
 export default function SettingsPanel({
   aiEnabled, onToggleAi,
   typeahead, onToggleTypeahead,
@@ -65,47 +56,32 @@ export default function SettingsPanel({
 
   return (
     <div>
-      {/* Page / panel header */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--space-3)',
-        marginBottom: 'var(--space-6)',
-      }}>
+      <div className="settings-header">
         <button
           onClick={onClose}
           aria-label="Back to search"
           className="btn-icon btn-icon-accent"
-          style={{ flexShrink: 0 }}
         >
           <ChevronLeft size={22} strokeWidth={2.5} aria-hidden="true" />
         </button>
         {/* tabIndex={-1} allows programmatic focus without joining tab order */}
-        <h2
-          ref={headingRef}
-          tabIndex={-1}
-          style={{
-            fontSize: 'var(--fs-heading)',
-            fontWeight: 600,
-            color: 'var(--text)',
-          }}
-        >
+        <h2 ref={headingRef} tabIndex={-1} className="settings-title">
           Settings
         </h2>
       </div>
 
       {/* ── Search ─────────────────────────────────── */}
-      <h3 style={SECTION}>Search</h3>
+      <h3 className="settings-section-heading">Search</h3>
 
       {/* Platform */}
-      <div style={{ marginBottom: 'var(--space-5)' }}>
-        <p style={{ fontSize: 'var(--fs-sub)', fontWeight: 500, marginBottom: 0 }}>Platform</p>
-        <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginTop: 2, marginBottom: 'var(--space-3)' }}>
+      <div className="settings-group">
+        <p className="settings-group__label">Platform</p>
+        <p className="settings-group__desc">
           {platform === 'web' ? 'Show web-oriented results' : 'Show native-oriented results'}
         </p>
-        <fieldset style={{ border: 'none', padding: 0 }}>
+        <fieldset className="settings-fieldset">
           <legend className="sr-only">Platform</legend>
-          <div style={{ display: 'flex', gap: 6, marginBottom: '2em' }}>
+          <div className="radio-chip-group">
             {[
               { value: 'web',    label: 'Web'    },
               { value: 'native', label: 'Native' },
@@ -127,15 +103,10 @@ export default function SettingsPanel({
       </div>
 
       {/* Typeahead */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 'var(--space-5)',
-      }}>
+      <div className="settings-toggle-row">
         <div>
-          <label htmlFor="toggle-typeahead" style={{ fontSize: 'var(--fs-sub)', fontWeight: 500, marginBottom: 0, display: 'block' }}>Typeahead</label>
-          <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginTop: 2 }}>
+          <label htmlFor="toggle-typeahead" className="settings-toggle-label">Typeahead</label>
+          <p className="settings-toggle-desc">
             {typeahead ? 'Results appear as you type' : 'Results appear on Search / Enter'}
           </p>
         </div>
@@ -143,12 +114,10 @@ export default function SettingsPanel({
       </div>
 
       {/* ── Appearance ──────────────────────────────── */}
-      <h3 style={{ ...SECTION, borderTop: '1px solid var(--border)', paddingTop: 'var(--space-4)' }}>
-        Appearance
-      </h3>
-      <fieldset style={{ border: 'none', padding: 0 }}>
+      <h3 className="settings-section-heading settings-section-heading--divided">Appearance</h3>
+      <fieldset className="settings-fieldset">
         <legend className="sr-only">Theme</legend>
-        <div style={{ display: 'flex', gap: 6, marginBottom: '2em' }}>
+        <div className="radio-chip-group">
           {[
             { value: 'light', label: 'Light' },
             { value: 'auto',  label: 'Auto'  },
@@ -167,88 +136,51 @@ export default function SettingsPanel({
       </fieldset>
 
       {/* ── AI Assist ───────────────────────────────── */}
-      <h3 style={{ ...SECTION, borderTop: '1px solid var(--border)', paddingTop: 'var(--space-4)' }}>
-        AI Assist
-      </h3>
+      <h3 className="settings-section-heading settings-section-heading--divided">AI Assist</h3>
 
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 'var(--space-4)',
-      }}>
+      <div className="settings-toggle-row settings-toggle-row--sm">
         <div>
-          <label htmlFor="toggle-ai" style={{ fontSize: 'var(--fs-sub)', fontWeight: 500, marginBottom: 0, display: 'block' }}>Enable AI assist</label>
-          <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)', marginTop: 2 }}>
-            Rewrites text based on your refinement notes
-          </p>
+          <label htmlFor="toggle-ai" className="settings-toggle-label">Enable AI assist</label>
+          <p className="settings-toggle-desc">Rewrites text based on your refinement notes</p>
         </div>
         <Toggle id="toggle-ai" checked={aiEnabled} onChange={onToggleAi} />
       </div>
 
-      <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-muted)' }}>
+      <p>
         API keys are stored locally in your browser (<code>localStorage</code>) and sent only to
         the AI provider&rsquo;s own API — never to any intermediate server.
         You supply your own key; usage is billed directly to your account.
       </p>
-      <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-faint)' }}>
+      <p>
         This app stores five things in <code>localStorage</code>: your theme preference,
         your platform filter (Web/Native), your search mode (typeahead on/off),
         your active AI provider, and your API key(s).
         No personal data, usage data, or corpus content is collected or transmitted by this app.
       </p>
 
-      <div style={{ marginBottom: '2em' }}>
-        <label
-          htmlFor="active-provider"
-          style={{ fontSize: 'var(--fs-body)', color: 'var(--text)', display: 'block', marginBottom: 4 }}
-        >
+      <div className="settings-provider-group">
+        <label htmlFor="active-provider" className="settings-field-label">
           Active provider
         </label>
-        <div style={{ position: 'relative' }}>
+        <div className="settings-select-wrap">
           <select
             id="active-provider"
             value={activeProvider}
             onChange={e => setActiveProvider(e.target.value)}
             disabled={!aiEnabled}
-            style={{
-              width: '100%',
-              padding: '6px 30px 6px 10px',
-              fontSize: 'var(--fs-body)',
-              background: 'var(--bg-subtle)',
-              border: '1px solid var(--border-control)',
-              borderRadius: 'var(--radius)',
-              color: aiEnabled ? 'var(--text)' : 'var(--text-disabled)',
-              cursor: aiEnabled ? 'default' : 'not-allowed',
-              appearance: 'none',
-              WebkitAppearance: 'none',
-            }}
+            className="settings-select"
           >
             {PROVIDERS.map(p => (
               <option key={p.id} value={p.id}>{p.label}</option>
             ))}
           </select>
-          <ChevronDown
-            size={14}
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              right: 10,
-              top: '50%',
-              transform: 'translateY(-50%)',
-              pointerEvents: 'none',
-              color: aiEnabled ? 'var(--text-faint)' : 'var(--text-faint)',
-            }}
-          />
+          <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
         </div>
       </div>
 
       {PROVIDERS.filter(p => p.id === activeProvider).map(p => (
-        <div key={p.id} style={{ marginBottom: 'var(--space-2)' }}>
-          <label
-            htmlFor={`apikey-${p.id}`}
-            style={{ fontSize: 'var(--fs-body)', color: 'var(--text)', display: 'block', marginBottom: 3 }}
-          >
+        <div key={p.id} className="settings-key-group">
+          <label htmlFor={`apikey-${p.id}`} className="settings-field-label">
             {p.label}
           </label>
           <input
@@ -258,33 +190,15 @@ export default function SettingsPanel({
             onChange={e => setKeys(prev => ({ ...prev, [p.id]: e.target.value }))}
             placeholder={p.placeholder}
             disabled={!aiEnabled}
-            style={{
-              width: '100%',
-              padding: '6px 10px',
-              fontSize: 'var(--fs-body)',
-              background: 'var(--bg-subtle)',
-              border: '1px solid var(--border-control)',
-              borderRadius: 'var(--radius)',
-              color: aiEnabled ? 'var(--text)' : 'var(--text-disabled)',
-              cursor: aiEnabled ? 'text' : 'not-allowed',
-            }}
+            className="settings-key-input"
           />
         </div>
       ))}
 
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 'var(--space-4)' }}>
-        <button
-          onClick={handleSave}
-          className="btn-accent"
-          style={{
-            padding: '7px 16px',
-            fontSize: 'var(--fs-body)',
-            borderRadius: 'var(--radius)',
-            width: isDesktop ? 'auto' : '100%',
-          }}
-        >
+      <div className="settings-save-row">
+        <button onClick={handleSave} className="btn-accent settings-save-btn">
           {saved
-            ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" style={{ display: 'inline-block', verticalAlign: '-0.15em', marginRight: 4 }} />Saved</>
+            ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />Saved</>
             : 'Save'
           }
         </button>
@@ -295,30 +209,8 @@ export default function SettingsPanel({
 
 function RadioChip({ name, value, label, current, onChange }) {
   const isActive = current === value
-  const [focused, setFocused] = useState(false)
   return (
-    <label
-      onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
-      style={{
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 6,
-        padding: '7px 0',
-        borderRadius: 'var(--radius)',
-        border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border-control)'}`,
-        background: isActive ? 'var(--accent-bg)' : 'var(--bg-subtle)',
-        color: isActive ? 'var(--accent-text)' : 'var(--text-muted)',
-        cursor: 'pointer',
-        fontSize: 'var(--fs-body)',
-        fontWeight: isActive ? 500 : 400,
-        transition: 'all 0.1s',
-        outline: focused ? '2px solid var(--focus)' : 'none',
-        outlineOffset: focused ? 2 : 0,
-      }}
-    >
+    <label className={`radio-chip${isActive ? ' radio-chip--active' : ''}`}>
       <input
         type="radio"
         name={name}
@@ -327,91 +219,29 @@ function RadioChip({ name, value, label, current, onChange }) {
         onChange={() => onChange(value)}
         className="sr-only"
       />
-      <span style={{
-        width: 8,
-        height: 8,
-        borderRadius: '50%',
-        background: isActive ? 'var(--accent-text)' : 'transparent',
-        border: isActive ? 'none' : '1.5px solid var(--text-muted)',
-        flexShrink: 0,
-        transition: 'all 0.1s',
-      }} aria-hidden="true" />
+      <span className="radio-chip__indicator" aria-hidden="true" />
       {label}
     </label>
   )
 }
 
 function Toggle({ id, checked, onChange }) {
-  const [hovered, setHovered] = useState(false)
-  const trackBg = checked
-    ? (hovered ? 'var(--accent-text)' : 'var(--accent-bg)')
-    : 'var(--border)'
-  const trackBorder = checked
-    ? (hovered ? 'var(--accent-text)' : 'var(--accent)')
-    : 'var(--border-control)'
-
   return (
-    <span
-      style={{ position: 'relative', display: 'inline-flex', width: 40, height: 22, flexShrink: 0 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+    <span className="toggle">
       <input
         type="checkbox"
         role="switch"
         id={id}
         checked={checked}
         onChange={onChange}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          opacity: 0,
-          margin: 0,
-          cursor: 'pointer',
-          zIndex: 1,
-        }}
+        className="toggle__input"
       />
-      <span aria-hidden="true" style={{
-        width: 40, height: 22,
-        borderRadius: 11,
-        background: trackBg,
-        border: `1px solid ${trackBorder}`,
-        position: 'relative',
-        transition: 'background 0.15s, border-color 0.15s',
-        pointerEvents: 'none',
-      }}>
-        <span style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 16, height: 16,
-          borderRadius: '50%',
-          background: '#fff',
-          outline: checked ? '1.5px solid var(--accent)' : '1.5px solid var(--border-control)',
-          outlineOffset: 0,
-          position: 'absolute',
-          top: 3,
-          left: checked ? 21 : 3,
-          transition: 'left 0.2s, outline 0.2s',
-        }}>
-          {checked ? (
-            <span style={{
-              display: 'block',
-              width: 2, height: 8,
-              borderRadius: 1,
-              background: hovered ? 'var(--accent-bg)' : 'var(--accent)',
-            }} />
-          ) : (
-            <span style={{
-              display: 'block',
-              width: 8, height: 8,
-              borderRadius: '50%',
-              border: '1.5px solid var(--border-control)',
-              background: 'transparent',
-            }} />
-          )}
+      <span aria-hidden="true" className="toggle__track">
+        <span className="toggle__thumb">
+          {checked
+            ? <span className="toggle__check" />
+            : <span className="toggle__ring" />
+          }
         </span>
       </span>
     </span>

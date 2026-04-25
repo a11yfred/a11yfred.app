@@ -11,21 +11,12 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
   }
 
   return (
-    <search aria-label="Defect search" style={{ display: 'block', marginBottom: 'var(--space-4)' }}>
-      <label
-        htmlFor="defect-search"
-        style={{
-          display: 'block',
-          fontSize: 'var(--fs-body)',
-          fontWeight: 500,
-          color: 'var(--text-muted)',
-          marginBottom: 'var(--space-2)',
-        }}
-      >
+    <search aria-label="Defect search" className="search-bar">
+      <label htmlFor="defect-search" className="search-label">
         Describe the defect or observation
       </label>
-      <div style={{ display: 'flex', gap: 8 }}>
-        <div style={{ position: 'relative', flex: 1 }}>
+      <div className="search-row">
+        <div className="search-input-wrap">
           <input
             ref={inputRef}
             id="defect-search"
@@ -36,43 +27,13 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
             placeholder="e.g. modal close button no label"
             autoComplete="off"
             spellCheck={false}
-            style={{
-              width: '100%',
-              minHeight: '3rem',
-              padding: query ? 'var(--space-3) 2.5rem var(--space-3) var(--space-4)' : 'var(--space-3) var(--space-4)',
-              fontSize: 'var(--fs-sub)',
-              lineHeight: 1.5,
-              background: 'var(--bg-subtle)',
-              border: '1px solid var(--border-control)',
-              borderRadius: 'var(--radius)',
-              color: 'var(--text)',
-              transition: 'border-color 0.15s',
-              boxSizing: 'border-box',
-              marginBottom: 0,
-            }}
-            onFocus={e => e.target.style.borderColor = 'var(--focus)'}
-            onBlur={e => e.target.style.borderColor = 'var(--border-control)'}
+            className={`search-input${query ? ' search-input--has-value' : ''}`}
           />
           {query && (
             <button
               onClick={() => { onChange(''); inputRef.current?.focus() }}
               aria-label="Clear search"
-              className="btn-accent"
-              style={{
-                position: 'absolute',
-                right: 8,
-                top: '50%',
-                transform: 'translateY(-50%)',
-                width: 24,
-                height: 24,
-                borderRadius: '50%',
-                fontSize: 'var(--fs-body)',
-                lineHeight: 1,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              className="btn-accent search-clear-btn"
             >
               <X size={12} strokeWidth={2.5} aria-hidden="true" />
             </button>
@@ -82,43 +43,20 @@ export default function SearchBar({ query, onChange, onSearch, typeahead }) {
           <button
             onClick={onSearch}
             disabled={query.length < 2}
-            style={{
-              padding: 'var(--space-3) var(--space-4)',
-              fontSize: 'var(--fs-sub)',
-              fontWeight: 500,
-              borderRadius: 'var(--radius)',
-              border: '1px solid var(--accent)',
-              background: 'var(--accent-bg)',
-              color: 'var(--accent-text)',
-              opacity: query.length < 2 ? 0.5 : 1,
-              cursor: query.length < 2 ? 'not-allowed' : 'pointer',
-              whiteSpace: 'nowrap',
-              alignSelf: 'flex-end',
-              minHeight: '3rem',
-            }}
+            className="btn-accent search-submit-btn"
           >
             Search
           </button>
         )}
       </div>
       {query.length === 0 && (
-        <p style={{ fontSize: 'var(--fs-body)', color: 'var(--text-faint)', marginTop: 'var(--space-2)' }}>
+        <p className="search-hint">
           {typeahead ? (
             <>
               Results appear as you type. This can be changed from{' '}
               <button
                 onClick={() => navigate('/settings')}
-                style={{
-                  fontSize: 'inherit',
-                  color: 'var(--accent-text)',
-                  background: 'none',
-                  border: 'none',
-                  padding: 0,
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
-                onMouseLeave={e => e.currentTarget.style.color = 'var(--accent-text)'}
+                className="search-hint-link"
               >
                 Settings
               </button>.

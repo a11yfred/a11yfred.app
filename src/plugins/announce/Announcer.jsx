@@ -46,34 +46,12 @@ export function Announcer() {
 
   return (
     <>
-      <div
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        style={SR_ONLY}
-      >
+      <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
         {politeMsg}
       </div>
-      <div
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-        style={SR_ONLY}
-      >
+      <div role="alert" aria-live="assertive" aria-atomic="true" className="sr-only">
         {assertiveMsg}
       </div>
     </>
   )
-}
-
-const SR_ONLY = {
-  position: 'absolute',
-  width: 1,
-  height: 1,
-  padding: 0,
-  margin: -1,
-  overflow: 'hidden',
-  clip: 'rect(0,0,0,0)',
-  whiteSpace: 'nowrap',
-  borderWidth: 0,
 }

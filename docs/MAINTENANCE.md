@@ -60,6 +60,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 ## Performance & functionality
 
+- [ ] **CSS minification** — enable `css: { transformer: 'lightningcss' }` in `vite.config.js` build options; confirm output is minified (JS is already minified via esbuild by default)
 - [ ] **Bundle size** — `npm run build`; total < 200 kB gzipped; note individual chunk sizes
 - [ ] **Cold load** — incognito + Slow 3G; search is usable within 3 seconds
 - [ ] **No console errors** — production build in DevTools; zero errors, zero unexpected warnings
