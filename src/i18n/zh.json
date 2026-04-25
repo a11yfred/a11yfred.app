@@ -19,9 +19,9 @@
   "search.hint_settings_link": "设置",
 
   "results.aria_label": "缺陷候选",
-  "results.no_results_announce": ""{query}"无结果。请尝试组件名称、元素类型或其他短语。",
+  "results.no_results_announce": "\"{query}\"无结果。请尝试组件名称、元素类型或其他短语。",
   "results.no_results_aria": "无结果",
-  "results.no_results_heading": ""{query}"无结果",
+  "results.no_results_heading": "\"{query}\"无结果",
   "results.no_results_body": "请尝试组件名称、元素类型或其他短语。",
 
   "detail.fails": "失败：",

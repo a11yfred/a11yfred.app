@@ -294,6 +294,7 @@ function Toggle({ id, checked, onChange }) {
         id={id}
         checked={checked}
         onChange={onChange}
+        onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onChange(e) } }}
         className="toggle__input"
       />
       <span aria-hidden="true" className="toggle__track">
