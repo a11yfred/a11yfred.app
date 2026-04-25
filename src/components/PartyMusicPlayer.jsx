@@ -17,6 +17,9 @@ export default function PartyMusicPlayer({ active }) {
 
   useEffect(() => {
     setPos(rndPos())
+    stopRef.current?.()
+    stopRef.current = null
+    setPlaying(false)
   }, [route])
 
   useEffect(() => {

@@ -33,13 +33,14 @@ function guitar(ctx, dest, hz, t, dur) {
     osc.stop(t + dur + 0.02)
   }
 
+  // Very light waveshaper + lowpass — sawtooth already has harmonics
   const dist = ctx.createWaveShaper()
-  dist.curve = makeDistortionCurve(150)
-  dist.oversample = '4x'
+  dist.curve = makeDistortionCurve(30)
+  dist.oversample = '2x'
 
   const lp = ctx.createBiquadFilter()
   lp.type = 'lowpass'
-  lp.frequency.value = 2400
+  lp.frequency.value = 1800
 
   const g = ctx.createGain()
   g.gain.setValueAtTime(0, t)
