@@ -1089,7 +1089,7 @@ input.search-input:focus {
 }
 
 .settings-save-btn {
-  padding: 7px 16px;
+  padding: var(--space-3) var(--space-4);
   font-size: var(--fs-body);
   border-radius: var(--radius);
   width: 100%;
@@ -1153,7 +1153,8 @@ input.search-input:focus {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 7px 0.5em;
+  padding: var(--space-3) var(--space-4);
+  min-height: 3rem;
   border-radius: var(--radius);
   border: 1px solid var(--border-control);
   background: var(--bg-subtle);
@@ -1161,7 +1162,7 @@ input.search-input:focus {
   cursor: pointer;
   font-size: var(--fs-body);
   font-weight: 400;
-  line-height: 1em;
+  white-space: nowrap;
   text-align: center;
   transition: all var(--duration-fast);
 }
@@ -1236,6 +1237,7 @@ input.search-input:focus {
   .radio-chip {
     border-radius: 0;
     margin-left: -1px;
+    padding-inline: var(--space-3);
     font-size: var(--fs-small);
   }
 
@@ -1459,7 +1461,8 @@ input.search-input:focus {
 }
 
 .detail-refine {
-  margin-top: 1rem;
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
 }
 
 .detail-refine-hint {
