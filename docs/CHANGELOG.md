@@ -4,6 +4,53 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-25 — Internationalization: 10-language UI support, I18nProvider, privacy button layout
+
+### I18n system (`src/i18n/index.jsx`, `src/i18n/en.json`, …)
+
+- Zero-dependency custom i18n: React Context + flat-key JSON + `{placeholder}` interpolation; no react-i18next or i18next needed
+- `I18nProvider` wraps `AppContent` in `App.jsx`; `useT()` hook returns the memoized `t(key, vars)` function in any child component
+- Static imports of 10 locale files at module level into a `MESSAGES` map; locale lookup with double fallback: unknown locale → `MESSAGES.en`, missing key → English key → key literal
+- `AppShell` (state + `I18nProvider` wrapper) split from `AppContent` (all logic + render, calls `useT()`); a component cannot consume its own context — this split is the canonical fix
+
+### Locale files (`src/i18n/`)
+
+- 10 complete locale files: `en.json` (source of truth), `es.json`, `fr.json`, `de.json`, `nl.json`, `ja.json`, `tl.json` (Filipino/Tagalog, ISO 639-1), `zh.json`, `ko.json`, `sv.json`
+- ~93 keys per file covering all UI strings across SearchBar, ResultList, DetailPanel, SettingsPanel, App (Header, Footer, PartyBanner), and all `announce()` calls
+- All translations generated with AI; `settings.privacy_body_translations` key discloses this in native language in every locale
+- Filipino uses ISO code `tl`; language label reads "Filipino (Tagalog)" per Philippine Government conventions
+
+### All UI components wired (`src/App.jsx`, `src/components/`)
+
+- `SearchBar.jsx` — all labels, aria-labels, placeholder, hint text, button text via `t()`; platform label reuses `settings.platform_web/native` keys to stay DRY
+- `ResultList.jsx` — `aria-label`, no-results heading and body, no-results `announce()` all via `t()` with `{query}` interpolation
+- `DetailPanel.jsx` — all labels, button aria-labels, modal headings/bodies, refine hints via `t()`; copy and reset `announce()` calls use `t()` with `{label}` interpolation; `label` strings pre-computed in `DetailPanel` and passed down to `Field`
+- `SettingsPanel.jsx` — all section headings, radio chip labels, toggle labels, provider labels, API key placeholders via `t()`; `PROVIDERS` array uses `placeholderKey` (a translation key) instead of a literal string; theme chips use `labelKey` pattern; `usePageTitle(t('settings.heading'))`
+- `App.jsx` — `Header`, `Footer`, `PartyBanner` each call `useT()` directly; footer credit splits on `'Mikey Ilagan'` via `.split()` for cross-locale `<strong>` markup; party `announce()` strings via `t()`; BottomSheet label and Drawer label via `t()`
+
+### Language selector expanded (`src/components/SettingsPanel.jsx`)
+
+- `LANGUAGES` array now has 10 entries: English, Español, Français, Deutsch, Nederlands, Svenska, 中文（简体）, 日本語, 한국어, Filipino (Tagalog)
+- Swedish added for the t12t (tillgänglighet) Scandinavian accessibility community; Chinese and Korean for East Asian accessibility communities
+
+### Privacy button layout (`src/components/SettingsPanel.jsx`, `src/index.css`)
+
+- Privacy button moved from between AI toggle and provider selector into a new `.settings-footer-row` at the bottom of settings
+- Desktop (≥ 768px): flexbox row, `justify-content: space-between` — privacy button left-aligned, Save button right-aligned
+- Mobile: flex column — Save button on top (`order: -1`), privacy button below
+- CSS specificity fix: `.settings-save-btn` base rule placed before `.settings-footer-row .settings-save-btn` to satisfy `no-descending-specificity` linter rule
+
+### Privacy modal extended
+
+- Privacy modal now has three paragraphs: existing API key storage disclosure, existing localStorage key inventory, new `settings.privacy_body_translations` AI translation disclosure
+- Disclosure states: translations were generated with AI and may contain errors; no custom or user-entered data is ever sent out for translation
+
+### `localStorage` count updated
+
+- Inventory is now six keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `apikey_<provider>`
+
+---
+
 ## 2026-04-25 — Party mode enhancements: sounds, sparkles, music, visual polish
 
 ### Party mode sound effects (`src/utils/partySounds.js`, `src/App.jsx`)

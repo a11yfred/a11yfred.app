@@ -8,6 +8,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 | Date | Passed | Failed | Deferred | N/A | Notes |
 | ---- | ------ | ------ | -------- | --- | ----- |
+| 2026-04-25 | 15 | 0 | 3 | 4 | i18n: 10-language support, I18nProvider, useT(), all components wired; privacy button layout; CONTRIBUTING.md PR template reference; localStorage count updated to 6; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-25 | 14 | 0 | 3 | 4 | Party mode sounds (SFX), sparkles, music player, radial gradient fix, banner animation, chip stars, cursor size, assertive announce hold; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-25 | 14 | 0 | 3 | 4 | Party mode, confetti, copy guard, LinkedIn footer, search label/hint/icon, rewrite btn height; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-25 | 15 | 0 | 4 | 4 | Settings↔panel navigation; reset confirmation modal; BottomSheet chrome fix; SC bullets; liveSearch rename; language selector; corpus expanded to 54; Ko-fi letter; N/A: font self-hosting, bundle size, Umami, favicon |
@@ -98,13 +99,15 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 ---
 
-## i18n (future — once react-i18next is wired up)
+## i18n
 
-- [ ] **String coverage** — all new UI text uses `t('key')`, not hardcoded English strings
-- [ ] **Locale file parity** — all keys in `en/translation.json` exist in every other locale file
-- [ ] **Corpus translation sync** — new/edited corpus entries re-translated across all target languages
-- [ ] **Technical term review** — machine-translated WCAG terminology flagged for human review
-- [ ] **`lang` attribute** — `<html lang>` updates correctly when user switches language
+The custom i18n system (`src/i18n/`) is live with 10 locale files and `useT()` wired into all components.
+
+- [ ] **String coverage** — any new UI text must use `t('key')` from `src/i18n/en.json`; never hardcode English strings in components
+- [ ] **Locale file parity** — all keys in `en.json` must exist in every other locale file (`es`, `fr`, `de`, `nl`, `sv`, `zh`, `ko`, `ja`, `tl`); add missing keys with an English fallback value when adding new strings
+- [ ] **Corpus translation sync** — when `scripts/translate.js` is written, re-run it whenever corpus entries are added or edited; review WCAG terminology in translated output before committing
+- [ ] **Technical term review** — after any machine translation batch, flag corpus entries using WCAG-specific terms (accessible name, focus trap, landmark, live region, ARIA role) for human review
+- [ ] **`lang` attribute** — `<html lang>` updates correctly when user switches language; verify with screen reader after any changes to `App.jsx` language effect
 
 ---
 

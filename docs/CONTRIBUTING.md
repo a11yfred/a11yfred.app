@@ -63,6 +63,12 @@ Open a GitHub Issue. No template required — just describe what you saw or what
 
 ---
 
+## Pull request template
+
+A PR template lives at `.github/PULL_REQUEST_TEMPLATE.md` and loads automatically when you open a pull request on GitHub. Fill out the relevant sections — you can delete any that don't apply to your change.
+
+---
+
 ## What's not in scope
 
 The corpus in this repo (`corpus.json`) is the **public** version — entries sourced entirely from publicly available accessibility guidance (WCAG, WebAIM, Deque, axe-core). Private or personal audit data will not be accepted.

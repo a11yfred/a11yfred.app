@@ -38,16 +38,16 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ## Internationalization (i18n)
 
-Target languages: English, Spanish, German, Dutch, French, Japanese, Tagalog/Filipino.
+Supported languages: English, Español, Français, Deutsch, Nederlands, Svenska, 中文（简体）, 日本語, 한국어, Filipino (Tagalog).
 
-- [ ] **Install react-i18next** `[i18n]` `[code]` — run `npm install react-i18next i18next`; create `src/i18n.js` with language detection and fallback to English; wrap `<App>` in `<I18nextProvider>` in `main.jsx`; the language selector and `localStorage` key (`language`) are already in place
-- [ ] **UI string extraction** `[i18n]` `[code]` — audit every JSX component and extract all visible English strings into `src/locales/en/translation.json`; replace hardcoded strings with `t('key')` calls; stub all other locale files with English keys as placeholders
-- [x] **Language selector in Settings** `[i18n]` `[ux]` — selector added under Appearance; persists to `localStorage` as `'language'`; defaults to `navigator.language`; applies to `document.documentElement.lang`
+- [x] **Zero-dep i18n system** `[i18n]` `[code]` — `src/i18n/index.jsx` with React Context + `useT()` hook; flat-key JSON locale files; `{placeholder}` interpolation via RegExp; double-fallback (unknown locale → en, missing key → en key → key literal); no react-i18next or i18next needed
+- [x] **UI string extraction** `[i18n]` `[code]` — all visible strings extracted to `src/i18n/en.json` (~93 keys); all components wired with `useT()`: SearchBar, ResultList, DetailPanel, SettingsPanel, Header, Footer, PartyBanner
+- [x] **10 locale files** `[i18n]` — complete translations for en, es, fr, de, nl, sv, zh, ko, ja, tl (Filipino/Tagalog); AI-generated; all include translation disclosure key
+- [x] **Language selector in Settings** `[i18n]` `[ux]` — selector added under Appearance; persists to `localStorage` as `'language'`; defaults to `navigator.language`; 10 languages listed
 - [x] **Dynamic `lang` attribute** `[i18n]` `[a11y]` — `document.documentElement.lang` updates on language change in `App.jsx`
-- [ ] **Translation service** `[i18n]` `[ai]` — create `src/services/translationService.js` following the same pattern as `aiService.js`; implement Google Cloud Translation API (supports all 7 target languages including Filipino/`fil`); user supplies their own Google Cloud API key in Settings; the service translates a string to the active locale on demand
-- [ ] **Corpus pre-translation** `[i18n]` `[corpus]` — run the translation service once against all `mikeys-corpus.json` entries and store results per-language as a `translations` object on each entry: `{ "es": { "desc": "...", "rem": "..." }, "de": {...}, ... }`; `dataService.js` returns the translated fields when the active locale is not English
-- [ ] **AI refinement translation pass** `[i18n]` `[ai]` — after `getAiRefinement` rewrites `desc` and `rem`, if the active locale is not English, pass the results through `translationService` automatically before updating the component state
-- [ ] **WCAG term review** `[i18n]` `[corpus]` — after any machine translation batch, flag corpus entries that use specialized WCAG terminology (accessible name, focus trap, landmark, live region, ARIA role) for human review; machine translation of these terms is unreliable and may not match established terminology in each language
+- [ ] **Corpus pre-translation script** `[i18n]` `[corpus]` — write `scripts/translate.js` (Node.js) that calls an AI provider to translate all `corpus.json` `desc` and `rem` fields into each supported locale; output as `corpus.{lang}.json` files; update `dataService.js` to accept a `locale` param and load the appropriate file; run once, review for WCAG terminology accuracy before committing
+- [ ] **AI refinement locale pass** `[i18n]` `[ai]` — after `getAiRefinement` rewrites `desc` and `rem`, if the active locale is not English, have the AI respond in the active locale directly (update the system prompt to instruct the model to reply in `{locale}`) rather than post-translating
+- [ ] **WCAG term review** `[i18n]` `[corpus]` — after any corpus translation batch, flag entries that use specialized WCAG terminology (accessible name, focus trap, landmark, live region, ARIA role) for human review; machine translation of these terms is unreliable and may not match established terminology in each language
 
 ---
 
@@ -78,6 +78,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 ## UX / Interaction
 
 - [ ] **Result list arrow key navigation** `[ux]` `[a11y]` — the result list uses `role="listbox"` and `role="option"` but does not yet implement arrow key navigation; add `onKeyDown` handlers to the list container so that pressing Down/Up moves focus between options, and pressing Home/End jumps to the first/last option; this completes the ARIA listbox keyboard contract (WCAG 2.1.1)
+- [ ] **Toggle Enter key support** `[ux]` `[a11y]` — the `Toggle` component (checkbox with `role="switch"`) in SettingsPanel responds to Space but not Enter; native checkboxes only toggle on Space, but `role="switch"` on a non-native element should also respond to Enter per the ARIA authoring practices; add an `onKeyDown` handler that calls `onChange` when `e.key === 'Enter'` to match expected keyboard behavior (WCAG 2.1.1)
 - [ ] **How to use page** `[ux]` — add an onboarding modal or help page that explains the workflow: search → select → add location prefix → refine → copy; trigger it on first visit (check a `localStorage` flag) or via a Help button in the header; the content should be brief enough to read in under 30 seconds
 - [ ] **About / data sources page** `[ux]` `[corpus]` — when an About or How-to page is created, include a section describing how the public corpus was compiled and the sources used: WCAG 2.2 Understanding docs (W3C/WAI), axe-core rule descriptions (Deque), WebAIM articles, and Deque University; explain that entries are written in plain language and near-duplicates are consolidated; this gives users confidence in the data and gives proper credit to the source organizations
 - [ ] **Email results** `[ux]` — add a button to email the selected defect description and remediation to yourself using a `mailto:` link with a pre-populated subject and body; no server required; useful for quickly forwarding a defect write-up from a phone
@@ -112,7 +113,6 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Make both close × buttons match exactly** `[design]` — defects panel close button and settings close button should use the same size and placement
 - [ ] **Search results heading and count** `[a11y]` `[ux]` — add an h2 "X results" above the list; move focus there when results appear (already in Immediate above)
 - [ ] **Ko-fi link in footer or settings** `[ux]` — add a Ko-fi link alongside the Bluesky footer link or in Settings
-- [ ] **react-i18next integration** `[i18n]` `[code]` — install and wire up the library; extract UI strings; the selector and localStorage key are ready
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
 
 ---
@@ -175,11 +175,17 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 - [ ] **Migrate inline spacing to tokens** `[code]` — audit all components for raw pixel or rem values in inline styles that are not referencing `var(--space-*)`; replace with the nearest token; this is the last major inline-value migration after font sizes (done) and priority colors (done in this session)
 - [ ] **CSS Modules** `[code]` — evaluate migrating from inline styles to CSS Modules as the component count grows; CSS Modules give better tooling (autocomplete, dead-code detection) without adding a CSS-in-JS runtime; not urgent while the component set is small
-- [ ] **PR template** `[code]` — reference `.github/PULL_REQUEST_TEMPLATE.md` in `CONTRIBUTING.md` so contributors know to use it
+- [x] **PR template** `[code]` — `.github/PULL_REQUEST_TEMPLATE.md` referenced in `CONTRIBUTING.md`
 
 ---
 
 ## Resolved
+
+- [x] **Zero-dep i18n system** `[i18n]` `[code]` — `src/i18n/index.jsx`: React Context + `useT()` hook; flat-key JSON; `{placeholder}` interpolation; double-fallback chain; no external library; `AppShell`/`AppContent` split so provider and consumer are separate components
+- [x] **UI string extraction** `[i18n]` `[code]` — all ~93 UI strings extracted to `src/i18n/en.json`; all components (SearchBar, ResultList, DetailPanel, SettingsPanel, Header, Footer, PartyBanner) wired with `useT()`; all `announce()` calls use translated strings
+- [x] **10 locale files** `[i18n]` — en, es, fr, de, nl, sv, zh, ko, ja, tl; complete AI-generated translations; `settings.privacy_body_translations` disclosure key in every locale
+- [x] **Privacy button layout** `[design]` `[ux]` — moved to `.settings-footer-row`; desktop: privacy left + Save right; mobile: Save on top, privacy below; privacy modal extended with AI translation disclosure paragraph
+- [x] **PR template referenced in CONTRIBUTING.md** `[code]` — "No template required" updated to reference `.github/PULL_REQUEST_TEMPLATE.md`
 
 - [x] **Settings ↔ defect panel navigation** `[ux]` `[a11y]` — opening Settings while a panel is selected preserves the panel state via `keepMounted`; closing Settings restores the panel with edits intact and returns keyboard focus via `focusTrigger`
 - [x] **Reset confirmation modal** `[ux]` — if >70% of a textarea's original text has changed, Reset opens a "Are you sure?" confirmation modal; uses `isSignificantlyChanged` (Levenshtein-based); stacked Yes/No buttons using `.btn-ghost` secondary style

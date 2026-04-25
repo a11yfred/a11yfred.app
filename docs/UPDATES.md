@@ -4,6 +4,32 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 25, 2026 — The app now speaks 10 languages
+
+### Interface translated into 10 languages
+
+All text in the app is now translated: English, Spanish, French, German, Dutch, Swedish, Simplified Chinese, Japanese, Korean, and Filipino (Tagalog). Switch languages in Settings → Appearance → Language.
+
+Everything translates: search labels, placeholder text, hint text, result messages, the defect detail panel (all buttons, modal headings, everything), all Settings labels, party mode announcements, the footer, and all screen reader announcements.
+
+### Translations were done with AI — they may have errors
+
+The translations were generated with AI assistance, not by native speakers. A note has been added to the Privacy & storage information modal to be upfront about this. If you spot a translation error, please open an issue or submit a PR.
+
+No custom or user-entered data (location prefixes, refine notes, anything you type) is ever sent anywhere for translation.
+
+### Three new language additions: Swedish, Chinese, Korean
+
+Swedish was added specifically to reach the t12t (tillgänglighet — Swedish for "accessibility") community in Scandinavia, which is one of the most active international accessibility communities. Simplified Chinese and Korean were added for the large accessibility communities in East Asia.
+
+### Privacy & storage button has a new home
+
+The "Privacy & storage information" button has been moved to the bottom of Settings, on the same row as the Save button. On desktop it sits on the left, across from Save on the right. On mobile, Save comes first and the privacy link sits below it.
+
+The privacy modal now has a third paragraph noting that AI-generated translations may contain errors and confirming that none of your personal data is ever sent out for translation.
+
+---
+
 ## April 25, 2026 — Party mode goes wild: sounds, sparkles, music, and more
 
 ### Sounds when you click things
