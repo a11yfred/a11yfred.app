@@ -11,17 +11,21 @@ Three deployment targets are configured. Only one should be active at a time.
 Netlify auto-deploys on every push to `main` when the site is connected in the dashboard.
 
 ### To disable
+
 Add `ignore = "exit 0"` under `[build]` in `netlify.toml`:
+
 ```toml
 [build]
   ignore = "exit 0"
   publish = "dist"
   command = "npm run build"
 ```
+
 This triggers one final build, then skips all future pushes.
 Alternative: **Netlify dashboard → Site settings → Danger zone → Pause site publishing** (no build triggered).
 
 ### To re-enable
+
 Remove the `ignore` line (or unpause in the dashboard).
 
 ---
@@ -33,12 +37,14 @@ Remove the `ignore` line (or unpause in the dashboard).
 Vercel works with private repos on the free Hobby plan.
 
 ### To enable
+
 1. Go to [vercel.com](https://vercel.com) and import the repository.
 2. Vercel auto-detects Vite — no framework preset changes needed.
 3. The `vercel.json` in this repo handles the SPA fallback and security headers.
 4. Disable Netlify (see above) so both aren't deploying on the same push.
 
 ### To disable
+
 In the Vercel dashboard: **Project settings → Git → Disconnect** or pause deployments.
 There is no code-only way to skip Vercel builds (unlike Netlify's `ignore` command).
 
@@ -52,6 +58,7 @@ Currently set to **manual trigger only** — it will not run on push until you o
 Requires the repository to be **public** (GitHub free plan restriction).
 
 ### To enable auto-deploy
+
 1. Make the repository public.
 2. In GitHub: **Settings → Pages → Source → GitHub Actions**.
 3. In `vite.config.js`: uncomment the `REPO_NAME` lines and set the name if deploying
@@ -62,6 +69,7 @@ Requires the repository to be **public** (GitHub free plan restriction).
 5. Disable Netlify (see above).
 
 ### To disable
+
 Re-comment the `push` trigger (revert to `workflow_dispatch` only), or disable the
 workflow in GitHub → Actions → the workflow → ⋯ menu → Disable workflow.
 

@@ -8,6 +8,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 | Date | Passed | Failed | Deferred | N/A | Notes |
 | ---- | ------ | ------ | -------- | --- | ----- |
+| 2026-04-26 | — | — | — | — | Maint checklist overhauled: expanded token audit, dead CSS, SCSS eval, plugin isolation, all-docs accuracy, user-facing content, dependency cleanup, Markdown linting, locale parity (CRITICAL), TODO/MAINT sync; privacy disclosure updated (showVoting added); TODO.md [x] items reordered to section bottoms; deployment section updated for 3 targets |
 | 2026-04-25 | 17 | 0 | 3 | 4 | About panel → Drawer pattern; settings footer Reset+Save paired; section dividers; Privacy btn in About; MAINTENANCE.md parity command + stale items fixed; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-25 | 16 | 0 | 3 | 4 | About panel; Settings Reset All; Phase 2 stubs (Supabase/auth); i18n parity (all 49 locales); dataService mergedCache perf; privacy text updated; btn-secondary added; ESLint argsIgnorePattern; N/A: font self-hosting, bundle size, Umami, favicon |
 | 2026-04-25 | 15 | 0 | 3 | 4 | i18n: 10-language support, I18nProvider, useT(), all components wired; privacy button layout; CONTRIBUTING.md PR template reference; localStorage count updated to 6; N/A: font self-hosting, bundle size, Umami, favicon |
@@ -21,10 +22,12 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 ## Code quality
 
-- [ ] **Token audit** — search for hardcoded values (`#fff`, `14px`, `1rem`) not using `var(--*)` tokens
-- [ ] **Dead code** — remove unused CSS classes, commented-out markup, dead component props, orphaned imports
-- [ ] **DRY pass** — look for repeated inline style patterns that could move to utility classes
-- [ ] **Unused tokens** — check `tokens.css` for custom properties no longer referenced anywhere
+- [ ] **Linters** — run `npm run lint` (ESLint), `npm run lint:css` (Stylelint), and `markdownlint docs/ README.md` (Markdown); fix all errors and warnings before committing; new rule overrides should be justified in a comment
+- [ ] **Token audit** — grep `index.css` and all JSX for hardcoded color values (`#fff`, `#111`, `rgba`, `hsl`), hardcoded sizes that repeat 3+ times (px or em values), and anything that could be a named token; add tokens for values that have clear semantic meaning; update `tokens.css` first, then replace all instances; check that examples in this item stay current after any token additions
+- [ ] **Dead CSS** — search for CSS classes defined in `index.css` that are no longer referenced in any JSX file; look for overwritten rules where a later declaration always wins (specificity or cascade); remove both the dead rule and any workaround selectors that exist only to defeat it; check for commented-out blocks that have not been removed
+- [ ] **DRY pass** — look for repeated inline style patterns that could move to utility classes; three or more identical property+value pairs across unrelated selectors is the threshold
+- [ ] **Unused tokens** — check `tokens.css` for custom properties no longer referenced anywhere in `index.css` or JSX; distinguish between truly dead tokens and tokens reserved for planned features (`--duration-slow`, `--ease-in`, `--mono` are intentional placeholders — do not remove without checking TODO)
+- [ ] **SCSS evaluation** — assess whether CSS custom properties are still sufficient for the current theming and component complexity; if repeated nesting patterns, complex selectors, or mixins would meaningfully reduce duplication, add a TODO item to evaluate SCSS migration; do not migrate without a dedicated session
 
 ---
 
@@ -50,7 +53,8 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 - [ ] **Privacy disclosure** — SettingsPanel disclosure accurately lists all stored keys; update `settings.privacy_body_2` in `en.json` (and propagate to all locale files) whenever storage changes
 - [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget is currently disabled; re-enable only when console errors are resolved and selector patches are verified against live DOM
 - [ ] **Dependency audit** — run `npm audit`; resolve high/critical before release
-- [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates
+- [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates; read changelogs for anything touching a11y, security, or CSP before upgrading
+- [ ] **Dead dependencies** — check `package.json` against actual `import` usage in `src/`; remove any package that is no longer imported anywhere; verify the removal does not break the build
 
 ---
 
@@ -69,12 +73,15 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 ---
 
-## Deployment (Netlify)
+## Deployment
+
+Three targets are configured (Netlify active, Vercel and GitHub Pages dormant). See `docs/DEPLOYING.md` for switching instructions.
 
 - [ ] **Build succeeds** — `npm run build` locally; no Vite errors; chunk sizes within expected ranges
 - [ ] **SPA redirect** — navigate directly to `/#/settings` in a new tab; page loads (not a 404)
-- [ ] **Security headers** — confirm `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` all present in response headers
-- [ ] **`robots.txt` served** — `https://your-site.netlify.app/robots.txt` returns the file with `Disallow: /`
+- [ ] **Security headers** — confirm `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` all present in response headers on the active deployment
+- [ ] **`robots.txt` served** — verify `robots.txt` returns the correct content for the current deployment phase (dev: `Disallow: /`; Phase 3 public: `Allow: /`)
+- [ ] **Active target only** — ensure only one platform is deploying on each push; if switching targets, confirm the previous one is paused or its trigger is disabled (see `docs/DEPLOYING.md`)
 
 ---
 
@@ -95,7 +102,7 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
 
 - [ ] **String coverage** — any new UI text must use `t('key')` from `src/i18n/en.json`; never hardcode English strings in components
 - [ ] **Translate new UI strings** — after adding any new keys to `en.json`, run `ANTHROPIC_API_KEY=... npm run translate` to fill in proper translations for all 49 non-English locale files; the script detects keys still holding English fallback values and translates them in one pass; apply capitalization conventions afterward (sentence case for Romance/Germanic, no change for caseless scripts); this must run as part of every maintenance pass when `en.json` was modified since the last pass
-- [ ] **Locale file parity** — all keys in `en.json` must exist in every other locale file; add missing keys with an English fallback value when adding new strings; run before release:
+- [ ] **Locale file parity (CRITICAL)** — every key added to `en.json` must be added to all 49+ other locale files immediately, using the English value as a placeholder; do not wait for a translation run; a missing key falls back to the key literal at runtime, which is visible to users; run the parity check after every session that modified `en.json`:
 
   ```sh
   node -e "
@@ -120,12 +127,23 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
 
 ---
 
+## Plugins
+
+Plugins (`src/plugins/router/`, `src/plugins/announce/`) are designed to be portable — usable outside this project with no changes.
+
+- [ ] **Import isolation** — verify no plugin file imports from app-level code (`../../App`, `../../hooks`, `../../services`, `../../i18n`, `../../data`); plugins may only import from React, react-dom, and declared external packages
+- [ ] **External dependency audit** — list any non-React external packages imported by plugins (currently: `lucide-react` in `router/`); document these in the plugin's `README.md` under a "Dependencies" heading so any project adopting the plugin knows what to install
+- [ ] **Plugin README accuracy** — verify the export lists and API docs in `src/plugins/router/README.md` and `src/plugins/announce/README.md` match current exported symbols; update if hooks or components were added, renamed, or removed
+
+---
+
 ## Docs
 
 - [ ] **docs/CHANGELOG.md** — entry added for any meaningful code change
 - [ ] **docs/UPDATES.md** — plain-language entry for anything user-facing
-- [ ] **docs/TODO.md** — for any `[x]` items within an active section (Immediate, UX, etc.): wrap the item text in `~~strikethrough~~` and move it to the bottom of that same section; for items fully retired from the backlog, move them instead to `## Resolved` with strikethrough; never leave a checked `[x]` item at the top of a section among unchecked items
-- [ ] **README.md** — project structure matches actual files; phase table updated if status changes
-- [ ] **docs/CONTRIBUTING.md** — defect schema matches `corpus.json`; update if fields are added or renamed
-- [ ] **docs/MAINTENANCE.md** — add a row to the run log above; add/retire sections as systems change
-- [ ] **About panel content** — verify "Coming Soon" section reflects current roadmap; remove items that have shipped; update feature descriptions as capabilities expand
+- [ ] **docs/TODO.md** — move any `[x]` items to the bottom of their section with `~~strikethrough~~`; fully retired backlog items go to `## Resolved`; recurring sweep tasks that belong in MAINTENANCE.md should be removed from TODO; one-time project tasks that do not recur should not appear in MAINTENANCE.md
+- [ ] **All docs accuracy** — review every file in `docs/` and `README.md`; feature descriptions must match current implementation; remove stale content; deploy section in README must reflect all configured targets; project structure must list actual files with accurate descriptions
+- [ ] **docs/CONTRIBUTING.md** — defect schema example matches `corpus.json` fields exactly; update if fields are added or renamed
+- [ ] **docs/MAINTENANCE.md** — add a row to the run log; add or retire sections as systems change; verify all checklist items are still relevant and actionable
+- [ ] **TODO ↔ MAINT sync** — scan `docs/TODO.md` for any recurring sweep-style tasks that belong in MAINTENANCE.md instead; scan MAINTENANCE.md for any one-time project tasks that belong in TODO.md; recurring items (audits, checks, reviews) live here; one-time items (build a feature, migrate a system, wire a provider) live in TODO
+- [ ] **User-facing content accuracy** — open the About panel and read every section (What Is This, How to Use It, Notable Features, Coming Soon); verify descriptions match shipped behavior; remove Coming Soon items that have shipped; update the Privacy & Storage modal to list all `localStorage` keys accurately (theme, language, platform, liveSearch, showVoting, ai_provider, apikey_\*, defect ratings); run this check whenever a new feature stores data or a Coming Soon item ships
