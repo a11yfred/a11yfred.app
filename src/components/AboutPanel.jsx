@@ -28,6 +28,7 @@ export default function AboutPanel({ onClose }) {
       <section className="about-section">
         <h3 className="about-section-heading">{t('about.what_heading')}</h3>
         <p className="about-body">{t('about.what_body')}</p>
+        <p className="about-body">{t('about.what_wcag')}</p>
       </section>
 
       <section className="about-section">

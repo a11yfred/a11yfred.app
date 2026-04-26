@@ -113,6 +113,19 @@ export default function SettingsPanel({
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
   const [pendingLanguage, setPendingLanguage] = useState(language)
   const [changedLanguage, setChangedLanguage] = useState(false)
+  const [savedKeys, setSavedKeys] = useState(() => {
+    const saved = {}
+    PROVIDERS.forEach(p => {
+      saved[p.id] = localStorage.getItem(`apikey_${p.id}`) || ''
+    })
+    return saved
+  })
+  const [savedProvider, setSavedProvider] = useState(
+    () => localStorage.getItem('ai_provider') || 'anthropic'
+  )
+  const [unsavedOpen, setUnsavedOpen] = useState(false)
+  const hasUnsaved = activeProvider !== savedProvider ||
+    PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id])
   const didMountLang = useRef(false)
 
   // Sync pendingLanguage if the language prop changes externally (e.g. Reset All)
@@ -123,10 +136,14 @@ export default function SettingsPanel({
 
   // Escape key — Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
-    const handler = (e) => { if (e.key === 'Escape') onClose() }
+    const handler = (e) => {
+      if (e.key !== 'Escape') return
+      if (unsavedOpen) return
+      if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() }
+    }
     document.addEventListener('keydown', handler)
     return () => document.removeEventListener('keydown', handler)
-  }, [onClose])
+  }, [onClose, hasUnsaved, unsavedOpen])
 
   const handleSave = () => {
     PROVIDERS.forEach(p => {
@@ -137,6 +154,8 @@ export default function SettingsPanel({
       }
     })
     localStorage.setItem('ai_provider', activeProvider)
+    setSavedKeys({ ...keys })
+    setSavedProvider(activeProvider)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
     announce(t('settings.saved_announce'))
@@ -146,7 +165,7 @@ export default function SettingsPanel({
     <div>
       <div className="settings-header">
         <button
-          onClick={onClose}
+          onClick={() => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } }}
           aria-label={t('settings.back')}
           className="btn-icon btn-icon-accent"
         >
@@ -383,13 +402,43 @@ export default function SettingsPanel({
       </Modal>
 
       <Modal
+        open={unsavedOpen}
+        onClose={() => setUnsavedOpen(false)}
+        heading={t('settings.unsaved_heading')}
+        actions={[
+          {
+            label: t('settings.unsaved_save_close'),
+            onClick: () => { handleSave(); setUnsavedOpen(false); onClose() },
+            className: 'btn-accent',
+          },
+          {
+            label: t('settings.unsaved_discard'),
+            onClick: () => { setUnsavedOpen(false); onClose() },
+            className: 'btn-secondary',
+          },
+          {
+            label: t('settings.unsaved_cancel'),
+            onClick: () => setUnsavedOpen(false),
+            className: 'btn-ghost',
+          },
+        ]}
+      >
+        <p>{t('settings.unsaved_body')}</p>
+      </Modal>
+
+      <Modal
         open={resetConfirmOpen}
         onClose={() => setResetConfirmOpen(false)}
         heading={t('settings.confirm_reset_all_heading')}
         actions={[
           {
             label: t('settings.confirm_reset_all_yes'),
-            onClick: () => { setResetConfirmOpen(false); onReset?.() },
+            onClick: () => {
+              setResetConfirmOpen(false)
+              setSavedKeys(Object.fromEntries(PROVIDERS.map(p => [p.id, ''])))
+              setSavedProvider('anthropic')
+              onReset?.()
+            },
             className: 'btn-accent',
           },
           {
