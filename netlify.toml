@@ -14,15 +14,14 @@
     # Opt out of browser features this app doesn't use
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
     # Content Security Policy:
-    #   - self:           app JS/CSS/HTML
-    #   - fonts.googleapis.com / gstatic.com: Inter font (stylesheet + files)
+    #   - self:           app JS/CSS/HTML + self-hosted Inter font (via @fontsource)
     #   - connect-src:    direct browser→AI provider calls (no relay server)
     #   Note: update connect-src when wiring additional AI providers
     Content-Security-Policy = """
       default-src 'self';
       script-src 'self';
-      style-src 'self' https://fonts.googleapis.com;
-      font-src 'self' https://fonts.gstatic.com;
+      style-src 'self';
+      font-src 'self';
       connect-src 'self'
         https://api.anthropic.com
         https://api.openai.com
