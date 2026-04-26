@@ -11,7 +11,6 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Populate defect corpus** `[corpus]` — import from audit spreadsheets; target 150–200 entries across web and native; review existing 50 starters for accuracy and voice consistency
 - [ ] **Deploy to Netlify** `[infra]` — connect the GitHub repo to Netlify; set the build command to `npm run build` and publish directory to `dist`; the `netlify.toml` is already configured with headers and the SPA redirect rule
 - [x] ~~**Add favicon** `[design]` `[infra]` — `public/favicon.svg` created (magnifying glass + "A" letterform in accent color `#5548c8`); `<link rel="icon">` uncommented in `index.html`~~
-- [ ] **Verify Ko-fi a11y patch selectors (follow-up)** `[a11y]` — the tooltip selector `i[rel="tooltip"]` and input selectors within `.kofi-overlay-widget-overlay` were added without live DOM verification; open the deployed app with Ko-fi loaded and confirm the selectors match the real markup before shipping
 - [ ] **Offline-first PWA** `[infra]` — add a Service Worker that caches the app shell and corpus JSON so the app works fully without an internet connection after the first load; use Vite's `vite-plugin-pwa` or a hand-rolled `service-worker.js`; add a Web App Manifest so it can be installed to the home screen; test on mobile Chrome
 - [ ] **Verify Ko-fi a11y patch selectors** `[a11y]` — `patchKofiA11y` in `App.jsx` uses CSS selectors that were guessed from Ko-fi's known class conventions (`.floatingchat-container-wrap`, `.kofi-overlay-widget-overlay`); open the deployed app with Ko-fi loaded, inspect the actual injected DOM in DevTools, and update the selectors and Escape-key close-button targeting to match the real markup
 - [ ] **Revisit animations** `[ux]` `[a11y]` — several transitions are missing or inconsistent: the BottomSheet has a slide-up entrance but no slide-down exit animation; the result list appears instantly with no stagger; SettingsPanel on desktop switches without any transition; bundle all animation improvements into one pass and verify every new animation is disabled under `prefers-reduced-motion: reduce`
@@ -38,7 +37,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ## Internationalization (i18n)
 
-Supported languages: English, Español, Français, Deutsch, Nederlands, Svenska, 中文（简体）, 日本語, 한국어, Filipino (Tagalog).
+50+ locale files covering Latin, CJK, RTL, and indigenous scripts. `en.json` is the source of truth; run `npm run translate` after adding keys.
 
 - [ ] **Corpus pre-translation script** `[i18n]` `[corpus]` — write `scripts/translate.js` (Node.js) that calls an AI provider to translate all `corpus.json` `desc` and `rem` fields into each supported locale; output as `corpus.{lang}.json` files; update `dataService.js` to accept a `locale` param and load the appropriate file; run once, review for WCAG terminology accuracy before committing
 - [ ] **AI refinement locale pass** `[i18n]` `[ai]` — after `getAiRefinement` rewrites `desc` and `rem`, if the active locale is not English, have the AI respond in the active locale directly (update the system prompt to instruct the model to reply in `{locale}`) rather than post-translating
@@ -103,15 +102,12 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Reflow at 400% zoom** `[a11y]` — open the app in Chrome at 400% zoom (browser zoom, not OS scale); confirm no horizontal scrolling is required and no content is cut off or hidden (WCAG 1.4.10)
 - [ ] **`prefers-contrast: more` visual check** `[a11y]` `[design]` — enable "Increase Contrast" in macOS Accessibility settings or use Chrome DevTools to emulate `prefers-contrast: more`; verify the token overrides in `tokens.css` improve legibility without breaking the layout
 - [ ] **`prefers-reduced-motion` in JS animations** `[a11y]` — CSS transitions already honor `prefers-reduced-motion: reduce`; add a `window.matchMedia('(prefers-reduced-motion: reduce)')` check for any future JS-driven animations (e.g. the planned loading spinner on AI refinement)
-- [ ] **Keyboard navigation in result list** `[a11y]` `[ux]` — see UX section above; this is both a UX and accessibility item
 - [ ] **Toggle design** `[design]` `[a11y]` — the current Toggle component uses a thin bar and circle; replace with a clearer on/off design using a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
 - [ ] **Gear icon replacement** `[design]` — the ⚙️ emoji renders differently across OSes and is not ideal for a refined UI; replace with an SVG gear icon that uses `currentColor` so it inherits the button's color and respects dark mode
 - [ ] **Monospace result description** `[design]` — consider rendering the `desc` preview in the result list using the mono font stack to more closely match how it will look when copied into a spreadsheet; evaluate whether it improves or hurts scannability
 - [ ] **Visible selection indicator** `[design]` `[a11y]` — the selected result card uses an accent border; add a secondary visual cue (e.g. a filled accent left-edge bar or a checkmark) so the selection is unmistakable, especially for users with color vision deficiencies
 - [ ] **Empty state before search** `[design]` — the pre-search state (before any query is entered) shows only the search label and a help hint; add a short prompt, illustration, or sample query to make the tool feel more inviting and explain what to type
-- [ ] **Favicon** `[design]` `[infra]` — see Immediate section above
-- [ ] **Search results heading and count** `[a11y]` `[ux]` — add an h2 "X results" above the list; move focus there when results appear (already in Immediate above)
-- [ ] **Ko-fi link in footer or settings** `[ux]` — add a Ko-fi link alongside the Bluesky footer link or in Settings
+- [ ] **Ko-fi link in footer** `[ux]` — add a Ko-fi link in the footer as a fallback for when the floating widget is disabled
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
 - [x] ~~**Remove divider above defects panel** `[design]` — `border-bottom` removed from `.detail-sc-list`~~
 - [x] ~~**Make both close × buttons match exactly** `[design]` — BackChevron in Settings and About aligned to `size={20}` matching BottomSheet X and header buttons~~
@@ -131,7 +127,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 - [ ] **Bundle size baseline** `[perf]` — run `npm run build` and record the size of each chunk in Vite's output; target total < 200 kB gzipped; the vendor chunk split (react + fuse) added in this session should help long-term caching
 - [ ] **Fuse.js profiling** `[perf]` — measure search latency with a corpus of 500+ entries using `performance.now()` around the `fuse.search()` call; if it exceeds 50ms, tune the `threshold`, `minMatchCharLength`, or `keys` weights in `useDefectSearch.js`
-- [ ] **Cold load time** `[perf]` — test on a throttled connection (Chrome DevTools → Network → Slow 3G); target first usable search within 3 seconds; the main blocker will likely be the Inter font if not self-hosted
+- [ ] **Cold load time** `[perf]` — test on a throttled connection (Chrome DevTools → Network → Slow 3G); target first usable search within 3 seconds
 - [x] ~~**Font self-hosting** `[perf]` `[privacy]` — `@fontsource/inter` installed; `latin-ext` subsets for weights 400/500/600/700 imported in `main.jsx`; Google Fonts CDN links removed from `index.html`; CSP updated to `font-src 'self'`~~
 - [x] ~~**Font subsetting** `[perf]` — using `@fontsource/inter/latin-ext-{weight}.css` (Latin + Latin Extended subset); covers accented characters for European locales without loading all scripts~~
 
@@ -139,7 +135,6 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Competitive / Differentiators
 
-- [ ] **Offline-first PWA** `[infra]` — add a Service Worker that caches the app shell and corpus JSON; the app should be fully functional without an internet connection once loaded; critical for auditors working on-site at client offices with restricted networks
 - [ ] **Bug tracker integration** `[ux]` `[infra]` — add pre-populated deep links to Jira and Linear that open a new ticket with the defect description and remediation already filled in; no API key or auth required for deep links; document the URL format for each tracker
 - [ ] **WCAG version tagging** `[corpus]` — add a `wcagVersion` field to each corpus entry (`"2.1"` or `"2.2"`); display the version tag on the result card and in DetailPanel; useful when auditing against a specific version requirement
 - [ ] **Compare mode** `[ux]` — allow the user to open two defect entries side by side to decide which fits better; implement as a split view in the main content area; useful when multiple success criteria could apply to the same observation
@@ -162,7 +157,6 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Infrastructure
 
-- [ ] **Offline-first PWA** `[infra]` `[perf]` — add a Service Worker (via `vite-plugin-pwa` or hand-rolled) that caches the app shell, corpus JSON, and translation overlays; add a `manifest.json` for home-screen installability; test on mobile Chrome; the corpus is self-contained static JSON so offline should work without any backend
 - [ ] **Electron desktop app — activate** `[infra]` — scaffold is in `electron/`; to activate: `npm install --save-dev electron electron-builder concurrently`, then `npm run electron:dev`; wire `window.electronAPI.keys.*` in SettingsPanel so API keys use `safeStorage` instead of `localStorage`; test on macOS and Windows; package with `npm run electron:build`
 - [ ] **Umami analytics** `[infra]` — create an account at umami.is or self-host, add the site, replace `YOUR_WEBSITE_ID` in `index.html`, and uncomment the script tag; verify that Umami reports zero cookies and no personal data in the dashboard before enabling on any deployment
 - [ ] **Version tagging** `[infra]` — create git tags for stable milestones once the corpus is stable enough to track; use semantic versioning (`v0.1.0` for Phase 1 launch, `v0.2.0` for Phase 2 AI, `v1.0.0` for Phase 3 public)
