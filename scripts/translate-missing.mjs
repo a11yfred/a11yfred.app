@@ -181,10 +181,11 @@ for (const locale of localeFiles) {
 
   const needsTranslation = {}
   for (const [key, enVal] of Object.entries(en)) {
-    const hasEnglishPlaceholder = key in data && data[key] === enVal
-    const isStaleTranslation = sourceChanged.has(key) && key in data && data[key] !== enVal
+    const isMissing = !(key in data)
+    const hasEnglishPlaceholder = !isMissing && data[key] === enVal
+    const isStaleTranslation = sourceChanged.has(key) && !isMissing && data[key] !== enVal
 
-    if (hasEnglishPlaceholder || isStaleTranslation) {
+    if (isMissing || hasEnglishPlaceholder || isStaleTranslation) {
       needsTranslation[key] = enVal
     }
   }
@@ -206,7 +207,7 @@ for (const locale of localeFiles) {
 
     let updated = 0
     for (const [key, translated] of Object.entries(translations)) {
-      if (key in data && translated && translated !== en[key]) {
+      if (translated && translated !== en[key]) {
         data[key] = translated
         updated++
       }
