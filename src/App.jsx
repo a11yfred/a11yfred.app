@@ -146,6 +146,8 @@ function AppContent({
   // Tracks whether settings was opened while a defect panel was selected,
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
+  const pendingSearchAnnounce = useRef(false)
+  const liveAnnounceTimer = useRef(null)
 
   const activeQuery = liveSearch ? query : submittedQuery
   const results = useDefectSearch(activeQuery, platform, language, searchKey)
@@ -227,6 +229,24 @@ function AppContent({
   useEffect(() => { localStorage.setItem('liveSearch', liveSearch) }, [liveSearch])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
 
+  // Announce result count: immediately on manual search, debounced 500ms on live search
+  useEffect(() => {
+    if (pendingSearchAnnounce.current) {
+      pendingSearchAnnounce.current = false
+      clearTimeout(liveAnnounceTimer.current)
+      announce(t('results.count_announce', { count: results.length }))
+      return
+    }
+    if (!liveSearch || query.trim().length < 2) {
+      clearTimeout(liveAnnounceTimer.current)
+      return
+    }
+    clearTimeout(liveAnnounceTimer.current)
+    liveAnnounceTimer.current = setTimeout(() => {
+      announce(t('results.count_announce', { count: results.length }))
+    }, 500)
+  }, [query, liveSearch, searchKey]) // eslint-disable-line react-hooks/exhaustive-deps -- t and results.length read from closure; refs not reactive
+
   // WCAG 2.4.3: focus h1 when returning from settings on desktop (page swap).
   // On mobile or when returning to a defect panel, restore panel focus instead.
   useEffect(() => {
@@ -278,6 +298,7 @@ function AppContent({
     setSubmittedQuery(query)
     setSearchKey(k => k + 1)
     setSelected(null)
+    pendingSearchAnnounce.current = true
   }
 
   const handleOpenSettings = () => {

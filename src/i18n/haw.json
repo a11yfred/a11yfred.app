@@ -16,7 +16,7 @@
   "search.hint_ai": "Ke kōkua nei ka AI ({provider}).",
   "search.hint_change_in": "Hiki ke hoʻololi ma",
   "search.hint_settings_link": "Nā hoʻonohonoho",
-  "results.aria_label": "Nā hewa i loaʻa",
+  "results.aria_label": "Hopena",
   "results.no_results_announce": "ʻAʻohe hopena no \"{query}\". E hoʻāʻo i ka inoa o ke ʻano, ke ʻano o ka mea, a i ʻole he māhele ʻē aʻe.",
   "results.no_results_aria": "ʻAʻohe hopena",
   "results.no_results_heading": "ʻAʻohe hopena no \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "ʻAʻole, e mālama i nā hoʻonohonoho",
   "settings.language_change": "Hoʻololi",
   "settings.language_changed": "Ua hoʻololi",
-  "settings.language_changed_announce": "ʻŌlelo: Ua hoʻololi, kaomi Mālama e hōʻoia"
+  "settings.language_changed_announce": "ʻŌlelo: Ua hoʻololi, kaomi Mālama e hōʻoia",
+  "results.count_announce": "{count} Hopena"
 }

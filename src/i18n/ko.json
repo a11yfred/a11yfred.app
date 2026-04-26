@@ -16,7 +16,7 @@
   "search.hint_ai": "AI 지원이 활성화되었습니다 ({provider}).",
   "search.hint_change_in": "다음에서 변경할 수 있습니다",
   "search.hint_settings_link": "설정",
-  "results.aria_label": "결함 후보",
+  "results.aria_label": "결과",
   "results.no_results_announce": "\"{query}\"에 대한 결과 없음. 구성 요소 이름, 요소 유형 또는 다른 문구를 시도해 보세요.",
   "results.no_results_aria": "결과 없음",
   "results.no_results_heading": "\"{query}\"에 대한 결과 없음",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "아니요, 설정 유지",
   "settings.language_change": "변경",
   "settings.language_changed": "변경됨",
-  "settings.language_changed_announce": "언어: 변경됨, 저장 버튼을 눌러 확인하세요"
+  "settings.language_changed_announce": "언어: 변경됨, 저장 버튼을 눌러 확인하세요",
+  "results.count_announce": "결과 {count}개"
 }

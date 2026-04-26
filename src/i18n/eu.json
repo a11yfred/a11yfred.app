@@ -16,7 +16,7 @@
   "search.hint_ai": "AI laguntza aktibo dago ({provider}).",
   "search.hint_change_in": "Hau alda daiteke",
   "search.hint_settings_link": "Ezarpenetan",
-  "results.aria_label": "Akats hautagaiak",
+  "results.aria_label": "Emaitzak",
   "results.no_results_announce": "Ez dago emaitzarik \"{query}\" bilaketarako. Saiatu osagaiaren izena, elementu mota edo beste esaldi bat.",
   "results.no_results_aria": "Ez dago emaitzarik",
   "results.no_results_heading": "Ez dago emaitzarik \"{query}\" bilaketarako",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Ez, mantendu ezarpenak",
   "settings.language_change": "Aldatu",
   "settings.language_changed": "Aldatuta",
-  "settings.language_changed_announce": "Hizkuntza: Aldatuta, sakatu Gorde botoia baieztatzen"
+  "settings.language_changed_announce": "Hizkuntza: Aldatuta, sakatu Gorde botoia baieztatzen",
+  "results.count_announce": "{count} Emaitzak"
 }

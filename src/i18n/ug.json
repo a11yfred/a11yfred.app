@@ -16,7 +16,7 @@
   "search.hint_ai": "AI ياردىمى ئاكتىپ ({provider}).",
   "search.hint_change_in": "بۇنى مۇنداق ئۆزگەرتكىلى بولىدۇ",
   "search.hint_settings_link": "تەڭشەكلەردە",
-  "results.aria_label": "نۇقسان نامزاتلىرى",
+  "results.aria_label": "نەتىجىلەر",
   "results.no_results_announce": "\"{query}\" ئۈچۈن نەتىجە يوق. بىرلەشمە ئىسمى، ئېلېمېنت تۈرى ياكى باشقا ئىبارە سىناڭ.",
   "results.no_results_aria": "نەتىجە يوق",
   "results.no_results_heading": "\"{query}\" ئۈچۈن نەتىجە يوق",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "ياق، تەڭشەكلەرنى ساقلا",
   "settings.language_change": "ئۆزگەرتىش",
   "settings.language_changed": "ئۆزگەرتىلدى",
-  "settings.language_changed_announce": "تىل: ئۆزگەرتىلدى، تەستىقلاش ئۈچۈن ساقلاش كونۇپكىسىنى بېسىڭ"
+  "settings.language_changed_announce": "تىل: ئۆزگەرتىلدى، تەستىقلاش ئۈچۈن ساقلاش كونۇپكىسىنى بېسىڭ",
+  "results.count_announce": "{count} نەتىجىلەر"
 }

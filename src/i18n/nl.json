@@ -16,7 +16,7 @@
   "search.hint_ai": "AI-assistent actief ({provider}).",
   "search.hint_change_in": "Dit kan worden gewijzigd in",
   "search.hint_settings_link": "Instellingen",
-  "results.aria_label": "Defectkandidaten",
+  "results.aria_label": "Resultaten",
   "results.no_results_announce": "Geen resultaten voor \"{query}\". Probeer een componentnaam, elementtype of een andere formulering.",
   "results.no_results_aria": "Geen resultaten",
   "results.no_results_heading": "Geen resultaten voor \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Nee, instellingen bewaren",
   "settings.language_change": "Wijzigen",
   "settings.language_changed": "Gewijzigd",
-  "settings.language_changed_announce": "Taal: Gewijzigd, druk op Opslaan om te bevestigen"
+  "settings.language_changed_announce": "Taal: Gewijzigd, druk op Opslaan om te bevestigen",
+  "results.count_announce": "{count} Resultaten"
 }

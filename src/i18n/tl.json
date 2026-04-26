@@ -16,7 +16,7 @@
   "search.hint_ai": "Aktibo ang AI assist ({provider}).",
   "search.hint_change_in": "Maaari itong baguhin sa",
   "search.hint_settings_link": "Mga Setting",
-  "results.aria_label": "Mga kandidato ng depekto",
+  "results.aria_label": "Mga resulta",
   "results.no_results_announce": "Walang resulta para sa \"{query}\". Subukan ang pangalan ng component, uri ng elemento, o ibang parirala.",
   "results.no_results_aria": "Walang resulta",
   "results.no_results_heading": "Walang resulta para sa \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Hindi, panatilihin ang mga setting",
   "settings.language_change": "Baguhin",
   "settings.language_changed": "Nabago",
-  "settings.language_changed_announce": "Wika: Nabago, pindutin ang I-save para kumpirmahin"
+  "settings.language_changed_announce": "Wika: Nabago, pindutin ang I-save para kumpirmahin",
+  "results.count_announce": "{count} Mga resulta"
 }

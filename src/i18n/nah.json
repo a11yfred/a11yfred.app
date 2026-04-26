@@ -16,7 +16,7 @@
   "search.hint_ai": "IA temachtilli tlapoa ({provider}).",
   "search.hint_change_in": "Inin yeliztica tlapohualoni",
   "search.hint_settings_link": "Tlatequitiliz",
-  "results.aria_label": "Tlapantlahtzolli temachilli",
+  "results.aria_label": "Ixtlahpantli",
   "results.no_results_announce": "Ayac tlahtlacolli \"{query}\" itech. Xiquihtoa itoca maquixtilli, tlahco iaxca, inozo oc ce tlatlahtoliztica.",
   "results.no_results_aria": "Ayac tlahtlacolli",
   "results.no_results_heading": "Ayac tlahtlacolli \"{query}\" itech",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Amo, configuración ticpia",
   "settings.language_change": "Xicpatlani",
   "settings.language_changed": "Opatlac",
-  "settings.language_changed_announce": "Tlahtoa: Opatlac, ximopatlahtoa Pixca nāhuallahtōlli"
+  "settings.language_changed_announce": "Tlahtoa: Opatlac, ximopatlahtoa Pixca nāhuallahtōlli",
+  "results.count_announce": "{count} Ixtlahpantli"
 }

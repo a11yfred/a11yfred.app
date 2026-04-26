@@ -16,7 +16,7 @@
   "search.hint_ai": "IA âpacihtâwin ({provider}).",
   "search.hint_change_in": "Ôma kîsikâwihikêwin",
   "search.hint_settings_link": "Kihci-masinahikanihk",
-  "results.aria_label": "Kâ-nâtamihkwak âpacihtâwina",
+  "results.aria_label": "Itwêhtamowina",
   "results.no_results_announce": "\"{query}\" ohci namôya kikway. Nâtamihk tipiyaw-isihcikêwin, kîsikâwihikêwin askihkos kâ-âpacihtâyan.",
   "results.no_results_aria": "Namôya kikway",
   "results.no_results_heading": "\"{query}\" ohci namôya kikway",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Namôya, kihci-masinahikan iyako",
   "settings.language_change": "Pāhkahcihtā",
   "settings.language_changed": "Pāhkahcihtāw",
-  "settings.language_changed_announce": "Nêhiyawêwin: Pāhkahcihtāw, Nakatêyihtam kā-itōtaman"
+  "settings.language_changed_announce": "Nêhiyawêwin: Pāhkahcihtāw, Nakatêyihtam kā-itōtaman",
+  "results.count_announce": "{count} Itwêhtamowina"
 }

@@ -16,7 +16,7 @@
   "search.hint_ai": "AI assist is active ({provider}).",
   "search.hint_change_in": "This can be changed in",
   "search.hint_settings_link": "Settings",
-  "results.aria_label": "Defect candidates",
+  "results.aria_label": "Results",
   "results.no_results_announce": "No results for \"{query}\". Try a component name, element type, or a different phrase.",
   "results.no_results_aria": "No results",
   "results.no_results_heading": "No results for \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "No, keep settings",
   "settings.language_change": "Change",
   "settings.language_changed": "Changed",
-  "settings.language_changed_announce": "Language: Changed, press Save button to confirm"
+  "settings.language_changed_announce": "Language: Changed, press Save button to confirm",
+  "results.count_announce": "{count} Results"
 }

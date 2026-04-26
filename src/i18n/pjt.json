@@ -16,7 +16,7 @@
   "search.hint_ai": "AI kani ({provider}).",
   "search.hint_change_in": "Pakana kani",
   "search.hint_settings_link": "Takayna",
-  "results.aria_label": "Pirri-pirri liyini",
+  "results.aria_label": "Tjukuritja",
   "results.no_results_announce": "\"{query}\" mana liyini. Rika nayri kani.",
   "results.no_results_aria": "Mana liyini",
   "results.no_results_heading": "\"{query}\" mana liyini",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Mana, takayna kani",
   "settings.language_change": "Ngapartji",
   "settings.language_changed": "Ngapartjilpai",
-  "settings.language_changed_announce": "Wangka: Ngapartjilpai, Kani-ku nyakula"
+  "settings.language_changed_announce": "Wangka: Ngapartjilpai, Kani-ku nyakula",
+  "results.count_announce": "{count} Tjukuritja"
 }

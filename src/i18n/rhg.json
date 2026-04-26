@@ -16,7 +16,7 @@
   "search.hint_ai": "AI madot çalu ase ({provider}).",
   "search.hint_change_in": "Eita bodolaibo",
   "search.hint_settings_link": "Taijing",
-  "results.aria_label": "Hoñar natija",
+  "results.aria_label": "Phalikam",
   "results.no_results_announce": "\"{query}\" loi natija naai. Component naam, element dhora wá ainder frase try kor.",
   "results.no_results_aria": "Natija naai",
   "results.no_results_heading": "\"{query}\" loi natija naai",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Na, taijing rakho",
   "settings.language_change": "Fura",
   "settings.language_changed": "Furai hoise",
-  "settings.language_changed_announce": "Zaban: Furai hoise, Rikkhha button capa kor"
+  "settings.language_changed_announce": "Zaban: Furai hoise, Rikkhha button capa kor",
+  "results.count_announce": "{count} Phalikam"
 }

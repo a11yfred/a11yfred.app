@@ -23,11 +23,16 @@ export default function ResultList({ results, selected, onSelect, query }) {
         const isSelected = selected?.id === defect.id
         const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
 
+        const truncDesc = defect.desc.length > 180
+          ? defect.desc.slice(0, 180).trimEnd() + '…'
+          : defect.desc
+
         return (
           <li
             key={defect.id}
             role="option"
             aria-selected={isSelected}
+            aria-label={`${defect.title}, ${t(p.key)}, ${defect.scLabel}, ${truncDesc}`}
             tabIndex={0}
             onClick={() => onSelect(defect)}
             onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onSelect(defect)}

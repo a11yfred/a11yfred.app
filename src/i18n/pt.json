@@ -16,7 +16,7 @@
   "search.hint_ai": "Assistente de IA ativo ({provider}).",
   "search.hint_change_in": "Pode ser alterado em",
   "search.hint_settings_link": "Definições",
-  "results.aria_label": "Candidatos a defeito",
+  "results.aria_label": "Resultados",
   "results.no_results_announce": "Sem resultados para \"{query}\". Tente um nome de componente, tipo de elemento ou uma frase diferente.",
   "results.no_results_aria": "Sem resultados",
   "results.no_results_heading": "Sem resultados para \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Não, manter definições",
   "settings.language_change": "Alterar",
   "settings.language_changed": "Alterado",
-  "settings.language_changed_announce": "Idioma: Alterado, clique em Salvar para confirmar"
+  "settings.language_changed_announce": "Idioma: Alterado, clique em Salvar para confirmar",
+  "results.count_announce": "{count} Resultados"
 }

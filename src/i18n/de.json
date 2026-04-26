@@ -16,7 +16,7 @@
   "search.hint_ai": "KI-Assistent aktiv ({provider}).",
   "search.hint_change_in": "Dies kann geändert werden in",
   "search.hint_settings_link": "Einstellungen",
-  "results.aria_label": "Fehlerkandidaten",
+  "results.aria_label": "Ergebnisse",
   "results.no_results_announce": "Keine Ergebnisse für \"{query}\". Versuche einen Komponentennamen, Elementtyp oder eine andere Formulierung.",
   "results.no_results_aria": "Keine Ergebnisse",
   "results.no_results_heading": "Keine Ergebnisse für \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Nein, Einstellungen behalten",
   "settings.language_change": "Ändern",
   "settings.language_changed": "Geändert",
-  "settings.language_changed_announce": "Sprache: Geändert, klicken Sie auf Speichern zum Bestätigen"
+  "settings.language_changed_announce": "Sprache: Geändert, klicken Sie auf Speichern zum Bestätigen",
+  "results.count_announce": "{count} Ergebnisse"
 }

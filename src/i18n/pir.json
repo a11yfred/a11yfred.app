@@ -16,7 +16,7 @@
   "search.hint_ai": "Ye AI first mate be at yer service ({provider}).",
   "search.hint_change_in": "This be changeable in",
   "search.hint_settings_link": "Captain's Quarters",
-  "results.aria_label": "Blight candidates",
+  "results.aria_label": "Bounty",
   "results.no_results_announce": "No plunder fer \"{query}\". Try a component name, element type, or a different shanty.",
   "results.no_results_aria": "No plunder found",
   "results.no_results_heading": "No plunder fer \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Nay, keep me settings",
   "settings.language_change": "Alter Course",
   "settings.language_changed": "Course Altered",
-  "settings.language_changed_announce": "Tongue: Course Altered, press ye Stow button to confirm, arr!"
+  "settings.language_changed_announce": "Tongue: Course Altered, press ye Stow button to confirm, arr!",
+  "results.count_announce": "{count} bounty finds, arr!"
 }

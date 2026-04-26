@@ -16,7 +16,7 @@
   "search.hint_ai": "AI āeksion aktīvys issa ({provider}).",
   "search.hint_change_in": "Bē gevionot sīkudon kessa",
   "search.hint_settings_link": "Gevion",
-  "results.aria_label": "Qrīdruhor nāgrī",
+  "results.aria_label": "Tegot",
   "results.no_results_announce": "\"{query}\" syt nāgrī issa daor. Skoros tolmiot, hen skoros, pōlio urnēbian.",
   "results.no_results_aria": "Nāgrī issa daor",
   "results.no_results_heading": "\"{query}\" syt nāgrī issa daor",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "No, mantindre la configuració",
   "settings.language_change": "Keliagon",
   "settings.language_changed": "Kelias",
-  "settings.language_changed_announce": "Ȳdra: Kelias, Morghugon belmagon"
+  "settings.language_changed_announce": "Ȳdra: Kelias, Morghugon belmagon",
+  "results.count_announce": "{count} Tegot"
 }

@@ -16,7 +16,7 @@
   "search.hint_ai": "مساعدة الذكاء الاصطناعي نشطة ({provider}).",
   "search.hint_change_in": "يمكن تغيير ذلك في",
   "search.hint_settings_link": "الإعدادات",
-  "results.aria_label": "مرشحو العيوب",
+  "results.aria_label": "نتائج",
   "results.no_results_announce": "لا نتائج لـ \"{query}\". جرّب اسم مكوّن أو نوع عنصر أو عبارة مختلفة.",
   "results.no_results_aria": "لا نتائج",
   "results.no_results_heading": "لا نتائج لـ \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "لا، احتفظ بالإعدادات",
   "settings.language_change": "تغيير",
   "settings.language_changed": "تم التغيير",
-  "settings.language_changed_announce": "اللغة: تم التغيير، اضغط زر حفظ للتأكيد"
+  "settings.language_changed_announce": "اللغة: تم التغيير، اضغط زر حفظ للتأكيد",
+  "results.count_announce": "{count} نتائج"
 }

@@ -16,7 +16,7 @@
   "search.hint_ai": "IA wiindamaagewin ({provider}).",
   "search.hint_change_in": "Mii ow asemaa gaa-izhi",
   "search.hint_settings_link": "Mazinaigan-ing",
-  "results.aria_label": "Wiindamaagewin bi-izhi",
+  "results.aria_label": "Izhichigewin",
   "results.no_results_announce": "\"{query}\" mii gaawiin gegoo. Nanda-wiindamaage giin, giigidood gaye.",
   "results.no_results_aria": "Gaawiin gegoo",
   "results.no_results_heading": "\"{query}\" mii gaawiin gegoo",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Gaawiin, settings áshjaa'",
   "settings.language_change": "Giizhiitaa",
   "settings.language_changed": "Giizhiitaaw",
-  "settings.language_changed_announce": "Anishinaabemowin: Giizhiitaaw, Ajijaak tigumiara"
+  "settings.language_changed_announce": "Anishinaabemowin: Giizhiitaaw, Ajijaak tigumiara",
+  "results.count_announce": "{count} Izhichigewin"
 }

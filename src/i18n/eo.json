@@ -16,7 +16,7 @@
   "search.hint_ai": "AI-helpo estas aktiva ({provider}).",
   "search.hint_change_in": "Ĉi tion eblas ŝanĝi en",
   "search.hint_settings_link": "Agordoj",
-  "results.aria_label": "Difektokandidatoj",
+  "results.aria_label": "Rezultoj",
   "results.no_results_announce": "Neniu rezulto por \"{query}\". Provu komponantan nomon, elementa tipon aŭ alian frazon.",
   "results.no_results_aria": "Neniu rezulto",
   "results.no_results_heading": "Neniu rezulto por \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Ne, konservi agordojn",
   "settings.language_change": "Ŝanĝi",
   "settings.language_changed": "Ŝanĝita",
-  "settings.language_changed_announce": "Lingvo: Ŝanĝita, premu Konservi por konfirmi"
+  "settings.language_changed_announce": "Lingvo: Ŝanĝita, premu Konservi por konfirmi",
+  "results.count_announce": "{count} Rezultoj"
 }

@@ -16,7 +16,7 @@
   "search.hint_ai": "IA bá 'ádahwíí'áaji' hólǫ́ ({provider}).",
   "search.hint_change_in": "Éí nihéé'ástáago áhoolzhiizh",
   "search.hint_settings_link": "Bee haz'áaniigi",
-  "results.aria_label": "Ałk'idą́ą́' ágó bił 'ánálwod",
+  "results.aria_label": "Baa naané",
   "results.no_results_announce": "\"{query}\" ádi t'áadoo le'é yee hólǫ́ da. Tsin bee 'ólta'í bídin, naalyéhé bee 'ádá'áłchíní, doodaii' łahji' naninééh.",
   "results.no_results_aria": "T'áadoo le'é yee hólǫ́ da",
   "results.no_results_heading": "\"{query}\" ádi t'áadoo le'é yee hólǫ́ da",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Dooda, settings áshjaa'",
   "settings.language_change": "Ánáhwi'",
   "settings.language_changed": "Ánáhwi'nígíí",
-  "settings.language_changed_announce": "Saad: Ánáhwi'nígíí, Bich'ah yikaahgo niilyeeh"
+  "settings.language_changed_announce": "Saad: Ánáhwi'nígíí, Bich'ah yikaahgo niilyeeh",
+  "results.count_announce": "{count} Baa naané"
 }

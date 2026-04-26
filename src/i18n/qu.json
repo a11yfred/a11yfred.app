@@ -16,7 +16,7 @@
   "search.hint_ai": "IA yanapay llank'achkaspa ({provider}).",
   "search.hint_change_in": "Kay tikrariyta atikunmi",
   "search.hint_settings_link": "Ruwaykuykunapi",
-  "results.aria_label": "Pantay kamachikuykuna",
+  "results.aria_label": "Tupusqakuna",
   "results.no_results_announce": "\"{query}\" nisqanchikpaq mana ima kanchu. Wakin suti, ima kaq, utaq suk ñiqin kallpachiy.",
   "results.no_results_aria": "Mana ima kanchu",
   "results.no_results_heading": "\"{query}\" nisqanchikpaq mana ima kanchu",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Mana, configuración waqaychay",
   "settings.language_change": "Tikrachi",
   "settings.language_changed": "Tikrachisqa",
-  "settings.language_changed_announce": "Simi: Tikrachisqa, Waqaychay tuputa ñit'iy"
+  "settings.language_changed_announce": "Simi: Tikrachisqa, Waqaychay tuputa ñit'iy",
+  "results.count_announce": "{count} Tupusqakuna"
 }

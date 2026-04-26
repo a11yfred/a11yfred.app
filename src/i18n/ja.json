@@ -16,7 +16,7 @@
   "search.hint_ai": "AIアシストが有効です（{provider}）。",
   "search.hint_change_in": "これは変更できます",
   "search.hint_settings_link": "設定",
-  "results.aria_label": "不具合候補",
+  "results.aria_label": "結果",
   "results.no_results_announce": "「{query}」の結果はありません。コンポーネント名、要素タイプ、または別のフレーズで試してください。",
   "results.no_results_aria": "結果なし",
   "results.no_results_heading": "「{query}」の結果はありません",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "いいえ、設定を維持",
   "settings.language_change": "変更",
   "settings.language_changed": "変更済み",
-  "settings.language_changed_announce": "言語：変更済み、保存ボタンを押して確認してください"
+  "settings.language_changed_announce": "言語：変更済み、保存ボタンを押して確認してください",
+  "results.count_announce": "{count} 件の結果"
 }

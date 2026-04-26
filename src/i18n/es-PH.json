@@ -16,7 +16,7 @@
   "search.hint_ai": "La asistencia de IA está activa ({provider}).",
   "search.hint_change_in": "Esto se puede cambiar en",
   "search.hint_settings_link": "Configuración",
-  "results.aria_label": "Candidatos a defecto",
+  "results.aria_label": "Resultados",
   "results.no_results_announce": "Sin resultados para \"{query}\". Prueba con un nombre de componente, tipo de elemento u otra frase.",
   "results.no_results_aria": "Sin resultados",
   "results.no_results_heading": "Sin resultados para \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "No, mantener configuración",
   "settings.language_change": "Cambiar",
   "settings.language_changed": "Cambiado",
-  "settings.language_changed_announce": "Idioma: Cambiado, pulse el botón Guardar para confirmar"
+  "settings.language_changed_announce": "Idioma: Cambiado, pulse el botón Guardar para confirmar",
+  "results.count_announce": "{count} Resultados"
 }

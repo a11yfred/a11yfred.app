@@ -16,7 +16,7 @@
   "search.hint_ai": "AI རོགས་རམ་འབྱུང་གི་ཡོད། ({provider}).",
   "search.hint_change_in": "འདི་ལ་འགྱུར་བ་གཏོང་ཆོག",
   "search.hint_settings_link": "སྒྲིག་གཞི",
-  "results.aria_label": "འཛོལ་བ་ཚོ།",
+  "results.aria_label": "འབྲས་བུ།",
   "results.no_results_announce": "\"{query}\"ལ་འབྲས་བུ་མེད། ཟུར་འཛིན་མིང་ཡང་ན་ཁ་གསལ་གཞན་ཞིག་བསམ་རོགས།",
   "results.no_results_aria": "འབྲས་བུ་མེད།",
   "results.no_results_heading": "\"{query}\"ལ་འབྲས་བུ་མེད།",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "མིན། སྒྲིག་གཞི་ཉར།",
   "settings.language_change": "བཅོས་",
   "settings.language_changed": "བཅོས་སོ།",
-  "settings.language_changed_announce": "སྐད་ཡིག། བཅོས་སོ། གསོག་འཇོག་བྱས་ལ་ཐུག"
+  "settings.language_changed_announce": "སྐད་ཡིག། བཅོས་སོ། གསོག་འཇོག་བྱས་ལ་ཐུག",
+  "results.count_announce": "{count} འབྲས་བུ།"
 }

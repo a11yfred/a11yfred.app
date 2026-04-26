@@ -16,7 +16,7 @@
   "search.hint_ai": "IA pytyvõ oikohápe ({provider}).",
   "search.hint_change_in": "Ikatu oñemohenda",
   "search.hint_settings_link": "Ñoha'ãnguéra",
-  "results.aria_label": "Mba'e'ỹva ñemyatyrõrã",
+  "results.aria_label": "Okuatia",
   "results.no_results_announce": "Ndaipóri mba'eguarã \"{query}\" rehegua. Eha'ã tembipuru réra, mba'e motenondeharã térã ambue ñe'ẽ.",
   "results.no_results_aria": "Ndaipóri mba'eguarã",
   "results.no_results_heading": "Ndaipóri mba'eguarã \"{query}\" rehegua",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Nahániri, emopyta configuración",
   "settings.language_change": "Moambuéta",
   "settings.language_changed": "Moambuetáma",
-  "settings.language_changed_announce": "Ñe'ẽ: Moambuetáma, embyky Eñongatu moñepyrũ"
+  "settings.language_changed_announce": "Ñe'ẽ: Moambuetáma, embyky Eñongatu moñepyrũ",
+  "results.count_announce": "{count} Okuatia"
 }

@@ -16,7 +16,7 @@
   "search.hint_ai": "AI உதவி செயலில் உள்ளது ({provider}).",
   "search.hint_change_in": "இதை மாற்றலாம்",
   "search.hint_settings_link": "அமைப்புகளில்",
-  "results.aria_label": "குறைபாடு வேட்பாளர்கள்",
+  "results.aria_label": "முடிவுகள்",
   "results.no_results_announce": "\"{query}\" க்கு முடிவுகள் இல்லை. கூறு பெயர், உறுப்பு வகை அல்லது வேறு சொற்றொடரை முயற்சிக்கவும்.",
   "results.no_results_aria": "முடிவுகள் இல்லை",
   "results.no_results_heading": "\"{query}\" க்கு முடிவுகள் இல்லை",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "இல்லை, அமைப்புகளை வைத்திரு",
   "settings.language_change": "மாற்று",
   "settings.language_changed": "மாற்றப்பட்டது",
-  "settings.language_changed_announce": "மொழி: மாற்றப்பட்டது, சேமி பொத்தானை அழுத்தி உறுதிப்படுத்தவும்"
+  "settings.language_changed_announce": "மொழி: மாற்றப்பட்டது, சேமி பொத்தானை அழுத்தி உறுதிப்படுத்தவும்",
+  "results.count_announce": "{count} முடிவுகள்"
 }

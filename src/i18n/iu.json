@@ -16,7 +16,7 @@
   "search.hint_ai": "IA atorneqarpoq ({provider}).",
   "search.hint_change_in": "Tamanna allaquersorneqarsinnaappoq",
   "search.hint_settings_link": "Nalunaarusiorfigineqarsinnaassusianni",
-  "results.aria_label": "Nalilersorneqarsinnaassoq nassatarisassaq",
+  "results.aria_label": "Nalinginnaasumik",
   "results.no_results_announce": "\"{query}\" pillugit nassatarisassaq nalilersorneqanngikkaluarpoq. Atorsimasoq atorsinnaanngilaq, ima ataatsimiittarisinnaanngikkaluarluni.",
   "results.no_results_aria": "Nassatarisassaq nalilersorneqanngikkaluarpoq",
   "results.no_results_heading": "\"{query}\" pillugit nassatarisassaq nalilersorneqanngikkaluarpoq",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Naamik, settings nalunaarusiorfigineqarsinnaassusiat",
   "settings.language_change": "Asijjiqpaa",
   "settings.language_changed": "Asijjiqqittauqpuq",
-  "settings.language_changed_announce": "Oqaatsit: Asijjiqqittauqpuq, Nalunaarusiorfigineqarsinnaassusiat tigumiara"
+  "settings.language_changed_announce": "Oqaatsit: Asijjiqqittauqpuq, Nalunaarusiorfigineqarsinnaassusiat tigumiara",
+  "results.count_announce": "{count} Nalinginnaasumik"
 }

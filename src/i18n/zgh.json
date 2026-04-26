@@ -16,7 +16,7 @@
   "search.hint_ai": "ⵜⴰⵎⵜⵜⴰ ⵏ AI ⵜⴹⴼⴰⵕ ({provider}).",
   "search.hint_change_in": "ⵉⵖⵢ ⴰⴷ ⵢⵜⵜⵓⴱⴷⴷⵍ ⵖ",
   "search.hint_settings_link": "ⵜⴰⵙⵏⵉⴼⵍⵜ",
-  "results.aria_label": "ⵉⵎⵙⵙⵓⴳⵏ ⵉⵎⵣⵔⴰⵢⵏ",
+  "results.aria_label": "Ijerrulen",
   "results.no_results_announce": "ⵓⵔ ⵍⵍⴰⵏⵜ ⵜⵉⵏⵜⴰⵎⵉⵏ ⵉ \"{query}\". ⵙⵙⵓⴷⵙ ⴰⵙⵎⵔⵙ ⵏⵖ ⵉⵎⵉⵔ ⵏ ⵓⵙⵏⴼⵍ.",
   "results.no_results_aria": "ⵓⵔ ⵍⵍⴰⵏⵜ ⵜⵉⵏⵜⴰⵎⵉⵏ",
   "results.no_results_heading": "ⵓⵔ ⵍⵍⴰⵏⵜ ⵜⵉⵏⵜⴰⵎⵉⵏ ⵉ \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "ⵓⵀⵓ, ⵖⵣⵓ ⵜⴰⵙⵏⵉⴼⵍⵜ",
   "settings.language_change": "ⴱⴷⴷⵍ",
   "settings.language_changed": "ⵉⵜⴱⴷⴷⵍ",
-  "settings.language_changed_announce": "ⵜⵓⵜⵍⴰⵢⵜ: ⵉⵜⴱⴷⴷⵍ, ⴽⵛⵎ ⵙ ⵜⴽⴰⴱⴱⵓⵜ ⵙⴽⵛⵎ ⴰⴽⴽ ⵜⵓⴷⵔⵜ"
+  "settings.language_changed_announce": "ⵜⵓⵜⵍⴰⵢⵜ: ⵉⵜⴱⴷⴷⵍ, ⴽⵛⵎ ⵙ ⵜⴽⴰⴱⴱⵓⵜ ⵙⴽⵛⵎ ⴰⴽⴽ ⵜⵓⴷⵔⵜ",
+  "results.count_announce": "{count} Ijerrulen"
 }

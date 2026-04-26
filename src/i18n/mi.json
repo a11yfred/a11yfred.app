@@ -16,7 +16,7 @@
   "search.hint_ai": "Kei te mahi te āwhina AI ({provider}).",
   "search.hint_change_in": "Ka āhei te huri i",
   "search.hint_settings_link": "Ngā Tautuhinga",
-  "results.aria_label": "Ngā kaitono hapa",
+  "results.aria_label": "Hua",
   "results.no_results_announce": "Kāore he hua mō \"{query}\". Whakamātauria he ingoa tūāhua, momo huānga, kupu kē rānei.",
   "results.no_results_aria": "Kāore he hua",
   "results.no_results_heading": "Kāore he hua mō \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Kāo, pupuri ngā tautuhinga",
   "settings.language_change": "Huri",
   "settings.language_changed": "Kua huri",
-  "settings.language_changed_announce": "Reo: Kua huri, pēhia Tiaki hei whakaū"
+  "settings.language_changed_announce": "Reo: Kua huri, pēhia Tiaki hei whakaū",
+  "results.count_announce": "{count} Hua"
 }

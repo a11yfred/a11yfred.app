@@ -16,7 +16,7 @@
   "search.hint_ai": "AI QaH chu' ({provider}).",
   "search.hint_change_in": "choHlaH",
   "search.hint_settings_link": "qawHaq",
-  "results.aria_label": "Defect namzetmey",
+  "results.aria_label": "mab'o'mey",
   "results.no_results_announce": "\"{query}\" — pagh tu'lu'. pong, Hap moj, pagh latlh mu' yIwIv.",
   "results.no_results_aria": "pagh tu'lu'",
   "results.no_results_heading": "\"{query}\" — pagh tu'lu'",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Qo', qawHaq yIpol",
   "settings.language_change": "yIchoH",
   "settings.language_changed": "choHlu'",
-  "settings.language_changed_announce": "Hol: choHlu', yIpol 'ev lo'"
+  "settings.language_changed_announce": "Hol: choHlu', yIpol 'ev lo'",
+  "results.count_announce": "{count} mab'o'mey"
 }

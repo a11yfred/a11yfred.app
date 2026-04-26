@@ -16,7 +16,7 @@
   "search.hint_ai": "Hỗ trợ AI đang hoạt động ({provider}).",
   "search.hint_change_in": "Có thể thay đổi trong",
   "search.hint_settings_link": "Cài đặt",
-  "results.aria_label": "Các lỗi ứng viên",
+  "results.aria_label": "Kết quả",
   "results.no_results_announce": "Không có kết quả cho \"{query}\". Thử tên thành phần, loại phần tử hoặc cụm từ khác.",
   "results.no_results_aria": "Không có kết quả",
   "results.no_results_heading": "Không có kết quả cho \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Không, giữ cài đặt",
   "settings.language_change": "Thay đổi",
   "settings.language_changed": "Đã thay đổi",
-  "settings.language_changed_announce": "Ngôn ngữ: Đã thay đổi, nhấn nút Lưu để xác nhận"
+  "settings.language_changed_announce": "Ngôn ngữ: Đã thay đổi, nhấn nút Lưu để xác nhận",
+  "results.count_announce": "{count} Kết quả"
 }

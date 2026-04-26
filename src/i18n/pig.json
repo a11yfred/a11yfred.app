@@ -16,7 +16,7 @@
   "search.hint_ai": "AIway assistway isway activeay ({provider}).",
   "search.hint_change_in": "Isthay ancay ebay angedchay inway",
   "search.hint_settings_link": "Ettingssay",
-  "results.aria_label": "Efectday andidatescay",
+  "results.aria_label": "Esultsray",
   "results.no_results_announce": "Onay esultsray orfay \"{query}\". Ytray away omponentcay amenay, elementway ypetay, orway away ifferentday rasephay.",
   "results.no_results_aria": "Onay esultsray",
   "results.no_results_heading": "Onay esultsray orfay \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Onay, eepkay ettingssay",
   "settings.language_change": "Angechay",
   "settings.language_changed": "Angedchay",
-  "settings.language_changed_announce": "Anguagelay: Angedchay, esspray Avesay uttonbay otay onfirmcay"
+  "settings.language_changed_announce": "Anguagelay: Angedchay, esspray Avesay uttonbay otay onfirmcay",
+  "results.count_announce": "{count} Esultsray"
 }

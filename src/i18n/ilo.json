@@ -16,7 +16,7 @@
   "search.hint_ai": "Aktibo ti tulong ti AI ({provider}).",
   "search.hint_change_in": "Mabalin a maublaw daytoy iti",
   "search.hint_settings_link": "Mga Setting",
-  "results.aria_label": "Dagiti kandidato ti depekto",
+  "results.aria_label": "Resulta",
   "results.no_results_announce": "Awan ti resulta para iti \"{query}\". Subukan ti nagan ti component, tipo ti elemento, wenno sabali nga pariparok.",
   "results.no_results_aria": "Awan ti resulta",
   "results.no_results_heading": "Awan ti resulta para iti \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Saan, itanem ti settings",
   "settings.language_change": "Baliwan",
   "settings.language_changed": "Nabaliwan",
-  "settings.language_changed_announce": "Pagsasao: Nabaliwan, i-klik ti Idulin tapno mapasingkedan"
+  "settings.language_changed_announce": "Pagsasao: Nabaliwan, i-klik ti Idulin tapno mapasingkedan",
+  "results.count_announce": "{count} Resulta"
 }

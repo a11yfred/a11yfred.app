@@ -16,7 +16,7 @@
   "search.hint_ai": "Aktibo ang tabang sa AI ({provider}).",
   "search.hint_change_in": "Mahimong buhaton kini sa",
   "search.hint_settings_link": "Mga Setting",
-  "results.aria_label": "Mga kandidato sa depekto",
+  "results.aria_label": "Mga resulta",
   "results.no_results_announce": "Walay resulta para sa \"{query}\". Sulayi ang ngalan sa component, uri sa elemento, o lain pang pahayag.",
   "results.no_results_aria": "Walay resulta",
   "results.no_results_heading": "Walay resulta para sa \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Dili, i-keep ang mga setting",
   "settings.language_change": "Usba",
   "settings.language_changed": "Giusba",
-  "settings.language_changed_announce": "Pinulongan: Giusba, pindota ang I-save para sa pagtugot"
+  "settings.language_changed_announce": "Pinulongan: Giusba, pindota ang I-save para sa pagtugot",
+  "results.count_announce": "{count} Mga resulta"
 }

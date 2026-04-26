@@ -16,7 +16,7 @@
   "search.hint_ai": "El ayuda de IA ta actibo ({provider}).",
   "search.hint_change_in": "Puede cambia este en",
   "search.hint_settings_link": "Configurasyon",
-  "results.aria_label": "Candidato de defecto",
+  "results.aria_label": "Resultados",
   "results.no_results_announce": "Nada resultado para \"{query}\". Prueba un nombre de componente, tipo de elemento, o otro frase.",
   "results.no_results_aria": "Nada resultado",
   "results.no_results_heading": "Nada resultado para \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "No, mantener configuración",
   "settings.language_change": "Cambia",
   "settings.language_changed": "Cambiado",
-  "settings.language_changed_announce": "Lengua: Cambiado, pindot el botón Guardar para confirmar"
+  "settings.language_changed_announce": "Lengua: Cambiado, pindot el botón Guardar para confirmar",
+  "results.count_announce": "{count} Resultados"
 }

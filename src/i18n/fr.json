@@ -16,7 +16,7 @@
   "search.hint_ai": "Assistance IA active ({provider}).",
   "search.hint_change_in": "Cela peut être modifié dans",
   "search.hint_settings_link": "Paramètres",
-  "results.aria_label": "Candidats de défauts",
+  "results.aria_label": "Résultats",
   "results.no_results_announce": "Aucun résultat pour \"{query}\". Essayez un nom de composant, un type d'élément ou une autre formulation.",
   "results.no_results_aria": "Aucun résultat",
   "results.no_results_heading": "Aucun résultat pour \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Non, conserver les paramètres",
   "settings.language_change": "Modifier",
   "settings.language_changed": "Modifié",
-  "settings.language_changed_announce": "Langue : Modifiée, appuyez sur Enregistrer pour confirmer"
+  "settings.language_changed_announce": "Langue : Modifiée, appuyez sur Enregistrer pour confirmer",
+  "results.count_announce": "{count} Résultats"
 }

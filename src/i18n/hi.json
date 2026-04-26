@@ -16,7 +16,7 @@
   "search.hint_ai": "AI सहायता सक्रिय है ({provider})।",
   "search.hint_change_in": "इसे बदला जा सकता है",
   "search.hint_settings_link": "सेटिंग",
-  "results.aria_label": "दोष उम्मीदवार",
+  "results.aria_label": "परिणाम",
   "results.no_results_announce": "\"{query}\" के लिए कोई परिणाम नहीं। कोई घटक नाम, तत्व प्रकार, या अलग वाक्यांश आज़माएं।",
   "results.no_results_aria": "कोई परिणाम नहीं",
   "results.no_results_heading": "\"{query}\" के लिए कोई परिणाम नहीं",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "नहीं, सेटिंग रखें",
   "settings.language_change": "बदलें",
   "settings.language_changed": "बदला गया",
-  "settings.language_changed_announce": "भाषा: बदला गया, पुष्टि के लिए सहेजें बटन दबाएं"
+  "settings.language_changed_announce": "भाषा: बदला गया, पुष्टि के लिए सहेजें बटन दबाएं",
+  "results.count_announce": "{count} परिणाम"
 }

@@ -16,7 +16,7 @@
   "search.hint_ai": "YZ yardımı faal ({provider}).",
   "search.hint_change_in": "Bunu özgertmek mümkün",
   "search.hint_settings_link": "Ayarlarda",
-  "results.aria_label": "Qusur namzetleri",
+  "results.aria_label": "Neticeler",
   "results.no_results_announce": "\"{query}\" için netije yoq. Bileşen adı, element türü ya başqa söz deneñ.",
   "results.no_results_aria": "Netije yoq",
   "results.no_results_heading": "\"{query}\" için netije yoq",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Hayır, ayarları koru",
   "settings.language_change": "Değiştir",
   "settings.language_changed": "Değiştirildi",
-  "settings.language_changed_announce": "Til: Değiştirildi, onaylamak için Kaydet düğmesine basın"
+  "settings.language_changed_announce": "Til: Değiştirildi, onaylamak için Kaydet düğmesine basın",
+  "results.count_announce": "{count} Neticeler"
 }

@@ -16,7 +16,7 @@
   "search.hint_ai": "AI-assistans är aktiv ({provider}).",
   "search.hint_change_in": "Det kan ändras i",
   "search.hint_settings_link": "Inställningar",
-  "results.aria_label": "Felkandidater",
+  "results.aria_label": "Resultat",
   "results.no_results_announce": "Inga resultat för \"{query}\". Prova ett komponentnamn, elementtyp eller en annan formulering.",
   "results.no_results_aria": "Inga resultat",
   "results.no_results_heading": "Inga resultat för \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Nej, behåll inställningar",
   "settings.language_change": "Ändra",
   "settings.language_changed": "Ändrat",
-  "settings.language_changed_announce": "Språk: Ändrat, tryck på Spara för att bekräfta"
+  "settings.language_changed_announce": "Språk: Ändrat, tryck på Spara för att bekräfta",
+  "results.count_announce": "{count} Resultat"
 }

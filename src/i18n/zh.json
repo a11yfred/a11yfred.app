@@ -16,7 +16,7 @@
   "search.hint_ai": "AI辅助已激活（{provider}）。",
   "search.hint_change_in": "可在此更改",
   "search.hint_settings_link": "设置",
-  "results.aria_label": "缺陷候选",
+  "results.aria_label": "结果",
   "results.no_results_announce": "\"{query}\"无结果。请尝试组件名称、元素类型或其他短语。",
   "results.no_results_aria": "无结果",
   "results.no_results_heading": "\"{query}\"无结果",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "否，保留设置",
   "settings.language_change": "更改",
   "settings.language_changed": "已更改",
-  "settings.language_changed_announce": "语言：已更改，按\"保存\"按钮确认"
+  "settings.language_changed_announce": "语言：已更改，按\"保存\"按钮确认",
+  "results.count_announce": "{count} 个结果"
 }

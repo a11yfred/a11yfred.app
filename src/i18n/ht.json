@@ -16,7 +16,7 @@
   "search.hint_ai": "Asistans IA aktif ({provider}).",
   "search.hint_change_in": "Sa ka chanje nan",
   "search.hint_settings_link": "Paramèt",
-  "results.aria_label": "Kandida defò",
+  "results.aria_label": "Rezilta",
   "results.no_results_announce": "Pa gen rezilta pou \"{query}\". Eseye yon non konponant, tip eleman, oswa yon lòt ekspresyon.",
   "results.no_results_aria": "Pa gen rezilta",
   "results.no_results_heading": "Pa gen rezilta pou \"{query}\"",
@@ -157,5 +157,6 @@
   "settings.confirm_reset_all_no": "Non, kenbe paramèt yo",
   "settings.language_change": "Chanje",
   "settings.language_changed": "Chanje",
-  "settings.language_changed_announce": "Lang: Chanje, klike bouton Sove pou konfime"
+  "settings.language_changed_announce": "Lang: Chanje, klike bouton Sove pou konfime",
+  "results.count_announce": "{count} Rezilta"
 }
