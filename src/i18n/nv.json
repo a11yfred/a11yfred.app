@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Settings t'áá kwíí reset?",
   "settings.confirm_reset_all_body": "API keys dóó settings t'áá kwíí. Doo náháálnih da.",
   "settings.confirm_reset_all_yes": "Aoo', t'áá kwíí reset",
-  "settings.confirm_reset_all_no": "Dooda, settings áshjaa'"
+  "settings.confirm_reset_all_no": "Dooda, settings áshjaa'",
+  "settings.language_change": "Ánáhwi'",
+  "settings.language_changed": "Ánáhwi'nígíí",
+  "settings.language_changed_announce": "Saad: Ánáhwi'nígíí, Bich'ah yikaahgo niilyeeh"
 }

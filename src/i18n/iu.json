@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Settings nalunaarusiorfigineqarsinnaassusiat reset?",
   "settings.confirm_reset_all_body": "API keys nalunaarusiorfigineqarsinnaassusiat atugarissaarsinnaanissaminnik. Nalilersorneq atorsinnaanngikkaluarluni.",
   "settings.confirm_reset_all_yes": "Aap, nalunaarusiorfigineqarsinnaassusiat reset",
-  "settings.confirm_reset_all_no": "Naamik, settings nalunaarusiorfigineqarsinnaassusiat"
+  "settings.confirm_reset_all_no": "Naamik, settings nalunaarusiorfigineqarsinnaassusiat",
+  "settings.language_change": "Asijjiqpaa",
+  "settings.language_changed": "Asijjiqqittauqpuq",
+  "settings.language_changed_announce": "Oqaatsit: Asijjiqqittauqpuq, Nalunaarusiorfigineqarsinnaassusiat tigumiara"
 }

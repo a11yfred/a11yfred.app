@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Restablir tota la configuració?",
   "settings.confirm_reset_all_body": "Açò esborrarà tota la configuració guardada — incloses les teues claus API — i tornarà tot als valors predeterminats. Aquesta acció no es pot desfer.",
   "settings.confirm_reset_all_yes": "Sí, restablir tot",
-  "settings.confirm_reset_all_no": "No, mantindre la configuració"
+  "settings.confirm_reset_all_no": "No, mantindre la configuració",
+  "settings.language_change": "Keliagon",
+  "settings.language_changed": "Kelias",
+  "settings.language_changed_announce": "Ȳdra: Kelias, Morghugon belmagon"
 }

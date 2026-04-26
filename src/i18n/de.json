@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Alle Einstellungen zurücksetzen?",
   "settings.confirm_reset_all_body": "Dadurch werden alle gespeicherten Einstellungen — einschließlich Ihrer API-Schlüssel — gelöscht und alles auf die Standardwerte zurückgesetzt. Dies kann nicht rückgängig gemacht werden.",
   "settings.confirm_reset_all_yes": "Ja, alles zurücksetzen",
-  "settings.confirm_reset_all_no": "Nein, Einstellungen behalten"
+  "settings.confirm_reset_all_no": "Nein, Einstellungen behalten",
+  "settings.language_change": "Ändern",
+  "settings.language_changed": "Geändert",
+  "settings.language_changed_announce": "Sprache: Geändert, klicken Sie auf Speichern zum Bestätigen"
 }

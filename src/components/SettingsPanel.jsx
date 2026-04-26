@@ -112,6 +112,7 @@ export default function SettingsPanel({
   const [rhgPending, setRhgPending] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
   const [pendingLanguage, setPendingLanguage] = useState(language)
+  const [changedLanguage, setChangedLanguage] = useState(false)
   const didMountLang = useRef(false)
 
   // Sync pendingLanguage if the language prop changes externally (e.g. Reset All)
@@ -203,13 +204,21 @@ export default function SettingsPanel({
           </div>
           <button
             type="button"
-            className="btn-secondary settings-language-set-btn"
+            className={`btn-accent settings-language-change-btn${changedLanguage ? ' field-btn--success' : ''}`}
             onClick={() => {
               if (pendingLanguage === 'rhg') { setRhgPending(true) }
-              else { onLanguageChange(pendingLanguage) }
+              else {
+                onLanguageChange(pendingLanguage)
+                setChangedLanguage(true)
+                setTimeout(() => setChangedLanguage(false), 1500)
+                announce(t('settings.language_changed_announce'))
+              }
             }}
           >
-            {t('settings.save')}
+            {changedLanguage
+              ? <><Check size={14} aria-hidden="true" />{' '}{t('settings.language_changed')}</>
+              : t('settings.language_change')
+            }
           </button>
         </div>
       </div>

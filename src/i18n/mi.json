@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Tautuhi anō ngā tautuhinga katoa?",
   "settings.confirm_reset_all_body": "Ka ūkui tēnei i ngā tautuhinga katoa — tae atu ki ō kī API — ā ka huri ngā mea katoa ki ngā taurite. Kāore e taea te huri whakamuri.",
   "settings.confirm_reset_all_yes": "Āe, tautuhi anō ngā mea katoa",
-  "settings.confirm_reset_all_no": "Kāo, pupuri ngā tautuhinga"
+  "settings.confirm_reset_all_no": "Kāo, pupuri ngā tautuhinga",
+  "settings.language_change": "Huri",
+  "settings.language_changed": "Kua huri",
+  "settings.language_changed_announce": "Reo: Kua huri, pēhia Tiaki hei whakaū"
 }

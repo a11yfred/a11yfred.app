@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "すべての設定をリセットしますか？",
   "settings.confirm_reset_all_body": "これにより、APIキーを含むすべての保存された設定が消去され、すべてデフォルトに戻ります。この操作は取り消せません。",
   "settings.confirm_reset_all_yes": "はい、すべてリセット",
-  "settings.confirm_reset_all_no": "いいえ、設定を維持"
+  "settings.confirm_reset_all_no": "いいえ、設定を維持",
+  "settings.language_change": "変更",
+  "settings.language_changed": "変更済み",
+  "settings.language_changed_announce": "言語：変更済み、保存ボタンを押して確認してください"
 }

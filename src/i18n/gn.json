@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "¿Embojevy configuración ikatúvagua?",
   "settings.confirm_reset_all_body": "Ko'ã omoñemimba configuración ikatúvagua — API keys ndive — ha embojevy valores por defecto. Ndaikatúi ojepu'ã.",
   "settings.confirm_reset_all_yes": "Héẽ, embojevy ikatúvagua",
-  "settings.confirm_reset_all_no": "Nahániri, emopyta configuración"
+  "settings.confirm_reset_all_no": "Nahániri, emopyta configuración",
+  "settings.language_change": "Moambuéta",
+  "settings.language_changed": "Moambuetáma",
+  "settings.language_changed_announce": "Ñe'ẽ: Moambuetáma, embyky Eñongatu moñepyrũ"
 }

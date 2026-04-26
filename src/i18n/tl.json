@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "I-reset ang lahat ng setting?",
   "settings.confirm_reset_all_body": "Ito ay mag-aalis ng lahat ng naka-save na setting — kasama ang iyong mga API key — at ibabalik ang lahat sa mga default. Hindi ito mababawi.",
   "settings.confirm_reset_all_yes": "Oo, i-reset ang lahat",
-  "settings.confirm_reset_all_no": "Hindi, panatilihin ang mga setting"
+  "settings.confirm_reset_all_no": "Hindi, panatilihin ang mga setting",
+  "settings.language_change": "Baguhin",
+  "settings.language_changed": "Nabago",
+  "settings.language_changed_announce": "Wika: Nabago, pindutin ang I-save para kumpirmahin"
 }

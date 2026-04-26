@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Esetray Allway Ettingssay?",
   "settings.confirm_reset_all_body": "Isthay illway earclay allway avedsay ettingssay — includinway ouryay APIway eysway — andway eturnray everythingway otay efaultsday. Isthay annotcay ebay undoneway.",
   "settings.confirm_reset_all_yes": "Esyay, esetray everythingway",
-  "settings.confirm_reset_all_no": "Onay, eepkay ettingssay"
+  "settings.confirm_reset_all_no": "Onay, eepkay ettingssay",
+  "settings.language_change": "Angechay",
+  "settings.language_changed": "Angedchay",
+  "settings.language_changed_announce": "Anguagelay: Angedchay, esspray Avesay uttonbay otay onfirmcay"
 }

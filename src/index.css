@@ -1141,7 +1141,10 @@ input.search-input:focus {
   min-width: 0;
 }
 
-.settings-language-set-btn {
+.settings-language-change-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 6px var(--space-3);
   font-size: var(--fs-body);
   border-radius: var(--radius);

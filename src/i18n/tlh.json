@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "qawHaq Hoch yIchu'Ha'moH?",
   "settings.confirm_reset_all_body": "API HaSta qawHaq Hoch. latlh Qo'.",
   "settings.confirm_reset_all_yes": "HIja', Hoch yIchu'Ha'moH",
-  "settings.confirm_reset_all_no": "Qo', qawHaq yIpol"
+  "settings.confirm_reset_all_no": "Qo', qawHaq yIpol",
+  "settings.language_change": "yIchoH",
+  "settings.language_changed": "choHlu'",
+  "settings.language_changed_announce": "Hol: choHlu', yIpol 'ev lo'"
 }

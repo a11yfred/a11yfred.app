@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Återställa alla inställningar?",
   "settings.confirm_reset_all_body": "Det här rensar alla sparade inställningar — inklusive dina API-nycklar — och återställer allt till standardvärden. Det kan inte ångras.",
   "settings.confirm_reset_all_yes": "Ja, återställ allt",
-  "settings.confirm_reset_all_no": "Nej, behåll inställningar"
+  "settings.confirm_reset_all_no": "Nej, behåll inställningar",
+  "settings.language_change": "Ändra",
+  "settings.language_changed": "Ändrat",
+  "settings.language_changed_announce": "Språk: Ändrat, tryck på Spara för att bekräfta"
 }

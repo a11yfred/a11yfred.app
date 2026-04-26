@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "सभी सेटिंग रीसेट करें?",
   "settings.confirm_reset_all_body": "यह सभी सहेजी गई सेटिंग — आपकी API कुंजियों सहित — साफ़ करेगा और सब कुछ डिफ़ॉल्ट पर वापस कर देगा। यह पूर्ववत नहीं किया जा सकता।",
   "settings.confirm_reset_all_yes": "हां, सब रीसेट करें",
-  "settings.confirm_reset_all_no": "नहीं, सेटिंग रखें"
+  "settings.confirm_reset_all_no": "नहीं, सेटिंग रखें",
+  "settings.language_change": "बदलें",
+  "settings.language_changed": "बदला गया",
+  "settings.language_changed_announce": "भाषा: बदला गया, पुष्टि के लिए सहेजें बटन दबाएं"
 }

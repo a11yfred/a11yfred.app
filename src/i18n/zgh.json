@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "ⵙⵎⵔⵙ ⴽⵓⵍⵍⵓ ⵜⴰⵙⵏⵉⴼⵍⵜ?",
   "settings.confirm_reset_all_body": "API ⵜⵉⵙⵔⵔⵓⵜⵉⵏ ⴷ ⵜⴰⵙⵏⵉⴼⵍⵜ ⴽⵓⵍⵍⵓ. ⵓⵔ ⵉⵎⵎⴰⵍ.",
   "settings.confirm_reset_all_yes": "ⵢⴰⵀ, ⵙⵎⵔⵙ ⴽⵓⵍⵍⵓ",
-  "settings.confirm_reset_all_no": "ⵓⵀⵓ, ⵖⵣⵓ ⵜⴰⵙⵏⵉⴼⵍⵜ"
+  "settings.confirm_reset_all_no": "ⵓⵀⵓ, ⵖⵣⵓ ⵜⴰⵙⵏⵉⴼⵍⵜ",
+  "settings.language_change": "ⴱⴷⴷⵍ",
+  "settings.language_changed": "ⵉⵜⴱⴷⴷⵍ",
+  "settings.language_changed_announce": "ⵜⵓⵜⵍⴰⵢⵜ: ⵉⵜⴱⴷⴷⵍ, ⴽⵛⵎ ⵙ ⵜⴽⴰⴱⴱⵓⵜ ⵙⴽⵛⵎ ⴰⴽⴽ ⵜⵓⴷⵔⵜ"
 }

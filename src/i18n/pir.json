@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Heave-ho All Settings, arrr?",
   "settings.confirm_reset_all_body": "This will walk all saved settings off the plank — including yer API keys — and return everything to port defaults. This cannot be undone, sailor.",
   "settings.confirm_reset_all_yes": "Aye, heave-ho everything",
-  "settings.confirm_reset_all_no": "Nay, keep me settings"
+  "settings.confirm_reset_all_no": "Nay, keep me settings",
+  "settings.language_change": "Alter Course",
+  "settings.language_changed": "Course Altered",
+  "settings.language_changed_announce": "Tongue: Course Altered, press ye Stow button to confirm, arr!"
 }

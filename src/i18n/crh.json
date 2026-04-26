@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Tüm ayarlar sıfırlansın mı?",
   "settings.confirm_reset_all_body": "Bu, tüm kaydedilmiş ayarları — API anahtarlarınız dahil — silerek her şeyi varsayılana döndürecektir. Bu işlem geri alınamaz.",
   "settings.confirm_reset_all_yes": "Evet, her şeyi sıfırla",
-  "settings.confirm_reset_all_no": "Hayır, ayarları koru"
+  "settings.confirm_reset_all_no": "Hayır, ayarları koru",
+  "settings.language_change": "Değiştir",
+  "settings.language_changed": "Değiştirildi",
+  "settings.language_changed_announce": "Til: Değiştirildi, onaylamak için Kaydet düğmesine basın"
 }

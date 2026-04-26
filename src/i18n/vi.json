@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Đặt lại tất cả cài đặt?",
   "settings.confirm_reset_all_body": "Thao tác này sẽ xóa tất cả cài đặt đã lưu — bao gồm khóa API của bạn — và trả về mặc định. Không thể hoàn tác.",
   "settings.confirm_reset_all_yes": "Có, đặt lại tất cả",
-  "settings.confirm_reset_all_no": "Không, giữ cài đặt"
+  "settings.confirm_reset_all_no": "Không, giữ cài đặt",
+  "settings.language_change": "Thay đổi",
+  "settings.language_changed": "Đã thay đổi",
+  "settings.language_changed_announce": "Ngôn ngữ: Đã thay đổi, nhấn nút Lưu để xác nhận"
 }

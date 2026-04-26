@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Ezarpen guztiak berrezarri?",
   "settings.confirm_reset_all_body": "Honek gordetako ezarpen guztiak — API gakoak barne — ezabatuko ditu eta dena lehenetsira itzuliko da. Ezin da desegin.",
   "settings.confirm_reset_all_yes": "Bai, berrezarri dena",
-  "settings.confirm_reset_all_no": "Ez, mantendu ezarpenak"
+  "settings.confirm_reset_all_no": "Ez, mantendu ezarpenak",
+  "settings.language_change": "Aldatu",
+  "settings.language_changed": "Aldatuta",
+  "settings.language_changed_announce": "Hizkuntza: Aldatuta, sakatu Gorde botoia baieztatzen"
 }

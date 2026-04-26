@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "¿Llapan configuración tikrachiy?",
   "settings.confirm_reset_all_body": "API llaves chaynawan llapan configuración. Mana kutichipaykunachu.",
   "settings.confirm_reset_all_yes": "Ari, llapanta tikrachiy",
-  "settings.confirm_reset_all_no": "Mana, configuración waqaychay"
+  "settings.confirm_reset_all_no": "Mana, configuración waqaychay",
+  "settings.language_change": "Tikrachi",
+  "settings.language_changed": "Tikrachisqa",
+  "settings.language_changed_announce": "Simi: Tikrachisqa, Waqaychay tuputa ñit'iy"
 }

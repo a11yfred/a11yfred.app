@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Takayna ananyi kulira?",
   "settings.confirm_reset_all_body": "API keys takayna mana. Kulira wiya.",
   "settings.confirm_reset_all_yes": "Wara, ananyi kulira",
-  "settings.confirm_reset_all_no": "Mana, takayna kani"
+  "settings.confirm_reset_all_no": "Mana, takayna kani",
+  "settings.language_change": "Ngapartji",
+  "settings.language_changed": "Ngapartjilpai",
+  "settings.language_changed_announce": "Wangka: Ngapartjilpai, Kani-ku nyakula"
 }

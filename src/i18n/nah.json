@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Configuración mochintin reset?",
   "settings.confirm_reset_all_body": "API keys ihuan configuración mochintin. Amo ticcuepa.",
   "settings.confirm_reset_all_yes": "Quema, mochintin reset",
-  "settings.confirm_reset_all_no": "Amo, configuración ticpia"
+  "settings.confirm_reset_all_no": "Amo, configuración ticpia",
+  "settings.language_change": "Xicpatlani",
+  "settings.language_changed": "Opatlac",
+  "settings.language_changed_announce": "Tlahtoa: Opatlac, ximopatlahtoa Pixca nāhuallahtōlli"
 }

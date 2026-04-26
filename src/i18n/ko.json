@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "모든 설정을 초기화할까요?",
   "settings.confirm_reset_all_body": "API 키를 포함한 모든 저장된 설정을 지우고 기본값으로 돌아갑니다. 이 작업은 취소할 수 없습니다.",
   "settings.confirm_reset_all_yes": "예, 모두 초기화",
-  "settings.confirm_reset_all_no": "아니요, 설정 유지"
+  "settings.confirm_reset_all_no": "아니요, 설정 유지",
+  "settings.language_change": "변경",
+  "settings.language_changed": "변경됨",
+  "settings.language_changed_announce": "언어: 변경됨, 저장 버튼을 눌러 확인하세요"
 }

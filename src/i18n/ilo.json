@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "I-reset ti amin nga settings?",
   "settings.confirm_reset_all_body": "Daytoy ti mangpukaw ti amin nga naipatanem nga settings — pati na API keys — ken maisubli ti amin iti default. Saanen mabalbaliwan.",
   "settings.confirm_reset_all_yes": "Wen, i-reset ti amin",
-  "settings.confirm_reset_all_no": "Saan, itanem ti settings"
+  "settings.confirm_reset_all_no": "Saan, itanem ti settings",
+  "settings.language_change": "Baliwan",
+  "settings.language_changed": "Nabaliwan",
+  "settings.language_changed_announce": "Pagsasao: Nabaliwan, i-klik ti Idulin tapno mapasingkedan"
 }

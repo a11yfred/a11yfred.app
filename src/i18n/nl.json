@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Alle instellingen resetten?",
   "settings.confirm_reset_all_body": "Dit wist alle opgeslagen instellingen — inclusief uw API-sleutels — en zet alles terug naar de standaardinstellingen. Dit kan niet ongedaan worden gemaakt.",
   "settings.confirm_reset_all_yes": "Ja, alles resetten",
-  "settings.confirm_reset_all_no": "Nee, instellingen bewaren"
+  "settings.confirm_reset_all_no": "Nee, instellingen bewaren",
+  "settings.language_change": "Wijzigen",
+  "settings.language_changed": "Gewijzigd",
+  "settings.language_changed_announce": "Taal: Gewijzigd, druk op Opslaan om te bevestigen"
 }

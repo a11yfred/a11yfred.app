@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "I-reset ang tanan nga setting?",
   "settings.confirm_reset_all_body": "Mao kini ang magwagtang sa tanang gitipig nga setting — lakip ang imong mga API key — ug mobalik ang tanan sa default. Dili na kini mabawi.",
   "settings.confirm_reset_all_yes": "Oo, i-reset ang tanan",
-  "settings.confirm_reset_all_no": "Dili, i-keep ang mga setting"
+  "settings.confirm_reset_all_no": "Dili, i-keep ang mga setting",
+  "settings.language_change": "Usba",
+  "settings.language_changed": "Giusba",
+  "settings.language_changed_announce": "Pinulongan: Giusba, pindota ang I-save para sa pagtugot"
 }

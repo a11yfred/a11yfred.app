@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "སྒྲིག་གཞི་ཐམས་ཅད་སོར་ཆུད་ལམ།",
   "settings.confirm_reset_all_body": "API ལྡེ་མིག་སོགས་གསོག་འཇོག་ཐམས་ཅད་བཏོན། ཐམས་ཅད་སྒྲིག་གཞི་སྔ་མར་ཕྱིར་འཐེན། ལོག་ཐབས་མེད།",
   "settings.confirm_reset_all_yes": "ཡིན། ཐམས་ཅད་སོར་ཆུད།",
-  "settings.confirm_reset_all_no": "མིན། སྒྲིག་གཞི་ཉར།"
+  "settings.confirm_reset_all_no": "མིན། སྒྲིག་གཞི་ཉར།",
+  "settings.language_change": "བཅོས་",
+  "settings.language_changed": "བཅོས་སོ།",
+  "settings.language_changed_announce": "སྐད་ཡིག། བཅོས་སོ། གསོག་འཇོག་བྱས་ལ་ཐུག"
 }

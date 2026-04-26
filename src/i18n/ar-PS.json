@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "إعادة تعيين جميع الإعدادات؟",
   "settings.confirm_reset_all_body": "سيؤدي هذا إلى مسح جميع الإعدادات المحفوظة — بما فيها مفاتيح API — وإعادة كل شيء إلى الافتراضي. لا يمكن التراجع عن هذا.",
   "settings.confirm_reset_all_yes": "نعم، إعادة تعيين كل شيء",
-  "settings.confirm_reset_all_no": "لا، احتفظ بالإعدادات"
+  "settings.confirm_reset_all_no": "لا، احتفظ بالإعدادات",
+  "settings.language_change": "تغيير",
+  "settings.language_changed": "تم التغيير",
+  "settings.language_changed_announce": "اللغة: تم التغيير، اضغط زر حفظ للتأكيد"
 }

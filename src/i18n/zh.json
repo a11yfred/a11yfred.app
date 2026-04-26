@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "重置所有设置？",
   "settings.confirm_reset_all_body": "这将清除所有已保存的设置 — 包括您的 API 密钥 — 并将一切恢复为默认值。此操作无法撤销。",
   "settings.confirm_reset_all_yes": "是，重置所有",
-  "settings.confirm_reset_all_no": "否，保留设置"
+  "settings.confirm_reset_all_no": "否，保留设置",
+  "settings.language_change": "更改",
+  "settings.language_changed": "已更改",
+  "settings.language_changed_announce": "语言：已更改，按\"保存\"按钮确认"
 }

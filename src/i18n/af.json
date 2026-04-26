@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Alle instellings terugstel?",
   "settings.confirm_reset_all_body": "Dit sal alle gestoorde instellings — insluitend jou API-sleutels — verwyder en alles na standaardwaardes herstel. Dit kan nie ongedaan gemaak word nie.",
   "settings.confirm_reset_all_yes": "Ja, stel alles terug",
-  "settings.confirm_reset_all_no": "Nee, hou instellings"
+  "settings.confirm_reset_all_no": "Nee, hou instellings",
+  "settings.language_change": "Verander",
+  "settings.language_changed": "Verander",
+  "settings.language_changed_announce": "Taal: Verander, klik Stoor-knoppie om te bevestig"
 }

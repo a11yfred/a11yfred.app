@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "¿Restablecer toda la configuración?",
   "settings.confirm_reset_all_body": "Esto borrará toda la configuración guardada — incluidas tus claves API — y devolverá todo a los valores predeterminados. No se puede deshacer.",
   "settings.confirm_reset_all_yes": "Sí, restablecer todo",
-  "settings.confirm_reset_all_no": "No, mantener configuración"
+  "settings.confirm_reset_all_no": "No, mantener configuración",
+  "settings.language_change": "Cambiar",
+  "settings.language_changed": "Cambiado",
+  "settings.language_changed_announce": "Idioma: Cambiado, pulse el botón Guardar para confirmar"
 }

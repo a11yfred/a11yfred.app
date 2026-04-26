@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Restarigi ĉiujn agordojn?",
   "settings.confirm_reset_all_body": "Tio forigos ĉiujn konservitajn agordojn — inkluzive viajn API-ŝlosilojn — kaj restarigos ĉion al implicita valoro. Tion oni ne povas malfari.",
   "settings.confirm_reset_all_yes": "Jes, restarigi ĉion",
-  "settings.confirm_reset_all_no": "Ne, konservi agordojn"
+  "settings.confirm_reset_all_no": "Ne, konservi agordojn",
+  "settings.language_change": "Ŝanĝi",
+  "settings.language_changed": "Ŝanĝita",
+  "settings.language_changed_announce": "Lingvo: Ŝanĝita, premu Konservi por konfirmi"
 }

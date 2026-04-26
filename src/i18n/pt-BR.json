@@ -154,5 +154,8 @@
   "settings.confirm_reset_all_heading": "Redefinir todas as configurações?",
   "settings.confirm_reset_all_body": "Isso apagará todas as configurações salvas — incluindo suas chaves API — e redefinirá tudo para os valores padrão. Essa ação não pode ser desfeita.",
   "settings.confirm_reset_all_yes": "Sim, redefinir tudo",
-  "settings.confirm_reset_all_no": "Não, manter configurações"
+  "settings.confirm_reset_all_no": "Não, manter configurações",
+  "settings.language_change": "Alterar",
+  "settings.language_changed": "Alterado",
+  "settings.language_changed_announce": "Idioma: Alterado, clique em Salvar para confirmar"
 }
