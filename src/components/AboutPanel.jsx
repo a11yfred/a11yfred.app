@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight, Info } from 'lucide-react'
-import { useFocusOnMount, BottomSheet, useDir } from '../plugins/router/index.js'
+import { useFocusOnMount, usePageTitle, BottomSheet, useDir } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 
 export default function AboutPanel({ onClose }) {
   const t = useT()
   const headingRef = useFocusOnMount()
   const dir = useDir()
+  usePageTitle(t('about.sheet_label'))
   const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
   const [privacyOpen, setPrivacyOpen] = useState(false)
 
