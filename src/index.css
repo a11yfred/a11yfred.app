@@ -760,6 +760,17 @@ body:has(.modal-panel.is-open) .drawer-panel {
   background: var(--bg-subtle);
 }
 
+.error-retry-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+  border-width: 0;
+}
+
 /* ─── Disabled form controls ─────────────────────────────────
    Browsers apply automatic opacity to disabled <select> elements
    but not <input>, causing visual inconsistency. Force opacity:1
@@ -1003,6 +1014,57 @@ select:disabled {
   margin-bottom: 0;
 }
 
+/* ─── Result skeleton ────────────────────────────────────── */
+
+@keyframes skeleton-shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(250%); }
+}
+
+.skeleton-line {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--bg-subtle);
+}
+
+.skeleton-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border),
+    transparent
+  );
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-line::after {
+    display: none;
+  }
+}
+
+.skeleton-card {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.skeleton-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+}
+
 /* ─── Search bar ──────────────────────────────────────────── */
 
 .search-bar {
@@ -1102,6 +1164,15 @@ input.search-input:focus {
   margin-top: var(--space-8);
   padding-top: var(--space-5);
   border-top: 1px solid var(--border);
+}
+
+.view-all-btn {
+  display: block;
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-size: var(--fs-body);
+  min-height: 3rem;
   text-align: center;
 }
 
@@ -1266,6 +1337,7 @@ input.search-input:focus {
 
 .settings-select {
   width: 100%;
+  height: 100%;
   padding: 6px 30px 6px 10px;
   font-size: var(--fs-body);
   background: var(--bg-subtle);
@@ -1295,7 +1367,7 @@ input.search-input:focus {
   margin-bottom: var(--space-2);
 }
 
-.settings-key-input {
+input.settings-key-input {
   width: 100%;
   padding: 6px 10px;
   font-size: var(--fs-body);
@@ -1323,7 +1395,7 @@ input.search-input:focus {
 .settings-field-error {
   color: var(--error);
   font-size: var(--fs-small);
-  margin-top: 0;
+  margin-top: 0.2em;
   margin-bottom: var(--space-2);
 }
 
@@ -1662,6 +1734,7 @@ input.search-input:focus {
 
 .detail-label {
   font-size: var(--fs-body);
+  font-weight: 600;
   color: var(--text);
   display: block;
   margin-bottom: 4px;
@@ -1718,8 +1791,36 @@ input.search-input:focus {
 
 .detail-rewrite-btn {
   align-self: stretch;
-  padding: 0 12px;
-  white-space: nowrap;
+  padding: 4px 1.25em;
+  white-space: normal;
+  text-align: center;
+  min-width: 6rem;
+  justify-content: center;
+}
+
+.detail-revise-label {
+  line-height: 1.3;
+  text-align: center;
+}
+
+.detail-revise-icon {
+  display: inline;
+  vertical-align: -0.15em;
+}
+
+@keyframes revising-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.detail-revising-text {
+  animation: revising-pulse 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .detail-revising-text {
+    animation: none;
+  }
 }
 
 /* ─── Related issues ─────────────────────────────────────── */
@@ -1731,15 +1832,14 @@ input.search-input:focus {
 }
 
 .detail-related__heading {
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   color: var(--text-muted);
   margin-bottom: var(--space-2);
 }
 
 .detail-related__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  list-style: disc;
+  padding-left: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -1750,7 +1850,7 @@ input.search-input:focus {
   border: none;
   padding: 0;
   font-size: var(--fs-body);
-  color: var(--accent);
+  color: var(--accent-text);
   cursor: pointer;
   text-align: left;
   text-decoration: underline;
@@ -1758,7 +1858,7 @@ input.search-input:focus {
 }
 
 .detail-related__btn:hover {
-  color: var(--accent-hover, var(--accent));
+  color: var(--text);
   text-decoration: none;
 }
 
@@ -1781,9 +1881,60 @@ input.search-input:focus {
   margin-bottom: 4px;
 }
 
+.field__label-row {
+  display: flex;
+  align-items: center;
+}
+
 .field__label {
   font-size: var(--fs-body);
+  font-weight: 600;
   color: var(--text);
+}
+
+.field__updated-badge {
+  display: inline-block;
+  margin-left: 0.4em;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--accent-text);
+}
+
+/* Custom styled checkbox — light purple bg, dark purple check */
+.field-select-checkbox {
+  appearance: none;
+  width: 1.125em;
+  height: 1.125em;
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-subtle);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  transition: background-color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.field-select-checkbox:checked {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%233c3489' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.field-select-checkbox:focus-visible {
+  outline-offset: 2px;
+}
+
+.field-select-checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] .field-select-checkbox:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%23afa9ec' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 .field__actions {
@@ -1810,7 +1961,7 @@ input.search-input:focus {
 .field__textarea {
   width: 100%;
   padding: 8px 10px;
-  font-size: var(--fs-body);
+  font-size: var(--fs-small);
   line-height: 1.6;
   background: var(--bg-subtle);
   border: 1px solid var(--border-control);
@@ -1820,6 +1971,11 @@ input.search-input:focus {
   overflow-y: auto;
   font-family: ui-monospace, monospace;
   margin-bottom: 0;
+}
+
+.field__textarea--animating {
+  color: var(--text-muted);
+  cursor: wait;
 }
 
 /* ─── About Panel ──────────────────────────────────────────── */
@@ -1891,6 +2047,7 @@ input.search-input:focus {
   font-size: var(--fs-body);
   color: var(--text);
   line-height: 1.6;
+  margin-bottom: 0;
 }
 
 .about-steps {
@@ -1970,6 +2127,7 @@ input.search-input:focus {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  margin-bottom: var(--space-5);
 }
 
 .about-coming li {
