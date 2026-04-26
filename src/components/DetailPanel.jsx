@@ -4,14 +4,7 @@ import { getAiRefinement } from '../services/aiService.js'
 import { useFocusOnMount, useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
-
-const PRIORITY_VARS = {
-  Critical:        { color: 'var(--priority-critical-text)', bg: 'var(--priority-critical-bg)', key: 'priority.critical'      },
-  High:            { color: 'var(--priority-high-text)',     bg: 'var(--priority-high-bg)',     key: 'priority.high'           },
-  Medium:          { color: 'var(--priority-medium-text)',   bg: 'var(--priority-medium-bg)',   key: 'priority.medium'         },
-  Low:             { color: 'var(--priority-low-text)',      bg: 'var(--priority-low-bg)',      key: 'priority.low'            },
-  'Best Practice': { color: 'var(--text-muted)',             bg: 'var(--bg-subtle)',            key: 'priority.best_practice'  },
-}
+import { PRIORITY_VARS } from '../data/priorityStyles.js'
 
 function scToWaiUrl(scLabel) {
   const match = scLabel?.match(/^\d+\.\d+\.\d+\s+(.+?)\s+\(Level/)

@@ -92,6 +92,9 @@
   --ease-out:    cubic-bezier(0.16, 1,   0.3,  1);  /* spring-y; good for slides entering */
   --ease-in:     cubic-bezier(0.4,  0,   1,    1);  /* accelerating; good for exits */
   --ease-in-out: cubic-bezier(0.4,  0,   0.2,  1);  /* balanced; good for state toggles */
+
+  /* Shared transition shorthand for interactive buttons */
+  --transition-btn: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
 }
 
 [data-theme="dark"] {

@@ -688,48 +688,17 @@ body:has(.modal-panel.is-open) .drawer-panel {
   border-radius: 50%;
 }
 
-/* ─── Ghost button (secondary / cancel actions) ─────────────
-   Shares the same box model as .btn-accent but uses a neutral
-   border and muted text instead of the accent color.          */
+/* ─── Ghost / secondary button (neutral border, muted text) ─
+   .btn-secondary is the preferred name for new code.
+   .btn-ghost is kept as a back-compat alias — both are identical. */
 
-.btn-ghost {
-  border: 1px solid var(--border-control);
-  background: transparent;
-  color: var(--text-muted);
-  font-weight: 500;
-  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
-}
-
-.btn-ghost:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-ghost:not(:disabled):hover {
-  background: var(--bg-subtle);
-  color: var(--text);
-  border-color: var(--text-faint);
-}
-
-/* Named alias — use .btn-secondary for semantic clarity in new code.
-   .btn-ghost remains for back-compat with existing usage.            */
+.btn-ghost,
 .btn-secondary {
   border: 1px solid var(--border-control);
   background: transparent;
   color: var(--text-muted);
   font-weight: 500;
-  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
-}
-
-.btn-secondary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-secondary:not(:disabled):hover {
-  background: var(--bg-subtle);
-  color: var(--text);
-  border-color: var(--text-faint);
+  transition: var(--transition-btn);
 }
 
 /* ─── Accent button (Save, Reset, Copy, Rewrite) ─────────── */
@@ -748,12 +717,23 @@ body:has(.modal-panel.is-open) .drawer-panel {
   background: var(--accent-bg);
   color: var(--accent-text);
   font-weight: 500;
-  transition: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+  transition: var(--transition-btn);
 }
 
+/* ─── Shared disabled state — before hover rules (specificity order) */
+
+.btn-ghost:disabled,
+.btn-secondary:disabled,
 .btn-accent:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.btn-ghost:not(:disabled):hover,
+.btn-secondary:not(:disabled):hover {
+  background: var(--bg-subtle);
+  color: var(--text);
+  border-color: var(--text-faint);
 }
 
 .btn-accent:not(:disabled):hover {
