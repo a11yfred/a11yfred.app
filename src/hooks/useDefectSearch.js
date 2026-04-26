@@ -57,5 +57,5 @@ export default function useDefectSearch(query, platform, locale = 'en', searchKe
       .map(r => r.item)
   }, [fuse, query, searchKey, ratings]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return results
+  return { results, allDefects }
 }

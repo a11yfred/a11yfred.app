@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { Sparkles, RotateCcw, Clipboard, Check } from 'lucide-react'
 import { getAiRefinement } from '../services/aiService.js'
 import { useFocusOnMount, useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
@@ -44,7 +44,7 @@ function isSignificantlyChanged(original, current, threshold = 0.7) {
   return editDistance(original, current) / original.length > threshold
 }
 
-export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
+export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDefects = [], onSelect }) {
   const titleRef = useFocusOnMount()
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
@@ -228,6 +228,8 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
         </div>
       </div>
 
+      <RelatedIssues defect={defect} allDefects={allDefects} onSelect={onSelect} />
+
       <Modal
         open={nothingToCopy}
         onClose={() => setNothingToCopy(false)}
@@ -255,6 +257,38 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0 }) {
       >
         <p>{t('detail.confirm_reset_body')}</p>
       </Modal>
+    </div>
+  )
+}
+
+function RelatedIssues({ defect, allDefects, onSelect }) {
+  const t = useT()
+
+  const related = useMemo(() => {
+    if (!allDefects?.length || !defect.related?.length) return []
+    return allDefects
+      .filter(d => d.id !== defect.id && defect.related.includes(d.scLabel))
+      .slice(0, 5)
+  }, [allDefects, defect])
+
+  if (!related.length || !onSelect) return null
+
+  return (
+    <div className="detail-related">
+      <p className="detail-related__heading">{t('detail.related_heading')}</p>
+      <ul className="detail-related__list">
+        {related.map(d => (
+          <li key={d.id}>
+            <button
+              type="button"
+              className="detail-related__btn"
+              onClick={() => onSelect(d)}
+            >
+              {d.title}
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
