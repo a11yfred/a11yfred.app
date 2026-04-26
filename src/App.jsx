@@ -7,8 +7,8 @@ import AboutPanel from './components/AboutPanel.jsx'
 import Confetti from './components/Confetti.jsx'
 import PartySparkles from './components/PartySparkles.jsx'
 import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
-import useDefectSearch from './hooks/useDefectSearch.js'
-import useDefectRatings from './hooks/useDefectRatings.js'
+import useFindingSearch from './hooks/useFindingSearch.js'
+import useFindingRatings from './hooks/useFindingRatings.js'
 import {
   Router,
   useRouter,
@@ -160,29 +160,29 @@ function AppContent({
   const t = useT()
   const settingsOpen = route === '/settings'
   const aboutOpen = route === '/about'
-  const defectMatch = useRouteMatch('/defect/:id')
-  const defectIdFromRoute = defectMatch?.id ?? null
-  const isNotFound = route !== '/' && route !== '/settings' && route !== '/about' && !defectMatch
+  const findingMatch = useRouteMatch('/finding/:id')
+  const findingIdFromRoute = findingMatch?.id ?? null
+  const isNotFound = route !== '/' && route !== '/settings' && route !== '/about' && !findingMatch
   const h1Ref = useRef(null)
   const didMount = useRef(false)
   const aboutWasOpenRef = useRef(false)
   const [viewAll, setViewAll] = useState(false)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
   const handleOpenAbout = () => navigate('/about')
-  const handleCloseAbout = () => navigate(selected ? `/defect/${selected.id}` : '/')
-  const handleSelectDefect = (defect) => {
-    setSelected(defect)
-    navigate(defect ? `/defect/${defect.id}` : '/')
+  const handleCloseAbout = () => navigate(selected ? `/finding/${selected.id}` : '/')
+  const handleSelectFinding = (finding) => {
+    setSelected(finding)
+    navigate(finding ? `/finding/${finding.id}` : '/')
   }
-  // Tracks whether settings was opened while a defect panel was selected,
+  // Tracks whether settings was opened while a finding panel was selected,
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
   const pendingSearchAnnounce = useRef(false)
   const liveAnnounceTimer = useRef(null)
 
-  const { ratings, upvote, downvote, toggleStar, toggleArchive } = useDefectRatings()
+  const { ratings, upvote, downvote, toggleStar, toggleArchive } = useFindingRatings()
   const activeQuery = liveSearch ? query : submittedQuery
-  const { results, allDefects, sortedDefects, dataLoading, dataError, retryData } = useDefectSearch(activeQuery, platform, language, searchKey, ratings)
+  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings)
   const [viewAllLoading, setViewAllLoading] = useState(false)
 
   useEffect(() => {
@@ -245,7 +245,7 @@ function AppContent({
     const IGNORED_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLock', 'Escape'])
     let count = 0
     function handleKeyDown(e) {
-      if (e.target.id === 'defect-search' && !IGNORED_KEYS.has(e.key)) {
+      if (e.target.id === 'finding-search' && !IGNORED_KEYS.has(e.key)) {
         count++
         if (count % 3 === 0) playSqueak()
       }
@@ -288,7 +288,7 @@ function AppContent({
   }, [query, liveSearch, searchKey]) // eslint-disable-line react-hooks/exhaustive-deps -- t and results.length read from closure; refs not reactive
 
   // WCAG 2.4.3: focus h1 when returning from settings on desktop (page swap).
-  // On mobile or when returning to a defect panel, restore panel focus instead.
+  // On mobile or when returning to a finding panel, restore panel focus instead.
   useEffect(() => {
     if (!didMount.current) { didMount.current = true; return }
     if (!settingsOpen) {
@@ -310,11 +310,11 @@ function AppContent({
   }, [aboutOpen, isDesktop])
 
   useEffect(() => {
-    if (!defectIdFromRoute || dataLoading || allDefects.length === 0) return
-    if (selected?.id === defectIdFromRoute) return
-    const found = allDefects.find(d => d.id === defectIdFromRoute)
+    if (!findingIdFromRoute || dataLoading || allFindings.length === 0) return
+    if (selected?.id === findingIdFromRoute) return
+    const found = allFindings.find(d => d.id === findingIdFromRoute)
     if (found) setSelected(found)
-  }, [defectIdFromRoute, dataLoading]) // eslint-disable-line react-hooks/exhaustive-deps -- allDefects populated when dataLoading flips false
+  }, [findingIdFromRoute, dataLoading]) // eslint-disable-line react-hooks/exhaustive-deps -- allFindings populated when dataLoading flips false
 
   useEffect(() => {
     if (!selected || settingsOpen || aboutOpen) return
@@ -326,7 +326,7 @@ function AppContent({
   const activateEasterEgg = (egg) => {
     setLanguage(egg)
     setQuery('')
-    handleSelectDefect(null)
+    handleSelectFinding(null)
     returnToPanelRef.current = false
     setSubmittedQuery('')
   }
@@ -339,7 +339,7 @@ function AppContent({
     }
     setQuery(q)
     if (q === '') {
-      handleSelectDefect(null)
+      handleSelectFinding(null)
       returnToPanelRef.current = false
       setSubmittedQuery('')
     }
@@ -351,7 +351,7 @@ function AppContent({
     if (egg) { activateEasterEgg(egg); return }
     setSubmittedQuery(query)
     setSearchKey(k => k + 1)
-    handleSelectDefect(null)
+    handleSelectFinding(null)
     pendingSearchAnnounce.current = true
   }
 
@@ -379,6 +379,9 @@ function AppContent({
     setQuery('')
     setSubmittedQuery('')
     setSelected(null)
+    setViewAll(false)
+    setViewAllConfirmOpen(false)
+    setViewAllLoading(false)
     navigate('/')
     announce(t('settings.reset_all_announce'), { priority: 'assertive' })
   }
@@ -406,7 +409,7 @@ function AppContent({
     onPlatformChange: (p) => { setPlatform(p) },
     partyUnlocked,
     onUnlock: unlock,
-    onClose: () => navigate(selected ? `/defect/${selected.id}` : '/'),
+    onClose: () => navigate(selected ? `/finding/${selected.id}` : '/'),
     onReset: handleResetAll,
   }
 
@@ -430,14 +433,14 @@ function AppContent({
       {dataError
         ? <DataError onRetry={retryData} />
         : dataLoading || viewAllLoading
-          ? <ResultListSkeleton count={activeQuery === 'debug skeleton' ? sortedDefects.length : undefined} />
+          ? <ResultListSkeleton count={activeQuery === 'debug skeleton' ? sortedFindings.length : undefined} />
           : viewAll
             ? (
               <ResultList
                 key="view-all"
-                results={sortedDefects}
+                results={sortedFindings}
                 selected={selected}
-                onSelect={handleSelectDefect}
+                onSelect={handleSelectFinding}
                 query=""
                 ratings={ratings}
                 onUpvote={upvote}
@@ -454,7 +457,7 @@ function AppContent({
                   key="search"
                   results={results}
                   selected={selected}
-                  onSelect={handleSelectDefect}
+                  onSelect={handleSelectFinding}
                   query={activeQuery}
                   ratings={ratings}
                   onUpvote={upvote}
@@ -484,7 +487,7 @@ function AppContent({
           {
             label: t('search.view_all_confirm_yes'),
             onClick: () => {
-              announce(t('results.loading_announce', { count: sortedDefects.length }))
+              announce(t('results.loading_announce', { count: sortedFindings.length }))
               setViewAllLoading(true)
               setViewAll(true)
               setViewAllConfirmOpen(false)
@@ -498,7 +501,7 @@ function AppContent({
           },
         ]}
       >
-        <p>{t('search.view_all_confirm_body', { count: allDefects.length })}</p>
+        <p>{t('search.view_all_confirm_body', { count: allFindings.length })}</p>
       </Modal>
     </>
   )
@@ -552,7 +555,7 @@ function AppContent({
 
       <BottomSheet
         open={!!selected && !settingsOpen && !aboutOpen}
-        onClose={() => { handleSelectDefect(null); returnToPanelRef.current = false }}
+        onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }}
         keepMounted={(settingsOpen || aboutOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
@@ -560,11 +563,11 @@ function AppContent({
         {selected && (
           <DetailPanel
             key={selected.id}
-            defect={selected}
+            finding={selected}
             aiEnabled={aiEnabled}
             focusTrigger={panelFocusTrigger}
-            allDefects={allDefects}
-            onSelect={handleSelectDefect}
+            allFindings={allFindings}
+            onSelect={handleSelectFinding}
           />
         )}
       </BottomSheet>
