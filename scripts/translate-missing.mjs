@@ -2,8 +2,13 @@
 /**
  * translate-missing.mjs
  *
- * Translates any i18n keys that still have English fallback values into the
- * target language using the Anthropic API.
+ * Translates i18n keys that are either:
+ *   (a) still holding their English placeholder value, or
+ *   (b) previously translated from an English source that has since changed
+ *       (detected by comparing en.json against scripts/en-snapshot.json).
+ *
+ * After a successful run the snapshot is updated so future runs only
+ * re-translate keys whose English source has changed again.
  *
  * Usage:
  *   ANTHROPIC_API_KEY=sk-ant-... node scripts/translate-missing.mjs
@@ -20,6 +25,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const I18N_DIR = path.join(__dirname, '..', 'src', 'i18n')
+const SNAPSHOT_PATH = path.join(__dirname, 'en-snapshot.json')
 
 const API_KEY = process.env.ANTHROPIC_API_KEY
 if (!API_KEY) {
@@ -139,8 +145,26 @@ ${JSON.stringify(keysToValues, null, 2)}`
 const localeArg = process.argv.find((a, i) => process.argv[i - 1] === '--locale')
 const targetLocales = localeArg ? localeArg.split(',').map(s => s.trim()) : null
 
-// Load English reference
+// Load English reference and snapshot of English values at last translation time
 const en = JSON.parse(fs.readFileSync(path.join(I18N_DIR, 'en.json'), 'utf8'))
+const snapshot = fs.existsSync(SNAPSHOT_PATH)
+  ? JSON.parse(fs.readFileSync(SNAPSHOT_PATH, 'utf8'))
+  : {}
+
+// Keys whose English source changed since the last translation run
+const sourceChanged = new Set(
+  Object.keys(en).filter(k => k in snapshot && snapshot[k] !== en[k])
+)
+
+if (sourceChanged.size > 0) {
+  console.log(`\nDetected ${sourceChanged.size} key(s) whose English source changed since last run:`)
+  for (const k of sourceChanged) {
+    console.log(`  ${k}`)
+    console.log(`    was: ${snapshot[k]}`)
+    console.log(`    now: ${en[k]}`)
+  }
+  console.log()
+}
 
 const localeFiles = fs.readdirSync(I18N_DIR)
   .filter(f => f.endsWith('.json') && f !== 'en.json')
@@ -155,22 +179,27 @@ for (const locale of localeFiles) {
   const filePath = path.join(I18N_DIR, `${locale}.json`)
   const data = JSON.parse(fs.readFileSync(filePath, 'utf8'))
 
-  // Find keys where value is identical to English (English fallback)
   const needsTranslation = {}
   for (const [key, enVal] of Object.entries(en)) {
-    if (key in data && data[key] === enVal) {
+    const hasEnglishPlaceholder = key in data && data[key] === enVal
+    const isStaleTranslation = sourceChanged.has(key) && key in data && data[key] !== enVal
+
+    if (hasEnglishPlaceholder || isStaleTranslation) {
       needsTranslation[key] = enVal
     }
   }
 
   const count = Object.keys(needsTranslation).length
   if (count === 0) {
-    console.log(`✓ ${locale}: no untranslated keys`)
+    console.log(`✓ ${locale}: up to date`)
     continue
   }
 
+  const staleCount = Object.keys(needsTranslation).filter(k => sourceChanged.has(k)).length
+  const newCount = count - staleCount
   const langName = LOCALE_NAMES[locale] || locale
-  console.log(`→ ${locale} (${langName}): translating ${count} keys…`)
+  const detail = [newCount && `${newCount} new`, staleCount && `${staleCount} updated`].filter(Boolean).join(', ')
+  console.log(`→ ${locale} (${langName}): translating ${count} keys (${detail})…`)
 
   try {
     const translations = await translateBatch(locale, needsTranslation)
@@ -192,6 +221,13 @@ for (const locale of localeFiles) {
   }
 
   await sleep(DELAY_MS)
+}
+
+// Update snapshot to reflect current English source so the next run
+// only re-translates keys that change after this point.
+if (totalErrors === 0 || totalTranslated > 0) {
+  fs.writeFileSync(SNAPSHOT_PATH, JSON.stringify(en, null, 2) + '\n', 'utf8')
+  console.log('\nSnapshot updated.')
 }
 
 console.log(`\nDone. ${totalTranslated} keys translated across ${localeFiles.length} locales.`)
