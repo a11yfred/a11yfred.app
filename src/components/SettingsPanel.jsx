@@ -84,9 +84,12 @@ const LANGUAGES = [
 export default function SettingsPanel({
   aiEnabled, onToggleAi,
   liveSearch, onToggleLiveSearch,
+  showVoting, onToggleVoting,
   theme, onThemeChange,
   language, onLanguageChange,
   platform, onPlatformChange,
+  partyUnlocked,
+  onUnlock,
   onClose,
   onReset,
 }) {
@@ -146,6 +149,7 @@ export default function SettingsPanel({
   }, [onClose, hasUnsaved, unsavedOpen])
 
   const handleSave = () => {
+    onUnlock?.()
     PROVIDERS.forEach(p => {
       if (keys[p.id]) {
         localStorage.setItem(`apikey_${p.id}`, keys[p.id])
@@ -187,7 +191,7 @@ export default function SettingsPanel({
             { value: 'light', labelKey: 'settings.theme_light' },
             { value: 'auto',  labelKey: 'settings.theme_auto'  },
             { value: 'dark',  labelKey: 'settings.theme_dark'  },
-            { value: 'party', labelKey: 'settings.theme_party' },
+            ...(partyUnlocked ? [{ value: 'party', labelKey: 'settings.theme_party' }] : []),
           ].map(({ value, labelKey }) => (
             <RadioChip
               key={value}
@@ -287,6 +291,19 @@ export default function SettingsPanel({
           </p>
         </div>
         <Toggle id="toggle-live-search" checked={liveSearch} onChange={onToggleLiveSearch} />
+      </div>
+
+      {/* Result voting */}
+      <div className="settings-toggle-row">
+        <div>
+          <label htmlFor="toggle-voting" className="settings-toggle-label">
+            {t('settings.voting_label')}
+          </label>
+          <p className="settings-toggle-desc">
+            {showVoting ? t('settings.voting_on') : t('settings.voting_off')}
+          </p>
+        </div>
+        <Toggle id="toggle-voting" checked={showVoting} onChange={onToggleVoting} />
       </div>
 
       {/* ── AI Assist ───────────────────────────────── */}

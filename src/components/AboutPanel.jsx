@@ -34,7 +34,7 @@ export default function AboutPanel({ onClose }) {
       <section className="about-section">
         <h3 className="about-section-heading">{t('about.how_heading')}</h3>
         <ol className="about-steps">
-          {[1, 2, 3, 4].map(n => (
+          {[1, 2, 3, 4, 5].map(n => (
             <li key={n} className="about-step">
               <span className="about-step-label">{t(`about.step_${n}_label`)}</span>
               <span className="about-step-body">{t(`about.step_${n}_body`)}</span>

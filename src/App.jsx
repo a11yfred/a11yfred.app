@@ -8,6 +8,7 @@ import Confetti from './components/Confetti.jsx'
 import PartySparkles from './components/PartySparkles.jsx'
 import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
 import useDefectSearch from './hooks/useDefectSearch.js'
+import useDefectRatings from './hooks/useDefectRatings.js'
 import {
   Router,
   useRouter,
@@ -94,7 +95,12 @@ function AppShell() {
     return navigator.language || 'en'
   })
   const [aiEnabled, setAiEnabled] = useState(false)
+  const [partyUnlocked, setPartyUnlocked] = useState(() =>
+    localStorage.getItem('partyUnlocked') === 'true' ||
+    localStorage.getItem('theme') === 'party'
+  )
   const [liveSearch, setLiveSearch] = useState(() => localStorage.getItem('liveSearch') !== 'false')
+  const [showVoting, setShowVoting] = useState(() => localStorage.getItem('showVoting') !== 'false')
   const [query, setQuery] = useState('')
   const [submittedQuery, setSubmittedQuery] = useState('')
   const [searchKey, setSearchKey] = useState(0)
@@ -149,8 +155,9 @@ function AppContent({
   const pendingSearchAnnounce = useRef(false)
   const liveAnnounceTimer = useRef(null)
 
+  const { ratings, upvote, downvote, toggleStar, toggleArchive } = useDefectRatings()
   const activeQuery = liveSearch ? query : submittedQuery
-  const results = useDefectSearch(activeQuery, platform, language, searchKey)
+  const results = useDefectSearch(activeQuery, platform, language, searchKey, ratings)
 
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
@@ -227,6 +234,7 @@ function AppContent({
   }, [language]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { localStorage.setItem('liveSearch', liveSearch) }, [liveSearch])
+  useEffect(() => { localStorage.setItem('showVoting', showVoting) }, [showVoting])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
 
   // Announce result count: immediately on manual search, debounced 500ms on live search
@@ -315,10 +323,12 @@ function AppContent({
     // Clear all persisted data
     localStorage.clear()
     // Reset React state to defaults
+    setPartyUnlocked(false)
     setTheme('auto')
     setLanguage(defaultLang)
     setPlatform('web')
     setLiveSearch(true)
+    setShowVoting(true)
     setAiEnabled(false)
     setQuery('')
     setSubmittedQuery('')
@@ -326,17 +336,27 @@ function AppContent({
     navigate('/')
   }
 
+  function unlock() {
+    if (partyUnlocked) return
+    setPartyUnlocked(true)
+    localStorage.setItem('partyUnlocked', 'true')
+  }
+
   const settingsProps = {
     aiEnabled,
-    onToggleAi: () => setAiEnabled(a => !a),
+    onToggleAi: () => { unlock(); setAiEnabled(a => !a) },
     liveSearch,
-    onToggleLiveSearch: () => setLiveSearch(s => !s),
+    onToggleLiveSearch: () => { unlock(); setLiveSearch(s => !s) },
+    showVoting,
+    onToggleVoting: () => { unlock(); setShowVoting(v => !v) },
     theme,
-    onThemeChange: setTheme,
+    onThemeChange: (t) => { unlock(); setTheme(t) },
     language: settingsLanguage,
-    onLanguageChange: setLanguage,
+    onLanguageChange: (l) => { unlock(); setLanguage(l) },
     platform,
-    onPlatformChange: setPlatform,
+    onPlatformChange: (p) => { unlock(); setPlatform(p) },
+    partyUnlocked,
+    onUnlock: unlock,
     onClose: () => navigate('/'),
     onReset: handleResetAll,
   }
@@ -363,6 +383,12 @@ function AppContent({
           selected={selected}
           onSelect={setSelected}
           query={activeQuery}
+          ratings={ratings}
+          onUpvote={upvote}
+          onDownvote={downvote}
+          onStar={toggleStar}
+          onArchive={toggleArchive}
+          showVoting={showVoting}
         />
       )}
     </>
