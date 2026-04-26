@@ -1078,6 +1078,15 @@ input.search-input:focus {
   color: var(--text);
 }
 
+/* ─── View All section ────────────────────────────────────── */
+
+.view-all-section {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
 /* ─── Settings panel ──────────────────────────────────────── */
 
 .settings-header {

@@ -14,6 +14,7 @@ import {
   useRouter,
   Drawer,
   BottomSheet,
+  Modal,
   useMediaQuery,
 } from './plugins/router/index.js'
 import { Announcer, announce } from './plugins/announce/index.js'
@@ -118,6 +119,8 @@ function AppShell() {
   const [selected, setSelected] = useState(null)
   const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
   const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
+  const [viewAll, setViewAll] = useState(false)
+  const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
 
   return (
     <I18nProvider locale={language}>
@@ -303,6 +306,7 @@ function AppContent({
   }
 
   const handleQueryChange = (q) => {
+    if (q && viewAll) setViewAll(false)
     if (liveSearch) {
       const egg = EASTER_EGGS[q.trim().toLowerCase()]
       if (egg) { activateEasterEgg(egg); return }
@@ -316,6 +320,7 @@ function AppContent({
   }
 
   const handleSearch = () => {
+    setViewAll(false)
     const egg = EASTER_EGGS[query.trim().toLowerCase()]
     if (egg) { activateEasterEgg(egg); return }
     setSubmittedQuery(query)
@@ -396,20 +401,70 @@ function AppContent({
         providerName={providerName}
         showVoting={showVoting}
       />
-      {activeQuery.length >= 2 && (
-        <ResultList
-          results={results}
-          selected={selected}
-          onSelect={setSelected}
-          query={activeQuery}
-          ratings={ratings}
-          onUpvote={upvote}
-          onDownvote={downvote}
-          onStar={toggleStar}
-          onArchive={toggleArchive}
-          showVoting={showVoting}
-        />
-      )}
+      {viewAll
+        ? (
+          <ResultList
+            key="view-all"
+            results={allDefects}
+            selected={selected}
+            onSelect={setSelected}
+            query=""
+            ratings={ratings}
+            onUpvote={upvote}
+            onDownvote={downvote}
+            onStar={toggleStar}
+            onArchive={toggleArchive}
+            showVoting={showVoting}
+            focusCount
+          />
+        )
+        : activeQuery.length >= 2
+          ? (
+            <ResultList
+              key="search"
+              results={results}
+              selected={selected}
+              onSelect={setSelected}
+              query={activeQuery}
+              ratings={ratings}
+              onUpvote={upvote}
+              onDownvote={downvote}
+              onStar={toggleStar}
+              onArchive={toggleArchive}
+              showVoting={showVoting}
+            />
+          )
+          : (
+            <div className="view-all-section">
+              <button
+                type="button"
+                className="btn-secondary view-all-btn"
+                onClick={() => setViewAllConfirmOpen(true)}
+              >
+                {t('search.view_all')}
+              </button>
+            </div>
+          )
+      }
+      <Modal
+        open={viewAllConfirmOpen}
+        onClose={() => setViewAllConfirmOpen(false)}
+        heading={t('search.view_all_confirm_heading')}
+        actions={[
+          {
+            label: t('search.view_all_confirm_yes'),
+            onClick: () => { setViewAll(true); setViewAllConfirmOpen(false) },
+            className: 'btn-accent modal-ok-btn',
+          },
+          {
+            label: t('search.view_all_confirm_no'),
+            onClick: () => setViewAllConfirmOpen(false),
+            className: 'btn-secondary modal-ok-btn',
+          },
+        ]}
+      >
+        <p>{t('search.view_all_confirm_body', { count: allDefects.length })}</p>
+      </Modal>
     </>
   )
 

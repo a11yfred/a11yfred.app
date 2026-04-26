@@ -1,11 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore } from 'lucide-react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, focusCount = false }) {
   const t = useT()
+  const countRef = useRef(null)
+
+  useEffect(() => {
+    if (focusCount) countRef.current?.focus()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps — focus once on mount when view-all activates
 
   if (results.length === 0) {
     return <NoResults query={query} />
@@ -16,7 +21,13 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   return (
     <div className="result-list-section">
       <div className="results-meta">
-        <p className="results-count">{t('results.count', { count: results.length })}</p>
+        <p
+          ref={countRef}
+          tabIndex={focusCount ? -1 : undefined}
+          className="results-count"
+        >
+          {t('results.count', { count: results.length })}
+        </p>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
       </div>
 
