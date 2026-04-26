@@ -24,7 +24,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     <div className="result-list-section">
       <div className="results-meta">
         <p className="results-count">{t('results.count', { count: results.length })}</p>
-        <p className="results-vote-hint">{t('results.vote_hint')}</p>
+        {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
       </div>
 
       <ul className="result-list" role="listbox" aria-label={t('results.aria_label')}>
