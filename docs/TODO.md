@@ -11,7 +11,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Populate defect corpus** `[corpus]` — import from audit spreadsheets; target 150–200 entries across web and native; review existing 50 starters for accuracy and voice consistency
 - [ ] **Deploy to Netlify** `[infra]` — connect the GitHub repo to Netlify; set the build command to `npm run build` and publish directory to `dist`; the `netlify.toml` is already configured with headers and the SPA redirect rule
 - [ ] **Add favicon** `[design]` `[infra]` — create a `favicon.svg` in `public/` and uncomment the `<link rel="icon">` tag in `index.html`; the favicon should be a simple accessible "A" mark or magnifying glass glyph using the accent color `#5548c8`
-- [ ] **Standardize DetailPanel action icons** `[design]` `[a11y]` — the Reset (↺) and Copy (⎘) symbol characters in `DetailPanel` are not vertically aligned with the Lucide `<Check>` icon used in the Settings "Saved" state; switch all three to Lucide icons (`RotateCcw`, `Clipboard`, `Check`) so they share the same size, baseline, and stroke weight across buttons
+- [x] **Standardize DetailPanel action icons** `[design]` `[a11y]` — switched to Lucide `RotateCcw`, `Clipboard`, `Check`; Unicode chars stripped from all 50 locale files; mobile shows icon only, desktop shows icon + text
 - [x] **Search button height — match input** `[design]` — fixed: `align-self: stretch` on `.search-submit-btn`
 - [ ] **Verify Ko-fi a11y patch selectors (follow-up)** `[a11y]` — the tooltip selector `i[rel="tooltip"]` and input selectors within `.kofi-overlay-widget-overlay` were added without live DOM verification; open the deployed app with Ko-fi loaded and confirm the selectors match the real markup before shipping
 - [x] **Footer credit wording** `[design]` — changed to "A project by Mikey Ilagan"
@@ -25,11 +25,11 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ## Corpus
 
-- [ ] **Batch import tooling** `[corpus]` — write a small Node.js or Python script that reads rows from a CSV or Excel export of your audit spreadsheets and converts them to the `mikeys-corpus.json` schema; run once, review the output for voice consistency and keyword coverage, then delete the script
+- [ ] **Batch import tooling** `[corpus]` — write a small Node.js or Python script that reads rows from a CSV or Excel export of your audit spreadsheets and converts them to the corpus JSON schema; run once, review the output for voice consistency and keyword coverage, then delete the script
 - [ ] **Keyword audit** `[corpus]` — after the batch import, review the `keywords` array on every entry; keywords drive Fuse.js relevance more than any other field, and imported entries from spreadsheets often need additional synonyms and component names added
 - [ ] **Platform coverage** `[corpus]` — verify that native-only defects are flagged `"platform": "native"` and that `"both"` entries make sense on each platform; aim for roughly 40% native or both entries to make the Native filter useful
 - [ ] **Related SC links** `[corpus]` — spot-check the `related` arrays for accuracy; some starter entries are missing secondary success criteria that are commonly cited alongside the primary SC
-- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — add a toggle in Settings to switch between the personal corpus (`mikeys-corpus.json`) and the generic public corpus (`corpus.json`); the two files are already separate; the toggle should persist to `localStorage` and only appear if both files are available
+- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — add a toggle in Settings to switch between the private corpus and the generic public corpus (`corpus.json`); the two files are already separate; the toggle should persist to `localStorage` and only appear if both files are available
 - [ ] **Public corpus bootstrap** `[corpus]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as the personal corpus
 - [ ] **Corpus provenance field** `[corpus]` — add a `source` field to each defect entry indicating origin (e.g. `"personal"`, `"WAI"`, `"axe"`, `"Deque"`); helps contributors understand where an entry came from and what style to follow when adding similar entries
 - [ ] **Custom data source** `[corpus]` `[ux]` — allow Settings to accept a URL or file path pointing to a user-supplied JSON corpus; validate the schema on load, fall back to the built-in corpus if the source is unreachable or malformed; document the expected schema in a help tooltip
@@ -78,7 +78,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 ## UX / Interaction
 
 - [ ] **Result list arrow key navigation** `[ux]` `[a11y]` — the result list uses `role="listbox"` and `role="option"` but does not yet implement arrow key navigation; add `onKeyDown` handlers to the list container so that pressing Down/Up moves focus between options, and pressing Home/End jumps to the first/last option; this completes the ARIA listbox keyboard contract (WCAG 2.1.1)
-- [ ] **Toggle Enter key support** `[ux]` `[a11y]` — the `Toggle` component (checkbox with `role="switch"`) in SettingsPanel responds to Space but not Enter; native checkboxes only toggle on Space, but `role="switch"` on a non-native element should also respond to Enter per the ARIA authoring practices; add an `onKeyDown` handler that calls `onChange` when `e.key === 'Enter'` to match expected keyboard behavior (WCAG 2.1.1)
+- [x] **Toggle Enter key support** `[ux]` `[a11y]` — `onKeyDown` handler added to Toggle; Enter triggers `onChange` matching ARIA authoring practices for `role="switch"` (WCAG 2.1.1)
 - [ ] **How to use page** `[ux]` — add an onboarding modal or help page that explains the workflow: search → select → add location prefix → refine → copy; trigger it on first visit (check a `localStorage` flag) or via a Help button in the header; the content should be brief enough to read in under 30 seconds
 - [ ] **About / data sources page** `[ux]` `[corpus]` — when an About or How-to page is created, include a section describing how the public corpus was compiled and the sources used: WCAG 2.2 Understanding docs (W3C/WAI), axe-core rule descriptions (Deque), WebAIM articles, and Deque University; explain that entries are written in plain language and near-duplicates are consolidated; this gives users confidence in the data and gives proper credit to the source organizations
 - [ ] **Email results** `[ux]` — add a button to email the selected defect description and remediation to yourself using a `mailto:` link with a pre-populated subject and body; no server required; useful for quickly forwarding a defect write-up from a phone
@@ -90,7 +90,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Export defects to formats** `[ux]` — let users export the currently selected defect (or a multi-select batch) to CSV, Markdown, or a plain text block; implement as a download via a Blob URL; no server required
 - [ ] **Audit report builder** `[ux]` — multi-select multiple defects from the result list, add occurrence counts and severity overrides, and export a formatted accessibility audit report in Markdown or plain text; this is the primary deliverable format for most audit engagements
 - [ ] **Component-level filtering** `[ux]` — add a secondary filter (in addition to the Platform toggle) that narrows results by UI component type (modal, form, button, heading, image, etc.); this requires adding a `component` field to the corpus schema and updating `useDefectSearch`
-- [ ] **Print view** `[ux]` — add `@media print` styles so the selected defect details print cleanly; hide the header, footer, search bar, and settings button; show only the defect title, SC labels, description, and remediation
+- [x] **Print view** `[ux]` — `@media print` block added to `index.css`; hides header, footer, search, chrome, and action buttons; shows defect title, SC list, and field textareas cleanly
 - [ ] **Upvote / downvote results** `[ux]` `[corpus]` — add thumbs up/down buttons to each result card; store ratings in `localStorage` keyed by defect ID; use ratings to boost or demote entries in Fuse.js scoring so frequently used defects surface higher; if authentication is added later, sync ratings to Supabase so they persist across devices
 
 ---
@@ -109,8 +109,8 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Visible selection indicator** `[design]` `[a11y]` — the selected result card uses an accent border; add a secondary visual cue (e.g. a filled accent left-edge bar or a checkmark) so the selection is unmistakable, especially for users with color vision deficiencies
 - [ ] **Empty state before search** `[design]` — the pre-search state (before any query is entered) shows only the search label and a help hint; add a short prompt, illustration, or sample query to make the tool feel more inviting and explain what to type
 - [ ] **Favicon** `[design]` `[infra]` — see Immediate section above
-- [ ] **Remove divider above defects panel** `[design]`
-- [ ] **Make both close × buttons match exactly** `[design]` — defects panel close button and settings close button should use the same size and placement
+- [x] **Remove divider above defects panel** `[design]` — `border-bottom` removed from `.detail-sc-list`
+- [x] **Make both close × buttons match exactly** `[design]` — BackChevron in Settings and About aligned to `size={20}` matching BottomSheet X and header buttons
 - [ ] **Search results heading and count** `[a11y]` `[ux]` — add an h2 "X results" above the list; move focus there when results appear (already in Immediate above)
 - [ ] **Ko-fi link in footer or settings** `[ux]` — add a Ko-fi link alongside the Bluesky footer link or in Settings
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
@@ -120,7 +120,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 ## Privacy and Security
 
 - [ ] **CSP test** `[privacy]` — after deploying to Netlify, use Chrome DevTools → Network → Headers to verify the `Content-Security-Policy` response header from `netlify.toml` is present and correct; confirm AI provider calls succeed under the policy
-- [ ] **`rel="noreferrer"` audit** `[privacy]` — confirm every `target="_blank"` link in the codebase has `rel="noreferrer"`; currently: footer GitHub link and DetailPanel WAI SC links both have it; check any new links added to corpus entries or documentation
+- [x] **`rel="noreferrer"` audit** `[privacy]` — all `target="_blank"` links verified: GitHub header link, LinkedIn footer link, and DetailPanel WAI SC links all have `rel="noreferrer"`
 - [ ] **Dependency audit** `[privacy]` — run `npm audit` before any release; resolve high or critical severity issues; for low/moderate, document the risk and accept if a fix is not available
 - [ ] **GDPR disclosure for Phase 3** `[privacy]` — when the public Phase 3 version launches, add a brief privacy statement page explaining what data is and is not collected; Umami analytics (if enabled) collects no personal data and uses no cookies; API keys go only to the AI provider; no user data is retained by this app
 
@@ -129,8 +129,8 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 ## Performance and Optimization
 
 - [ ] **Bundle size baseline** `[perf]` — run `npm run build` and record the size of each chunk in Vite's output; target total < 200 kB gzipped; the vendor chunk split (react + fuse) added in this session should help long-term caching
-- [ ] **Font self-hosting** `[perf]` `[privacy]` — replace the Google Fonts CDN link in `index.html` with `@fontsource/inter` (npm package); self-hosting eliminates the Google DNS lookup, avoids exposing user IPs to Google, and makes the app function offline; run `npm install @fontsource/inter` and import only the weights in use (400, 500, 600, 700)
-- [ ] **Font subsetting** `[perf]` — after self-hosting, investigate subsetting Inter to the Latin character range only; this reduces the font payload significantly; use `@fontsource/inter/latin.css` which is already subset by the package
+- [x] **Font self-hosting** `[perf]` `[privacy]` — `@fontsource/inter` installed; `latin-ext` subsets for weights 400/500/600/700 imported in `main.jsx`; Google Fonts CDN links removed from `index.html`; CSP updated to `font-src 'self'`
+- [x] **Font subsetting** `[perf]` — using `@fontsource/inter/latin-ext-{weight}.css` (Latin + Latin Extended subset); covers accented characters for European locales without loading all scripts
 - [ ] **Fuse.js profiling** `[perf]` — measure search latency with a corpus of 500+ entries using `performance.now()` around the `fuse.search()` call; if it exceeds 50ms, tune the `threshold`, `minMatchCharLength`, or `keys` weights in `useDefectSearch.js`
 - [ ] **Cold load time** `[perf]` — test on a throttled connection (Chrome DevTools → Network → Slow 3G); target first usable search within 3 seconds; the main blocker will likely be the Inter font if not self-hosted
 
@@ -148,7 +148,9 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Authentication and User Data
 
-- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` — add optional sign-in using Supabase Auth (free tier); authentication is not required — the app works fully without it; use Supabase's OAuth helpers so no custom auth server is needed; signed-in state persists across sessions via Supabase's session management
+- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` — stubs live in `src/services/authService.js` and `src/services/supabaseClient.js`; activate by installing `@supabase/supabase-js`, setting `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, and uncommenting the implementation blocks; Supabase project setup instructions and DB schema (SQL) are in `supabaseClient.js`
+- [ ] **Settings sync** `[infra]` `[ux]` — `syncSettings()` and `getRemoteSettings()` stubs in `dataService.js`; on sign-in, load remote settings and merge with localStorage; on any setting change, push to Supabase; API keys intentionally excluded from sync (localStorage only)
+- [ ] **User-owned custom defects** `[corpus]` `[ux]` — `getUserDefects()`, `saveUserDefect()`, `deleteUserDefect()` stubs in `dataService.js`; DB schema in `supabaseClient.js`; UI: add/edit/delete controls in DetailPanel or a dedicated "My Defects" panel; IDs use `USR-*` prefix; mixed into search results alongside public corpus
 - [ ] **Persist ratings to Supabase** `[ux]` `[infra]` — when a user is signed in, sync upvote/downvote ratings to a `ratings` table (`user_id`, `defect_id`, `vote`); merge with any existing `localStorage` ratings on sign-in; `dataService.js` already abstracts the data layer, so this is a localized change
 - [ ] **User-owned remote corpus** `[corpus]` `[infra]` — let signed-in users point the app at their own Supabase table or a remote JSON URL as a corpus source; add a URL/connection string field in Settings; fall back to the built-in corpus if the source is unreachable; private sources require auth so the key is never in the URL
 - [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — in the Phase 3 public deployment, serve Mikey's private corpus from a Supabase RLS-protected table rather than a bundled JSON file; unauthenticated users get `corpus.json` (public data) only; the private corpus never ships in any public build
@@ -158,6 +160,8 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Infrastructure
 
+- [ ] **Offline-first PWA** `[infra]` `[perf]` — add a Service Worker (via `vite-plugin-pwa` or hand-rolled) that caches the app shell, corpus JSON, and translation overlays; add a `manifest.json` for home-screen installability; test on mobile Chrome; the corpus is self-contained static JSON so offline should work without any backend
+- [ ] **Electron desktop app** `[infra]` — the app is a strong candidate for Electron: no server required, works fully offline, AI calls go directly from the user's machine to the provider; use a separate `electron/` feature branch to prototype; Vite builds the renderer, Electron wraps it; the AI key stored in `localStorage` (or migrated to Electron's `safeStorage`) never leaves the device; test on macOS and Windows; goal is a distributable installer via GitHub Releases
 - [ ] **Umami analytics** `[infra]` — create an account at umami.is or self-host, add the site, replace `YOUR_WEBSITE_ID` in `index.html`, and uncomment the script tag; verify that Umami reports zero cookies and no personal data in the dashboard before enabling on any deployment
 - [ ] **Version tagging** `[infra]` — create git tags for stable milestones once the corpus is stable enough to track; use semantic versioning (`v0.1.0` for Phase 1 launch, `v0.2.0` for Phase 2 AI, `v1.0.0` for Phase 3 public)
 - [ ] **Phase 3 public corpus** `[infra]` `[corpus]` — compile static JSON from WAI Understanding docs, WebAIM articles, Deque University, and axe-core rule descriptions; curation task, not infrastructure; same JSON schema as Phase 1; this corpus is never mixed with Mikey's personal corpus
@@ -173,6 +177,8 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Code Quality
 
+- [ ] **Button system unification** `[code]` `[design]` — the codebase has `.btn-accent` (primary), `.btn-ghost` (secondary/back-compat), `.btn-secondary` (new named alias), `.btn-icon`, `.btn-icon-accent`, and `.field-btn` (compact field actions); consolidate into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, and `.btn--field` variants; migrate all uses; this enables the system to be extracted as a standalone UI plugin; `.btn-ghost` can be kept as a back-compat alias during migration
+- [ ] **UI component library extraction** `[code]` — the SPA patterns developed here (router, announcer, focus management, button system, form controls, modal/drawer/bottom-sheet) are strong candidates for a standalone React component library; document the extraction path; consider a monorepo setup with `packages/ui` alongside the main app
 - [ ] **Migrate inline spacing to tokens** `[code]` — audit all components for raw pixel or rem values in inline styles that are not referencing `var(--space-*)`; replace with the nearest token; this is the last major inline-value migration after font sizes (done) and priority colors (done in this session)
 - [ ] **CSS Modules** `[code]` — evaluate migrating from inline styles to CSS Modules as the component count grows; CSS Modules give better tooling (autocomplete, dead-code detection) without adding a CSS-in-JS runtime; not urgent while the component set is small
 - [x] **PR template** `[code]` — `.github/PULL_REQUEST_TEMPLATE.md` referenced in `CONTRIBUTING.md`
@@ -212,7 +218,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [x] **Settings save button divider** `[design]` — `border-top` added above the Save button row
 - [x] **Footer: "Made by" → "A project by"** `[design]`
 - [x] **Ko-fi accessibility letter** `[a11y]` — `docs/LETTER_TO_KOFI.md` created; added to `.gitignore`
-- [x] **`.gitignore` updated** `[infra]` — added `src/data/mikeys-corpus.json` and `docs/LETTER_TO_KOFI.md`
+- [x] **`.gitignore` updated** `[infra]` — added private corpus file and `docs/LETTER_TO_KOFI.md`
 - [x] **Public corpus expanded to 54 entries** `[corpus]` — 13 new entries (ATH-051–063) added from axe, WCAG Understanding docs, WebAIM; topics include captions, audio description, live regions, error suggestions, gesture alternatives, and more
 - [x] **Public corpus seeded** `[corpus]` — 41 simplified entries at middle school/ESL reading level; 9 near-duplicates consolidated; all `desc`/`rem` rewritten in plain language; `dataService.js` now points to `corpus.json` as the default
 - [x] **DetailPanel SC text links** `[design]` `[a11y]` — SC pill badges replaced with inline text links; format is "Fails: 1.1.1 …" and "Related: …, …"; `ScBadge` component removed; `.sc-badge` / `.badge-group` CSS removed
@@ -267,7 +273,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [x] Settings focus management — heading focus on open; trigger-button focus restored on close
 - [x] Font scale simplified — 7 tokens → 4 (`--fs-small/body/sub/heading`); `html { font-size: 100% }` (browser default); h1 uses `clamp(1.75rem, 10.5vw, 2.667rem)`
 - [x] Font token migration — all inline literal px values replaced across all components
-- [x] Corpus renamed — `defects.json` → `mikeys-corpus.json`; public placeholder `corpus.json` created
+- [x] Corpus renamed from `defects.json`; public placeholder `corpus.json` created
 - [x] Mobile-first layout — `.app-container` class, 768px breakpoint
 - [x] Touch targets — `.btn-icon` (44×44px), platform toggle padding bump
 - [x] Design token system — `tokens.css`

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, ChevronDown, Check, Info } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -88,6 +88,7 @@ export default function SettingsPanel({
   language, onLanguageChange,
   platform, onPlatformChange,
   onClose,
+  onReset,
 }) {
   const headingRef = useFocusOnMount()
   const t = useT()
@@ -109,6 +110,16 @@ export default function SettingsPanel({
   const [saved, setSaved] = useState(false)
   const [privacyOpen, setPrivacyOpen] = useState(false)
   const [rhgPending, setRhgPending] = useState(false)
+  const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
+  const [pendingLanguage, setPendingLanguage] = useState(language)
+  const [changedLanguage, setChangedLanguage] = useState(false)
+  const didMountLang = useRef(false)
+
+  // Sync pendingLanguage if the language prop changes externally (e.g. Reset All)
+  useEffect(() => {
+    if (!didMountLang.current) { didMountLang.current = true; return }
+    setPendingLanguage(language)
+  }, [language])
 
   // Escape key — Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
@@ -126,8 +137,6 @@ export default function SettingsPanel({
       }
     })
     localStorage.setItem('ai_provider', activeProvider)
-    // Apply the displayed language — resets any active easter egg locale
-    onLanguageChange(language)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
     announce(t('settings.saved_announce'))
@@ -141,7 +150,7 @@ export default function SettingsPanel({
           aria-label={t('settings.back')}
           className="btn-icon btn-icon-accent"
         >
-          <BackChevron size={22} strokeWidth={2.5} aria-hidden="true" />
+          <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>
         <h2 ref={headingRef} tabIndex={-1} className="settings-title">
           {t('settings.heading')}
@@ -177,23 +186,40 @@ export default function SettingsPanel({
       <div className="settings-group">
         <p className="settings-group__label">{t('settings.language_label')}</p>
         <p className="settings-group__desc">{t('settings.language_desc')}</p>
-        <div className="settings-select-wrap">
-          <select
-            value={language}
-            onChange={e => {
-              if (e.target.value === 'rhg') { setRhgPending(true) }
-              else { onLanguageChange(e.target.value) }
+        <div className="settings-language-row">
+          <div className="settings-select-wrap settings-select-wrap--language">
+            <select
+              value={pendingLanguage}
+              onChange={e => setPendingLanguage(e.target.value)}
+              className="settings-select"
+              aria-label={t('settings.language_aria')}
+            >
+              {LANGUAGES.map(lang => (
+                <option key={lang.value} value={lang.value}>
+                  {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
+          </div>
+          <button
+            type="button"
+            className={`btn-accent settings-language-change-btn${changedLanguage ? ' field-btn--success' : ''}`}
+            onClick={() => {
+              if (pendingLanguage === 'rhg') { setRhgPending(true) }
+              else {
+                onLanguageChange(pendingLanguage)
+                setChangedLanguage(true)
+                setTimeout(() => setChangedLanguage(false), 1500)
+                announce(t('settings.language_changed_announce'))
+              }
             }}
-            className="settings-select"
-            aria-label={t('settings.language_aria')}
           >
-            {LANGUAGES.map(lang => (
-              <option key={lang.value} value={lang.value}>
-                {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
-              </option>
-            ))}
-          </select>
-          <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
+            {changedLanguage
+              ? <><Check size={14} aria-hidden="true" />{' '}{t('settings.language_changed')}</>
+              : t('settings.language_change')
+            }
+          </button>
         </div>
       </div>
 
@@ -296,7 +322,7 @@ export default function SettingsPanel({
         </div>
       ))}
 
-      {/* ── Footer row: privacy (left) + save (right) on desktop; save then privacy on mobile ── */}
+      {/* ── Footer: privacy link above buttons on mobile; privacy left / buttons right on desktop ── */}
       <div className="settings-footer-row">
         <button
           type="button"
@@ -306,12 +332,21 @@ export default function SettingsPanel({
           <Info size={14} aria-hidden="true" style={{ flexShrink: 0 }} />
           {t('settings.privacy_button')}
         </button>
-        <button onClick={handleSave} className="btn-accent settings-save-btn">
-          {saved
-            ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
-            : t('settings.save')
-          }
-        </button>
+        <div className="settings-footer-actions">
+          <button
+            type="button"
+            onClick={() => setResetConfirmOpen(true)}
+            className="btn-secondary settings-reset-btn"
+          >
+            {t('settings.reset_all')}
+          </button>
+          <button onClick={handleSave} className="btn-accent settings-save-btn">
+            {saved
+              ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
+              : t('settings.save')
+            }
+          </button>
+        </div>
       </div>
 
       {prefersReducedMotion && (
@@ -339,12 +374,32 @@ export default function SettingsPanel({
         onClose={() => setRhgPending(false)}
         heading="Rohingya (Ruáingga)"
         actions={[
-          { label: 'Use anyway', onClick: () => { onLanguageChange('rhg'); setRhgPending(false) }, className: 'btn-accent' },
+          { label: 'Use anyway', onClick: () => { onLanguageChange(pendingLanguage); setRhgPending(false) }, className: 'btn-accent' },
           { label: 'Cancel',     onClick: () => setRhgPending(false),                              className: 'btn-ghost'  },
         ]}
       >
         <p>This translation was AI-generated and has not been reviewed by native Rohingya speakers.</p>
         <p>The Rohingya people have endured genocide and forced displacement. Please use this translation with care, and consider contributing corrections if you are able.</p>
+      </Modal>
+
+      <Modal
+        open={resetConfirmOpen}
+        onClose={() => setResetConfirmOpen(false)}
+        heading={t('settings.confirm_reset_all_heading')}
+        actions={[
+          {
+            label: t('settings.confirm_reset_all_yes'),
+            onClick: () => { setResetConfirmOpen(false); onReset?.() },
+            className: 'btn-accent',
+          },
+          {
+            label: t('settings.confirm_reset_all_no'),
+            onClick: () => setResetConfirmOpen(false),
+            className: 'btn-ghost',
+          },
+        ]}
+      >
+        <p>{t('settings.confirm_reset_all_body')}</p>
       </Modal>
     </div>
   )
@@ -361,9 +416,12 @@ function RadioChip({ name, value, label, current, onChange }) {
         checked={isActive}
         onChange={() => onChange(value)}
         className="radio-chip__input"
+        aria-label={label.replace(/\n/g, ' ')}
       />
-      <span className="radio-chip__indicator" aria-hidden="true" />
-      {label.split('\n').flatMap((part, i) => i === 0 ? [part] : [<br key={i} />, part])}
+      <span className="radio-chip__indicator" aria-hidden="true" role="presentation" />
+      <span aria-hidden="true">
+        {label.split('\n').flatMap((part, i) => i === 0 ? [part] : [<br key={i} />, part])}
+      </span>
     </label>
   )
 }
@@ -380,11 +438,11 @@ function Toggle({ id, checked, onChange }) {
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onChange(e) } }}
         className="toggle__input"
       />
-      <span aria-hidden="true" className="toggle__track">
-        <span className="toggle__thumb">
+      <span aria-hidden="true" role="presentation" className="toggle__track">
+        <span role="presentation" className="toggle__thumb">
           {checked
-            ? <span className="toggle__check" />
-            : <span className="toggle__ring" />
+            ? <span role="presentation" className="toggle__check" />
+            : <span role="presentation" className="toggle__ring" />
           }
         </span>
       </span>

@@ -206,6 +206,43 @@ consistency within each file.
 
 ---
 
+## When NOT to use `announce()`
+
+Not every state change needs a live region announcement. Over-announcing is
+disorienting — it creates speech noise that competes with the content the user
+is actually navigating.
+
+### Focus management already handles these
+
+When UI moves focus, the screen reader follows. No announcement is needed for:
+
+- **Panel open/close** — `<Drawer>`, `<BottomSheet>`, and `<Modal>` use
+  `useFocusOnMount` to move focus to the panel heading when they open. The
+  dialog role (`role="dialog"`) causes screen readers to announce the dialog
+  label automatically. When the panel closes, focus returns to the trigger
+  element — the user hears the button label and knows where they are.
+- **Page/view transitions** — if focus is moved to the new view's `<h1>` or
+  heading, the screen reader reads it. Add `announce()` only if the view change
+  is backgrounded and focus does not move.
+- **Toggle buttons** — `aria-pressed` / `aria-checked` / `aria-expanded` on
+  the button itself update the spoken state on activation. Calling `announce()`
+  on top of this double-announces.
+
+**Rule of thumb:** if focus is moving to somewhere that describes the change,
+you don't need `announce()`. Use it for changes that happen in the background,
+at a distance from the current focus position, or with no accessible label
+of their own.
+
+### Use `announce()` for
+
+- **Action confirmations** — "Settings: Saved", "Copy: Copied", "Reset: Complete"
+- **Async results** — search counts, AI rewrite completion, form submission outcomes
+- **Background changes** — theme switch, language change (the visual result is
+  not near the toggle)
+- **Errors** — validation failures, network errors (use `assertive`)
+
+---
+
 ## What `<Announcer />` renders
 
 Two visually-hidden `<div>` elements placed in the DOM:
