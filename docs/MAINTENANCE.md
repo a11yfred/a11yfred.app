@@ -28,27 +28,16 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 ---
 
-## Accessibility (WCAG 2.2)
+## Accessibility
 
-- [ ] **1.1.1** — icon buttons have descriptive `aria-label`; decorative SVGs are `aria-hidden`
-- [ ] **1.3.1** — page landmarks present: `<header>`, `<main>`, `<footer>`, `<search>`; result list uses `role="listbox"` / `role="option"`
-- [ ] **1.4.3** — all text/background pairs ≥ 4.5:1 (AA); check light and dark themes
-- [ ] **1.4.4** — zoom to 200%; text readable, no content hidden or truncated
-- [ ] **1.4.6** — emulate `prefers-contrast: more`; contrast tokens apply without breaking layout
-- [ ] **1.4.10** — zoom to 400%; no horizontal scrolling required
-- [ ] **1.4.11** — UI borders and focus rings ≥ 3:1 against adjacent color
-- [ ] **1.4.12** — apply WCAG text spacing bookmarklet; no content loss
-- [ ] **2.1.1** — tab through entire interface; search, selection, copy, reset, refine, settings all reachable
-- [ ] **2.4.3** — tab order follows logical visual reading order
-- [ ] **2.4.7** — focus indicator visible on all focusable elements in both themes
-- [ ] **2.5.3** — visible label text matches or is contained in the accessible name
-- [ ] **2.5.5** — interactive controls ≥ 44×44px (AAA); verify Reset and Copy buttons in DetailPanel
-- [ ] **2.5.8** — all controls ≥ 24×24px (AA, WCAG 2.2); clear search button is 24×24
-- [ ] **3.1.1** — `<html lang="en">` present
-- [ ] **4.1.2** — Toggle has `role="switch"` and `aria-checked`; RadioChip hides native input via `.sr-only`
-- [ ] **4.1.3** — copy and reset fire `announce()`; verify screen reader hears confirmations
-- [ ] **Dark mode** — toggle dark theme; inspect all states: empty, results, selected defect, settings, AI active, all four priority badge levels
-- [ ] **Responsive** — test at 375px, 768px, and 1280px; layout, text, and controls hold at each width
+- [ ] **axe-core sweep** — run `npm run dev` and open DevTools; `@axe-core/react` runs automatically in development and logs all violations to the console; fix every violation before release; axe covers WCAG 2.0, 2.1, and 2.2 (Level A and AA) plus best practices
+- [ ] **Manual: keyboard** — tab through the entire interface; search, selection, copy, reset, refine, and settings must all be reachable and operable without a mouse; tab order follows visual reading order
+- [ ] **Manual: zoom** — zoom to 200% (text readable, no content hidden or truncated) and 400% (no horizontal scrolling required)
+- [ ] **Manual: screen reader** — test with NVDA + Firefox and VoiceOver + Safari; verify: result list announcements when a search fires, BottomSheet heading focus on select, copy/reset announcements via `announce()`, Settings open/close focus return, Drawer focus trap on mobile; `<html lang>` updates correctly when user switches language
+- [ ] **Manual: dark mode** — toggle dark theme; inspect all states: empty, results, selected defect, settings, AI active, all four priority badge levels
+- [ ] **Manual: responsive** — test at 375px, 768px, and 1280px; layout, text, and controls hold at each width
+- [ ] **Manual: prefers-contrast** — emulate `prefers-contrast: more`; contrast tokens apply without breaking layout
+- [ ] **Manual: text spacing** — apply WCAG text spacing bookmarklet; no content loss
 
 ---
 
@@ -95,7 +84,6 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 - [ ] **Remove `noindex`** — replace with `<meta name="robots" content="index, follow">`
 - [ ] **`robots.txt`** — replace with permissive version (`Allow: /`); add sitemap reference
 - [ ] **`sitemap.xml`** — generate `public/sitemap.xml`; add `<link rel="sitemap">` in `index.html`
-- [ ] **Favicon** — create `public/favicon.svg`; uncomment `<link rel="icon">` in `index.html`
 - [ ] **OG image** — create 1200×630 `public/og-image.png`; update `og:image` and `twitter:image` URLs
 - [ ] **JSON-LD** — fill in real URLs in the `WebApplication` structured data block in `index.html`
 
@@ -125,7 +113,7 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
   ```
 
 - [ ] **Announce string audit** — verify that all `announce()` call strings are pulled from `t()` and that every locale file has the corresponding key translated (not just English fallback)
-- [ ] **Corpus translation coverage** — defect descriptions and remediation steps in `corpus.json` should have locale-specific overlays; when `scripts/translate.js` is written, re-run it whenever entries are added or edited; WCAG SC names and codes (`1.1.1`, `aria-label`, etc.) should remain in English in all locales
+- [ ] **Corpus translation coverage** — defect descriptions and remediation steps in `corpus.json` should have locale-specific overlays; run `npm run translate` whenever entries are added or edited; WCAG SC names and codes (`1.1.1`, `aria-label`, etc.) should remain in English in all locales
 - [ ] **Technical term review** — after any machine translation batch, flag corpus entries using WCAG-specific terms (accessible name, focus trap, landmark, live region, ARIA role) for human review; machine translation of these terms is unreliable
 - [ ] **Capitalization conventions** — English variants use NYT title case; Romance/Germanic use sentence case; caseless scripts (CJK, Arabic, Uyghur, Tamil, Devanagari) receive no capitalization changes; apply this when adding keys or updating existing ones
 - [ ] **`lang` attribute** — `<html lang>` updates correctly when user switches language; verify with screen reader after any changes to `App.jsx` language effect
@@ -141,4 +129,3 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
 - [ ] **docs/CONTRIBUTING.md** — defect schema matches `corpus.json`; update if fields are added or renamed
 - [ ] **docs/MAINTENANCE.md** — add a row to the run log above; add/retire sections as systems change
 - [ ] **About panel content** — verify "Coming Soon" section reflects current roadmap; remove items that have shipped; update feature descriptions as capabilities expand
-- [ ] **Phase 2 stubs review** (before activating Supabase) — re-read `src/services/authService.js` and `src/services/supabaseClient.js` comments against the current Supabase SDK docs; confirm OAuth provider slugs, table names, and RLS policy examples are still accurate

@@ -41,7 +41,6 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 - [ ] **Corpus pre-translation script** `[i18n]` `[corpus]` — write `scripts/translate.js` (Node.js) that calls an AI provider to translate all `corpus.json` `desc` and `rem` fields into each supported locale; output as `corpus.{lang}.json` files; update `dataService.js` to accept a `locale` param and load the appropriate file; run once, review for WCAG terminology accuracy before committing
 - [ ] **AI refinement locale pass** `[i18n]` `[ai]` — after `getAiRefinement` rewrites `desc` and `rem`, if the active locale is not English, have the AI respond in the active locale directly (update the system prompt to instruct the model to reply in `{locale}`) rather than post-translating
-- [ ] **WCAG term review** `[i18n]` `[corpus]` — after any corpus translation batch, flag entries that use specialized WCAG terminology (accessible name, focus trap, landmark, live region, ARIA role) for human review; machine translation of these terms is unreliable and may not match established terminology in each language
 - [x] ~~**Zero-dep i18n system** `[i18n]` `[code]` — `src/i18n/index.jsx` with React Context + `useT()` hook; flat-key JSON locale files; `{placeholder}` interpolation via RegExp; double-fallback (unknown locale → en, missing key → en key → key literal); no react-i18next or i18next needed~~
 - [x] ~~**UI string extraction** `[i18n]` `[code]` — all visible strings extracted to `src/i18n/en.json` (~93 keys); all components wired with `useT()`: SearchBar, ResultList, DetailPanel, SettingsPanel, Header, Footer, PartyBanner~~
 - [x] ~~**10 locale files** `[i18n]` — complete translations for en, es, fr, de, nl, sv, zh, ko, ja, tl (Filipino/Tagalog); AI-generated; all include translation disclosure key~~
@@ -97,10 +96,6 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Accessibility and Design
 
-- [ ] **Screen reader test** `[a11y]` — test the full workflow with NVDA + Firefox and VoiceOver + Safari; verify: result list announcements when a search fires, BottomSheet heading focus on select, copy/reset announcements (via `announce()`), Settings open/close focus, and the Drawer focus trap on mobile
-- [ ] **Contrast audit — priority badges** `[a11y]` `[design]` — run the axe DevTools extension or Colour Contrast Analyser on the priority badge colors in both light and dark themes; dark mode token values were added in this session but should be verified against the actual rendered colors
-- [ ] **Reflow at 400% zoom** `[a11y]` — open the app in Chrome at 400% zoom (browser zoom, not OS scale); confirm no horizontal scrolling is required and no content is cut off or hidden (WCAG 1.4.10)
-- [ ] **`prefers-contrast: more` visual check** `[a11y]` `[design]` — enable "Increase Contrast" in macOS Accessibility settings or use Chrome DevTools to emulate `prefers-contrast: more`; verify the token overrides in `tokens.css` improve legibility without breaking the layout
 - [ ] **`prefers-reduced-motion` in JS animations** `[a11y]` — CSS transitions already honor `prefers-reduced-motion: reduce`; add a `window.matchMedia('(prefers-reduced-motion: reduce)')` check for any future JS-driven animations (e.g. the planned loading spinner on AI refinement)
 - [ ] **Toggle design** `[design]` `[a11y]` — the current Toggle component uses a thin bar and circle; replace with a clearer on/off design using a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
 - [ ] **Gear icon replacement** `[design]` — the ⚙️ emoji renders differently across OSes and is not ideal for a refined UI; replace with an SVG gear icon that uses `currentColor` so it inherits the button's color and respects dark mode
@@ -116,8 +111,6 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Privacy and Security
 
-- [ ] **CSP test** `[privacy]` — after deploying to Netlify, use Chrome DevTools → Network → Headers to verify the `Content-Security-Policy` response header from `netlify.toml` is present and correct; confirm AI provider calls succeed under the policy
-- [ ] **Dependency audit** `[privacy]` — run `npm audit` before any release; resolve high or critical severity issues; for low/moderate, document the risk and accept if a fix is not available
 - [ ] **GDPR disclosure for Phase 3** `[privacy]` — when the public Phase 3 version launches, add a brief privacy statement page explaining what data is and is not collected; Umami analytics (if enabled) collects no personal data and uses no cookies; API keys go only to the AI provider; no user data is retained by this app
 - [x] ~~**`rel="noreferrer"` audit** `[privacy]` — all `target="_blank"` links verified: GitHub header link, LinkedIn footer link, and DetailPanel WAI SC links all have `rel="noreferrer"`~~
 
@@ -125,9 +118,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Performance and Optimization
 
-- [ ] **Bundle size baseline** `[perf]` — run `npm run build` and record the size of each chunk in Vite's output; target total < 200 kB gzipped; the vendor chunk split (react + fuse) added in this session should help long-term caching
 - [ ] **Fuse.js profiling** `[perf]` — measure search latency with a corpus of 500+ entries using `performance.now()` around the `fuse.search()` call; if it exceeds 50ms, tune the `threshold`, `minMatchCharLength`, or `keys` weights in `useDefectSearch.js`
-- [ ] **Cold load time** `[perf]` — test on a throttled connection (Chrome DevTools → Network → Slow 3G); target first usable search within 3 seconds
 - [x] ~~**Font self-hosting** `[perf]` `[privacy]` — `@fontsource/inter` installed; `latin-ext` subsets for weights 400/500/600/700 imported in `main.jsx`; Google Fonts CDN links removed from `index.html`; CSP updated to `font-src 'self'`~~
 - [x] ~~**Font subsetting** `[perf]` — using `@fontsource/inter/latin-ext-{weight}.css` (Latin + Latin Extended subset); covers accented characters for European locales without loading all scripts~~
 
@@ -144,6 +135,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Authentication and User Data
 
+- [ ] **Phase 2 stubs review** `[infra]` — before activating Supabase, re-read `src/services/authService.js` and `src/services/supabaseClient.js` comments against the current Supabase SDK docs; confirm OAuth provider slugs, table names, and RLS policy examples are still accurate
 - [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` — stubs live in `src/services/authService.js` and `src/services/supabaseClient.js`; activate by installing `@supabase/supabase-js`, setting `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, and uncommenting the implementation blocks; Supabase project setup instructions and DB schema (SQL) are in `supabaseClient.js`
 - [ ] **Settings sync** `[infra]` `[ux]` — `syncSettings()` and `getRemoteSettings()` stubs in `dataService.js`; on sign-in, load remote settings and merge with localStorage; on any setting change, push to Supabase; API keys intentionally excluded from sync (localStorage only)
 - [ ] **User-owned custom defects** `[corpus]` `[ux]` — `getUserDefects()`, `saveUserDefect()`, `deleteUserDefect()` stubs in `dataService.js`; DB schema in `supabaseClient.js`; UI: add/edit/delete controls in DetailPanel or a dedicated "My Defects" panel; IDs use `USR-*` prefix; mixed into search results alongside public corpus
