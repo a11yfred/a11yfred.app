@@ -11,7 +11,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Populate defect corpus** `[corpus]` — import from audit spreadsheets; target 150–200 entries across web and native; review existing 50 starters for accuracy and voice consistency
 - [ ] **Deploy to Netlify** `[infra]` — connect the GitHub repo to Netlify; set the build command to `npm run build` and publish directory to `dist`; the `netlify.toml` is already configured with headers and the SPA redirect rule
 - [ ] **Add favicon** `[design]` `[infra]` — create a `favicon.svg` in `public/` and uncomment the `<link rel="icon">` tag in `index.html`; the favicon should be a simple accessible "A" mark or magnifying glass glyph using the accent color `#5548c8`
-- [ ] **Standardize DetailPanel action icons** `[design]` `[a11y]` — the Reset (↺) and Copy (⎘) symbol characters in `DetailPanel` are not vertically aligned with the Lucide `<Check>` icon used in the Settings "Saved" state; switch all three to Lucide icons (`RotateCcw`, `Clipboard`, `Check`) so they share the same size, baseline, and stroke weight across buttons
+- [x] **Standardize DetailPanel action icons** `[design]` `[a11y]` — switched to Lucide `RotateCcw`, `Clipboard`, `Check`; Unicode chars stripped from all 50 locale files; mobile shows icon only, desktop shows icon + text
 - [x] **Search button height — match input** `[design]` — fixed: `align-self: stretch` on `.search-submit-btn`
 - [ ] **Verify Ko-fi a11y patch selectors (follow-up)** `[a11y]` — the tooltip selector `i[rel="tooltip"]` and input selectors within `.kofi-overlay-widget-overlay` were added without live DOM verification; open the deployed app with Ko-fi loaded and confirm the selectors match the real markup before shipping
 - [x] **Footer credit wording** `[design]` — changed to "A project by Mikey Ilagan"
@@ -78,7 +78,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 ## UX / Interaction
 
 - [ ] **Result list arrow key navigation** `[ux]` `[a11y]` — the result list uses `role="listbox"` and `role="option"` but does not yet implement arrow key navigation; add `onKeyDown` handlers to the list container so that pressing Down/Up moves focus between options, and pressing Home/End jumps to the first/last option; this completes the ARIA listbox keyboard contract (WCAG 2.1.1)
-- [ ] **Toggle Enter key support** `[ux]` `[a11y]` — the `Toggle` component (checkbox with `role="switch"`) in SettingsPanel responds to Space but not Enter; native checkboxes only toggle on Space, but `role="switch"` on a non-native element should also respond to Enter per the ARIA authoring practices; add an `onKeyDown` handler that calls `onChange` when `e.key === 'Enter'` to match expected keyboard behavior (WCAG 2.1.1)
+- [x] **Toggle Enter key support** `[ux]` `[a11y]` — `onKeyDown` handler added to Toggle; Enter triggers `onChange` matching ARIA authoring practices for `role="switch"` (WCAG 2.1.1)
 - [ ] **How to use page** `[ux]` — add an onboarding modal or help page that explains the workflow: search → select → add location prefix → refine → copy; trigger it on first visit (check a `localStorage` flag) or via a Help button in the header; the content should be brief enough to read in under 30 seconds
 - [ ] **About / data sources page** `[ux]` `[corpus]` — when an About or How-to page is created, include a section describing how the public corpus was compiled and the sources used: WCAG 2.2 Understanding docs (W3C/WAI), axe-core rule descriptions (Deque), WebAIM articles, and Deque University; explain that entries are written in plain language and near-duplicates are consolidated; this gives users confidence in the data and gives proper credit to the source organizations
 - [ ] **Email results** `[ux]` — add a button to email the selected defect description and remediation to yourself using a `mailto:` link with a pre-populated subject and body; no server required; useful for quickly forwarding a defect write-up from a phone
@@ -90,7 +90,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Export defects to formats** `[ux]` — let users export the currently selected defect (or a multi-select batch) to CSV, Markdown, or a plain text block; implement as a download via a Blob URL; no server required
 - [ ] **Audit report builder** `[ux]` — multi-select multiple defects from the result list, add occurrence counts and severity overrides, and export a formatted accessibility audit report in Markdown or plain text; this is the primary deliverable format for most audit engagements
 - [ ] **Component-level filtering** `[ux]` — add a secondary filter (in addition to the Platform toggle) that narrows results by UI component type (modal, form, button, heading, image, etc.); this requires adding a `component` field to the corpus schema and updating `useDefectSearch`
-- [ ] **Print view** `[ux]` — add `@media print` styles so the selected defect details print cleanly; hide the header, footer, search bar, and settings button; show only the defect title, SC labels, description, and remediation
+- [x] **Print view** `[ux]` — `@media print` block added to `index.css`; hides header, footer, search, chrome, and action buttons; shows defect title, SC list, and field textareas cleanly
 - [ ] **Upvote / downvote results** `[ux]` `[corpus]` — add thumbs up/down buttons to each result card; store ratings in `localStorage` keyed by defect ID; use ratings to boost or demote entries in Fuse.js scoring so frequently used defects surface higher; if authentication is added later, sync ratings to Supabase so they persist across devices
 
 ---
@@ -109,8 +109,8 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Visible selection indicator** `[design]` `[a11y]` — the selected result card uses an accent border; add a secondary visual cue (e.g. a filled accent left-edge bar or a checkmark) so the selection is unmistakable, especially for users with color vision deficiencies
 - [ ] **Empty state before search** `[design]` — the pre-search state (before any query is entered) shows only the search label and a help hint; add a short prompt, illustration, or sample query to make the tool feel more inviting and explain what to type
 - [ ] **Favicon** `[design]` `[infra]` — see Immediate section above
-- [ ] **Remove divider above defects panel** `[design]`
-- [ ] **Make both close × buttons match exactly** `[design]` — defects panel close button and settings close button should use the same size and placement
+- [x] **Remove divider above defects panel** `[design]` — `border-bottom` removed from `.detail-sc-list`
+- [x] **Make both close × buttons match exactly** `[design]` — BackChevron in Settings and About aligned to `size={20}` matching BottomSheet X and header buttons
 - [ ] **Search results heading and count** `[a11y]` `[ux]` — add an h2 "X results" above the list; move focus there when results appear (already in Immediate above)
 - [ ] **Ko-fi link in footer or settings** `[ux]` — add a Ko-fi link alongside the Bluesky footer link or in Settings
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
@@ -120,7 +120,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 ## Privacy and Security
 
 - [ ] **CSP test** `[privacy]` — after deploying to Netlify, use Chrome DevTools → Network → Headers to verify the `Content-Security-Policy` response header from `netlify.toml` is present and correct; confirm AI provider calls succeed under the policy
-- [ ] **`rel="noreferrer"` audit** `[privacy]` — confirm every `target="_blank"` link in the codebase has `rel="noreferrer"`; currently: footer GitHub link and DetailPanel WAI SC links both have it; check any new links added to corpus entries or documentation
+- [x] **`rel="noreferrer"` audit** `[privacy]` — all `target="_blank"` links verified: GitHub header link, LinkedIn footer link, and DetailPanel WAI SC links all have `rel="noreferrer"`
 - [ ] **Dependency audit** `[privacy]` — run `npm audit` before any release; resolve high or critical severity issues; for low/moderate, document the risk and accept if a fix is not available
 - [ ] **GDPR disclosure for Phase 3** `[privacy]` — when the public Phase 3 version launches, add a brief privacy statement page explaining what data is and is not collected; Umami analytics (if enabled) collects no personal data and uses no cookies; API keys go only to the AI provider; no user data is retained by this app
 
@@ -129,8 +129,8 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 ## Performance and Optimization
 
 - [ ] **Bundle size baseline** `[perf]` — run `npm run build` and record the size of each chunk in Vite's output; target total < 200 kB gzipped; the vendor chunk split (react + fuse) added in this session should help long-term caching
-- [ ] **Font self-hosting** `[perf]` `[privacy]` — replace the Google Fonts CDN link in `index.html` with `@fontsource/inter` (npm package); self-hosting eliminates the Google DNS lookup, avoids exposing user IPs to Google, and makes the app function offline; run `npm install @fontsource/inter` and import only the weights in use (400, 500, 600, 700)
-- [ ] **Font subsetting** `[perf]` — after self-hosting, investigate subsetting Inter to the Latin character range only; this reduces the font payload significantly; use `@fontsource/inter/latin.css` which is already subset by the package
+- [x] **Font self-hosting** `[perf]` `[privacy]` — `@fontsource/inter` installed; `latin-ext` subsets for weights 400/500/600/700 imported in `main.jsx`; Google Fonts CDN links removed from `index.html`; CSP updated to `font-src 'self'`
+- [x] **Font subsetting** `[perf]` — using `@fontsource/inter/latin-ext-{weight}.css` (Latin + Latin Extended subset); covers accented characters for European locales without loading all scripts
 - [ ] **Fuse.js profiling** `[perf]` — measure search latency with a corpus of 500+ entries using `performance.now()` around the `fuse.search()` call; if it exceeds 50ms, tune the `threshold`, `minMatchCharLength`, or `keys` weights in `useDefectSearch.js`
 - [ ] **Cold load time** `[perf]` — test on a throttled connection (Chrome DevTools → Network → Slow 3G); target first usable search within 3 seconds; the main blocker will likely be the Inter font if not self-hosted
 

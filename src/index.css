@@ -1806,6 +1806,56 @@ input.search-input:focus {
   line-height: 1.5;
 }
 
+/* ─── Print ───────────────────────────────────────────────── */
+
+@media print {
+  .page-header,
+  .page-footer,
+  .search-section,
+  .result-list-section,
+  .sheet-chrome,
+  .sheet-close-bottom,
+  .field__actions,
+  .detail-refine,
+  .detail-field-row,
+  .drawer-backdrop,
+  .sheet-backdrop {
+    display: none !important;
+  }
+
+  .sheet-panel,
+  .sheet-content {
+    position: static !important;
+    overflow: visible !important;
+    max-height: none !important;
+    padding: 0 !important;
+    transform: none !important;
+  }
+
+  .detail-panel {
+    padding: 0;
+  }
+
+  .detail-title {
+    font-size: 18pt;
+  }
+
+  .priority-badge {
+    border: 1px solid #000;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .field__textarea {
+    border: 1px solid #ccc;
+    resize: none;
+  }
+
+  a[href]::after {
+    content: none;
+  }
+}
+
 .about-privacy-btn {
   display: inline-flex;
   align-items: center;
