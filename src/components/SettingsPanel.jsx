@@ -141,11 +141,6 @@ export default function SettingsPanel({
     setPendingLanguage(language)
   }, [language])
 
-  // Clear errors when AI is disabled
-  useEffect(() => {
-    if (!aiEnabled) setErrors({})
-  }, [aiEnabled])
-
   // Scroll to and focus the first invalid field when errors change
   useEffect(() => {
     if (!errors.apiKey) return
@@ -169,7 +164,6 @@ export default function SettingsPanel({
   const handleSave = () => {
     if (aiEnabled && !keys[activeProvider].trim()) {
       setErrors({ apiKey: true })
-      onToggleAi()
       return
     }
     if (!hasUnsaved) {
