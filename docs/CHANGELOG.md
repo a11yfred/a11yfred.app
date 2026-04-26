@@ -4,6 +4,18 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-26 — Public corpus expansion (ATH-004 through ATH-070, 16 new entries)
+
+### corpus.json
+
+- Added 16 new defect entries filling gap IDs (ATH-004, 006, 015, 020, 024, 036, 042, 044, 049) and extending the sequence (ATH-064 through ATH-070)
+- New WCAG SCs now covered: 2.2.1 (Timing Adjustable), 2.3.1 (Three Flashes), 1.4.10 (Reflow), 2.5.8 (Target Size — WCAG 2.2), 1.3.4 (Orientation), 1.3.5 (Identify Input Purpose), 2.5.4 (Motion Actuation), 1.3.2 (Meaningful Sequence), 3.3.4 (Error Prevention), 2.4.11 (Focus Appearance — WCAG 2.2), 1.3.3 (Sensory Characteristics), 3.2.3 (Consistent Navigation)
+- New topic coverage: iFrame titles, aria-expanded state, document accessibility (PDF/Word/Excel), emoji and special characters in screen reader output
+- All new entries carry English `desc`, `rem`, `keywords`, `priority`, `platform`, and `related` fields matching existing schema
+- **Flag for editorial review** — wording and remediation advice not yet through the same editorial pass as original ATH-001 through ATH-063 entries
+
+---
+
 ## 2026-04-25 — About panel as drawer, settings footer fix, section dividers, MAINTENANCE.md
 
 ### About panel redesign

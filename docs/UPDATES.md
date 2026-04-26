@@ -4,6 +4,35 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 26, 2026 — Public corpus expanded with 16 new defect entries
+
+### 16 new accessibility defects added to the corpus
+
+The public corpus has grown from 53 to 69 entries. The new defects cover common issues that were missing from the original set, including several WCAG 2.2 criteria:
+
+- **ATH-004** Session Timeout Without Warning (2.2.1)
+- **ATH-006** Flashing Content May Cause Seizures (2.3.1)
+- **ATH-015** Content Does Not Reflow at 400% Zoom (1.4.10)
+- **ATH-020** Touch or Click Target Too Small (2.5.8, WCAG 2.2)
+- **ATH-024** Screen Orientation Locked (1.3.4)
+- **ATH-036** Autocomplete Attribute Missing on Personal Data Fields (1.3.5)
+- **ATH-042** iFrame Missing a Title (4.1.2)
+- **ATH-044** Expanded or Collapsed State Not Communicated (4.1.2)
+- **ATH-049** Device Motion Feature Has No Alternative (2.5.4)
+- **ATH-064** Reading Order Disrupted by CSS Positioning (1.3.2)
+- **ATH-065** No Confirmation Step for Irreversible Actions (3.3.4)
+- **ATH-066** Focus Indicator Does Not Meet Minimum Area (2.4.11, WCAG 2.2)
+- **ATH-067** Instructions Rely on Sensory Characteristics Only (1.3.3)
+- **ATH-068** Navigation Changes Position Across Pages (3.2.3)
+- **ATH-069** Linked Document Is Not Accessible (1.1.1) — PDFs, Word, Excel
+- **ATH-070** Emoji or Special Characters Disrupt Screen Reader Output (1.3.1)
+
+### All new entries need review
+
+These entries were written based on established WCAG guidance and common audit findings, but the wording, keywords, and remediation advice should be reviewed before treating them as final. They have not been through the same editorial pass as the original corpus. See the TODO for a review task.
+
+---
+
 ## April 25, 2026 — About panel improvements and settings footer fix
 
 ### The About panel is now a proper drawer
