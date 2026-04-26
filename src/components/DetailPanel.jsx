@@ -17,7 +17,6 @@ function scToWaiUrl(scLabel) {
   return `https://www.w3.org/WAI/WCAG22/Understanding/${slug}.html`
 }
 
-// Levenshtein edit distance for the reset-confirmation threshold check
 function editDistance(a, b) {
   const m = a.length, n = b.length
   const dp = Array.from({ length: m + 1 }, (_, i) => [i])
@@ -46,16 +45,27 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(defect.desc)
   const [remText, setRemText] = useState(defect.rem)
-  const [refineNote, setRefineNote] = useState('')
+  const [reviseNote, setReviseNote] = useState('')
+  const [noteSaved, setNoteSaved] = useState(false)
   const [copiedDesc, setCopiedDesc] = useState(false)
   const [copiedRem, setCopiedRem] = useState(false)
   const [resetDesc, setResetDesc] = useState(false)
   const [resetRem, setResetRem] = useState(false)
   const [refining, setRefining] = useState(false)
+  const [animating, setAnimating] = useState(false)
   const [confirmReset, setConfirmReset] = useState(null)
   const [nothingToCopy, setNothingToCopy] = useState(false)
+  const [revisionFailed, setRevisionFailed] = useState(false)
+  // Field-specific undo stacks — each entry is the text before that AI revision
+  const [descHistory, setDescHistory] = useState([])
+  const [remHistory, setRemHistory] = useState([])
+  const [reviseDesc, setReviseDesc] = useState(true)
+  const [reviseRem, setReviseRem] = useState(true)
+  const typeTimerRef = useRef(null)
+  const refineButtonRef = useRef(null)
 
-  // Refocus the panel title when returning from settings (focusTrigger increments)
+  useEffect(() => () => clearTimeout(typeTimerRef.current), [])
+
   useEffect(() => {
     if (focusTrigger > 0) titleRef.current?.focus()
   }, [focusTrigger]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -65,10 +75,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
     : descText
 
   const copy = (text, setCopied, label) => {
-    if (!text?.trim()) {
-      setNothingToCopy(true)
-      return
-    }
+    if (!text?.trim()) { setNothingToCopy(true); return }
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true)
       announce(t('detail.copied_announce', { label }))
@@ -76,8 +83,6 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
     })
   }
 
-  // DRY reset handler — checks significance and either resets immediately or
-  // opens the confirmation modal when the user has made substantial edits.
   const handleReset = (original, current, setText, setFlag, label) => {
     const doReset = () => {
       setText(original)
@@ -85,31 +90,106 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
       setFlag(true)
       setTimeout(() => setFlag(false), 2000)
     }
-    if (isSignificantlyChanged(original, current)) {
-      setConfirmReset({ doReset })
-    } else {
+    if (!current?.trim() || !isSignificantlyChanged(original, current)) {
       doReset()
+    } else {
+      setConfirmReset({ doReset })
     }
+  }
+
+  const handleUndoDesc = () => {
+    const prev = descHistory[descHistory.length - 1]
+    if (!prev) return
+    setDescText(prev)
+    setDescHistory(h => h.slice(0, -1))
+    announce(t('detail.undo_last_announce'))
+  }
+
+  const handleUndoRem = () => {
+    const prev = remHistory[remHistory.length - 1]
+    if (!prev) return
+    setRemText(prev)
+    setRemHistory(h => h.slice(0, -1))
+    announce(t('detail.undo_last_announce'))
+  }
+
+  function startTypewriter(newDesc, newRem, tFunc) {
+    clearTimeout(typeTimerRef.current)
+    const total = (newDesc?.length ?? 0) + (newRem?.length ?? 0)
+    if (!total) { setAnimating(false); return }
+
+    const charsPerTick = Math.max(2, Math.ceil(total / 40))
+    if (newDesc) setDescText('')
+    if (newRem) setRemText('')
+
+    let descIdx = 0
+    let remIdx = 0
+
+    function tick() {
+      if (newDesc && descIdx < newDesc.length) {
+        descIdx = Math.min(descIdx + charsPerTick, newDesc.length)
+        setDescText(newDesc.slice(0, descIdx))
+      } else if (newRem && remIdx < newRem.length) {
+        remIdx = Math.min(remIdx + charsPerTick, newRem.length)
+        setRemText(newRem.slice(0, remIdx))
+      }
+
+      const descDone = !newDesc || descIdx >= newDesc.length
+      const remDone = !newRem || remIdx >= newRem.length
+
+      if (descDone && remDone) {
+        setAnimating(false)
+        announce(tFunc('detail.ai_updated_announce'))
+      } else {
+        typeTimerRef.current = setTimeout(tick, 33)
+      }
+    }
+
+    typeTimerRef.current = setTimeout(tick, 33)
   }
 
   const handleRefine = async () => {
-    if (!refineNote.trim()) return
-    if (aiEnabled) {
+    if (!reviseNote.trim()) return
+
+    if (aiEnabled && canRevise) {
+      if (reviseNote.trim() === 'debug wrong') {
+        setRevisionFailed(true)
+        return
+      }
+
       setRefining(true)
+      announce(t('detail.rewriting_text'), { priority: 'assertive' })
+
       try {
-        const result = await getAiRefinement({ defect, descText, remText, note: refineNote })
-        if (result.desc) setDescText(result.desc)
-        if (result.rem) setRemText(result.rem)
+        const result = await getAiRefinement({ defect, descText, remText, note: reviseNote })
+        const newDesc = reviseDesc && result.desc ? result.desc : null
+        const newRem = reviseRem && result.rem ? result.rem : null
+
+        if (newDesc) setDescHistory(h => [...h, descText])
+        if (newRem) setRemHistory(h => [...h, remText])
+
+        setRefining(false)
+        setAnimating(true)
+        startTypewriter(newDesc, newRem, t)
       } catch (e) {
         console.error('AI refinement failed:', e)
+        setRefining(false)
+        setAnimating(false)
+        setRevisionFailed(true)
       }
-      setRefining(false)
+    } else {
+      setNoteSaved(true)
+      announce(t('detail.saved_note_aria'))
+      setTimeout(() => setNoteSaved(false), 2000)
+      setReviseNote('')
     }
   }
 
+  const canRevise = reviseDesc || reviseRem
   const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
   const remLabel = t('detail.rem_label')
+  const refineLabel = t(aiEnabled ? 'detail.refine_label_ai' : 'detail.refine_label_no_ai')
 
   return (
     <div className="detail-panel">
@@ -166,7 +246,15 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
         onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel)}
         reset={resetDesc}
         onReset={() => handleReset(defect.desc, descText, setDescText, setResetDesc, descLabel)}
+        undoable={descHistory.length > 0}
+        onUndo={handleUndoDesc}
+        selected={reviseDesc}
+        onSelectChange={setReviseDesc}
+        selectLabel={t('detail.revise_desc_checkbox')}
+        animating={animating}
+        wasUpdated={descHistory.length > 0}
         isDesktop={isDesktop}
+        aiEnabled={aiEnabled}
       />
 
       <Field
@@ -178,11 +266,19 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
         onCopy={() => copy(remText, setCopiedRem, remLabel)}
         reset={resetRem}
         onReset={() => handleReset(defect.rem, remText, setRemText, setResetRem, remLabel)}
+        undoable={remHistory.length > 0}
+        onUndo={handleUndoRem}
+        selected={reviseRem}
+        onSelectChange={setReviseRem}
+        selectLabel={t('detail.revise_rem_checkbox')}
+        animating={animating}
+        wasUpdated={remHistory.length > 0}
         isDesktop={isDesktop}
+        aiEnabled={aiEnabled}
       />
 
       <div className="detail-refine">
-        <label htmlFor="refine-note" className="detail-label">{t('detail.refine_label')}</label>
+        <label htmlFor="revise-note" className="detail-label">{refineLabel}</label>
         <p className="detail-refine-hint">
           {aiEnabled
             ? <>{t('detail.refine_hint_ai')}{' '}
@@ -199,25 +295,36 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
         </p>
         <div className="detail-refine-row">
           <textarea
-            id="refine-note"
-            value={refineNote}
-            onChange={e => setRefineNote(e.target.value)}
+            id="revise-note"
+            value={reviseNote}
+            onChange={e => setReviseNote(e.target.value)}
             placeholder={aiEnabled ? t('detail.refine_placeholder_ai') : t('detail.refine_placeholder_no_ai')}
             className="detail-input detail-input--textarea"
             rows={3}
           />
-          {aiEnabled && (
-            <button
-              onClick={handleRefine}
-              disabled={refining || !refineNote.trim()}
-              className="btn-accent field-btn detail-rewrite-btn"
-              aria-label={refining ? t('detail.rewriting_aria') : t('detail.rewrite_aria')}
-            >
-              {refining
-                ? t('detail.rewriting_text')
-                : <><Sparkles size={12} aria-hidden="true" strokeWidth={2} />{' '}{t('detail.rewrite_text')}</>}
-            </button>
-          )}
+          <button
+            ref={refineButtonRef}
+            onClick={handleRefine}
+            disabled={refining || animating || !reviseNote.trim()}
+            className={`btn-accent field-btn detail-rewrite-btn${noteSaved ? ' field-btn--success' : ''}`}
+            aria-label={
+              refining ? t('detail.rewriting_aria')
+              : aiEnabled && canRevise ? t('detail.rewrite_aria')
+              : noteSaved ? t('detail.saved_note_aria')
+              : t('detail.save_note_aria')
+            }
+          >
+            {refining
+              ? <span className="detail-revising-text">{t('detail.rewriting_text')}</span>
+              : aiEnabled && canRevise
+                ? <span className="detail-revise-label" aria-hidden="true">
+                    <Sparkles size={12} strokeWidth={2} className="detail-revise-icon" />
+                    {' '}Save &<br />Revise Selected
+                  </span>
+                : noteSaved
+                  ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.saved_note_text')}</>
+                  : t('detail.save_note_text')}
+          </button>
         </div>
       </div>
 
@@ -229,6 +336,15 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
         heading={t('detail.nothing_to_copy_heading')}
       >
         <p>{t('detail.nothing_to_copy_body')}</p>
+      </Modal>
+
+      <Modal
+        open={revisionFailed}
+        onClose={() => setRevisionFailed(false)}
+        heading={t('detail.revise_error_heading')}
+        returnFocusRef={refineButtonRef}
+      >
+        <p>{t('detail.revise_error_body')}</p>
       </Modal>
 
       <Modal
@@ -286,7 +402,15 @@ function RelatedIssues({ defect, allDefects, onSelect }) {
   )
 }
 
-function Field({ id, label, value, onChange, copied, onCopy, reset, onReset, isDesktop }) {
+function Field({
+  id, label, value, onChange,
+  copied, onCopy,
+  reset, onReset,
+  undoable, onUndo,
+  selected, onSelectChange, selectLabel,
+  animating, wasUpdated,
+  isDesktop, aiEnabled,
+}) {
   const t = useT()
   const taRef = useRef(null)
 
@@ -300,23 +424,59 @@ function Field({ id, label, value, onChange, copied, onCopy, reset, onReset, isD
     el.style.height = Math.min(el.scrollHeight, maxHeight) + 'px'
   }, [value])
 
+  function handleResetOrUndo() {
+    if (undoable) onUndo()
+    else onReset()
+  }
+
+  const resetBtnLabel = reset
+    ? t('detail.reset_done_aria', { label })
+    : undoable
+      ? t('detail.undo_last_aria', { label })
+      : t('detail.reset_aria', { label })
+
+  const resetBtnText = reset
+    ? t('detail.reset_done_desktop')
+    : undoable
+      ? t('detail.undo_last_desktop')
+      : t('detail.reset_desktop')
+
   return (
     <div className="field">
       <div className="field__header">
-        <label htmlFor={id} className="field__label">{label}</label>
+        <div className="field__label-row">
+          {aiEnabled && (
+            <input
+              type="checkbox"
+              className="field-select-checkbox"
+              checked={selected}
+              onChange={e => onSelectChange(e.target.checked)}
+              aria-label={selectLabel}
+              disabled={animating}
+            />
+          )}
+          <label htmlFor={id} className="field__label">
+            {label}
+            {wasUpdated && (
+              <span className="field__updated-badge">{t('detail.updated_label')}</span>
+            )}
+          </label>
+        </div>
         <div className="field__actions">
           <button
-            onClick={onReset}
-            aria-label={reset ? t('detail.reset_done_aria', { label }) : t('detail.reset_aria', { label })}
+            onClick={handleResetOrUndo}
+            aria-label={resetBtnLabel}
             className={`btn-accent field-btn${reset ? ' field-btn--success' : ''}`}
+            disabled={animating}
           >
             {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
-            {isDesktop && <span>{reset ? t('detail.reset_done_desktop') : t('detail.reset_desktop')}</span>}
+            {isDesktop && <span>{resetBtnText}</span>}
           </button>
           <button
             onClick={onCopy}
             aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
             className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
+            disabled={animating}
           >
             {copied ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
             {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
@@ -328,7 +488,8 @@ function Field({ id, label, value, onChange, copied, onCopy, reset, onReset, isD
         id={id}
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="field__textarea"
+        readOnly={animating}
+        className={`field__textarea${animating ? ' field__textarea--animating' : ''}`}
       />
     </div>
   )
