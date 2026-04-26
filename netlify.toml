@@ -16,7 +16,9 @@
     # Content Security Policy:
     #   - self:           app JS/CSS/HTML + self-hosted Inter font (via @fontsource)
     #   - connect-src:    direct browser→AI provider calls (no relay server)
-    #   Note: update connect-src when wiring additional AI providers
+    #   Phase 2 (auth): add your Supabase project URL to connect-src, e.g.:
+    #     https://your-project.supabase.co
+    #   Note: update connect-src when wiring additional AI providers or Supabase
     Content-Security-Policy = """
       default-src 'self';
       script-src 'self';
@@ -27,7 +29,7 @@
         https://api.openai.com
         https://generativelanguage.googleapis.com
         https://api.cognitive.microsoft.com;
-      img-src 'self' data:;
+      img-src 'self' data: https://avatars.githubusercontent.com https://lh3.googleusercontent.com;
       object-src 'none';
       base-uri 'self';
       form-action 'self';

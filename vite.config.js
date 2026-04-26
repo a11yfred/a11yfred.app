@@ -11,13 +11,18 @@ export default defineConfig({
   //base: process.env.NODE_ENV === 'production' ? `/${REPO_NAME}/` : '/',
 
   build: {
+    // Enable LightningCSS for faster, smaller CSS output
+    css: { transformer: 'lightningcss' },
+    // 50+ locale JSON files make the main bundle intentionally large; suppress warning
+    chunkSizeWarningLimit: 1200,
     rollupOptions: {
       output: {
         // Split vendor chunks so the browser can cache React and Fuse.js
         // independently from app code — only changed chunks are re-downloaded.
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          fuse:  ['fuse.js'],
+        // Vite 8 (rolldown) requires manualChunks to be a function.
+        manualChunks(id) {
+          if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'react'
+          if (id.includes('node_modules/fuse.js/')) return 'fuse'
         },
       },
     },
