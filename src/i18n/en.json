@@ -175,7 +175,7 @@
   "settings.privacy_subhead_storage": "What’s Stored",
   "settings.privacy_subhead_translations": "Translations",
   "settings.privacy_body_1": "API keys are stored locally in your browser (localStorage) and sent only to the AI provider’s own API — never to any intermediate server. You can clear them at any time by removing the key and saving, or by clearing your browser’s site data.",
-  "settings.privacy_body_2": "This app stores the following in your browser's localStorage: your theme preference, your language preference, your platform filter (Web/Native), your live search setting, your active AI provider, one API key per provider you configure, and your defect voting data (votes, stars, and archived items). No other data is stored or transmitted.",
+  "settings.privacy_body_2": "This app stores the following in your browser's localStorage: your theme preference, your language preference, your platform filter (Web/Native), your live search setting, your sort priority setting, your active AI provider, one API key per provider you configure, and your defect voting data (votes, stars, and archived items). No other data is stored or transmitted.",
   "settings.privacy_body_translations": "UI translations and base public corpus translations were generated with AI and may contain errors or missing data. No custom or user-entered data is ever sent out for translation.",
   "settings.api_key_label_prefix": "API Key",
   "settings.api_key_required": "(required)",
