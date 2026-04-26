@@ -720,11 +720,24 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transition: var(--transition-btn);
 }
 
+/* ─── Tertiary button (text-link style — no border, underlined) ── */
+
+.btn-tertiary {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  transition: var(--transition-btn);
+}
+
 /* ─── Shared disabled state — before hover rules (specificity order) */
 
 .btn-ghost:disabled,
 .btn-secondary:disabled,
-.btn-accent:disabled {
+.btn-accent:disabled,
+.btn-tertiary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -740,6 +753,11 @@ body:has(.modal-panel.is-open) .drawer-panel {
   background: var(--accent-text);
   color: var(--accent-bg);
   border-color: var(--accent-text);
+}
+
+.btn-tertiary:not(:disabled):hover,
+.btn-tertiary:not(:disabled):focus-visible {
+  background: var(--bg-subtle);
 }
 
 /* ─── Disabled form controls ─────────────────────────────────
