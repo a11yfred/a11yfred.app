@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
-import { useFocusTrap } from './useFocusTrap.js'
-import { useAriaHide } from './useAriaHide.js'
 
 /**
  * Bottom sheet that slides up from the bottom of the viewport.
@@ -26,26 +24,6 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
   const panelRef = useRef(null)
   const dragStartY = useRef(null)
   const dragDelta = useRef(0)
-
-  useFocusTrap(panelRef, open)
-  useAriaHide(panelRef, open)
-
-  // Save the triggering element on open; restore focus on close
-  useEffect(() => {
-    if (open) {
-      triggerRef.current = document.activeElement
-    } else {
-      triggerRef.current?.focus()
-    }
-  }, [open])
-
-  // Escape key
-  useEffect(() => {
-    if (!open) return
-    const handler = (e) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [open, onClose])
 
   // Scroll lock — prevent background from scrolling when sheet is open
   useEffect(() => {
@@ -96,23 +74,20 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
   return createPortal(
     <>
       {/* Backdrop — click to dismiss */}
-      <div
+{/*       <div
         className={`sheet-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
       />
-
+ */}
       {/* Panel */}
-      <div
+      <dialog
         ref={panelRef}
         className={`sheet-panel${open ? ' is-open' : ''}`}
-        role="dialog"
-        aria-modal="true"
         aria-label={label}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        inert={!open ? '' : undefined}
       >
         {/* Chrome: drag handle centered, close button top-right */}
         <div className="sheet-chrome">
@@ -139,7 +114,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
             </>
           )}
         </div>
-      </div>
+      </dialog>
     </>,
     document.body
   )
