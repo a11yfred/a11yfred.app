@@ -4,6 +4,26 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 26, 2026 — Deep linking, UI polish, and dev tooling
+
+### Shareable links for defects and panels
+
+Settings, About, and individual defect entries now have their own URLs. Opening `/#/about` loads the About panel directly. Opening `/#/defect/ATH-023` opens that specific defect. The browser back button works throughout. The page title bar updates to include the defect name when a defect is open.
+
+### Visual hover states
+
+Several text-link style buttons were missing hover feedback. Fails/WCAG SC criteria links, related issue buttons, the Settings link inside the detail panel, and the Privacy & Storage buttons in both Settings and About now all turn white on hover while keeping their underline.
+
+### Save & Revise button
+
+The button label and padding were both fixed — text no longer clips at the edges, and the label consistently says "Revise" instead of "Rewrite."
+
+### Dev debug tooling
+
+When running locally, every accessibility announcement now shows as a large toast at the bottom of the screen (white on black pill, red for urgent/assertive). This makes it easy to verify screen reader announcements while building without needing a screen reader open. The README now documents all debug commands and Easter egg search triggers.
+
+---
+
 ## April 26, 2026 — Public corpus expanded with 16 new defect entries
 
 ### 16 new accessibility defects added to the corpus

@@ -179,6 +179,34 @@ See [`src/plugins/announce/README.md`](src/plugins/announce/README.md) for usage
 
 ---
 
+## Dev / Debug
+
+These commands work in the running app during development.
+
+### Search field triggers
+
+Type any of the following exactly into the search bar and the action fires immediately (live search on) or on submit (live search off):
+
+| Input | Effect |
+| ----- | ------ |
+| `debug skeleton` | Shows the skeleton loading state using the current result count |
+| `pig latin` | Switches UI language to Pig Latin (Easter egg — not persisted) |
+| `pirate` | Switches to Pirate English |
+| `klingon` | Switches to tlhIngan Hol (Klingon) |
+| `valyrian` | Switches to High Valyrian |
+
+### AI revision triggers (detail panel, requires AI enabled)
+
+| Input in note field | Effect |
+| ------------------- | ------ |
+| `debug wrong` | Forces the "Revision Failed" error modal |
+
+### Visual ARIA monitor
+
+When running on `localhost`, every `announce()` call renders a large toast at the bottom of the screen showing the message text and priority level (`polite` or `assertive`). Assertive toasts use a red background. This is dev-only — the toast is not rendered in production.
+
+---
+
 ## Contributing
 
 See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to fork, run locally, add defect entries, and submit a pull request.

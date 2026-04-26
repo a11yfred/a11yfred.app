@@ -192,6 +192,7 @@
   "settings.confirm_reset_all_body": "This will clear all saved settings — including your API keys — and return everything to defaults. This cannot be undone.",
   "settings.confirm_reset_all_yes": "Yes, reset everything",
   "settings.confirm_reset_all_no": "No, keep settings",
+  "settings.reset_all_announce": "All settings reset",
   "settings.unsaved_heading": "Unsaved Changes",
   "settings.unsaved_body": "You have unsaved changes to your AI settings. What would you like to do?",
   "settings.unsaved_save_close": "Save & Close",

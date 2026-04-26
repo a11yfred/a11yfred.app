@@ -380,6 +380,7 @@ function AppContent({
     setSubmittedQuery('')
     setSelected(null)
     navigate('/')
+    announce(t('settings.reset_all_announce'), { priority: 'assertive' })
   }
 
   function unlock() {

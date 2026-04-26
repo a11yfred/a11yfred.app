@@ -1109,15 +1109,6 @@ input.search-input--has-value {
   padding-right: 2.5rem;
 }
 
-.search-decor-icon {
-  position: absolute;
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-disabled);
-  pointer-events: none;
-}
-
 input.search-input:focus {
   border-color: var(--focus);
 }

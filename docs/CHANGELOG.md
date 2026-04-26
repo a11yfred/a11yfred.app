@@ -4,6 +4,30 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-26 — Deep linking, UI polish, debug tooling
+
+### Router plugin
+
+- Added `matchRoute(pattern, route)` pure function and `useRouteMatch(pattern)` hook; both exported from `src/plugins/router/index.js`
+- `/about` promoted from component state to a hash route (`route === '/about'`)
+- `/defect/:id` route added: selecting a defect navigates there; closing navigates back; settings/about close restores the defect URL if one was open behind them
+- Auto-select on cold load: if the page is opened at `/#/defect/ATH-023`, the matching defect is found and selected once data finishes loading
+- Document title now updates to `A11yTextHelper | <defect title>` when the detail panel is the foreground view
+
+### UI fixes
+
+- `.detail-rewrite-btn` renamed to `.detail-revise-btn`; vertical padding increased from `4px` to `0.625em` (text no longer clips)
+- Added `:hover` state (`color: var(--text); text-decoration: underline`) to: `.detail-sc-link`, `.detail-related__btn` (also restored underline on hover), `.detail-settings-link`, `.settings-privacy-btn`, `.about-privacy-btn`
+- Search field: decorative `Pencil` icon (faint, right-aligned) that hides when text is entered
+- SettingsPanel: API key error stays visible on failed save (removed effect that cleared it immediately when AI was toggled off)
+
+### Debug tooling
+
+- `Announcer`: on `localhost`, every `announce()` call renders a large white-on-black pill toast with priority badge; assertive priority uses red background
+- README: Dev / Debug section documenting all search field triggers, AI debug trigger, and the visual ARIA monitor
+
+---
+
 ## 2026-04-26 — Public corpus expansion (ATH-004 through ATH-070, 16 new entries)
 
 ### corpus.json
