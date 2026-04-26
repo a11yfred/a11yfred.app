@@ -1,8 +1,8 @@
 # A11yTextHelper
 
-> Audit defect descriptions, fast.
+> Audit finding descriptions, fast.
 
-A personal accessibility audit writing assistant. Search a corpus of WCAG-aligned defect write-ups by natural language, pick a match, optionally add a location prefix, refine the text with AI, and copy it straight into your spreadsheet.
+A personal accessibility audit writing assistant. Search a corpus of WCAG-aligned finding write-ups by natural language, pick a match, optionally add a location prefix, refine the text with AI, and copy it straight into your spreadsheet.
 
 ---
 
@@ -24,7 +24,7 @@ npm run build      # output → dist/
 Three deployment targets are configured. See [docs/DEPLOYING.md](docs/DEPLOYING.md) for full instructions on enabling/disabling each.
 
 | Platform | Config | Status |
-| --- | --- | --- |
+| -------- | ------ | ------ |
 | **Netlify** | `netlify.toml` | Active — auto-deploys on push |
 | **Vercel** | `vercel.json` | Ready — connect repo in Vercel dashboard |
 | **GitHub Pages** | `.github/workflows/deploy-pages.yml` | Dormant — manual trigger, requires public repo |
@@ -36,84 +36,98 @@ Three deployment targets are configured. See [docs/DEPLOYING.md](docs/DEPLOYING.
 ```text
 src/
   data/
-    corpus.json         # Public corpus — WCAG-aligned defect entries; default data source
+    corpus.json           # Public corpus — WCAG-aligned finding entries; default data source
+    mikeys-corpus.json    # Private corpus — personal audit findings (not committed to public repo)
+    translations/         # Corpus title/desc/rem overlays per locale (de, es, fr, ja, ko, pt-BR, tl, zh)
   i18n/
-    index.jsx           # I18nProvider + useT() hook (zero-dep, React Context)
-    en.json             # Source of truth (~100 keys)
+    index.jsx             # I18nProvider + useT() hook (zero-dep, React Context)
+    en.json               # Source of truth (~235 keys)
     es.json fr.json de.json nl.json sv.json  # Romance/Germanic
     zh.json yue.json ko.json ja.json tl.json # CJK + Filipino
-    ar-PS.json ug.json  # RTL locales — sets dir="rtl" on <html>
+    ar-PS.json ug.json    # RTL locales — sets dir="rtl" on <html>
     # + 40+ more locale files (see src/i18n/ for full list)
   services/
-    dataService.js      # Data layer abstraction; Phase 2 stubs: getUserDefects, syncSettings
-    aiService.js        # AI provider abstraction; Anthropic implemented, others stubbed
-    supabaseClient.js   # Supabase client stub — Phase 2; see file for setup + schema
-    authService.js      # Auth stub — Google + GitHub OAuth via Supabase; Phase 2
+    dataService.js        # Data layer abstraction; Phase 2 stubs: getUserFindings, syncSettings
+    aiService.js          # AI provider abstraction; Anthropic implemented, others stubbed
+    supabaseClient.js     # Supabase client stub — Phase 2; see file for setup + schema
+    authService.js        # Auth stub — Google + GitHub OAuth via Supabase; Phase 2
   hooks/
-    useDefectSearch.js  # Fuse.js search with platform filter
+    useFindingSearch.js   # Fuse.js search with platform filter and rating-based sort
+    useFindingRatings.js  # localStorage-backed per-finding votes, stars, and archive state
   components/
     SearchBar.jsx
     ResultList.jsx
     DetailPanel.jsx
     SettingsPanel.jsx
+    AboutPanel.jsx
     Confetti.jsx
     PartySparkles.jsx
     PartyMusicPlayer.jsx
-    KofiWidget.jsx      # Ko-fi donation widget + a11y patch (currently disabled)
+    KofiWidget.jsx        # Ko-fi donation widget + a11y patch (currently disabled)
   plugins/
-    router/             # Hash-based SPA router + focus-management hooks (zero deps)
-      Router.jsx        # <Router> provider and useRouter hook
-      Route.jsx         # Conditional render by current route
-      Link.jsx          # Hash navigation anchor
-      Drawer.jsx        # Slide-in panel with focus trap, Escape, inert
-      BottomSheet.jsx   # Slide-up sheet with focus trap, Escape, inert
-      Modal.jsx         # Centered dialog; stacks above Drawer/BottomSheet
+    router/               # Hash-based SPA router + focus-management hooks (zero deps)
+      Router.jsx          # <Router> provider and useRouter hook
+      Route.jsx           # Conditional render by current route
+      Link.jsx            # Hash navigation anchor
+      Drawer.jsx          # Slide-in panel with focus trap, Escape, inert
+      BottomSheet.jsx     # Slide-up sheet with focus trap, Escape, inert
+      Modal.jsx           # Centered dialog; stacks above Drawer/BottomSheet
       useFocusOnMount.js
       useReturnFocus.js
       useFocusTrap.js
       useMediaQuery.js
       usePageTitle.js
       usePaginationFocus.js
-      index.js          # Barrel export
-      README.md         # Focus management rules and plugin documentation
-    announce/           # ARIA live region pub/sub (zero deps)
-      Announcer.jsx     # Mounts polite + assertive aria-live regions
-      announce.js       # announce(message, { priority }) — call from anywhere
-      useAnnounce.js    # Hook wrapper
-      index.js          # Barrel export
-      README.md         # Usage guide and screen reader behavior notes
+      index.js            # Barrel export
+      README.md           # Focus management rules and plugin documentation
+    announce/             # ARIA live region pub/sub (zero deps)
+      Announcer.jsx       # Mounts polite + assertive aria-live regions
+      announce.js         # announce(message, { priority }) — call from anywhere
+      useAnnounce.js      # Hook wrapper
+      index.js            # Barrel export
+      README.md           # Usage guide and screen reader behavior notes
   App.jsx
   main.jsx
-  tokens.css            # Design tokens: colors, type scale, spacing, radius, dark mode
-  typography.css        # Type scale utility classes (available for adoption)
-  index.css             # Reset, base styles, layout, off-canvas, focus ring, sr-only
+  tokens.css              # Design tokens: colors, type scale, spacing, radius, dark mode
+  typography.css          # Type scale utility classes (available for adoption)
+  index.css               # Reset, base styles, layout, off-canvas, focus ring, sr-only
+
+scripts/
+  translate-missing.mjs   # Translates missing/stale i18n keys via Anthropic API
+  en-snapshot.json        # Last-translated English values; drives stale-detection
+
+electron/                 # Electron desktop app scaffold (deps not yet installed)
+  main.js                 # Main process: BrowserWindow, safeStorage IPC handlers
+  preload.js              # Context bridge: exposes window.electronAPI to renderer
+  electron-builder.json   # Packaging config (macOS/Windows)
 
 public/
-  robots.txt            # Disallow all crawlers (dev deployment — replace before launch)
+  robots.txt              # Disallow all crawlers (dev deployment — replace before launch)
+  favicon.svg             # SVG favicon with dark mode support
 
-index.html              # App shell; SEO meta tags included but commented out for dev
-netlify.toml            # Build settings, security headers, SPA redirect rule
-vercel.json             # Build settings, security headers, SPA rewrite rule
-vite.config.js          # Vite config; vendor chunk splitting for long-term caching
+index.html                # App shell; SEO meta tags included but commented out for dev
+netlify.toml              # Build settings, security headers, SPA redirect rule
+vercel.json               # Build settings, security headers, SPA rewrite rule
+vite.config.js            # Vite 8 config; LightningCSS, vendor chunk splitting
 ```
 
 ---
 
-## Defect schema
+## Finding schema
 
 Each entry in `corpus.json` follows this schema:
 
 ```json
 {
-  "id": "ATH-051",
-  "title": "Defect Title",
+  "id": "ATH-077",
+  "title": "Finding Title",
   "sc": "1.1.1",
   "scLabel": "1.1.1 Non-text Content (Level A)",
   "related": ["4.1.2 Name, Role, Value (Level A)"],
   "priority": "Critical",
   "platform": "web",
   "keywords": ["keyword1", "keyword2", "element name", "component"],
-  "desc": "Defect description text.",
+  "desc": "Finding description text.",
   "rem": "Possible remediation steps."
 }
 ```
@@ -134,20 +148,36 @@ Each entry in `corpus.json` follows this schema:
 
 With AI assist toggled on, the Revision Notes field rewrites the description and remediation based on a short note. AI is **off by default**.
 
-Open Settings (⚙) to select a provider and add your API key. Keys are stored in `localStorage` only — never sent to any server other than the provider's own API. You supply your own key; usage is billed directly to your account.
+Open Settings to select a provider and add your API key. Keys are stored in `localStorage` only — never sent to any server other than the provider's own API. You supply your own key; usage is billed directly to your account.
 
-Currently implemented: **Anthropic (Claude)**  
+Currently implemented: **Anthropic (Claude)**
 Stubbed (ready to wire up): OpenAI, Google Gemini, Microsoft Copilot
 
 ## Themes
 
-Settings includes Light, Auto, and Dark theme options.
+Settings includes Light, Auto, and Dark theme options, plus Party Mode.
 
 ## Language
 
 Settings includes a Language selector (defaults to your browser's language). 50+ languages ship in UI translations, including English, Español, Français, Deutsch, Nederlands, Svenska, 中文, 日本語, 한국어, Filipino, Arabic (Palestinian), Māori, Hawaiian, Navajo, Ojibwe, Plains Cree, Tibetan, Tamil, Uyghur, Rohingya, Classical Nahuatl, Esperanto, Basque, Guaraní, Quechua, Pig Latin, Klingon, Valyrian, Pirate speak, and more. Selecting Palestinian Arabic or Uyghur switches the entire layout to RTL.
 
 Translations were generated with AI and may contain errors. No user-entered data is sent anywhere for translation. The `src/i18n/` directory contains one flat-key JSON file per locale; `src/i18n/en.json` is the source of truth. Title-case conventions follow NYT rules for English variants; sentence case for Romance/Germanic languages; no capitalization changes for scripts that lack the distinction.
+
+Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill in missing or stale translations after modifying `en.json`.
+
+---
+
+## Electron (offline desktop)
+
+The scaffold is in `electron/`. The app is already fully offline-capable (bundled corpus JSON, no server required). To activate the Electron build:
+
+```bash
+npm install --save-dev electron electron-builder concurrently
+npm run electron:dev    # Dev: Vite + Electron together
+npm run electron:build  # Production: Vite build + electron-builder package
+```
+
+API keys will use `window.electronAPI.keys` (Electron `safeStorage`) instead of `localStorage`. SettingsPanel currently uses `localStorage` directly — that's the last wiring task before packaging.
 
 ---
 
@@ -209,7 +239,7 @@ When running on `localhost`, every `announce()` call renders a large toast at th
 
 ## Contributing
 
-See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to fork, run locally, add defect entries, and submit a pull request.
+See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to fork, run locally, add finding entries, and submit a pull request.
 
 ---
 

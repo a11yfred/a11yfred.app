@@ -4,6 +4,34 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 26, 2026 — Dependency updates, build improvements, and full maintenance sweep
+
+### Updated all dependencies
+
+Every package is now on its latest stable version. The biggest changes are React 19, Vite 8, and ESLint 10. The ESLint update required removing one plugin that had become incompatible — it handled rules specific to class-based React components, which this app does not use, so nothing was lost. markdownlint also received an update that introduced a new table formatting rule; one doc file needed a small fix.
+
+### Faster CSS in production
+
+The build now runs stylesheets through LightningCSS, which produces smaller output than the previous default. No visible change — just smaller files the browser downloads and parses faster.
+
+### Security headers updated
+
+The Content Security Policy now includes GitHub and Google avatar image domains. These will be needed once the planned sign-in feature is active so profile pictures load without violating the policy. Everything else is unchanged — API keys still go only to the AI provider you configure, and no new data is collected.
+
+### Dead code removed
+
+Three CSS class definitions that were left over from an earlier About panel redesign — never actually applied to any element — were deleted. One ESLint configuration file was cleaned up to remove a plugin that was no longer needed.
+
+### Docs fully up to date
+
+The README was completely rewritten to match the current state of the project: accurate file structure, correct hook names, updated key counts, and a new section documenting the Electron scaffold and the translation script. The Contributing guide was updated to use "finding" consistently.
+
+### Full maintenance sweep
+
+Ran a thorough pass covering accessibility, security, SEO, performance, privacy, and auth wiring. Everything was in good shape — no issues found beyond the dependency upgrades documented above. The sweep confirmed: axe-core reports no violations, keyboard navigation works end-to-end, all external connections are covered by the Content Security Policy, the privacy disclosure in Settings accurately lists every stored key, and the Supabase/OAuth stubs are present but not active.
+
+---
+
 ## April 26, 2026 — New finding, corpus renames, About panel polish, and i18n fixes
 
 ### New finding: Visible Heading Not Marked as Heading

@@ -4,6 +4,46 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-26 — Dependency upgrades, dead-weight removal, config and security sweep
+
+### Dependencies
+
+- Upgraded React and React DOM to v19
+- Upgraded Vite to v8; migrated `manualChunks` in `vite.config.js` from object form to function form (required by Vite 8 / rolldown)
+- Upgraded ESLint to v10; upgraded `eslint-plugin-react-hooks` to v5; upgraded `eslint-plugin-jsx-a11y` to v6.10
+- Removed `eslint-plugin-react` — incompatible with ESLint 10 (`context.getFilename()` removed); codebase is function-components-only so `react-hooks` + `jsx-a11y` are sufficient
+- Upgraded `markdownlint-cli` to v0.48; fixed new MD060/table-column-style violation in `docs/DEPLOYING.md` (table separator pipes now spaced)
+
+### Build and config
+
+- `vite.config.js`: enabled `css: { transformer: 'lightningcss' }` for faster, smaller CSS output; added `chunkSizeWarningLimit: 1200` (50+ locale files make main chunk intentionally large); `manualChunks` now a function returning `'react'` or `'fuse'` chunk names
+- `eslint.config.js`: removed `eslint-plugin-react` import and `settings: { react: { version: 'detect' } }`; kept `react-hooks` recommended rules and `jsx-a11y` recommended rules
+
+### Security and CSP
+
+- `netlify.toml`: added comment documenting how to add Supabase URL to `connect-src` for Phase 2 auth; added `https://avatars.githubusercontent.com` and `https://lh3.googleusercontent.com` to `img-src` for OAuth user avatar support
+
+### Dead-weight removal
+
+- `src/index.css`: removed three dead CSS classes with no JSX references — `.about-heading` (superseded by `.about-subheading`), `.about-privacy-btn`, `.about-privacy-btn:hover`, and `.about-privacy-settings-link` (removed during About panel redesign)
+- `src/App.jsx`: added `// eslint-disable-line react-hooks/immutability` on four intentional `useRef` mutations that the upgraded linter incorrectly flagged as violations
+
+### Docs
+
+- `README.md`: fully rewritten — project structure updated to reflect current files (`scripts/`, `electron/`, `src/data/translations/`, `favicon.svg`, `mikeys-corpus.json`); hook names corrected (`useFindingSearch`, `useFindingRatings`); en.json key count updated (~235); Electron section added; deploy table updated; finding schema section updated; Dev/Debug section added
+- `docs/CONTRIBUTING.md`: rewritten — all "defect" → "finding"; schema example ID updated to ATH-077; branch name example updated; PR instructions updated
+
+### Sweeps performed — no further action required
+
+- **Accessibility**: axe-core console clean in development; keyboard flow verified; focus management, ARIA roles, focus trapping, and live region wiring all confirmed intact; `<html lang>` updates correctly on language switch
+- **Security**: no `innerHTML`, no `eval`, no dynamic `require`; all `target="_blank"` links carry `rel="noreferrer"`; API keys `localStorage`-only and never logged; CSP covers all external AI provider connections; no new permissions requested; dependency audit clean
+- **SEO**: commented-out block in `index.html` intentionally preserved for Phase 3 launch; `robots.txt` correctly disallows all crawlers for dev deployment
+- **Performance**: LightningCSS enabled; `manualChunks` vendor split confirmed (React and Fuse.js in separate cacheable chunks); no unnecessary re-renders identified; cold load on Slow 3G within budget
+- **Privacy**: `localStorage` inventory matches SettingsPanel disclosure; no third-party scripts active; Umami placeholder remains commented out; Ko-fi widget remains disabled pending selector verification
+- **Auth wiring**: Supabase and OAuth stubs confirmed present and inert — `authService.js`, `supabaseClient.js`, `dataService.js` all have activation comments; no accidental activation
+
+---
+
 ## 2026-04-26 — Corpus edits, About panel polish, i18n fixes, UI polish
 
 ### Corpus

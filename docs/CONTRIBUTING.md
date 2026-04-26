@@ -1,6 +1,6 @@
 # Contributing to A11yTextHelper
 
-Thanks for your interest. Contributions are welcome — especially defect entries, keyword improvements, and bug fixes.
+Thanks for your interest. Contributions are welcome — especially finding entries, keyword improvements, and bug fixes.
 
 ---
 
@@ -17,21 +17,21 @@ The app runs at `http://localhost:5173`.
 
 ---
 
-## Adding defect entries
+## Adding finding entries
 
 The **public** corpus lives in `src/data/corpus.json`. Each entry follows this schema:
 
 ```json
 {
-  "id": "ATH-052",
-  "title": "Defect Title",
+  "id": "ATH-077",
+  "title": "Finding Title",
   "sc": "1.1.1",
   "scLabel": "1.1.1 Non-text Content (Level A)",
   "related": ["4.1.2 Name, Role, Value (Level A)"],
   "priority": "Critical",
   "platform": "web",
   "keywords": ["keyword1", "keyword2", "element name", "component"],
-  "desc": "Defect description text.",
+  "desc": "Finding description text.",
   "rem": "Possible remediation steps."
 }
 ```
@@ -50,10 +50,10 @@ Descriptions and remediation should be written at a plain reading level — shor
 
 ## Submitting a pull request
 
-1. Fork the repo and create a branch: `git checkout -b add-defect-ath-052`
+1. Fork the repo and create a branch: `git checkout -b add-finding-ath-077`
 2. Make your changes
 3. Open a pull request with a short description of what you added or changed
-4. If adding defects, mention the WCAG success criterion and the public source/reference
+4. If adding findings, mention the WCAG success criterion and the public source/reference
 
 ---
 

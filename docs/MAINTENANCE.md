@@ -10,6 +10,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 | ---- | ------ | ------ | -------- | --- | ----- |
 | 2026-04-25 | — | — | — | — | Renamed "defect" to "finding" throughout: hooks (useDefectSearch/Ratings → useFindingSearch/Ratings), services (getDefects → getFindings), components, and all i18n user-facing strings; returnFocus utility added to router plugin; [data-focus-return]:focus CSS rule added; Modal/BottomSheet/Drawer wired to returnFocus; `npm run translate` pending (run with ANTHROPIC_API_KEY to propagate new i18n keys to all locales) |
 | 2026-04-25 | — | — | — | — | Fixed Reset All not clearing view-all state — focusCount=true on the stale result list was landing focus on "N results" heading instead of idle home screen; handleResetAll now resets setViewAll/setViewAllConfirmOpen/setViewAllLoading |
+| 2026-04-26 | — | — | — | — | Full sweep: React 19 + Vite 8 + ESLint 10 deps upgraded; eslint-plugin-react removed (ESLint 10 incompatible); LightningCSS enabled; manualChunks → function (rolldown); 3 dead CSS classes removed; CSP img-src expanded for OAuth avatars; README + CONTRIBUTING fully rewritten; DEPLOYING.md table separator fix; a11y/security/SEO/perf/privacy/auth-wiring audit — all clean; TODO [claude] tags added, "Deploy to Netlify" removed (shipped), remaining "defect" refs updated to "finding"; CHANGELOG + UPDATES entries written |
 | 2026-04-26 | — | — | — | — | Corpus edits: ATH-002 → "Focus Not Managed", ATH-006 → "Flashing Content", new ATH-076/ATH-085 "Visible Heading Not Marked as Heading"; About panel rewrite + WCAG link + example nav links + X close on desktop; i18n: steps 3/5 fixed across all locales, about.what_body_2 added + translated, en-* variants patched (12 keys each), parity gaps filled (39 placeholders); eslint react-hooks/immutability suppressed on intentional ref mutations; linters clean; full parity confirmed |
 | 2026-04-26 | — | — | — | — | Maint checklist overhauled: expanded token audit, dead CSS, SCSS eval, plugin isolation, all-docs accuracy, user-facing content, dependency cleanup, Markdown linting, locale parity (CRITICAL), TODO/MAINT sync; privacy disclosure updated (showVoting added); TODO.md [x] items reordered to section bottoms; deployment section updated for 3 targets |
 | 2026-04-25 | 17 | 0 | 3 | 4 | About panel → Drawer pattern; settings footer Reset+Save paired; section dividers; Privacy btn in About; MAINTENANCE.md parity command + stale items fixed; N/A: font self-hosting, bundle size, Umami, favicon |
@@ -63,7 +64,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 ## Performance & functionality
 
-- [ ] **CSS minification** — enable `css: { transformer: 'lightningcss' }` in `vite.config.js` build options; confirm output is minified (JS is already minified via esbuild by default)
+- [ ] **CSS minification** — confirm `css: { transformer: 'lightningcss' }` is still present in `vite.config.js`; verify the CSS output in `dist/` is minified after `npm run build` (JS is minified by default via esbuild)
 - [ ] **Bundle size** — `npm run build`; total < 200 kB gzipped; note individual chunk sizes
 - [ ] **Cold load** — incognito + Slow 3G; search is usable within 3 seconds
 - [ ] **No console errors** — production build in DevTools; zero errors, zero unexpected warnings
@@ -85,6 +86,7 @@ Three targets are configured (Netlify active, Vercel and GitHub Pages dormant). 
 - [ ] **Security headers** — confirm `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` all present in response headers on the active deployment
 - [ ] **`robots.txt` served** — verify `robots.txt` returns the correct content for the current deployment phase (dev: `Disallow: /`; Phase 3 public: `Allow: /`)
 - [ ] **Active target only** — ensure only one platform is deploying on each push; if switching targets, confirm the previous one is paused or its trigger is disabled (see `docs/DEPLOYING.md`)
+- [ ] **Electron wiring check** — if the Electron build has been activated, verify `SettingsPanel` is writing API keys to `window.electronAPI.keys` (via `safeStorage`) and not `localStorage`; if Electron is not yet active, confirm the scaffold in `electron/` is still intact (`main.js`, `preload.js`, `electron-builder.json`)
 
 ---
 

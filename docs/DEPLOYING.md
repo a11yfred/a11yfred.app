@@ -78,7 +78,7 @@ workflow in GitHub → Actions → the workflow → ⋯ menu → Disable workflo
 ## Switching between providers
 
 | Step | Netlify → Vercel | Netlify → GH Pages |
-|------|------------------|--------------------|
+| ---- | ---------------- | ------------------ |
 | Stop Netlify | Add `ignore = "exit 0"` or pause in dashboard | Same |
 | Enable target | Import repo in Vercel dashboard | Make repo public, enable Pages in GH Settings |
 | Config change | None needed | Uncomment `push` trigger in workflow |
