@@ -5,7 +5,7 @@
     "rem": "Agrega una etiqueta visible o un atributo aria-label que describa lo que hace el control. Por ejemplo, un botón de cierre dentro de un modal debe decir \"Cerrar\" o \"Cerrar diálogo\", no solo mostrar un ícono de X."
   },
   "ATH-002": {
-    "title": "El foco no se mueve al abrir contenido nuevo",
+    "title": "Foco no gestionado",
     "desc": "Cuando se abre un modal, diálogo o panel deslizable, el foco del teclado permanece donde estaba. Los usuarios de teclado y lectores de pantalla no pueden acceder fácilmente al nuevo contenido.",
     "rem": "Mueve el foco al primer elemento dentro del nuevo contenido cuando se abre. Usa tabindex=\"-1\" en un encabezado si el primer elemento enfocable aparece más adelante. Atrapa el foco dentro mientras está abierto, y regresa el foco al botón disparador cuando se cierre."
   },

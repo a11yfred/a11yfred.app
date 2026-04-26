@@ -5,7 +5,7 @@
     "rem": "Adicione um rótulo visível ou um atributo aria-label que descreva o que o controle faz. Por exemplo, um botão de fechar dentro de um modal deve dizer \"Fechar\" ou \"Fechar diálogo\", e não exibir apenas um ícone X."
   },
   "ATH-002": {
-    "title": "Foco Não é Movido Quando Novo Conteúdo é Aberto",
+    "title": "Foco Não Gerenciado",
     "desc": "Quando um modal, diálogo ou painel lateral é aberto, o foco do teclado permanece onde estava. Usuários de leitor de tela e teclado não conseguem acessar facilmente o novo conteúdo.",
     "rem": "Mova o foco para o primeiro elemento dentro do novo conteúdo quando ele for aberto. Use tabindex=\"-1\" em um título se o primeiro elemento focalizável aparecer mais tarde. Mantenha o foco aprisionado enquanto estiver aberto e retorne o foco ao botão que o acionou quando for fechado."
   },

@@ -5,7 +5,7 @@
     "rem": "Magdagdag ng nakikitang label o aria-label na katangian na naglalarawan ng ginagawa ng kontrol. Halimbawa, ang isang close button sa loob ng modal ay dapat sabihing \"Isara\" o \"Isara ang dialog\", hindi lang magpakita ng X na icon."
   },
   "ATH-002": {
-    "title": "Hindi Inililipat ang Focus Kapag Nagbubukas ng Bagong Nilalaman",
+    "title": "Hindi Pinamamahalaan ang Focus",
     "desc": "Kapag nagbukas ang isang modal, dialog, o drawer, nananatili ang keyboard focus sa dating posisyon nito. Hindi madaling maaabot ng mga gumagamit ng screen reader at keyboard ang bagong nilalaman.",
     "rem": "Ilipat ang focus sa unang elemento sa loob ng bagong nilalaman kapag ito ay nagbukas. Gamitin ang tabindex=\"-1\" sa isang heading kung ang unang focusable na elemento ay lumitaw sa ibang pagkakataon. I-trap ang focus sa loob habang ito ay bukas, at ibalik ang focus sa trigger button kapag ito ay nagsara."
   },

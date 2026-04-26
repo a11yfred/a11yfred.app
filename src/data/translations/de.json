@@ -5,7 +5,7 @@
     "rem": "Fügen Sie ein sichtbares Label oder ein aria-label-Attribut hinzu, das beschreibt, was das Steuerelement tut. Zum Beispiel sollte eine Schließen-Schaltfläche in einem Modal „Schließen“ oder „Dialog schließen“ sagen und nicht nur ein X-Symbol anzeigen."
   },
   "ATH-002": {
-    "title": "Fokus wird nicht verschoben, wenn neuer Inhalt geöffnet wird",
+    "title": "Fokus nicht verwaltet",
     "desc": "Wenn ein Modal, Dialog oder eine Schublade geöffnet wird, bleibt der Tastaturfokus an der vorherigen Stelle. Screenreader- und Tastaturnutzende können den neuen Inhalt nicht ohne Weiteres erreichen.",
     "rem": "Verschieben Sie den Fokus auf das erste Element im neuen Inhalt, wenn dieser geöffnet wird. Verwenden Sie tabindex=\"-1\" auf einer Überschrift, wenn das erste fokussierbare Element später kommt. Halten Sie den Fokus darin, während es geöffnet ist, und geben Sie den Fokus an die auslösende Schaltfläche zurück, wenn es geschlossen wird."
   },

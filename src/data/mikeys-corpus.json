@@ -1006,5 +1006,17 @@
     "keywords": ["switch control", "switch access", "scanning", "single switch", "motor disability", "assistive switch", "auto scan", "iOS switch control", "Android switch access"],
     "desc": "The interface cannot be fully operated using Switch Control (iOS) or Switch Access (Android). Switch users navigate through items sequentially — if items are unreachable, grouped incorrectly, or the scan order is wrong, they cannot complete tasks.",
     "rem": "Test with Switch Control on iOS and Switch Access on Android using auto-scan. Ensure all interactive elements appear in the scan order, scan groups are logical, and no targets are skipped. Custom components must expose correct accessibility traits to be included in the scan."
+  },
+  {
+    "id": "ATH-085",
+    "title": "Visible Heading Not Marked as Heading",
+    "sc": "1.3.1",
+    "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "related": ["2.4.6 Headings and Labels (Level AA)"],
+    "priority": "High",
+    "platform": "web",
+    "keywords": ["heading", "not marked up", "visual heading", "fake heading", "bold text", "large text", "paragraph as heading", "no h1 h2 h3", "heading role", "semantic heading", "section title", "styled text", "missing heading tag", "1.3.1"],
+    "desc": "Text that looks like a heading — because it is large, bold, or visually distinct — is not marked up with a heading element (h1–h6). Screen reader users cannot navigate by heading, cannot tell the text is a section title, and miss the structural cues that sighted users get from the visual design.",
+    "rem": "Replace the styled element with the appropriate heading element (h1–h6). The heading level should reflect the document outline — not the visual size. Use CSS to control appearance separately from semantic level. Confirm the heading fits logically into the existing heading hierarchy on the page."
   }
 ]

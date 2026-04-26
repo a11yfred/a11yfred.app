@@ -13,7 +13,7 @@
   },
   {
     "id": "ATH-002",
-    "title": "Focus Not Moved When New Content Opens",
+    "title": "Focus Not Managed",
     "sc": "2.4.3",
     "scLabel": "2.4.3 Focus Order (Level A)",
     "related": ["2.1.1 Keyboard (Level A)"],
@@ -661,7 +661,7 @@
   },
   {
     "id": "ATH-006",
-    "title": "Flashing Content May Cause Seizures",
+    "title": "Flashing Content",
     "sc": "2.3.1",
     "scLabel": "2.3.1 Three Flashes or Below Threshold (Level A)",
     "related": [],
@@ -898,5 +898,17 @@
     "keywords": ["emoji", "special characters", "unicode", "screen reader", "verbose", "overuse emoji", "emoji in text", "decorative emoji", "symbol", "ascii art", "aria-hidden emoji", "emoticon"],
     "desc": "Emoji or special characters are used in ways that disrupt screen reader output. Screen readers announce the full Unicode description of every emoji — for example, \"face with tears of joy\" — so repeated or decorative emoji create verbose, disruptive announcements. Special characters like dashes, arrows, or symbols may also be read unexpectedly.",
     "rem": "Hide purely decorative emoji from assistive technology with aria-hidden=\"true\". If an emoji carries meaning, replace it with visible text or supplement it with a visually hidden text alternative. Avoid using sequences of emoji or special characters to convey information (such as a row of stars to represent a rating). Test the full reading experience with a screen reader before publishing emoji-heavy content."
+  },
+  {
+    "id": "ATH-076",
+    "title": "Visible Heading Not Marked as Heading",
+    "sc": "1.3.1",
+    "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "related": ["2.4.6 Headings and Labels (Level AA)"],
+    "priority": "High",
+    "platform": "web",
+    "keywords": ["heading", "not marked up", "visual heading", "fake heading", "bold text", "large text", "paragraph as heading", "no h1 h2 h3", "heading role", "semantic heading", "section title", "styled text", "missing heading tag", "1.3.1"],
+    "desc": "Text that looks like a heading — because it is large, bold, or visually distinct — is not marked up with a heading element (h1–h6). Screen reader users cannot navigate by heading, cannot tell the text is a section title, and miss the structural cues that sighted users get from the visual design.",
+    "rem": "Replace the styled element with the appropriate heading element (h1–h6). The heading level should reflect the document outline — not the visual size. Use CSS to control appearance separately from semantic level. Confirm the heading fits logically into the existing heading hierarchy on the page."
   }
 ]

@@ -5,7 +5,7 @@
     "rem": "Ajoutez une étiquette visible ou un attribut aria-label qui décrit ce que fait le contrôle. Par exemple, un bouton de fermeture dans une fenêtre modale doit dire \"Fermer\" ou \"Fermer la boîte de dialogue\", pas seulement afficher une icône X."
   },
   "ATH-002": {
-    "title": "Le focus ne se déplace pas lors de l'ouverture du nouveau contenu",
+    "title": "Focus non géré",
     "desc": "Lorsqu'une fenêtre modale, une boîte de dialogue ou un panneau s'ouvre, le focus clavier reste à sa position. Les utilisateurs de clavier et de lecteurs d'écran ne peuvent pas accéder facilement au nouveau contenu.",
     "rem": "Déplacez le focus vers le premier élément dans le nouveau contenu à son ouverture. Utilisez tabindex=\"-1\" sur un titre si le premier élément focalisable apparaît plus loin. Piégez le focus à l'intérieur tant que le contenu est ouvert, et retournez le focus au bouton déclencheur à la fermeture."
   },
