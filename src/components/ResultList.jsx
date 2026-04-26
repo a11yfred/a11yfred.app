@@ -84,6 +84,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
                   aria-pressed={starred}
                   aria-label={starred ? t('results.unstar', { title: defect.title }) : t('results.star', { title: defect.title })}
+                  title={starred ? t('results.unstar', { title: defect.title }) : t('results.star', { title: defect.title })}
                   disabled={archived}
                   onClick={handleStar}
                 >
@@ -93,6 +94,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <button
                   className="result-vote-btn result-vote-btn--up"
                   aria-label={t('results.upvote', { title: defect.title })}
+                  title={t('results.upvote', { title: defect.title })}
                   disabled={archived}
                   onClick={handleUpvote}
                 >
@@ -102,6 +104,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <span
                   className="result-vote-score"
                   aria-label={t('results.score_label', { score })}
+                  title={t('results.score_label', { score })}
                 >
                   {score}
                 </span>
@@ -109,6 +112,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <button
                   className="result-vote-btn result-vote-btn--down"
                   aria-label={t('results.downvote', { title: defect.title })}
+                  title={t('results.downvote', { title: defect.title })}
                   disabled={archived}
                   onClick={handleDownvote}
                 >
@@ -119,6 +123,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   className={`result-vote-btn result-vote-btn--archive${archived ? ' result-vote-btn--active' : ''}`}
                   aria-pressed={archived}
                   aria-label={archived ? t('results.unarchive', { title: defect.title }) : t('results.archive', { title: defect.title })}
+                  title={archived ? t('results.unarchive', { title: defect.title }) : t('results.archive', { title: defect.title })}
                   onClick={handleArchive}
                 >
                   {archived
