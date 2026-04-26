@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useFocusTrap } from './useFocusTrap.js'
+import { returnFocus } from './returnFocus.js'
 
 /**
  * Drawer panel that slides in from the left on mobile.
@@ -34,7 +35,7 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
       triggerRef.current = document.activeElement
     } else {
       const target = focusOnClose?.current ?? triggerRef.current
-      target?.focus()
+      returnFocus(target)
     }
   }, [open, focusOnClose])
 

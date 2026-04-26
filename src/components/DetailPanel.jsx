@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { Sparkles, RotateCcw, Clipboard, Check } from 'lucide-react'
-import { getAiRefinement } from '../services/aiService.js'
+import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { useFocusOnMount, useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -36,15 +36,15 @@ function isSignificantlyChanged(original, current, threshold = 0.7) {
   return editDistance(original, current) / original.length > threshold
 }
 
-export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDefects = [], onSelect }) {
+export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect }) {
   const titleRef = useFocusOnMount()
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
   const t = useT()
 
   const [location, setLocation] = useState('')
-  const [descText, setDescText] = useState(defect.desc)
-  const [remText, setRemText] = useState(defect.rem)
+  const [descText, setDescText] = useState(finding.desc)
+  const [remText, setRemText] = useState(finding.rem)
   const [reviseNote, setReviseNote] = useState('')
   const [noteSaved, setNoteSaved] = useState(false)
   const [copiedDesc, setCopiedDesc] = useState(false)
@@ -55,7 +55,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
   const [animating, setAnimating] = useState(false)
   const [confirmReset, setConfirmReset] = useState(null)
   const [nothingToCopy, setNothingToCopy] = useState(false)
-  const [revisionFailed, setRevisionFailed] = useState(false)
+  const [revisionFailed, setRevisionFailed] = useState(null)
   // Field-specific undo stacks — each entry is the text before that AI revision
   const [descHistory, setDescHistory] = useState([])
   const [remHistory, setRemHistory] = useState([])
@@ -71,7 +71,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
   }, [focusTrigger]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const displayDesc = location.trim()
-    ? `${location.trim().replace(/:?\s*$/, ':')} ${defect.desc}`
+    ? `${location.trim().replace(/:?\s*$/, ':')} ${finding.desc}`
     : descText
 
   const copy = (text, setCopied, label) => {
@@ -152,16 +152,22 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
     if (!reviseNote.trim()) return
 
     if (aiEnabled && canRevise) {
-      if (reviseNote.trim() === 'debug wrong') {
-        setRevisionFailed(true)
-        return
-      }
+      const note = reviseNote.trim()
+      const provider = localStorage.getItem('ai_provider') || 'anthropic'
+      const PROVIDER_LABELS = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }
+      const providerLabel = PROVIDER_LABELS[provider] || provider
+
+      if (note === 'debug wrong')   { setRevisionFailed(t('detail.revise_error_body')); return }
+      if (note === 'debug 401')     { setRevisionFailed(t('detail.revise_error_invalid_key', { provider: providerLabel })); return }
+      if (note === 'debug 429')     { setRevisionFailed(t('detail.revise_error_rate_limit', { provider: providerLabel })); return }
+      if (note === 'debug 503')     { setRevisionFailed(t('detail.revise_error_service_error', { provider: providerLabel, status: 503 })); return }
+      if (note === 'debug network') { setRevisionFailed(t('detail.revise_error_network_error')); return }
 
       setRefining(true)
       announce(t('detail.rewriting_text'), { priority: 'assertive' })
 
       try {
-        const result = await getAiRefinement({ defect, descText, remText, note: reviseNote })
+        const result = await getAiRefinement({ finding, descText, remText, note: reviseNote })
         const newDesc = reviseDesc && result.desc ? result.desc : null
         const newRem = reviseRem && result.rem ? result.rem : null
 
@@ -175,7 +181,12 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
         console.error('AI refinement failed:', e)
         setRefining(false)
         setAnimating(false)
-        setRevisionFailed(true)
+        if (e instanceof AiApiError) {
+          const label = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }[e.provider] || e.provider || 'AI'
+          setRevisionFailed(t(`detail.revise_error_${e.type}`, { provider: label, status: e.status }))
+        } else {
+          setRevisionFailed(t('detail.revise_error_body'))
+        }
       }
     } else {
       setNoteSaved(true)
@@ -186,7 +197,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
   }
 
   const canRevise = reviseDesc || reviseRem
-  const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
+  const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
   const remLabel = t('detail.rem_label')
   const refineLabel = t(aiEnabled ? 'detail.refine_label_ai' : 'detail.refine_label_no_ai')
@@ -196,7 +207,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
       <div className="detail-header">
         <div className="detail-title-row">
           <h2 ref={titleRef} tabIndex={-1} className="detail-title">
-            {defect.title}
+            {finding.title}
           </h2>
           <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
             {t(p.key)}
@@ -206,12 +217,12 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
         <ul className="detail-sc-list">
           <li className="detail-sc-item">
             <span className="detail-sc-label">{t('detail.fails')}</span>{' '}
-            <ScLink label={defect.scLabel} />
+            <ScLink label={finding.scLabel} />
           </li>
-          {defect.related.length > 0 && (
+          {finding.related.length > 0 && (
             <li className="detail-sc-item">
               <span className="detail-sc-label">{t('detail.related')}</span>{' '}
-              {defect.related.map((r, i) => (
+              {finding.related.map((r, i) => (
                 <span key={r}>
                   {i > 0 && ', '}
                   <ScLink label={r} />
@@ -238,14 +249,14 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
       </div>
 
       <Field
-        id="defect-desc"
+        id="finding-desc"
         label={descLabel}
         value={location.trim() ? displayDesc : descText}
         onChange={setDescText}
         copied={copiedDesc}
         onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel)}
         reset={resetDesc}
-        onReset={() => handleReset(defect.desc, descText, setDescText, setResetDesc, descLabel)}
+        onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel)}
         undoable={descHistory.length > 0}
         onUndo={handleUndoDesc}
         selected={reviseDesc}
@@ -258,14 +269,14 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
       />
 
       <Field
-        id="defect-rem"
+        id="finding-rem"
         label={remLabel}
         value={remText}
         onChange={setRemText}
         copied={copiedRem}
         onCopy={() => copy(remText, setCopiedRem, remLabel)}
         reset={resetRem}
-        onReset={() => handleReset(defect.rem, remText, setRemText, setResetRem, remLabel)}
+        onReset={() => handleReset(finding.rem, remText, setRemText, setResetRem, remLabel)}
         undoable={remHistory.length > 0}
         onUndo={handleUndoRem}
         selected={reviseRem}
@@ -328,7 +339,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
         </div>
       </div>
 
-      <RelatedIssues defect={defect} allDefects={allDefects} onSelect={onSelect} />
+      <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelect} />
 
       <Modal
         open={nothingToCopy}
@@ -339,12 +350,12 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
       </Modal>
 
       <Modal
-        open={revisionFailed}
-        onClose={() => setRevisionFailed(false)}
+        open={!!revisionFailed}
+        onClose={() => setRevisionFailed(null)}
         heading={t('detail.revise_error_heading')}
         returnFocusRef={refineButtonRef}
       >
-        <p>{t('detail.revise_error_body')}</p>
+        <p>{revisionFailed}</p>
       </Modal>
 
       <Modal
@@ -370,15 +381,15 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
   )
 }
 
-function RelatedIssues({ defect, allDefects, onSelect }) {
+function RelatedIssues({ finding, allFindings, onSelect }) {
   const t = useT()
 
   const related = useMemo(() => {
-    if (!allDefects?.length || !defect.related?.length) return []
-    return allDefects
-      .filter(d => d.id !== defect.id && defect.related.includes(d.scLabel))
+    if (!allFindings?.length || !finding.related?.length) return []
+    return allFindings
+      .filter(d => d.id !== finding.id && finding.related.includes(d.scLabel))
       .slice(0, 5)
-  }, [allDefects, defect])
+  }, [allFindings, finding])
 
   if (!related.length || !onSelect) return null
 

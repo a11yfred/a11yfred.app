@@ -15,14 +15,14 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
 
   return (
     <search aria-label={t('search.aria_label')} className="search-bar">
-      <label htmlFor="defect-search" className="search-label">
+      <label htmlFor="finding-search" className="search-label">
         {t('search.label')}
       </label>
       <div className="search-row">
         <div className="search-input-wrap">
           <input
             ref={inputRef}
-            id="defect-search"
+            id="finding-search"
             type="text"
             value={query}
             onChange={e => onChange(e.target.value)}

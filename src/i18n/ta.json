@@ -135,6 +135,7 @@
   "about.step_1_label": "தேடு",
   "about.step_1_body": "நீங்கள் கவனித்ததை தட்டச்சு செய்யுங்கள் — ஒரு கூறு பெயர், உறுப்பு வகை, அல்லது எளிய மொழி விளக்கம்.",
   "about.step_2_label": "Prioritize (optional)",
+  "about.step_optional": "(optional)",
   "about.step_2_body": "Use the Priority Up/Priority Down arrows on each result to tune how results are ranked. Star to show first. Archive to hide it.",
   "about.step_3_label": "தனிப்பயனாக்கு",
   "about.step_3_body": "ஒரு இட முன்னொட்டு சேர்க்கவும் (எ.கா. \"பொது:\") மற்றும் சொல்லாட்சியை சரிசெய்ய AI மேம்படுத்தல் புலத்தை பயன்படுத்தவும்.",
@@ -219,5 +220,11 @@
   "error.body": "The defect library could not be loaded. Check your connection and",
   "error.retry": "try again",
   "settings.no_changes_heading": "No Changes",
-  "settings.no_changes_body": "Nothing to save."
+  "settings.no_changes_body": "Nothing to save.",
+  "detail.revise_error_invalid_key": "Invalid or expired API key ({provider}). Double-check your key in Settings.",
+  "detail.revise_error_rate_limit": "Rate limit reached ({provider}). Wait a moment and try again.",
+  "detail.revise_error_service_error": "{provider} service error ({status}). Try again in a few seconds.",
+  "detail.revise_error_network_error": "No internet connection. Check your connection and try again.",
+  "detail.revise_error_api_error": "Unexpected error from {provider} (HTTP {status}).",
+  "settings.reset_all_announce": "All settings reset"
 }

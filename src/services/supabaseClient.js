@@ -21,8 +21,8 @@
  *
  * Database schema:
  *
- *   -- User-owned custom defect entries (same shape as corpus.json)
- *   create table user_defects (
+ *   -- User-owned custom finding entries (same shape as corpus.json)
+ *   create table user_findings (
  *     id          text primary key,              -- e.g. "USR-001", client-assigned
  *     user_id     uuid references auth.users not null,
  *     title       text not null,
@@ -37,9 +37,9 @@
  *     created_at  timestamptz default now(),
  *     updated_at  timestamptz default now()
  *   );
- *   alter table user_defects enable row level security;
- *   create policy "Users can manage their own defects"
- *     on user_defects for all using (auth.uid() = user_id);
+ *   alter table user_findings enable row level security;
+ *   create policy "Users can manage their own findings"
+ *     on user_findings for all using (auth.uid() = user_id);
  *
  *   -- Synced app settings (avoids storing sensitive keys — API keys stay in localStorage only)
  *   create table user_settings (

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import Fuse from 'fuse.js'
-import { getDefects } from '../services/dataService.js'
+import { getFindings } from '../services/dataService.js'
 
 const FUSE_OPTIONS = {
   keys: [
@@ -20,8 +20,8 @@ const LOAD_TIMEOUT_MS = 8000
 
 const DEFAULT_RATING = { score: 0, starred: false, archived: false }
 
-export default function useDefectSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}) {
-  const [allDefects, setAllDefects] = useState([])
+export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}) {
+  const [allFindings, setAllFindings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
   const [dataError, setDataError] = useState(false)
   const [retryCount, setRetryCount] = useState(0)
@@ -53,11 +53,11 @@ export default function useDefectSearch(query, platform, locale = 'en', searchKe
       if (!cancelled) { setDataError(true); setDataLoading(false) }
     }, LOAD_TIMEOUT_MS)
 
-    getDefects(locale)
+    getFindings(locale)
       .then(data => {
         if (cancelled) return
         clearTimeout(timeout)
-        setAllDefects(data)
+        setAllFindings(data)
         setDataLoading(false)
       })
       .catch(() => {
@@ -72,15 +72,15 @@ export default function useDefectSearch(query, platform, locale = 'en', searchKe
 
   const platformFiltered = useMemo(() => {
     if (!platform || platform === 'web') {
-      return allDefects.filter(d => !d.nativeOnly)
+      return allFindings.filter(d => !d.nativeOnly)
     }
     if (platform === 'native') {
-      return allDefects.filter(d => !d.webOnly)
+      return allFindings.filter(d => !d.webOnly)
     }
-    return allDefects
-  }, [allDefects, platform])
+    return allFindings
+  }, [allFindings, platform])
 
-  const sortedDefects = useMemo(() =>
+  const sortedFindings = useMemo(() =>
     [...platformFiltered].sort((a, b) => {
       const pa = PRIORITY_ORDER[a.priority] ?? 99
       const pb = PRIORITY_ORDER[b.priority] ?? 99
@@ -110,8 +110,8 @@ export default function useDefectSearch(query, platform, locale = 'en', searchKe
   }, [fuse, query, searchKey, ratings]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (query === 'debug skeleton') {
-    return { results: [], allDefects, sortedDefects, dataLoading: debugLoading, dataError: debugError, retryData }
+    return { results: [], allFindings, sortedFindings, dataLoading: debugLoading, dataError: debugError, retryData }
   }
 
-  return { results, allDefects, sortedDefects, dataLoading, dataError, retryData }
+  return { results, allFindings, sortedFindings, dataLoading, dataError, retryData }
 }

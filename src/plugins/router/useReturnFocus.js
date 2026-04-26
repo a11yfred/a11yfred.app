@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { returnFocus } from './returnFocus.js'
 
 /**
  * Saves the currently focused element when the component mounts and
@@ -20,7 +21,7 @@ export function useReturnFocus() {
   useEffect(() => {
     savedRef.current = document.activeElement
     return () => {
-      savedRef.current?.focus()
+      returnFocus(savedRef.current)
     }
   }, [])
 }

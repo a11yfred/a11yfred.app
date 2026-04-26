@@ -135,6 +135,7 @@
   "about.step_1_label": "Sök",
   "about.step_1_body": "Skriv vad du observerade — ett komponentnamn, elementtyp eller vanlig beskrivning.",
   "about.step_2_label": "Prioritize (optional)",
+  "about.step_optional": "(optional)",
   "about.step_2_body": "Use the Priority Up/Priority Down arrows on each result to tune how results are ranked. Star to show first. Archive to hide it.",
   "about.step_3_label": "Anpassa",
   "about.step_3_body": "Lägg till ett platsprefix (t.ex. \"Globalt:\") och använd AI-förfiningsfältet för att justera formuleringen.",
@@ -219,5 +220,11 @@
   "error.body": "The defect library could not be loaded. Check your connection and",
   "error.retry": "try again",
   "settings.no_changes_heading": "No Changes",
-  "settings.no_changes_body": "Nothing to save."
+  "settings.no_changes_body": "Nothing to save.",
+  "detail.revise_error_invalid_key": "Invalid or expired API key ({provider}). Double-check your key in Settings.",
+  "detail.revise_error_rate_limit": "Rate limit reached ({provider}). Wait a moment and try again.",
+  "detail.revise_error_service_error": "{provider} service error ({status}). Try again in a few seconds.",
+  "detail.revise_error_network_error": "No internet connection. Check your connection and try again.",
+  "detail.revise_error_api_error": "Unexpected error from {provider} (HTTP {status}).",
+  "settings.reset_all_announce": "All settings reset"
 }

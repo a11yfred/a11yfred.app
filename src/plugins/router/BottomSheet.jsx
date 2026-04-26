@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 import { useFocusTrap } from './useFocusTrap.js'
 import { useAriaHide } from './useAriaHide.js'
+import { returnFocus } from './returnFocus.js'
 
 /**
  * Bottom sheet that slides up from the bottom of the viewport.
@@ -35,7 +36,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
     if (open) {
       triggerRef.current = document.activeElement
     } else {
-      triggerRef.current?.focus()
+      returnFocus(triggerRef.current)
     }
   }, [open])
 

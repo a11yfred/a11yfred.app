@@ -18,6 +18,7 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 | `Modal` | component | Centered dialog; stacks above Drawer/BottomSheet; Escape intercepts before underlying panels |
 | `useFocusOnMount` | hook | Move focus to an element when it mounts |
 | `useReturnFocus` | hook | Restore focus to the triggering control on unmount |
+| `returnFocus` | fn | Call `el.focus()` with a guaranteed-visible focus ring |
 | `useFocusTrap` | hook | Restrict Tab focus to a container |
 | `useAriaHide` | hook | Hide all other body children from the AT tree while the overlay is open |
 | `useDir` | hook | Returns the current `document.documentElement.dir` value, updates reactively on change |
@@ -118,13 +119,13 @@ reveals a detail panel below the list, or a bottom sheet opens with detail conte
 This prevents keyboard and screen reader users from having to hunt for the new content.
 
 ```jsx
-function DetailPanel({ defect }) {
+function DetailPanel({ finding }) {
   const titleRef = useFocusOnMount()
 
   return (
     <div>
       <h2 ref={titleRef} tabIndex={-1} className="your-outline-none-class">
-        {defect.title}
+        {finding.title}
       </h2>
       {/* ... */}
     </div>
@@ -177,6 +178,14 @@ function Modal({ onClose, children }) {
 **Do:** Return focus to whatever control the user activated to open the panel. Use
 `useReturnFocus` inside the modal component; it saves `document.activeElement` on mount
 and restores it on unmount automatically.
+
+**Visible focus ring on return:** Plain `.focus()` only triggers `:focus-visible` when the
+browser's keyboard-modality flag is set. When a panel was opened with a mouse click,
+programmatic focus lands invisibly — no ring, no cue of where you are. `useReturnFocus`,
+`Drawer`, `BottomSheet`, and `Modal` all call `returnFocus()` internally, which sets
+`data-focus-return` before calling `.focus()`. The CSS rule `[data-focus-return]:focus`
+ensures the ring always appears on return. If you call `returnFocus()` directly, add that
+rule to your stylesheet (see `index.css`).
 
 ```jsx
 function Modal({ onClose, children }) {
@@ -601,7 +610,7 @@ function App() {
 
 **`keepMounted` use case — settings ↔ detail panel navigation:**
 
-When the user opens Settings while a defect detail sheet is open, you want to hide the
+When the user opens Settings while a finding detail sheet is open, you want to hide the
 sheet visually but keep the user's edits alive. Pass `keepMounted={settingsOpen && !!selected}`
 so children stay mounted while settings is covering the sheet:
 
@@ -610,9 +619,9 @@ so children stay mounted while settings is covering the sheet:
   open={!!selected && !settingsOpen}
   onClose={() => setSelected(null)}
   keepMounted={settingsOpen && !!selected}
-  label="Defect detail"
+  label="Finding detail"
 >
-  {selected && <DetailPanel defect={selected} />}
+  {selected && <DetailPanel finding={selected} />}
 </BottomSheet>
 ```
 

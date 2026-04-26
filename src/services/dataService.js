@@ -6,8 +6,8 @@
  * merged record so cross-language search works (e.g. typing "button" in the
  * Japanese locale still finds ATH-001).
  *
- * Phase 2 (Supabase): replace the body of getDefects() with a Supabase query.
- * Add getUserDefects() to load the user's custom entries from Supabase.
+ * Phase 2 (Supabase): replace the body of getFindings() with a Supabase query.
+ * Add getUserFindings() to load the user's custom entries from Supabase.
  * No other file needs to change.
  */
 
@@ -38,7 +38,7 @@ async function loadOverlay(locale) {
   }
 }
 
-export async function getDefects(locale = 'en') {
+export async function getFindings(locale = 'en') {
   // All English variants use the corpus directly — no overlay needed
   if (!locale || locale.startsWith('en')) return corpusData
 
@@ -70,55 +70,55 @@ export async function getDefects(locale = 'en') {
 }
 
 /**
- * Phase 2 stub — returns the signed-in user's custom defect entries.
+ * Phase 2 stub — returns the signed-in user's custom finding entries.
  *
  * Custom entries use the same schema as corpus.json but with IDs like "USR-001".
- * They are stored in the Supabase `user_defects` table with RLS so only the
+ * They are stored in the Supabase `user_findings` table with RLS so only the
  * owner can read/write them.
  *
  * To activate:
  *   import { supabase } from './supabaseClient'
  *   const { data, error } = await supabase
- *     .from('user_defects')
+ *     .from('user_findings')
  *     .select('*')
  *     .order('created_at', { ascending: false })
  *   if (error) throw error
  *   return data
  *
- * Usage — combine with getDefects() for a merged search set:
- *   const [public, custom] = await Promise.all([getDefects(locale), getUserDefects(userId)])
+ * Usage — combine with getFindings() for a merged search set:
+ *   const [public, custom] = await Promise.all([getFindings(locale), getUserFindings(userId)])
  *   const all = [...public, ...custom]
  */
-export async function getUserDefects(_userId) {
+export async function getUserFindings(_userId) {
   return []
 }
 
 /**
- * Phase 2 stub — saves or updates a user's custom defect entry.
+ * Phase 2 stub — saves or updates a user's custom finding entry.
  *
  * To activate:
  *   const { error } = await supabase
- *     .from('user_defects')
- *     .upsert({ ...defect, user_id: userId, updated_at: new Date().toISOString() })
+ *     .from('user_findings')
+ *     .upsert({ ...finding, user_id: userId, updated_at: new Date().toISOString() })
  *   if (error) throw error
  */
-export async function saveUserDefect(_userId, _defect) {
-  throw new Error('User defects not yet implemented — see dataService.js Phase 2 comments')
+export async function saveUserFinding(_userId, _finding) {
+  throw new Error('User findings not yet implemented — see dataService.js Phase 2 comments')
 }
 
 /**
- * Phase 2 stub — deletes a user's custom defect entry.
+ * Phase 2 stub — deletes a user's custom finding entry.
  *
  * To activate:
  *   const { error } = await supabase
- *     .from('user_defects')
+ *     .from('user_findings')
  *     .delete()
- *     .eq('id', defectId)
+ *     .eq('id', findingId)
  *     .eq('user_id', userId)
  *   if (error) throw error
  */
-export async function deleteUserDefect(_userId, _defectId) {
-  throw new Error('User defects not yet implemented — see dataService.js Phase 2 comments')
+export async function deleteUserFinding(_userId, _findingId) {
+  throw new Error('User findings not yet implemented — see dataService.js Phase 2 comments')
 }
 
 /**

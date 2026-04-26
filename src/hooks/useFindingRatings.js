@@ -7,7 +7,7 @@ function loadRatings() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') } catch { return {} }
 }
 
-export default function useDefectRatings() {
+export default function useFindingRatings() {
   const [ratings, setRatings] = useState(loadRatings)
 
   function update(id, fn) {

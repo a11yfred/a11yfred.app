@@ -32,53 +32,53 @@ export default function ResultList({ results, selected, onSelect, query, ratings
       </div>
 
       <ul className="result-list" role="listbox" aria-label={t('results.aria_label')}>
-        {results.map(defect => {
-          const isSelected = selected?.id === defect.id
-          const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
-          const rating = ratings[defect.id] || DEFAULT_RATING
+        {results.map(finding => {
+          const isSelected = selected?.id === finding.id
+          const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
+          const rating = ratings[finding.id] || DEFAULT_RATING
           const { score, starred, archived } = rating
 
-          const truncDesc = defect.desc.length > 180
-            ? defect.desc.slice(0, 180).trimEnd() + '…'
-            : defect.desc
+          const truncDesc = finding.desc.length > 180
+            ? finding.desc.slice(0, 180).trimEnd() + '…'
+            : finding.desc
 
           const cardLabel = archived
-            ? t('results.archived_label', { title: defect.title })
-            : `${defect.title}, ${t(p.key)}, ${defect.scLabel}, ${truncDesc}`
+            ? t('results.archived_label', { title: finding.title })
+            : `${finding.title}, ${t(p.key)}, ${finding.scLabel}, ${truncDesc}`
 
           function handleUpvote(e) {
             e.stopPropagation()
-            onUpvote?.(defect.id)
-            announce(t('announce.upvoted', { title: defect.title, score: score + 1 }))
+            onUpvote?.(finding.id)
+            announce(t('announce.upvoted', { title: finding.title, score: score + 1 }))
           }
 
           function handleDownvote(e) {
             e.stopPropagation()
-            onDownvote?.(defect.id)
-            announce(t('announce.downvoted', { title: defect.title, score: score - 1 }))
+            onDownvote?.(finding.id)
+            announce(t('announce.downvoted', { title: finding.title, score: score - 1 }))
           }
 
           function handleStar(e) {
             e.stopPropagation()
-            onStar?.(defect.id)
+            onStar?.(finding.id)
             announce(starred
-              ? t('announce.unstarred', { title: defect.title })
-              : t('announce.starred', { title: defect.title })
+              ? t('announce.unstarred', { title: finding.title })
+              : t('announce.starred', { title: finding.title })
             )
           }
 
           function handleArchive(e) {
             e.stopPropagation()
-            onArchive?.(defect.id)
+            onArchive?.(finding.id)
             announce(archived
-              ? t('announce.unarchived', { title: defect.title })
-              : t('announce.archived', { title: defect.title })
+              ? t('announce.unarchived', { title: finding.title })
+              : t('announce.archived', { title: finding.title })
             )
           }
 
           return (
             <li
-              key={defect.id}
+              key={finding.id}
               role="presentation"
               className={`result-row${archived ? ' result-row--archived' : ''}`}
             >
@@ -87,8 +87,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <button
                   className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
                   aria-pressed={starred}
-                  aria-label={starred ? t('results.unstar', { title: defect.title }) : t('results.star', { title: defect.title })}
-                  title={starred ? t('results.unstar', { title: defect.title }) : t('results.star', { title: defect.title })}
+                  aria-label={starred ? t('results.unstar', { title: finding.title }) : t('results.star', { title: finding.title })}
+                  title={starred ? t('results.unstar', { title: finding.title }) : t('results.star', { title: finding.title })}
                   disabled={archived}
                   onClick={handleStar}
                 >
@@ -97,8 +97,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
                 <button
                   className="result-vote-btn result-vote-btn--up"
-                  aria-label={t('results.upvote', { title: defect.title })}
-                  title={t('results.upvote', { title: defect.title })}
+                  aria-label={t('results.upvote', { title: finding.title })}
+                  title={t('results.upvote', { title: finding.title })}
                   disabled={archived}
                   onClick={handleUpvote}
                 >
@@ -115,8 +115,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
                 <button
                   className="result-vote-btn result-vote-btn--down"
-                  aria-label={t('results.downvote', { title: defect.title })}
-                  title={t('results.downvote', { title: defect.title })}
+                  aria-label={t('results.downvote', { title: finding.title })}
+                  title={t('results.downvote', { title: finding.title })}
                   disabled={archived}
                   onClick={handleDownvote}
                 >
@@ -126,8 +126,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <button
                   className={`result-vote-btn result-vote-btn--archive${archived ? ' result-vote-btn--active' : ''}`}
                   aria-pressed={archived}
-                  aria-label={archived ? t('results.unarchive', { title: defect.title }) : t('results.archive', { title: defect.title })}
-                  title={archived ? t('results.unarchive', { title: defect.title }) : t('results.archive', { title: defect.title })}
+                  aria-label={archived ? t('results.unarchive', { title: finding.title }) : t('results.archive', { title: finding.title })}
+                  title={archived ? t('results.unarchive', { title: finding.title }) : t('results.archive', { title: finding.title })}
                   onClick={handleArchive}
                 >
                   {archived
@@ -143,23 +143,23 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 aria-selected={isSelected}
                 aria-label={cardLabel}
                 tabIndex={archived ? -1 : 0}
-                onClick={() => { if (!archived) onSelect(defect) }}
-                onKeyDown={e => { if ((e.key === 'Enter' || e.key === ' ') && !archived) onSelect(defect) }}
+                onClick={() => { if (!archived) onSelect(finding) }}
+                onKeyDown={e => { if ((e.key === 'Enter' || e.key === ' ') && !archived) onSelect(finding) }}
                 className={`result-item${isSelected ? ' result-item--selected' : ''}`}
               >
                 <div className="result-item__header">
                   <span className="result-item__title">
                     {isSelected && <span aria-hidden="true" className="result-item__dot" />}
-                    {defect.title}
+                    {finding.title}
                   </span>
                   <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
                     {t(p.key)}
                   </span>
                 </div>
 
-                <div className="result-item__sc">{defect.scLabel}</div>
+                <div className="result-item__sc">{finding.scLabel}</div>
 
-                <div className="result-item__desc">{defect.desc}</div>
+                <div className="result-item__desc">{finding.desc}</div>
               </div>
             </li>
           )

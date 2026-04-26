@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useFocusTrap } from './useFocusTrap.js'
 import { useAriaHide } from './useAriaHide.js'
+import { returnFocus } from './returnFocus.js'
 
 /**
  * Centered dialog modal.
@@ -44,7 +45,7 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
       })
     } else {
       const target = returnFocusRef?.current ?? autoTriggerRef.current
-      target?.focus()
+      returnFocus(target)
     }
   }, [open, returnFocusRef])
 

@@ -6,6 +6,19 @@
  * Calls go directly from the browser to the provider API.
  */
 
+export class AiApiError extends Error {
+  /**
+   * @param {'invalid_key'|'rate_limit'|'service_error'|'network_error'|'api_error'} type
+   * @param {{ status?: number, provider?: string }} opts
+   */
+  constructor(type, { status, provider } = {}) {
+    super(`AiApiError: ${type}`)
+    this.type = type
+    this.status = status
+    this.provider = provider
+  }
+}
+
 const PROVIDER_CONFIGS = {
   anthropic: {
     url: 'https://api.anthropic.com/v1/messages',
@@ -79,13 +92,13 @@ const PROVIDER_CONFIGS = {
   },
 }
 
-function buildPrompt({ defect, descText, remText, note }) {
-  return `You are helping an accessibility auditor write defect descriptions in their established voice and methodology.
+function buildPrompt({ finding, descText, remText, note }) {
+  return `You are helping an accessibility auditor write finding descriptions in their established voice and methodology.
 
-The auditor has this existing defect entry:
+The auditor has this existing finding:
 
-Title: ${defect.title}
-WCAG SC: ${defect.scLabel}
+Title: ${finding.title}
+WCAG SC: ${finding.scLabel}
 Current description: ${descText}
 Current remediation: ${remText}
 
@@ -98,7 +111,7 @@ Description: [rewritten description]
 Remediation: [rewritten remediation]`
 }
 
-export async function getAiRefinement({ defect, descText, remText, note }) {
+export async function getAiRefinement({ finding, descText, remText, note }) {
   const provider = localStorage.getItem('ai_provider') || 'anthropic'
   const key = localStorage.getItem(`apikey_${provider}`)
 
@@ -107,7 +120,7 @@ export async function getAiRefinement({ defect, descText, remText, note }) {
   }
 
   const config = PROVIDER_CONFIGS[provider]
-  const prompt = buildPrompt({ defect, descText, remText, note })
+  const prompt = buildPrompt({ finding, descText, remText, note })
 
   // Build URL (some providers need the key in the URL)
   let url
@@ -123,15 +136,24 @@ export async function getAiRefinement({ defect, descText, remText, note }) {
     url = config.url
   }
 
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: config.buildHeaders(key),
-    body: config.buildBody(prompt),
-  })
+  let res
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: config.buildHeaders(key),
+      body: config.buildBody(prompt),
+    })
+  } catch {
+    throw new AiApiError('network_error', { provider })
+  }
 
   if (!res.ok) {
-    const err = await res.text()
-    throw new Error(`API error (${provider}): ${res.status} — ${err}`)
+    const type =
+      res.status === 401 || res.status === 403 ? 'invalid_key'
+      : res.status === 429 ? 'rate_limit'
+      : res.status >= 500 ? 'service_error'
+      : 'api_error'
+    throw new AiApiError(type, { status: res.status, provider })
   }
 
   const text = await config.parseResponse(res)

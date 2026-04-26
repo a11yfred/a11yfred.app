@@ -62,6 +62,16 @@ button {
   border-radius: var(--radius-sm);
 }
 
+/* Programmatic focus-return — always show the ring when a dialog/sheet/panel
+   closes and focus lands back on the trigger, regardless of input modality.
+   The returnFocus() utility in the router plugin sets this attribute before
+   calling .focus() and clears it on the next blur or pointerdown. */
+[data-focus-return]:focus {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
 /* Toggle: show focus ring on the visual track when the hidden checkbox is focused */
 input[role="switch"] {
   outline: none;
@@ -1389,8 +1399,7 @@ input.settings-key-input {
 }
 
 .settings-field-required {
-  color: var(--text-muted);
-  font-size: var(--fs-small);
+  color: var(--text-faint);
 }
 
 .settings-key-group:has(.settings-field-error) {
@@ -2102,6 +2111,11 @@ input.settings-key-input {
   font-size: var(--fs-body);
   font-weight: 600;
   color: var(--text);
+}
+
+.about-step-optional {
+  color: var(--text-faint);
+  font-weight: 400;
 }
 
 .about-step-body {

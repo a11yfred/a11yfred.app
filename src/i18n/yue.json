@@ -135,6 +135,7 @@
   "about.step_1_label": "搜尋",
   "about.step_1_body": "輸入你觀察到嘅 — 組件名稱、元素類型，或者平易近人嘅描述。",
   "about.step_2_label": "Prioritize (optional)",
+  "about.step_optional": "(optional)",
   "about.step_2_body": "Use the Priority Up/Priority Down arrows on each result to tune how results are ranked. Star to show first. Archive to hide it.",
   "about.step_3_label": "自訂",
   "about.step_3_body": "加一個位置前綴（例如「全域：」），然後用AI優化欄位調整措辭。",
@@ -219,5 +220,11 @@
   "error.body": "The defect library could not be loaded. Check your connection and",
   "error.retry": "try again",
   "settings.no_changes_heading": "No Changes",
-  "settings.no_changes_body": "Nothing to save."
+  "settings.no_changes_body": "Nothing to save.",
+  "detail.revise_error_invalid_key": "Invalid or expired API key ({provider}). Double-check your key in Settings.",
+  "detail.revise_error_rate_limit": "Rate limit reached ({provider}). Wait a moment and try again.",
+  "detail.revise_error_service_error": "{provider} service error ({status}). Try again in a few seconds.",
+  "detail.revise_error_network_error": "No internet connection. Check your connection and try again.",
+  "detail.revise_error_api_error": "Unexpected error from {provider} (HTTP {status}).",
+  "settings.reset_all_announce": "All settings reset"
 }
