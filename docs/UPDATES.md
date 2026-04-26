@@ -4,6 +4,27 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 26, 2026 — New finding, corpus renames, About panel polish, and i18n fixes
+
+### New finding: Visible Heading Not Marked as Heading
+
+Added ATH-076 to the corpus. This covers the common pattern of text that looks like a heading (large, bold, visually distinct) but is not marked up with an `h1`–`h6` element. Screen reader users miss it entirely when navigating by heading.
+
+### Two corpus entries renamed
+
+- "Focus Not Moved When New Content Opens" is now **Focus Not Managed** — shorter and more accurate to the broader scope of focus management failures.
+- "Flashing Content May Cause Seizures" is now **Flashing Content** — the medical implication is already covered in the description; the title doesn't need to repeat it.
+
+### About panel improvements
+
+The "What Is This?" section has been rewritten with clearer, more direct language. WCAG 2.2 is now a clickable link. The example findings listed in the About panel are now actual links — clicking them opens the finding directly. On desktop, the gear icon in the header switches to a close button when About is open, consistent with how Settings works.
+
+### i18n fixes
+
+Corrected a bug where all 40+ non-English locale files had the wrong text for steps 3 ("Pick") and 5 ("Copy") in the How to Use section — they were showing the "Customize" and "Vote" content instead. All locale files now have full key coverage with no missing entries.
+
+---
+
 ## April 26, 2026 — Deep linking, UI polish, and dev tooling
 
 ### Shareable links for defects and panels

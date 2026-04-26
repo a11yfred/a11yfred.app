@@ -4,6 +4,46 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-26 — Corpus edits, About panel polish, i18n fixes, UI polish
+
+### Corpus
+
+- Renamed ATH-002: "Focus Not Moved When New Content Opens" → "Focus Not Managed"
+- Renamed ATH-006: "Flashing Content May Cause Seizures" → "Flashing Content"
+- Added ATH-076 (public corpus) and ATH-085 (private corpus): "Visible Heading Not Marked as Heading" — SC 1.3.1, High priority, web platform
+- Updated translated title for ATH-002 in all 8 corpus translation overlay files (de, es, fr, ja, ko, pt-BR, tl, zh)
+
+### About panel
+
+- "What Is This?" section rewritten with two-paragraph text; second paragraph starts with "Consistency is key…"
+- WCAG 2.2 text hyperlinked to <https://www.w3.org/TR/WCAG22/> via JSX split-on-placeholder pattern (`{wcag}` in i18n string)
+- Example items now navigate to their corpus finding pages on click (ATH-001, ATH-010, ATH-013, ATH-014, ATH-019)
+- On desktop, the header settings gear icon switches to an X close button when the About panel is open (mirrors Settings behavior)
+
+### i18n
+
+- `about.what_body_2` added to `en.json`; translate script updated to detect completely missing keys (`isMissing` condition) and write new keys to locale files
+- Translate script re-run across all 40+ non-English locales; all files now have full key coverage
+- Fixed step 3 ("Pick") and step 5 ("Copy") data in all 40+ non-English locales — previously showed "Customize" and "Vote" due to stale snapshot values
+- Added 12 missing keys to all English variant files (en-AU, en-GB, en-IN, en-ZA): `detail.revise_error_*`, `settings.reset_all_announce`, `settings.preserved_announce`, `settings.theme_*_announce`, `error.announce`
+- Added English placeholders for 39 remaining missing keys across de, pig, tlh, zh, pir, rhg, pjt; full key parity restored
+
+### UI polish
+
+- Removed extra margin-left from `.header-github-link .external-link-icon` (gap on the flex container was sufficient)
+- `(optional)` label next to Location Prefix field now `font-weight: 400` (was inheriting bold from parent label)
+- RTL: `.settings-footer-actions` `margin-left: auto` changed to `margin-inline-start: auto` so Save/Reset buttons are flush with the left edge in RTL locales
+- BottomSheet desktop close button: auto-width, right-aligned (left-aligned in RTL), with a divider above; mobile retains full-width behavior
+- Related issues list on mobile now has `margin-bottom: var(--space-4)` matching spacing elsewhere
+- Archiving a result now immediately moves it to the bottom of the sorted list without requiring a re-search (`ratings` added to `sortedFindings` dependency array and sort logic)
+- View-all state preserved when navigating to a finding detail, Settings, or About and returning (`returnViewAllRef` pattern)
+
+### Code quality
+
+- Suppressed `react-hooks/immutability` false positives on intentional `useRef` mutations in `App.jsx` with inline `// eslint-disable-line` comments
+
+---
+
 ## 2026-04-26 — Deep linking, UI polish, debug tooling
 
 ### Router plugin
