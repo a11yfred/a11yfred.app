@@ -9,7 +9,10 @@
     "preview": "vite preview",
     "lint:js": "eslint src/",
     "lint:css": "stylelint \"src/**/*.css\"",
-    "lint": "npm run lint:js && npm run lint:css"
+    "lint": "npm run lint:js && npm run lint:css",
+    "translate": "node scripts/translate-missing.mjs",
+    "electron:dev": "NODE_ENV=development concurrently \"vite\" \"electron electron/main.js\"",
+    "electron:build": "vite build && electron-builder --config electron/electron-builder.json"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
