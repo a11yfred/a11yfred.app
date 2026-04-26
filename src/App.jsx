@@ -247,7 +247,7 @@ function AppContent({
       h1Ref.current?.focus()
       aboutWasOpenRef.current = false
     }
-  }, [aboutOpen, isDesktop]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [aboutOpen, isDesktop])
 
   const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val' }
 
