@@ -130,6 +130,7 @@ export default function SettingsPanel({
     () => localStorage.getItem('ai_provider') || 'anthropic'
   )
   const [unsavedOpen, setUnsavedOpen] = useState(false)
+  const [noChangesOpen, setNoChangesOpen] = useState(false)
   const hasUnsaved = activeProvider !== savedProvider ||
     PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id])
   const didMountLang = useRef(false)
@@ -168,6 +169,10 @@ export default function SettingsPanel({
   const handleSave = () => {
     if (aiEnabled && !keys[activeProvider].trim()) {
       setErrors({ apiKey: true })
+      return
+    }
+    if (!hasUnsaved) {
+      setNoChangesOpen(true)
       return
     }
     setErrors({})
@@ -499,6 +504,14 @@ export default function SettingsPanel({
         ]}
       >
         <p>{t('settings.confirm_reset_all_body')}</p>
+      </Modal>
+
+      <Modal
+        open={noChangesOpen}
+        onClose={() => setNoChangesOpen(false)}
+        heading={t('settings.no_changes_heading')}
+      >
+        <p>{t('settings.no_changes_body')}</p>
       </Modal>
     </div>
   )
