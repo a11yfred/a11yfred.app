@@ -139,6 +139,7 @@ function AppContent({
   const isNotFound = route !== '/' && route !== '/settings'
   const h1Ref = useRef(null)
   const didMount = useRef(false)
+  const aboutWasOpenRef = useRef(false)
   const [aboutOpen, setAboutOpen] = useState(false)
   const handleOpenAbout = () => { if (settingsOpen) navigate('/'); setAboutOpen(true) }
   const handleCloseAbout = () => setAboutOpen(false)
@@ -239,6 +240,14 @@ function AppContent({
       }
     }
   }, [settingsOpen, isDesktop]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (aboutOpen) { aboutWasOpenRef.current = true; return }
+    if (aboutWasOpenRef.current && isDesktop) {
+      h1Ref.current?.focus()
+      aboutWasOpenRef.current = false
+    }
+  }, [aboutOpen, isDesktop]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val' }
 
@@ -407,7 +416,7 @@ function AppContent({
 
 function Header({ h1Ref, settingsOpen, aboutOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, isDesktop }) {
   const t = useT()
-  const compact = isDesktop && settingsOpen
+  const compact = isDesktop && (settingsOpen || aboutOpen)
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
       {!compact && (
