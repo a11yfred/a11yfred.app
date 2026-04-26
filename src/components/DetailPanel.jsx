@@ -306,7 +306,7 @@ export default function DetailPanel({ defect, aiEnabled, focusTrigger = 0, allDe
             ref={refineButtonRef}
             onClick={handleRefine}
             disabled={refining || animating || !reviseNote.trim()}
-            className={`btn-accent field-btn detail-rewrite-btn${noteSaved ? ' field-btn--success' : ''}`}
+            className={`btn-accent field-btn detail-revise-btn${noteSaved ? ' field-btn--success' : ''}`}
             aria-label={
               refining ? t('detail.rewriting_aria')
               : aiEnabled && canRevise ? t('detail.rewrite_aria')

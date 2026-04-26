@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Pencil } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -32,6 +33,9 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
             spellCheck={false}
             className={`search-input${query ? ' search-input--has-value' : ''}`}
           />
+          {!query && (
+            <Pencil size={18} strokeWidth={1.5} aria-hidden="true" className="search-decor-icon" />
+          )}
           {query && (
             <button
               onClick={() => { onChange(''); inputRef.current?.focus() }}

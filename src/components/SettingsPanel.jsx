@@ -169,6 +169,7 @@ export default function SettingsPanel({
   const handleSave = () => {
     if (aiEnabled && !keys[activeProvider].trim()) {
       setErrors({ apiKey: true })
+      onToggleAi()
       return
     }
     if (!hasUnsaved) {

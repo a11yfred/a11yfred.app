@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { _subscribe } from './announce.js'
 
+const IS_DEV = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+
 /**
  * Renders two visually-hidden ARIA live regions: one polite, one assertive.
  * Mount this once, near the top of your app tree (e.g. just inside <body>
@@ -18,6 +20,8 @@ export function Announcer() {
   const [assertiveMsg, setAssertiveMsg] = useState('')
   const politeTimer = useRef(null)
   const assertiveTimer = useRef(null)
+  const [toast, setToast] = useState(null)
+  const toastTimer = useRef(null)
 
   useEffect(() => {
     const unsub = _subscribe((message, priority) => {
@@ -39,11 +43,18 @@ export function Announcer() {
           politeTimer.current = setTimeout(() => setPoliteMsg(''), 1000)
         }, 50)
       }
+
+      if (IS_DEV) {
+        setToast({ message, priority })
+        clearTimeout(toastTimer.current)
+        toastTimer.current = setTimeout(() => setToast(null), 4000)
+      }
     })
     return () => {
       unsub()
       clearTimeout(politeTimer.current)
       clearTimeout(assertiveTimer.current)
+      clearTimeout(toastTimer.current)
     }
   }, [])
 
@@ -55,6 +66,12 @@ export function Announcer() {
       <div role="alert" aria-live="assertive" aria-atomic="true" className="sr-only">
         {assertiveMsg}
       </div>
+      {IS_DEV && toast && (
+        <div className={`announce-toast announce-toast--${toast.priority}`} aria-hidden="true">
+          <span className="announce-toast__badge">{toast.priority}</span>
+          {toast.message}
+        </div>
+      )}
     </>
   )
 }

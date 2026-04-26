@@ -701,7 +701,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transition: var(--transition-btn);
 }
 
-/* ─── Accent button (Save, Reset, Copy, Rewrite) ─────────── */
+/* ─── Accent button (Save, Reset, Copy, Revise) ─────────── */
 
 .btn-icon-accent {
   color: var(--accent-text);
@@ -1109,6 +1109,15 @@ input.search-input--has-value {
   padding-right: 2.5rem;
 }
 
+.search-decor-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-disabled);
+  pointer-events: none;
+}
+
 input.search-input:focus {
   border-color: var(--focus);
 }
@@ -1291,6 +1300,11 @@ input.search-input:focus {
   color: var(--accent-text);
   text-decoration: underline;
   cursor: pointer;
+}
+
+.settings-privacy-btn:hover {
+  color: var(--text);
+  text-decoration: underline;
 }
 
 .settings-provider-group {
@@ -1728,6 +1742,11 @@ input.settings-key-input {
   text-decoration: underline;
 }
 
+.detail-sc-link:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
 .detail-field-row {
   margin-bottom: 1rem;
 }
@@ -1783,15 +1802,20 @@ input.settings-key-input {
   cursor: pointer;
 }
 
+.detail-settings-link:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
 .detail-refine-row {
   display: flex;
   align-items: stretch;
   gap: 8px;
 }
 
-.detail-rewrite-btn {
+.detail-revise-btn {
   align-self: stretch;
-  padding: 4px 1.25em;
+  padding: 0.625em 1.25em;
   white-space: normal;
   text-align: center;
   min-width: 6rem;
@@ -1859,7 +1883,7 @@ input.settings-key-input {
 
 .detail-related__btn:hover {
   color: var(--text);
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .detail-related__btn:focus-visible {
@@ -2202,5 +2226,46 @@ input.settings-key-input {
   text-decoration: underline;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.about-privacy-btn:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* ─── Dev-only announce toast (localhost only) ──────────── */
+
+.announce-toast {
+  position: fixed;
+  bottom: 5.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgb(0 0 0 / 0.88);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+  padding: 0.75em 1.5em;
+  border-radius: 999px;
+  max-width: 80vw;
+  text-align: center;
+  z-index: 9999;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25em;
+}
+
+.announce-toast--assertive {
+  background: rgb(180 0 0 / 0.88);
+}
+
+.announce-toast__badge {
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
 }
 
