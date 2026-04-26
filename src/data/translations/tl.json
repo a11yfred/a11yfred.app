@@ -140,7 +140,7 @@
     "rem": "Magbigay ng mga keyboard-accessible na kontrol (tulad ng mga button) na gumaganap ng parehong aksyon tulad ng pag-drag. Dapat makapag-complete ang mga gumagamit ng keyboard ng bawat gawain nang walang mouse."
   },
   "ATH-034": {
-    "title": "Hindi Maaaring I-pause ang Paulit-ulit na Animation",
+    "title": "Walang Katapusang Animasyon na Loop",
     "desc": "Awtomatikong nagsisimula at nag-uulit ang isang animation o gumagalaw na elemento nang walang tigil. Walang paraan para sa gumagamit na i-pause, ihinto, o itago ito. Maaari itong makagambala o makapinsala sa mga taong may ilang kondisyon.",
     "rem": "Magbigay ng nakikita at keyboard-accessible na button para i-pause o ihinto ang animation. O itakda ito na awtomatikong tumitigil sa loob ng 5 segundo. Kung ang animation ay nagpapaabot ng live data (tulad ng news ticker), kinakailangan ang pause button."
   },

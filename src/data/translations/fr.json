@@ -140,7 +140,7 @@
     "rem": "Fournissez des contrôles accessibles au clavier (comme des boutons) qui effectuent la même action que le glisser. Les utilisateurs de clavier doivent pouvoir effectuer chaque tâche sans souris."
   },
   "ATH-034": {
-    "title": "L'animation en boucle ne peut pas être mise en pause",
+    "title": "Boucle d'animation sans fin",
     "desc": "Une animation ou un élément en mouvement démarre automatiquement et boucle sans s'arrêter. Il n'y a aucun moyen pour l'utilisateur de la mettre en pause, de l'arrêter ou de la masquer. Cela peut être distrayant ou nuisible pour les personnes ayant certaines conditions.",
     "rem": "Fournissez un bouton visible et accessible au clavier pour mettre en pause ou arrêter l'animation. Ou configurez-la pour qu'elle s'arrête automatiquement après 5 secondes. Si l'animation transmet des données en direct (comme un fil d'actualités), un bouton de pause est requis."
   },

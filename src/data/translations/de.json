@@ -140,7 +140,7 @@
     "rem": "Stellen Sie per Tastatur zugängliche Steuerelemente (wie Schaltflächen) bereit, die dieselbe Aktion wie Ziehen ausführen. Tastaturnutzende sollten jede Aufgabe ohne Maus erledigen können."
   },
   "ATH-034": {
-    "title": "Schleifende Animation kann nicht pausiert werden",
+    "title": "Endlose Animationsschleife",
     "desc": "Eine Animation oder ein sich bewegendes Element startet automatisch und läuft ohne Unterbrechung in einer Schleife. Es gibt keine Möglichkeit für Nutzende, sie zu pausieren, zu stoppen oder zu verbergen. Dies kann für Menschen mit bestimmten Erkrankungen ablenkend oder schädlich sein.",
     "rem": "Stellen Sie eine sichtbare, per Tastatur zugängliche Schaltfläche zum Pausieren oder Stoppen der Animation bereit. Oder lassen Sie sie innerhalb von 5 Sekunden automatisch stoppen. Wenn die Animation Live-Daten übermittelt (wie ein Nachrichtenticker), ist eine Pause-Schaltfläche erforderlich."
   },

@@ -140,7 +140,7 @@
     "rem": "Forneça controles acessíveis pelo teclado (como botões) que executem a mesma ação que o arrastar. Usuários de teclado devem poder concluir cada tarefa sem mouse."
   },
   "ATH-034": {
-    "title": "Animação em Loop Não Pode Ser Pausada",
+    "title": "Loop de Animação Sem Fim",
     "desc": "Uma animação ou elemento em movimento inicia automaticamente e fica em loop sem parar. O usuário não tem como pausar, parar ou ocultar. Isso pode ser distrator ou prejudicial para pessoas com certas condições.",
     "rem": "Forneça um botão visível e acessível pelo teclado para pausar ou parar a animação. Ou configure-a para parar automaticamente em 5 segundos. Se a animação transmite dados ao vivo (como um ticker de notícias), um botão de pausa é obrigatório."
   },

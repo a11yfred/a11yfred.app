@@ -140,7 +140,7 @@
     "rem": "Proporciona controles accesibles por teclado (como botones) que realicen la misma acción que arrastrar. Los usuarios de teclado deben poder completar cada tarea sin un ratón."
   },
   "ATH-034": {
-    "title": "La animación en bucle no se puede pausar",
+    "title": "Bucle de animación interminable",
     "desc": "Una animación o elemento en movimiento comienza automáticamente y se repite sin detenerse. No hay forma de que el usuario la pause, detenga u oculte. Esto puede ser distractor o dañino para personas con ciertas condiciones.",
     "rem": "Proporciona un botón visible y accesible por teclado para pausar o detener la animación. O configúrala para que se detenga automáticamente en 5 segundos. Si la animación transmite datos en vivo (como un ticker de noticias), se requiere un botón de pausa."
   },
