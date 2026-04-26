@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { Settings, X, Info } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
-import ResultList from './components/ResultList.jsx'
+import ResultList, { ResultListSkeleton, DataError } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
 import AboutPanel from './components/AboutPanel.jsx'
 import Confetti from './components/Confetti.jsx'
@@ -119,8 +119,6 @@ function AppShell() {
   const [selected, setSelected] = useState(null)
   const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
   const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
-  const [viewAll, setViewAll] = useState(false)
-  const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
 
   return (
     <I18nProvider locale={language}>
@@ -165,6 +163,8 @@ function AppContent({
   const didMount = useRef(false)
   const aboutWasOpenRef = useRef(false)
   const [aboutOpen, setAboutOpen] = useState(false)
+  const [viewAll, setViewAll] = useState(false)
+  const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
   const handleOpenAbout = () => { if (settingsOpen) navigate('/'); setAboutOpen(true) }
   const handleCloseAbout = () => setAboutOpen(false)
   // Tracks whether settings was opened while a defect panel was selected,
@@ -175,7 +175,14 @@ function AppContent({
 
   const { ratings, upvote, downvote, toggleStar, toggleArchive } = useDefectRatings()
   const activeQuery = liveSearch ? query : submittedQuery
-  const { results, allDefects } = useDefectSearch(activeQuery, platform, language, searchKey, ratings)
+  const { results, allDefects, sortedDefects, dataLoading, dataError, retryData } = useDefectSearch(activeQuery, platform, language, searchKey, ratings)
+  const [viewAllLoading, setViewAllLoading] = useState(false)
+
+  useEffect(() => {
+    if (!viewAllLoading) return
+    const id = setTimeout(() => setViewAllLoading(false), 400)
+    return () => clearTimeout(id)
+  }, [viewAllLoading])
 
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
@@ -401,50 +408,54 @@ function AppContent({
         providerName={providerName}
         showVoting={showVoting}
       />
-      {viewAll
-        ? (
-          <ResultList
-            key="view-all"
-            results={allDefects}
-            selected={selected}
-            onSelect={setSelected}
-            query=""
-            ratings={ratings}
-            onUpvote={upvote}
-            onDownvote={downvote}
-            onStar={toggleStar}
-            onArchive={toggleArchive}
-            showVoting={showVoting}
-            focusCount
-          />
-        )
-        : activeQuery.length >= 2
-          ? (
-            <ResultList
-              key="search"
-              results={results}
-              selected={selected}
-              onSelect={setSelected}
-              query={activeQuery}
-              ratings={ratings}
-              onUpvote={upvote}
-              onDownvote={downvote}
-              onStar={toggleStar}
-              onArchive={toggleArchive}
-              showVoting={showVoting}
-            />
-          )
-          : (
-            <div className="view-all-section">
-              <button
-                type="button"
-                className="btn-secondary view-all-btn"
-                onClick={() => setViewAllConfirmOpen(true)}
-              >
-                {t('search.view_all')}
-              </button>
-            </div>
-          )
+      {dataError
+        ? <DataError onRetry={retryData} />
+        : dataLoading || viewAllLoading
+          ? <ResultListSkeleton count={activeQuery === 'debug skeleton' ? sortedDefects.length : undefined} />
+          : viewAll
+            ? (
+              <ResultList
+                key="view-all"
+                results={sortedDefects}
+                selected={selected}
+                onSelect={setSelected}
+                query=""
+                ratings={ratings}
+                onUpvote={upvote}
+                onDownvote={downvote}
+                onStar={toggleStar}
+                onArchive={toggleArchive}
+                showVoting={showVoting}
+                focusCount
+              />
+            )
+            : activeQuery.length >= 2
+              ? (
+                <ResultList
+                  key="search"
+                  results={results}
+                  selected={selected}
+                  onSelect={setSelected}
+                  query={activeQuery}
+                  ratings={ratings}
+                  onUpvote={upvote}
+                  onDownvote={downvote}
+                  onStar={toggleStar}
+                  onArchive={toggleArchive}
+                  showVoting={showVoting}
+                />
+              )
+              : (
+                <div className="view-all-section">
+                  <button
+                    type="button"
+                    className="btn-secondary view-all-btn"
+                    onClick={() => setViewAllConfirmOpen(true)}
+                  >
+                    {t('search.view_all')}
+                  </button>
+                </div>
+              )
       }
       <Modal
         open={viewAllConfirmOpen}
@@ -453,7 +464,12 @@ function AppContent({
         actions={[
           {
             label: t('search.view_all_confirm_yes'),
-            onClick: () => { setViewAll(true); setViewAllConfirmOpen(false) },
+            onClick: () => {
+              announce(t('results.loading_announce', { count: sortedDefects.length }))
+              setViewAllLoading(true)
+              setViewAll(true)
+              setViewAllConfirmOpen(false)
+            },
             className: 'btn-accent modal-ok-btn',
           },
           {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import Fuse from 'fuse.js'
 import { getDefects } from '../services/dataService.js'
 
@@ -15,14 +15,60 @@ const FUSE_OPTIONS = {
   includeScore: true,
 }
 
+const PRIORITY_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }
+const LOAD_TIMEOUT_MS = 8000
+
 const DEFAULT_RATING = { score: 0, starred: false, archived: false }
 
 export default function useDefectSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}) {
   const [allDefects, setAllDefects] = useState([])
+  const [dataLoading, setDataLoading] = useState(true)
+  const [dataError, setDataError] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
+  const [debugLoading, setDebugLoading] = useState(false)
+  const [debugError, setDebugError] = useState(false)
+
+  const retryData = useCallback(() => {
+    setRetryCount(c => c + 1)
+  }, [])
 
   useEffect(() => {
-    getDefects(locale).then(setAllDefects)
-  }, [locale])
+    if (query !== 'debug skeleton') {
+      setDebugLoading(false)
+      setDebugError(false)
+      return
+    }
+    setDebugLoading(true)
+    setDebugError(false)
+    const t = setTimeout(() => { setDebugLoading(false); setDebugError(true) }, LOAD_TIMEOUT_MS)
+    return () => clearTimeout(t)
+  }, [query, retryCount])
+
+  useEffect(() => {
+    let cancelled = false
+    setDataLoading(true)
+    setDataError(false)
+
+    const timeout = setTimeout(() => {
+      if (!cancelled) { setDataError(true); setDataLoading(false) }
+    }, LOAD_TIMEOUT_MS)
+
+    getDefects(locale)
+      .then(data => {
+        if (cancelled) return
+        clearTimeout(timeout)
+        setAllDefects(data)
+        setDataLoading(false)
+      })
+      .catch(() => {
+        if (cancelled) return
+        clearTimeout(timeout)
+        setDataError(true)
+        setDataLoading(false)
+      })
+
+    return () => { cancelled = true; clearTimeout(timeout) }
+  }, [locale, retryCount])
 
   const platformFiltered = useMemo(() => {
     if (!platform || platform === 'web') {
@@ -34,6 +80,15 @@ export default function useDefectSearch(query, platform, locale = 'en', searchKe
     return allDefects
   }, [allDefects, platform])
 
+  const sortedDefects = useMemo(() =>
+    [...platformFiltered].sort((a, b) => {
+      const pa = PRIORITY_ORDER[a.priority] ?? 99
+      const pb = PRIORITY_ORDER[b.priority] ?? 99
+      if (pa !== pb) return pa - pb
+      return (a.scLabel ?? '').localeCompare(b.scLabel ?? '')
+    })
+  , [platformFiltered])
+
   const fuse = useMemo(() => new Fuse(platformFiltered, FUSE_OPTIONS), [platformFiltered])
 
   const results = useMemo(() => {
@@ -44,11 +99,8 @@ export default function useDefectSearch(query, platform, locale = 'en', searchKe
       .sort((a, b) => {
         const ra = ratings[a.item.id] || DEFAULT_RATING
         const rb = ratings[b.item.id] || DEFAULT_RATING
-        // Archived items always sink to the bottom
         if (ra.archived !== rb.archived) return ra.archived ? 1 : -1
-        // Starred non-archived items float to the top
         if (ra.starred !== rb.starred) return ra.starred ? -1 : 1
-        // Adjust fuse score (0=best, 1=worst) by vote score
         const adjA = (a.score ?? 1) - (ra.score * 0.05)
         const adjB = (b.score ?? 1) - (rb.score * 0.05)
         return adjA - adjB
@@ -57,5 +109,9 @@ export default function useDefectSearch(query, platform, locale = 'en', searchKe
       .map(r => r.item)
   }, [fuse, query, searchKey, ratings]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  return { results, allDefects }
+  if (query === 'debug skeleton') {
+    return { results: [], allDefects, sortedDefects, dataLoading: debugLoading, dataError: debugError, retryData }
+  }
+
+  return { results, allDefects, sortedDefects, dataLoading, dataError, retryData }
 }

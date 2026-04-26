@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore } from 'lucide-react'
+import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw } from 'lucide-react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
@@ -198,6 +198,67 @@ function NoResults({ query }) {
       </p>
       <p className="no-results__body">
         {t('results.no_results_body')}
+      </p>
+    </section>
+  )
+}
+
+const SKELETON_CARDS = 8
+
+export function ResultListSkeleton({ count = SKELETON_CARDS }) {
+  return (
+    <div className="result-list-section" aria-busy="true" aria-live="polite">
+      <div className="results-meta">
+        <p className="results-count">
+          <span className="skeleton-line" style={{ display: 'inline-block', height: '1em', width: '7rem', verticalAlign: 'middle' }} />
+        </p>
+      </div>
+      <ul className="result-list" role="list">
+        {Array.from({ length: count }, (_, i) => (
+          <li key={i} className="result-row" role="presentation">
+            <div className="skeleton-card">
+              <div className="skeleton-card__header">
+                <span className="skeleton-line" style={{ display: 'block', height: '1em', width: '55%' }} />
+                <span className="skeleton-line" style={{ display: 'block', height: '1em', width: '3.5rem', borderRadius: '999px', flexShrink: 0 }} />
+              </div>
+              <span className="skeleton-line" style={{ display: 'block', height: '0.85em', width: '38%' }} />
+              <span className="skeleton-line" style={{ display: 'block', height: '0.8em', width: '92%' }} />
+              <span className="skeleton-line" style={{ display: 'block', height: '0.8em', width: '70%' }} />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+export function DataError({ onRetry }) {
+  const t = useT()
+  return (
+    <section className="no-results">
+      <svg
+        aria-hidden="true"
+        width="56"
+        height="56"
+        viewBox="0 0 56 56"
+        fill="none"
+        className="no-results__icon"
+      >
+        <circle cx="28" cy="28" r="22" stroke="var(--border)" strokeWidth="2.5"/>
+        <line x1="28" y1="16" x2="28" y2="32" stroke="var(--text-faint)" strokeWidth="2.5" strokeLinecap="round"/>
+        <circle cx="28" cy="39" r="1.5" fill="var(--text-faint)"/>
+      </svg>
+      <p className="no-results__heading">{t('error.heading')}</p>
+      <p className="no-results__body">
+        {t('error.body')}{' '}
+        {onRetry && (
+          <button type="button" className="btn-tertiary error-retry-inline" onClick={onRetry}>
+            <RotateCcw size={12} aria-hidden="true" />
+            {t('error.retry')}
+          </button>
+        )}
+        {!onRetry && t('error.retry')}
+        .
       </p>
     </section>
   )
