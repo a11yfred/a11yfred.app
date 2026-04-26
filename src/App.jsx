@@ -92,7 +92,18 @@ function AppShell() {
   const [language, setLanguage] = useState(() => {
     const saved = localStorage.getItem('language')
     if (saved) return saved
-    return navigator.language || 'en'
+    const lang = navigator.language || 'en'
+    // Supported locale values — try exact match, then language prefix, then 'en'
+    const supported = [
+      'af','ar-PS','eu','yue','ceb','cbk','zh','cr','crh','nl',
+      'en-AU','en-GB','en-IN','en-ZA','en','eo','tl','fr','fr-CA',
+      'de','gn','ht','haw','hi','ilo','iu','ja','ko','mi','nah',
+      'nv','oj','pjt','pt','pt-BR','qu','rhg','es','es-PH','es-ES',
+      'sv','zgh','ta','bo','ug','vi',
+    ]
+    return supported.includes(lang)
+      ? lang
+      : (supported.find(s => s === lang.split('-')[0]) || 'en')
   })
   const [aiEnabled, setAiEnabled] = useState(false)
   const [saveCount, setSaveCount] = useState(() =>
@@ -314,7 +325,8 @@ function AppContent({
   }
 
   const handleOpenSettings = () => {
-    // Track whether a panel was open when settings launched so we can restore it
+    aboutWasOpenRef.current = false  // prevent about-close focus competing with settings-open focus
+    setAboutOpen(false)
     returnToPanelRef.current = !!selected
     navigate('/settings')
     // Do NOT clear selected here — keepMounted preserves the panel state

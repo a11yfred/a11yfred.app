@@ -10,7 +10,7 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 | Export | Type | Purpose |
 | --- | --- | --- |
 | `Router` | component | Context provider; wraps your app |
-| `useRouter` | hook | `{ route, navigate }` |
+| `useRouter` | hook | `{ route, navigate, appName }` |
 | `Route` | component | Renders children only when `route` matches |
 | `Link` | component | Hash-link anchor |
 | `Drawer` | component | Slide-in panel from the left; full focus management built in |
@@ -391,7 +391,7 @@ useEffect(() => {
 
 ---
 
-### Rule 8 — Accordions: keep focus on the trigger
+### Note — Accordions: keep focus on the trigger
 
 **When:** An accordion item expands or collapses.
 
@@ -595,6 +595,7 @@ function App() {
 | `open` | boolean | — | Whether the sheet is visible |
 | `onClose` | fn | — | Called on Escape, backdrop click, or the chrome close button |
 | `label` | string | `'Detail'` | `aria-label` for the dialog element |
+| `closeLabel` | string | `'Close'` | Accessible label for the chrome close button |
 | `keepMounted` | boolean | `false` | Keep children in the DOM while the sheet is visually closed. Use when you need to preserve React state (e.g. text edits) while a secondary panel covers the sheet. The sheet is still `inert` when closed; only the state is preserved. |
 | `children` | node | — | Rendered inside the sheet only while open (unless `keepMounted` is true) |
 
