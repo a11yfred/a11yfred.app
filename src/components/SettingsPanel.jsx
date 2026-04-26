@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, ChevronDown, Check, Info } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -111,6 +111,14 @@ export default function SettingsPanel({
   const [privacyOpen, setPrivacyOpen] = useState(false)
   const [rhgPending, setRhgPending] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
+  const [pendingLanguage, setPendingLanguage] = useState(language)
+  const didMountLang = useRef(false)
+
+  // Sync pendingLanguage if the language prop changes externally (e.g. Reset All)
+  useEffect(() => {
+    if (!didMountLang.current) { didMountLang.current = true; return }
+    setPendingLanguage(language)
+  }, [language])
 
   // Escape key — Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
@@ -128,8 +136,6 @@ export default function SettingsPanel({
       }
     })
     localStorage.setItem('ai_provider', activeProvider)
-    // Apply the displayed language — resets any active easter egg locale
-    onLanguageChange(language)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
     announce(t('settings.saved_announce'))
@@ -179,23 +185,32 @@ export default function SettingsPanel({
       <div className="settings-group">
         <p className="settings-group__label">{t('settings.language_label')}</p>
         <p className="settings-group__desc">{t('settings.language_desc')}</p>
-        <div className="settings-select-wrap">
-          <select
-            value={language}
-            onChange={e => {
-              if (e.target.value === 'rhg') { setRhgPending(true) }
-              else { onLanguageChange(e.target.value) }
+        <div className="settings-language-row">
+          <div className="settings-select-wrap settings-select-wrap--language">
+            <select
+              value={pendingLanguage}
+              onChange={e => setPendingLanguage(e.target.value)}
+              className="settings-select"
+              aria-label={t('settings.language_aria')}
+            >
+              {LANGUAGES.map(lang => (
+                <option key={lang.value} value={lang.value}>
+                  {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
+          </div>
+          <button
+            type="button"
+            className="btn-secondary settings-language-set-btn"
+            onClick={() => {
+              if (pendingLanguage === 'rhg') { setRhgPending(true) }
+              else { onLanguageChange(pendingLanguage) }
             }}
-            className="settings-select"
-            aria-label={t('settings.language_aria')}
           >
-            {LANGUAGES.map(lang => (
-              <option key={lang.value} value={lang.value}>
-                {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
-              </option>
-            ))}
-          </select>
-          <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
+            {t('settings.save')}
+          </button>
         </div>
       </div>
 
@@ -350,7 +365,7 @@ export default function SettingsPanel({
         onClose={() => setRhgPending(false)}
         heading="Rohingya (Ruáingga)"
         actions={[
-          { label: 'Use anyway', onClick: () => { onLanguageChange('rhg'); setRhgPending(false) }, className: 'btn-accent' },
+          { label: 'Use anyway', onClick: () => { onLanguageChange(pendingLanguage); setRhgPending(false) }, className: 'btn-accent' },
           { label: 'Cancel',     onClick: () => setRhgPending(false),                              className: 'btn-ghost'  },
         ]}
       >
@@ -392,9 +407,12 @@ function RadioChip({ name, value, label, current, onChange }) {
         checked={isActive}
         onChange={() => onChange(value)}
         className="radio-chip__input"
+        aria-label={label.replace(/\n/g, ' ')}
       />
-      <span className="radio-chip__indicator" aria-hidden="true" />
-      {label.split('\n').flatMap((part, i) => i === 0 ? [part] : [<br key={i} />, part])}
+      <span className="radio-chip__indicator" aria-hidden="true" role="presentation" />
+      <span aria-hidden="true">
+        {label.split('\n').flatMap((part, i) => i === 0 ? [part] : [<br key={i} />, part])}
+      </span>
     </label>
   )
 }
@@ -411,11 +429,11 @@ function Toggle({ id, checked, onChange }) {
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onChange(e) } }}
         className="toggle__input"
       />
-      <span aria-hidden="true" className="toggle__track">
-        <span className="toggle__thumb">
+      <span aria-hidden="true" role="presentation" className="toggle__track">
+        <span role="presentation" className="toggle__thumb">
           {checked
-            ? <span className="toggle__check" />
-            : <span className="toggle__ring" />
+            ? <span role="presentation" className="toggle__check" />
+            : <span role="presentation" className="toggle__ring" />
           }
         </span>
       </span>
