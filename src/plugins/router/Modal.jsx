@@ -21,8 +21,8 @@ import { useAriaHide } from './useAriaHide.js'
  *   actions   [{ label, onClick, className }]      — footer buttons; defaults to a single OK button
  *   children  node                                 — rendered inside the modal body
  */
-export default function Modal({ open, onClose, heading = 'Information', actions, children }) {
-  const triggerRef = useRef(null)
+export default function Modal({ open, onClose, heading = 'Information', actions, children, returnFocusRef }) {
+  const autoTriggerRef = useRef(null)
   const panelRef = useRef(null)
   const headingRef = useRef(null)
 
@@ -31,9 +31,11 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
 
   // Save trigger on open; focus the heading (tabIndex -1) so screen readers announce the dialog.
   // Scroll into view as a fallback in case the panel somehow sits outside the viewport.
+  // returnFocusRef overrides the auto-captured trigger for cases where the trigger
+  // becomes disabled (and loses focus) before the modal opens.
   useEffect(() => {
     if (open) {
-      triggerRef.current = document.activeElement
+      if (!returnFocusRef) autoTriggerRef.current = document.activeElement
       requestAnimationFrame(() => {
         if (headingRef.current) {
           headingRef.current.focus()
@@ -41,9 +43,10 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
         }
       })
     } else {
-      triggerRef.current?.focus()
+      const target = returnFocusRef?.current ?? autoTriggerRef.current
+      target?.focus()
     }
-  }, [open])
+  }, [open, returnFocusRef])
 
   // Escape — capture phase so this fires before Drawer / BottomSheet Escape handlers
   useEffect(() => {
