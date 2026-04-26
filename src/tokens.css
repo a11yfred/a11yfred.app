@@ -28,6 +28,7 @@
 
   /* Color — semantic */
   --success:         #2d6a4f;
+  --error:           #b91c1c;  /* 5.9:1 on #fff */
 
   /* Color — focus ring
      ≥ 3:1 against both --bg and --bg-subtle surfaces. */
@@ -109,6 +110,7 @@
   --accent-text: #afa9ec;
 
   --success:     #5dca8a;  /* 6.4:1 on #26215c dark accent-bg; 4.5:1 on #111 base bg */
+  --error:       #f87171;  /* 5.2:1 on #111 base bg */
 
   --focus:       #a09ce8;  /* 4.6:1 against #111 dark bg */
   /* #686868 = 3.6:1 on #111, 3.1:1 on #1a1a1a */

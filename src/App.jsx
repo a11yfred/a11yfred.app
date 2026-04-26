@@ -95,10 +95,10 @@ function AppShell() {
     return navigator.language || 'en'
   })
   const [aiEnabled, setAiEnabled] = useState(false)
-  const [partyUnlocked, setPartyUnlocked] = useState(() =>
-    localStorage.getItem('partyUnlocked') === 'true' ||
-    localStorage.getItem('theme') === 'party'
+  const [saveCount, setSaveCount] = useState(() =>
+    parseInt(localStorage.getItem('settingsSaveCount') || '0', 10)
   )
+  const partyUnlocked = saveCount >= 2 || theme === 'party'
   const [liveSearch, setLiveSearch] = useState(() => localStorage.getItem('liveSearch') !== 'false')
   const [showVoting, setShowVoting] = useState(() => localStorage.getItem('showVoting') !== 'false')
   const [query, setQuery] = useState('')
@@ -116,7 +116,7 @@ function AppShell() {
         aiEnabled={aiEnabled} setAiEnabled={setAiEnabled}
         liveSearch={liveSearch} setLiveSearch={setLiveSearch}
         showVoting={showVoting} setShowVoting={setShowVoting}
-        partyUnlocked={partyUnlocked} setPartyUnlocked={setPartyUnlocked}
+        partyUnlocked={partyUnlocked} setSaveCount={setSaveCount}
         query={query} setQuery={setQuery}
         submittedQuery={submittedQuery} setSubmittedQuery={setSubmittedQuery}
         searchKey={searchKey} setSearchKey={setSearchKey}
@@ -134,7 +134,7 @@ function AppContent({
   aiEnabled, setAiEnabled,
   liveSearch, setLiveSearch,
   showVoting, setShowVoting,
-  partyUnlocked, setPartyUnlocked,
+  partyUnlocked, setSaveCount,
   query, setQuery,
   submittedQuery, setSubmittedQuery,
   searchKey, setSearchKey,
@@ -161,7 +161,7 @@ function AppContent({
 
   const { ratings, upvote, downvote, toggleStar, toggleArchive } = useDefectRatings()
   const activeQuery = liveSearch ? query : submittedQuery
-  const results = useDefectSearch(activeQuery, platform, language, searchKey, ratings)
+  const { results, allDefects } = useDefectSearch(activeQuery, platform, language, searchKey, ratings)
 
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
@@ -327,7 +327,7 @@ function AppContent({
     // Clear all persisted data
     localStorage.clear()
     // Reset React state to defaults
-    setPartyUnlocked(false)
+    setSaveCount(0)
     setTheme('auto')
     setLanguage(defaultLang)
     setPlatform('web')
@@ -341,24 +341,26 @@ function AppContent({
   }
 
   function unlock() {
-    if (partyUnlocked) return
-    setPartyUnlocked(true)
-    localStorage.setItem('partyUnlocked', 'true')
+    setSaveCount(c => {
+      const next = c + 1
+      localStorage.setItem('settingsSaveCount', String(next))
+      return next
+    })
   }
 
   const settingsProps = {
     aiEnabled,
-    onToggleAi: () => { unlock(); setAiEnabled(a => !a) },
+    onToggleAi: () => { setAiEnabled(a => !a) },
     liveSearch,
-    onToggleLiveSearch: () => { unlock(); setLiveSearch(s => !s) },
+    onToggleLiveSearch: () => { setLiveSearch(s => !s) },
     showVoting,
-    onToggleVoting: () => { unlock(); setShowVoting(v => !v) },
+    onToggleVoting: () => { setShowVoting(v => !v) },
     theme,
-    onThemeChange: (t) => { unlock(); setTheme(t) },
+    onThemeChange: (t) => { setTheme(t) },
     language: settingsLanguage,
-    onLanguageChange: (l) => { unlock(); setLanguage(l) },
+    onLanguageChange: (l) => { setLanguage(l) },
     platform,
-    onPlatformChange: (p) => { unlock(); setPlatform(p) },
+    onPlatformChange: (p) => { setPlatform(p) },
     partyUnlocked,
     onUnlock: unlock,
     onClose: () => navigate('/'),
@@ -380,6 +382,7 @@ function AppContent({
         platform={platform}
         aiEnabled={aiEnabled}
         providerName={providerName}
+        showVoting={showVoting}
       />
       {activeQuery.length >= 2 && (
         <ResultList
@@ -458,6 +461,8 @@ function AppContent({
             defect={selected}
             aiEnabled={aiEnabled}
             focusTrigger={panelFocusTrigger}
+            allDefects={allDefects}
+            onSelect={setSelected}
           />
         )}
       </BottomSheet>

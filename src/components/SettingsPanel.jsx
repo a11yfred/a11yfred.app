@@ -100,6 +100,9 @@ export default function SettingsPanel({
   const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+  const settingsPanelRef = useRef(null)
+  const [errors, setErrors] = useState({})
+
   const [keys, setKeys] = useState(() => {
     const saved = {}
     PROVIDERS.forEach(p => {
@@ -137,6 +140,20 @@ export default function SettingsPanel({
     setPendingLanguage(language)
   }, [language])
 
+  // Clear errors when AI is disabled
+  useEffect(() => {
+    if (!aiEnabled) setErrors({})
+  }, [aiEnabled])
+
+  // Scroll to and focus the first invalid field when errors change
+  useEffect(() => {
+    if (!errors.apiKey) return
+    const el = settingsPanelRef.current?.querySelector('[aria-invalid="true"]')
+    if (!el) return
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    el.focus({ preventScroll: true })
+  }, [errors])
+
   // Escape key — Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
     const handler = (e) => {
@@ -149,6 +166,11 @@ export default function SettingsPanel({
   }, [onClose, hasUnsaved, unsavedOpen])
 
   const handleSave = () => {
+    if (aiEnabled && !keys[activeProvider].trim()) {
+      setErrors({ apiKey: true })
+      return
+    }
+    setErrors({})
     onUnlock?.()
     PROVIDERS.forEach(p => {
       if (keys[p.id]) {
@@ -166,7 +188,7 @@ export default function SettingsPanel({
   }
 
   return (
-    <div>
+    <div ref={settingsPanelRef}>
       <div className="settings-header">
         <button
           onClick={() => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } }}
@@ -344,17 +366,28 @@ export default function SettingsPanel({
       {PROVIDERS.filter(p => p.id === activeProvider).map(p => (
         <div key={p.id} className="settings-key-group">
           <label htmlFor={`apikey-${p.id}`} className="settings-field-label">
-            {p.label}
+            {t('settings.api_key_label_prefix')} — {p.label}
+            {aiEnabled && <span className="settings-field-required"> {t('settings.api_key_required')}</span>}
           </label>
           <input
             id={`apikey-${p.id}`}
             type="password"
             value={keys[p.id]}
-            onChange={e => setKeys(prev => ({ ...prev, [p.id]: e.target.value }))}
+            onChange={e => {
+              setKeys(prev => ({ ...prev, [p.id]: e.target.value }))
+              if (errors.apiKey) setErrors({})
+            }}
             placeholder={t(p.placeholderKey)}
             disabled={!aiEnabled}
             className="settings-key-input"
+            aria-invalid={errors.apiKey ? 'true' : undefined}
+            aria-describedby={errors.apiKey ? 'api-key-error' : undefined}
           />
+          {errors.apiKey && (
+            <p id="api-key-error" className="settings-field-error">
+              {t('settings.api_key_error')}
+            </p>
+          )}
         </div>
       ))}
 
