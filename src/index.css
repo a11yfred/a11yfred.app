@@ -849,11 +849,6 @@ select:disabled {
   transition: color var(--duration-fast), background var(--duration-fast);
 }
 
-.result-vote-btn:hover:not(:disabled) {
-  color: var(--text-muted);
-  background: var(--bg-subtle);
-}
-
 .result-vote-btn:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 1px;
@@ -863,6 +858,11 @@ select:disabled {
   opacity: 0.3;
   cursor: default;
   pointer-events: none;
+}
+
+.result-vote-btn:hover:not(:disabled) {
+  color: var(--text-muted);
+  background: var(--bg-subtle);
 }
 
 .result-vote-btn--active {
@@ -879,11 +879,32 @@ select:disabled {
   padding: 2px 0;
 }
 
+.result-item {
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color var(--duration-fast);
+}
+
 /* Archived row: dim everything except the restore button */
 .result-row--archived .result-item {
   opacity: 0.4;
   pointer-events: none;
   cursor: default;
+}
+
+.result-item:hover:not(.result-item--selected) {
+  border-color: var(--text-faint);
+}
+
+.result-item--selected {
+  border-color: var(--accent);
+  background: var(--accent-bg);
 }
 
 .result-row--archived .result-vote-btn:not(.result-vote-btn--archive) {
@@ -897,27 +918,6 @@ select:disabled {
 .result-row--archived .result-vote-btn--archive {
   opacity: 1;
   color: var(--accent);
-}
-
-.result-item {
-  padding: var(--space-3) var(--space-4);
-  margin-bottom: 0;
-  flex: 1;
-  min-width: 0;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--bg);
-  cursor: pointer;
-  transition: border-color var(--duration-fast);
-}
-
-.result-item:hover:not(.result-item--selected) {
-  border-color: var(--text-faint);
-}
-
-.result-item--selected {
-  border-color: var(--accent);
-  background: var(--accent-bg);
 }
 
 .result-item__header {
@@ -1163,7 +1163,7 @@ input.search-input:focus {
 
 .radio-chip-group {
   display: flex;
-  gap: 6px;
+  gap: 0;
   margin-bottom: 2em;
 }
 
@@ -1304,6 +1304,22 @@ input.search-input:focus {
   cursor: not-allowed;
 }
 
+.settings-field-required {
+  color: var(--text-muted);
+  font-size: var(--fs-small);
+}
+
+.settings-key-group:has(.settings-field-error) {
+  margin-bottom: 0;
+}
+
+.settings-field-error {
+  color: var(--error);
+  font-size: var(--fs-small);
+  margin-top: 0;
+  margin-bottom: var(--space-2);
+}
+
 .settings-save-btn,
 .settings-reset-btn {
   padding: var(--space-3) var(--space-4);
@@ -1368,7 +1384,8 @@ input.search-input:focus {
   gap: 6px;
   padding: var(--space-3) var(--space-4);
   min-height: 3rem;
-  border-radius: var(--radius);
+  border-radius: 0;
+  margin-left: -1px;
   border: 1px solid var(--border-control);
   background: var(--bg-subtle);
   color: var(--text-muted);
@@ -1438,47 +1455,41 @@ input.search-input:focus {
   content: '★';
 }
 
-/* ─── Segmented chip group on mobile ─────────────────────────
+/* ─── Segmented chip group ────────────────────────────────────
    Collapse the gap and share a single-pixel border between chips,
    rounding only the outer corners of the first and last chip.    */
-@media (width < 768px) {
-  .radio-chip-group {
-    gap: 0;
-  }
+.radio-chip:first-child {
+  border-radius: var(--radius) 0 0 var(--radius);
+  margin-left: 0;
+}
 
+.radio-chip:last-child {
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.radio-chip:focus-within {
+  z-index: 1;
+}
+
+/* RTL: outer corner radii and overlap margins flip to match reading direction */
+[dir="rtl"] .radio-chip {
+  margin-left: 0;
+  margin-right: -1px;
+}
+
+[dir="rtl"] .radio-chip:first-child {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-right: 0;
+}
+
+[dir="rtl"] .radio-chip:last-child {
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+@media (width < 768px) {
   .radio-chip {
-    border-radius: 0;
-    margin-left: -1px;
     padding-inline: var(--space-3);
     font-size: var(--fs-small);
-  }
-
-  .radio-chip:first-child {
-    border-radius: var(--radius) 0 0 var(--radius);
-    margin-left: 0;
-  }
-
-  .radio-chip:last-child {
-    border-radius: 0 var(--radius) var(--radius) 0;
-  }
-
-  .radio-chip:focus-within {
-    z-index: 1;
-  }
-
-  /* RTL: outer corner radii and overlap margins flip to match reading direction */
-  [dir="rtl"] .radio-chip {
-    margin-left: 0;
-    margin-right: -1px;
-  }
-
-  [dir="rtl"] .radio-chip:first-child {
-    border-radius: 0 var(--radius) var(--radius) 0;
-    margin-right: 0;
-  }
-
-  [dir="rtl"] .radio-chip:last-child {
-    border-radius: var(--radius) 0 0 var(--radius);
   }
 }
 
@@ -1702,6 +1713,52 @@ input.search-input:focus {
   align-self: stretch;
   padding: 0 12px;
   white-space: nowrap;
+}
+
+/* ─── Related issues ─────────────────────────────────────── */
+
+.detail-related {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.detail-related__heading {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.detail-related__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.detail-related__btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: var(--fs-body);
+  color: var(--accent);
+  cursor: pointer;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.detail-related__btn:hover {
+  color: var(--accent-hover, var(--accent));
+  text-decoration: none;
+}
+
+.detail-related__btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* ─── Field ───────────────────────────────────────────────── */
