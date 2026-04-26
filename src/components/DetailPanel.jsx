@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { Sparkles, RotateCcw, Clipboard, Check } from 'lucide-react'
+import { Sparkles, RotateCcw, Clipboard, Check, ExternalLink } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { useFocusOnMount, useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -257,7 +257,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel)}
         reset={resetDesc}
         onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel)}
-        undoable={descHistory.length > 0}
+        undoable={descHistory.length > 1}
         onUndo={handleUndoDesc}
         selected={reviseDesc}
         onSelectChange={setReviseDesc}
@@ -277,7 +277,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         onCopy={() => copy(remText, setCopiedRem, remLabel)}
         reset={resetRem}
         onReset={() => handleReset(finding.rem, remText, setRemText, setResetRem, remLabel)}
-        undoable={remHistory.length > 0}
+        undoable={remHistory.length > 1}
         onUndo={handleUndoRem}
         selected={reviseRem}
         onSelectChange={setReviseRem}
@@ -309,7 +309,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             id="revise-note"
             value={reviseNote}
             onChange={e => setReviseNote(e.target.value)}
-            placeholder={aiEnabled ? t('detail.refine_placeholder_ai') : t('detail.refine_placeholder_no_ai')}
+            placeholder={t('detail.refine_placeholder_no_ai')}
             className="detail-input detail-input--textarea"
             rows={3}
           />
@@ -317,7 +317,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             ref={refineButtonRef}
             onClick={handleRefine}
             disabled={refining || animating || !reviseNote.trim()}
-            className={`btn-accent field-btn detail-revise-btn${noteSaved ? ' field-btn--success' : ''}`}
+            className={`btn-accent detail-revise-btn${noteSaved ? ' field-btn--success' : ''}`}
             aria-label={
               refining ? t('detail.rewriting_aria')
               : aiEnabled && canRevise ? t('detail.rewrite_aria')
@@ -511,7 +511,7 @@ function ScLink({ label }) {
   if (href) {
     return (
       <a href={href} target="_blank" rel="noreferrer" className="detail-sc-link">
-        {label}
+        {label}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
       </a>
     )
   }

@@ -34,7 +34,7 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
 
   useEffect(() => {
     if (query !== 'debug skeleton') {
-      setDebugLoading(false)
+      setDebugLoading(false) // eslint-disable-line react-hooks/set-state-in-effect -- intentional reset when debug mode exits
       setDebugError(false)
       return
     }
@@ -46,7 +46,7 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
 
   useEffect(() => {
     let cancelled = false
-    setDataLoading(true)
+    setDataLoading(true)  // eslint-disable-line react-hooks/set-state-in-effect -- standard async loading pattern
     setDataError(false)
 
     const timeout = setTimeout(() => {
@@ -82,12 +82,16 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
 
   const sortedFindings = useMemo(() =>
     [...platformFiltered].sort((a, b) => {
+      const ra = ratings[a.id] || DEFAULT_RATING
+      const rb = ratings[b.id] || DEFAULT_RATING
+      if (ra.archived !== rb.archived) return ra.archived ? 1 : -1
+      if (ra.starred !== rb.starred) return ra.starred ? -1 : 1
       const pa = PRIORITY_ORDER[a.priority] ?? 99
       const pb = PRIORITY_ORDER[b.priority] ?? 99
       if (pa !== pb) return pa - pb
       return (a.scLabel ?? '').localeCompare(b.scLabel ?? '')
     })
-  , [platformFiltered])
+  , [platformFiltered, ratings])
 
   const fuse = useMemo(() => new Fuse(platformFiltered, FUSE_OPTIONS), [platformFiltered])
 

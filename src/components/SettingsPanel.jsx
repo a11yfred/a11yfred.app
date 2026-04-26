@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, ChevronDown, Check, Info } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir } from '../plugins/router/index.js'
+import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -97,6 +97,7 @@ export default function SettingsPanel({
   const t = useT()
   usePageTitle(t('settings.heading'))
   const dir = useDir()
+  const { navigate, route } = useRouter()
   const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -114,7 +115,7 @@ export default function SettingsPanel({
     () => localStorage.getItem('ai_provider') || 'anthropic'
   )
   const [saved, setSaved] = useState(false)
-  const [privacyOpen, setPrivacyOpen] = useState(false)
+  const privacyOpen = route === '/settings/privacy'
   const [rhgPending, setRhgPending] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
   const [pendingLanguage, setPendingLanguage] = useState(language)
@@ -129,10 +130,18 @@ export default function SettingsPanel({
   const [savedProvider, setSavedProvider] = useState(
     () => localStorage.getItem('ai_provider') || 'anthropic'
   )
+  const [savedPlatform, setSavedPlatform] = useState(platform)
+  const [savedLiveSearch, setSavedLiveSearch] = useState(liveSearch)
+  const [savedShowVoting, setSavedShowVoting] = useState(showVoting)
+  const [savedAiEnabled, setSavedAiEnabled] = useState(aiEnabled)
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
   const hasUnsaved = activeProvider !== savedProvider ||
-    PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id])
+    PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id]) ||
+    platform !== savedPlatform ||
+    liveSearch !== savedLiveSearch ||
+    showVoting !== savedShowVoting ||
+    aiEnabled !== savedAiEnabled
   const didMountLang = useRef(false)
 
   // Sync pendingLanguage if the language prop changes externally (e.g. Reset All)
@@ -164,6 +173,7 @@ export default function SettingsPanel({
   const handleSave = () => {
     if (aiEnabled && !keys[activeProvider].trim()) {
       setErrors({ apiKey: true })
+      onToggleAi() // revert toggle — no key means AI can't work
       return
     }
     if (!hasUnsaved) {
@@ -182,6 +192,10 @@ export default function SettingsPanel({
     localStorage.setItem('ai_provider', activeProvider)
     setSavedKeys({ ...keys })
     setSavedProvider(activeProvider)
+    setSavedPlatform(platform)
+    setSavedLiveSearch(liveSearch)
+    setSavedShowVoting(showVoting)
+    setSavedAiEnabled(aiEnabled)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
     announce(t('settings.saved_announce'))
@@ -210,18 +224,18 @@ export default function SettingsPanel({
         <legend className="sr-only">{t('settings.theme_legend')}</legend>
         <div className="radio-chip-group">
           {[
-            { value: 'light', labelKey: 'settings.theme_light' },
-            { value: 'auto',  labelKey: 'settings.theme_auto'  },
-            { value: 'dark',  labelKey: 'settings.theme_dark'  },
-            ...(partyUnlocked ? [{ value: 'party', labelKey: 'settings.theme_party' }] : []),
-          ].map(({ value, labelKey }) => (
+            { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
+            { value: 'auto',  labelKey: 'settings.theme_auto',  announceKey: 'settings.theme_auto_announce'  },
+            { value: 'dark',  labelKey: 'settings.theme_dark',  announceKey: 'settings.theme_dark_announce'  },
+            ...(partyUnlocked ? [{ value: 'party', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
+          ].map(({ value, labelKey, announceKey }) => (
             <RadioChip
               key={value}
               name="theme-setting"
               value={value}
               label={t(labelKey)}
               current={theme}
-              onChange={onThemeChange}
+              onChange={(val) => { onThemeChange(val); announce(t(announceKey)) }}
             />
           ))}
         </div>
@@ -369,9 +383,9 @@ export default function SettingsPanel({
             {t('settings.api_key_label_prefix')} — {p.label}
             {aiEnabled && <span className="settings-field-required"> {t('settings.api_key_required')}</span>}
           </label>
-          <input
+          <textarea
             id={`apikey-${p.id}`}
-            type="password"
+            autoComplete="off"
             value={keys[p.id]}
             onChange={e => {
               setKeys(prev => ({ ...prev, [p.id]: e.target.value }))
@@ -380,10 +394,10 @@ export default function SettingsPanel({
             placeholder={t(p.placeholderKey)}
             disabled={!aiEnabled}
             className="settings-key-input"
-            aria-invalid={errors.apiKey ? 'true' : undefined}
-            aria-describedby={errors.apiKey ? 'api-key-error' : undefined}
+            aria-invalid={errors.apiKey && aiEnabled ? 'true' : undefined}
+            aria-describedby={errors.apiKey && aiEnabled ? 'api-key-error' : undefined}
           />
-          {errors.apiKey && (
+          {errors.apiKey && aiEnabled && (
             <p id="api-key-error" className="settings-field-error">
               {t('settings.api_key_error')}
             </p>
@@ -395,7 +409,7 @@ export default function SettingsPanel({
       <div className="settings-footer-row">
         <button
           type="button"
-          onClick={() => setPrivacyOpen(true)}
+          onClick={() => navigate('/settings/privacy')}
           className="settings-privacy-btn"
         >
           <Info size={14} aria-hidden="true" style={{ flexShrink: 0 }} />
@@ -409,7 +423,7 @@ export default function SettingsPanel({
           >
             {t('settings.reset_all')}
           </button>
-          <button onClick={handleSave} className="btn-accent settings-save-btn">
+          <button onClick={handleSave} className={`btn-accent settings-save-btn${saved ? ' field-btn--success' : ''}`}>
             {saved
               ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
               : t('settings.save')
@@ -426,7 +440,7 @@ export default function SettingsPanel({
 
       <BottomSheet
         open={privacyOpen}
-        onClose={() => setPrivacyOpen(false)}
+        onClose={() => navigate('/settings')}
         label={t('settings.privacy_heading')}
         closeLabel={t('common.close')}
       >
@@ -487,13 +501,17 @@ export default function SettingsPanel({
               setResetConfirmOpen(false)
               setSavedKeys(Object.fromEntries(PROVIDERS.map(p => [p.id, ''])))
               setSavedProvider('anthropic')
+              setSavedPlatform('web')
+              setSavedLiveSearch(true)
+              setSavedShowVoting(true)
+              setSavedAiEnabled(false)
               onReset?.()
             },
             className: 'btn-accent',
           },
           {
             label: t('settings.confirm_reset_all_no'),
-            onClick: () => setResetConfirmOpen(false),
+            onClick: () => { setResetConfirmOpen(false); announce(t('settings.preserved_announce')) },
             className: 'btn-ghost',
           },
         ]}

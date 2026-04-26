@@ -16,13 +16,17 @@ import { returnFocus } from './returnFocus.js'
  * - Dismisses on Escape or backdrop click
  *
  * Props:
- *   open         boolean  — whether the sheet is visible
- *   onClose      fn       — called on Escape, backdrop click, or close button
- *   label        string   — aria-label for the dialog
- *   keepMounted  boolean  — keep children mounted while closed (preserves state)
- *   children     node     — rendered inside the sheet
+ *   open            boolean          — whether the sheet is visible
+ *   onClose         fn               — called on Escape, backdrop click, or close button
+ *   label           string           — aria-label for the dialog
+ *   keepMounted     boolean          — keep children mounted while closed (preserves state)
+ *   returnFocusRef  React.RefObject  — if provided, focus this element on close instead of
+ *                                      auto-captured trigger; use when child effects move focus
+ *                                      before this component's useEffect fires (child effects
+ *                                      fire before parent effects in React)
+ *   children        node             — rendered inside the sheet
  */
-export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, children }) {
+export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, children }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
   const dragStartY = useRef(null)
@@ -31,14 +35,16 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
   useFocusTrap(panelRef, open)
   useAriaHide(panelRef, open)
 
-  // Save the triggering element on open; restore focus on close
+  // Save the triggering element on open; restore focus on close.
+  // returnFocusRef overrides auto-capture for cases where child component effects
+  // (useFocusOnMount) move focus before this parent effect runs.
   useEffect(() => {
     if (open) {
-      triggerRef.current = document.activeElement
+      if (!returnFocusRef) triggerRef.current = document.activeElement
     } else {
-      returnFocus(triggerRef.current)
+      returnFocus(returnFocusRef?.current ?? triggerRef.current)
     }
-  }, [open])
+  }, [open, returnFocusRef])
 
   // Escape key
   useEffect(() => {

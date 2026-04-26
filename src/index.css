@@ -282,6 +282,17 @@ select:focus-visible {
   margin-right: 0.25em;
 }
 
+.external-link-icon {
+  display: inline-block;
+  vertical-align: -0.1em;
+  margin-left: 0.2em;
+  opacity: 0.7;
+}
+
+.header-github-link .external-link-icon {
+  margin-left: 0;
+}
+
 /* ─── Overlay backdrop (shared by Drawer, BottomSheet, Modal) ── */
 
 .overlay-backdrop {
@@ -432,22 +443,34 @@ body:has(.modal-panel.is-open) .drawer-panel {
   padding: 0 var(--space-5) 5rem;
 }
 
-/* Full-width Close button at the bottom of the sheet — mobile only */
+/* Close button at the bottom of the sheet */
 .sheet-close-bottom {
-  display: none;
+  display: flex;
+  justify-content: flex-end;
   padding-top: var(--space-4);
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+[dir="rtl"] .sheet-close-bottom {
+  justify-content: flex-start;
 }
 
 @media (width < 768px) {
   .sheet-close-bottom {
     display: block;
   }
+
+  .sheet-close-bottom-btn {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+  }
 }
 
 .sheet-close-bottom-btn {
   display: block;
-  width: 100%;
-  padding: var(--space-3) var(--space-4);
+  width: auto;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius);
   font-size: var(--fs-body);
   font-weight: 600;
@@ -781,6 +804,12 @@ body:has(.modal-panel.is-open) .drawer-panel {
   border-width: 0;
 }
 
+.error-retry-inline:not(:disabled):hover,
+.error-retry-inline:not(:disabled):focus-visible {
+  background: transparent;
+  color: var(--text);
+}
+
 /* ─── Disabled form controls ─────────────────────────────────
    Browsers apply automatic opacity to disabled <select> elements
    but not <input>, causing visual inconsistency. Force opacity:1
@@ -877,6 +906,24 @@ select:disabled {
   opacity: 0.3;
   cursor: default;
   pointer-events: none;
+}
+
+.result-vote-btn--up:not(:disabled) {
+  transition: transform 120ms ease-out;
+}
+
+.result-vote-btn--up:active:not(:disabled) {
+  transform: translateY(-2px);
+  transition-duration: 40ms;
+}
+
+.result-vote-btn--down:not(:disabled) {
+  transition: transform 120ms ease-out;
+}
+
+.result-vote-btn--down:active:not(:disabled) {
+  transform: translateY(2px);
+  transition-duration: 40ms;
 }
 
 .result-vote-btn:hover:not(:disabled) {
@@ -1382,15 +1429,19 @@ input.search-input:focus {
   margin-bottom: var(--space-2);
 }
 
-input.settings-key-input {
+.settings-key-input {
   width: 100%;
   padding: 6px 10px;
-  font-size: var(--fs-body);
+  font-size: var(--fs-small);
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
   background: var(--bg-subtle);
   border: 1px solid var(--border-control);
   border-radius: var(--radius);
   color: var(--text);
-  margin-bottom: 0;
+  margin-bottom: var(--space-2);
+  resize: vertical;
+  min-height: 56px;
+  line-height: 1.5;
 }
 
 .settings-key-input:disabled {
@@ -1446,7 +1497,7 @@ input.settings-key-input {
   }
 
   .settings-footer-actions {
-    margin-left: auto;
+    margin-inline-start: auto;
   }
 
   .settings-save-btn {
@@ -1723,6 +1774,7 @@ input.settings-key-input {
   list-style: disc;
   padding-left: var(--space-5);
   padding-bottom: var(--space-4);
+  margin-top: 1em;
   margin-bottom: var(--space-4);
 }
 
@@ -1761,6 +1813,7 @@ input.settings-key-input {
 
 .detail-optional {
   color: var(--text-faint);
+  font-weight: 400;
 }
 
 .detail-input {
@@ -1814,12 +1867,17 @@ input.settings-key-input {
 }
 
 .detail-revise-btn {
+  display: inline-flex;
+  align-items: center;
   align-self: stretch;
+  justify-content: center;
+  gap: 4px;
   padding: 0.625em 1.25em;
+  font-size: var(--fs-body);
+  border-radius: var(--radius);
   white-space: normal;
   text-align: center;
   min-width: 6rem;
-  justify-content: center;
 }
 
 .detail-revise-label {
@@ -1857,7 +1915,8 @@ input.settings-key-input {
 
 .detail-related__heading {
   font-size: var(--fs-body);
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--text);
   margin-bottom: var(--space-2);
 }
 
@@ -1867,6 +1926,7 @@ input.settings-key-input {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  margin-bottom: var(--space-4);
 }
 
 .detail-related__btn {
@@ -1982,6 +2042,12 @@ input.settings-key-input {
   border-color: var(--success);
 }
 
+.btn-accent.field-btn--success:hover {
+  color: var(--success);
+  background: var(--accent-bg);
+  border-color: var(--success);
+}
+
 .field__textarea {
   width: 100%;
   padding: 8px 10px;
@@ -2065,6 +2131,14 @@ input.settings-key-input {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.about-subheading {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text);
+  margin-top: var(--space-4);
+  margin-bottom: 0;
 }
 
 .about-body {
@@ -2236,6 +2310,32 @@ input.settings-key-input {
 .about-privacy-btn:hover {
   color: var(--text);
   text-decoration: underline;
+}
+
+.about-inline-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.about-inline-link:hover {
+  color: var(--text);
+}
+
+.about-inline-link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.about-privacy-settings-link {
+  display: block;
+  margin-top: var(--space-4);
 }
 
 /* ─── Dev-only announce toast (localhost only) ──────────── */

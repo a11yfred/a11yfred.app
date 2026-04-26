@@ -10,7 +10,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
   useEffect(() => {
     if (focusCount) countRef.current?.focus()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps — focus once on mount when view-all activates
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- focus once on mount when view-all activates
 
   if (results.length === 0) {
     return <NoResults query={query} />
@@ -213,7 +213,7 @@ export function ResultListSkeleton({ count = SKELETON_CARDS }) {
           <span className="skeleton-line" style={{ display: 'inline-block', height: '1em', width: '7rem', verticalAlign: 'middle' }} />
         </p>
       </div>
-      <ul className="result-list" role="list">
+      <ul className="result-list">
         {Array.from({ length: count }, (_, i) => (
           <li key={i} className="result-row" role="presentation">
             <div className="skeleton-card">
@@ -234,6 +234,13 @@ export function ResultListSkeleton({ count = SKELETON_CARDS }) {
 
 export function DataError({ onRetry }) {
   const t = useT()
+  const headingRef = useRef(null)
+
+  useEffect(() => {
+    announce(t('error.announce'), { priority: 'assertive' })
+    headingRef.current?.focus()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- announce only on first appearance
+
   return (
     <section className="no-results">
       <svg
@@ -248,7 +255,7 @@ export function DataError({ onRetry }) {
         <line x1="28" y1="16" x2="28" y2="32" stroke="var(--text-faint)" strokeWidth="2.5" strokeLinecap="round"/>
         <circle cx="28" cy="39" r="1.5" fill="var(--text-faint)"/>
       </svg>
-      <p className="no-results__heading">{t('error.heading')}</p>
+      <p className="no-results__heading" ref={headingRef} tabIndex={-1}>{t('error.heading')}</p>
       <p className="no-results__body">
         {t('error.body')}{' '}
         {onRetry && (
