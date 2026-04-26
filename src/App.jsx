@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
-import { Settings, X, Info } from 'lucide-react'
+import { Settings, X, Info, ExternalLink } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
@@ -68,6 +68,10 @@ function generatePartyPalette() {
     '--party-grad-x':    `${Math.floor(Math.random() * 80) + 10}%`,
     '--party-grad-y':    `${Math.floor(Math.random() * 80) + 10}%`,
   }
+}
+
+function findingSlug(title) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 }
 
 // Provider display names for the search hint
@@ -158,26 +162,62 @@ function AppContent({
   const { route, navigate, appName } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
-  const settingsOpen = route === '/settings'
+  const settingsOpen = route === '/settings' || route === '/settings/privacy'
   const aboutOpen = route === '/about'
-  const findingMatch = useRouteMatch('/finding/:id')
+  const viewAll = route === '/results/all'
+  const findingMatchSlug = useRouteMatch('/finding/:id/:slug')
+  const findingMatchBare = useRouteMatch('/finding/:id')
+  const findingMatch = findingMatchSlug ?? findingMatchBare
   const findingIdFromRoute = findingMatch?.id ?? null
-  const isNotFound = route !== '/' && route !== '/settings' && route !== '/about' && !findingMatch
+  const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/results/all'])
+  const isNotFound = !KNOWN_ROUTES.has(route) && !findingMatch
   const h1Ref = useRef(null)
   const didMount = useRef(false)
   const aboutWasOpenRef = useRef(false)
-  const [viewAll, setViewAll] = useState(false)
+  const settingsTriggerRef = useRef(null)
+  const aboutTriggerRef = useRef(null)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
-  const handleOpenAbout = () => navigate('/about')
-  const handleCloseAbout = () => navigate(selected ? `/finding/${selected.id}` : '/')
+  const handleCloseSettings = () => {
+    if (returnViewAllRef.current && !returnToPanelRef.current) {
+      returnViewAllRef.current = false
+      navigate('/results/all')
+    } else {
+      navigate('/')
+    }
+  }
+  const handleOpenAbout = () => {
+    aboutTriggerRef.current = document.activeElement
+    if (viewAll) returnViewAllRef.current = true
+    navigate('/about')
+  }
+  const handleCloseAbout = () => {
+    if (selected) {
+      navigate(`/finding/${selected.id}/${findingSlug(selected.title)}`)
+    } else if (returnViewAllRef.current) {
+      returnViewAllRef.current = false
+      navigate('/results/all')
+    } else {
+      navigate('/')
+    }
+  }
   const handleSelectFinding = (finding) => {
+    if (finding) {
+      findingTriggerRef.current = document.activeElement
+      if (viewAll) returnViewAllRef.current = true
+    } else {
+      const shouldReturn = returnViewAllRef.current
+      returnViewAllRef.current = false
+      if (shouldReturn) { navigate('/results/all'); return }
+    }
     setSelected(finding)
-    navigate(finding ? `/finding/${finding.id}` : '/')
+    navigate(finding ? `/finding/${finding.id}/${findingSlug(finding.title)}` : '/')
   }
   // Tracks whether settings was opened while a finding panel was selected,
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
+  const findingTriggerRef = useRef(null)
   const pendingSearchAnnounce = useRef(false)
+  const returnViewAllRef = useRef(false)
   const liveAnnounceTimer = useRef(null)
 
   const { ratings, upvote, downvote, toggleStar, toggleArchive } = useFindingRatings()
@@ -287,14 +327,16 @@ function AppContent({
     }, 500)
   }, [query, liveSearch, searchKey]) // eslint-disable-line react-hooks/exhaustive-deps -- t and results.length read from closure; refs not reactive
 
-  // WCAG 2.4.3: focus h1 when returning from settings on desktop (page swap).
-  // On mobile or when returning to a finding panel, restore panel focus instead.
+  // WCAG 2.4.3: restore focus to the trigger button (or h1) when settings/about close.
   useEffect(() => {
     if (!didMount.current) { didMount.current = true; return }
     if (!settingsOpen) {
       if (returnToPanelRef.current) {
         setPanelFocusTrigger(n => n + 1)
         returnToPanelRef.current = false
+      } else if (settingsTriggerRef.current) {
+        settingsTriggerRef.current.focus()
+        settingsTriggerRef.current = null
       } else if (isDesktop) {
         h1Ref.current?.focus()
       }
@@ -303,8 +345,13 @@ function AppContent({
 
   useEffect(() => {
     if (aboutOpen) { aboutWasOpenRef.current = true; return }
-    if (aboutWasOpenRef.current && isDesktop) {
-      h1Ref.current?.focus()
+    if (aboutWasOpenRef.current) {
+      if (aboutTriggerRef.current) {
+        aboutTriggerRef.current.focus()
+        aboutTriggerRef.current = null
+      } else if (isDesktop) {
+        h1Ref.current?.focus()
+      }
       aboutWasOpenRef.current = false
     }
   }, [aboutOpen, isDesktop])
@@ -319,7 +366,7 @@ function AppContent({
   useEffect(() => {
     if (!selected || settingsOpen || aboutOpen) return
     document.title = appName ? `${appName} | ${selected.title}` : selected.title
-  }, [selected, settingsOpen, aboutOpen, appName]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [selected, settingsOpen, aboutOpen, appName])
 
   const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val' }
 
@@ -327,12 +374,12 @@ function AppContent({
     setLanguage(egg)
     setQuery('')
     handleSelectFinding(null)
-    returnToPanelRef.current = false
+    returnToPanelRef.current = false // eslint-disable-line react-hooks/immutability
     setSubmittedQuery('')
   }
 
   const handleQueryChange = (q) => {
-    if (q && viewAll) setViewAll(false)
+    if (q && viewAll) navigate('/')
     if (liveSearch) {
       const egg = EASTER_EGGS[q.trim().toLowerCase()]
       if (egg) { activateEasterEgg(egg); return }
@@ -340,13 +387,13 @@ function AppContent({
     setQuery(q)
     if (q === '') {
       handleSelectFinding(null)
-      returnToPanelRef.current = false
+      returnToPanelRef.current = false // eslint-disable-line react-hooks/immutability
       setSubmittedQuery('')
     }
   }
 
   const handleSearch = () => {
-    setViewAll(false)
+    if (viewAll) navigate('/')
     const egg = EASTER_EGGS[query.trim().toLowerCase()]
     if (egg) { activateEasterEgg(egg); return }
     setSubmittedQuery(query)
@@ -356,8 +403,10 @@ function AppContent({
   }
 
   const handleOpenSettings = () => {
+    settingsTriggerRef.current = document.activeElement
     aboutWasOpenRef.current = false  // prevent about-close focus competing with settings-open focus
-    returnToPanelRef.current = !!selected
+    returnToPanelRef.current = !!selected // eslint-disable-line react-hooks/immutability
+    if (viewAll && !selected) returnViewAllRef.current = true
     navigate('/settings')
     // Do NOT clear selected here — keepMounted preserves the panel state
   }
@@ -379,7 +428,6 @@ function AppContent({
     setQuery('')
     setSubmittedQuery('')
     setSelected(null)
-    setViewAll(false)
     setViewAllConfirmOpen(false)
     setViewAllLoading(false)
     navigate('/')
@@ -409,7 +457,10 @@ function AppContent({
     onPlatformChange: (p) => { setPlatform(p) },
     partyUnlocked,
     onUnlock: unlock,
-    onClose: () => navigate(selected ? `/finding/${selected.id}` : '/'),
+    onClose: () => {
+      if (selected) navigate(`/finding/${selected.id}/${findingSlug(selected.title)}`)
+      else handleCloseSettings()
+    },
     onReset: handleResetAll,
   }
 
@@ -489,7 +540,7 @@ function AppContent({
             onClick: () => {
               announce(t('results.loading_announce', { count: sortedFindings.length }))
               setViewAllLoading(true)
-              setViewAll(true)
+              navigate('/results/all')
               setViewAllConfirmOpen(false)
             },
             className: 'btn-accent modal-ok-btn',
@@ -520,7 +571,7 @@ function AppContent({
           settingsOpen={settingsOpen}
           aboutOpen={aboutOpen}
           onOpenSettings={handleOpenSettings}
-          onCloseSettings={() => navigate('/')}
+          onCloseSettings={handleCloseSettings}
           onOpenAbout={handleOpenAbout}
           onCloseAbout={handleCloseAbout}
           isDesktop={isDesktop}
@@ -540,7 +591,7 @@ function AppContent({
       </div>
 
       {!isDesktop && (
-        <Drawer open={settingsOpen} onClose={() => navigate('/')} label={t('settings.drawer_label')}>
+        <Drawer open={settingsOpen} onClose={handleCloseSettings} label={t('settings.drawer_label')} focusOnClose={settingsTriggerRef}>
           <Suspense fallback={null}>
             <SettingsPanel {...settingsProps} />
           </Suspense>
@@ -548,17 +599,18 @@ function AppContent({
       )}
 
       {!isDesktop && (
-        <Drawer open={aboutOpen} onClose={handleCloseAbout} label={t('about.sheet_label')}>
+        <Drawer open={aboutOpen} onClose={handleCloseAbout} label={t('about.sheet_label')} focusOnClose={aboutTriggerRef}>
           <AboutPanel onClose={handleCloseAbout} />
         </Drawer>
       )}
 
       <BottomSheet
         open={!!selected && !settingsOpen && !aboutOpen}
-        onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }}
+        onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
         keepMounted={(settingsOpen || aboutOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
+        returnFocusRef={findingTriggerRef}
       >
         {selected && (
           <DetailPanel
@@ -597,7 +649,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, onOpenSettings, onCloseSetting
           >
             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12z" />
           </svg>
-          {t('header.github')}
+          {t('header.github')}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
         </a>
       )}
 
@@ -616,12 +668,12 @@ function Header({ h1Ref, settingsOpen, aboutOpen, onOpenSettings, onCloseSetting
           </button>
         )}
         <button
-          onClick={settingsOpen ? onCloseSettings : onOpenSettings}
-          aria-label={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
-          title={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
+          onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : onOpenSettings}
+          aria-label={settingsOpen ? t('header.close_settings') : aboutOpen ? t('common.close') : t('header.open_settings')}
+          title={settingsOpen ? t('header.close_settings') : aboutOpen ? t('common.close') : t('header.open_settings')}
           className="btn-icon btn-icon-accent page-header__settings-btn"
         >
-          {settingsOpen
+          {settingsOpen || aboutOpen
             ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
             : <Settings size={20} strokeWidth={2} aria-hidden="true" />
           }
@@ -719,7 +771,7 @@ function Footer() {
           >
             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
           </svg>
-          {t('footer.linkedin')}
+          {t('footer.linkedin')}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
         </a>
       </p>
     </footer>
