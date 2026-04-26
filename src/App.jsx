@@ -115,6 +115,8 @@ function AppShell() {
         language={language} setLanguage={setLanguage}
         aiEnabled={aiEnabled} setAiEnabled={setAiEnabled}
         liveSearch={liveSearch} setLiveSearch={setLiveSearch}
+        showVoting={showVoting} setShowVoting={setShowVoting}
+        partyUnlocked={partyUnlocked} setPartyUnlocked={setPartyUnlocked}
         query={query} setQuery={setQuery}
         submittedQuery={submittedQuery} setSubmittedQuery={setSubmittedQuery}
         searchKey={searchKey} setSearchKey={setSearchKey}
@@ -131,6 +133,8 @@ function AppContent({
   language, setLanguage,
   aiEnabled, setAiEnabled,
   liveSearch, setLiveSearch,
+  showVoting, setShowVoting,
+  partyUnlocked, setPartyUnlocked,
   query, setQuery,
   submittedQuery, setSubmittedQuery,
   searchKey, setSearchKey,
