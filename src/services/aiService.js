@@ -2,12 +2,8 @@
  * aiService.js
  *
  * Thin abstraction over AI providers.
- * - Anthropic: implemented
- * - OpenAI, Google, Microsoft: stubbed, ready to wire up
- *
  * Keys are read from localStorage (set via SettingsPanel).
  * Calls go directly from the browser to the provider API.
- * No server required for Phase 1.
  */
 
 const PROVIDER_CONFIGS = {
@@ -20,7 +16,7 @@ const PROVIDER_CONFIGS = {
       'anthropic-dangerous-direct-browser-access': 'true',
     }),
     buildBody: (prompt) => JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-6',
       max_tokens: 1024,
       messages: [{ role: 'user', content: prompt }],
     }),
@@ -31,18 +27,55 @@ const PROVIDER_CONFIGS = {
   },
 
   openai: {
-    // TODO: implement OpenAI
-    stub: true,
+    url: 'https://api.openai.com/v1/chat/completions',
+    buildHeaders: (key) => ({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${key}`,
+    }),
+    buildBody: (prompt) => JSON.stringify({
+      model: 'gpt-4o',
+      max_tokens: 1024,
+      messages: [{ role: 'user', content: prompt }],
+    }),
+    parseResponse: async (res) => {
+      const data = await res.json()
+      return data.choices?.[0]?.message?.content || ''
+    },
   },
 
   google: {
-    // TODO: implement Gemini
-    stub: true,
+    buildUrl: (key) =>
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,
+    buildHeaders: () => ({
+      'Content-Type': 'application/json',
+    }),
+    buildBody: (prompt) => JSON.stringify({
+      contents: [{ parts: [{ text: prompt }] }],
+      generationConfig: { maxOutputTokens: 1024 },
+    }),
+    parseResponse: async (res) => {
+      const data = await res.json()
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || ''
+    },
   },
 
   microsoft: {
-    // TODO: implement Copilot
-    stub: true,
+    // Azure OpenAI requires an endpoint URL in addition to an API key.
+    // Set VITE_AZURE_OPENAI_ENDPOINT in your .env to your deployment URL:
+    //   https://{resource}.openai.azure.com/openai/deployments/{deployment}/chat/completions?api-version=2024-02-01
+    buildUrl: () => import.meta.env.VITE_AZURE_OPENAI_ENDPOINT || null,
+    buildHeaders: (key) => ({
+      'Content-Type': 'application/json',
+      'api-key': key,
+    }),
+    buildBody: (prompt) => JSON.stringify({
+      max_tokens: 1024,
+      messages: [{ role: 'user', content: prompt }],
+    }),
+    parseResponse: async (res) => {
+      const data = await res.json()
+      return data.choices?.[0]?.message?.content || ''
+    },
   },
 }
 
@@ -74,14 +107,23 @@ export async function getAiRefinement({ defect, descText, remText, note }) {
   }
 
   const config = PROVIDER_CONFIGS[provider]
-
-  if (config.stub) {
-    throw new Error(`${provider} provider is not yet implemented.`)
-  }
-
   const prompt = buildPrompt({ defect, descText, remText, note })
 
-  const res = await fetch(config.url, {
+  // Build URL (some providers need the key in the URL)
+  let url
+  if (config.buildUrl) {
+    url = config.buildUrl(key)
+    if (!url) {
+      throw new Error(
+        `Microsoft/Azure provider requires VITE_AZURE_OPENAI_ENDPOINT to be set. ` +
+        `Add your Azure OpenAI deployment URL to your .env file.`
+      )
+    }
+  } else {
+    url = config.url
+  }
+
+  const res = await fetch(url, {
     method: 'POST',
     headers: config.buildHeaders(key),
     body: config.buildBody(prompt),
@@ -89,12 +131,11 @@ export async function getAiRefinement({ defect, descText, remText, note }) {
 
   if (!res.ok) {
     const err = await res.text()
-    throw new Error(`API error: ${res.status} — ${err}`)
+    throw new Error(`API error (${provider}): ${res.status} — ${err}`)
   }
 
   const text = await config.parseResponse(res)
 
-  // Parse the two-line response
   const descMatch = text.match(/^Description:\s*(.+)/m)
   const remMatch = text.match(/^Remediation:\s*(.+)/ms)
 
