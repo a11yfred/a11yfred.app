@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { X } from 'lucide-react'
 
@@ -25,15 +25,35 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
   const dragStartY = useRef(null)
   const dragDelta = useRef(0)
 
-  // Scroll lock — prevent background from scrolling when sheet is open
+  // useLayoutEffect fires before any useEffect (including useFocusOnMount in children),
+  // so showModal() records the external trigger — not the heading — as the return target.
+  useLayoutEffect(() => {
+    const dialog = panelRef.current
+    if (!dialog || !open || dialog.open) return
+    dialog.showModal()
+  }, [open])
+
   useEffect(() => {
+    const dialog = panelRef.current
+    if (!dialog) return
     if (open) {
       document.body.style.overflow = 'hidden'
     } else {
+      if (dialog.open) dialog.close()
       document.body.style.overflow = ''
     }
     return () => { document.body.style.overflow = '' }
   }, [open])
+
+  // Sync React state when Escape closes the dialog natively.
+  // Without this, open prop stays true and showModal() is never re-called.
+  useEffect(() => {
+    const dialog = panelRef.current
+    if (!dialog) return
+    const handleCancel = (e) => { e.preventDefault(); onClose() }
+    dialog.addEventListener('cancel', handleCancel)
+    return () => dialog.removeEventListener('cancel', handleCancel)
+  }, [onClose])
 
   // Swipe-to-dismiss: drag the sheet down from the chrome area to close
   const handleTouchStart = (e) => {
@@ -73,13 +93,6 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
 
   return createPortal(
     <>
-      {/* Backdrop — click to dismiss */}
-{/*       <div
-        className={`sheet-backdrop${open ? ' is-open' : ''}`}
-        onClick={onClose}
-        aria-hidden="true"
-      />
- */}
       {/* Panel */}
       <dialog
         ref={panelRef}

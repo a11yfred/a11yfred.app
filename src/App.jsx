@@ -148,7 +148,7 @@ function AppContent({
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
   // to the settings drawer — exclude the panel from triggering it separately.
-  const backgroundInert = (!isDesktop && settingsOpen) || (!!selected && !settingsOpen)
+  const backgroundInert = !isDesktop && settingsOpen
 
   useEffect(() => {
     // Clean up any palette inline styles from a previous party activation

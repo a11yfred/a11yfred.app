@@ -346,10 +346,13 @@ body:has(.modal-panel.is-open) .drawer-panel {
 /* Panel slides up from bottom; centered and width-capped to match .app-container.
    overflow:hidden clips children to the border-radius (no scrollbar bleeds).
    Flex column: chrome is a fixed-height row at top, content scrolls below it. */
+/* Base rule: positioning + closed/exit state */
 .sheet-panel {
   position: fixed;
   left: 50%;
   bottom: 0;
+  top: auto;
+  margin: 0;
   width: 100%;
   max-width: 720px;
   max-height: 92dvh;
@@ -359,16 +362,26 @@ body:has(.modal-panel.is-open) .drawer-panel {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transform: translateX(-50%) translateY(100%);
-  transition: transform var(--duration-base) var(--ease-in-out);
-  will-change: transform;
   outline: none;
+  will-change: transform;
+  transform: translateX(-50%) translateY(100%); /* closed/exit state */
+  transition:
+    transform var(--duration-base) var(--ease-in-out),
+    overlay var(--duration-base) var(--ease-in-out) allow-discrete,
+    display var(--duration-base) var(--ease-in-out) allow-discrete;
 }
 
-.sheet-panel.is-open {
+/* Open state */
+.sheet-panel:open {
   transform: translateX(-50%) translateY(0);
 }
 
+/* Entry: where the open transition starts from */
+@starting-style {
+  .sheet-panel:open {
+    transform: translateX(-50%) translateY(100%);
+  }
+}
 /* Chrome row — handle centered via absolute positioning; close button in normal
    flex flow at the right. padding-top ≥ --radius-lg keeps the button's focus
    ring clear of the top-corner clip zone on the panel. */
