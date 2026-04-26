@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, RotateCcw, Clipboard, Check } from 'lucide-react'
 import { getAiRefinement } from '../services/aiService.js'
 import { useFocusOnMount, useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -283,18 +283,16 @@ function Field({ id, label, value, onChange, copied, onCopy, reset, onReset, isD
             aria-label={reset ? t('detail.reset_done_aria', { label }) : t('detail.reset_aria', { label })}
             className={`btn-accent field-btn${reset ? ' field-btn--success' : ''}`}
           >
-            {reset
-              ? (isDesktop ? t('detail.reset_done_desktop') : t('detail.reset_done_mobile'))
-              : (isDesktop ? t('detail.reset_desktop') : t('detail.reset_mobile'))}
+            {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
+            {isDesktop && <span>{reset ? t('detail.reset_done_desktop') : t('detail.reset_desktop')}</span>}
           </button>
           <button
             onClick={onCopy}
             aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
             className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
           >
-            {copied
-              ? (isDesktop ? t('detail.copied_desktop') : t('detail.copied_mobile'))
-              : (isDesktop ? t('detail.copy_desktop') : t('detail.copy_mobile'))}
+            {copied ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+            {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
           </button>
         </div>
       </div>

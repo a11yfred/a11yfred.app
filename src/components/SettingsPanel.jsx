@@ -149,7 +149,7 @@ export default function SettingsPanel({
           aria-label={t('settings.back')}
           className="btn-icon btn-icon-accent"
         >
-          <BackChevron size={22} strokeWidth={2.5} aria-hidden="true" />
+          <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>
         <h2 ref={headingRef} tabIndex={-1} className="settings-title">
           {t('settings.heading')}

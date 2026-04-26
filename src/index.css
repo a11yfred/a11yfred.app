@@ -1512,7 +1512,6 @@ input.search-input:focus {
   padding-left: var(--space-5);
   padding-bottom: var(--space-4);
   margin-bottom: var(--space-4);
-  border-bottom: 1px solid var(--border);
 }
 
 .detail-sc-item {
@@ -1622,6 +1621,9 @@ input.search-input:focus {
 }
 
 .field-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: var(--fs-body);
   padding: 2px 8px;
   border-radius: 4px;

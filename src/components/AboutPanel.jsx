@@ -18,7 +18,7 @@ export default function AboutPanel({ onClose }) {
           aria-label={t('settings.back')}
           className="btn-icon btn-icon-accent"
         >
-          <BackChevron size={22} strokeWidth={2.5} aria-hidden="true" />
+          <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>
         <h2 ref={headingRef} tabIndex={-1} className="about-title">
           {t('about.sheet_label')}
