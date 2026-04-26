@@ -51,3 +51,23 @@ export function useRouter() {
   if (!ctx) throw new Error('useRouter must be used inside <Router>')
   return ctx
 }
+
+export function matchRoute(pattern, route) {
+  const patternParts = pattern.split('/')
+  const routeParts = route.split('/')
+  if (patternParts.length !== routeParts.length) return null
+  const params = {}
+  for (let i = 0; i < patternParts.length; i++) {
+    if (patternParts[i].startsWith(':')) {
+      params[patternParts[i].slice(1)] = routeParts[i]
+    } else if (patternParts[i] !== routeParts[i]) {
+      return null
+    }
+  }
+  return params
+}
+
+export function useRouteMatch(pattern) {
+  const { route } = useRouter()
+  return matchRoute(pattern, route)
+}

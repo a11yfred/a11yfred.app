@@ -12,6 +12,7 @@ import useDefectRatings from './hooks/useDefectRatings.js'
 import {
   Router,
   useRouter,
+  useRouteMatch,
   Drawer,
   BottomSheet,
   Modal,
@@ -154,19 +155,25 @@ function AppContent({
   platform, setPlatform,
   panelFocusTrigger, setPanelFocusTrigger,
 }) {
-  const { route, navigate } = useRouter()
+  const { route, navigate, appName } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
   const settingsOpen = route === '/settings'
-  const isNotFound = route !== '/' && route !== '/settings'
+  const aboutOpen = route === '/about'
+  const defectMatch = useRouteMatch('/defect/:id')
+  const defectIdFromRoute = defectMatch?.id ?? null
+  const isNotFound = route !== '/' && route !== '/settings' && route !== '/about' && !defectMatch
   const h1Ref = useRef(null)
   const didMount = useRef(false)
   const aboutWasOpenRef = useRef(false)
-  const [aboutOpen, setAboutOpen] = useState(false)
   const [viewAll, setViewAll] = useState(false)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
-  const handleOpenAbout = () => { if (settingsOpen) navigate('/'); setAboutOpen(true) }
-  const handleCloseAbout = () => setAboutOpen(false)
+  const handleOpenAbout = () => navigate('/about')
+  const handleCloseAbout = () => navigate(selected ? `/defect/${selected.id}` : '/')
+  const handleSelectDefect = (defect) => {
+    setSelected(defect)
+    navigate(defect ? `/defect/${defect.id}` : '/')
+  }
   // Tracks whether settings was opened while a defect panel was selected,
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
@@ -302,12 +309,24 @@ function AppContent({
     }
   }, [aboutOpen, isDesktop])
 
+  useEffect(() => {
+    if (!defectIdFromRoute || dataLoading || allDefects.length === 0) return
+    if (selected?.id === defectIdFromRoute) return
+    const found = allDefects.find(d => d.id === defectIdFromRoute)
+    if (found) setSelected(found)
+  }, [defectIdFromRoute, dataLoading]) // eslint-disable-line react-hooks/exhaustive-deps -- allDefects populated when dataLoading flips false
+
+  useEffect(() => {
+    if (!selected || settingsOpen || aboutOpen) return
+    document.title = appName ? `${appName} | ${selected.title}` : selected.title
+  }, [selected, settingsOpen, aboutOpen, appName]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val' }
 
   const activateEasterEgg = (egg) => {
     setLanguage(egg)
     setQuery('')
-    setSelected(null)
+    handleSelectDefect(null)
     returnToPanelRef.current = false
     setSubmittedQuery('')
   }
@@ -320,7 +339,7 @@ function AppContent({
     }
     setQuery(q)
     if (q === '') {
-      setSelected(null)
+      handleSelectDefect(null)
       returnToPanelRef.current = false
       setSubmittedQuery('')
     }
@@ -332,13 +351,12 @@ function AppContent({
     if (egg) { activateEasterEgg(egg); return }
     setSubmittedQuery(query)
     setSearchKey(k => k + 1)
-    setSelected(null)
+    handleSelectDefect(null)
     pendingSearchAnnounce.current = true
   }
 
   const handleOpenSettings = () => {
     aboutWasOpenRef.current = false  // prevent about-close focus competing with settings-open focus
-    setAboutOpen(false)
     returnToPanelRef.current = !!selected
     navigate('/settings')
     // Do NOT clear selected here — keepMounted preserves the panel state
@@ -387,7 +405,7 @@ function AppContent({
     onPlatformChange: (p) => { setPlatform(p) },
     partyUnlocked,
     onUnlock: unlock,
-    onClose: () => navigate('/'),
+    onClose: () => navigate(selected ? `/defect/${selected.id}` : '/'),
     onReset: handleResetAll,
   }
 
@@ -418,7 +436,7 @@ function AppContent({
                 key="view-all"
                 results={sortedDefects}
                 selected={selected}
-                onSelect={setSelected}
+                onSelect={handleSelectDefect}
                 query=""
                 ratings={ratings}
                 onUpvote={upvote}
@@ -435,7 +453,7 @@ function AppContent({
                   key="search"
                   results={results}
                   selected={selected}
-                  onSelect={setSelected}
+                  onSelect={handleSelectDefect}
                   query={activeQuery}
                   ratings={ratings}
                   onUpvote={upvote}
@@ -533,7 +551,7 @@ function AppContent({
 
       <BottomSheet
         open={!!selected && !settingsOpen && !aboutOpen}
-        onClose={() => { setSelected(null); returnToPanelRef.current = false }}
+        onClose={() => { handleSelectDefect(null); returnToPanelRef.current = false }}
         keepMounted={(settingsOpen || aboutOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
@@ -545,7 +563,7 @@ function AppContent({
             aiEnabled={aiEnabled}
             focusTrigger={panelFocusTrigger}
             allDefects={allDefects}
-            onSelect={setSelected}
+            onSelect={handleSelectDefect}
           />
         )}
       </BottomSheet>

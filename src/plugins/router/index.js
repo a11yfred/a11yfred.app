@@ -1,4 +1,4 @@
-export { Router, useRouter } from './Router.jsx'
+export { Router, useRouter, matchRoute, useRouteMatch } from './Router.jsx'
 export { default as Route } from './Route.jsx'
 export { default as Link } from './Link.jsx'
 export { default as Drawer } from './Drawer.jsx'
