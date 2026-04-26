@@ -106,7 +106,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` wired into all components. `en.json` is the source of truth. RTL locales (`ar-PS`, `ug`) automatically set `dir="rtl"` on `<html>`.
 
 - [ ] **String coverage** — any new UI text must use `t('key')` from `src/i18n/en.json`; never hardcode English strings in components
-- [ ] **Translate new UI strings** — after adding any new keys to `en.json`, provide proper translations (not English fallbacks) for all 49 non-English locale files; use the same machine-translation approach used in prior batches and apply capitalization conventions (sentence case for Romance/Germanic, no change for caseless scripts); this must run as part of every maintenance pass when `en.json` was modified since the last pass
+- [ ] **Translate new UI strings** — after adding any new keys to `en.json`, run `ANTHROPIC_API_KEY=... npm run translate` to fill in proper translations for all 49 non-English locale files; the script detects keys still holding English fallback values and translates them in one pass; apply capitalization conventions afterward (sentence case for Romance/Germanic, no change for caseless scripts); this must run as part of every maintenance pass when `en.json` was modified since the last pass
 - [ ] **Locale file parity** — all keys in `en.json` must exist in every other locale file; add missing keys with an English fallback value when adding new strings; run before release:
 
   ```sh
@@ -136,7 +136,7 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
 
 - [ ] **docs/CHANGELOG.md** — entry added for any meaningful code change
 - [ ] **docs/UPDATES.md** — plain-language entry for anything user-facing
-- [ ] **docs/TODO.md** — resolved items closed and moved to Resolved section; shorthand expanded before filing
+- [ ] **docs/TODO.md** — for any `[x]` items within an active section (Immediate, UX, etc.): wrap the item text in `~~strikethrough~~` and move it to the bottom of that same section; for items fully retired from the backlog, move them instead to `## Resolved` with strikethrough; never leave a checked `[x]` item at the top of a section among unchecked items
 - [ ] **README.md** — project structure matches actual files; phase table updated if status changes
 - [ ] **docs/CONTRIBUTING.md** — defect schema matches `corpus.json`; update if fields are added or renamed
 - [ ] **docs/MAINTENANCE.md** — add a row to the run log above; add/retire sections as systems change
