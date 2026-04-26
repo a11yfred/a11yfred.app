@@ -159,7 +159,7 @@ select:focus-visible {
   font-size: var(--fs-body);
   color: var(--accent-text);
   text-decoration: underline;
-  min-height: 44px;
+  min-height: var(--touch-target);
 }
 
 [dir="rtl"] .header-github-link {
@@ -679,8 +679,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
   color: var(--text-muted);
 }
 
@@ -1395,7 +1395,7 @@ input.settings-key-input {
 .settings-field-error {
   color: var(--error);
   font-size: var(--fs-small);
-  margin-top: 0.2em;
+  margin-top: 0.5em;
   margin-bottom: var(--space-2);
 }
 
@@ -1499,7 +1499,7 @@ input.settings-key-input {
   height: 8px;
   border-radius: 50%;
   background: transparent;
-  border: 1.5px solid var(--text-muted);
+  border: var(--border-width-control) solid var(--text-muted);
   flex-shrink: 0;
   transition: all var(--duration-fast);
 }
@@ -1622,7 +1622,7 @@ input.settings-key-input {
   height: 16px;
   border-radius: 50%;
   background: #fff;
-  outline: 1.5px solid var(--border-control);
+  outline: var(--border-width-control) solid var(--border-control);
   outline-offset: 0;
   position: absolute;
   top: 3px;
@@ -1663,7 +1663,7 @@ input.settings-key-input {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  border: 1.5px solid var(--border-control);
+  border: var(--border-width-control) solid var(--border-control);
   background: transparent;
 }
 
@@ -1905,7 +1905,7 @@ input.settings-key-input {
   appearance: none;
   width: 1.125em;
   height: 1.125em;
-  border: 1.5px solid var(--accent);
+  border: var(--border-width-control) solid var(--accent);
   border-radius: var(--radius-sm);
   background-color: var(--bg-subtle);
   cursor: pointer;

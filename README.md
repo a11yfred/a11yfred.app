@@ -19,27 +19,15 @@ npm run dev        # http://localhost:5173
 npm run build      # output → dist/
 ```
 
-## Deploy to Netlify
+## Deploy
 
-Connect the GitHub repo to a Netlify site. The `netlify.toml` in the project root handles:
+Three deployment targets are configured. See [docs/DEPLOYING.md](docs/DEPLOYING.md) for full instructions on enabling/disabling each.
 
-- Build command (`npm run build`) and publish directory (`dist`)
-- Security headers (CSP, X-Frame-Options, Referrer-Policy, Permissions-Policy)
-- SPA fallback redirect so hash routes work on hard reload
-
-No other Netlify configuration is required.
-
-### GitHub Pages (alternative)
-
-1. Uncomment and set `REPO_NAME` in `vite.config.js`
-2. Build: `npm run build`
-3. Push `dist/` to your `gh-pages` branch or use the `gh-pages` npm package:
-
-```bash
-npm install --save-dev gh-pages
-# Add to package.json: "deploy": "gh-pages -d dist"
-npm run deploy
-```
+| Platform | Config | Status |
+| --- | --- | --- |
+| **Netlify** | `netlify.toml` | Active — auto-deploys on push |
+| **Vercel** | `vercel.json` | Ready — connect repo in Vercel dashboard |
+| **GitHub Pages** | `.github/workflows/deploy-pages.yml` | Dormant — manual trigger, requires public repo |
 
 ---
 
@@ -48,8 +36,7 @@ npm run deploy
 ```text
 src/
   data/
-    mikeys-corpus.json  # Personal defect corpus (private — never ships in public build)
-    corpus.json         # Public corpus — 54 plain-language entries; default data source
+    corpus.json         # Public corpus — WCAG-aligned defect entries; default data source
   i18n/
     index.jsx           # I18nProvider + useT() hook (zero-dep, React Context)
     en.json             # Source of truth (~100 keys)
@@ -64,18 +51,15 @@ src/
     authService.js      # Auth stub — Google + GitHub OAuth via Supabase; Phase 2
   hooks/
     useDefectSearch.js  # Fuse.js search with platform filter
-  utils/
-    partySounds.js        # Web Audio API SFX: goose honk, cat sounds, fart, ahooga, wolf whistle, snare
-    partySongs.js         # Web Audio API music: looping Song 2 (Blur) approximation
   components/
     SearchBar.jsx
     ResultList.jsx
     DetailPanel.jsx
     SettingsPanel.jsx
-    Confetti.jsx          # Party mode canvas confetti animation (5 s, rAF loop)
-    PartySparkles.jsx     # Party mode click sparkles — burst of stars/circles from cursor
-    PartyMusicPlayer.jsx  # Party mode floating play/pause button; random position per route
-    KofiWidget.jsx        # Ko-fi donation widget + a11y patch (currently disabled)
+    Confetti.jsx
+    PartySparkles.jsx
+    PartyMusicPlayer.jsx
+    KofiWidget.jsx      # Ko-fi donation widget + a11y patch (currently disabled)
   plugins/
     router/             # Hash-based SPA router + focus-management hooks (zero deps)
       Router.jsx        # <Router> provider and useRouter hook
@@ -100,7 +84,7 @@ src/
       README.md         # Usage guide and screen reader behavior notes
   App.jsx
   main.jsx
-  tokens.css            # Design tokens: colors, type scale, spacing, radius, dark mode, party mode
+  tokens.css            # Design tokens: colors, type scale, spacing, radius, dark mode
   typography.css        # Type scale utility classes (available for adoption)
   index.css             # Reset, base styles, layout, off-canvas, focus ring, sr-only
 
@@ -109,6 +93,7 @@ public/
 
 index.html              # App shell; SEO meta tags included but commented out for dev
 netlify.toml            # Build settings, security headers, SPA redirect rule
+vercel.json             # Build settings, security headers, SPA rewrite rule
 vite.config.js          # Vite config; vendor chunk splitting for long-term caching
 ```
 
@@ -116,7 +101,7 @@ vite.config.js          # Vite config; vendor chunk splitting for long-term cach
 
 ## Defect schema
 
-Each entry in `mikeys-corpus.json` follows this schema:
+Each entry in `corpus.json` follows this schema:
 
 ```json
 {
@@ -147,7 +132,7 @@ Each entry in `mikeys-corpus.json` follows this schema:
 
 ## AI assist
 
-With AI assist toggled on, the Refine field rewrites the description and remediation based on a short note. AI is **off by default**.
+With AI assist toggled on, the Revision Notes field rewrites the description and remediation based on a short note. AI is **off by default**.
 
 Open Settings (⚙) to select a provider and add your API key. Keys are stored in `localStorage` only — never sent to any server other than the provider's own API. You supply your own key; usage is billed directly to your account.
 
@@ -156,7 +141,7 @@ Stubbed (ready to wire up): OpenAI, Google Gemini, Microsoft Copilot
 
 ## Themes
 
-Settings includes Light, Auto, Dark, and **Party Mode?** theme options. Party Mode generates a random complementary color palette on each activation, switches the font to Comic Sans, shows a 5-second confetti animation (skipped when `prefers-reduced-motion` is on), and changes the cursor to a magic wand. Screen readers receive a full description of the changes via `announce()`.
+Settings includes Light, Auto, and Dark theme options.
 
 ## Language
 
@@ -192,8 +177,6 @@ See [`src/plugins/announce/README.md`](src/plugins/announce/README.md) for usage
 | 2 | AI assist on any model of choice | Partial (Anthropic done) |
 | 3 | Public version with public data (WAI, WebAIM, Deque, axe) | Planned |
 
-Mikey's private corpus (`mikeys-corpus.json`) is never part of the public version.
-
 ---
 
 ## Contributing
@@ -211,9 +194,10 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to fork, run locally, a
 | [docs/TODO.md](docs/TODO.md) | Personal backlog |
 | [docs/MAINTENANCE.md](docs/MAINTENANCE.md) | Recurring sweep checklists |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to contribute |
+| [docs/DEPLOYING.md](docs/DEPLOYING.md) | Deployment options and switching guide |
 
 ---
 
 ## License
 
-[MIT](LICENSE) — Mikey Ilagan, 2026
+[MIT](LICENSE) — 2026
