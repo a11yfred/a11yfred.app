@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore } from 'lucide-react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -10,51 +11,152 @@ const PRIORITY_VARS = {
   'Best Practice': { color: 'var(--text-muted)',             bg: 'var(--bg-subtle)',            key: 'priority.best_practice' },
 }
 
-export default function ResultList({ results, selected, onSelect, query }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true }) {
   const t = useT()
 
   if (results.length === 0) {
     return <NoResults query={query} />
   }
 
+  const DEFAULT_RATING = { score: 0, starred: false, archived: false }
+
   return (
-    <ul className="result-list" role="listbox" aria-label={t('results.aria_label')}>
-      {results.map(defect => {
-        const isSelected = selected?.id === defect.id
-        const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
+    <div className="result-list-section">
+      <div className="results-meta">
+        <p className="results-count">{t('results.count', { count: results.length })}</p>
+        <p className="results-vote-hint">{t('results.vote_hint')}</p>
+      </div>
 
-        const truncDesc = defect.desc.length > 180
-          ? defect.desc.slice(0, 180).trimEnd() + '…'
-          : defect.desc
+      <ul className="result-list" role="listbox" aria-label={t('results.aria_label')}>
+        {results.map(defect => {
+          const isSelected = selected?.id === defect.id
+          const p = PRIORITY_VARS[defect.priority] || PRIORITY_VARS['Best Practice']
+          const rating = ratings[defect.id] || DEFAULT_RATING
+          const { score, starred, archived } = rating
 
-        return (
-          <li
-            key={defect.id}
-            role="option"
-            aria-selected={isSelected}
-            aria-label={`${defect.title}, ${t(p.key)}, ${defect.scLabel}, ${truncDesc}`}
-            tabIndex={0}
-            onClick={() => onSelect(defect)}
-            onKeyDown={e => (e.key === 'Enter' || e.key === ' ') && onSelect(defect)}
-            className={`result-item${isSelected ? ' result-item--selected' : ''}`}
-          >
-            <div className="result-item__header">
-              <span className="result-item__title">
-                {isSelected && <span aria-hidden="true" className="result-item__dot" />}
-                {defect.title}
-              </span>
-              <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
-                {t(p.key)}
-              </span>
-            </div>
+          const truncDesc = defect.desc.length > 180
+            ? defect.desc.slice(0, 180).trimEnd() + '…'
+            : defect.desc
 
-            <div className="result-item__sc">{defect.scLabel}</div>
+          const cardLabel = archived
+            ? t('results.archived_label', { title: defect.title })
+            : `${defect.title}, ${t(p.key)}, ${defect.scLabel}, ${truncDesc}`
 
-            <div className="result-item__desc">{defect.desc}</div>
-          </li>
-        )
-      })}
-    </ul>
+          function handleUpvote(e) {
+            e.stopPropagation()
+            onUpvote?.(defect.id)
+            announce(t('announce.upvoted', { title: defect.title, score: score + 1 }))
+          }
+
+          function handleDownvote(e) {
+            e.stopPropagation()
+            onDownvote?.(defect.id)
+            announce(t('announce.downvoted', { title: defect.title, score: score - 1 }))
+          }
+
+          function handleStar(e) {
+            e.stopPropagation()
+            onStar?.(defect.id)
+            announce(starred
+              ? t('announce.unstarred', { title: defect.title })
+              : t('announce.starred', { title: defect.title })
+            )
+          }
+
+          function handleArchive(e) {
+            e.stopPropagation()
+            onArchive?.(defect.id)
+            announce(archived
+              ? t('announce.unarchived', { title: defect.title })
+              : t('announce.archived', { title: defect.title })
+            )
+          }
+
+          return (
+            <li
+              key={defect.id}
+              role="presentation"
+              className={`result-row${archived ? ' result-row--archived' : ''}`}
+            >
+              {/* Vote controls — outside role="option" so they have independent accessible names */}
+              {showVoting && <div className="result-vote-col">
+                <button
+                  className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
+                  aria-pressed={starred}
+                  aria-label={starred ? t('results.unstar', { title: defect.title }) : t('results.star', { title: defect.title })}
+                  disabled={archived}
+                  onClick={handleStar}
+                >
+                  <Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />
+                </button>
+
+                <button
+                  className="result-vote-btn result-vote-btn--up"
+                  aria-label={t('results.upvote', { title: defect.title })}
+                  disabled={archived}
+                  onClick={handleUpvote}
+                >
+                  <ChevronUp size={14} aria-hidden="true" />
+                </button>
+
+                <span
+                  className="result-vote-score"
+                  aria-label={t('results.score_label', { score })}
+                >
+                  {score}
+                </span>
+
+                <button
+                  className="result-vote-btn result-vote-btn--down"
+                  aria-label={t('results.downvote', { title: defect.title })}
+                  disabled={archived}
+                  onClick={handleDownvote}
+                >
+                  <ChevronDown size={14} aria-hidden="true" />
+                </button>
+
+                <button
+                  className={`result-vote-btn result-vote-btn--archive${archived ? ' result-vote-btn--active' : ''}`}
+                  aria-pressed={archived}
+                  aria-label={archived ? t('results.unarchive', { title: defect.title }) : t('results.archive', { title: defect.title })}
+                  onClick={handleArchive}
+                >
+                  {archived
+                    ? <ArchiveRestore size={13} aria-hidden="true" />
+                    : <Archive size={13} aria-hidden="true" />
+                  }
+                </button>
+              </div>}
+
+              {/* Selectable result card */}
+              <div
+                role="option"
+                aria-selected={isSelected}
+                aria-label={cardLabel}
+                tabIndex={archived ? -1 : 0}
+                onClick={() => { if (!archived) onSelect(defect) }}
+                onKeyDown={e => { if ((e.key === 'Enter' || e.key === ' ') && !archived) onSelect(defect) }}
+                className={`result-item${isSelected ? ' result-item--selected' : ''}`}
+              >
+                <div className="result-item__header">
+                  <span className="result-item__title">
+                    {isSelected && <span aria-hidden="true" className="result-item__dot" />}
+                    {defect.title}
+                  </span>
+                  <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
+                    {t(p.key)}
+                  </span>
+                </div>
+
+                <div className="result-item__sc">{defect.scLabel}</div>
+
+                <div className="result-item__desc">{defect.desc}</div>
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }
 

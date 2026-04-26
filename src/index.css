@@ -791,14 +791,119 @@ select:disabled {
 
 /* ─── Result list ─────────────────────────────────────────── */
 
+.result-list-section {
+  margin-bottom: var(--space-6);
+}
+
+.results-meta {
+  margin-bottom: var(--space-3);
+}
+
+.results-count {
+  font-size: var(--fs-sub);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-1);
+}
+
+.results-vote-hint {
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+  margin-bottom: 0;
+}
+
 .result-list {
   list-style: none;
-  margin-bottom: var(--space-6);
+}
+
+/* Each row holds the vote column + the selectable card side by side */
+.result-row {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: 1em;
+}
+
+/* Vote controls column */
+.result-vote-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding-top: var(--space-3);
+  flex-shrink: 0;
+  width: 28px;
+}
+
+.result-vote-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color var(--duration-fast), background var(--duration-fast);
+}
+
+.result-vote-btn:hover:not(:disabled) {
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+}
+
+.result-vote-btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+.result-vote-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+.result-vote-btn--active {
+  color: var(--accent);
+}
+
+.result-vote-score {
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--text-muted);
+  line-height: 1;
+  min-width: 24px;
+  text-align: center;
+  padding: 2px 0;
+}
+
+/* Archived row: dim everything except the restore button */
+.result-row--archived .result-item {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
+.result-row--archived .result-vote-btn:not(.result-vote-btn--archive) {
+  opacity: 0.3;
+}
+
+.result-row--archived .result-vote-score {
+  opacity: 0.3;
+}
+
+.result-row--archived .result-vote-btn--archive {
+  opacity: 1;
+  color: var(--accent);
 }
 
 .result-item {
   padding: var(--space-3) var(--space-4);
-  margin-bottom: 1em;
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 0;
   border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--bg);
