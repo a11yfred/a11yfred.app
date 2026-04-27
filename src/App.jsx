@@ -19,6 +19,7 @@ import {
   useMediaQuery,
 } from './plugins/router/index.js'
 import { Announcer, announce } from './plugins/announce/index.js'
+import { FocusDebugger } from './components/FocusDebugger.jsx'
 import { playPartySound, playSqueak } from './utils/partySounds.js'
 import { I18nProvider, useT } from './i18n/index.jsx'
 
@@ -555,7 +556,10 @@ function AppContent({
 
   return (
     <div className="app-container">
-      <Announcer />
+      <div className="dev-toast-stack">
+        <FocusDebugger />
+        <Announcer />
+      </div>
       <Confetti active={theme === 'party'} />
       <PartySparkles active={theme === 'party'} />
       <PartyMusicPlayer active={theme === 'party'} />

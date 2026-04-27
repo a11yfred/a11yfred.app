@@ -22,6 +22,7 @@ export function Announcer() {
   const assertiveTimer = useRef(null)
   const [toast, setToast] = useState(null)
   const toastTimer = useRef(null)
+  const toastFadeTimer = useRef(null)
 
   useEffect(() => {
     const unsub = _subscribe((message, priority) => {
@@ -45,9 +46,13 @@ export function Announcer() {
       }
 
       if (IS_DEV) {
-        setToast({ message, priority })
+        setToast({ message, priority, fading: false })
         clearTimeout(toastTimer.current)
-        toastTimer.current = setTimeout(() => setToast(null), 4000)
+        clearTimeout(toastFadeTimer.current)
+        toastTimer.current = setTimeout(() => {
+          setToast(prev => prev ? { ...prev, fading: true } : null)
+          toastFadeTimer.current = setTimeout(() => setToast(null), 400)
+        }, 3600)
       }
     })
     return () => {
@@ -55,6 +60,7 @@ export function Announcer() {
       clearTimeout(politeTimer.current)
       clearTimeout(assertiveTimer.current)
       clearTimeout(toastTimer.current)
+      clearTimeout(toastFadeTimer.current)
     }
   }, [])
 
@@ -67,7 +73,7 @@ export function Announcer() {
         {assertiveMsg}
       </div>
       {IS_DEV && toast && (
-        <div className={`announce-toast announce-toast--${toast.priority}`} aria-hidden="true">
+        <div className={`announce-toast announce-toast--${toast.priority}${toast.fading ? ' announce-toast--fading' : ''}`} aria-hidden="true">
           <span className="announce-toast__badge">{toast.priority}</span>
           {toast.message}
         </div>
