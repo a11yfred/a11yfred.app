@@ -4,6 +4,53 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-27 — Multilingual edit backend, badge redesign, debug improvements, UX polish
+
+### Multilingual edit flow — backend complete
+
+- New `src/services/userOverridesService.js` — localStorage CRUD for personal locale overrides (`userOverrides` key); `applyOverride(finding, locale, overrides)` pure function applies overrides without reading localStorage
+- New `src/services/contributionService.js` — contribution queue (`pendingContributions` key); `EDIT_TARGET` / `EDIT_SCOPE` / `CONTRIBUTION_STATUS` constants; `submitContribution`, `exportContributionsJson`, status management
+- New `src/hooks/useUserOverrides.js` — reactive state wrapper; exposes `saveOverride`, `deleteOverride`, `deleteAllForFinding`, `clearAllOverrides`, `hasOverride`
+- New `src/hooks/useContributionQueue.js` — reactive state wrapper; exposes `submitContribution`, `approveContribution`, `rejectContribution`, `exportJson`; re-exports flow constants
+- `useFindingSearch.js` — added 8th param `userOverrides`; new `allFindings` useMemo applies `applyOverride` to every corpus finding before merging with user findings; sets `_hasOverride`, `_overrideLocale`, `_overrideEditedAt` metadata flags
+- `App.jsx` — instantiates `useUserOverrides` + `useContributionQueue`; passes `userOverrides` to `useFindingSearch`; passes both hooks to `DetailPanel` as `userOverridesHook`/`contributionQueueHook` props ready for UI wiring
+- New `scripts/apply-contributions.mjs` — maintainer approval script; reads exported contributions JSON; patches `corpus.json` (English) and `src/data/translations/{locale}.json` per scope (`lang_only`, `lang_and_en`, `all_langs`); idempotent; prints next-step git instructions
+- 46 new `en.json` keys for all edit flow dialogs, scope picker, contribution panel, and override indicator; placeholders added to all 49 non-English locale files
+- `SECURITY.md` — added `userOverrides`, `pendingContributions`, `wcagFilter` to localStorage inventory table
+
+### Batch features (previous session — now committed)
+
+- `DetailPanel` — Copy all + Reset all buttons; inline edit warning (`role="status"`)
+- `SettingsPanel` — WCAG version filter checkboxes (2.0/2.1/2.2); persisted as `wcagFilter`
+- `AboutPanel` — data sources section
+- `SearchBar` — typewriter animation (8 phrases, `aria-hidden` removed, right-aligned in label row, truncated with `text-overflow`)
+- `useFindingSearch` — `versionFiltered` useMemo stage
+
+### Badge redesign
+
+- `priority-badge`, `source-badge`, `wcag-badge` — reduced to `--fs-small` (12px), switched to `--mono` font
+- `result-item__badges` — new flex container wraps all three badges; prevents spread-out placement when multiple badges appear; `result-item__header` now uses `align-items: center`
+
+### Debug plugin improvements
+
+- `DebugHelp` — clicking the overlay backdrop closes the panel
+- `App.jsx` — `debug all on/off` now toggles all debug tools: `devAllEnabled` (focus + announce toasts) AND `namesEnabled` (names tooltip); updated description in the command reference
+
+### GDPR draft
+
+- `docs/GDPR-DRAFT.md` (gitignored) — full Phase 1 privacy disclosure covering localStorage keys, AI API data flow, no-cookies, no-tracking, contribution export flow, offline use; ready for review before Phase 3 launch
+
+### TODO.md
+
+- Added `[phase3]` category tag; applied to all auth/cloud/public-launch items
+- New "Multilingual Edit Flow" subsection with 7 UI todos
+- `UI component library extraction` expanded with architecture explanation and prerequisite chain
+- `CSS Modules` expanded with tradeoff analysis
+- Version tagging entry updated with exact git commands
+- Electron offline note: offline is implicit in the bundled app; AI Assist still needs internet
+- Umami tagged `[manual]` (requires account signup)
+- Phase 3 hosting entry rewritten as undecided-strategy note
+
 ## 2026-04-27 — Session restore, recent findings, export utility, user findings data layer
 
 ### Session persistence

@@ -30,17 +30,18 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
 
   return (
     <search aria-label={t('search.aria_label')} className="search-bar">
-      <label htmlFor="finding-search" className="search-label">
-        {t('search.label')}
-      </label>
-      {query.length === 0 && !prefersReducedMotion && (
-        <p className="search-typewriter" aria-hidden="true">
-          Try:{' '}
-          <span key={phraseIdx} className="search-typewriter__phrase">
-            {TYPEWRITER_PHRASES[phraseIdx]}
+      <div className="search-label-row">
+        <label htmlFor="finding-search" className="search-label">
+          {t('search.label')}
+        </label>
+        {query.length === 0 && !prefersReducedMotion && (
+          <span className="search-typewriter">
+            Try: <span key={phraseIdx} className="search-typewriter__phrase">
+              {TYPEWRITER_PHRASES[phraseIdx]}
+            </span>
           </span>
-        </p>
-      )}
+        )}
+      </div>
       <div className="search-row">
         <div className="search-input-wrap">
           <input

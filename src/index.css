@@ -995,8 +995,15 @@ select:disabled {
 .result-item__header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-2);
+}
+
+.result-item__badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
 }
 
 .result-item__title {
@@ -1020,30 +1027,23 @@ select:disabled {
   flex-shrink: 0;
 }
 
-.priority-badge {
-  font-size: var(--fs-body);
-  padding: 2px 8px;
+.priority-badge,
+.source-badge,
+.wcag-badge {
+  font-size: var(--fs-small);
+  font-family: var(--mono);
+  padding: 2px 6px;
   border-radius: var(--radius-full);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .source-badge {
-  font-size: var(--fs-body);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  white-space: nowrap;
-  flex-shrink: 0;
   background: var(--source-bg);
   color: var(--source-text);
 }
 
 .wcag-badge {
-  font-size: var(--fs-body);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  white-space: nowrap;
-  flex-shrink: 0;
   background: var(--wcag-bg);
   color: var(--wcag-text);
 }
@@ -1160,7 +1160,7 @@ select:disabled {
   font-size: var(--fs-body);
   font-weight: 500;
   color: var(--text);
-  margin-bottom: var(--space-2);
+  margin-bottom: 0;
 }
 
 .search-row {
@@ -1243,11 +1243,24 @@ input.search-input:focus {
 
 /* ─── Search typewriter ───────────────────────────────────── */
 
+.search-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
 .search-typewriter {
   font-size: var(--fs-body);
   color: var(--text-faint);
-  margin-top: var(--space-1);
-  margin-bottom: var(--space-2);
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  flex-shrink: 0;
+  max-width: 55%;
 }
 
 @keyframes typewriter-fade {
@@ -1277,6 +1290,9 @@ input.search-input:focus {
   animation: typewriter-fade 2.5s ease both;
   font-style: italic;
   color: var(--accent-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 18ch;
 }
 
 /* ─── View All section ────────────────────────────────────── */
@@ -1365,6 +1381,7 @@ input.search-input:focus {
   flex-direction: column;
   gap: var(--space-2);
   margin-top: var(--space-2);
+  margin-bottom: var(--space-5);
 }
 
 .settings-checkbox-label {

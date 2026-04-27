@@ -15,9 +15,10 @@ const IS_DEV = typeof window !== 'undefined' &&
 export function DebugHelp({ open, onClose, customCommands = [] }) {
   if (!IS_DEV || !open) return null
 
+  /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
   return (
-    <div className="debug-help-overlay" aria-hidden="true">
-      <div className="debug-help-panel">
+    <div className="debug-help-overlay" aria-hidden="true" onClick={onClose}>
+      <div className="debug-help-panel" onClick={e => e.stopPropagation()}>
         <div className="debug-help-header">
           <span className="debug-help-title">Debug Commands</span>
           <button className="debug-help-close" onClick={onClose} aria-label="Close debug help">✕</button>
@@ -29,8 +30,8 @@ export function DebugHelp({ open, onClose, customCommands = [] }) {
             <h3 className="debug-help-section-title">A11y Testing</h3>
             <table className="debug-help-table">
               <tbody>
-                <tr><td><code>debug all on</code></td><td>Enable all dev toasts (KB focus + announce)</td></tr>
-                <tr><td><code>debug all off</code></td><td>Disable all dev toasts</td></tr>
+                <tr><td><code>debug all on</code></td><td>Enable all debug tools (KB focus, announce, names tooltip)</td></tr>
+                <tr><td><code>debug all off</code></td><td>Disable all debug tools</td></tr>
                 <tr><td><code>debug names on</code></td><td>Show accessible name tooltip on hover</td></tr>
                 <tr><td><code>debug names off</code></td><td>Hide accessible name tooltip</td></tr>
               </tbody>

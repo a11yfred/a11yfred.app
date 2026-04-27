@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import Fuse from 'fuse.js'
 import { getFindings } from '../services/dataService.js'
+import { applyOverride } from '../services/userOverridesService.js'
 
 const FUSE_OPTIONS = {
   keys: [
@@ -22,7 +23,7 @@ const DEFAULT_RATING = { score: 0, starred: false, archived: false }
 
 const DEFAULT_WCAG_FILTER = { show20: true, show21: true, show22: true }
 
-export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userFindings = [], wcagFilter = DEFAULT_WCAG_FILTER) {
+export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userFindings = [], wcagFilter = DEFAULT_WCAG_FILTER, userOverrides = {}) {
   const [corpusFindings, setCorpusFindings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
   const [dataError, setDataError] = useState(false)
@@ -72,11 +73,14 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
     return () => { cancelled = true; clearTimeout(timeout) }
   }, [locale, retryCount])
 
-  // Merge corpus findings with user-created findings.
-  const allFindings = useMemo(
-    () => userFindings.length ? [...corpusFindings, ...userFindings] : corpusFindings,
-    [corpusFindings, userFindings]
-  )
+  // Apply personal locale overrides then merge with user-created findings.
+  const allFindings = useMemo(() => {
+    const hasOverrides = Object.keys(userOverrides).length > 0
+    const corpus = hasOverrides
+      ? corpusFindings.map(f => applyOverride(f, locale, userOverrides))
+      : corpusFindings
+    return userFindings.length ? [...corpus, ...userFindings] : corpus
+  }, [corpusFindings, userFindings, locale, userOverrides])
 
   const platformFiltered = useMemo(() => {
     if (!platform || platform === 'web') {

@@ -12,6 +12,9 @@ All user data is stored locally in `localStorage` only. Nothing is ever sent to 
 | Settings save count (Party Mode unlock) | `localStorage` | No |
 | Recent findings history (last 10 IDs) | `localStorage` key `recentFindings` | No |
 | User-created / copied findings | `localStorage` key `userFindings` | No |
+| Personal locale overrides for corpus findings | `localStorage` key `userOverrides` | No |
+| Pending contribution suggestions (queued edits awaiting review) | `localStorage` key `pendingContributions` | No — exported manually by the user and reviewed offline |
+| WCAG version filter preference | `localStorage` key `wcagFilter` | No |
 | Last selected finding ID (session only) | `sessionStorage` key `lastSelectedId` | No — cleared when the tab closes |
 
 ## API keys

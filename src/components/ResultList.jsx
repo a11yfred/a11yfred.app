@@ -155,15 +155,17 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                     {isSelected && <span aria-hidden="true" className="result-item__dot" />}
                     {finding.title}
                   </span>
-                  <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
-                    {t(p.key)}
+                  <span className="result-item__badges">
+                    <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
+                      {t(p.key)}
+                    </span>
+                    {finding.source && (
+                      <span className="source-badge">{finding.source}</span>
+                    )}
+                    {finding.wcagVersion && finding.wcagLevel && (
+                      <span className="wcag-badge">{finding.wcagVersion} {finding.wcagLevel}</span>
+                    )}
                   </span>
-                  {finding.source && (
-                    <span className="source-badge">{finding.source}</span>
-                  )}
-                  {finding.wcagVersion && finding.wcagLevel && (
-                    <span className="wcag-badge">{finding.wcagVersion} {finding.wcagLevel}</span>
-                  )}
                 </div>
 
                 <div className="result-item__sc">{finding.scLabel}</div>

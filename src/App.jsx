@@ -23,6 +23,8 @@ import { FocusDebugger, NamesDebugger, DeployBanner, AiDebugToast, useAiDebugToa
 import { playPartySound, playSqueak } from './utils/partySounds.js'
 import { I18nProvider, useT } from './i18n/index.jsx'
 import useUserFindings from './hooks/useUserFindings.js'
+import useUserOverrides from './hooks/useUserOverrides.js'
+import useContributionQueue from './hooks/useContributionQueue.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 
@@ -246,8 +248,11 @@ function AppContent({
   const { ratings, upvote, downvote, toggleStar, toggleArchive } = useFindingRatings()
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
+  const userOverridesHook = useUserOverrides()
+  const { overrides: userOverrides } = userOverridesHook
+  const contributionQueueHook = useContributionQueue()
   const activeQuery = liveSearch ? query : submittedQuery
-  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter)
+  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
 
   // Announce result count after a non-live-search submission only.
@@ -426,8 +431,8 @@ function AppContent({
     if (eggOff !== undefined) { setLanguage(eggOff); setQuery(submittedQuery); return true }
     if (lq === 'party mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
     // Universal debug commands
-    if (lq === 'debug all on')    { setDevAllEnabled(true);  setQuery(submittedQuery); return true }
-    if (lq === 'debug all off')   { setDevAllEnabled(false); setQuery(submittedQuery); return true }
+    if (lq === 'debug all on')    { setDevAllEnabled(true);  setNamesEnabled(true);  setQuery(submittedQuery); return true }
+    if (lq === 'debug all off')   { setDevAllEnabled(false); setNamesEnabled(false); setQuery(submittedQuery); return true }
     if (lq === 'debug names on')  { setNamesEnabled(true);  setQuery(''); return true }
     if (lq === 'debug names off') { setNamesEnabled(false); setQuery(''); return true }
     const dt = DEPLOY_TARGETS[lq]
@@ -719,6 +724,9 @@ function AppContent({
             focusTrigger={panelFocusTrigger}
             allFindings={allFindings}
             onSelect={handleSelectFinding}
+            locale={language}
+            userOverridesHook={userOverridesHook}
+            contributionQueueHook={contributionQueueHook}
           />
         )}
       </BottomSheet>

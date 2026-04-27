@@ -4,6 +4,24 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 27, 2026 — Multilingual edit backend, badge redesign, debug improvements
+
+### Edit in any language
+
+The backend for multilingual editing is fully wired. When you edit a finding's description or remediation in a non-English locale, you'll soon be able to choose: save it privately to your own device, or suggest the change for the shared corpus. For the "contribute" path, your edit is queued locally and can be exported as JSON for maintainer review — nothing is sent automatically. Personal edits are stored in your browser's localStorage and applied on top of the corpus text at runtime, so your changes show up in search results immediately.
+
+### Badge redesign
+
+The priority, source, and WCAG version badges in result cards now sit together as a group on the right side of the card header, instead of spacing out unevenly. They're also smaller and use a monospaced font to make them feel more like labels than text.
+
+### Debug improvements
+
+The debug help panel now closes when you click the overlay behind it. The `debug all on/off` command now toggles all debug tools together — focus toast, announce toast, and the accessible-names tooltip.
+
+### GDPR draft
+
+A privacy disclosure document covering all data practices (localStorage keys, AI API calls, no tracking) has been drafted and saved locally. It'll be published as a page before any public launch.
+
 ## April 27, 2026 — Session restore, recent history, export, user findings data layer
 
 ### Remember where you were

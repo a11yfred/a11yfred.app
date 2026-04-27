@@ -4,13 +4,14 @@ Personal backlog for A11yTextHelper. Completed items are deleted — see [docs/C
 
 Items are ordered **high value + low effort first** within each section, and sections are ordered the same way overall.
 
-Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[claude]` `[manual]` `[dormant]`
+Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[claude]` `[manual]` `[dormant]` `[phase3]`
 
 `[corpus]` and `[data]` are interchangeable — use either
 `[priority]` = currently the most important; keep at the top of the backlog
 `[claude]` = suggested by Claude during a review or sweep session (not a user-originated request)
 `[manual]` = requires human judgment or action; Claude cannot complete this alone
 `[dormant]` = not currently being worked on; keep for reference but do not prioritize
+`[phase3]` = requires authentication, public launch, or infrastructure that doesn't exist yet; do not schedule until Phase 3 scope is defined
 
 ---
 
@@ -35,8 +36,8 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 - [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — switching is already available via debug command (internal only); public-facing toggle requires authentication as a prerequisite — see Accounts & Cloud Sync
 - [x] **Batch import tooling** `[corpus]` `[claude]` — `src/services/importService.js` handles .csv/.xlsx/.xls/.json; fuzzy column-name mapping; priority + platform normalization; USR-NNN ID generation; `importFromFile` + `importFromUrl` exposed on `useUserFindings` hook; SheetJS (xlsx) lazy-loaded as a separate chunk; file upload UI pending
 - [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` — Phase 1: `importFromUrl` in importService handles public JSON URLs; Phase 2 (auth required): signed-in users point app at their own Supabase table via `dataService.getUserFindings()`; Settings UI + fallback behavior pending; prereq: Authentication (Accounts & Cloud Sync)
-- [ ] **Public corpus bootstrap** `[corpus]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as Phase 1; the `source` badge field enables clear attribution per entry; this corpus is never mixed with Mikey's personal corpus
-- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — Phase 3: serve Mikey's private corpus from a Supabase RLS-protected table; unauthenticated users get `corpus.json` only; the private corpus never ships in any public build; prereq: Authentication (Accounts & Cloud Sync)
+- [ ] **Public corpus bootstrap** `[corpus]` `[phase3]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as Phase 1; the `source` badge field enables clear attribution per entry; this corpus is never mixed with Mikey's personal corpus
+- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` `[phase3]` — serve Mikey's private corpus from a Supabase RLS-protected table; unauthenticated users get `corpus.json` only; the private corpus never ships in any public build; prereq: Authentication
 
 ### Competitive / Differentiators
 
@@ -57,20 +58,32 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 - [ ] **Frequent findings** `[ux]` `[privacy]` — track implicit usage: increment open count when a finding's panel is opened, copy count when a copy button is used; persist per-finding `{ opens, copies }` to `localStorage` as `frequentFindings`; settings option to show a "Frequent" section above results (followed by "Starred" from ratings); update privacy statement to document the new storage key
 - [ ] **Pin results to home page** `[ux]` `[privacy]` — add a pin toggle button inside each result tile (top-right, visible on hover/focus); pinned findings appear in a "Pinned" section on the home page before any search; persist as `pinnedFindings` (array of IDs) in `localStorage`; reset all clears pins; update privacy statement
 - [ ] **How to use page** `[ux]` — onboarding modal on first visit (check `localStorage` flag `showHowToUse`); workflow: search → select → add location prefix → refine → copy; "Show this on startup" checkbox defaults checked; Help button in the header can also open it as a panel (same content, more detail); settings toggle to re-enable the startup modal; brief enough to read in under 30 seconds
-- [ ] **About / data sources** `[ux]` `[corpus]` — add a data sources section to the existing About page describing how the public corpus was compiled: WCAG 2.2 Understanding docs (W3C/WAI), axe-core rule descriptions (Deque), WebAIM articles, and Deque University; entries are written in plain language and near-duplicates are consolidated; allow About to scroll as content grows
-- [ ] **WCAG version filter** `[ux]` `[corpus]` — add checkboxes in the SettingsPanel (alongside Platform toggle) to narrow results by WCAG version: "2.1 only", "2.2 only", and "All"; uses the `wcagVersion` field now present on all corpus entries
+- [x] **About / data sources** `[ux]` `[corpus]` — data sources section added to AboutPanel; WCAG, axe-core, WebAIM, Deque; panel scrolls as content grows
+- [x] **WCAG version filter** `[ux]` `[corpus]` — checkboxes in SettingsPanel; persisted as `wcagFilter`; `versionFiltered` useMemo stage in `useFindingSearch`
 - [x] **Export findings to formats** `[ux]` — `exportFinding(finding, format)` utility complete in `src/utils/exportFinding.js`; supports `text`, `markdown`, `csv`; button UI pending
 - [ ] **Copy / add / edit / delete findings** `[ux]` `[enhancement]` — data layer wired: `src/services/userFindingsService.js` (localStorage CRUD, USR-NNN IDs), `src/hooks/useUserFindings.js`, merged into `useFindingSearch` alongside corpus; UI (forms, inline edit, copy button) pending; auth prereq for cloud persistence
 - [ ] **Narrow results mode** `[ux]` — when results are showing, display a toggle to enter "narrow" mode; the search input switches label and placeholder to reflect narrowing-within-results; the clear button becomes "Clear and reset" (clears the narrow filter and returns to the initial empty state); live-search setting governs whether narrowing updates in real time or on submit; show a count of narrowed vs. total results; replaced the original corpus `component` field approach
 - [ ] **Upvote / downvote results** `[ux]` `[corpus]` — add thumbs up/down buttons to each result card; store ratings in `localStorage` keyed by finding ID; use ratings to boost or demote entries in Fuse.js scoring so frequently used findings surface higher; if authentication is added later, sync ratings to Supabase so they persist across devices
 - [ ] **Export findings** `[ux]` — multi-select findings from the result list, add occurrence counts and severity overrides, and export a formatted accessibility audit report in Markdown or plain text; primary deliverable format for most audit engagements
-- [ ] **Language-specific edit warning** `[ux]` `[i18n]` — when text fields are modified, show an inline notice under each field that edits apply only to the current language session; also show a warning modal when the user first makes an edit and the active locale is non-English; modal + inline error
+- [x] **Language-specific edit warning (inline)** `[ux]` `[i18n]` — inline `role="status"` warning shown in DetailPanel when edited fields diverge from the original; edit-flow dialogs and modal pending (see Multilingual Edit Flow below)
+
+### Multilingual Edit Flow
+
+Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and services are wired; personal overrides are applied in `useFindingSearch` and visible in search results.
+
+- [ ] **Save changes button in DetailPanel** `[ux]` `[i18n]` — add a "Save changes" button that triggers the edit-flow dialog when the active locale is non-English; when locale is English, save directly as a personal override without the dialog
+- [ ] **Edit target dialog** `[ux]` `[i18n]` — modal shown when user saves in a non-English locale; two choices: "Save to my personal entries" (calls `useUserOverrides.saveOverride`) or "Suggest to shared corpus" (routes to scope dialog then `useContributionQueue.submitContribution`); i18n keys: `edit.target_dialog_title`, `edit.target_dialog_body`, `edit.save_as_personal`, `edit.contribute_to_base`
+- [ ] **Edit scope dialog** `[ux]` `[i18n]` — follow-on dialog after choosing a save target; three radio options: `lang_only`, `lang_and_en`, `all_langs`; for personal saves show `edit.personal_ai_warning` when scope is `lang_only`; i18n keys: `edit.scope_label`, `edit.scope_lang_only/lang_and_en/all_langs`, `edit.scope_all_langs_desc`
+- [ ] **English switch transition (lang_and_en flow)** `[ux]` `[design]` — after saving the non-English version, animate the bottom sheet closed and reopen it showing the English version of the same finding; show `edit.en_switch_dialog_title/body` dialog first giving the user a chance to skip; do not change the app-wide locale — only the finding content in the panel switches to English for this edit step
+- [ ] **Personal override indicator in DetailPanel** `[ux]` `[design]` — when a finding has a personal override for the active locale (`finding._hasOverride`), show a small badge or label near the title; i18n key: `edit.override_indicator`; include "last edited" timestamp from `_overrideEditedAt`
+- [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` — a section in SettingsPanel (or a dedicated route) listing pending contributions with approve/reject/export controls; uses `useContributionQueue`; export button calls `exportJson()` and triggers a file download; i18n keys: `contributions.*`; the actual merge still runs via `scripts/apply-contributions.mjs`
+- [ ] **Reset All includes personal overrides and contributions** `[ux]` `[privacy]` — the comprehensive Reset All modal should list and clear `userOverrides` and `pendingContributions`; call `clearAllOverrides()` from `userOverridesService` and `clearContributions()` from `contributionService`
 - [ ] **Ko-fi link in footer** `[ux]` `[dormant]` — add a Ko-fi link in the footer as a fallback for when the floating widget is disabled
 
 ### Visual Design
 
 - ~~**Gear icon replacement** — replaced by Lucide `Settings` icon; no longer needed~~
-- [ ] **Empty state typewriter** `[design]` — in the pre-search state, add a typewriter animation that cycles through example phrases ("modals", "buttons", "focus management", "wcag 2.2", "mobile devices", "content", "external keyboard mobile", "voiceover") inside the search label or below it; visually only — wrap in `aria-hidden="true"` so screen readers are unaffected
+- [x] **Empty state typewriter** `[design]` — fade-cycle animation in SearchBar cycling 8 phrases; `aria-hidden="true"`; disabled under `prefers-reduced-motion`; stops cycling when query non-empty
 - [ ] **Toggle design** `[design]` `[a11y]` — replace the current thin-bar-and-circle Toggle with a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
 - [ ] **Result card fold on select** `[ux]` `[design]` — when a finding is selected, unselected result cards fold to a single line (animated collapse); opening the detail panel triggers the fold; closing the detail panel deselects and all cards unfold to full height; replaces the standalone visible-selection-indicator item
 - [ ] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border and a dot indicator; superseded by result card fold behavior above once that ships
@@ -131,16 +144,16 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ### Code Quality
 
-- [ ] **Migrate inline spacing to tokens** `[code]` `[claude]` — audit all components for raw pixel or rem values in inline styles that are not referencing `var(--space-*)`; replace with the nearest token; this is the last major inline-value migration after font sizes (done) and priority colors (done)
-- [ ] **UI component library extraction** `[code]` `[claude]` — the SPA patterns developed here (router, announcer, focus management, button system, form controls, modal/drawer/bottom-sheet) are strong candidates for a standalone React component library; document the extraction path; consider a monorepo setup with `packages/ui` alongside the main app
-- [ ] **CSS Modules** `[code]` `[claude]` — evaluate migrating from inline styles to CSS Modules as the component count grows; CSS Modules give better tooling (autocomplete, dead-code detection) without adding a CSS-in-JS runtime; not urgent while the component set is small
+- [ ] **Migrate inline spacing to tokens** `[code]` `[claude]` — audit all components for raw pixel or rem values not referencing `var(--space-*)`; replace with the nearest token; last major inline-value migration after font sizes (done) and priority colors (done); overlaps with the recurring Token Audit in MAINTENANCE.md — run both together
+- [ ] **UI component library extraction** `[code]` `[claude]` — this app has built a solid set of accessible, self-contained SPA primitives that could ship as a standalone React library: the hash router (`src/plugins/router/`) handles navigation, modals, drawers, bottom sheets, focus management, and page-title sync; the announcer (`src/plugins/announce/`) is a live-region wrapper; the focus and names debuggers are dev-only overlays; form controls (Toggle, chip groups, checkboxes) are already tokenized; button system unification is a prerequisite — extraction path: (1) complete button unification, (2) extract `src/plugins/` into `packages/core`, (3) extract UI components into `packages/ui`, (4) set up a pnpm or npm workspaces monorepo with the main app as `packages/app`; this is also like a combination of all the plugins in this codebase — router, announcer, focus debugger — plus a component layer on top; complexity is high, defer until the component API is stable (post button unification)
+- [ ] **CSS Modules** `[code]` `[claude]` — evaluate migrating from the single `index.css` flat file to CSS Modules (one `.module.css` per component); CSS Modules give autocomplete, dead-code detection, and zero naming collisions without a CSS-in-JS runtime; the main tradeoff is losing the ability to override styles globally via tokens — likely solvable by keeping `tokens.css` as a global file and scoping only component-specific rules; not urgent while the component set is small
 
 ### Infrastructure
 
-- [ ] **Version tagging** `[infra]` — create git tags for stable milestones once the corpus is stable enough to track; use semantic versioning (`v0.1.0` for Phase 1 launch, `v0.2.0` for Phase 2 AI, `v1.0.0` for Phase 3 public)
-- [ ] **Electron desktop app — activate** `[infra]` `[dormant]` — scaffold is in `electron/`; to activate: `npm install --save-dev electron electron-builder concurrently`, then `npm run electron:dev`; wire `window.electronAPI.keys.*` in SettingsPanel so API keys use `safeStorage` instead of `localStorage`; test on macOS and Windows; package with `npm run electron:build`
-- [ ] **Umami analytics** `[infra]` `[dormant]` — create an account at umami.is or self-host, add the site, replace `YOUR_WEBSITE_ID` in `index.html`, and uncomment the script tag; verify that Umami reports zero cookies and no personal data in the dashboard before enabling on any deployment
-- [ ] **Phase 3 hosting** `[infra]` `[dormant]` — set up a separate Netlify site from a separate repo for the Phase 3 public deployment; the personal corpus never appears in that repo
+- [ ] **Version tagging** `[infra]` — create git tags for stable milestones once the corpus is stable enough to track; use semantic versioning (`v0.1.0` for Phase 1 launch, `v0.2.0` for Phase 2 AI, `v1.0.0` for Phase 3 public); to tag: `git tag -a v0.1.0 -m "Phase 1 launch — personal tool, N corpus entries"` then `git push origin v0.1.0`; tags are listed on the GitHub releases page and can be used as deployment targets
+- [ ] **Electron desktop app — activate** `[infra]` `[dormant]` — scaffold is in `electron/`; to activate: `npm install --save-dev electron electron-builder concurrently`, then `npm run electron:dev`; wire `window.electronAPI.keys.*` in SettingsPanel so API keys use `safeStorage` instead of localStorage; test on macOS and Windows; package with `npm run electron:build`; note: offline mode is **implicit** in Electron — the app shell and corpus are bundled, so it works fully offline without an explicit toggle; AI Assist still requires internet to reach the provider API
+- [ ] **Umami analytics** `[infra]` `[dormant]` `[manual]` — requires signing up at umami.is; create an account, add the site, replace `YOUR_WEBSITE_ID` in `index.html`, and uncomment the script tag; verify that Umami reports zero cookies and no personal data in the dashboard before enabling on any deployment
+- [ ] **Phase 3 hosting strategy** `[infra]` `[dormant]` `[phase3]` — deployment strategy for a public Phase 3 launch is undecided; options include a separate Netlify/Vercel site from a separate repo (personal corpus never in that repo), a subdomain of an existing site, or self-hosted; defer until Phase 3 scope is clearer
 
 ### Performance & Optimization
 
@@ -148,7 +161,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ### Privacy & Security
 
-- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[dormant]` — when the public Phase 3 version launches, add a brief privacy statement page explaining what data is and is not collected; Umami analytics (if enabled) collects no personal data and uses no cookies; API keys go only to the AI provider; no user data is retained by this app
+- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[dormant]` `[phase3]` — draft written at `docs/GDPR-DRAFT.md` (gitignored); covers localStorage keys, AI API calls, no-cookies, no-tracking, contribution flow, offline use; review and publish as a linked page before any public Phase 3 launch
 
 ---
 
@@ -156,14 +169,14 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ### Authentication
 
-- [ ] **Sign-in UI** `[ux]` — add a minimal sign-in section at the bottom of SettingsPanel (below AI Assist); show avatar and display name when signed in, "Sign in with Google / GitHub" buttons when not; sign-out option inline; no dedicated auth page needed
-- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` — stubs live in `src/services/authService.js` and `src/services/supabaseClient.js`; activate by installing `@supabase/supabase-js`, setting `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, and uncommenting the implementation blocks; Supabase project setup instructions and DB schema (SQL) are in `supabaseClient.js`
+- [ ] **Sign-in UI** `[ux]` `[phase3]` — add a minimal sign-in section at the bottom of SettingsPanel (below AI Assist); show avatar and display name when signed in, "Sign in with Google / GitHub" buttons when not; sign-out option inline; no dedicated auth page needed
+- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` — stubs live in `src/services/authService.js` and `src/services/supabaseClient.js`; activate by installing `@supabase/supabase-js`, setting `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, and uncommenting the implementation blocks; Supabase project setup instructions and DB schema (SQL) are in `supabaseClient.js`
 - [ ] **Phase 2 stubs review** `[infra]` `[claude]` — before activating Supabase, re-read `src/services/authService.js` and `src/services/supabaseClient.js` comments against the current Supabase SDK docs; confirm OAuth provider slugs, table names, and RLS policy examples are still accurate
-- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — see Data & Content; listed here as an auth enforcement concern
+- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` `[phase3]` — see Data & Content; listed here as an auth enforcement concern
 
 ### Cloud Data Sync
 
-- [ ] **Settings sync** `[infra]` `[ux]` — `syncSettings()` and `getRemoteSettings()` stubs in `dataService.js`; on sign-in, load remote settings and merge with localStorage; on any setting change, push to Supabase; API keys intentionally excluded from sync (localStorage only)
-- [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` — Phase 1 localStorage layer is wired (`userFindingsService.js`, `useUserFindings.js`); Phase 2: activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase; DB schema in `supabaseClient.js`
-- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` — when a user is signed in, sync upvote/downvote ratings to a `ratings` table (`user_id`, `finding_id`, `vote`); merge with any existing `localStorage` ratings on sign-in; `dataService.js` already abstracts the data layer, so this is a localized change
-- [ ] **GitHub Sponsors** `[infra]` `[dormant]` — set up GitHub Sponsors as a secondary tip option alongside the Ko-fi widget for Phase 3
+- [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` — `syncSettings()` and `getRemoteSettings()` stubs in `dataService.js`; on sign-in, load remote settings and merge with localStorage; on any setting change, push to Supabase; API keys intentionally excluded from sync (localStorage only)
+- [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Phase 1 localStorage layer is wired (`userFindingsService.js`, `useUserFindings.js`); Phase 2: activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase; DB schema in `supabaseClient.js`
+- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — when a user is signed in, sync upvote/downvote ratings to a `ratings` table (`user_id`, `finding_id`, `vote`); merge with any existing `localStorage` ratings on sign-in; `dataService.js` already abstracts the data layer, so this is a localized change
+- [ ] **GitHub Sponsors** `[infra]` `[dormant]` `[phase3]` — set up GitHub Sponsors as a secondary tip option alongside the Ko-fi widget for Phase 3
