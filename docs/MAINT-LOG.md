@@ -4,6 +4,7 @@ Record of every maintenance sweep. Newest first.
 
 | Date | Passed | Failed | Deferred | N/A | Notes |
 | ---- | ------ | ------ | -------- | --- | ----- |
+| 2026-04-27 | 6 | 0 | 2 | 2 | Post-commit verify: all linters clean, build 226kB gz; run log moved to MAINT-LOG.md |
 | 2026-04-27 | 6 | 0 | 2 | 2 | NamesDebugger added; all linters clean; build 226kB gz; ABOUT.md "Silly Languages"; N/A: i18n (en.json unchanged), Electron; Deferred: manual a11y/keyboard |
 | 2026-04-27 | 6 | 0 | 0 | 2 | Post-commit verification pass — all linters clean, build clean; N/A: i18n (en.json unchanged), Electron |
 | 2026-04-27 | 6 | 0 | 2 | 2 | Fixed 9 ESLint errors in debug plugin (unused imports, ref-in-render, backdrop onClick); 4 CSS errors in debug.css (@keyframes expansion, hover multi-declaration); build clean 225kB gz; plugin import isolation verified; ABOUT.md restructured; TODO.md reordered with `[dormant]` tags; `debug skeleton` moved to custom commands; Deferred: manual a11y/keyboard checks; N/A: i18n (en.json unchanged), Electron |
