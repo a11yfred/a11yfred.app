@@ -58,6 +58,7 @@ All significant changes to A11yTextHelper, newest first.
 ### ABOUT.md and docs
 
 - `ABOUT.md`: "Fake Languages" sub-heading renamed to "Silly Languages" (Klingon and Valyrian are considered real languages by some)
+- `docs/MAINT-LOG.md`: created — maintenance run history moved out of `MAINTENANCE.md` into its own file; `MAINTENANCE.md` now has a single pointer to it; checklist item updated; README docs table updated
 
 ### Debug command reclassification
 

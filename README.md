@@ -308,6 +308,7 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to fork, run locally, a
 | [docs/UPDATES.md](docs/UPDATES.md) | Plain-language summary of what changed and why |
 | [docs/TODO.md](docs/TODO.md) | Personal backlog |
 | [docs/MAINTENANCE.md](docs/MAINTENANCE.md) | Recurring sweep checklists |
+| [docs/MAINT-LOG.md](docs/MAINT-LOG.md) | Maintenance run history |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to contribute |
 | [docs/DEPLOYING.md](docs/DEPLOYING.md) | Deployment options and switching guide |
 | [docs/SECURITY.md](docs/SECURITY.md) | Data storage, API keys, CSP, and vulnerability reporting |
