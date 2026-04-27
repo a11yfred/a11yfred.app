@@ -109,6 +109,17 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
 
 - [ ] **String coverage** — any new UI text must use `t('key')` from `src/i18n/en.json`; never hardcode English strings in components
 - [ ] **Translate new UI strings** — after adding any new keys to `en.json`, run `ANTHROPIC_API_KEY=... npm run translate` to fill in proper translations for all 49 non-English locale files; the script detects keys still holding English fallback values and translates them in one pass; apply capitalization conventions afterward (sentence case for Romance/Germanic, no change for caseless scripts); this must run as part of every maintenance pass when `en.json` was modified since the last pass
+- [ ] **Track `en.json` edits** — every time a key is added or updated in `en.json`, note the key and old/new value in `docs/i18n-edits.md`; do not try to propagate immediately — batch them and run the translate workflow below; failing to track means stale translations silently exist across 50+ locales with no record of what changed
+- [ ] **Full translate workflow** — run this whenever `docs/i18n-edits.md` has unresolved entries, using `es.json` (most reliably translated locale) as the reference for what keys exist and what translated values look like:
+
+  **Step 1 — Parity (no API needed):** Compare `es.json` keys against all other locale files. For every key present in `es.json` that is missing from another locale file, add it with the English value from `en.json` as a placeholder. Commit: `i18n: add missing keys as English placeholders`.
+
+  **Step 2 — Retranslate stale keys:** Find keys whose English source changed since `scripts/en-snapshot.json` was last written (the snapshot records the English value at translation time). For each such key, update all locale files that still hold the old translation by retranslating from the new English. Run `ANTHROPIC_API_KEY=... node scripts/translate-missing.mjs` — the script auto-detects changed keys by comparing `en.json` against the snapshot. Commit: `i18n: retranslate stale keys — English source changed`.
+
+  **Step 3 — Translate English placeholders:** Find all values in non-English locale files that are identical to their `en.json` counterpart (i.e. still an English placeholder). Run `ANTHROPIC_API_KEY=... node scripts/translate-missing.mjs` — same script, picks up any remaining placeholders. Commit: `i18n: translate remaining English placeholder values`.
+
+  After all three steps, update `docs/i18n-edits.md` to mark resolved entries and verify parity is clean.
+
 - [ ] **Locale file parity (CRITICAL)** — every key added to `en.json` must be added to all 49+ other locale files immediately, using the English value as a placeholder; do not wait for a translation run; a missing key falls back to the key literal at runtime, which is visible to users; run the parity check after every session that modified `en.json`:
 
   ```sh
