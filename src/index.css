@@ -1038,6 +1038,16 @@ select:disabled {
   color: var(--source-text);
 }
 
+.wcag-badge {
+  font-size: var(--fs-body);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: var(--wcag-bg);
+  color: var(--wcag-text);
+}
+
 .result-item__sc {
   font-size: var(--fs-body);
   color: var(--text-muted);

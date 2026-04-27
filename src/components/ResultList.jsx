@@ -161,6 +161,9 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   {finding.source && (
                     <span className="source-badge">{finding.source}</span>
                   )}
+                  {finding.wcagVersion && finding.wcagLevel && (
+                    <span className="wcag-badge">{finding.wcagVersion} {finding.wcagLevel}</span>
+                  )}
                 </div>
 
                 <div className="result-item__sc">{finding.scLabel}</div>

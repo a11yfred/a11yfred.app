@@ -243,6 +243,9 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
           {finding.source && (
             <span className="source-badge">{finding.source}</span>
           )}
+          {finding.wcagVersion && finding.wcagLevel && (
+            <span className="wcag-badge">{finding.wcagVersion} {finding.wcagLevel}</span>
+          )}
         </div>
 
         <ul className="detail-sc-list">

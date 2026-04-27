@@ -4,6 +4,8 @@
     "title": "Unlabeled Button or Link",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.1.1 Non-text Content (Level A)"
     ],
@@ -32,6 +34,8 @@
     "title": "Focus Not Managed",
     "sc": "2.4.3",
     "scLabel": "2.4.3 Focus Order (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -59,6 +63,8 @@
     "title": "Focus Indicator Missing or Not Visible",
     "sc": "2.4.7",
     "scLabel": "2.4.7 Focus Visible (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [
       "1.4.11 Non-text Contrast (Level AA)",
       "2.1.1 Keyboard (Level A)"
@@ -86,6 +92,8 @@
     "title": "Control Not Keyboard Accessible",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.7 Focus Visible (Level AA)",
       "4.1.2 Name, Role, Value (Level A)"
@@ -118,6 +126,8 @@
     "title": "Text Contrast Too Low",
     "sc": "1.4.3",
     "scLabel": "1.4.3 Contrast (Minimum) (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "Critical",
     "platform": "both",
@@ -142,6 +152,8 @@
     "title": "Non-text Contrast Too Low",
     "sc": "1.4.11",
     "scLabel": "1.4.11 Non-text Contrast (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "Critical",
     "platform": "both",
@@ -165,6 +177,8 @@
     "title": "Alt Text Missing, Wrong, or Unnecessary",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)"
     ],
@@ -192,6 +206,8 @@
     "title": "Control Label Describes Appearance, Not Purpose",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.1.1 Non-text Content (Level A)"
     ],
@@ -217,6 +233,8 @@
     "title": "No Skip Link",
     "sc": "2.4.1",
     "scLabel": "2.4.1 Bypass Blocks (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -240,6 +258,8 @@
     "title": "Skip Link Not Visible When Focused",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.1 Bypass Blocks (Level A)"
     ],
@@ -263,6 +283,8 @@
     "title": "Incorrect Heading Structure",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Medium",
     "platform": "both",
@@ -289,6 +311,8 @@
     "title": "No H1 on the Page",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Medium",
     "platform": "both",
@@ -309,6 +333,8 @@
     "title": "Asterisk for Required Fields Not Explained",
     "sc": "3.3.2",
     "scLabel": "3.3.2 Labels or Instructions (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)",
       "4.1.2 Name, Role, Value (Level A)"
@@ -334,6 +360,8 @@
     "title": "Form Errors Not Linked to Their Fields",
     "sc": "3.3.1",
     "scLabel": "3.3.1 Error Identification (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)",
       "4.1.2 Name, Role, Value (Level A)"
@@ -360,6 +388,8 @@
     "title": "No Status Message After Action",
     "sc": "4.1.3",
     "scLabel": "4.1.3 Status Messages (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [
       "1.3.1 Info and Relationships (Level A)"
     ],
@@ -387,6 +417,8 @@
     "title": "ARIA Used Incorrectly",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)"
     ],
@@ -415,6 +447,8 @@
     "title": "Color Is the Only Visual Indicator",
     "sc": "1.4.1",
     "scLabel": "1.4.1 Use of Color (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)"
     ],
@@ -440,6 +474,8 @@
     "title": "Zoom or Pinch-to-Zoom Disabled",
     "sc": "1.4.4",
     "scLabel": "1.4.4 Resize Text (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "Critical",
     "platform": "web",
@@ -463,6 +499,8 @@
     "title": "Form Field Missing a Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "4.1.2 Name, Role, Value (Level A)",
       "3.3.2 Labels or Instructions (Level A)"
@@ -496,6 +534,8 @@
     "title": "Hidden Content Still Readable by Screen Readers",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Critical",
     "platform": "both",
@@ -519,6 +559,8 @@
     "title": "Text Spacing Too Tight",
     "sc": "1.4.12",
     "scLabel": "1.4.12 Text Spacing (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "Critical",
     "platform": "web",
@@ -541,6 +583,8 @@
     "title": "Accessible Name Does Not Match Visible Label",
     "sc": "2.5.3",
     "scLabel": "2.5.3 Label in Name (Level A)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "A",
     "related": [
       "4.1.2 Name, Role, Value (Level A)"
     ],
@@ -565,6 +609,8 @@
     "title": "ARIA Tabs Pattern",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "4.1.2 Name, Role, Value (Level A)"
     ],
@@ -589,6 +635,8 @@
     "title": "Non-interactive Element in Tab Order",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.3 Focus Order (Level A)"
     ],
@@ -614,6 +662,8 @@
     "title": "Repeated Links to the Same Destination",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)"
     ],
@@ -639,6 +689,8 @@
     "title": "Language Change Not Marked in HTML",
     "sc": "3.1.2",
     "scLabel": "3.1.2 Language of Parts (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "Critical",
     "platform": "both",
@@ -662,6 +714,8 @@
     "title": "Page Language Not Set",
     "sc": "3.1.1",
     "scLabel": "3.1.1 Language of Page (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "High",
     "platform": "web",
@@ -682,6 +736,8 @@
     "title": "Drag Action Has No Keyboard Alternative",
     "sc": "2.5.7",
     "scLabel": "2.5.7 Dragging Movements (Level AA)",
+    "wcagVersion": "2.2",
+    "wcagLevel": "AA",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -706,6 +762,8 @@
     "title": "Endless Animation Loop",
     "sc": "2.2.2",
     "scLabel": "2.2.2 Pause, Stop, Hide (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Critical",
     "platform": "both",
@@ -731,6 +789,8 @@
     "title": "Page Landmarks Missing or Incorrect",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Medium",
     "platform": "web",
@@ -757,6 +817,8 @@
     "title": "Page Title Does Not Change Between Pages",
     "sc": "2.4.2",
     "scLabel": "2.4.2 Page Titled (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Medium",
     "platform": "web",
@@ -778,6 +840,8 @@
     "title": "Keyboard Trap",
     "sc": "2.1.2",
     "scLabel": "2.1.2 No Keyboard Trap (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Critical",
     "platform": "both",
@@ -800,6 +864,8 @@
     "title": "Chart or Graph Has No Text Alternative",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)"
     ],
@@ -825,6 +891,8 @@
     "title": "Table Data Not Using Table Markup",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Critical",
     "platform": "web",
@@ -847,6 +915,8 @@
     "title": "Tooltip or Hover Content Not Keyboard Accessible",
     "sc": "1.4.13",
     "scLabel": "1.4.13 Content on Hover or Focus (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -871,6 +941,8 @@
     "title": "Tab Order Does Not Match Visual Order",
     "sc": "2.4.3",
     "scLabel": "2.4.3 Focus Order (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -894,6 +966,8 @@
     "title": "Informative Content Hidden from Screen Readers",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)"
     ],
@@ -918,6 +992,8 @@
     "title": "No Warning Before Opening a New Window",
     "sc": "3.2.2",
     "scLabel": "3.2.2 On Input (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Medium",
     "platform": "web",
@@ -939,6 +1015,8 @@
     "title": "Receiving Focus Causes Unexpected Change",
     "sc": "3.2.1",
     "scLabel": "3.2.1 On Focus (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -962,6 +1040,8 @@
     "title": "Changing an Input Causes Unexpected Change",
     "sc": "3.2.2",
     "scLabel": "3.2.2 On Input (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -986,6 +1066,8 @@
     "title": "Content Announced Incorrectly by Screen Readers",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "High",
     "platform": "web",
@@ -1010,6 +1092,8 @@
     "title": "Figure or Illustration Has No Description",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "High",
     "platform": "web",
@@ -1033,6 +1117,8 @@
     "title": "Form Field Has Conflicting Labels",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.5.3 Label in Name (Level A)"
     ],
@@ -1056,6 +1142,8 @@
     "title": "Dropdown or Select Has No Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "4.1.2 Name, Role, Value (Level A)"
     ],
@@ -1081,6 +1169,8 @@
     "title": "Layout Breaks When Text Is Enlarged",
     "sc": "1.4.4",
     "scLabel": "1.4.4 Resize Text (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [
       "1.4.10 Reflow (Level AA)"
     ],
@@ -1107,6 +1197,8 @@
     "title": "Vague or Generic Link Text",
     "sc": "2.4.4",
     "scLabel": "2.4.4 Link Purpose (In Context) (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "High",
     "platform": "both",
@@ -1131,6 +1223,8 @@
     "title": "Audio or Video Has No Transcript or Captions",
     "sc": "1.2.1",
     "scLabel": "1.2.1 Audio-only and Video-only (Prerecorded) (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.2.2 Captions (Prerecorded) (Level A)"
     ],
@@ -1158,6 +1252,8 @@
     "title": "Form Group Has No Group Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "4.1.2 Name, Role, Value (Level A)"
     ],
@@ -1184,6 +1280,8 @@
     "title": "List Content Not Using List Markup",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Medium",
     "platform": "web",
@@ -1208,6 +1306,8 @@
     "title": "Live Region Not Announcing Updates",
     "sc": "4.1.3",
     "scLabel": "4.1.3 Status Messages (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "High",
     "platform": "web",
@@ -1232,6 +1332,8 @@
     "title": "Multi-Point Gesture Has No Single-Pointer Alternative",
     "sc": "2.5.1",
     "scLabel": "2.5.1 Pointer Gestures (Level A)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "A",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -1257,6 +1359,8 @@
     "title": "Error Message Does Not Explain How to Fix the Problem",
     "sc": "3.3.3",
     "scLabel": "3.3.3 Error Suggestion (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [
       "3.3.1 Error Identification (Level A)"
     ],
@@ -1283,6 +1387,8 @@
     "title": "Video Has No Closed Captions",
     "sc": "1.2.2",
     "scLabel": "1.2.2 Captions (Prerecorded) (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.2.1 Audio-only and Video-only (Prerecorded) (Level A)"
     ],
@@ -1309,6 +1415,8 @@
     "title": "Video Has No Audio Description",
     "sc": "1.2.5",
     "scLabel": "1.2.5 Audio Description (Prerecorded) (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [
       "1.1.1 Non-text Content (Level A)"
     ],
@@ -1334,6 +1442,8 @@
     "title": "Session Timeout Without Warning",
     "sc": "2.2.1",
     "scLabel": "2.2.1 Timing Adjustable (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Critical",
     "platform": "both",
@@ -1357,6 +1467,8 @@
     "title": "Flashing Content",
     "sc": "2.3.1",
     "scLabel": "2.3.1 Three Flashes or Below Threshold (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "Critical",
     "platform": "both",
@@ -1382,6 +1494,8 @@
     "title": "Content Does Not Reflow at 400% Zoom",
     "sc": "1.4.10",
     "scLabel": "1.4.10 Reflow (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [
       "1.4.4 Resize Text (Level AA)"
     ],
@@ -1409,6 +1523,8 @@
     "title": "Touch or Click Target Too Small",
     "sc": "2.5.8",
     "scLabel": "2.5.8 Target Size (Minimum) (Level AA)",
+    "wcagVersion": "2.2",
+    "wcagLevel": "AA",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -1437,6 +1553,8 @@
     "title": "Screen Orientation Locked",
     "sc": "1.3.4",
     "scLabel": "1.3.4 Orientation (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "High",
     "platform": "both",
@@ -1461,6 +1579,8 @@
     "title": "Autocomplete Attribute Missing on Personal Data Fields",
     "sc": "1.3.5",
     "scLabel": "1.3.5 Identify Input Purpose (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [
       "3.3.2 Labels or Instructions (Level A)"
     ],
@@ -1490,6 +1610,8 @@
     "title": "iFrame Missing a Title",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [],
     "priority": "High",
     "platform": "web",
@@ -1515,6 +1637,8 @@
     "title": "Expanded or Collapsed State Not Communicated",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)"
     ],
@@ -1543,6 +1667,8 @@
     "title": "Device Motion Feature Has No Alternative",
     "sc": "2.5.4",
     "scLabel": "2.5.4 Motion Actuation (Level A)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "A",
     "related": [
       "2.1.1 Keyboard (Level A)"
     ],
@@ -1570,6 +1696,8 @@
     "title": "Reading Order Disrupted by CSS Positioning",
     "sc": "1.3.2",
     "scLabel": "1.3.2 Meaningful Sequence (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.3 Focus Order (Level A)"
     ],
@@ -1598,6 +1726,8 @@
     "title": "No Confirmation Step for Irreversible Actions",
     "sc": "3.3.4",
     "scLabel": "3.3.4 Error Prevention (Legal, Financial, Data) (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [
       "3.3.1 Error Identification (Level A)"
     ],
@@ -1628,6 +1758,8 @@
     "title": "Focus Indicator Does Not Meet Minimum Area",
     "sc": "2.4.11",
     "scLabel": "2.4.11 Focus Appearance (Level AA)",
+    "wcagVersion": "2.2",
+    "wcagLevel": "AA",
     "related": [
       "2.4.7 Focus Visible (Level AA)",
       "1.4.11 Non-text Contrast (Level AA)"
@@ -1655,6 +1787,8 @@
     "title": "Instructions Rely on Sensory Characteristics Only",
     "sc": "1.3.3",
     "scLabel": "1.3.3 Sensory Characteristics (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.4.1 Use of Color (Level A)"
     ],
@@ -1686,6 +1820,8 @@
     "title": "Navigation Changes Position Across Pages",
     "sc": "3.2.3",
     "scLabel": "3.2.3 Consistent Navigation (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "Medium",
     "platform": "web",
@@ -1710,6 +1846,8 @@
     "title": "Native App Ignores Device Orientation",
     "sc": "1.3.4",
     "scLabel": "1.3.4 Orientation (Level AA)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [],
     "priority": "Critical",
     "platform": "native",
@@ -1735,6 +1873,8 @@
     "title": "No Dark Mode Support",
     "sc": "N/A",
     "scLabel": "Best Practice",
+    "wcagVersion": "",
+    "wcagLevel": "",
     "related": [],
     "priority": "Best Practice",
     "platform": "both",
@@ -1757,6 +1897,8 @@
     "title": "Voice Control Users Cannot Operate Controls",
     "sc": "2.5.3",
     "scLabel": "2.5.3 Label in Name (Level A)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "A",
     "related": [
       "4.1.2 Name, Role, Value (Level A)",
       "2.1.1 Keyboard (Level A)"
@@ -1784,6 +1926,8 @@
     "title": "Mobile App Does Not Support External Keyboard",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.7 Focus Visible (Level AA)",
       "2.4.3 Focus Order (Level A)"
@@ -1810,6 +1954,8 @@
     "title": "Switch Control and Switch Access Not Supported",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.3 Focus Order (Level A)"
     ],
@@ -1836,6 +1982,8 @@
     "title": "Linked Document Is Not Accessible",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)",
       "2.4.4 Link Purpose (In Context) (Level A)"
@@ -1869,6 +2017,8 @@
     "title": "Emoji or Special Characters Disrupt Screen Reader Output",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "1.1.1 Non-text Content (Level A)"
     ],
@@ -1897,6 +2047,8 @@
     "title": "Visible Heading Not Marked as Heading",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.6 Headings and Labels (Level AA)"
     ],
