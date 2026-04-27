@@ -231,6 +231,7 @@ function AppContent({
       } catch { /* localStorage unavailable */ }
     } else {
       sessionStorage.removeItem('lastSelectedId')
+      setFindingHistory([])
       const shouldReturn = returnViewAllRef.current
       returnViewAllRef.current = false
       if (shouldReturn) { navigate('/results/all'); return }
@@ -238,11 +239,34 @@ function AppContent({
     setSelected(finding)
     navigate(finding ? `/finding/${finding.id}/${findingSlug(finding.title)}` : '/')
   }
+  const handleSelectRelated = (finding) => {
+    if (!finding) return
+    setFindingHistory(h => selected ? [...h, selected] : h)
+    sessionStorage.setItem('lastSelectedId', finding.id)
+    try {
+      const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
+      const deduped = recent.filter(id => id !== finding.id)
+      deduped.unshift(finding.id)
+      localStorage.setItem('recentFindings', JSON.stringify(deduped.slice(0, 10)))
+    } catch { /* localStorage unavailable */ }
+    setSelected(finding)
+    navigate(`/finding/${finding.id}/${findingSlug(finding.title)}`)
+    setPanelFocusTrigger(n => n + 1)
+  }
+  const handleBack = () => {
+    const prev = findingHistory[findingHistory.length - 1]
+    if (!prev) return
+    setFindingHistory(h => h.slice(0, -1))
+    setSelected(prev)
+    navigate(`/finding/${prev.id}/${findingSlug(prev.title)}`)
+    setPanelFocusTrigger(n => n + 1)
+  }
   // Tracks whether settings was opened while a finding panel was selected,
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
   const findingTriggerRef = useRef(null)
   const returnViewAllRef = useRef(false)
+  const [findingHistory, setFindingHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
   const { ratings, upvote, downvote, toggleStar, toggleArchive } = useFindingRatings()
@@ -715,6 +739,8 @@ function AppContent({
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
         returnFocusRef={findingTriggerRef}
+        onBack={findingHistory.length > 0 ? handleBack : undefined}
+        backLabel={t('detail.back_aria')}
       >
         {selected && (
           <DetailPanel
@@ -724,6 +750,7 @@ function AppContent({
             focusTrigger={panelFocusTrigger}
             allFindings={allFindings}
             onSelect={handleSelectFinding}
+            onSelectRelated={handleSelectRelated}
             locale={language}
             userOverridesHook={userOverridesHook}
             contributionQueueHook={contributionQueueHook}

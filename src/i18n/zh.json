@@ -281,5 +281,6 @@
   "settings.wcag_filter_legend": "Filter by WCAG version",
   "settings.wcag_filter_20": "WCAG 2.0 entries",
   "settings.wcag_filter_21": "WCAG 2.1 additions",
-  "settings.wcag_filter_22": "WCAG 2.2 additions"
+  "settings.wcag_filter_22": "WCAG 2.2 additions",
+  "detail.back_aria": "[TODO: translate] Back to previous finding"
 }

@@ -4,6 +4,24 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-27 — Related issue back navigation, Copy/Reset layout
+
+### BottomSheet — back button for related issue navigation
+
+- `BottomSheet.jsx` — new `onBack` / `backLabel` props; renders `btn-icon btn-icon-accent sheet-back-btn` (ChevronLeft, RTL-aware) in the chrome left when `onBack` is defined; `sheet-back-btn` uses `margin-right: auto` to keep the drag handle centered and the close button right-aligned
+- `App.jsx` — `findingHistory` state (array of previous findings); `handleSelectRelated` pushes current finding to history before navigating and increments `panelFocusTrigger` so the new sheet's heading receives focus; `handleBack` pops history, restores previous finding, and increments `panelFocusTrigger` for focus; `BottomSheet` receives `onBack={findingHistory.length > 0 ? handleBack : undefined}`
+- `DetailPanel.jsx` — new `onSelectRelated` prop; `RelatedIssues` uses `onSelectRelated ?? onSelect` so the history-aware handler fires when available
+- `en.json` — `detail.back_aria`: "Back to previous finding"; placeholder added to all 49 non-English locales
+
+### Detail panel — Copy all / Reset all layout
+
+- Buttons moved out of `detail-refine` to the end of `DetailPanel`, just above the `sheet-close-bottom` close button
+- Order swapped: Reset all → Copy all (was Copy all → Reset all)
+- `.detail-actions-end` — added `border-top` + `padding-top` + increased `margin-top` to form a visual footer section; `.detail-panel + .sheet-close-bottom` rule removes the redundant double border
+- Mobile (<768px) — both `.detail-action-btn` get `flex: 1; justify-content: center` for a 50/50 layout
+
+---
+
 ## 2026-04-27 — Multilingual edit backend, badge redesign, debug improvements, UX polish
 
 ### Multilingual edit flow — backend complete

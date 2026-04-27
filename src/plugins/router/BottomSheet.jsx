@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useFocusTrap } from './useFocusTrap.js'
 import { useAriaHide } from './useAriaHide.js'
 import { returnFocus } from './returnFocus.js'
+import { useDir } from './useDir.js'
 
 /**
  * Bottom sheet that slides up from the bottom of the viewport.
@@ -26,11 +27,13 @@ import { returnFocus } from './returnFocus.js'
  *                                      fire before parent effects in React)
  *   children        node             — rendered inside the sheet
  */
-export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, children }) {
+export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, onBack, backLabel = 'Back', children }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
   const dragStartY = useRef(null)
   const dragDelta = useRef(0)
+  const dir = useDir()
+  const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
 
   useFocusTrap(panelRef, open)
   useAriaHide(panelRef, open)
@@ -123,9 +126,18 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
         onTouchEnd={handleTouchEnd}
         inert={!open ? '' : undefined}
       >
-        {/* Chrome: drag handle centered, close button top-right */}
+        {/* Chrome: drag handle centered, optional back button top-left, close button top-right */}
         <div className="sheet-chrome">
           <div className="sheet-handle" aria-hidden="true" />
+          {onBack && (
+            <button
+              onClick={onBack}
+              aria-label={backLabel}
+              className="btn-icon btn-icon-accent sheet-back-btn"
+            >
+              <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
+            </button>
+          )}
           <button
             onClick={onClose}
             aria-label={closeLabel}

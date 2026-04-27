@@ -24,7 +24,9 @@
       "icon button",
       "modal close",
       "x button",
-      "dismiss"
+      "dismiss",
+      "voiceover",
+      "talkback"
     ],
     "desc": "A button or link does not have an accessible name. Screen readers announce it as \"button\" or \"link\" with no context, so users cannot tell what it does.",
     "rem": "Add a visible label or an aria-label attribute that describes what the control does. For example, a close button inside a modal should say \"Close\" or \"Close dialog\", not just show an X icon."
@@ -53,7 +55,9 @@
       "new content",
       "expanded",
       "sheet",
-      "drawer"
+      "drawer",
+      "voiceover",
+      "talkback"
     ],
     "desc": "When a modal, dialog, or drawer opens, keyboard focus stays where it was. Screen reader and keyboard users cannot easily reach the new content.",
     "rem": "Move focus to the first element inside the new content when it opens. Use tabindex=\"-1\" on a heading if the first focusable element comes later. Trap focus inside while it is open, and return focus to the trigger button when it closes."
@@ -198,7 +202,9 @@
       "logo",
       "banner",
       "img",
-      "no alt"
+      "no alt",
+      "voiceover",
+      "talkback"
     ],
     "desc": "An image has no alt text, has alt text that does not describe the image's purpose, or has alt text that repeats nearby visible text.",
     "rem": "Decide if the image carries meaning or is purely decorative. Meaningful images need short, descriptive alt text that explains the purpose. Decorative images should use alt=\"\" so screen readers skip them."
@@ -225,7 +231,9 @@
       "describes image",
       "not purpose",
       "logo label",
-      "accessible name mismatch"
+      "accessible name mismatch",
+      "voiceover",
+      "talkback"
     ],
     "desc": "A control's accessible name describes how it looks rather than what it does. For example, a button labeled \"magnifying glass icon\" should instead say \"Search\".",
     "rem": "Write labels that describe the action or destination of the control, not its visual appearance. Change labels like \"arrow icon\" to \"Next page\" or \"Search icon\" to \"Search\"."
@@ -304,7 +312,9 @@
       "heading hierarchy",
       "skipped heading",
       "heading order",
-      "heading levels"
+      "heading levels",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Text that looks like a heading is not marked as one, or heading levels skip numbers (for example, jumping from h1 to h3). Screen reader users navigate pages by headings, so a broken structure makes it hard to find content.",
     "rem": "Use h1–h6 elements for all section titles. Do not skip levels — each sub-section should use the next heading level down. Do not use heading elements just to make text larger or bolder."
@@ -326,7 +336,9 @@
       "missing h1",
       "no heading one",
       "page structure",
-      "h1"
+      "h1",
+      "voiceover",
+      "talkback"
     ],
     "desc": "The page has no h1 heading. The h1 is the main title of the page and helps screen reader users understand where they are.",
     "rem": "Add a single h1 element to each page that describes the page's main topic. All other headings should follow in order below it."
@@ -381,7 +393,9 @@
       "validation",
       "aria-describedby",
       "error identification",
-      "form validation"
+      "form validation",
+      "voiceover",
+      "talkback"
     ],
     "desc": "When a form shows an error message, screen readers do not announce it because it is not programmatically linked to the input field.",
     "rem": "Use aria-describedby to connect the error message to its input field. When errors appear, move keyboard focus to the first field with an error so all users know where to fix the problem."
@@ -410,7 +424,9 @@
       "screen reader",
       "notification",
       "toast",
-      "success message"
+      "success message",
+      "voiceover",
+      "talkback"
     ],
     "desc": "After a user action such as submitting a form or loading results, nothing is announced to screen reader users. They do not know if the action worked.",
     "rem": "Use role=\"status\" or aria-live=\"polite\" on a container that receives the result message. This lets screen readers announce updates without moving focus. Only use aria-live=\"assertive\" or role=\"alert\" for urgent messages."
@@ -440,7 +456,9 @@
       "aria conflict",
       "aria misuse",
       "aria alert",
-      "on blur"
+      "on blur",
+      "voiceover",
+      "talkback"
     ],
     "desc": "ARIA attributes are applied incorrectly. Common problems: aria-hidden is placed on a focusable element, role=\"alert\" is used for routine messages, or ARIA roles conflict with the element's native behavior.",
     "rem": "Follow the ARIA specification closely. Never put aria-hidden on an element that is focusable or contains focusable children. Use role=\"alert\" only for urgent, time-sensitive messages — use aria-live=\"polite\" for everything else."
@@ -553,7 +571,9 @@
       "visibility",
       "collapse",
       "off-screen",
-      "still readable"
+      "still readable",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Content that is visually hidden (such as a closed dropdown or collapsed panel) is still readable by screen readers. Users may hear content that seems to have no context.",
     "rem": "Use display: none or visibility: hidden to hide content from both visual and screen reader users. Or use aria-hidden=\"true\" on content that should be invisible to screen readers. Make sure the chosen method actually hides the content from assistive technology."
@@ -603,7 +623,9 @@
       "mismatch",
       "accessible name",
       "voice control",
-      "visible label mismatch"
+      "visible label mismatch",
+      "voiceover",
+      "talkback"
     ],
     "desc": "A control's accessible name is different from its visible text label. Voice input users speak the visible label to activate the control, but it does not match what the control is actually named.",
     "rem": "Make sure the accessible name starts with or contains the visible label text. Remove aria-label values that replace the visible text — let the visible text serve as the accessible name."
@@ -708,7 +730,9 @@
       "multilingual",
       "language change",
       "programmatic language",
-      "lang attribute"
+      "lang attribute",
+      "voiceover",
+      "talkback"
     ],
     "desc": "The page contains text in more than one language, but the language change is not marked in the HTML. Screen readers may read foreign words using the wrong pronunciation.",
     "rem": "Add a lang attribute to the element wrapping the text in a different language. For example: <span lang=\"es\">Hola</span>."
@@ -888,7 +912,9 @@
       "no text alternative",
       "pie chart",
       "bar chart",
-      "data viz"
+      "data viz",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Charts and graphs convey data visually but have no text alternative. Screen reader users cannot access the information the chart contains.",
     "rem": "Provide a text summary that describes what the chart shows — its type, key trends, and main takeaways. When possible, also provide the underlying data in a table."
@@ -964,7 +990,9 @@
       "visual order",
       "dom order",
       "confusing order",
-      "focus sequence"
+      "focus sequence",
+      "voiceover",
+      "talkback"
     ],
     "desc": "When tabbing through the page, focus jumps in an order that does not match what is shown on screen. This is confusing for keyboard users.",
     "rem": "Make the HTML source order match the visual layout. Avoid using positive tabindex values to control tab order — they create maintenance problems and usually make things worse."
@@ -990,7 +1018,9 @@
       "icon",
       "not conveyed",
       "aria-hidden rating",
-      "stars"
+      "stars",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Content that carries meaning (like a star rating or status icon) is hidden from screen readers using aria-hidden. Screen reader users cannot access that information.",
     "rem": "Remove aria-hidden from content that carries meaning. Add an accessible name or supplemental text that conveys the same information. For example, instead of hiding a star rating, add hidden text like \"Rating: 4 out of 5 stars\"."
@@ -1091,7 +1121,9 @@
       "announces",
       "format",
       "incorrect announcement",
-      "broken price"
+      "broken price",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Content is formatted in a way that causes screen readers to read it incorrectly. For example, a price of \"$1,200\" may be read as garbled text depending on how it is marked up.",
     "rem": "Review how the content is structured in the HTML and test with a screen reader. Fix the markup or formatting so the announced text conveys the intended meaning accurately."
@@ -1116,7 +1148,9 @@
       "no caption",
       "no description",
       "figure element",
-      "complex image"
+      "complex image",
+      "voiceover",
+      "talkback"
     ],
     "desc": "An image or diagram uses a figure element but has no figcaption or accessible description. Screen reader users hear the image file name or a generic announcement instead of what the image shows.",
     "rem": "Add a figcaption element inside the figure that explains what the image shows or why it matters. For more complex visuals, link to a longer text description nearby."
@@ -1141,7 +1175,9 @@
       "visible label mismatch",
       "label conflict",
       "input label",
-      "accessible name mismatch"
+      "accessible name mismatch",
+      "voiceover",
+      "talkback"
     ],
     "desc": "A form field has both a visible label and an aria-label that say different things. Screen reader users hear the aria-label while sighted users read the visible label, which creates confusion.",
     "rem": "Use only one labeling method, or make sure both labels say the same thing. The accessible name (aria-label or aria-labelledby) must contain the visible label text."
@@ -1222,7 +1258,9 @@
       "generic link",
       "link text",
       "link purpose",
-      "descriptive link"
+      "descriptive link",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Links use generic text like \"Click here\", \"Read more\", or \"Learn more\". Screen reader users who navigate by links cannot tell where each link goes.",
     "rem": "Write link text that describes the destination or action. Instead of \"Click here\", use \"Download the accessibility checklist\" or \"Read the full WCAG 1.1.1 explanation\"."
@@ -1251,7 +1289,9 @@
       "hard of hearing",
       "1.2.1",
       "1.2.2",
-      "media alternative"
+      "media alternative",
+      "voiceover",
+      "talkback"
     ],
     "desc": "A video or audio recording has no captions or transcript. Deaf and hard of hearing users cannot access the spoken content.",
     "rem": "For audio-only content, provide a full text transcript. For video with audio, provide synchronized captions. Place the transcript near the media or link to it clearly. Auto-generated captions must be reviewed and corrected before publishing."
@@ -1331,7 +1371,9 @@
       "role alert",
       "role status",
       "aria-live polite",
-      "notification"
+      "notification",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Content that updates dynamically — like a search result count, a progress update, or a notification — is not announced by screen readers because the live region is missing or set up incorrectly.",
     "rem": "Add aria-live=\"polite\" to a container that will receive the updated text. Use aria-live=\"assertive\" only for urgent alerts. Inject the message into the live region after it is already in the DOM — injecting the region and message at the same time may not be announced."
@@ -1387,7 +1429,9 @@
       "3.3.3",
       "form error",
       "password requirements",
-      "format error"
+      "format error",
+      "voiceover",
+      "talkback"
     ],
     "desc": "A form shows an error when the user submits, but the message does not say how to fix it. For example, it may say \"Invalid input\" without explaining what format is expected.",
     "rem": "Write specific, actionable error messages. Tell users exactly what went wrong and how to correct it. For example: \"Phone number must be 10 digits, numbers only\" instead of \"Invalid phone number\"."
@@ -1442,7 +1486,9 @@
       "1.2.5",
       "described video",
       "AD",
-      "no audio description"
+      "no audio description",
+      "voiceover",
+      "talkback"
     ],
     "desc": "A prerecorded video contains visual information that is not described in the audio — such as on-screen text, actions, or diagrams. Blind and low vision users miss this content entirely.",
     "rem": "Add an audio description track that narrates key visual content during natural pauses in the dialogue. If there are not enough pauses, create an extended audio description version with the video paused at relevant moments. An alternative is a full text description, but an audio track is preferred."
@@ -1669,7 +1715,9 @@
       "state not announced",
       "dropdown state",
       "open closed",
-      "toggle button"
+      "toggle button",
+      "voiceover",
+      "talkback"
     ],
     "desc": "A button that opens or closes a panel, accordion, menu, or disclosure widget does not communicate whether the content is currently open or closed. Screen reader users cannot tell the current state from the button alone.",
     "rem": "Add aria-expanded=\"false\" to the trigger button by default and toggle it to aria-expanded=\"true\" when the content opens. Update the value every time the state changes. Do not rely on visual indicators like a chevron icon — those are not perceived by screen reader users."
@@ -1729,7 +1777,9 @@
       "position absolute",
       "float",
       "out of order",
-      "visual order mismatch"
+      "visual order mismatch",
+      "voiceover",
+      "talkback"
     ],
     "desc": "CSS properties like order, position: absolute, or float cause content to appear in a different sequence visually than it does in the DOM. Screen readers and other assistive technologies follow DOM order, so content may be read in a confusing or meaningless sequence.",
     "rem": "Ensure the DOM order matches the intended reading order. If CSS repositioning is necessary, test with a screen reader to confirm the content sequence makes sense. Avoid relying on the CSS order property to define meaning — use it only for visual adjustments when the DOM order is already correct."
@@ -1761,7 +1811,9 @@
       "no undo",
       "no confirmation",
       "review step",
-      "destructive action"
+      "destructive action",
+      "voiceover",
+      "talkback"
     ],
     "desc": "An action that cannot be easily undone — such as deleting data, completing a purchase, or submitting a legal or financial form — has no confirmation or review step. A user who activates it by accident has no way to recover.",
     "rem": "Before completing any significant or irreversible action, give users a chance to review, confirm, or cancel. Options include a confirmation dialog, a review-and-edit summary screen, or a brief undo window after the action completes. Clearly label destructive actions so users understand the consequence before they commit."
@@ -1823,7 +1875,9 @@
       "1.3.3",
       "sensory characteristics",
       "visual instruction",
-      "click the button on the right"
+      "click the button on the right",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Instructions for using the interface describe content by its visual appearance, shape, or position only — for example: \"Click the round button\" or \"See the options on the right\". Users who cannot see the screen cannot follow these instructions.",
     "rem": "Always accompany visual references with the element's name or function. Instead of \"Click the button on the right\", write \"Click the Settings button\". Instead of \"See the items below\", reference the heading or label by name. Never rely on shape, color, or position as the only way to identify something."
@@ -2058,7 +2112,9 @@
       "symbol",
       "ascii art",
       "aria-hidden emoji",
-      "emoticon"
+      "emoticon",
+      "voiceover",
+      "talkback"
     ],
     "desc": "Emoji or special characters are used in ways that disrupt screen reader output. Screen readers announce the full Unicode description of every emoji — for example, \"face with tears of joy\" — so repeated or decorative emoji create verbose, disruptive announcements. Special characters like dashes, arrows, or symbols may also be read unexpectedly.",
     "rem": "Hide purely decorative emoji from assistive technology with aria-hidden=\"true\". If an emoji carries meaning, replace it with visible text or supplement it with a visually hidden text alternative. Avoid using sequences of emoji or special characters to convey information (such as a row of stars to represent a rating). Test the full reading experience with a screen reader before publishing emoji-heavy content."

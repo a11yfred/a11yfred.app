@@ -36,7 +36,7 @@ function isSignificantlyChanged(original, current, threshold = 0.7) {
   return editDistance(original, current) / original.length > threshold
 }
 
-export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect }) {
+export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
@@ -410,31 +410,32 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                   : t('detail.save_note_text')}
           </button>
         </div>
-        <div className="detail-actions-end">
-          <button
-            type="button"
-            className="btn-ghost detail-action-btn"
-            onClick={handleCopyAll}
-            aria-label={t('detail.copy_all_aria')}
-          >
-            {copiedAll
-              ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.copied_desktop')}</>
-              : <><Clipboard size={14} aria-hidden="true" />{' '}{t('detail.copy_all_text')}</>
-            }
-          </button>
-          <button
-            type="button"
-            className="btn-ghost detail-action-btn"
-            onClick={handleResetAllFields}
-            aria-label={t('detail.reset_all_fields_aria')}
-          >
-            <RotateCcw size={14} aria-hidden="true" />
-            {' '}{t('detail.reset_all_fields_text')}
-          </button>
-        </div>
       </div>
 
-      <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelect} />
+      <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} />
+
+      <div className="detail-actions-end">
+        <button
+          type="button"
+          className="btn-ghost detail-action-btn"
+          onClick={handleResetAllFields}
+          aria-label={t('detail.reset_all_fields_aria')}
+        >
+          <RotateCcw size={14} aria-hidden="true" />
+          {' '}{t('detail.reset_all_fields_text')}
+        </button>
+        <button
+          type="button"
+          className="btn-ghost detail-action-btn"
+          onClick={handleCopyAll}
+          aria-label={t('detail.copy_all_aria')}
+        >
+          {copiedAll
+            ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.copied_desktop')}</>
+            : <><Clipboard size={14} aria-hidden="true" />{' '}{t('detail.copy_all_text')}</>
+          }
+        </button>
+      </div>
 
       <Modal
         open={nothingToCopy}

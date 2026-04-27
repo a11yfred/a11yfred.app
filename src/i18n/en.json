@@ -137,6 +137,7 @@
   "detail.copy_mobile": "",
   "detail.sheet_label": "{title} — Finding Detail",
   "detail.sheet_default": "Finding Detail",
+  "detail.back_aria": "Back to previous finding",
   "detail.refine_label_ai": "Revision Notes",
   "detail.refine_label_no_ai": "Notes",
   "detail.undo_last_desktop": "Undo Last",

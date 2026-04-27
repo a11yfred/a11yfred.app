@@ -4,6 +4,18 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 27, 2026 — Related issue back navigation, Copy/Reset button layout
+
+### Navigate back through related findings
+
+When you tap a related issue link inside a finding panel, a back button now appears in the top-left corner of the sheet chrome. Tapping it returns you to the previous finding with focus restored to its heading, so you can follow a chain of related issues and retrace your steps without closing the sheet.
+
+### Copy all and Reset all moved to the bottom
+
+The "Copy all" and "Reset all" buttons have moved to the bottom of the finding panel, right above the Close button. On narrow screens both buttons sit side by side at full width, making them easy to tap after reviewing a finding.
+
+---
+
 ## April 27, 2026 — Multilingual edit backend, badge redesign, debug improvements
 
 ### Edit in any language

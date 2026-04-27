@@ -606,6 +606,8 @@ function App() {
 | `label` | string | `'Detail'` | `aria-label` for the dialog element |
 | `closeLabel` | string | `'Close'` | Accessible label for the chrome close button |
 | `keepMounted` | boolean | `false` | Keep children in the DOM while the sheet is visually closed. Use when you need to preserve React state (e.g. text edits) while a secondary panel covers the sheet. The sheet is still `inert` when closed; only the state is preserved. |
+| `onBack` | fn \| undefined | `undefined` | When provided, renders a back-chevron button in the top-left of the chrome. Call it to navigate to a previous context; the button is hidden when `onBack` is `undefined`. |
+| `backLabel` | string | `'Back'` | Accessible label for the optional back button. |
 | `children` | node | — | Rendered inside the sheet only while open (unless `keepMounted` is true) |
 
 **`keepMounted` use case — settings ↔ detail panel navigation:**
@@ -637,6 +639,7 @@ When settings closes, restore focus to the panel heading via a `focusTrigger` pr
 .sheet-panel.is-open       /* transform: translateX(-50%) translateY(0) */
 .sheet-chrome              /* chrome row at top; flex row; close button at right end */
 .sheet-handle              /* drag-handle pill; position:absolute centered in chrome row */
+.sheet-back-btn            /* optional back button; margin-right:auto pushes close to right end */
 .sheet-close-btn           /* close button; flex-shrink:0 in the chrome flow */
 .sheet-content             /* scrollable content area; flex:1 overflow-y:auto */
 .sheet-close-bottom        /* full-width Close button at bottom — mobile only */

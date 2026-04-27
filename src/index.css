@@ -427,6 +427,11 @@ body:has(.modal-panel.is-open) .drawer-panel {
   flex-shrink: 0;
 }
 
+.sheet-back-btn {
+  flex-shrink: 0;
+  margin-right: auto;
+}
+
 .sheet-heading {
   font-size: var(--fs-heading);
   font-weight: 700;
@@ -2038,12 +2043,32 @@ input.search-input:focus {
   }
 }
 
-/* Detail panel — copy-all / reset-all row */
+/* Detail panel — copy-all / reset-all row (merged with close button footer) */
 .detail-actions-end {
   display: flex;
   justify-content: flex-end;
   gap: var(--space-2);
-  margin-top: var(--space-3);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+/* When detail-actions-end is the last child before .sheet-close-bottom, suppress the double border */
+.detail-panel + .sheet-close-bottom {
+  border-top: none;
+  margin-top: 0;
+  padding-top: var(--space-2);
+}
+
+@media (width < 768px) {
+  .detail-actions-end {
+    gap: var(--space-2);
+  }
+
+  .detail-actions-end .detail-action-btn {
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 .detail-action-btn {
