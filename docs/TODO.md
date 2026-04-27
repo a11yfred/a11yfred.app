@@ -4,24 +4,28 @@ Personal backlog for A11yTextHelper. Completed items are deleted — see [docs/C
 
 Items are ordered **high value + low effort first** within each section, and sections are ordered the same way overall.
 
-Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[claude]` `[dormant]`
+Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[claude]` `[dormant]`
 
+`[corpus]` and `[data]` are interchangeable — use either
+`[priority]` = currently the most important; keep at the top of the backlog
 `[claude]` = suggested by Claude during a review or sweep session (not a user-originated request)
 `[dormant]` = not currently being worked on; keep for reference but do not prioritize
 
 ---
 
-## Immediate
+## Priority
 
-- [ ] **Populate finding corpus** `[corpus]` — import from audit spreadsheets; target 150–200 entries across web and native; review existing starters for accuracy and voice consistency
-- [ ] **Result list keyboard navigation** `[ux]` `[a11y]` — add Up/Down/Home/End arrow key navigation to the result list; result cards are currently plain buttons in a list (listbox/option pattern was removed); consider a roving tabindex approach or a dedicated keyboard shortcut (e.g. J/K) to move between cards without Tab
-- [ ] **Revisit animations** `[ux]` `[a11y]` — several transitions are missing or inconsistent: the BottomSheet has a slide-up entrance but no slide-down exit animation; the result list appears instantly with no stagger; SettingsPanel on desktop switches without any transition; bundle all animation improvements into one pass and verify every new animation is disabled under `prefers-reduced-motion: reduce`
-- [ ] **Offline-first PWA** `[infra]` — add a Service Worker that caches the app shell and corpus JSON so the app works fully without an internet connection after the first load; use Vite's `vite-plugin-pwa` or a hand-rolled `service-worker.js`; add a Web App Manifest so it can be installed to the home screen; test on mobile Chrome
+- [ ] **Populate finding corpus** `[priority]` `[corpus]` — import from audit spreadsheets; target 150–200 entries across web and native; review existing starters for accuracy and voice consistency
+- [ ] **Result list keyboard navigation** `[priority]` `[ux]` `[a11y]` — add Up/Down/Home/End arrow key navigation to the result list; result cards are currently plain buttons in a list (listbox/option pattern was removed); consider a roving tabindex approach or a dedicated keyboard shortcut (e.g. J/K) to move between cards without Tab
+- [ ] **Revisit animations** `[priority]` `[ux]` `[a11y]` — several transitions are missing or inconsistent: the BottomSheet has a slide-up entrance but no slide-down exit animation; the result list appears instantly with no stagger; SettingsPanel on desktop switches without any transition; bundle all animation improvements into one pass and verify every new animation is disabled under `prefers-reduced-motion: reduce`
+- [ ] **Offline-first PWA** `[priority]` `[infra]` — add a Service Worker that caches the app shell and corpus JSON so the app works fully without an internet connection after the first load; use Vite's `vite-plugin-pwa` or a hand-rolled `service-worker.js`; add a Web App Manifest so it can be installed to the home screen; test on mobile Chrome
 - [ ] **Verify Ko-fi a11y patch selectors** `[a11y]` `[dormant]` — `patchKofiA11y` in `App.jsx` uses CSS selectors that were guessed from Ko-fi's known class conventions; open the deployed app with Ko-fi loaded, inspect the actual injected DOM in DevTools, and update the selectors and Escape-key close-button targeting to match the real markup
 
 ---
 
-## Corpus
+## Data & Content
+
+### Corpus & Findings
 
 - [ ] **Import from corpus_src/** `[corpus]` — when xlsx or other source files are added to `corpus_src/`, update the specified corpus (public or private) with the new or updated findings; user will specify the target corpus and any special handling per import
 - [ ] **Review new corpus entries ATH-004 through ATH-070** `[corpus]` — 16 entries added 2026-04-26; wording, remediation advice, keywords, and priority assignments need an editorial pass before treating them as final; compare voice and specificity against ATH-001–063
@@ -33,10 +37,21 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Batch import tooling** `[corpus]` `[claude]` — write a small Node.js or Python script that reads rows from a CSV or Excel export of your audit spreadsheets and converts them to the corpus JSON schema; run once, review the output for voice consistency and keyword coverage, then delete the script
 - [ ] **Custom data source** `[corpus]` `[ux]` — allow Settings to accept a URL or file path pointing to a user-supplied JSON corpus; validate the schema on load, fall back to the built-in corpus if the source is unreachable or malformed; document the expected schema in a help tooltip
 - [ ] **Public corpus bootstrap** `[corpus]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as the personal corpus
+- [ ] **User-owned remote corpus** `[corpus]` `[infra]` — let signed-in users point the app at their own Supabase table or a remote JSON URL as a corpus source; add a URL/connection string field in Settings; fall back to the built-in corpus if the source is unreachable; private sources require auth so the key is never in the URL
+- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — in the Phase 3 public deployment, serve Mikey's private corpus from a Supabase RLS-protected table rather than a bundled JSON file; unauthenticated users get `corpus.json` (public data) only; the private corpus never ships in any public build
+- [ ] **Phase 3 public corpus** `[corpus]` `[dormant]` — compile static JSON from WAI Understanding docs, WebAIM articles, Deque University, and axe-core rule descriptions; curation task, not infrastructure; same JSON schema as Phase 1; this corpus is never mixed with Mikey's personal corpus
+
+### Competitive / Differentiators
+
+- [ ] **WCAG version tagging** `[corpus]` — add a `wcagVersion` field to each corpus entry (`"2.1"` or `"2.2"`); display the version tag on the result card and in DetailPanel; useful when auditing against a specific version requirement
+- [ ] **Bug tracker integration** `[ux]` `[infra]` — add pre-populated deep links to Jira and Linear that open a new ticket with the finding description and remediation already filled in; no API key or auth required for deep links; document the URL format for each tracker
+- [ ] **Compare mode** `[ux]` — allow the user to open two finding entries side by side to decide which fits better; implement as a split view in the main content area; useful when multiple success criteria could apply to the same observation
 
 ---
 
-## UX / Interaction
+## User Experience Design
+
+### UX
 
 - [ ] **Email results** `[ux]` — add a button to email the selected finding description and remediation to yourself using a `mailto:` link with a pre-populated subject and body; no server required; useful for quickly forwarding a finding write-up from a phone
 - [ ] **Copy both fields at once** `[ux]` — add a single "Copy all" button to the `DetailPanel` header that copies the description and remediation together as formatted plain text (e.g. `Description: …\n\nRemediation: …`); useful for pasting into email or a report
@@ -45,34 +60,54 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Bookmarks / favorites** `[ux]` — allow marking frequently used findings as favorites by clicking a star icon on the result card; persist favorites to `localStorage` as a Set of finding IDs; show a "Starred" section above search results when any favorites exist
 - [ ] **How to use page** `[ux]` — add an onboarding modal or help page that explains the workflow: search → select → add location prefix → refine → copy; trigger it on first visit (check a `localStorage` flag) or via a Help button in the header; the content should be brief enough to read in under 30 seconds
 - [ ] **About / data sources page** `[ux]` `[corpus]` — when an About or How-to page is created, include a section describing how the public corpus was compiled and the sources used: WCAG 2.2 Understanding docs (W3C/WAI), axe-core rule descriptions (Deque), WebAIM articles, and Deque University; explain that entries are written in plain language and near-duplicates are consolidated; this gives users confidence in the data and gives proper credit to the source organizations
-- [ ] **WCAG version filter** `[ux]` `[corpus]` — add a filter option (alongside the Platform toggle) to narrow results by WCAG version: "2.1 only", "2.2 only", and "All"; requires a `wcagVersion` field on each corpus entry; see also WCAG version tagging in Competitive / Differentiators
+- [ ] **WCAG version filter** `[ux]` `[corpus]` — add a filter option (alongside the Platform toggle) to narrow results by WCAG version: "2.1 only", "2.2 only", and "All"; requires a `wcagVersion` field on each corpus entry; see also WCAG version tagging in Data & Content
 - [x] **Export findings to formats** `[ux]` — `exportFinding(finding, format)` utility complete in `src/utils/exportFinding.js`; supports `text`, `markdown`, `csv`; button UI pending
 - [ ] **Copy / add / edit / delete findings** `[ux]` — data layer wired: `src/services/userFindingsService.js` (localStorage CRUD, USR-NNN IDs), `src/hooks/useUserFindings.js`, merged into `useFindingSearch` alongside corpus; UI (forms, inline edit, copy button) pending
 - [ ] **Component-level filtering** `[ux]` — add a secondary filter (in addition to the Platform toggle) that narrows results by UI component type (modal, form, button, heading, image, etc.); this requires adding a `component` field to the corpus schema and updating `useFindingSearch`
 - [ ] **Upvote / downvote results** `[ux]` `[corpus]` — add thumbs up/down buttons to each result card; store ratings in `localStorage` keyed by finding ID; use ratings to boost or demote entries in Fuse.js scoring so frequently used findings surface higher; if authentication is added later, sync ratings to Supabase so they persist across devices
 - [ ] **Audit report builder** `[ux]` — multi-select multiple findings from the result list, add occurrence counts and severity overrides, and export a formatted accessibility audit report in Markdown or plain text; this is the primary deliverable format for most audit engagements
+- [ ] **Language-specific edit warning** `[ux]` `[i18n]` — when users can save custom edits to a finding entry, show a notice that edits apply only to the currently active language and will not persist if the user switches to a different locale; display this warning in the edit UI before the user saves
+- [ ] **Ko-fi link in footer** `[ux]` `[dormant]` — add a Ko-fi link in the footer as a fallback for when the floating widget is disabled
 
----
-
-## Accessibility and Design
+### Visual Design
 
 - [ ] **Gear icon replacement** `[design]` — the ⚙️ emoji renders differently across OSes and is not ideal for a refined UI; replace with an SVG gear icon that uses `currentColor` so it inherits the button's color and respects dark mode
 - [ ] **Empty state before search** `[design]` — the pre-search state (before any query is entered) shows only the search label and a help hint; add a short prompt, illustration, or sample query to make the tool feel more inviting and explain what to type
 - [ ] **Toggle design** `[design]` `[a11y]` — the current Toggle component uses a thin bar and circle; replace with a clearer on/off design using a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
 - [ ] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border; add a secondary visual cue (e.g. a filled accent left-edge bar or a checkmark) so the selection is unmistakable, especially for users with color vision deficiencies
 - [ ] **Monospace result description** `[design]` `[claude]` — consider rendering the `desc` preview in the result list using the mono font stack to more closely match how it will look when copied into a spreadsheet; evaluate whether it improves or hurts scannability
-- [ ] **Ko-fi link in footer** `[ux]` `[dormant]` — add a Ko-fi link in the footer as a fallback for when the floating widget is disabled
+- [ ] **Button system unification** `[design]` `[code]` `[claude]` — the codebase has `.btn-accent`, `.btn-ghost`, `.btn-secondary`, `.btn-icon`, `.btn-icon-accent`, and `.field-btn`; consolidate into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, `.btn--field` variants; migrate all uses; enables extraction as a standalone UI plugin
+
+---
+
+## Accessibility (A11Y)
+
+- [ ] **Visible selection indicator** `[a11y]` `[design]` `[claude]` — see Visual Design; listed here for a11y tracking
+- [ ] **Toggle design** `[a11y]` `[design]` — see Visual Design; focus ring visibility is the a11y concern
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` `[dormant]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
-- ~~**`prefers-reduced-motion` in JS animations** `[a11y]` `[claude]` — CSS transitions already honor `prefers-reduced-motion: reduce`; add a `window.matchMedia('(prefers-reduced-motion: reduce)')` check for any future JS-driven animations (e.g. the planned loading spinner on AI refinement)~~
+- ~~**`prefers-reduced-motion` in JS animations** `[a11y]` `[claude]` — CSS transitions already honor `prefers-reduced-motion: reduce`; add a `window.matchMedia('(prefers-reduced-motion: reduce)')` check for any future JS-driven animations~~
 
 ---
 
 ## AI
 
+### AI Assist
+
 - [ ] **AI error surface** `[ai]` `[ux]` — refinement failures currently show a generic "Revision Failed" modal; parse HTTP status codes to show specific messages: 401 = invalid key, 429 = rate limit exceeded, 503 = service unavailable; network failures (no connection) should be distinguished from API errors; include the provider name in the message
 - [ ] **Wire Microsoft Copilot** `[ai]` — requires `VITE_AZURE_OPENAI_ENDPOINT` env var set to a full Azure OpenAI deployment URL; implemented in `aiService.js` but untested; add the env var and verify the response parses correctly
 - [ ] **System prompt tuning** `[ai]` `[claude]` — test AI refinements across at least 20 different finding types covering a variety of SCs, priorities, and platforms; adjust the tone, length, and format instructions in `buildPrompt` in `aiService.js` if the output drifts from the established voice
 - ~~**AI refinement loading state** `[ux]` `[a11y]` — replace the "Revising…" button text with an animated spinner using CSS; add `aria-busy="true"` to the button during the request; respect `prefers-reduced-motion` by disabling the spin animation and showing text only instead~~
+
+### AI Agent Support
+
+Agent support means upgrading the single-shot AI refinement call into a multi-step, tool-using workflow. The goals are: more accurate rewrites, corpus-aware suggestions, and eventually autonomous finding research.
+
+- [ ] **Evaluate tool use approach** `[agent]` `[ai]` `[claude]` — prototype replacing the `buildPrompt` + single API call in `aiService.js` with an Anthropic tool use call; define a `search_corpus` tool that the model can invoke to look up related findings before rewriting; compare output quality against the current single-prompt approach before committing
+- [ ] **`search_corpus` tool definition** `[agent]` `[ai]` `[claude]` — define a JSON tool schema that accepts a natural-language query string and returns the top 3 matching corpus entries (using the existing Fuse.js `useFindingSearch` logic); expose this as a callable function that the Anthropic API can invoke during an agentic turn
+- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — extend the Refine section of `DetailPanel` to support a short back-and-forth conversation; store turn history in local component state as an array of `{ role, content }` objects; pass the full history in each subsequent API call; add a "Clear conversation" button that resets the history without closing the panel
+- [ ] **Agentic error and loop handling** `[agent]` `[ai]` `[claude]` — when using tool use, add a turn limit (e.g. 5 tool calls max) to prevent runaway loops; surface a clear error message if the limit is reached; log each tool call result to the browser console in development for debugging
+- [ ] **System prompt for agentic mode** `[agent]` `[ai]` `[claude]` — write a separate system prompt for the agentic workflow that instructs the model to always search the corpus before rewriting, to preserve the auditor's established voice, and to format the final output as two labeled lines (Description: / Remediation:); keep this separate from the single-shot `buildPrompt` in `aiService.js`
+- [ ] **Model selection for agent mode** `[agent]` `[ai]` `[claude]` — tool use and multi-turn workflows are better served by larger models; default to `claude-opus-4-7` when agent mode is active; make this configurable in Settings alongside the existing provider/key inputs
 
 ---
 
@@ -91,67 +126,43 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ---
 
-## Code Quality
+## DevOps
 
-- [ ] **Button system unification** `[code]` `[design]` `[claude]` — the codebase has `.btn-accent` (primary), `.btn-ghost` (secondary/back-compat), `.btn-secondary` (new named alias), `.btn-icon`, `.btn-icon-accent`, and `.field-btn` (compact field actions); consolidate into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, and `.btn--field` variants; migrate all uses; this enables the system to be extracted as a standalone UI plugin; `.btn-ghost` can be kept as a back-compat alias during migration
+### Code Quality
+
 - [ ] **Migrate inline spacing to tokens** `[code]` `[claude]` — audit all components for raw pixel or rem values in inline styles that are not referencing `var(--space-*)`; replace with the nearest token; this is the last major inline-value migration after font sizes (done) and priority colors (done)
 - [ ] **UI component library extraction** `[code]` `[claude]` — the SPA patterns developed here (router, announcer, focus management, button system, form controls, modal/drawer/bottom-sheet) are strong candidates for a standalone React component library; document the extraction path; consider a monorepo setup with `packages/ui` alongside the main app
 - [ ] **CSS Modules** `[code]` `[claude]` — evaluate migrating from inline styles to CSS Modules as the component count grows; CSS Modules give better tooling (autocomplete, dead-code detection) without adding a CSS-in-JS runtime; not urgent while the component set is small
 
----
-
-## AI Agent Support
-
-Agent support means upgrading the single-shot AI refinement call into a multi-step, tool-using workflow. The goals are: more accurate rewrites, corpus-aware suggestions, and eventually autonomous finding research.
-
-- [ ] **Evaluate tool use approach** `[agent]` `[ai]` `[claude]` — prototype replacing the `buildPrompt` + single API call in `aiService.js` with an Anthropic tool use call; define a `search_corpus` tool that the model can invoke to look up related findings before rewriting; compare output quality against the current single-prompt approach before committing
-- [ ] **`search_corpus` tool definition** `[agent]` `[ai]` `[claude]` — define a JSON tool schema that accepts a natural-language query string and returns the top 3 matching corpus entries (using the existing Fuse.js `useFindingSearch` logic); expose this as a callable function that the Anthropic API can invoke during an agentic turn
-- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — extend the Refine section of `DetailPanel` to support a short back-and-forth conversation; store turn history in local component state as an array of `{ role, content }` objects; pass the full history in each subsequent API call; add a "Clear conversation" button that resets the history without closing the panel
-- [ ] **Agentic error and loop handling** `[agent]` `[ai]` `[claude]` — when using tool use, add a turn limit (e.g. 5 tool calls max) to prevent runaway loops; surface a clear error message if the limit is reached; log each tool call result to the browser console in development for debugging
-- [ ] **System prompt for agentic mode** `[agent]` `[ai]` `[claude]` — write a separate system prompt for the agentic workflow that instructs the model to always search the corpus before rewriting, to preserve the auditor's established voice, and to format the final output as two labeled lines (Description: / Remediation:); keep this separate from the single-shot `buildPrompt` in `aiService.js`
-- [ ] **Model selection for agent mode** `[agent]` `[ai]` `[claude]` — tool use and multi-turn workflows are better served by larger models; default to `claude-opus-4-7` when agent mode is active; make this configurable in Settings alongside the existing provider/key inputs
-
----
-
-## Authentication and User Data
-
-- [ ] **Sign-in UI** `[ux]` — add a minimal sign-in section at the bottom of SettingsPanel (below AI Assist); show avatar and display name when signed in, "Sign in with Google / GitHub" buttons when not; sign-out option inline; no dedicated auth page needed
-- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` — stubs live in `src/services/authService.js` and `src/services/supabaseClient.js`; activate by installing `@supabase/supabase-js`, setting `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, and uncommenting the implementation blocks; Supabase project setup instructions and DB schema (SQL) are in `supabaseClient.js`
-- [ ] **Phase 2 stubs review** `[infra]` `[claude]` — before activating Supabase, re-read `src/services/authService.js` and `src/services/supabaseClient.js` comments against the current Supabase SDK docs; confirm OAuth provider slugs, table names, and RLS policy examples are still accurate
-- [ ] **Settings sync** `[infra]` `[ux]` — `syncSettings()` and `getRemoteSettings()` stubs in `dataService.js`; on sign-in, load remote settings and merge with localStorage; on any setting change, push to Supabase; API keys intentionally excluded from sync (localStorage only)
-- [ ] **User-owned custom findings** `[corpus]` `[ux]` — `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js`; DB schema in `supabaseClient.js`; UI: add/edit/delete controls in DetailPanel or a dedicated "My Findings" panel; IDs use `USR-*` prefix; mixed into search results alongside public corpus
-- [ ] **Language-specific edit warning** `[ux]` `[i18n]` — when users can save custom edits to a finding entry, show a notice that edits apply only to the currently active language and will not persist if the user switches to a different locale; display this warning in the edit UI before the user saves
-- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` — when a user is signed in, sync upvote/downvote ratings to a `ratings` table (`user_id`, `finding_id`, `vote`); merge with any existing `localStorage` ratings on sign-in; `dataService.js` already abstracts the data layer, so this is a localized change
-- [ ] **User-owned remote corpus** `[corpus]` `[infra]` — let signed-in users point the app at their own Supabase table or a remote JSON URL as a corpus source; add a URL/connection string field in Settings; fall back to the built-in corpus if the source is unreachable; private sources require auth so the key is never in the URL
-- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — in the Phase 3 public deployment, serve Mikey's private corpus from a Supabase RLS-protected table rather than a bundled JSON file; unauthenticated users get `corpus.json` (public data) only; the private corpus never ships in any public build
-
----
-
-## Infrastructure
+### Infrastructure
 
 - [ ] **Version tagging** `[infra]` — create git tags for stable milestones once the corpus is stable enough to track; use semantic versioning (`v0.1.0` for Phase 1 launch, `v0.2.0` for Phase 2 AI, `v1.0.0` for Phase 3 public)
 - [ ] **Electron desktop app — activate** `[infra]` `[dormant]` — scaffold is in `electron/`; to activate: `npm install --save-dev electron electron-builder concurrently`, then `npm run electron:dev`; wire `window.electronAPI.keys.*` in SettingsPanel so API keys use `safeStorage` instead of `localStorage`; test on macOS and Windows; package with `npm run electron:build`
 - [ ] **Umami analytics** `[infra]` `[dormant]` — create an account at umami.is or self-host, add the site, replace `YOUR_WEBSITE_ID` in `index.html`, and uncomment the script tag; verify that Umami reports zero cookies and no personal data in the dashboard before enabling on any deployment
-- [ ] **Phase 3 public corpus** `[infra]` `[corpus]` `[dormant]` — compile static JSON from WAI Understanding docs, WebAIM articles, Deque University, and axe-core rule descriptions; curation task, not infrastructure; same JSON schema as Phase 1; this corpus is never mixed with Mikey's personal corpus
 - [ ] **Phase 3 hosting** `[infra]` `[dormant]` — set up a separate Netlify site from a separate repo for the Phase 3 public deployment; the personal corpus never appears in that repo
 
----
-
-## Performance and Optimization
+### Performance & Optimization
 
 - [ ] **Fuse.js profiling** `[perf]` `[claude]` — measure search latency with a corpus of 500+ entries using `performance.now()` around the `fuse.search()` call; if it exceeds 50ms, tune the `threshold`, `minMatchCharLength`, or `keys` weights in `useFindingSearch.js`
 
----
-
-## Privacy and Security
+### Privacy & Security
 
 - [ ] **GDPR disclosure for Phase 3** `[privacy]` `[dormant]` — when the public Phase 3 version launches, add a brief privacy statement page explaining what data is and is not collected; Umami analytics (if enabled) collects no personal data and uses no cookies; API keys go only to the AI provider; no user data is retained by this app
 
 ---
 
-## Competitive / Differentiators
+## Accounts & Cloud Sync
 
-- [ ] **Bug tracker integration** `[ux]` `[infra]` — add pre-populated deep links to Jira and Linear that open a new ticket with the finding description and remediation already filled in; no API key or auth required for deep links; document the URL format for each tracker
-- [ ] **WCAG version tagging** `[corpus]` — add a `wcagVersion` field to each corpus entry (`"2.1"` or `"2.2"`); display the version tag on the result card and in DetailPanel; useful when auditing against a specific version requirement
-- [ ] **Compare mode** `[ux]` — allow the user to open two finding entries side by side to decide which fits better; implement as a split view in the main content area; useful when multiple success criteria could apply to the same observation
+### Authentication
+
+- [ ] **Sign-in UI** `[ux]` — add a minimal sign-in section at the bottom of SettingsPanel (below AI Assist); show avatar and display name when signed in, "Sign in with Google / GitHub" buttons when not; sign-out option inline; no dedicated auth page needed
+- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` — stubs live in `src/services/authService.js` and `src/services/supabaseClient.js`; activate by installing `@supabase/supabase-js`, setting `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, and uncommenting the implementation blocks; Supabase project setup instructions and DB schema (SQL) are in `supabaseClient.js`
+- [ ] **Phase 2 stubs review** `[infra]` `[claude]` — before activating Supabase, re-read `src/services/authService.js` and `src/services/supabaseClient.js` comments against the current Supabase SDK docs; confirm OAuth provider slugs, table names, and RLS policy examples are still accurate
+- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — see Data & Content; listed here as an auth enforcement concern
+
+### Cloud Data Sync
+
+- [ ] **Settings sync** `[infra]` `[ux]` — `syncSettings()` and `getRemoteSettings()` stubs in `dataService.js`; on sign-in, load remote settings and merge with localStorage; on any setting change, push to Supabase; API keys intentionally excluded from sync (localStorage only)
+- [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` — Phase 1 localStorage layer is wired (`userFindingsService.js`, `useUserFindings.js`); Phase 2: activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase; DB schema in `supabaseClient.js`
+- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` — when a user is signed in, sync upvote/downvote ratings to a `ratings` table (`user_id`, `finding_id`, `vote`); merge with any existing `localStorage` ratings on sign-in; `dataService.js` already abstracts the data layer, so this is a localized change
 - [ ] **GitHub Sponsors** `[infra]` `[dormant]` — set up GitHub Sponsors as a secondary tip option alongside the Ko-fi widget for Phase 3
