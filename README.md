@@ -37,7 +37,6 @@ Three deployment targets are configured. See [docs/DEPLOYING.md](docs/DEPLOYING.
 src/
   data/
     corpus.json           # Public corpus — WCAG-aligned finding entries; default data source
-    mikeys-corpus.json    # Private corpus — personal audit findings (not committed to public repo)
     translations/         # Corpus title/desc/rem overlays per locale (de, es, fr, ja, ko, pt-BR, tl, zh)
   i18n/
     index.jsx             # I18nProvider + useT() hook (zero-dep, React Context)
