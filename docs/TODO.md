@@ -33,12 +33,10 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 - [ ] **Related SC links** `[corpus]` — spot-check the `related` arrays for accuracy; some starter entries are missing secondary success criteria that are commonly cited alongside the primary SC
 - [x] **Corpus provenance field** `[corpus]` `[claude]` — `source` field added to all 76 corpus entries (`"ATH"` = Mikey's original entries); indigo source badge displayed in ResultList and DetailPanel alongside priority badge; tokens `--source-text`/`--source-bg` in light + dark mode (both ≥ 4.5:1)
 - [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — switching is already available via debug command (internal only); public-facing toggle requires authentication as a prerequisite — see Accounts & Cloud Sync
-- [ ] **Batch import tooling** `[corpus]` `[claude]` — write a small Node.js or Python script that reads rows from a CSV or Excel export of your audit spreadsheets and converts them to the corpus JSON schema; run once, review the output for voice consistency and keyword coverage, then delete the script
-- [ ] **Custom data source** `[corpus]` `[ux]` — allow Settings to accept a URL or file path pointing to a user-supplied JSON corpus; validate the schema on load, fall back to the built-in corpus if the source is unreachable or malformed; document the expected schema in a help tooltip
-- [ ] **Public corpus bootstrap** `[corpus]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as the personal corpus
-- [ ] **User-owned remote corpus** `[corpus]` `[infra]` — let signed-in users point the app at their own Supabase table or a remote JSON URL as a corpus source; add a URL/connection string field in Settings; fall back to the built-in corpus if the source is unreachable; private sources require auth so the key is never in the URL
-- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — in the Phase 3 public deployment, serve Mikey's private corpus from a Supabase RLS-protected table rather than a bundled JSON file; unauthenticated users get `corpus.json` (public data) only; the private corpus never ships in any public build
-- [ ] **Phase 3 public corpus** `[corpus]` `[dormant]` — compile static JSON from WAI Understanding docs, WebAIM articles, Deque University, and axe-core rule descriptions; curation task, not infrastructure; same JSON schema as Phase 1; this corpus is never mixed with Mikey's personal corpus
+- [x] **Batch import tooling** `[corpus]` `[claude]` — `src/services/importService.js` handles .csv/.xlsx/.xls/.json; fuzzy column-name mapping; priority + platform normalization; USR-NNN ID generation; `importFromFile` + `importFromUrl` exposed on `useUserFindings` hook; SheetJS (xlsx) lazy-loaded as a separate chunk; file upload UI pending
+- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` — Phase 1: `importFromUrl` in importService handles public JSON URLs; Phase 2 (auth required): signed-in users point app at their own Supabase table via `dataService.getUserFindings()`; Settings UI + fallback behavior pending; prereq: Authentication (Accounts & Cloud Sync)
+- [ ] **Public corpus bootstrap** `[corpus]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as Phase 1; the `source` badge field enables clear attribution per entry; this corpus is never mixed with Mikey's personal corpus
+- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` — Phase 3: serve Mikey's private corpus from a Supabase RLS-protected table; unauthenticated users get `corpus.json` only; the private corpus never ships in any public build; prereq: Authentication (Accounts & Cloud Sync)
 
 ### Competitive / Differentiators
 
@@ -75,12 +73,14 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 - [ ] **Toggle design** `[design]` `[a11y]` — the current Toggle component uses a thin bar and circle; replace with a clearer on/off design using a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
 - [ ] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border; add a secondary visual cue (e.g. a filled accent left-edge bar or a checkmark) so the selection is unmistakable, especially for users with color vision deficiencies
 - [ ] **Monospace result description** `[design]` `[claude]` — consider rendering the `desc` preview in the result list using the mono font stack to more closely match how it will look when copied into a spreadsheet; evaluate whether it improves or hurts scannability
+- [ ] **Priority control placement** `[ux]` `[design]` — revisit where the priority badge and any future priority-setting control lives in the result card and detail panel; currently badge is top-right of card header; consider whether it belongs in a metadata row below the title alongside SC and platform for better scannability
 - [ ] **Button system unification** `[design]` `[code]` `[claude]` — the codebase has `.btn-accent`, `.btn-ghost`, `.btn-secondary`, `.btn-icon`, `.btn-icon-accent`, and `.field-btn`; consolidate into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, `.btn--field` variants; migrate all uses; enables extraction as a standalone UI plugin
 
 ---
 
 ## Accessibility (A11Y)
 
+- [ ] **Skip links** `[a11y]` — add a visually-hidden "Skip to main content" link as the first focusable element in the page; on keyboard focus it becomes visible; target is the `<main>` element; also evaluate a "Skip to results" link when results are visible; WCAG 2.4.1 Bypass Blocks (Level A)
 - [ ] **Visible selection indicator** `[a11y]` `[design]` `[claude]` — see Visual Design; listed here for a11y tracking
 - [ ] **Toggle design** `[a11y]` `[design]` — see Visual Design; focus ring visibility is the a11y concern
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` `[dormant]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs

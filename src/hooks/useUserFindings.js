@@ -6,6 +6,10 @@ import {
   createUserFinding,
   copyUserFinding,
 } from '../services/userFindingsService.js'
+import {
+  importFromFile as _importFromFile,
+  importFromUrl  as _importFromUrl,
+} from '../services/importService.js'
 
 /**
  * useUserFindings
@@ -51,5 +55,28 @@ export default function useUserFindings() {
     return stored
   }, [])
 
-  return { userFindings, addFinding, editFinding, deleteFinding, copyFinding }
+  /**
+   * Parse and import a user-uploaded file (.csv, .xlsx, .xls, .json).
+   * Each successfully normalized finding is saved as a user finding.
+   * Returns { findings, skipped, total } — caller can surface a summary.
+   */
+  const importFromFile = useCallback(async (file, options = {}) => {
+    const result = await _importFromFile(file, options)
+    result.findings.forEach(f => saveUserFinding(f))
+    refresh()
+    return result
+  }, [])
+
+  /**
+   * Fetch a public JSON URL and import its findings.
+   * For auth-gated Supabase sources use dataService.getUserFindings() (Phase 2).
+   */
+  const importFromUrl = useCallback(async (url, options = {}) => {
+    const result = await _importFromUrl(url, options)
+    result.findings.forEach(f => saveUserFinding(f))
+    refresh()
+    return result
+  }, [])
+
+  return { userFindings, addFinding, editFinding, deleteFinding, copyFinding, importFromFile, importFromUrl }
 }
