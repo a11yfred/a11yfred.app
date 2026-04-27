@@ -85,6 +85,14 @@ src/
       useAnnounce.js      # Hook wrapper
       index.js            # Barrel export
       README.md           # Usage guide and screen reader behavior notes
+    debug/                # Dev-only diagnostic tools (renders nothing in production)
+      FocusDebugger.jsx   # KB focus toast + element flash on every focus event
+      DeployBanner.jsx    # Fixed bottom-left deployment status banner
+      AiDebugToast.jsx    # AI assist toggle toast + useAiDebugToast hook
+      DebugHelp.jsx       # Full command reference panel (debug help)
+      debug.css           # All debug-only styles
+      index.js            # Barrel export
+      README.md           # Command reference and usage guide
   App.jsx
   main.jsx
   tokens.css              # Design tokens: colors, type scale, spacing, radius, dark mode
@@ -196,6 +204,12 @@ ARIA live region pub/sub. Mount `<Announcer />` once at the app root, then call 
 
 See [`src/plugins/announce/README.md`](src/plugins/announce/README.md) for usage and screen reader behavior notes.
 
+### debug (`src/plugins/debug/`)
+
+Dev-only diagnostic tools. Renders nothing in production. Includes a KB focus toast, announce toast visualization, AI assist toggle toast, deployment status banner, and a `debug help` command reference panel.
+
+See [`src/plugins/debug/README.md`](src/plugins/debug/README.md) for full command reference and usage guide.
+
 ---
 
 ## Phases
@@ -210,45 +224,71 @@ See [`src/plugins/announce/README.md`](src/plugins/announce/README.md) for usage
 
 ## Dev / Debug
 
-These commands work in the running app during development.
+Full command reference lives in [`src/plugins/debug/README.md`](src/plugins/debug/README.md). Quick reference below.
 
-### Search field triggers
+Type any command exactly into the search bar — fires immediately with live search on, or on submit with live search off.
 
-Type any of the following exactly into the search bar and the action fires immediately (live search on) or on submit (live search off):
+### Universal commands
 
-| Input | Effect |
-| ----- | ------ |
-| `debug skeleton` | Shows the skeleton loading state using the current result count |
-| `pig latin` | Switches UI language to Pig Latin (Easter egg — not persisted) |
-| `pirate` | Switches to Pirate English |
-| `klingon` | Switches to tlhIngan Hol (Klingon) |
-| `valyrian` | Switches to High Valyrian |
+| Command | Effect |
+| ------- | ------ |
+| `debug help` | Show full command reference panel |
+| `debug all on` | Enable KB focus toast + announce toast |
+| `debug all off` | Disable KB focus toast + announce toast |
 
-### AI revision triggers (detail panel — AI assist must be enabled)
+### Custom commands (A11yTextHelper)
 
-With AI assist on, type any of the following exactly into the Revision Notes field and click Save & Revise:
-
-| Input in note field | Effect |
-| ------------------- | ------ |
-| `debug ai assist` | 2s fake loading, then appends the note text to both desc and rem fields |
-| `debug ok` | 1.2s fake loading, then typewriters in placeholder text for both fields |
-| `debug wrong` | Triggers the generic "Revision Failed" error modal |
-| `debug 401` | Triggers the invalid API key error for the active provider |
-| `debug 429` | Triggers the rate limit error for the active provider |
-| `debug 503` | Triggers the service unavailable error for the active provider |
-| `debug network` | Triggers the network error modal |
+| Command | Effect |
+| ------- | ------ |
+| `debug skeleton` | Show skeleton loading state |
+| `debug ai assist on` | Enable AI assist + show toast |
+| `debug ai assist off` | Disable AI assist + show toast |
 
 On `localhost`, AI assist can be enabled in Settings without entering a real API key.
 
-### Dev-only visual debuggers
+### Detail panel revision triggers (AI assist must be enabled)
 
-Both debuggers are active only on `localhost` and render nothing in production.
+Type these in the Revision Notes field and click Save & Revise:
 
-**ARIA announcer toast** — every `announce()` call renders a pill toast at the bottom of the screen with the message text and priority badge (`polite` or `assertive`). Assertive toasts use a red background. Toasts fade down and out after ~4 seconds.
+| Input | Effect |
+| ----- | ------ |
+| `debug ai assist on` | 2 s fake load, appends note to both fields |
+| `debug ok` | 1.2 s fake load, typewriter placeholder text |
+| `debug wrong` | Generic Revision Failed error |
+| `debug 401` | Invalid API key error |
+| `debug 429` | Rate limit error |
+| `debug 503` | Service unavailable error |
+| `debug network` | Network error modal |
 
-**KB Focus toast** — whenever keyboard focus moves, a blue pill shows which element was targeted (`<tag.class1.class2>`), whether it has a visible `:focus` outline (green ✓ / red ✗), and whether `:focus-visible` is currently matching. The focused element also briefly flashes teal so you can spot it visually without reading the toast.
+### Dev-only visual tools
 
-When both toasts are visible at the same time they stack vertically. Both respect `prefers-reduced-motion: reduce` — the teal flash is skipped entirely and the fade animation is instant.
+All active only on `localhost`, render nothing in production.
+
+**ARIA announcer toast** — every `announce()` call shows a pill toast with message text and a `polite` / `assertive` badge. Assertive toasts use a red background. Fades down and out after ~4 seconds.
+
+**KB Focus toast** — whenever keyboard focus moves, a blue pill shows the target element (`<tag.class1.class2>`), whether it has a visible `:focus` outline (✓/✗), and whether `:focus-visible` is matching. The focused element briefly flashes teal.
+
+Both toasts stack vertically when visible simultaneously. Both respect `prefers-reduced-motion: reduce`.
+
+---
+
+## Easter Eggs
+
+Type any of the following in the search bar. Active search results and the open detail panel are preserved when an Easter egg fires.
+
+| Command | Effect |
+| ------- | ------ |
+| `pig latin` | Switch UI to Pig Latin |
+| `pig latin off` | Restore language to English |
+| `pirate` | Switch UI to Pirate English |
+| `pirate off` | Restore language to English |
+| `klingon` | Switch UI to tlhIngan Hol |
+| `klingon off` | Restore language to English |
+| `valyrian` | Switch UI to High Valyrian |
+| `valyrian off` | Restore language to English |
+| `party mode off` | Restore appearance to Auto |
+
+Party Mode is available in Settings — turn it on to find it. 🎉
 
 ---
 
@@ -268,6 +308,7 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to fork, run locally, a
 | [docs/MAINTENANCE.md](docs/MAINTENANCE.md) | Recurring sweep checklists |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | How to contribute |
 | [docs/DEPLOYING.md](docs/DEPLOYING.md) | Deployment options and switching guide |
+| [docs/SECURITY.md](docs/SECURITY.md) | Data storage, API keys, CSP, and vulnerability reporting |
 
 ---
 

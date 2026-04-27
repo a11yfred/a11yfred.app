@@ -162,7 +162,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       if (note === 'debug 429')     { setRevisionFailed(t('detail.revise_error_rate_limit', { provider: providerLabel })); return }
       if (note === 'debug 503')     { setRevisionFailed(t('detail.revise_error_service_error', { provider: providerLabel, status: 503 })); return }
       if (note === 'debug network') { setRevisionFailed(t('detail.revise_error_network_error')); return }
-      if (note === 'debug ai assist') {
+      if (note === 'debug ai assist on') {
         setRefining(true)
         announce(t('detail.rewriting_text'), { priority: 'assertive' })
         setTimeout(() => {

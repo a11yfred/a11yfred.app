@@ -19,7 +19,7 @@ import {
   useMediaQuery,
 } from './plugins/router/index.js'
 import { Announcer, announce } from './plugins/announce/index.js'
-import { FocusDebugger } from './components/FocusDebugger.jsx'
+import { FocusDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher } from './plugins/debug/index.js'
 import { playPartySound, playSqueak } from './utils/partySounds.js'
 import { I18nProvider, useT } from './i18n/index.jsx'
 
@@ -178,6 +178,11 @@ function AppContent({
   const settingsTriggerRef = useRef(null)
   const aboutTriggerRef = useRef(null)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
+  const viewAllTriggerRef = useRef(null)
+  const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
+  const [devAllEnabled, setDevAllEnabled] = useState(true)
+  const [deployTarget, setDeployTarget] = useState(null)  // null | 'netlify' | 'pages' | 'vercel' | 'off'
+  const [debugHelpOpen, setDebugHelpOpen] = useState(false)
   const handleCloseSettings = () => {
     if (returnViewAllRef.current && !returnToPanelRef.current) {
       returnViewAllRef.current = false
@@ -203,7 +208,7 @@ function AppContent({
   }
   const handleSelectFinding = (finding) => {
     if (finding) {
-      findingTriggerRef.current = document.activeElement
+      if (!selected) findingTriggerRef.current = document.activeElement
       if (viewAll) returnViewAllRef.current = true
     } else {
       const shouldReturn = returnViewAllRef.current
@@ -371,18 +376,38 @@ function AppContent({
 
   const activateEasterEgg = (egg) => {
     setLanguage(egg)
-    setQuery('')
-    handleSelectFinding(null)
-    returnToPanelRef.current = false // eslint-disable-line react-hooks/immutability
-    setSubmittedQuery('')
+    setQuery(submittedQuery) // restore visible field to last submitted term; preserves non-live results
+  }
+
+  const EASTER_EGG_OFFS = { 'pig latin off': 'en', 'pirate off': 'en', 'klingon off': 'en', 'valyrian off': 'en' }
+
+  const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify', 'debug deploy netlify': 'netlify', 'debug deploy pages': 'pages', 'debug deploy vercel': 'vercel' }
+
+  const runCommand = (q) => {
+    const lq = q.trim().toLowerCase()
+    // Easter egg offs
+    const eggOff = EASTER_EGG_OFFS[lq]
+    if (eggOff !== undefined) { setLanguage(eggOff); setQuery(submittedQuery); return true }
+    if (lq === 'party mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
+    // Universal debug commands
+    if (lq === 'debug all on')  { setDevAllEnabled(true);  setQuery(submittedQuery); return true }
+    if (lq === 'debug all off') { setDevAllEnabled(false); setQuery(submittedQuery); return true }
+    const dt = DEPLOY_TARGETS[lq]
+    if (dt !== undefined) { setDeployTarget(dt); setQuery(submittedQuery); return true }
+    if (lq === 'debug help') { setDebugHelpOpen(true); setQuery(''); return true }
+    // Custom debug commands
+    if (lq === 'debug ai assist on')  { setAiEnabled(true);  fireAiDebugToast('on');  setQuery(''); return true }
+    if (lq === 'debug ai assist off') { setAiEnabled(false); fireAiDebugToast('off'); setQuery(''); return true }
+    return false
   }
 
   const handleQueryChange = (q) => {
-    if (q && viewAll) navigate('/')
     if (liveSearch) {
       const egg = EASTER_EGGS[q.trim().toLowerCase()]
       if (egg) { activateEasterEgg(egg); return }
+      if (runCommand(q)) return
     }
+    if (q && viewAll) navigate('/')
     setQuery(q)
     if (q === '') {
       handleSelectFinding(null)
@@ -392,9 +417,10 @@ function AppContent({
   }
 
   const handleSearch = () => {
-    if (viewAll) navigate('/')
     const egg = EASTER_EGGS[query.trim().toLowerCase()]
     if (egg) { activateEasterEgg(egg); return }
+    if (runCommand(query)) return
+    if (viewAll) navigate('/')
     setSubmittedQuery(query)
     setSearchKey(k => k + 1)
     handleSelectFinding(null)
@@ -430,6 +456,7 @@ function AppContent({
     setViewAllLoading(false)
     navigate('/')
     announce(t('settings.reset_all_announce'), { priority: 'assertive' })
+    setTimeout(() => h1Ref.current?.focus(), 50)
   }
 
   function unlock() {
@@ -520,7 +547,7 @@ function AppContent({
                   <button
                     type="button"
                     className="btn-secondary view-all-btn"
-                    onClick={() => setViewAllConfirmOpen(true)}
+                    onClick={() => { viewAllTriggerRef.current = document.activeElement; setViewAllConfirmOpen(true) }}
                   >
                     {t('search.view_all')}
                   </button>
@@ -530,6 +557,7 @@ function AppContent({
       <Modal
         open={viewAllConfirmOpen}
         onClose={() => setViewAllConfirmOpen(false)}
+        returnFocusRef={viewAllTriggerRef}
         heading={t('search.view_all_confirm_heading')}
         actions={[
           {
@@ -557,9 +585,38 @@ function AppContent({
   return (
     <div className="app-container">
       <div className="dev-toast-stack">
-        <FocusDebugger />
-        <Announcer />
+        <AiDebugToast state={aiDebugToast} fading={aiDebugToastFading} />
+        <FocusDebugger enabled={devAllEnabled} />
+        <Announcer devEnabled={devAllEnabled} />
       </div>
+      <DeployBanner target={deployTarget} />
+      <DebugLauncher enabled={false} onCommand={runCommand} />
+      <DebugHelp
+        open={debugHelpOpen}
+        onClose={() => setDebugHelpOpen(false)}
+        customCommands={[
+          {
+            heading: 'Custom — A11yTextHelper',
+            rows: [
+              { cmd: 'debug skeleton',      desc: 'Show skeleton loading state' },
+              { cmd: 'debug ai assist on',  desc: 'Enable AI assist + show toast' },
+              { cmd: 'debug ai assist off', desc: 'Disable AI assist + show toast' },
+            ],
+          },
+          {
+            heading: 'Detail Panel (AI assist enabled)',
+            rows: [
+              { cmd: 'debug ai assist on',  desc: 'Same as above, typed in Revision Notes' },
+              { cmd: 'debug ok',            desc: '1.2 s fake load, typewriter placeholder text' },
+              { cmd: 'debug wrong',         desc: 'Trigger generic Revision Failed error' },
+              { cmd: 'debug 401',           desc: 'Trigger invalid API key error' },
+              { cmd: 'debug 429',           desc: 'Trigger rate limit error' },
+              { cmd: 'debug 503',           desc: 'Trigger service unavailable error' },
+              { cmd: 'debug network',       desc: 'Trigger network error modal' },
+            ],
+          },
+        ]}
+      />
       <Confetti active={theme === 'party'} />
       <PartySparkles active={theme === 'party'} />
       <PartyMusicPlayer active={theme === 'party'} />

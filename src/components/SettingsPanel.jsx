@@ -94,6 +94,9 @@ export default function SettingsPanel({
   onReset,
 }) {
   const headingRef = useFocusOnMount()
+  const saveButtonRef = useRef(null)
+  const privacyButtonRef = useRef(null)
+  const resetButtonRef = useRef(null)
   const t = useT()
   usePageTitle(t('settings.heading'))
   const dir = useDir()
@@ -427,6 +430,7 @@ export default function SettingsPanel({
       <div className="settings-footer-row">
         <button
           type="button"
+          ref={privacyButtonRef}
           onClick={() => navigate('/settings/privacy')}
           className="settings-privacy-btn"
         >
@@ -436,12 +440,13 @@ export default function SettingsPanel({
         <div className="settings-footer-actions">
           <button
             type="button"
+            ref={resetButtonRef}
             onClick={() => setResetConfirmOpen(true)}
             className="btn-secondary settings-reset-btn"
           >
             {t('settings.reset_all')}
           </button>
-          <button onClick={handleSave} className={`btn-accent settings-save-btn${saved ? ' field-btn--success' : ''}`}>
+          <button ref={saveButtonRef} onClick={handleSave} className={`btn-accent settings-save-btn${saved ? ' field-btn--success' : ''}`}>
             {saved
               ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
               : t('settings.save')
@@ -461,6 +466,7 @@ export default function SettingsPanel({
         onClose={() => navigate('/settings')}
         label={t('settings.privacy_heading')}
         closeLabel={t('common.close')}
+        returnFocusRef={privacyButtonRef}
       >
         <h2 className="sheet-heading">{t('settings.privacy_heading')}</h2>
         <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_storage')}</h3>
@@ -511,6 +517,7 @@ export default function SettingsPanel({
       <Modal
         open={resetConfirmOpen}
         onClose={() => setResetConfirmOpen(false)}
+        returnFocusRef={resetButtonRef}
         heading={t('settings.confirm_reset_all_heading')}
         actions={[
           {
@@ -540,6 +547,7 @@ export default function SettingsPanel({
       <Modal
         open={noChangesOpen}
         onClose={() => setNoChangesOpen(false)}
+        returnFocusRef={saveButtonRef}
         heading={t('settings.no_changes_heading')}
       >
         <p>{t('settings.no_changes_body')}</p>

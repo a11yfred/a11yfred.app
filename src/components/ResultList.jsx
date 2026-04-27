@@ -6,6 +6,14 @@ import { PRIORITY_VARS } from '../data/priorityStyles.js'
 
 export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true }) {
   const t = useT()
+  const itemRefs = useRef({})
+  const focusNextRef = useRef(null)
+
+  useEffect(() => {
+    if (!focusNextRef.current) return
+    const el = itemRefs.current[focusNextRef.current]
+    if (el) { el.focus(); focusNextRef.current = null }
+  })
 
   if (results.length === 0) {
     return <NoResults query={query} />
@@ -68,6 +76,9 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
           function handleArchive(e) {
             e.stopPropagation()
+            const idx = results.indexOf(finding)
+            const next = results[idx + 1] || results[idx - 1]
+            if (next) focusNextRef.current = next.id
             onArchive?.(finding.id)
             announce(archived
               ? t('announce.unarchived', { title: finding.title })
@@ -133,6 +144,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               </div>}
 
               <button
+                ref={el => { itemRefs.current[finding.id] = el }}
                 aria-label={cardLabel}
                 tabIndex={archived ? -1 : undefined}
                 onClick={() => { if (!archived) onSelect(finding) }}

@@ -4,23 +4,44 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## April 27, 2026 — Corpus renamed, revise button loading state, dev debug tooling
+## April 27, 2026 — Focus fixes, debug plugin, Easter egg improvements, docs overhaul
 
-### Corpus file renamed
+### Focus management tightened
 
-The personal corpus file has been renamed from `mikeys-corpus.json` to `personal-corpus.json`. No change to how data loads or displays.
+Several focus return gaps are closed. Closing a modal or sheet now reliably returns focus to the button that opened it: the Save button for "No Changes", the Reset All button for the reset confirmation, and the Privacy & Storage button for the privacy sheet. Archiving a result card moves focus to the next card in the list. Reset All now focuses the H1 heading after resetting. The View All confirm modal also returns focus to the View All button.
 
-### Better feedback on the Revise button
+Navigating to a related issue from a finding panel no longer overwrites the focus return target — focus still goes back to the original result card when the panel closes.
 
-The "Save & Revise Selected" button now shows a small spinning icon in front of "Revising…" while the AI request is in progress. The button also signals `aria-busy` to assistive technology during the request, so screen readers know an update is on its way. If you have Reduce Motion turned on in your OS, the spinner appears but does not rotate.
+### Debug plugin
 
-### Dev-only debug tooling (localhost only)
+All dev-only tooling is consolidated into a new standalone plugin at `src/plugins/debug/`. The KB focus debugger, announce toast visualization, AI assist toggle toast, deployment banner, and a new command reference panel (`debug help`) are all there. The plugin is self-contained — markup, styles, and logic together — and can be dropped into any React/Vite project.
 
-On localhost, AI assist can now be enabled in Settings without entering a real API key — useful for testing the UI without burning API credits.
+Type `debug help` in the search bar to see all available commands in a floating panel with an X to close.
 
-Two new revision note triggers let you test the full AI refinement flow without a key: `debug ai assist` runs a 2-second fake loading state then appends your note to the description and remediation fields; `debug ok` does the same with placeholder text and a typewriter animation.
+### New debug commands
 
-A keyboard focus debugger now runs alongside the existing ARIA announcer toast. Whenever focus moves via keyboard, a blue toast shows which element was targeted (tag + identifying classes) and whether it has a visible `:focus` outline and matches `:focus-visible`. The focused element also briefly flashes teal so you can spot it without reading the toast. Both toasts stack vertically when they appear at the same time, and both fade down and out when they clear.
+- `debug all on / off` — toggle the KB focus toast and announce toast visualization together
+- `debug ai assist on / off` — enable or disable AI assist from the search bar; shows a green toast confirming the change
+- `debug deploy [off | on | netlify | pages | vercel]` — show a fixed bottom-left banner indicating which deployment target is active
+- `debug help` — show the full command reference panel
+
+### Debug Launcher (opt-in FAB)
+
+The debug plugin now includes a floating action button that can be enabled for any project. When active it sits in the corner like an accessibility overlay button and opens a spotlight-style command input — useful for projects that don't have a search bar or command field to type debug commands into. A11yTextHelper leaves it off by default since commands go in the search bar, but it's one prop change to enable.
+
+### Easter egg improvements
+
+Easter eggs no longer wipe your search results when they fire. If you had results on screen and typed `pig latin`, your results come back when the language changes. The detail panel also stays open.
+
+New off commands: `pig latin off`, `pirate off`, `klingon off`, `valyrian off` all restore the UI language to English. `party mode off` restores the appearance to Auto.
+
+### About page restructured
+
+The About page was reorganized. Easter eggs now have their own sub-sections for Fake Languages and Party Mode. The Languages section picked up the RTL layout and capitalization philosophy notes that used to be separate sections. A new Accessibility Details section explains the `useAriaHide` hook. Architectural Choices is expanded with a note on 404 handling and a list of all three plugins with links to their READMEs.
+
+### TODO backlog reordered
+
+TODO items are now sorted by value and effort — high value, low effort at the top. Dormant items (Ko-fi, Electron, Phase 3, Umami) are tagged `[dormant]` so they stay in the list without cluttering active work. A new item covers importing from `corpus_src/` source files.
 
 ---
 

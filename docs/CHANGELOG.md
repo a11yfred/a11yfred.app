@@ -4,7 +4,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-04-27 — Corpus rename, AI refinement loading state, dev debug tooling
+## 2026-04-27 — Focus management, debug plugin, command system, docs overhaul
 
 ### Data
 
@@ -16,14 +16,47 @@ All significant changes to A11yTextHelper, newest first.
 - `DetailPanel.jsx`: added a spinning `<Loader2>` icon (Lucide, 12px, `aria-hidden="true"`) before "Revising…" text during the request
 - `index.css`: added `@keyframes spinner-spin` and `.detail-revising-spinner` class; spin disabled under `prefers-reduced-motion: reduce`
 
-### Dev debug tooling (localhost only)
+### Focus management (WCAG 2.4.3)
 
-- `SettingsPanel.jsx`: API key validation bypassed on `localhost` / `127.0.0.1` so AI assist can be enabled without a real key during development
-- `DetailPanel.jsx`: added `debug ai assist` revision trigger — 2s fake loading, appends revision note to desc/rem; added `debug ok` trigger — 1.2s fake loading, typewriters in placeholder text; all existing `debug wrong/401/429/503/network` error triggers preserved
-- `FocusDebugger.jsx` (new): listens for `focusin` events; shows a blue KB Focus toast with element tag + up to 2 identifying classes, `:focus` outline true/false, and `:focus-visible` true/false; flashes a teal (`rgb(0 210 230)`) overlay over the focused element's bounding rect; flash skipped under `prefers-reduced-motion: reduce`
-- `Announcer.jsx`: announce toasts now fade down and out (0.4s) instead of snapping away
-- `App.jsx`: `<Announcer />` and `<FocusDebugger />` wrapped in shared `div.dev-toast-stack` so both pills stack vertically when visible simultaneously
-- `index.css`: `.dev-toast-stack` container, `.focus-toast` two-row layout with green/red `:focus`/`:focus-visible` indicators, `.focus-debug-flash` overlay, `@keyframes toast-fade-out` shared by both toasts
+- `App.jsx` / `SettingsPanel.jsx`: wired `returnFocusRef` to Privacy BottomSheet → privacy button, reset confirm Modal → Reset All button, no-changes Modal → Save button, view-all confirm Modal → View All button
+- `App.jsx`: `handleResetAll` now focuses H1 after reset (`setTimeout 50ms`)
+- `App.jsx`: `handleSelectFinding` no longer overwrites `findingTriggerRef` when a panel is already open — preserves original result-card trigger for when the panel closes
+- `ResultList.jsx`: archiving a result focuses the next result card in the list (falls back to previous if no next); uses `itemRefs` map + `focusNextRef` ref resolved in a post-render effect
+
+### Debug plugin (`src/plugins/debug/`)
+
+- New plugin directory: `FocusDebugger.jsx` (moved from `src/components/`), `DeployBanner.jsx`, `AiDebugToast.jsx` + `useAiDebugToast`, `DebugHelp.jsx`, `debug.css`, `index.js`, `README.md`
+- All dev-only CSS moved from `index.css` to `src/plugins/debug/debug.css`; `index.css` now has a single comment pointing there
+- `DebugHelp.jsx`: full command reference panel rendered on `debug help`; accepts `customCommands` prop for project-specific sections; has X button to close
+- `DeployBanner.jsx`: fixed bottom-left banner for deployment status; activated via `debug deploy [off|on|netlify|pages|vercel]`
+- `AiDebugToast.jsx`: green toast for AI assist toggle; driven by `useAiDebugToast` hook
+- `FocusDebugger.jsx`: accepts `enabled` prop so `debug all off` suppresses it
+- `Announcer.jsx`: added `devEnabled` prop (ref-based closure update) — toast visualization respects `debug all off`
+- `DebugLauncher.jsx`: FAB (bottom-right, `>_` icon) + spotlight-style command input; `enabled` prop defaults to `false`; useful for projects without a built-in command field; `onCommand` prop wires in the project's command dispatcher; Escape and X button close it
+
+### Command system
+
+- `App.jsx`: unified `runCommand(q)` dispatcher replaces scattered inline checks; handles: `debug help`, `debug all on/off`, `debug deploy [target]`, `debug ai assist on/off`, Easter egg off commands, `party mode off`
+- `DetailPanel.jsx`: renamed `debug ai assist` trigger → `debug ai assist on`
+- Easter egg off commands: `pig latin off`, `pirate off`, `klingon off`, `valyrian off` → restore language to `'en'`; `party mode off` → restore theme to `'auto'`
+- Easter egg on/off detection moved before `navigate('/')` in both `handleQueryChange` and `handleSearch` so viewAll state is preserved when a command fires; `activateEasterEgg` no longer clears search results or closes the panel
+
+### Corpus rename / AI refinement loading state / localhost bypass
+
+- Renamed `src/data/mikeys-corpus.json` → `src/data/personal-corpus.json`; `.gitignore` updated
+- `DetailPanel.jsx`: `aria-busy="true"` on Save & Revise button while refining; spinning `<Loader2>` icon before "Revising…" text
+- `SettingsPanel.jsx`: API key validation bypassed on `localhost` / `127.0.0.1`
+
+### Debug command reclassification
+
+- `debug skeleton` moved from universal to custom commands — it triggers app-level loading state, not a plugin feature; updated `DebugHelp.jsx` (removed from hardcoded A11y Testing section), `App.jsx` (added to `customCommands` array), plugin `README.md`, and main `README.md`
+
+### Docs
+
+- `ABOUT.md`: restructured — Easter Eggs section split into "Fake Languages" and "Party Mode" sub-sections; Ko-fi patch section removed; feature sections renamed to "Modals Stay in the Viewport" and "Bottom Sheet Swipe Gesture"; RTL moved under Languages section; Language Capitalization Philosophy moved under Languages section; "Priority Labels Are Fully Translated" and "Line Breaks Inside Translation Strings" sections removed; new "Accessibility Details" section with `useAriaHide`; "Architectural Choices" expanded with 404 section and plugins list with README links
+- `docs/TODO.md`: reordered sections and items by value/effort (high value + low effort first); `[dormant]` tag added to Ko-fi items, Electron scaffold, Umami analytics, Phase 3 items, GitHub Sponsors, GDPR disclosure; corpus_src intake item added; methodology note added to header
+- `docs/SECURITY.md`: created — data storage table, API keys policy, no-backend statement, debug tooling note, CSP description, third-party scripts, vulnerability reporting
+- `docs/CONTRIBUTING.md`: simplified — duplicate schema removed, README cross-reference added, tightened to ~34 lines
 
 ---
 

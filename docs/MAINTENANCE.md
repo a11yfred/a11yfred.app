@@ -8,6 +8,7 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 | Date | Passed | Failed | Deferred | N/A | Notes |
 | ---- | ------ | ------ | -------- | --- | ----- |
+| 2026-04-27 | 6 | 0 | 2 | 2 | Fixed 9 ESLint errors in debug plugin (unused imports, ref-in-render, backdrop onClick); 4 CSS errors in debug.css (@keyframes expansion, hover multi-declaration); build clean 225kB gz; plugin import isolation verified; ABOUT.md restructured; TODO.md reordered with `[dormant]` tags; `debug skeleton` moved to custom commands; Deferred: manual a11y/keyboard checks; N/A: i18n (en.json unchanged), Electron |
 | 2026-04-25 | — | — | — | — | Renamed "defect" to "finding" throughout: hooks (useDefectSearch/Ratings → useFindingSearch/Ratings), services (getDefects → getFindings), components, and all i18n user-facing strings; returnFocus utility added to router plugin; [data-focus-return]:focus CSS rule added; Modal/BottomSheet/Drawer wired to returnFocus; `npm run translate` pending (run with ANTHROPIC_API_KEY to propagate new i18n keys to all locales) |
 | 2026-04-25 | — | — | — | — | Fixed Reset All not clearing view-all state — focusCount=true on the stale result list was landing focus on "N results" heading instead of idle home screen; handleResetAll now resets setViewAll/setViewAllConfirmOpen/setViewAllLoading |
 | 2026-04-26 | — | — | — | — | Full sweep: React 19 + Vite 8 + ESLint 10 deps upgraded; eslint-plugin-react removed (ESLint 10 incompatible); LightningCSS enabled; manualChunks → function (rolldown); 3 dead CSS classes removed; CSP img-src expanded for OAuth avatars; README + CONTRIBUTING fully rewritten; DEPLOYING.md table separator fix; a11y/security/SEO/perf/privacy/auth-wiring audit — all clean; TODO [claude] tags added, "Deploy to Netlify" removed (shipped), remaining "defect" refs updated to "finding"; CHANGELOG + UPDATES entries written |
@@ -147,11 +148,11 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
 
 ## Plugins
 
-Plugins (`src/plugins/router/`, `src/plugins/announce/`) are designed to be portable — usable outside this project with no changes.
+Plugins (`src/plugins/router/`, `src/plugins/announce/`, `src/plugins/debug/`) are designed to be portable — usable outside this project with no changes.
 
 - [ ] **Import isolation** — verify no plugin file imports from app-level code (`../../App`, `../../hooks`, `../../services`, `../../i18n`, `../../data`); plugins may only import from React, react-dom, and declared external packages
 - [ ] **External dependency audit** — list any non-React external packages imported by plugins (currently: `lucide-react` in `router/`); document these in the plugin's `README.md` under a "Dependencies" heading so any project adopting the plugin knows what to install
-- [ ] **Plugin README accuracy** — verify the export lists and API docs in `src/plugins/router/README.md` and `src/plugins/announce/README.md` match current exported symbols; update if hooks or components were added, renamed, or removed
+- [ ] **Plugin README accuracy** — verify the export lists and API docs in `src/plugins/router/README.md`, `src/plugins/announce/README.md`, and `src/plugins/debug/README.md` match current exported symbols; update if hooks or components were added, renamed, or removed
 
 ---
 

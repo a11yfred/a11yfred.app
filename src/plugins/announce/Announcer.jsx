@@ -15,7 +15,7 @@ const IS_DEV = typeof window !== 'undefined' && window.location.hostname === 'lo
  * screen reader users navigating the page do not encounter stale announcement
  * text sitting in the live region.
  */
-export function Announcer() {
+export function Announcer({ devEnabled = true }) {
   const [politeMsg, setPoliteMsg] = useState('')
   const [assertiveMsg, setAssertiveMsg] = useState('')
   const politeTimer = useRef(null)
@@ -23,6 +23,8 @@ export function Announcer() {
   const [toast, setToast] = useState(null)
   const toastTimer = useRef(null)
   const toastFadeTimer = useRef(null)
+  const devEnabledRef = useRef(devEnabled)
+  devEnabledRef.current = devEnabled // eslint-disable-line react-hooks/refs
 
   useEffect(() => {
     const unsub = _subscribe((message, priority) => {
@@ -45,7 +47,7 @@ export function Announcer() {
         }, 50)
       }
 
-      if (IS_DEV) {
+      if (IS_DEV && devEnabledRef.current) {
         setToast({ message, priority, fading: false })
         clearTimeout(toastTimer.current)
         clearTimeout(toastFadeTimer.current)
@@ -72,7 +74,7 @@ export function Announcer() {
       <div role="alert" aria-live="assertive" aria-atomic="true" className="sr-only">
         {assertiveMsg}
       </div>
-      {IS_DEV && toast && (
+      {IS_DEV && devEnabled && toast && (
         <div className={`announce-toast announce-toast--${toast.priority}${toast.fading ? ' announce-toast--fading' : ''}`} aria-hidden="true">
           <span className="announce-toast__badge">{toast.priority}</span>
           {toast.message}
