@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { Sparkles, RotateCcw, Clipboard, Check, ExternalLink } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
-import { useFocusOnMount, useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
+import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
@@ -37,7 +37,7 @@ function isSignificantlyChanged(original, current, threshold = 0.7) {
 }
 
 export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect }) {
-  const titleRef = useFocusOnMount()
+  const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
   const t = useT()
@@ -371,7 +371,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
           {
             label: t('detail.confirm_reset_no'),
             onClick: () => setConfirmReset(null),
-            className: 'btn-ghost modal-ok-btn',
+            className: 'btn-tertiary modal-ok-btn',
           },
         ]}
       >

@@ -38,9 +38,12 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             : `${finding.title}, ${t(p.key)}, ${finding.scLabel}, ${truncDesc}`
 
           // Truncate title used in vote-button labels only — full title used in announce() calls
-          const shortTitle = finding.title.length > 24
-            ? finding.title.slice(0, 24).trimEnd() + '…'
-            : finding.title
+          const shortTitle = (() => {
+            if (finding.title.length <= 36) return finding.title
+            const cut = finding.title.slice(0, 36)
+            const lastSpace = cut.lastIndexOf(' ')
+            return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + '…'
+          })()
 
           function handleUpvote(e) {
             e.stopPropagation()
@@ -129,10 +132,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 </button>
               </div>}
 
-              {/* Selectable result card — button so each item has its own interactive context;
-                  aria-pressed communicates selection state */}
               <button
-                aria-pressed={isSelected}
                 aria-label={cardLabel}
                 tabIndex={archived ? -1 : undefined}
                 onClick={() => { if (!archived) onSelect(finding) }}
