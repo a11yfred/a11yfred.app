@@ -79,13 +79,15 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 ## Deployment
 
-Three targets are configured (Netlify active, Vercel and GitHub Pages dormant). See `docs/DEPLOYING.md` for switching instructions.
+> **⚠ All auto-deploys currently suspended (2026-04-27).** `netlify.toml` has `ignore = "exit 0"` so no build triggers on push. Vercel and GitHub Pages were already dormant. Skip the live-deployment checks below until deploys are re-enabled; run only the local build check.
 
-- [ ] **Build succeeds** — `npm run build` locally; no Vite errors; chunk sizes within expected ranges
-- [ ] **SPA redirect** — navigate directly to `/#/settings` in a new tab; page loads (not a 404)
-- [ ] **Security headers** — confirm `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` all present in response headers on the active deployment
-- [ ] **`robots.txt` served** — verify `robots.txt` returns the correct content for the current deployment phase (dev: `Disallow: /`; Phase 3 public: `Allow: /`)
-- [ ] **Active target only** — ensure only one platform is deploying on each push; if switching targets, confirm the previous one is paused or its trigger is disabled (see `docs/DEPLOYING.md`)
+Three targets are configured (all currently paused). See `docs/DEPLOYING.md` for switching instructions. To re-enable Netlify, remove the `ignore = "exit 0"` line from `netlify.toml`.
+
+- [ ] **Build succeeds** — `npm run build` locally; no Vite errors; chunk sizes within expected ranges *(run this even while deploys are paused)*
+- [ ] **SPA redirect** — *(skip while deploys are paused)* navigate directly to `/#/settings` in a new tab; page loads (not a 404)
+- [ ] **Security headers** — *(skip while deploys are paused)* confirm `Content-Security-Policy`, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` all present in response headers on the active deployment
+- [ ] **`robots.txt` served** — *(skip while deploys are paused)* verify `robots.txt` returns the correct content for the current deployment phase (dev: `Disallow: /`; Phase 3 public: `Allow: /`)
+- [ ] **Active target only** — *(skip while deploys are paused)* ensure only one platform is deploying on each push; if switching targets, confirm the previous one is paused or its trigger is disabled (see `docs/DEPLOYING.md`)
 - [ ] **Electron wiring check** — if the Electron build has been activated, verify `SettingsPanel` is writing API keys to `window.electronAPI.keys` (via `safeStorage`) and not `localStorage`; if Electron is not yet active, confirm the scaffold in `electron/` is still intact (`main.js`, `preload.js`, `electron-builder.json`)
 
 ---
