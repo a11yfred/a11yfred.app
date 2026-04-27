@@ -44,6 +44,10 @@
   --priority-low-text:      #3b6d11;
   --priority-low-bg:        #eaf3de;
 
+  /* Color — source badge (light mode) */
+  --source-text: #3730a3;  /* indigo ~8.7:1 on --source-bg */
+  --source-bg:   #eef2ff;
+
   /* Typography — families */
   --font: 'Inter', system-ui, -apple-system, sans-serif;
   --mono: 'SF Mono', 'Fira Mono', 'Fira Code', 'Consolas', monospace;
@@ -136,6 +140,10 @@
   --priority-medium-bg:     #0e2440;
   --priority-low-text:      #5dca8a;  /* ~7:1 on #0d2d18 */
   --priority-low-bg:        #0d2d18;
+
+  /* Color — source badge (dark mode) */
+  --source-text: #a5b4fc;  /* ~8.3:1 on --source-bg */
+  --source-bg:   #1e1b4b;
 }
 
 /* Party Mode — color tokens injected dynamically by generatePartyPalette()

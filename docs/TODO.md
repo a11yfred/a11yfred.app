@@ -4,11 +4,12 @@ Personal backlog for A11yTextHelper. Completed items are deleted — see [docs/C
 
 Items are ordered **high value + low effort first** within each section, and sections are ordered the same way overall.
 
-Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[claude]` `[dormant]`
+Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[claude]` `[manual]` `[dormant]`
 
 `[corpus]` and `[data]` are interchangeable — use either
 `[priority]` = currently the most important; keep at the top of the backlog
 `[claude]` = suggested by Claude during a review or sweep session (not a user-originated request)
+`[manual]` = requires human judgment or action; Claude cannot complete this alone
 `[dormant]` = not currently being worked on; keep for reference but do not prioritize
 
 ---
@@ -19,7 +20,6 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 - [ ] **Result list keyboard navigation** `[priority]` `[ux]` `[a11y]` — add Up/Down/Home/End arrow key navigation to the result list; result cards are currently plain buttons in a list (listbox/option pattern was removed); consider a roving tabindex approach or a dedicated keyboard shortcut (e.g. J/K) to move between cards without Tab
 - [ ] **Revisit animations** `[priority]` `[ux]` `[a11y]` — several transitions are missing or inconsistent: the BottomSheet has a slide-up entrance but no slide-down exit animation; the result list appears instantly with no stagger; SettingsPanel on desktop switches without any transition; bundle all animation improvements into one pass and verify every new animation is disabled under `prefers-reduced-motion: reduce`
 - [ ] **Offline-first PWA** `[priority]` `[infra]` — add a Service Worker that caches the app shell and corpus JSON so the app works fully without an internet connection after the first load; use Vite's `vite-plugin-pwa` or a hand-rolled `service-worker.js`; add a Web App Manifest so it can be installed to the home screen; test on mobile Chrome
-- [ ] **Verify Ko-fi a11y patch selectors** `[a11y]` `[dormant]` — `patchKofiA11y` in `App.jsx` uses CSS selectors that were guessed from Ko-fi's known class conventions; open the deployed app with Ko-fi loaded, inspect the actual injected DOM in DevTools, and update the selectors and Escape-key close-button targeting to match the real markup
 
 ---
 
@@ -27,13 +27,12 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 
 ### Corpus & Findings
 
-- [ ] **Import from corpus_src/** `[corpus]` — when xlsx or other source files are added to `corpus_src/`, update the specified corpus (public or private) with the new or updated findings; user will specify the target corpus and any special handling per import
-- [ ] **Review new corpus entries ATH-004 through ATH-070** `[corpus]` — 16 entries added 2026-04-26; wording, remediation advice, keywords, and priority assignments need an editorial pass before treating them as final; compare voice and specificity against ATH-001–063
-- [ ] **Keyword audit** `[corpus]` — after the batch import, review the `keywords` array on every entry; keywords drive Fuse.js relevance more than any other field, and imported entries from spreadsheets often need additional synonyms and component names added
+- [ ] **Review new corpus entries ATH-004 through ATH-070** `[corpus]` `[manual]` — 16 entries added 2026-04-26; wording, remediation advice, keywords, and priority assignments need an editorial pass before treating them as final; compare voice and specificity against ATH-001–063
+- [ ] **Keyword audit** `[corpus]` `[manual]` — after the batch import, review the `keywords` array on every entry; keywords drive Fuse.js relevance more than any other field, and imported entries from spreadsheets often need additional synonyms and component names added
 - [ ] **Platform coverage** `[corpus]` — verify that native-only findings are flagged `"platform": "native"` and that `"both"` entries make sense on each platform; aim for roughly 40% native or both entries to make the Native filter useful
 - [ ] **Related SC links** `[corpus]` — spot-check the `related` arrays for accuracy; some starter entries are missing secondary success criteria that are commonly cited alongside the primary SC
-- [ ] **Corpus provenance field** `[corpus]` `[claude]` — add a `source` field to each finding entry indicating origin (e.g. `"personal"`, `"WAI"`, `"axe"`, `"Deque"`); helps contributors understand where an entry came from and what style to follow when adding similar entries
-- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — add a toggle in Settings to switch between the private corpus and the generic public corpus (`corpus.json`); the two files are already separate; the toggle should persist to `localStorage` and only appear if both files are available
+- [x] **Corpus provenance field** `[corpus]` `[claude]` — `source` field added to all 76 corpus entries (`"ATH"` = Mikey's original entries); indigo source badge displayed in ResultList and DetailPanel alongside priority badge; tokens `--source-text`/`--source-bg` in light + dark mode (both ≥ 4.5:1)
+- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — switching is already available via debug command (internal only); public-facing toggle requires authentication as a prerequisite — see Accounts & Cloud Sync
 - [ ] **Batch import tooling** `[corpus]` `[claude]` — write a small Node.js or Python script that reads rows from a CSV or Excel export of your audit spreadsheets and converts them to the corpus JSON schema; run once, review the output for voice consistency and keyword coverage, then delete the script
 - [ ] **Custom data source** `[corpus]` `[ux]` — allow Settings to accept a URL or file path pointing to a user-supplied JSON corpus; validate the schema on load, fall back to the built-in corpus if the source is unreachable or malformed; document the expected schema in a help tooltip
 - [ ] **Public corpus bootstrap** `[corpus]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as the personal corpus

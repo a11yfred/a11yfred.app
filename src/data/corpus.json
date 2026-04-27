@@ -4,10 +4,26 @@
     "title": "Unlabeled Button or Link",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
-    "related": ["1.1.1 Non-text Content (Level A)"],
+    "related": [
+      "1.1.1 Non-text Content (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["unlabeled", "no label", "button", "icon", "control", "accessible name", "aria-label", "close button", "icon button", "modal close", "x button", "dismiss"],
+    "source": "ATH",
+    "keywords": [
+      "unlabeled",
+      "no label",
+      "button",
+      "icon",
+      "control",
+      "accessible name",
+      "aria-label",
+      "close button",
+      "icon button",
+      "modal close",
+      "x button",
+      "dismiss"
+    ],
     "desc": "A button or link does not have an accessible name. Screen readers announce it as \"button\" or \"link\" with no context, so users cannot tell what it does.",
     "rem": "Add a visible label or an aria-label attribute that describes what the control does. For example, a close button inside a modal should say \"Close\" or \"Close dialog\", not just show an X icon."
   },
@@ -16,10 +32,25 @@
     "title": "Focus Not Managed",
     "sc": "2.4.3",
     "scLabel": "2.4.3 Focus Order (Level A)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["focus", "modal", "dialog", "focus management", "set focus", "trap", "open", "new content", "expanded", "sheet", "drawer"],
+    "source": "ATH",
+    "keywords": [
+      "focus",
+      "modal",
+      "dialog",
+      "focus management",
+      "set focus",
+      "trap",
+      "open",
+      "new content",
+      "expanded",
+      "sheet",
+      "drawer"
+    ],
     "desc": "When a modal, dialog, or drawer opens, keyboard focus stays where it was. Screen reader and keyboard users cannot easily reach the new content.",
     "rem": "Move focus to the first element inside the new content when it opens. Use tabindex=\"-1\" on a heading if the first focusable element comes later. Trap focus inside while it is open, and return focus to the trigger button when it closes."
   },
@@ -28,10 +59,25 @@
     "title": "Focus Indicator Missing or Not Visible",
     "sc": "2.4.7",
     "scLabel": "2.4.7 Focus Visible (Level AA)",
-    "related": ["1.4.11 Non-text Contrast (Level AA)", "2.1.1 Keyboard (Level A)"],
+    "related": [
+      "1.4.11 Non-text Contrast (Level AA)",
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["focus indicator", "focus state", "visible focus", "focus ring", "keyboard focus", "contrast focus", "no focus", "missing focus", "outline none", "focus invisible"],
+    "source": "ATH",
+    "keywords": [
+      "focus indicator",
+      "focus state",
+      "visible focus",
+      "focus ring",
+      "keyboard focus",
+      "contrast focus",
+      "no focus",
+      "missing focus",
+      "outline none",
+      "focus invisible"
+    ],
     "desc": "Keyboard users cannot see which element is focused. The default focus outline may be removed, or the custom focus style is too faint to see clearly.",
     "rem": "Make sure every keyboard-focusable element shows a clear focus outline. Do not set outline: none without providing a visible custom focus style. The focus indicator must have at least a 3:1 contrast ratio against nearby colors."
   },
@@ -40,10 +86,30 @@
     "title": "Control Not Keyboard Accessible",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
-    "related": ["2.4.7 Focus Visible (Level AA)", "4.1.2 Name, Role, Value (Level A)"],
+    "related": [
+      "2.4.7 Focus Visible (Level AA)",
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["keyboard", "inaccessible", "not keyboard", "operable", "tab", "focus", "controls", "hover only", "mouse only", "not focusable", "div", "span", "no role", "generic element", "custom element"],
+    "source": "ATH",
+    "keywords": [
+      "keyboard",
+      "inaccessible",
+      "not keyboard",
+      "operable",
+      "tab",
+      "focus",
+      "controls",
+      "hover only",
+      "mouse only",
+      "not focusable",
+      "div",
+      "span",
+      "no role",
+      "generic element",
+      "custom element"
+    ],
     "desc": "The control can only be used with a mouse. Keyboard users cannot focus or activate it. Custom elements built with div or span also lack a role, so screen readers do not know what the control is.",
     "rem": "Use native HTML elements like button or a whenever possible — they are keyboard accessible and have built-in roles. If a custom element must be used, add tabindex=\"0\", an appropriate ARIA role, and keyboard event handlers for Enter and Space."
   },
@@ -55,7 +121,19 @@
     "related": [],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["contrast", "color contrast", "text contrast", "insufficient", "ratio", "4.5", "foreground", "background", "low vision", "fails contrast"],
+    "source": "ATH",
+    "keywords": [
+      "contrast",
+      "color contrast",
+      "text contrast",
+      "insufficient",
+      "ratio",
+      "4.5",
+      "foreground",
+      "background",
+      "low vision",
+      "fails contrast"
+    ],
     "desc": "Text does not have enough contrast against its background. People with low vision or color blindness may not be able to read it.",
     "rem": "Change the text color, background color, or both so the contrast ratio is at least 4.5:1. Use a color contrast checker tool to verify."
   },
@@ -67,7 +145,18 @@
     "related": [],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["non-text contrast", "icon contrast", "border contrast", "ui component", "3:1", "graphical", "non text", "button border", "input border"],
+    "source": "ATH",
+    "keywords": [
+      "non-text contrast",
+      "icon contrast",
+      "border contrast",
+      "ui component",
+      "3:1",
+      "graphical",
+      "non text",
+      "button border",
+      "input border"
+    ],
     "desc": "Icons, form input borders, or UI component edges do not have enough contrast against nearby colors. People with low vision may not be able to see or identify them.",
     "rem": "Update the color of the element so it has at least a 3:1 contrast ratio against the colors next to it."
   },
@@ -76,10 +165,25 @@
     "title": "Alt Text Missing, Wrong, or Unnecessary",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["alt text", "alternative text", "image", "missing alt", "poor alt", "decorative", "informative", "logo", "banner", "img", "no alt"],
+    "source": "ATH",
+    "keywords": [
+      "alt text",
+      "alternative text",
+      "image",
+      "missing alt",
+      "poor alt",
+      "decorative",
+      "informative",
+      "logo",
+      "banner",
+      "img",
+      "no alt"
+    ],
     "desc": "An image has no alt text, has alt text that does not describe the image's purpose, or has alt text that repeats nearby visible text.",
     "rem": "Decide if the image carries meaning or is purely decorative. Meaningful images need short, descriptive alt text that explains the purpose. Decorative images should use alt=\"\" so screen readers skip them."
   },
@@ -88,10 +192,23 @@
     "title": "Control Label Describes Appearance, Not Purpose",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
-    "related": ["1.1.1 Non-text Content (Level A)"],
+    "related": [
+      "1.1.1 Non-text Content (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["poorly labeled", "poor label", "confusing label", "wrong label", "accessible name", "describes image", "not purpose", "logo label", "accessible name mismatch"],
+    "source": "ATH",
+    "keywords": [
+      "poorly labeled",
+      "poor label",
+      "confusing label",
+      "wrong label",
+      "accessible name",
+      "describes image",
+      "not purpose",
+      "logo label",
+      "accessible name mismatch"
+    ],
     "desc": "A control's accessible name describes how it looks rather than what it does. For example, a button labeled \"magnifying glass icon\" should instead say \"Search\".",
     "rem": "Write labels that describe the action or destination of the control, not its visual appearance. Change labels like \"arrow icon\" to \"Next page\" or \"Search icon\" to \"Search\"."
   },
@@ -100,10 +217,21 @@
     "title": "No Skip Link",
     "sc": "2.4.1",
     "scLabel": "2.4.1 Bypass Blocks (Level A)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["skip link", "bypass", "skip to main", "no skip", "bypass blocks", "repetitive", "navigation"],
+    "source": "ATH",
+    "keywords": [
+      "skip link",
+      "bypass",
+      "skip to main",
+      "no skip",
+      "bypass blocks",
+      "repetitive",
+      "navigation"
+    ],
     "desc": "There is no skip link at the top of the page. Keyboard users must tab through all navigation links on every page before reaching the main content.",
     "rem": "Add a \"Skip to main content\" link as the first focusable element on the page. Make it visible when focused, and have it move focus to the start of the main content area."
   },
@@ -112,10 +240,21 @@
     "title": "Skip Link Not Visible When Focused",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
-    "related": ["2.4.1 Bypass Blocks (Level A)"],
+    "related": [
+      "2.4.1 Bypass Blocks (Level A)"
+    ],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["skip link", "invisible", "sr only", "screen reader only", "not visible", "bypass", "sighted keyboard"],
+    "source": "ATH",
+    "keywords": [
+      "skip link",
+      "invisible",
+      "sr only",
+      "screen reader only",
+      "not visible",
+      "bypass",
+      "sighted keyboard"
+    ],
     "desc": "A skip link exists but is hidden from sighted keyboard users. When a keyboard user tabs to it, nothing appears on screen.",
     "rem": "Make the skip link appear on screen when it receives keyboard focus. It can be hidden off-screen by default, but must become visible when focused."
   },
@@ -127,7 +266,21 @@
     "related": [],
     "priority": "Medium",
     "platform": "both",
-    "keywords": ["heading", "not marked", "heading-like", "visual heading", "bold", "larger text", "no heading role", "unmarked heading", "heading hierarchy", "skipped heading", "heading order", "heading levels"],
+    "source": "ATH",
+    "keywords": [
+      "heading",
+      "not marked",
+      "heading-like",
+      "visual heading",
+      "bold",
+      "larger text",
+      "no heading role",
+      "unmarked heading",
+      "heading hierarchy",
+      "skipped heading",
+      "heading order",
+      "heading levels"
+    ],
     "desc": "Text that looks like a heading is not marked as one, or heading levels skip numbers (for example, jumping from h1 to h3). Screen reader users navigate pages by headings, so a broken structure makes it hard to find content.",
     "rem": "Use h1–h6 elements for all section titles. Do not skip levels — each sub-section should use the next heading level down. Do not use heading elements just to make text larger or bolder."
   },
@@ -139,7 +292,15 @@
     "related": [],
     "priority": "Medium",
     "platform": "both",
-    "keywords": ["no h1", "heading level one", "missing h1", "no heading one", "page structure", "h1"],
+    "source": "ATH",
+    "keywords": [
+      "no h1",
+      "heading level one",
+      "missing h1",
+      "no heading one",
+      "page structure",
+      "h1"
+    ],
     "desc": "The page has no h1 heading. The h1 is the main title of the page and helps screen reader users understand where they are.",
     "rem": "Add a single h1 element to each page that describes the page's main topic. All other headings should follow in order below it."
   },
@@ -148,10 +309,23 @@
     "title": "Asterisk for Required Fields Not Explained",
     "sc": "3.3.2",
     "scLabel": "3.3.2 Labels or Instructions (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)", "4.1.2 Name, Role, Value (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)",
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["asterisk", "undefined", "required", "symbol", "form", "asterisk meaning", "star", "undefined symbol"],
+    "source": "ATH",
+    "keywords": [
+      "asterisk",
+      "undefined",
+      "required",
+      "symbol",
+      "form",
+      "asterisk meaning",
+      "star",
+      "undefined symbol"
+    ],
     "desc": "The form uses asterisks (*) to mark required fields, but the meaning of the asterisk is never explained. Some users may not know what it means.",
     "rem": "Add a note at the top of the form that explains the asterisk, such as \"Fields marked with * are required.\" Also mark required fields programmatically using the required or aria-required attribute."
   },
@@ -160,10 +334,24 @@
     "title": "Form Errors Not Linked to Their Fields",
     "sc": "3.3.1",
     "scLabel": "3.3.1 Error Identification (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)", "4.1.2 Name, Role, Value (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)",
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["error", "form error", "error message", "not associated", "programmatic", "validation", "aria-describedby", "error identification", "form validation"],
+    "source": "ATH",
+    "keywords": [
+      "error",
+      "form error",
+      "error message",
+      "not associated",
+      "programmatic",
+      "validation",
+      "aria-describedby",
+      "error identification",
+      "form validation"
+    ],
     "desc": "When a form shows an error message, screen readers do not announce it because it is not programmatically linked to the input field.",
     "rem": "Use aria-describedby to connect the error message to its input field. When errors appear, move keyboard focus to the first field with an error so all users know where to fix the problem."
   },
@@ -172,10 +360,25 @@
     "title": "No Status Message After Action",
     "sc": "4.1.3",
     "scLabel": "4.1.3 Status Messages (Level AA)",
-    "related": ["1.3.1 Info and Relationships (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["status message", "no status", "announcement", "aria-live", "loading", "results", "update", "screen reader", "notification", "toast", "success message"],
+    "source": "ATH",
+    "keywords": [
+      "status message",
+      "no status",
+      "announcement",
+      "aria-live",
+      "loading",
+      "results",
+      "update",
+      "screen reader",
+      "notification",
+      "toast",
+      "success message"
+    ],
     "desc": "After a user action such as submitting a form or loading results, nothing is announced to screen reader users. They do not know if the action worked.",
     "rem": "Use role=\"status\" or aria-live=\"polite\" on a container that receives the result message. This lets screen readers announce updates without moving focus. Only use aria-live=\"assertive\" or role=\"alert\" for urgent messages."
   },
@@ -184,10 +387,26 @@
     "title": "ARIA Used Incorrectly",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["aria", "role alert", "improper aria", "aria-live assertive", "aria-hidden", "focusable", "hidden element", "invalid aria", "aria conflict", "aria misuse", "aria alert", "on blur"],
+    "source": "ATH",
+    "keywords": [
+      "aria",
+      "role alert",
+      "improper aria",
+      "aria-live assertive",
+      "aria-hidden",
+      "focusable",
+      "hidden element",
+      "invalid aria",
+      "aria conflict",
+      "aria misuse",
+      "aria alert",
+      "on blur"
+    ],
     "desc": "ARIA attributes are applied incorrectly. Common problems: aria-hidden is placed on a focusable element, role=\"alert\" is used for routine messages, or ARIA roles conflict with the element's native behavior.",
     "rem": "Follow the ARIA specification closely. Never put aria-hidden on an element that is focusable or contains focusable children. Use role=\"alert\" only for urgent, time-sensitive messages — use aria-live=\"polite\" for everything else."
   },
@@ -196,10 +415,23 @@
     "title": "Color Is the Only Visual Indicator",
     "sc": "1.4.1",
     "scLabel": "1.4.1 Use of Color (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["color", "sole use of color", "use of color", "only color", "link color", "selected", "state", "indication", "color only"],
+    "source": "ATH",
+    "keywords": [
+      "color",
+      "sole use of color",
+      "use of color",
+      "only color",
+      "link color",
+      "selected",
+      "state",
+      "indication",
+      "color only"
+    ],
     "desc": "Information is communicated using color alone. For example, a required field is highlighted in red but has no other indicator. People who are colorblind or cannot see colors will miss this information.",
     "rem": "Always pair color with a second visual indicator — such as an underline, bold text, an icon, or a text label. Make sure any state changes are also communicated to assistive technology."
   },
@@ -211,7 +443,18 @@
     "related": [],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["zoom", "scaling", "viewport", "user-scalable", "meta viewport", "pinch", "magnify", "maximum-scale", "no zoom"],
+    "source": "ATH",
+    "keywords": [
+      "zoom",
+      "scaling",
+      "viewport",
+      "user-scalable",
+      "meta viewport",
+      "pinch",
+      "magnify",
+      "maximum-scale",
+      "no zoom"
+    ],
     "desc": "The page prevents users from zooming in using a browser or pinch gesture. People with low vision rely on zooming to read content.",
     "rem": "Remove user-scalable=\"no\" from the viewport meta tag. Do not set maximum-scale below 2. Allow users to zoom freely."
   },
@@ -220,10 +463,31 @@
     "title": "Form Field Missing a Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
-    "related": ["4.1.2 Name, Role, Value (Level A)", "3.3.2 Labels or Instructions (Level A)"],
+    "related": [
+      "4.1.2 Name, Role, Value (Level A)",
+      "3.3.2 Labels or Instructions (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["no visible label", "input", "form", "placeholder", "label", "search", "text field", "no label", "unlabeled input", "placeholder as label", "label association", "for attribute", "not associated", "form label", "unlabeled form", "form inputs"],
+    "source": "ATH",
+    "keywords": [
+      "no visible label",
+      "input",
+      "form",
+      "placeholder",
+      "label",
+      "search",
+      "text field",
+      "no label",
+      "unlabeled input",
+      "placeholder as label",
+      "label association",
+      "for attribute",
+      "not associated",
+      "form label",
+      "unlabeled form",
+      "form inputs"
+    ],
     "desc": "A form field has no visible label, or its label is not programmatically linked to the field. Placeholder text disappears when the user starts typing and is not a substitute for a proper label.",
     "rem": "Give every form field a visible label element that describes what to enter. Link the label to the input using matching for and id attributes. Avoid using placeholder text as the only label."
   },
@@ -235,7 +499,18 @@
     "related": [],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["hidden", "screen reader", "accessible", "aria-hidden", "display none", "visibility", "collapse", "off-screen", "still readable"],
+    "source": "ATH",
+    "keywords": [
+      "hidden",
+      "screen reader",
+      "accessible",
+      "aria-hidden",
+      "display none",
+      "visibility",
+      "collapse",
+      "off-screen",
+      "still readable"
+    ],
     "desc": "Content that is visually hidden (such as a closed dropdown or collapsed panel) is still readable by screen readers. Users may hear content that seems to have no context.",
     "rem": "Use display: none or visibility: hidden to hide content from both visual and screen reader users. Or use aria-hidden=\"true\" on content that should be invisible to screen readers. Make sure the chosen method actually hides the content from assistive technology."
   },
@@ -247,7 +522,17 @@
     "related": [],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["text spacing", "letter spacing", "line height", "word spacing", "paragraph spacing", "1.4.12", "spacing", "line-height"],
+    "source": "ATH",
+    "keywords": [
+      "text spacing",
+      "letter spacing",
+      "line height",
+      "word spacing",
+      "paragraph spacing",
+      "1.4.12",
+      "spacing",
+      "line-height"
+    ],
     "desc": "The page does not support minimum text spacing. When users apply custom spacing through browser settings, content breaks or becomes unreadable.",
     "rem": "Design and code so the page still works with these values applied: line height at least 1.5× the font size, paragraph spacing at least 2× the font size, letter spacing at least 0.12× the font size, word spacing at least 0.16× the font size."
   },
@@ -256,10 +541,22 @@
     "title": "Accessible Name Does Not Match Visible Label",
     "sc": "2.5.3",
     "scLabel": "2.5.3 Label in Name (Level A)",
-    "related": ["4.1.2 Name, Role, Value (Level A)"],
+    "related": [
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["label in name", "aria-label", "visible text", "speech input", "mismatch", "accessible name", "voice control", "visible label mismatch"],
+    "source": "ATH",
+    "keywords": [
+      "label in name",
+      "aria-label",
+      "visible text",
+      "speech input",
+      "mismatch",
+      "accessible name",
+      "voice control",
+      "visible label mismatch"
+    ],
     "desc": "A control's accessible name is different from its visible text label. Voice input users speak the visible label to activate the control, but it does not match what the control is actually named.",
     "rem": "Make sure the accessible name starts with or contains the visible label text. Remove aria-label values that replace the visible text — let the visible text serve as the accessible name."
   },
@@ -268,10 +565,22 @@
     "title": "ARIA Tabs Pattern",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
-    "related": ["4.1.2 Name, Role, Value (Level A)"],
+    "related": [
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
     "priority": "Best Practice",
     "platform": "web",
-    "keywords": ["aria tabs", "tablist", "tab role", "carousel", "accordion", "aria tab", "arrow key", "overengineering"],
+    "source": "ATH",
+    "keywords": [
+      "aria tabs",
+      "tablist",
+      "tab role",
+      "carousel",
+      "accordion",
+      "aria tab",
+      "arrow key",
+      "overengineering"
+    ],
     "desc": "The component uses ARIA tabs, which require arrow key navigation that many users do not expect. ARIA tab patterns are easy to break and hard to implement correctly.",
     "rem": "Consider replacing ARIA tabs with a simpler pattern. Accordion, links, or a button-panel structure often provide the same content without the added complexity."
   },
@@ -280,10 +589,23 @@
     "title": "Non-interactive Element in Tab Order",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
-    "related": ["2.4.3 Focus Order (Level A)"],
+    "related": [
+      "2.4.3 Focus Order (Level A)"
+    ],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["tabbable", "non-control", "tabindex", "progress bar", "non-interactive", "focusable", "div", "not actionable", "tabindex on div"],
+    "source": "ATH",
+    "keywords": [
+      "tabbable",
+      "non-control",
+      "tabindex",
+      "progress bar",
+      "non-interactive",
+      "focusable",
+      "div",
+      "not actionable",
+      "tabindex on div"
+    ],
     "desc": "A non-interactive element (such as a div, paragraph, or progress bar) is in the tab order. Keyboard users tab to it but cannot do anything with it, which is confusing.",
     "rem": "Remove the tabindex attribute from non-interactive elements. Only native interactive elements or elements that need programmatic focus (such as dialog headings) should receive focus."
   },
@@ -292,10 +614,23 @@
     "title": "Repeated Links to the Same Destination",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["redundant", "duplicate links", "adjacent", "same destination", "image link", "text link", "repetitive", "excessive tab stops", "redundant link"],
+    "source": "ATH",
+    "keywords": [
+      "redundant",
+      "duplicate links",
+      "adjacent",
+      "same destination",
+      "image link",
+      "text link",
+      "repetitive",
+      "excessive tab stops",
+      "redundant link"
+    ],
     "desc": "A content block has multiple separate links or buttons that all go to the same place — for example, a card with a linked image, a linked title, and a \"Read more\" button. Keyboard users must tab through all of them, and screen reader users hear repeated announcements.",
     "rem": "Combine them into a single link. Mark the image as decorative (alt=\"\") and use the text as the link label. Or wrap the entire card in one link element."
   },
@@ -307,7 +642,18 @@
     "related": [],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["language", "lang", "parts", "spanish", "french", "multilingual", "language change", "programmatic language", "lang attribute"],
+    "source": "ATH",
+    "keywords": [
+      "language",
+      "lang",
+      "parts",
+      "spanish",
+      "french",
+      "multilingual",
+      "language change",
+      "programmatic language",
+      "lang attribute"
+    ],
     "desc": "The page contains text in more than one language, but the language change is not marked in the HTML. Screen readers may read foreign words using the wrong pronunciation.",
     "rem": "Add a lang attribute to the element wrapping the text in a different language. For example: <span lang=\"es\">Hola</span>."
   },
@@ -319,7 +665,15 @@
     "related": [],
     "priority": "High",
     "platform": "web",
-    "keywords": ["lang attribute", "missing lang", "language", "html lang", "no language", "page language"],
+    "source": "ATH",
+    "keywords": [
+      "lang attribute",
+      "missing lang",
+      "language",
+      "html lang",
+      "no language",
+      "page language"
+    ],
     "desc": "The html element has no lang attribute. Screen readers may use the wrong language profile to read the page, causing incorrect pronunciation.",
     "rem": "Add a lang attribute to the html element that matches the primary language of the page. For example: <html lang=\"en\">."
   },
@@ -328,10 +682,22 @@
     "title": "Drag Action Has No Keyboard Alternative",
     "sc": "2.5.7",
     "scLabel": "2.5.7 Dragging Movements (Level AA)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["drag", "dragging", "swipe", "carousel", "slider", "drag movement", "no keyboard drag", "2.5.7"],
+    "source": "ATH",
+    "keywords": [
+      "drag",
+      "dragging",
+      "swipe",
+      "carousel",
+      "slider",
+      "drag movement",
+      "no keyboard drag",
+      "2.5.7"
+    ],
     "desc": "A feature requires the user to drag an element with a pointer. There is no keyboard-accessible way to perform the same action.",
     "rem": "Provide keyboard-accessible controls (such as buttons) that perform the same action as dragging. Keyboard users should be able to complete every task without a mouse."
   },
@@ -343,7 +709,20 @@
     "related": [],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["animation", "continuous", "auto-play", "carousel", "no pause", "blinking", "moving", "scrolling", "no control", "loops", "auto-advance"],
+    "source": "ATH",
+    "keywords": [
+      "animation",
+      "continuous",
+      "auto-play",
+      "carousel",
+      "no pause",
+      "blinking",
+      "moving",
+      "scrolling",
+      "no control",
+      "loops",
+      "auto-advance"
+    ],
     "desc": "An animation or moving element starts automatically and loops without stopping. There is no way for the user to pause, stop, or hide it. This can be distracting or harmful for people with certain conditions.",
     "rem": "Provide a visible, keyboard-accessible button to pause or stop the animation. Or set it to stop automatically within 5 seconds. If the animation conveys live data (like a news ticker), a pause button is required."
   },
@@ -355,7 +734,21 @@
     "related": [],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["landmarks", "no landmarks", "main", "nav", "header", "footer", "region", "aria landmark", "page structure", "no main", "content structure", "poor landmark"],
+    "source": "ATH",
+    "keywords": [
+      "landmarks",
+      "no landmarks",
+      "main",
+      "nav",
+      "header",
+      "footer",
+      "region",
+      "aria landmark",
+      "page structure",
+      "no main",
+      "content structure",
+      "poor landmark"
+    ],
     "desc": "Page content is not organized inside HTML landmark elements. Screen reader users cannot jump between sections of the page — they must read everything from the start.",
     "rem": "Wrap all page content in semantic HTML elements: header, nav, main, aside, and footer. Every page needs at least one main element. Use ARIA landmark roles only when the right HTML element is not available."
   },
@@ -367,7 +760,16 @@
     "related": [],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["page title", "static title", "no title change", "same title", "document title", "title element", "2.4.2"],
+    "source": "ATH",
+    "keywords": [
+      "page title",
+      "static title",
+      "no title change",
+      "same title",
+      "document title",
+      "title element",
+      "2.4.2"
+    ],
     "desc": "The page title (shown in the browser tab) stays the same on all pages. Users cannot tell which page they are on from the tab alone.",
     "rem": "Update the document title on each page to describe what that page is about. For example: \"Cart — My Store\" or \"Settings — App Name\". In a single-page app, update the title on each route change."
   },
@@ -379,7 +781,17 @@
     "related": [],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["keyboard trap", "trap", "stuck", "cannot escape", "tab trap", "no keyboard trap", "datepicker trap", "modal trap"],
+    "source": "ATH",
+    "keywords": [
+      "keyboard trap",
+      "trap",
+      "stuck",
+      "cannot escape",
+      "tab trap",
+      "no keyboard trap",
+      "datepicker trap",
+      "modal trap"
+    ],
     "desc": "Keyboard focus gets stuck inside a component. Once a keyboard user tabs into it, there is no way out using only the keyboard.",
     "rem": "Make sure keyboard users can always tab out of any component. If a modal or dialog traps focus intentionally, add an Escape key handler and a visible close button so users can leave."
   },
@@ -388,10 +800,23 @@
     "title": "Chart or Graph Has No Text Alternative",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["chart", "graph", "data visualization", "infographic", "inaccessible chart", "no text alternative", "pie chart", "bar chart", "data viz"],
+    "source": "ATH",
+    "keywords": [
+      "chart",
+      "graph",
+      "data visualization",
+      "infographic",
+      "inaccessible chart",
+      "no text alternative",
+      "pie chart",
+      "bar chart",
+      "data viz"
+    ],
     "desc": "Charts and graphs convey data visually but have no text alternative. Screen reader users cannot access the information the chart contains.",
     "rem": "Provide a text summary that describes what the chart shows — its type, key trends, and main takeaways. When possible, also provide the underlying data in a table."
   },
@@ -403,7 +828,17 @@
     "related": [],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["table", "tabular", "data table", "comparison", "no table markup", "grid", "tabular data", "not in table"],
+    "source": "ATH",
+    "keywords": [
+      "table",
+      "tabular",
+      "data table",
+      "comparison",
+      "no table markup",
+      "grid",
+      "tabular data",
+      "not in table"
+    ],
     "desc": "Data organized in rows and columns is not using HTML table markup. Screen reader users cannot understand the relationship between column headers and data cells.",
     "rem": "Use proper table markup with table, thead, tbody, tr, th, and td elements. Make sure column and row headers use th elements with appropriate scope attributes."
   },
@@ -412,10 +847,22 @@
     "title": "Tooltip or Hover Content Not Keyboard Accessible",
     "sc": "1.4.13",
     "scLabel": "1.4.13 Content on Hover or Focus (Level AA)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["hover", "tooltip", "content on hover", "mouse only", "not keyboard", "hover content", "disappears", "1.4.13"],
+    "source": "ATH",
+    "keywords": [
+      "hover",
+      "tooltip",
+      "content on hover",
+      "mouse only",
+      "not keyboard",
+      "hover content",
+      "disappears",
+      "1.4.13"
+    ],
     "desc": "Extra content appears only when the user hovers with a mouse. Keyboard users and screen reader users cannot trigger or read this content.",
     "rem": "Make hover content also appear when the element receives keyboard focus. Users must be able to dismiss it without moving focus (for example, with Escape). The content should stay visible until the user moves focus away."
   },
@@ -424,10 +871,21 @@
     "title": "Tab Order Does Not Match Visual Order",
     "sc": "2.4.3",
     "scLabel": "2.4.3 Focus Order (Level A)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["focus order", "tab order", "wrong order", "visual order", "dom order", "confusing order", "focus sequence"],
+    "source": "ATH",
+    "keywords": [
+      "focus order",
+      "tab order",
+      "wrong order",
+      "visual order",
+      "dom order",
+      "confusing order",
+      "focus sequence"
+    ],
     "desc": "When tabbing through the page, focus jumps in an order that does not match what is shown on screen. This is confusing for keyboard users.",
     "rem": "Make the HTML source order match the visual layout. Avoid using positive tabindex values to control tab order — they create maintenance problems and usually make things worse."
   },
@@ -436,10 +894,22 @@
     "title": "Informative Content Hidden from Screen Readers",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["inaccessible content", "hidden from at", "star rating", "rating", "icon", "not conveyed", "aria-hidden rating", "stars"],
+    "source": "ATH",
+    "keywords": [
+      "inaccessible content",
+      "hidden from at",
+      "star rating",
+      "rating",
+      "icon",
+      "not conveyed",
+      "aria-hidden rating",
+      "stars"
+    ],
     "desc": "Content that carries meaning (like a star rating or status icon) is hidden from screen readers using aria-hidden. Screen reader users cannot access that information.",
     "rem": "Remove aria-hidden from content that carries meaning. Add an accessible name or supplemental text that conveys the same information. For example, instead of hiding a star rating, add hidden text like \"Rating: 4 out of 5 stars\"."
   },
@@ -451,7 +921,16 @@
     "related": [],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["new window", "new tab", "target blank", "no warning", "opens new", "new window warning", "external link"],
+    "source": "ATH",
+    "keywords": [
+      "new window",
+      "new tab",
+      "target blank",
+      "no warning",
+      "opens new",
+      "new window warning",
+      "external link"
+    ],
     "desc": "A link or button opens a new browser window or tab without warning. This is disorienting, especially for screen reader users who may not realize the context has changed.",
     "rem": "Add a warning in the link text or accessible name. For example: \"Annual Report (opens in a new tab)\". You can also add an icon with alt text to indicate a new window will open."
   },
@@ -460,10 +939,21 @@
     "title": "Receiving Focus Causes Unexpected Change",
     "sc": "3.2.1",
     "scLabel": "3.2.1 On Focus (Level A)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["change on focus", "on focus", "focus change", "change of context", "focus event", "unexpected change", "3.2.1"],
+    "source": "ATH",
+    "keywords": [
+      "change on focus",
+      "on focus",
+      "focus change",
+      "change of context",
+      "focus event",
+      "unexpected change",
+      "3.2.1"
+    ],
     "desc": "When an element receives keyboard or pointer focus, the page changes — for example, a form submits or a new page loads. This is unexpected and disorienting.",
     "rem": "Do not trigger any actions when an element receives focus. Actions should only happen when the user deliberately activates a control (for example, by pressing Enter, Space, or clicking)."
   },
@@ -472,10 +962,22 @@
     "title": "Changing an Input Causes Unexpected Change",
     "sc": "3.2.2",
     "scLabel": "3.2.2 On Input (Level A)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["change on input", "on input", "select change", "dropdown change", "auto submit", "unexpected change", "3.2.2", "page reload on select"],
+    "source": "ATH",
+    "keywords": [
+      "change on input",
+      "on input",
+      "select change",
+      "dropdown change",
+      "auto submit",
+      "unexpected change",
+      "3.2.2",
+      "page reload on select"
+    ],
     "desc": "Selecting an option in a dropdown or changing a form value automatically causes the page to reload or navigate. Users who keyboard through a list of options may trigger an unintended change.",
     "rem": "Do not trigger page-level changes when the user changes a form value. Instead, wait for a deliberate submit action — like pressing a \"Go\" button — before acting on the selection."
   },
@@ -487,7 +989,19 @@
     "related": [],
     "priority": "High",
     "platform": "web",
-    "keywords": ["inaccurate", "price", "broken", "screen reader", "reads wrong", "output", "announces", "format", "incorrect announcement", "broken price"],
+    "source": "ATH",
+    "keywords": [
+      "inaccurate",
+      "price",
+      "broken",
+      "screen reader",
+      "reads wrong",
+      "output",
+      "announces",
+      "format",
+      "incorrect announcement",
+      "broken price"
+    ],
     "desc": "Content is formatted in a way that causes screen readers to read it incorrectly. For example, a price of \"$1,200\" may be read as garbled text depending on how it is marked up.",
     "rem": "Review how the content is structured in the HTML and test with a screen reader. Fix the markup or formatting so the announced text conveys the intended meaning accurately."
   },
@@ -499,7 +1013,18 @@
     "related": [],
     "priority": "High",
     "platform": "web",
-    "keywords": ["figure", "figcaption", "diagram", "illustration", "caption", "no caption", "no description", "figure element", "complex image"],
+    "source": "ATH",
+    "keywords": [
+      "figure",
+      "figcaption",
+      "diagram",
+      "illustration",
+      "caption",
+      "no caption",
+      "no description",
+      "figure element",
+      "complex image"
+    ],
     "desc": "An image or diagram uses a figure element but has no figcaption or accessible description. Screen reader users hear the image file name or a generic announcement instead of what the image shows.",
     "rem": "Add a figcaption element inside the figure that explains what the image shows or why it matters. For more complex visuals, link to a longer text description nearby."
   },
@@ -508,10 +1033,21 @@
     "title": "Form Field Has Conflicting Labels",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
-    "related": ["2.5.3 Label in Name (Level A)"],
+    "related": [
+      "2.5.3 Label in Name (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["conflicting label", "duplicate label", "aria-label mismatch", "visible label mismatch", "label conflict", "input label", "accessible name mismatch"],
+    "source": "ATH",
+    "keywords": [
+      "conflicting label",
+      "duplicate label",
+      "aria-label mismatch",
+      "visible label mismatch",
+      "label conflict",
+      "input label",
+      "accessible name mismatch"
+    ],
     "desc": "A form field has both a visible label and an aria-label that say different things. Screen reader users hear the aria-label while sighted users read the visible label, which creates confusion.",
     "rem": "Use only one labeling method, or make sure both labels say the same thing. The accessible name (aria-label or aria-labelledby) must contain the visible label text."
   },
@@ -520,10 +1056,23 @@
     "title": "Dropdown or Select Has No Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
-    "related": ["4.1.2 Name, Role, Value (Level A)"],
+    "related": [
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["select", "dropdown", "no label", "unlabeled select", "unlabeled dropdown", "listbox", "combobox", "missing label", "form select"],
+    "source": "ATH",
+    "keywords": [
+      "select",
+      "dropdown",
+      "no label",
+      "unlabeled select",
+      "unlabeled dropdown",
+      "listbox",
+      "combobox",
+      "missing label",
+      "form select"
+    ],
     "desc": "A dropdown menu or select element has no label. Screen reader users do not know what choice they are making.",
     "rem": "Add a visible label element with a for attribute that matches the select element's id. If you cannot show a visible label, use aria-label or aria-labelledby instead."
   },
@@ -532,10 +1081,24 @@
     "title": "Layout Breaks When Text Is Enlarged",
     "sc": "1.4.4",
     "scLabel": "1.4.4 Resize Text (Level AA)",
-    "related": ["1.4.10 Reflow (Level AA)"],
+    "related": [
+      "1.4.10 Reflow (Level AA)"
+    ],
     "priority": "High",
     "platform": "web",
-    "keywords": ["text resize", "zoom text", "text enlargement", "layout break", "overflow", "cut off text", "overlap", "1.4.4", "browser zoom", "200 percent"],
+    "source": "ATH",
+    "keywords": [
+      "text resize",
+      "zoom text",
+      "text enlargement",
+      "layout break",
+      "overflow",
+      "cut off text",
+      "overlap",
+      "1.4.4",
+      "browser zoom",
+      "200 percent"
+    ],
     "desc": "When users increase text size in their browser to 200%, the page layout breaks. Text overlaps other content, gets cut off, or disappears. Low vision users who rely on larger text cannot read the page.",
     "rem": "Use flexible layouts and relative units (rem, em, %) instead of fixed pixel heights. Test the page at 200% text size in your browser settings to make sure everything remains readable and nothing overflows."
   },
@@ -547,7 +1110,19 @@
     "related": [],
     "priority": "High",
     "platform": "both",
-    "keywords": ["click here", "learn more", "read more", "more", "here", "vague link", "generic link", "link text", "link purpose", "descriptive link"],
+    "source": "ATH",
+    "keywords": [
+      "click here",
+      "learn more",
+      "read more",
+      "more",
+      "here",
+      "vague link",
+      "generic link",
+      "link text",
+      "link purpose",
+      "descriptive link"
+    ],
     "desc": "Links use generic text like \"Click here\", \"Read more\", or \"Learn more\". Screen reader users who navigate by links cannot tell where each link goes.",
     "rem": "Write link text that describes the destination or action. Instead of \"Click here\", use \"Download the accessibility checklist\" or \"Read the full WCAG 1.1.1 explanation\"."
   },
@@ -556,10 +1131,25 @@
     "title": "Audio or Video Has No Transcript or Captions",
     "sc": "1.2.1",
     "scLabel": "1.2.1 Audio-only and Video-only (Prerecorded) (Level A)",
-    "related": ["1.2.2 Captions (Prerecorded) (Level A)"],
+    "related": [
+      "1.2.2 Captions (Prerecorded) (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["audio", "video", "captions", "transcript", "no captions", "no transcript", "deaf", "hard of hearing", "1.2.1", "1.2.2", "media alternative"],
+    "source": "ATH",
+    "keywords": [
+      "audio",
+      "video",
+      "captions",
+      "transcript",
+      "no captions",
+      "no transcript",
+      "deaf",
+      "hard of hearing",
+      "1.2.1",
+      "1.2.2",
+      "media alternative"
+    ],
     "desc": "A video or audio recording has no captions or transcript. Deaf and hard of hearing users cannot access the spoken content.",
     "rem": "For audio-only content, provide a full text transcript. For video with audio, provide synchronized captions. Place the transcript near the media or link to it clearly. Auto-generated captions must be reviewed and corrected before publishing."
   },
@@ -568,10 +1158,24 @@
     "title": "Form Group Has No Group Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
-    "related": ["4.1.2 Name, Role, Value (Level A)"],
+    "related": [
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
     "priority": "High",
     "platform": "web",
-    "keywords": ["fieldset", "legend", "no legend", "radio group", "checkbox group", "form group", "group label", "radiogroup", "checkboxgroup", "no fieldset"],
+    "source": "ATH",
+    "keywords": [
+      "fieldset",
+      "legend",
+      "no legend",
+      "radio group",
+      "checkbox group",
+      "form group",
+      "group label",
+      "radiogroup",
+      "checkboxgroup",
+      "no fieldset"
+    ],
     "desc": "A group of related form controls (like radio buttons or checkboxes) has no group label. Screen reader users hear each option without understanding what question it answers.",
     "rem": "Wrap the group in a fieldset element and add a legend as its first child. The legend text should be the question or category the group belongs to. For example: \"Choose your preferred contact method\"."
   },
@@ -583,7 +1187,19 @@
     "related": [],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["list", "no list markup", "ul", "ol", "dl", "list item", "nav list", "step list", "bullet points", "semantic list"],
+    "source": "ATH",
+    "keywords": [
+      "list",
+      "no list markup",
+      "ul",
+      "ol",
+      "dl",
+      "list item",
+      "nav list",
+      "step list",
+      "bullet points",
+      "semantic list"
+    ],
     "desc": "Content that looks like a list — such as navigation links, steps, or options — is built with divs or paragraphs instead of HTML list elements. Screen readers cannot announce how many items are in the list.",
     "rem": "Use ul for unordered lists, ol for numbered lists, and dl for definition-style lists. Pair each list with li or dt/dd items. This also helps with navigation menus and step-by-step instructions."
   },
@@ -595,7 +1211,19 @@
     "related": [],
     "priority": "High",
     "platform": "web",
-    "keywords": ["aria-live", "live region", "dynamic content", "not announced", "status update", "alert", "role alert", "role status", "aria-live polite", "notification"],
+    "source": "ATH",
+    "keywords": [
+      "aria-live",
+      "live region",
+      "dynamic content",
+      "not announced",
+      "status update",
+      "alert",
+      "role alert",
+      "role status",
+      "aria-live polite",
+      "notification"
+    ],
     "desc": "Content that updates dynamically — like a search result count, a progress update, or a notification — is not announced by screen readers because the live region is missing or set up incorrectly.",
     "rem": "Add aria-live=\"polite\" to a container that will receive the updated text. Use aria-live=\"assertive\" only for urgent alerts. Inject the message into the live region after it is already in the DOM — injecting the region and message at the same time may not be announced."
   },
@@ -604,10 +1232,23 @@
     "title": "Multi-Point Gesture Has No Single-Pointer Alternative",
     "sc": "2.5.1",
     "scLabel": "2.5.1 Pointer Gestures (Level A)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["pinch", "zoom gesture", "two finger", "multi-touch", "pointer gesture", "no alternative", "2.5.1", "touch gesture", "multi-point"],
+    "source": "ATH",
+    "keywords": [
+      "pinch",
+      "zoom gesture",
+      "two finger",
+      "multi-touch",
+      "pointer gesture",
+      "no alternative",
+      "2.5.1",
+      "touch gesture",
+      "multi-point"
+    ],
     "desc": "A feature requires a multi-finger gesture — like pinch-to-zoom or a two-finger swipe — with no single-tap or keyboard alternative. Users with motor disabilities who cannot perform multi-touch gestures are locked out.",
     "rem": "Provide a single-pointer alternative for every multi-point gesture. For example, add plus and minus zoom buttons alongside pinch-to-zoom. All gestures must have a keyboard-accessible equivalent."
   },
@@ -616,10 +1257,24 @@
     "title": "Error Message Does Not Explain How to Fix the Problem",
     "sc": "3.3.3",
     "scLabel": "3.3.3 Error Suggestion (Level AA)",
-    "related": ["3.3.1 Error Identification (Level A)"],
+    "related": [
+      "3.3.1 Error Identification (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["error suggestion", "validation message", "vague error", "no fix", "error recovery", "inline error", "3.3.3", "form error", "password requirements", "format error"],
+    "source": "ATH",
+    "keywords": [
+      "error suggestion",
+      "validation message",
+      "vague error",
+      "no fix",
+      "error recovery",
+      "inline error",
+      "3.3.3",
+      "form error",
+      "password requirements",
+      "format error"
+    ],
     "desc": "A form shows an error when the user submits, but the message does not say how to fix it. For example, it may say \"Invalid input\" without explaining what format is expected.",
     "rem": "Write specific, actionable error messages. Tell users exactly what went wrong and how to correct it. For example: \"Phone number must be 10 digits, numbers only\" instead of \"Invalid phone number\"."
   },
@@ -628,10 +1283,24 @@
     "title": "Video Has No Closed Captions",
     "sc": "1.2.2",
     "scLabel": "1.2.2 Captions (Prerecorded) (Level A)",
-    "related": ["1.2.1 Audio-only and Video-only (Prerecorded) (Level A)"],
+    "related": [
+      "1.2.1 Audio-only and Video-only (Prerecorded) (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["captions", "closed captions", "CC", "subtitles", "no captions", "video", "deaf", "hard of hearing", "prerecorded", "1.2.2"],
+    "source": "ATH",
+    "keywords": [
+      "captions",
+      "closed captions",
+      "CC",
+      "subtitles",
+      "no captions",
+      "video",
+      "deaf",
+      "hard of hearing",
+      "prerecorded",
+      "1.2.2"
+    ],
     "desc": "A prerecorded video has spoken audio but no captions. Deaf and hard of hearing users cannot access the spoken content, and users watching in noisy or sound-sensitive environments cannot follow along.",
     "rem": "Add accurate captions to every prerecorded video that has a spoken audio track. Captions must be synchronized with the audio, include speaker identification where relevant, and describe important non-speech sounds (like [applause] or [doorbell]). Review auto-generated captions for accuracy before publishing."
   },
@@ -640,10 +1309,23 @@
     "title": "Video Has No Audio Description",
     "sc": "1.2.5",
     "scLabel": "1.2.5 Audio Description (Prerecorded) (Level AA)",
-    "related": ["1.1.1 Non-text Content (Level A)"],
+    "related": [
+      "1.1.1 Non-text Content (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["audio description", "video description", "visual content", "blind", "low vision", "1.2.5", "described video", "AD", "no audio description"],
+    "source": "ATH",
+    "keywords": [
+      "audio description",
+      "video description",
+      "visual content",
+      "blind",
+      "low vision",
+      "1.2.5",
+      "described video",
+      "AD",
+      "no audio description"
+    ],
     "desc": "A prerecorded video contains visual information that is not described in the audio — such as on-screen text, actions, or diagrams. Blind and low vision users miss this content entirely.",
     "rem": "Add an audio description track that narrates key visual content during natural pauses in the dialogue. If there are not enough pauses, create an extended audio description version with the video paused at relevant moments. An alternative is a full text description, but an audio track is preferred."
   },
@@ -655,7 +1337,18 @@
     "related": [],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["session timeout", "time limit", "auto logout", "timed session", "no warning", "expires", "extend session", "timeout warning", "session expiry"],
+    "source": "ATH",
+    "keywords": [
+      "session timeout",
+      "time limit",
+      "auto logout",
+      "timed session",
+      "no warning",
+      "expires",
+      "extend session",
+      "timeout warning",
+      "session expiry"
+    ],
     "desc": "A timed session expires without warning the user. Users who are slow to complete a task — due to disability, distraction, or assistive technology — lose their work with no chance to extend the time.",
     "rem": "Warn users at least 20 seconds before a time limit expires and give them a way to extend it. Users must be able to turn off, adjust, or extend the time limit unless it is longer than 20 hours or is essential to the activity. Use auto-save where possible to preserve partial progress."
   },
@@ -667,7 +1360,20 @@
     "related": [],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["flash", "flicker", "seizure", "photosensitive", "three flashes", "blink", "gif", "animation", "strobe", "blinking", "2.3.1"],
+    "source": "ATH",
+    "keywords": [
+      "flash",
+      "flicker",
+      "seizure",
+      "photosensitive",
+      "three flashes",
+      "blink",
+      "gif",
+      "animation",
+      "strobe",
+      "blinking",
+      "2.3.1"
+    ],
     "desc": "Content on the page flashes or blinks more than 3 times per second. Rapidly flashing content can trigger photosensitive seizures, which are a medical emergency.",
     "rem": "Remove or redesign any content that flashes more than 3 times per second. If flashing is needed, reduce the frequency to 3 times per second or below and ensure the flashing area is small. Test animated GIFs, CSS animations, and video clips. Use the Photosensitive Epilepsy Analysis Tool (PEAT) for borderline cases."
   },
@@ -676,10 +1382,25 @@
     "title": "Content Does Not Reflow at 400% Zoom",
     "sc": "1.4.10",
     "scLabel": "1.4.10 Reflow (Level AA)",
-    "related": ["1.4.4 Resize Text (Level AA)"],
+    "related": [
+      "1.4.4 Resize Text (Level AA)"
+    ],
     "priority": "Critical",
     "platform": "web",
-    "keywords": ["reflow", "400 percent", "horizontal scroll", "overflow", "single axis", "1.4.10", "320px", "viewport", "responsive", "zoom layout", "small viewport"],
+    "source": "ATH",
+    "keywords": [
+      "reflow",
+      "400 percent",
+      "horizontal scroll",
+      "overflow",
+      "single axis",
+      "1.4.10",
+      "320px",
+      "viewport",
+      "responsive",
+      "zoom layout",
+      "small viewport"
+    ],
     "desc": "When zoomed to 400% in the browser, the page requires horizontal scrolling to read content. Low vision users who zoom in lose context when content flows off-screen instead of wrapping.",
     "rem": "Design content so it remains readable in a single scrolling direction at the equivalent of a 320 CSS pixel viewport width. Use flexible layouts, relative units (rem, em, %), and avoid fixed pixel widths on containers. Test by setting browser zoom to 400% on a 1280px-wide window, or by setting the viewport to 320px wide in DevTools."
   },
@@ -688,10 +1409,26 @@
     "title": "Touch or Click Target Too Small",
     "sc": "2.5.8",
     "scLabel": "2.5.8 Target Size (Minimum) (Level AA)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["touch target", "click target", "small button", "24px", "target size", "2.5.8", "tap area", "hit area", "small control", "wcag 2.2", "motor", "minimum target"],
+    "source": "ATH",
+    "keywords": [
+      "touch target",
+      "click target",
+      "small button",
+      "24px",
+      "target size",
+      "2.5.8",
+      "tap area",
+      "hit area",
+      "small control",
+      "wcag 2.2",
+      "motor",
+      "minimum target"
+    ],
     "desc": "Interactive elements — such as buttons, links, and icon controls — are smaller than 24×24 CSS pixels with insufficient spacing around them. Small targets are difficult to activate accurately for users with motor disabilities and touch screen users.",
     "rem": "Make all interactive targets at least 24×24 CSS pixels, including any spacing offset to neighboring targets. If the visible element is smaller, add padding to expand the clickable area without changing the visual design. Aim for 44×44 CSS pixels (WCAG 2.5.5 AAA) on touch interfaces."
   },
@@ -703,7 +1440,19 @@
     "related": [],
     "priority": "High",
     "platform": "both",
-    "keywords": ["orientation", "portrait", "landscape", "rotation", "locked orientation", "1.3.4", "screen rotation", "disable rotation", "forced orientation", "wheelchair mount"],
+    "source": "ATH",
+    "keywords": [
+      "orientation",
+      "portrait",
+      "landscape",
+      "rotation",
+      "locked orientation",
+      "1.3.4",
+      "screen rotation",
+      "disable rotation",
+      "forced orientation",
+      "wheelchair mount"
+    ],
     "desc": "The content is locked to a single screen orientation — portrait or landscape — and will not reflow when the device is rotated. Users who mount their device in a fixed position, such as on a wheelchair, cannot use the other orientation.",
     "rem": "Remove any code that forces a fixed screen orientation. Support both portrait and landscape using CSS media queries or flexible layouts. Only restrict orientation when a specific orientation is essential — such as a piano keyboard that only makes sense in landscape."
   },
@@ -712,10 +1461,27 @@
     "title": "Autocomplete Attribute Missing on Personal Data Fields",
     "sc": "1.3.5",
     "scLabel": "1.3.5 Identify Input Purpose (Level AA)",
-    "related": ["3.3.2 Labels or Instructions (Level A)"],
+    "related": [
+      "3.3.2 Labels or Instructions (Level A)"
+    ],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["autocomplete", "autofill", "1.3.5", "personal data", "name", "email", "address", "phone", "username", "input purpose", "form autofill", "identify input purpose", "browser autofill"],
+    "source": "ATH",
+    "keywords": [
+      "autocomplete",
+      "autofill",
+      "1.3.5",
+      "personal data",
+      "name",
+      "email",
+      "address",
+      "phone",
+      "username",
+      "input purpose",
+      "form autofill",
+      "identify input purpose",
+      "browser autofill"
+    ],
     "desc": "Form fields that collect personal information — such as name, email, phone number, and address — are missing the autocomplete attribute. Users with motor disabilities or cognitive impairments who rely on browser autofill must enter data manually every time.",
     "rem": "Add the autocomplete attribute to all personal data fields using the correct HTML token values. For example: autocomplete=\"name\", autocomplete=\"email\", autocomplete=\"tel\", autocomplete=\"street-address\", autocomplete=\"new-password\". A full list of valid values is available in the HTML specification."
   },
@@ -727,7 +1493,20 @@
     "related": [],
     "priority": "High",
     "platform": "web",
-    "keywords": ["iframe", "embedded content", "no title", "frame", "title attribute", "inaccessible embed", "third-party embed", "map embed", "payment embed", "widget", "embed title"],
+    "source": "ATH",
+    "keywords": [
+      "iframe",
+      "embedded content",
+      "no title",
+      "frame",
+      "title attribute",
+      "inaccessible embed",
+      "third-party embed",
+      "map embed",
+      "payment embed",
+      "widget",
+      "embed title"
+    ],
     "desc": "An iframe element does not have a title attribute. Screen reader users cannot tell what the embedded content is before they enter it — they hear only \"frame\" with no context.",
     "rem": "Add a descriptive title attribute to every iframe. For example: <iframe title=\"Google Maps showing our office location\">. If the iframe contains no meaningful content, hide it from assistive technology with aria-hidden=\"true\"."
   },
@@ -736,10 +1515,26 @@
     "title": "Expanded or Collapsed State Not Communicated",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["aria-expanded", "expanded", "collapsed", "accordion", "disclosure", "menu toggle", "nav toggle", "no state", "state not announced", "dropdown state", "open closed", "toggle button"],
+    "source": "ATH",
+    "keywords": [
+      "aria-expanded",
+      "expanded",
+      "collapsed",
+      "accordion",
+      "disclosure",
+      "menu toggle",
+      "nav toggle",
+      "no state",
+      "state not announced",
+      "dropdown state",
+      "open closed",
+      "toggle button"
+    ],
     "desc": "A button that opens or closes a panel, accordion, menu, or disclosure widget does not communicate whether the content is currently open or closed. Screen reader users cannot tell the current state from the button alone.",
     "rem": "Add aria-expanded=\"false\" to the trigger button by default and toggle it to aria-expanded=\"true\" when the content opens. Update the value every time the state changes. Do not rely on visual indicators like a chevron icon — those are not perceived by screen reader users."
   },
@@ -748,10 +1543,25 @@
     "title": "Device Motion Feature Has No Alternative",
     "sc": "2.5.4",
     "scLabel": "2.5.4 Motion Actuation (Level A)",
-    "related": ["2.1.1 Keyboard (Level A)"],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["device motion", "shake", "tilt", "motion actuation", "accelerometer", "gyroscope", "2.5.4", "shake to undo", "motion gesture", "no alternative", "device sensor"],
+    "source": "ATH",
+    "keywords": [
+      "device motion",
+      "shake",
+      "tilt",
+      "motion actuation",
+      "accelerometer",
+      "gyroscope",
+      "2.5.4",
+      "shake to undo",
+      "motion gesture",
+      "no alternative",
+      "device sensor"
+    ],
     "desc": "A feature is triggered by device motion — such as shaking to undo or tilting to scroll — and there is no other way to perform the same action. Users who cannot move their device, or whose device is mounted to a wheelchair, cannot access this feature.",
     "rem": "Provide a UI control — such as a button or menu option — that performs the same action as the device motion gesture. Also allow users to disable the motion trigger entirely to prevent accidental activation."
   },
@@ -760,10 +1570,26 @@
     "title": "Reading Order Disrupted by CSS Positioning",
     "sc": "1.3.2",
     "scLabel": "1.3.2 Meaningful Sequence (Level A)",
-    "related": ["2.4.3 Focus Order (Level A)"],
+    "related": [
+      "2.4.3 Focus Order (Level A)"
+    ],
     "priority": "High",
     "platform": "web",
-    "keywords": ["reading order", "dom order", "css order", "flex order", "grid order", "meaningful sequence", "1.3.2", "order property", "position absolute", "float", "out of order", "visual order mismatch"],
+    "source": "ATH",
+    "keywords": [
+      "reading order",
+      "dom order",
+      "css order",
+      "flex order",
+      "grid order",
+      "meaningful sequence",
+      "1.3.2",
+      "order property",
+      "position absolute",
+      "float",
+      "out of order",
+      "visual order mismatch"
+    ],
     "desc": "CSS properties like order, position: absolute, or float cause content to appear in a different sequence visually than it does in the DOM. Screen readers and other assistive technologies follow DOM order, so content may be read in a confusing or meaningless sequence.",
     "rem": "Ensure the DOM order matches the intended reading order. If CSS repositioning is necessary, test with a screen reader to confirm the content sequence makes sense. Avoid relying on the CSS order property to define meaning — use it only for visual adjustments when the DOM order is already correct."
   },
@@ -772,10 +1598,28 @@
     "title": "No Confirmation Step for Irreversible Actions",
     "sc": "3.3.4",
     "scLabel": "3.3.4 Error Prevention (Legal, Financial, Data) (Level AA)",
-    "related": ["3.3.1 Error Identification (Level A)"],
+    "related": [
+      "3.3.1 Error Identification (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["confirmation", "undo", "delete", "submit", "irreversible", "purchase", "legal", "financial", "3.3.4", "error prevention", "no undo", "no confirmation", "review step", "destructive action"],
+    "source": "ATH",
+    "keywords": [
+      "confirmation",
+      "undo",
+      "delete",
+      "submit",
+      "irreversible",
+      "purchase",
+      "legal",
+      "financial",
+      "3.3.4",
+      "error prevention",
+      "no undo",
+      "no confirmation",
+      "review step",
+      "destructive action"
+    ],
     "desc": "An action that cannot be easily undone — such as deleting data, completing a purchase, or submitting a legal or financial form — has no confirmation or review step. A user who activates it by accident has no way to recover.",
     "rem": "Before completing any significant or irreversible action, give users a chance to review, confirm, or cancel. Options include a confirmation dialog, a review-and-edit summary screen, or a brief undo window after the action completes. Clearly label destructive actions so users understand the consequence before they commit."
   },
@@ -784,10 +1628,25 @@
     "title": "Focus Indicator Does Not Meet Minimum Area",
     "sc": "2.4.11",
     "scLabel": "2.4.11 Focus Appearance (Level AA)",
-    "related": ["2.4.7 Focus Visible (Level AA)", "1.4.11 Non-text Contrast (Level AA)"],
+    "related": [
+      "2.4.7 Focus Visible (Level AA)",
+      "1.4.11 Non-text Contrast (Level AA)"
+    ],
     "priority": "High",
     "platform": "web",
-    "keywords": ["focus appearance", "focus indicator area", "2.4.11", "perimeter", "minimum size", "focus contrast", "wcag 2.2", "focus visible area", "thin outline", "focus ring size"],
+    "source": "ATH",
+    "keywords": [
+      "focus appearance",
+      "focus indicator area",
+      "2.4.11",
+      "perimeter",
+      "minimum size",
+      "focus contrast",
+      "wcag 2.2",
+      "focus visible area",
+      "thin outline",
+      "focus ring size"
+    ],
     "desc": "The keyboard focus indicator is present but does not meet the WCAG 2.2 minimum requirements. The indicator area must be at least as large as the perimeter of the focused component times 2 CSS pixels, and must have sufficient contrast between focused and unfocused states.",
     "rem": "Use a focus outline that is at least 2 CSS pixels thick around the full perimeter of the component. Ensure at least a 3:1 contrast ratio between the focused and unfocused appearance. A solid 2px offset outline that encircles the component and changes color on focus is a reliable approach."
   },
@@ -796,10 +1655,29 @@
     "title": "Instructions Rely on Sensory Characteristics Only",
     "sc": "1.3.3",
     "scLabel": "1.3.3 Sensory Characteristics (Level A)",
-    "related": ["1.4.1 Use of Color (Level A)"],
+    "related": [
+      "1.4.1 Use of Color (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["sensory", "shape", "color only", "location", "position", "right", "left", "round", "square", "above", "below", "1.3.3", "sensory characteristics", "visual instruction", "click the button on the right"],
+    "source": "ATH",
+    "keywords": [
+      "sensory",
+      "shape",
+      "color only",
+      "location",
+      "position",
+      "right",
+      "left",
+      "round",
+      "square",
+      "above",
+      "below",
+      "1.3.3",
+      "sensory characteristics",
+      "visual instruction",
+      "click the button on the right"
+    ],
     "desc": "Instructions for using the interface describe content by its visual appearance, shape, or position only — for example: \"Click the round button\" or \"See the options on the right\". Users who cannot see the screen cannot follow these instructions.",
     "rem": "Always accompany visual references with the element's name or function. Instead of \"Click the button on the right\", write \"Click the Settings button\". Instead of \"See the items below\", reference the heading or label by name. Never rely on shape, color, or position as the only way to identify something."
   },
@@ -811,7 +1689,19 @@
     "related": [],
     "priority": "Medium",
     "platform": "web",
-    "keywords": ["consistent navigation", "navigation order", "navigation position", "inconsistent nav", "3.2.3", "different order", "nav changes", "menu order", "global nav", "page nav"],
+    "source": "ATH",
+    "keywords": [
+      "consistent navigation",
+      "navigation order",
+      "navigation position",
+      "inconsistent nav",
+      "3.2.3",
+      "different order",
+      "nav changes",
+      "menu order",
+      "global nav",
+      "page nav"
+    ],
     "desc": "Navigation links appear in a different order or position on different pages of the same site or app. Users who rely on consistent placement — including screen reader users and keyboard users — must relearn the layout on each page.",
     "rem": "Keep navigation menus in the same relative order and position on every page. If new items are added to navigation, insert them consistently so the rest of the order is preserved. Users may personalize their own navigation, but the default layout must remain the same across pages."
   },
@@ -823,7 +1713,20 @@
     "related": [],
     "priority": "Critical",
     "platform": "native",
-    "keywords": ["orientation", "portrait", "landscape", "rotation", "native app", "locked orientation", "device orientation", "wheelchair mount", "iOS", "Android", "forced orientation"],
+    "source": "ATH",
+    "keywords": [
+      "orientation",
+      "portrait",
+      "landscape",
+      "rotation",
+      "native app",
+      "locked orientation",
+      "device orientation",
+      "wheelchair mount",
+      "iOS",
+      "Android",
+      "forced orientation"
+    ],
     "desc": "The native app locks its interface to a single orientation — portrait or landscape — and does not respond when the user rotates their device. Users who mount their device in a fixed position, such as on a wheelchair, cannot use an app that ignores their device orientation.",
     "rem": "Remove any code that forces or restricts screen orientation. Use platform layout tools (Auto Layout on iOS, ConstraintLayout on Android) to support both orientations gracefully. Only restrict orientation when a specific orientation is genuinely essential to the functionality."
   },
@@ -835,7 +1738,17 @@
     "related": [],
     "priority": "Best Practice",
     "platform": "both",
-    "keywords": ["dark mode", "dark theme", "light theme", "color scheme", "prefers-color-scheme", "system theme", "night mode", "high contrast dark"],
+    "source": "ATH",
+    "keywords": [
+      "dark mode",
+      "dark theme",
+      "light theme",
+      "color scheme",
+      "prefers-color-scheme",
+      "system theme",
+      "night mode",
+      "high contrast dark"
+    ],
     "desc": "The app does not support dark mode. Users who rely on dark mode — including those with photosensitivity, migraines, or low vision — cannot use a comfortable or accessible color scheme.",
     "rem": "Implement a dark color scheme that respects the system-level dark mode preference. On web, use the prefers-color-scheme media query. On native platforms, respond to the system appearance setting. Ensure all text, icons, and UI elements maintain sufficient contrast in dark mode."
   },
@@ -844,10 +1757,25 @@
     "title": "Voice Control Users Cannot Operate Controls",
     "sc": "2.5.3",
     "scLabel": "2.5.3 Label in Name (Level A)",
-    "related": ["4.1.2 Name, Role, Value (Level A)", "2.1.1 Keyboard (Level A)"],
+    "related": [
+      "4.1.2 Name, Role, Value (Level A)",
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["voice control", "voice access", "dragon", "speech input", "voice input", "speak to click", "label in name", "accessible name", "spoken label", "voice navigation"],
+    "source": "ATH",
+    "keywords": [
+      "voice control",
+      "voice access",
+      "dragon",
+      "speech input",
+      "voice input",
+      "speak to click",
+      "label in name",
+      "accessible name",
+      "spoken label",
+      "voice navigation"
+    ],
     "desc": "Controls cannot be reliably operated by voice control software such as Dragon NaturallySpeaking or iOS Voice Control. Common causes include accessible names that do not contain the visible label text, controls without labels, or custom elements that do not expose a name to assistive technology.",
     "rem": "Ensure every interactive control has an accessible name that begins with or contains its visible label text. Do not use aria-label to override or replace visible text — the accessible name must match what the user can see and speak. Test with Dragon or iOS Voice Control to confirm controls can be spoken and activated."
   },
@@ -856,10 +1784,24 @@
     "title": "Mobile App Does Not Support External Keyboard",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
-    "related": ["2.4.7 Focus Visible (Level AA)", "2.4.3 Focus Order (Level A)"],
+    "related": [
+      "2.4.7 Focus Visible (Level AA)",
+      "2.4.3 Focus Order (Level A)"
+    ],
     "priority": "Critical",
     "platform": "native",
-    "keywords": ["external keyboard", "bluetooth keyboard", "hardware keyboard", "keyboard navigation", "mobile keyboard", "iOS keyboard", "Android keyboard", "keyboard accessibility", "tab key mobile"],
+    "source": "ATH",
+    "keywords": [
+      "external keyboard",
+      "bluetooth keyboard",
+      "hardware keyboard",
+      "keyboard navigation",
+      "mobile keyboard",
+      "iOS keyboard",
+      "Android keyboard",
+      "keyboard accessibility",
+      "tab key mobile"
+    ],
     "desc": "The mobile app does not support navigation or interaction using an external Bluetooth or hardware keyboard. Users with motor disabilities who pair a keyboard with their phone or tablet cannot use the app.",
     "rem": "Test the full app with an external keyboard connected to the device. All interactive controls must be reachable by Tab key and activatable by Enter or Space. Focus must be visible at all times, and focus order must follow a logical sequence. On iOS, implement UIKeyCommand and ensure all focusable elements are keyboard-reachable. On Android, handle key events appropriately."
   },
@@ -868,10 +1810,24 @@
     "title": "Switch Control and Switch Access Not Supported",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
-    "related": ["2.4.3 Focus Order (Level A)"],
+    "related": [
+      "2.4.3 Focus Order (Level A)"
+    ],
     "priority": "Critical",
     "platform": "both",
-    "keywords": ["switch control", "switch access", "scanning", "single switch", "motor disability", "assistive switch", "auto scan", "step scan", "iOS switch control", "Android switch access"],
+    "source": "ATH",
+    "keywords": [
+      "switch control",
+      "switch access",
+      "scanning",
+      "single switch",
+      "motor disability",
+      "assistive switch",
+      "auto scan",
+      "step scan",
+      "iOS switch control",
+      "Android switch access"
+    ],
     "desc": "The interface cannot be fully operated using Switch Control (iOS) or Switch Access (Android). Switch users navigate by scanning through items sequentially with one or two switches. If items are inaccessible, grouped incorrectly, or the scan order is wrong, switch users cannot reach or activate them.",
     "rem": "Test with Switch Control on iOS and Switch Access on Android using auto-scan mode. Ensure all interactive elements are reachable in the scan order, that scan groups are logical, and that no interactive elements are skipped. Avoid focus traps. Custom components must expose the correct accessibility traits so the platform can include them in the scan."
   },
@@ -880,10 +1836,31 @@
     "title": "Linked Document Is Not Accessible",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
-    "related": ["1.3.1 Info and Relationships (Level A)", "2.4.4 Link Purpose (In Context) (Level A)"],
+    "related": [
+      "1.3.1 Info and Relationships (Level A)",
+      "2.4.4 Link Purpose (In Context) (Level A)"
+    ],
     "priority": "High",
     "platform": "both",
-    "keywords": ["pdf", "document", "word", "excel", "powerpoint", "attachment", "inaccessible document", "untagged pdf", "no tags", "scanned pdf", "image pdf", "pdf accessibility", "office document", "doc", "docx", "xlsx"],
+    "source": "ATH",
+    "keywords": [
+      "pdf",
+      "document",
+      "word",
+      "excel",
+      "powerpoint",
+      "attachment",
+      "inaccessible document",
+      "untagged pdf",
+      "no tags",
+      "scanned pdf",
+      "image pdf",
+      "pdf accessibility",
+      "office document",
+      "doc",
+      "docx",
+      "xlsx"
+    ],
     "desc": "A linked document — such as a PDF, Word file, or spreadsheet — is not accessible. Common problems include scanned PDFs with no text layer, untagged PDFs that screen readers cannot navigate, missing document headings, and no alt text on images inside the document.",
     "rem": "For PDFs: use the Accessibility Checker in Adobe Acrobat to add tags, set a document language, add alt text to images, and define a logical reading order. Avoid scanned-image PDFs — export from the original source document whenever possible. For Word and Excel files, use the built-in Accessibility Checker and add heading styles, alt text, and descriptive sheet names. If a document cannot be made accessible, provide an accessible HTML alternative and link to it alongside the document."
   },
@@ -892,10 +1869,26 @@
     "title": "Emoji or Special Characters Disrupt Screen Reader Output",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
-    "related": ["1.1.1 Non-text Content (Level A)"],
+    "related": [
+      "1.1.1 Non-text Content (Level A)"
+    ],
     "priority": "Medium",
     "platform": "both",
-    "keywords": ["emoji", "special characters", "unicode", "screen reader", "verbose", "overuse emoji", "emoji in text", "decorative emoji", "symbol", "ascii art", "aria-hidden emoji", "emoticon"],
+    "source": "ATH",
+    "keywords": [
+      "emoji",
+      "special characters",
+      "unicode",
+      "screen reader",
+      "verbose",
+      "overuse emoji",
+      "emoji in text",
+      "decorative emoji",
+      "symbol",
+      "ascii art",
+      "aria-hidden emoji",
+      "emoticon"
+    ],
     "desc": "Emoji or special characters are used in ways that disrupt screen reader output. Screen readers announce the full Unicode description of every emoji — for example, \"face with tears of joy\" — so repeated or decorative emoji create verbose, disruptive announcements. Special characters like dashes, arrows, or symbols may also be read unexpectedly.",
     "rem": "Hide purely decorative emoji from assistive technology with aria-hidden=\"true\". If an emoji carries meaning, replace it with visible text or supplement it with a visually hidden text alternative. Avoid using sequences of emoji or special characters to convey information (such as a row of stars to represent a rating). Test the full reading experience with a screen reader before publishing emoji-heavy content."
   },
@@ -904,10 +1897,28 @@
     "title": "Visible Heading Not Marked as Heading",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
-    "related": ["2.4.6 Headings and Labels (Level AA)"],
+    "related": [
+      "2.4.6 Headings and Labels (Level AA)"
+    ],
     "priority": "High",
     "platform": "web",
-    "keywords": ["heading", "not marked up", "visual heading", "fake heading", "bold text", "large text", "paragraph as heading", "no h1 h2 h3", "heading role", "semantic heading", "section title", "styled text", "missing heading tag", "1.3.1"],
+    "source": "ATH",
+    "keywords": [
+      "heading",
+      "not marked up",
+      "visual heading",
+      "fake heading",
+      "bold text",
+      "large text",
+      "paragraph as heading",
+      "no h1 h2 h3",
+      "heading role",
+      "semantic heading",
+      "section title",
+      "styled text",
+      "missing heading tag",
+      "1.3.1"
+    ],
     "desc": "Text that looks like a heading — because it is large, bold, or visually distinct — is not marked up with a heading element (h1–h6). Screen reader users cannot navigate by heading, cannot tell the text is a section title, and miss the structural cues that sighted users get from the visual design.",
     "rem": "Replace the styled element with the appropriate heading element (h1–h6). The heading level should reflect the document outline — not the visual size. Use CSS to control appearance separately from semantic level. Confirm the heading fits logically into the existing heading hierarchy on the page."
   }

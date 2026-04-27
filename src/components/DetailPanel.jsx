@@ -240,6 +240,9 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
           <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
             {t(p.key)}
           </span>
+          {finding.source && (
+            <span className="source-badge">{finding.source}</span>
+          )}
         </div>
 
         <ul className="detail-sc-list">

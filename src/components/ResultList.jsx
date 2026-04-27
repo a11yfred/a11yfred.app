@@ -158,6 +158,9 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
                     {t(p.key)}
                   </span>
+                  {finding.source && (
+                    <span className="source-badge">{finding.source}</span>
+                  )}
                 </div>
 
                 <div className="result-item__sc">{finding.scLabel}</div>
