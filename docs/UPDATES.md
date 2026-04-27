@@ -4,6 +4,18 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 27, 2026 — Corpus renamed, revise button loading state
+
+### Corpus file renamed
+
+The personal corpus file has been renamed from `mikeys-corpus.json` to `personal-corpus.json`. No change to how data loads or displays.
+
+### Better feedback on the Revise button
+
+The "Save & Revise Selected" button now shows a small spinning icon in front of "Revising…" while the AI request is in progress. The button also signals `aria-busy` to assistive technology during the request, so screen readers know an update is on its way. If you have Reduce Motion turned on in your OS, the spinner appears but does not rotate.
+
+---
+
 ## April 26, 2026 — Dependency updates, build improvements, and full maintenance sweep
 
 ### Updated all dependencies

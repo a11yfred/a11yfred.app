@@ -4,6 +4,20 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-27 — Corpus file rename, AI refinement loading state
+
+### Data
+
+- Renamed `src/data/mikeys-corpus.json` → `src/data/personal-corpus.json`; `.gitignore` updated to match
+
+### AI refinement UX
+
+- `DetailPanel.jsx`: added `aria-busy="true"` to the Save & Revise button while `refining` is true
+- `DetailPanel.jsx`: added a spinning `<Loader2>` icon (Lucide, 12px, `aria-hidden="true"`) before "Revising…" text during the request
+- `index.css`: added `@keyframes spinner-spin` and `.detail-revising-spinner` class; spin disabled under `prefers-reduced-motion: reduce`
+
+---
+
 ## 2026-04-26 — Dependency upgrades, dead-weight removal, config and security sweep
 
 ### Dependencies
