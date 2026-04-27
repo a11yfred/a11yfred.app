@@ -233,6 +233,14 @@ function AppContent({
     announce(t('results.count', { count: results.length }))
   }, [results, submittedQuery, liveSearch]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Live search: announce "Loading" when query changes and results were already showing.
+  const liveSearchHadResultsRef = useRef(false)
+  useEffect(() => {
+    if (!liveSearch || query.length < 2) { liveSearchHadResultsRef.current = false; return }
+    if (liveSearchHadResultsRef.current) announce(t('results.loading_announce'))
+    if (results.length > 0) liveSearchHadResultsRef.current = true
+  }, [query]) // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (!viewAllLoading) return
     const id = setTimeout(() => setViewAllLoading(false), 400)
