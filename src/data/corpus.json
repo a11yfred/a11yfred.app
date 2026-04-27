@@ -492,7 +492,8 @@
       "pinch",
       "magnify",
       "maximum-scale",
-      "no zoom"
+      "no zoom",
+      "mobile"
     ],
     "desc": "The page prevents users from zooming in using a browser or pinch gesture. People with low vision rely on zooming to read content.",
     "rem": "Remove user-scalable=\"no\" from the viewport meta tag. Do not set maximum-scale below 2. Allow users to zoom freely."
@@ -783,7 +784,8 @@
       "scrolling",
       "no control",
       "loops",
-      "auto-advance"
+      "auto-advance",
+      "mobile"
     ],
     "desc": "An animation or moving element starts automatically and loops without stopping. There is no way for the user to pause, stop, or hide it. This can be distracting or harmful for people with certain conditions.",
     "rem": "Provide a visible, keyboard-accessible button to pause or stop the animation. Or set it to stop automatically within 5 seconds. If the animation conveys live data (like a news ticker), a pause button is required."
@@ -1356,7 +1358,8 @@
       "no alternative",
       "2.5.1",
       "touch gesture",
-      "multi-point"
+      "multi-point",
+      "mobile"
     ],
     "desc": "A feature requires a multi-finger gesture — like pinch-to-zoom or a two-finger swipe — with no single-tap or keyboard alternative. Users with motor disabilities who cannot perform multi-touch gestures are locked out.",
     "rem": "Provide a single-pointer alternative for every multi-point gesture. For example, add plus and minus zoom buttons alongside pinch-to-zoom. All gestures must have a keyboard-accessible equivalent."
@@ -1550,7 +1553,8 @@
       "small control",
       "wcag 2.2",
       "motor",
-      "minimum target"
+      "minimum target",
+      "mobile"
     ],
     "desc": "Interactive elements — such as buttons, links, and icon controls — are smaller than 24×24 CSS pixels with insufficient spacing around them. Small targets are difficult to activate accurately for users with motor disabilities and touch screen users.",
     "rem": "Make all interactive targets at least 24×24 CSS pixels, including any spacing offset to neighboring targets. If the visible element is smaller, add padding to expand the clickable area without changing the visual design. Aim for 44×44 CSS pixels (WCAG 2.5.5 AAA) on touch interfaces."
@@ -1576,7 +1580,8 @@
       "screen rotation",
       "disable rotation",
       "forced orientation",
-      "wheelchair mount"
+      "wheelchair mount",
+      "mobile"
     ],
     "desc": "The content is locked to a single screen orientation — portrait or landscape — and will not reflow when the device is rotated. Users who mount their device in a fixed position, such as on a wheelchair, cannot use the other orientation.",
     "rem": "Remove any code that forces a fixed screen orientation. Support both portrait and landscape using CSS media queries or flexible layouts. Only restrict orientation when a specific orientation is essential — such as a piano keyboard that only makes sense in landscape."
@@ -1693,7 +1698,8 @@
       "shake to undo",
       "motion gesture",
       "no alternative",
-      "device sensor"
+      "device sensor",
+      "mobile"
     ],
     "desc": "A feature is triggered by device motion — such as shaking to undo or tilting to scroll — and there is no other way to perform the same action. Users who cannot move their device, or whose device is mounted to a wheelchair, cannot access this feature.",
     "rem": "Provide a UI control — such as a button or menu option — that performs the same action as the device motion gesture. Also allow users to disable the motion trigger entirely to prevent accidental activation."
@@ -1870,7 +1876,8 @@
       "wheelchair mount",
       "iOS",
       "Android",
-      "forced orientation"
+      "forced orientation",
+      "mobile"
     ],
     "desc": "The native app locks its interface to a single orientation — portrait or landscape — and does not respond when the user rotates their device. Users who mount their device in a fixed position, such as on a wheelchair, cannot use an app that ignores their device orientation.",
     "rem": "Remove any code that forces or restricts screen orientation. Use platform layout tools (Auto Layout on iOS, ConstraintLayout on Android) to support both orientations gracefully. Only restrict orientation when a specific orientation is genuinely essential to the functionality."
@@ -1894,7 +1901,8 @@
       "prefers-color-scheme",
       "system theme",
       "night mode",
-      "high contrast dark"
+      "high contrast dark",
+      "mobile"
     ],
     "desc": "The app does not support dark mode. Users who rely on dark mode — including those with photosensitivity, migraines, or low vision — cannot use a comfortable or accessible color scheme.",
     "rem": "Implement a dark color scheme that respects the system-level dark mode preference. On web, use the prefers-color-scheme media query. On native platforms, respond to the system appearance setting. Ensure all text, icons, and UI elements maintain sufficient contrast in dark mode."
@@ -1923,7 +1931,8 @@
       "label in name",
       "accessible name",
       "spoken label",
-      "voice navigation"
+      "voice navigation",
+      "mobile"
     ],
     "desc": "Controls cannot be reliably operated by voice control software such as Dragon NaturallySpeaking or iOS Voice Control. Common causes include accessible names that do not contain the visible label text, controls without labels, or custom elements that do not expose a name to assistive technology.",
     "rem": "Ensure every interactive control has an accessible name that begins with or contains its visible label text. Do not use aria-label to override or replace visible text — the accessible name must match what the user can see and speak. Test with Dragon or iOS Voice Control to confirm controls can be spoken and activated."
@@ -1983,7 +1992,8 @@
       "auto scan",
       "step scan",
       "iOS switch control",
-      "Android switch access"
+      "Android switch access",
+      "mobile"
     ],
     "desc": "The interface cannot be fully operated using Switch Control (iOS) or Switch Access (Android). Switch users navigate by scanning through items sequentially with one or two switches. If items are inaccessible, grouped incorrectly, or the scan order is wrong, switch users cannot reach or activate them.",
     "rem": "Test with Switch Control on iOS and Switch Access on Android using auto-scan mode. Ensure all interactive elements are reachable in the scan order, that scan groups are logical, and that no interactive elements are skipped. Avoid focus traps. Custom components must expose the correct accessibility traits so the platform can include them in the scan."
