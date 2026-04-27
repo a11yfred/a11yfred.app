@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Nipaluna {count} results tana single page tana.",
   "search.view_all_confirm_yes": "Aa",
   "search.view_all_confirm_no": "Pakana",
-  "results.loading_announce": "Nipaluna {count} Results tana",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Pulingara & Kuyani",
   "detail.save_note_text": "Pulingara",
   "detail.saved_note_text": "Pulingara",

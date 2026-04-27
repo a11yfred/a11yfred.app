@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "هيك رح يظهر {count} نتيجة على هالصفحة الواحدة.",
   "search.view_all_confirm_yes": "آه",
   "search.view_all_confirm_no": "لا، الغِ",
-  "results.loading_announce": "جاري تحميل {count} نتيجة",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "احفظ وأعد الكتابة",
   "detail.save_note_text": "احفظ",
   "detail.saved_note_text": "محفوظ",

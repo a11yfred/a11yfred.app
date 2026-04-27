@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "E hōʻike ana kēia i nā hopena {count} ma kēia ʻaoʻao hoʻokahi.",
   "search.view_all_confirm_yes": "ʻAe",
   "search.view_all_confirm_no": "Mai Manao",
-  "results.loading_announce": "Ke ukali nei i nā hopena {count}",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Mālama & Kākau Hou",
   "detail.save_note_text": "Mālama",
   "detail.saved_note_text": "Ua mālama ʻia",

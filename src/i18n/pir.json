@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "This will show {count} results on this single page, the whole lot.",
   "search.view_all_confirm_yes": "Aye!",
   "search.view_all_confirm_no": "Belay That",
-  "results.loading_announce": "Hauling in {count} Results",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Save &amp; Rewrite",
   "detail.save_note_text": "Save",
   "detail.saved_note_text": "Saved",

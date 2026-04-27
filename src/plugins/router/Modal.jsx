@@ -25,22 +25,20 @@ import { returnFocus } from './returnFocus.js'
 export default function Modal({ open, onClose, heading = 'Information', actions, children, returnFocusRef }) {
   const autoTriggerRef = useRef(null)
   const panelRef = useRef(null)
-  const headingRef = useRef(null)
 
   useFocusTrap(panelRef, open)
   useAriaHide(panelRef, open)
 
-  // Save trigger on open; focus the heading (tabIndex -1) so screen readers announce the dialog.
-  // Scroll into view as a fallback in case the panel somehow sits outside the viewport.
-  // returnFocusRef overrides the auto-captured trigger for cases where the trigger
-  // becomes disabled (and loses focus) before the modal opens.
+  // Focus the dialog panel itself (not the heading) so screen readers announce
+  // "Are You Sure? dialog" once via aria-labelledby, without a redundant second
+  // announcement of the heading text when it receives focus.
   useEffect(() => {
     if (open) {
       if (!returnFocusRef) autoTriggerRef.current = document.activeElement
       requestAnimationFrame(() => {
-        if (headingRef.current) {
-          headingRef.current.focus()
-          headingRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+        if (panelRef.current) {
+          panelRef.current.focus()
+          panelRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
         }
       })
     } else {
@@ -78,6 +76,7 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-heading"
+        tabIndex={-1}
         inert={!open ? '' : undefined}
       >
         {open && (
@@ -85,9 +84,7 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
             <div className="modal-body">
               <h2
                 id="modal-heading"
-                ref={headingRef}
                 className="modal-heading"
-                tabIndex={-1}
               >
                 {heading}
               </h2>

@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Dit sal {count} resultate op hierdie enkele bladsy wys.",
   "search.view_all_confirm_yes": "Ja",
   "search.view_all_confirm_no": "Nooit mind nie",
-  "results.loading_announce": "Laai {count} Resultate",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Stoor & Herskryf",
   "detail.save_note_text": "Stoor",
   "detail.saved_note_text": "Gestoor",

@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Ipakita niini ang {count} nga mga resulta sa usa ka pahina.",
   "search.view_all_confirm_yes": "Oo",
   "search.view_all_confirm_no": "Ayaw na lang",
-  "results.loading_announce": "Gikarga ang {count} nga mga Resulta",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "I-save ug I-rewrite",
   "detail.save_note_text": "I-save",
   "detail.saved_note_text": "Nasave na",

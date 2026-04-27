@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Magpapakita ito ng {count} na resulta sa iisang pahina.",
   "search.view_all_confirm_yes": "Oo",
   "search.view_all_confirm_no": "Huwag Na",
-  "results.loading_announce": "Nino-load ang {count} na Resulta",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "I-save at Isulat Muli",
   "detail.save_note_text": "I-save",
   "detail.saved_note_text": "Nai-save",

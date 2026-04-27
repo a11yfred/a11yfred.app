@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Ka whakaatuhia {count} ngā hua i tēnei whārangi kotahi.",
   "search.view_all_confirm_yes": "Āe",
   "search.view_all_confirm_no": "Kaua e",
-  "results.loading_announce": "E uta ana {count} Ngā Hua",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Tiakina & Tūāhua anō",
   "detail.save_note_text": "Tiakina",
   "detail.saved_note_text": "Kua tiakina",

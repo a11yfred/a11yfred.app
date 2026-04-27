@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Sa a ap montre {count} rezilta sou yon sèl paj.",
   "search.view_all_confirm_yes": "Wi",
   "search.view_all_confirm_no": "Kite sa",
-  "results.loading_announce": "Chajman {count} Rezilta",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Anrejistre & Reekri",
   "detail.save_note_text": "Anrejistre",
   "detail.saved_note_text": "Anrejistre",

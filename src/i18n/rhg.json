@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Iyya ekta page-e {count}ta result dekkaoiyé.",
   "search.view_all_confirm_yes": "Hã",
   "search.view_all_confirm_no": "Na thaw",
-  "results.loading_announce": "{count}ta Result load óisé",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "সেভ করো & রিরাইট করো",
   "detail.save_note_text": "সেভ করো",
   "detail.saved_note_text": "Save óiyeché",

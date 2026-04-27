@@ -946,6 +946,8 @@ select:disabled {
 }
 
 .result-item {
+  display: block;
+  text-align: left;
   padding: var(--space-3) var(--space-4);
   margin-bottom: 0;
   flex: 1;

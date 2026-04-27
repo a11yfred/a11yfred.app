@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Això mostrarà {count} resultats en aquesta pàgina.",
   "search.view_all_confirm_yes": "Sí",
   "search.view_all_confirm_no": "No importa",
-  "results.loading_announce": "Carregant {count} resultats",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Desa i reescriu",
   "detail.save_note_text": "Desa",
   "detail.saved_note_text": "Desat",

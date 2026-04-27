@@ -216,9 +216,7 @@ function AppContent({
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
   const findingTriggerRef = useRef(null)
-  const pendingSearchAnnounce = useRef(false)
   const returnViewAllRef = useRef(false)
-  const liveAnnounceTimer = useRef(null)
 
   const { ratings, upvote, downvote, toggleStar, toggleArchive } = useFindingRatings()
   const activeQuery = liveSearch ? query : submittedQuery
@@ -309,24 +307,6 @@ function AppContent({
   useEffect(() => { localStorage.setItem('showVoting', showVoting) }, [showVoting])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
 
-  // Announce result count: immediately on manual search, debounced 500ms on live search
-  useEffect(() => {
-    if (pendingSearchAnnounce.current) {
-      pendingSearchAnnounce.current = false
-      clearTimeout(liveAnnounceTimer.current)
-      announce(t('results.count_announce', { count: results.length }))
-      return
-    }
-    if (!liveSearch || query.trim().length < 2) {
-      clearTimeout(liveAnnounceTimer.current)
-      return
-    }
-    clearTimeout(liveAnnounceTimer.current)
-    liveAnnounceTimer.current = setTimeout(() => {
-      announce(t('results.count_announce', { count: results.length }))
-    }, 500)
-  }, [query, liveSearch, searchKey]) // eslint-disable-line react-hooks/exhaustive-deps -- t and results.length read from closure; refs not reactive
-
   // WCAG 2.4.3: restore focus to the trigger button (or h1) when settings/about close.
   useEffect(() => {
     if (!didMount.current) { didMount.current = true; return }
@@ -399,7 +379,6 @@ function AppContent({
     setSubmittedQuery(query)
     setSearchKey(k => k + 1)
     handleSelectFinding(null)
-    pendingSearchAnnounce.current = true
   }
 
   const handleOpenSettings = () => {
@@ -499,7 +478,6 @@ function AppContent({
                 onStar={toggleStar}
                 onArchive={toggleArchive}
                 showVoting={showVoting}
-                focusCount
               />
             )
             : activeQuery.length >= 2
@@ -538,7 +516,7 @@ function AppContent({
           {
             label: t('search.view_all_confirm_yes'),
             onClick: () => {
-              announce(t('results.loading_announce', { count: sortedFindings.length }))
+              announce(t('results.loading_announce'))
               setViewAllLoading(true)
               navigate('/results/all')
               setViewAllConfirmOpen(false)

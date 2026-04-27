@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Bu, tek bir sayfada {count} netice gösterecek.",
   "search.view_all_confirm_yes": "Evet",
   "search.view_all_confirm_no": "Vazgeçtim",
-  "results.loading_announce": "{count} Netice Yükleniyor",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Saqla ve Yeniden Yaz",
   "detail.save_note_text": "Saqla",
   "detail.saved_note_text": "Saqlandı",

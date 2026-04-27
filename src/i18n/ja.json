@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "この操作により、{count} 件の結果が1ページに表示されます。",
   "search.view_all_confirm_yes": "はい",
   "search.view_all_confirm_no": "キャンセル",
-  "results.loading_announce": "{count} 件の結果を読み込み中",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "保存して書き直す",
   "detail.save_note_text": "保存",
   "detail.saved_note_text": "保存済み",

@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Aya ad yesken {count} n yicewwiqen deg yiwen n usebter.",
   "search.view_all_confirm_yes": "Ih",
   "search.view_all_confirm_no": "Ḥṣel",
-  "results.loading_announce": "Attuli {count} n Yicewwiqen",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Sekmed & Snifel",
   "detail.save_note_text": "Sekmed",
   "detail.saved_note_text": "Ittwasakem",

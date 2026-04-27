@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Neciz {count} tlahtōliztli ī cēme āmatlahtōl.",
   "search.view_all_confirm_yes": "Quēmānia",
   "search.view_all_confirm_no": "Amo niquinequi",
-  "results.loading_announce": "Mopāxaloa {count} Tlahtōliztli",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Xicpiya & Xictlahcuilōz",
   "detail.save_note_text": "Xicpiya",
   "detail.saved_note_text": "Mopix",

@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "此操作將在單一頁面上顯示 {count} 個結果。",
   "search.view_all_confirm_yes": "確定",
   "search.view_all_confirm_no": "取消",
-  "results.loading_announce": "正在載入 {count} 個結果",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "儲存並重新撰寫",
   "detail.save_note_text": "儲存",
   "detail.saved_note_text": "已儲存",

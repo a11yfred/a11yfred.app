@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "بۇ بىر بەتتە {count} نەتىجىنى كۆرسىتىدۇ.",
   "search.view_all_confirm_yes": "ھەئە",
   "search.view_all_confirm_no": "بولمىسا قويۇڭ",
-  "results.loading_announce": "{count} نەتىجە يۈكلىنىۋاتىدۇ",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "ساقلاش ۋە قايتا يېزىش",
   "detail.save_note_text": "ساقلاش",
   "detail.saved_note_text": "ساقلاندى",

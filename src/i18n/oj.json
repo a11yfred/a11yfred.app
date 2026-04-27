@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Omaa waaboozid {count} ozhi'igaazowinan dash-mazina'iganing.",
   "search.view_all_confirm_yes": "Eya'",
   "search.view_all_confirm_no": "Gaawiin",
-  "results.loading_announce": "Biindige-atoowinan {count} Ozhi'igaazowinan",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Asaan & Gashkichige",
   "detail.save_note_text": "Asaan",
   "detail.saved_note_text": "Ozhi'igaazod",

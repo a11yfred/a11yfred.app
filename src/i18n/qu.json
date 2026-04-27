@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Kay huk p'anqapi {count} resultadokuna rikurinqa.",
   "search.view_all_confirm_yes": "Ari",
   "search.view_all_confirm_no": "Ama hina",
-  "results.loading_announce": "{count} Resultadokunata Cargayachkan",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Waqaychay & T'ikray",
   "detail.save_note_text": "Waqaychay",
   "detail.saved_note_text": "Waqaychakusqa",

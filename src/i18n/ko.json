@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "이 페이지에 {count}개의 결과가 모두 표시됩니다.",
   "search.view_all_confirm_yes": "예",
   "search.view_all_confirm_no": "취소",
-  "results.loading_announce": "{count}개의 결과 로딩 중",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "저장 및 재작성",
   "detail.save_note_text": "저장",
   "detail.saved_note_text": "저장됨",

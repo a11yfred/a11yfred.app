@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Honek {count} emaitza erakutsiko ditu orrialde honetan.",
   "search.view_all_confirm_yes": "Bai",
   "search.view_all_confirm_no": "Utzi",
-  "results.loading_announce": "{count} Emaitza kargatzen",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Gorde eta Berridatzi",
   "detail.save_note_text": "Gorde",
   "detail.saved_note_text": "Gordeta",

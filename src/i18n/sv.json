@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Detta visar {count} resultat på denna enda sida.",
   "search.view_all_confirm_yes": "Ja",
   "search.view_all_confirm_no": "Avbryt",
-  "results.loading_announce": "Laddar {count} resultat",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Spara och skriv om",
   "detail.save_note_text": "Spara",
   "detail.saved_note_text": "Sparad",

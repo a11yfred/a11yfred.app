@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Dit toont {count} resultaten op deze enkele pagina.",
   "search.view_all_confirm_yes": "Ja",
   "search.view_all_confirm_no": "Annuleer",
-  "results.loading_announce": "{count} resultaten laden",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Opslaan & Herschrijven",
   "detail.save_note_text": "Opslaan",
   "detail.saved_note_text": "Opgeslagen",

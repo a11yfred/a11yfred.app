@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "mu'mey {count} wa' SaH Dalegh.",
   "search.view_all_confirm_yes": "HIja'",
   "search.view_all_confirm_no": "qaSbe'",
-  "results.loading_announce": "{count} SIch boS",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "yISuq & yIchoH",
   "detail.save_note_text": "yISuq",
   "detail.saved_note_text": "Suqlu'pu'",

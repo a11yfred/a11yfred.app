@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "இது இந்த ஒற்றை பக்கத்தில் {count} முடிவுகளைக் காட்டும்.",
   "search.view_all_confirm_yes": "ஆம்",
   "search.view_all_confirm_no": "வேண்டாம்",
-  "results.loading_announce": "{count} முடிவுகள் ஏற்றப்படுகின்றன",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "சேமி & மறுதயாரி",
   "detail.save_note_text": "சேமி",
   "detail.saved_note_text": "சேமிக்கப்பட்டது",

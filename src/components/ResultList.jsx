@@ -4,13 +4,13 @@ import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, focusCount = false }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true }) {
   const t = useT()
   const countRef = useRef(null)
 
   useEffect(() => {
-    if (focusCount) countRef.current?.focus()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- focus once on mount when view-all activates
+    countRef.current?.focus()
+  }, [])
 
   if (results.length === 0) {
     return <NoResults query={query} />
@@ -21,17 +21,17 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   return (
     <div className="result-list-section">
       <div className="results-meta">
-        <p
+        <h2
           ref={countRef}
-          tabIndex={focusCount ? -1 : undefined}
+          tabIndex={-1}
           className="results-count"
         >
           {t('results.count', { count: results.length })}
-        </p>
+        </h2>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
       </div>
 
-      <ul className="result-list" role="listbox" aria-label={t('results.aria_label')}>
+      <ul className="result-list" aria-label={t('results.aria_label')}>
         {results.map(finding => {
           const isSelected = selected?.id === finding.id
           const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
@@ -45,6 +45,11 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           const cardLabel = archived
             ? t('results.archived_label', { title: finding.title })
             : `${finding.title}, ${t(p.key)}, ${finding.scLabel}, ${truncDesc}`
+
+          // Truncate title used in vote-button labels only — full title used in announce() calls
+          const shortTitle = finding.title.length > 24
+            ? finding.title.slice(0, 24).trimEnd() + '…'
+            : finding.title
 
           function handleUpvote(e) {
             e.stopPropagation()
@@ -79,16 +84,14 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           return (
             <li
               key={finding.id}
-              role="presentation"
               className={`result-row${archived ? ' result-row--archived' : ''}`}
             >
-              {/* Vote controls — outside role="option" so they have independent accessible names */}
               {showVoting && <div className="result-vote-col">
                 <button
                   className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
                   aria-pressed={starred}
-                  aria-label={starred ? t('results.unstar', { title: finding.title }) : t('results.star', { title: finding.title })}
-                  title={starred ? t('results.unstar', { title: finding.title }) : t('results.star', { title: finding.title })}
+                  aria-label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
+                  title={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleStar}
                 >
@@ -97,8 +100,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
                 <button
                   className="result-vote-btn result-vote-btn--up"
-                  aria-label={t('results.upvote', { title: finding.title })}
-                  title={t('results.upvote', { title: finding.title })}
+                  aria-label={t('results.upvote', { title: shortTitle })}
+                  title={t('results.upvote', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleUpvote}
                 >
@@ -115,8 +118,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
                 <button
                   className="result-vote-btn result-vote-btn--down"
-                  aria-label={t('results.downvote', { title: finding.title })}
-                  title={t('results.downvote', { title: finding.title })}
+                  aria-label={t('results.downvote', { title: shortTitle })}
+                  title={t('results.downvote', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleDownvote}
                 >
@@ -126,8 +129,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <button
                   className={`result-vote-btn result-vote-btn--archive${archived ? ' result-vote-btn--active' : ''}`}
                   aria-pressed={archived}
-                  aria-label={archived ? t('results.unarchive', { title: finding.title }) : t('results.archive', { title: finding.title })}
-                  title={archived ? t('results.unarchive', { title: finding.title }) : t('results.archive', { title: finding.title })}
+                  aria-label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
+                  title={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                   onClick={handleArchive}
                 >
                   {archived
@@ -137,14 +140,13 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 </button>
               </div>}
 
-              {/* Selectable result card */}
-              <div
-                role="option"
-                aria-selected={isSelected}
+              {/* Selectable result card — button so each item has its own interactive context;
+                  aria-pressed communicates selection state */}
+              <button
+                aria-pressed={isSelected}
                 aria-label={cardLabel}
-                tabIndex={archived ? -1 : 0}
+                tabIndex={archived ? -1 : undefined}
                 onClick={() => { if (!archived) onSelect(finding) }}
-                onKeyDown={e => { if ((e.key === 'Enter' || e.key === ' ') && !archived) onSelect(finding) }}
                 className={`result-item${isSelected ? ' result-item--selected' : ''}`}
               >
                 <div className="result-item__header">
@@ -160,7 +162,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <div className="result-item__sc">{finding.scLabel}</div>
 
                 <div className="result-item__desc">{finding.desc}</div>
-              </div>
+              </button>
             </li>
           )
         })}

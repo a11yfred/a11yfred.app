@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "དེས་ཤོག་ངོས་གཅིག་པའི་སྟེང་འབྲས་བུ་{count} སྟོན་ངེས།",
   "search.view_all_confirm_yes": "ཡིན།",
   "search.view_all_confirm_no": "ཡ་ང་བ་མེད།",
-  "results.loading_announce": "འབྲས་བུ་{count} འབྱོར་གྱི་ཡོད།",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "ཉར་ཏེ་བོར་བཀོད།",
   "detail.save_note_text": "ཉར།",
   "detail.saved_note_text": "ཉར་ཟིན།",

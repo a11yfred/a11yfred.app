@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Thao tác này sẽ hiển thị {count} kết quả trên một trang duy nhất.",
   "search.view_all_confirm_yes": "Có",
   "search.view_all_confirm_no": "Thôi",
-  "results.loading_announce": "Đang tải {count} kết quả",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Lưu & Viết lại",
   "detail.save_note_text": "Lưu",
   "detail.saved_note_text": "Đã lưu",

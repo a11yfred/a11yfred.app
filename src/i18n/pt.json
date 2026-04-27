@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Isto irá mostrar {count} resultados nesta única página.",
   "search.view_all_confirm_yes": "Sim",
   "search.view_all_confirm_no": "Cancelar",
-  "results.loading_announce": "A carregar {count} Resultados",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Guardar e Reescrever",
   "detail.save_note_text": "Guardar",
   "detail.saved_note_text": "Guardado",

@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Ĉi tio montros {count} rezultojn sur ĉi tiu ununura paĝo.",
   "search.view_all_confirm_yes": "Jes",
   "search.view_all_confirm_no": "Ne Gravas",
-  "results.loading_announce": "Ŝargante {count} Rezultojn",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Konservi kaj Reverki",
   "detail.save_note_text": "Konservi",
   "detail.saved_note_text": "Konservita",

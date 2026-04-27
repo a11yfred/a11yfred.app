@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "इससे इस एकल पृष्ठ पर {count} परिणाम दिखाए जाएंगे।",
   "search.view_all_confirm_yes": "हाँ",
   "search.view_all_confirm_no": "रहने दें",
-  "results.loading_announce": "{count} परिणाम लोड हो रहे हैं",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "सहेजें & पुनः लिखें",
   "detail.save_note_text": "सहेजें",
   "detail.saved_note_text": "सहेजा गया",

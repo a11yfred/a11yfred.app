@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Ôma ka-wâpahtahikâtêw {count} ohpinamowina ôma peyak askîhk.",
   "search.view_all_confirm_yes": "Âha",
   "search.view_all_confirm_no": "Namawiya",
-  "results.loading_announce": "Mâtinân {count} Ohpinamowina",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Sâkohta & Âhcihta",
   "detail.save_note_text": "Sâkohta",
   "detail.saved_note_text": "Sâkohtâw",

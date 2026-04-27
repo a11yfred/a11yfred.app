@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Cela affichera {count} résultats sur cette seule page.",
   "search.view_all_confirm_yes": "Oui",
   "search.view_all_confirm_no": "Annuler",
-  "results.loading_announce": "Chargement de {count} résultats",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Enregistrer et réécrire",
   "detail.save_note_text": "Enregistrer",
   "detail.saved_note_text": "Enregistré",

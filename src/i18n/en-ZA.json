@@ -196,7 +196,7 @@
   "search.view_all_confirm_body": "This will show {count} results on this single page.",
   "search.view_all_confirm_yes": "Yes",
   "search.view_all_confirm_no": "Nevermind",
-  "results.loading_announce": "Loading {count} Results",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Save & Rewrite",
   "detail.save_note_text": "Save",
   "detail.saved_note_text": "Saved",

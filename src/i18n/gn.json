@@ -195,7 +195,7 @@
   "search.view_all_confirm_body": "Ko'ã {count} mba'e'oka ojehecháta ko páhinape.",
   "search.view_all_confirm_yes": "Añete",
   "search.view_all_confirm_no": "Hasyete",
-  "results.loading_announce": "Oñemboguapy {count} Mba'e'oka",
+  "results.loading_announce": "Loading results",
   "detail.save_rewrite_text": "Ñemboguapy & Moambue",
   "detail.save_note_text": "Ñemboguapy",
   "detail.saved_note_text": "Oñemboguapy",
