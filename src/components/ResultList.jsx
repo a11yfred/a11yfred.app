@@ -1,16 +1,11 @@
-import { useEffect, useRef } from 'react'
 import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw } from 'lucide-react'
+import { useEffect, useRef } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 
 export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true }) {
   const t = useT()
-  const countRef = useRef(null)
-
-  useEffect(() => {
-    countRef.current?.focus()
-  }, [])
 
   if (results.length === 0) {
     return <NoResults query={query} />
@@ -21,11 +16,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   return (
     <div className="result-list-section">
       <div className="results-meta">
-        <h2
-          ref={countRef}
-          tabIndex={-1}
-          className="results-count"
-        >
+        <h2 className="results-count">
           {t('results.count', { count: results.length })}
         </h2>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
@@ -89,7 +80,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               {showVoting && <div className="result-vote-col">
                 <button
                   className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
-                  aria-pressed={starred}
                   aria-label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                   title={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                   disabled={archived}
@@ -128,7 +118,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
                 <button
                   className={`result-vote-btn result-vote-btn--archive${archived ? ' result-vote-btn--active' : ''}`}
-                  aria-pressed={archived}
                   aria-label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                   title={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                   onClick={handleArchive}

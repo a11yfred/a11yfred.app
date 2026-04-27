@@ -119,6 +119,7 @@ export default function SettingsPanel({
   const [rhgPending, setRhgPending] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
   const [pendingLanguage, setPendingLanguage] = useState(language)
+  const [savedLanguage, setSavedLanguage] = useState(language)
   const [changedLanguage, setChangedLanguage] = useState(false)
   const [savedKeys, setSavedKeys] = useState(() => {
     const saved = {}
@@ -141,7 +142,8 @@ export default function SettingsPanel({
     platform !== savedPlatform ||
     liveSearch !== savedLiveSearch ||
     showVoting !== savedShowVoting ||
-    aiEnabled !== savedAiEnabled
+    aiEnabled !== savedAiEnabled ||
+    pendingLanguage !== savedLanguage
   const didMountLang = useRef(false)
 
   // Sync pendingLanguage if the language prop changes externally (e.g. Reset All)
@@ -196,6 +198,8 @@ export default function SettingsPanel({
     setSavedLiveSearch(liveSearch)
     setSavedShowVoting(showVoting)
     setSavedAiEnabled(aiEnabled)
+    setSavedLanguage(pendingLanguage)
+    if (pendingLanguage !== language) onLanguageChange(pendingLanguage)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
     announce(t('settings.saved_announce'))

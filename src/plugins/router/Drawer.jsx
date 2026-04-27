@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { useFocusTrap } from './useFocusTrap.js'
+import { useAriaHide } from './useAriaHide.js'
 import { returnFocus } from './returnFocus.js'
 
 /**
@@ -27,12 +28,14 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
   const panelRef = useRef(null)
 
   useFocusTrap(panelRef, open)
+  useAriaHide(panelRef, open)
 
-  // Save trigger element when opening; restore focus when closing.
-  // If focusOnClose ref is provided, use that target instead of the trigger.
+  // Save trigger element on open; focus the panel so NVDA announces the dialog
+  // name once (panel has aria-label); restore focus on close.
   useEffect(() => {
     if (open) {
       triggerRef.current = document.activeElement
+      panelRef.current?.focus()
     } else {
       const target = focusOnClose?.current ?? triggerRef.current
       returnFocus(target)
@@ -63,6 +66,7 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
         role="dialog"
         aria-modal="true"
         aria-label={label}
+        tabIndex={-1}
         inert={!open ? '' : undefined}
       >
         {/* Only mount children while open — useFocusOnMount fires on each open */}

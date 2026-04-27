@@ -223,6 +223,16 @@ function AppContent({
   const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings)
   const [viewAllLoading, setViewAllLoading] = useState(false)
 
+  // Announce result count after a non-live-search submission only.
+  // Live search skips this — announcing on every keystroke would be unbearable.
+  const lastAnnouncedQuery = useRef(null)
+  useEffect(() => {
+    if (liveSearch || submittedQuery.length < 2) return
+    if (submittedQuery === lastAnnouncedQuery.current) return
+    lastAnnouncedQuery.current = submittedQuery
+    announce(t('results.count', { count: results.length }))
+  }, [results, submittedQuery, liveSearch]) // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (!viewAllLoading) return
     const id = setTimeout(() => setViewAllLoading(false), 400)

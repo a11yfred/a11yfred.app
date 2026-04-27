@@ -35,12 +35,13 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
   useFocusTrap(panelRef, open)
   useAriaHide(panelRef, open)
 
-  // Save the triggering element on open; restore focus on close.
-  // returnFocusRef overrides auto-capture for cases where child component effects
-  // (useFocusOnMount) move focus before this parent effect runs.
+  // Save the triggering element on open; focus the panel; restore focus on close.
+  // Panel focus fires here (parent effect) after useFocusOnMount in children (child
+  // effects run first), so the panel wins and NVDA announces the dialog label once.
   useEffect(() => {
     if (open) {
       if (!returnFocusRef) triggerRef.current = document.activeElement
+      panelRef.current?.focus()
     } else {
       returnFocus(returnFocusRef?.current ?? triggerRef.current)
     }
@@ -116,6 +117,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
         role="dialog"
         aria-modal="true"
         aria-label={label}
+        tabIndex={-1}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
