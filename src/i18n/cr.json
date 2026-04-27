@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Wâpikwaniy: Pêyakwan",
   "settings.theme_dark_announce": "Wâpikwaniy: Tipiskâw",
   "settings.theme_party_announce": "Wâpikwaniy: Mêtawêwin!",
-  "error.announce": "Kîkway kâ-wî-mâyipayik — kâ-kiskinohtahikêt masinahikanêwi-kihci-maskihkiy namôya kî-pê-pimipayiw. Kâkîsimo kâ-isi-pimipayik êkwa mâci-nîkân."
+  "error.announce": "Kîkway kâ-wî-mâyipayik — kâ-kiskinohtahikêt masinahikanêwi-kihci-maskihkiy namôya kî-pê-pimipayiw. Kâkîsimo kâ-isi-pimipayik êkwa mâci-nîkân.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

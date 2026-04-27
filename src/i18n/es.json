@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Apariencia: Automática",
   "settings.theme_dark_announce": "Apariencia: Oscura",
   "settings.theme_party_announce": "Apariencia: ¡Fiesta!",
-  "error.announce": "Algo salió mal: no se pudo cargar la biblioteca de hallazgos. Verifica tu conexión e intenta de nuevo."
+  "error.announce": "Algo salió mal: no se pudo cargar la biblioteca de hallazgos. Verifica tu conexión e intenta de nuevo.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

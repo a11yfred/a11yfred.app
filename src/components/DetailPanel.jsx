@@ -68,7 +68,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
 
   useEffect(() => {
     if (focusTrigger > 0) titleRef.current?.focus()
-  }, [focusTrigger]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [focusTrigger])
 
   const displayDesc = location.trim()
     ? `${location.trim().replace(/:?\s*$/, ':')} ${finding.desc}`

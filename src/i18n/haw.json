@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Nānaina: ʻAuto",
   "settings.theme_dark_announce": "Nānaina: Pouli",
   "settings.theme_party_announce": "Nānaina: Pāʻina!",
-  "error.announce": "Ua hewa kekahi mea — ʻaʻole hiki ke hoʻouka i ka waihona loaʻa. E nānā i kāu pilina a e hoʻāʻo hou."
+  "error.announce": "Ua hewa kekahi mea — ʻaʻole hiki ke hoʻouka i ka waihona loaʻa. E nānā i kāu pilina a e hoʻāʻo hou.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

@@ -256,7 +256,7 @@ export default function SettingsPanel({
           const label = entry
             ? (language?.startsWith('en') && entry.en ? `${entry.label} (${entry.en})` : entry.label)
             : LANGUAGES.find(l => l.value === language?.split('-')[0])?.label ?? language
-          return <p className="settings-group__desc">The current language is <strong>{label}</strong>.</p>
+          return <p className="settings-group__desc">{t('settings.language_current_is', { label })}</p>
         })()}
         <p className="settings-group__desc">{t('settings.language_desc')}</p>
         <div className="settings-language-row">

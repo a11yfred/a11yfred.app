@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Aspekto: Aŭtomata",
   "settings.theme_dark_announce": "Aspekto: Malhela",
   "settings.theme_party_announce": "Aspekto: Festo!",
-  "error.announce": "Io misfunkciis — la trovaĵ-biblioteko ne povis esti ŝargita. Kontrolu vian konekton kaj provu denove."
+  "error.announce": "Io misfunkciis — la trovaĵ-biblioteko ne povis esti ŝargita. Kontrolu vian konekton kaj provu denove.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

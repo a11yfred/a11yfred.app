@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "外觀：自動",
   "settings.theme_dark_announce": "外觀：深色",
   "settings.theme_party_announce": "外觀：派對！",
-  "error.announce": "出現錯誤——無法載入問題記錄庫。請檢查你嘅網絡連線後再試。"
+  "error.announce": "出現錯誤——無法載入問題記錄庫。請檢查你嘅網絡連線後再試。",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

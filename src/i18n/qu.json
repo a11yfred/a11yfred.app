@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Rikurichiy: Kikillanmanta",
   "settings.theme_dark_announce": "Rikurichiy: Tutayaq",
   "settings.theme_party_announce": "Rikurichiy: Raymi!",
-  "error.announce": "Ima sasachakuypim taripaykurqa — taripakunan qhawana mana kargakuyta atirqanchu. Tupachisqaykiwan qhawariy, chaymantam kutichiy."
+  "error.announce": "Ima sasachakuypim taripaykurqa — taripakunan qhawana mana kargakuyta atirqanchu. Tupachisqaykiwan qhawariy, chaymantam kutichiy.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

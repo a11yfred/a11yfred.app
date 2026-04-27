@@ -345,11 +345,11 @@ function MyModal({ open, onClose, children }) {
 }
 ```
 
-`Modal` and `BottomSheet` both call `useAriaHide` internally — you do not need to add it again when using those components.
+`Modal`, `BottomSheet`, and `Drawer` all call `useAriaHide` internally — you do not need to add it again when using those components.
 
 **Stacking behaviour:** If two overlays are open simultaneously, the hook only removes `aria-hidden` from elements *it personally added the marker to*. An element already hidden by an earlier overlay will not be prematurely restored when the inner overlay closes.
 
-**Non-portaled overlays (Drawer):** The Drawer renders inside `#root`, so `el.contains(panel)` always returns `true` for `#root` — the hook has nothing to hide. For non-portaled overlays, set `aria-hidden` directly on the background content wrapper alongside `inert`:
+**Non-portaled overlays (Drawer):** The Drawer renders inside `#root`, so `el.contains(panel)` always returns `true` for `#root` — the hook itself has nothing to hide for the background. For non-portaled overlays, set `aria-hidden` directly on the background content wrapper alongside `inert`:
 
 ```jsx
 <div

@@ -233,5 +233,7 @@
   "settings.theme_light_announce": "Appearance: Light",
   "settings.theme_auto_announce": "Appearance: Auto",
   "settings.theme_dark_announce": "Appearance: Dark",
-  "settings.theme_party_announce": "Appearance: Party!"
+  "settings.theme_party_announce": "Appearance: Party!",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

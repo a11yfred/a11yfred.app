@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "མདོག་ཆ། རང་བཞིན",
   "settings.theme_dark_announce": "མདོག་ཆ། མུན་པ",
   "settings.theme_party_announce": "མདོག་ཆ། གཞས་ཚོགས།",
-  "error.announce": "ལས་འགུལ་ལ་ཉེས་འཁྲུལ་བྱུང་ — ཞིབ་འཇུག་མཛོད་འདྲེན་མ་ཐུབ། ཁྱེད་ཀྱི་དྲ་འབྲེལ་ཞིབ་བལྟ་གནང་ཞིང་ཡང་བསྐྱར་ཚོད་ལྟ་གནང་།"
+  "error.announce": "ལས་འགུལ་ལ་ཉེས་འཁྲུལ་བྱུང་ — ཞིབ་འཇུག་མཛོད་འདྲེན་མ་ཐུབ། ཁྱེད་ཀྱི་དྲ་འབྲེལ་ཞིབ་བལྟ་གནང་ཞིང་ཡང་བསྐྱར་ཚོད་ལྟ་གནང་།",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

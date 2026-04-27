@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Gaa-waabiskaag: Auto",
   "settings.theme_dark_announce": "Gaa-waabiskaag: Giizhiibaa",
   "settings.theme_party_announce": "Gaa-waabiskaag: Pawaaganaatig!",
-  "error.announce": "Aaniin ezhiwebak — gaa-pi-izhiwebizid mashkimoding accessibility gaawiin ojiitaasiin. Babaamenimaan gidayaawing miinawaa gazhi-maajiidoon."
+  "error.announce": "Aaniin ezhiwebak — gaa-pi-izhiwebizid mashkimoding accessibility gaawiin ojiitaasiin. Babaamenimaan gidayaawing miinawaa gazhi-maajiidoon.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

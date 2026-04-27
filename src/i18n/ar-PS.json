@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "المظهر: تلقائي",
   "settings.theme_dark_announce": "المظهر: داكن",
   "settings.theme_party_announce": "المظهر: احتفالي!",
-  "error.announce": "صار في مشكلة — ما قدر يتحمل مكتبة النتائج. تحقق من الاتصال تبعك وحاول مرة ثانية."
+  "error.announce": "صار في مشكلة — ما قدر يتحمل مكتبة النتائج. تحقق من الاتصال تبعك وحاول مرة ثانية.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

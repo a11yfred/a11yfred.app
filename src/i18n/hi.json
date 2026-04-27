@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "रूप-रंग: ऑटो",
   "settings.theme_dark_announce": "रूप-रंग: डार्क",
   "settings.theme_party_announce": "रूप-रंग: Party!",
-  "error.announce": "कुछ गलत हो गया — निष्कर्ष लाइब्रेरी लोड नहीं हो सकी। अपना कनेक्शन जाँचें और पुनः प्रयास करें।"
+  "error.announce": "कुछ गलत हो गया — निष्कर्ष लाइब्रेरी लोड नहीं हो सकी। अपना कनेक्शन जाँचें और पुनः प्रयास करें।",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

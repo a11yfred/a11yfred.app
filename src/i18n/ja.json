@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "外観：自動",
   "settings.theme_dark_announce": "外観：ダーク",
   "settings.theme_party_announce": "外観：パーティー！",
-  "error.announce": "エラーが発生しました — 指摘事項ライブラリを読み込めませんでした。接続状態を確認してから再度お試しください。"
+  "error.announce": "エラーが発生しました — 指摘事項ライブラリを読み込めませんでした。接続状態を確認してから再度お試しください。",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Apariencia: Automático",
   "settings.theme_dark_announce": "Apariencia: Oscuro",
   "settings.theme_party_announce": "Apariencia: Fiesta!",
-  "error.announce": "Algo ya sale mal — el biblioteca di hallazgos no puede carga. Revisa tu conexión y trata de nuevo."
+  "error.announce": "Algo ya sale mal — el biblioteca di hallazgos no puede carga. Revisa tu conexión y trata de nuevo.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Apariencia: Auto",
   "settings.theme_dark_announce": "Apariencia: Pytũ",
   "settings.theme_party_announce": "Apariencia: Fiesta!",
-  "error.announce": "Mba'e oiko vai — finding library ndaikatúi oñemboguapy. Ehechájevy ne conexión ha eha'ã jey."
+  "error.announce": "Mba'e oiko vai — finding library ndaikatúi oñemboguapy. Ehechájevy ne conexión ha eha'ã jey.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

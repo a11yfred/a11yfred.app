@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Ixtlamatiliztli: Nomā",
   "settings.theme_dark_announce": "Ixtlamatiliztli: Yohualtica",
   "settings.theme_party_announce": "Ixtlamatiliztli: Pāpaquilīztli!",
-  "error.announce": "Ōmotlacahuac tlachihua — āhuel ōmopōuh in āmoxtli āmōtlapōhualiz. Xicita in motlahzohcāyōtl ihuan xinochiyān xiccuepato."
+  "error.announce": "Ōmotlacahuac tlachihua — āhuel ōmopōuh in āmoxtli āmōtlapōhualiz. Xicita in motlahzohcāyōtl ihuan xinochiyān xiccuepato.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

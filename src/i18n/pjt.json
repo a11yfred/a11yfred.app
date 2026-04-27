@@ -233,5 +233,7 @@
   "settings.theme_dark_announce": "Nipalitia: Tupra",
   "settings.theme_party_announce": "Nipalitia: Party!",
   "error.announce": "Luwanta minapalitia — finding library nipalitia wara. Tana connection pakana wara minapalitia wanta waranta tunapri.",
-  "settings.preserved_announce": "Settings: Preserved"
+  "settings.preserved_announce": "Settings: Preserved",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

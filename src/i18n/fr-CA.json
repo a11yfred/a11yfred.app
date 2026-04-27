@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Apparence : Auto",
   "settings.theme_dark_announce": "Apparence : Sombre",
   "settings.theme_party_announce": "Apparence : Fête !",
-  "error.announce": "Une erreur s'est produite — la bibliothèque de constats n'a pas pu être chargée. Vérifiez votre connexion et réessayez."
+  "error.announce": "Une erreur s'est produite — la bibliothèque de constats n'a pas pu être chargée. Vérifiez votre connexion et réessayez.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

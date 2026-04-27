@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Udem: Awurman",
   "settings.theme_dark_announce": "Udem: Aberkuk",
   "settings.theme_party_announce": "Udem: Taɣuri!",
-  "error.announce": "Yella-d ugur — tɣermant n tigawin ur tẓḍer ara ad d-ttwasɣal. Senqed tuqqna-nnek, sakin ɛreḍ tikelt-nniḍen."
+  "error.announce": "Yella-d ugur — tɣermant n tigawin ur tẓḍer ara ad d-ttwasɣal. Senqed tuqqna-nnek, sakin ɛreḍ tikelt-nniḍen.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

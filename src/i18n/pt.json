@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Aparência: Automático",
   "settings.theme_dark_announce": "Aparência: Escuro",
   "settings.theme_party_announce": "Aparência: Festa!",
-  "error.announce": "Ocorreu um erro — não foi possível carregar a biblioteca de descobertas. Verifique a sua ligação e tente novamente."
+  "error.announce": "Ocorreu um erro — não foi possível carregar a biblioteca de descobertas. Verifique a sua ligação e tente novamente.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

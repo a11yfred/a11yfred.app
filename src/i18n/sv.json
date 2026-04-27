@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Utseende: Auto",
   "settings.theme_dark_announce": "Utseende: Mörkt",
   "settings.theme_party_announce": "Utseende: Party!",
-  "error.announce": "Något gick fel – noteringsbibliotekets kunde inte läsas in. Kontrollera din anslutning och försök igen."
+  "error.announce": "Något gick fel – noteringsbibliotekets kunde inte läsas in. Kontrollera din anslutning och försök igen.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

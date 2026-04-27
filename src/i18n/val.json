@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Aparença: Automàtica",
   "settings.theme_dark_announce": "Aparença: Fosca",
   "settings.theme_party_announce": "Aparença: Festa!",
-  "error.announce": "S'ha produït un error — no s'ha pogut carregar la biblioteca de troballes. Comprova la connexió i torna-ho a intentar."
+  "error.announce": "S'ha produït un error — no s'ha pogut carregar la biblioteca de troballes. Comprova la connexió i torna-ho a intentar.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

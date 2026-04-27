@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "ᑕᑯᔭᐅᓂᖓ: ᐊᐅᓚᑦᑎᔪᖅ",
   "settings.theme_dark_announce": "ᑕᑯᔭᐅᓂᖓ: ᑕᕆᐅᖅ",
   "settings.theme_party_announce": "ᑕᑯᔭᐅᓂᖓ: ᐅᒥᐊᕐᔪᐊᖅ!",
-  "error.announce": "ᐃᓚᒋᔭᐅᔪᖅ ᐋᖅᑭᒃᑕᐅᓚᐅᙱᑦᑐᖅ — ᑐᓴᕈᑕᐅᔪᓂᒃ ᕿᓂᕈᑎ ᐊᑐᖅᑕᐅᔪᓐᓇᓚᐅᙱᑦᑐᖅ. ᐃᓱᒪᒋᔭᐅᔪᒥᒃ ᖃᐅᔨᓗᑎᑦ ᐊᒻᒪ ᐊᓂᒍᙱᑦᑑᒋᐊᖅᑕᕐᓗᑎᑦ."
+  "error.announce": "ᐃᓚᒋᔭᐅᔪᖅ ᐋᖅᑭᒃᑕᐅᓚᐅᙱᑦᑐᖅ — ᑐᓴᕈᑕᐅᔪᓂᒃ ᕿᓂᕈᑎ ᐊᑐᖅᑕᐅᔪᓐᓇᓚᐅᙱᑦᑐᖅ. ᐃᓱᒪᒋᔭᐅᔪᒥᒃ ᖃᐅᔨᓗᑎᑦ ᐊᒻᒪ ᐊᓂᒍᙱᑦᑑᒋᐊᖅᑕᕐᓗᑎᑦ.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

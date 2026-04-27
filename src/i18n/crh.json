@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Görünüş: Otomatik",
   "settings.theme_dark_announce": "Görünüş: Qaranğı",
   "settings.theme_party_announce": "Görünüş: Bayram!",
-  "error.announce": "Bir şeyler yañlış ketti — bulgu kütüphanesi yüklenemedi. Bağlantıñızı kontrol ediñ ve tekrar deneñ."
+  "error.announce": "Bir şeyler yañlış ketti — bulgu kütüphanesi yüklenemedi. Bağlantıñızı kontrol ediñ ve tekrar deneñ.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Voorkoms: Outomaties",
   "settings.theme_dark_announce": "Voorkoms: Donker",
   "settings.theme_party_announce": "Voorkoms: Partytjie!",
-  "error.announce": "Iets het verkeerd gegaan — die bevindingsbiblioteek kon nie gelaai word nie. Gaan jou verbinding na en probeer weer."
+  "error.announce": "Iets het verkeerd gegaan — die bevindingsbiblioteek kon nie gelaai word nie. Gaan jou verbinding na en probeer weer.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

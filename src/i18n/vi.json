@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Giao diện: Tự động",
   "settings.theme_dark_announce": "Giao diện: Tối",
   "settings.theme_party_announce": "Giao diện: Tiệc tùng!",
-  "error.announce": "Đã xảy ra lỗi — không thể tải thư viện phát hiện. Hãy kiểm tra kết nối của bạn và thử lại."
+  "error.announce": "Đã xảy ra lỗi — không thể tải thư viện phát hiện. Hãy kiểm tra kết nối của bạn và thử lại.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

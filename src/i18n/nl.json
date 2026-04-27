@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Weergave: Automatisch",
   "settings.theme_dark_announce": "Weergave: Donker",
   "settings.theme_party_announce": "Weergave: Feest!",
-  "error.announce": "Er is iets misgegaan — de bibliotheek met bevindingen kon niet worden geladen. Controleer uw verbinding en probeer het opnieuw."
+  "error.announce": "Er is iets misgegaan — de bibliotheek met bevindingen kon niet worden geladen. Controleer uw verbinding en probeer het opnieuw.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Āhua: Aunoa",
   "settings.theme_dark_announce": "Āhua: Pouri",
   "settings.theme_party_announce": "Āhua: Kanikani!",
-  "error.announce": "I hē tētahi mea — kāore i taea te uta i te kohinga kitenga. Tirohia tō hononga ā, ngana anō."
+  "error.announce": "I hē tētahi mea — kāore i taea te uta i te kohinga kitenga. Tirohia tō hononga ā, ngana anō.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

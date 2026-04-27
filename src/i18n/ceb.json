@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Hitsura: Auto",
   "settings.theme_dark_announce": "Hitsura: Ngitngit",
   "settings.theme_party_announce": "Hitsura: Party!",
-  "error.announce": "May napakyasan — ang finding library dili ma-load. Susaya ang imong koneksyon ug sulayi pag-usab."
+  "error.announce": "May napakyasan — ang finding library dili ma-load. Susaya ang imong koneksyon ug sulayi pag-usab.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

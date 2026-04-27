@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "외관: 자동",
   "settings.theme_dark_announce": "외관: 다크",
   "settings.theme_party_announce": "외관: 파티!",
-  "error.announce": "오류가 발생했습니다 — 발견 항목 라이브러리를 불러올 수 없습니다. 연결 상태를 확인하고 다시 시도하세요."
+  "error.announce": "오류가 발생했습니다 — 발견 항목 라이브러리를 불러올 수 없습니다. 연결 상태를 확인하고 다시 시도하세요.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

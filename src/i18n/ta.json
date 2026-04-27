@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "தோற்றம்: தானியங்கி",
   "settings.theme_dark_announce": "தோற்றம்: இருண்ட",
   "settings.theme_party_announce": "தோற்றம்: கோலாகலம்!",
-  "error.announce": "ஏதோ தவறு நடந்தது — கண்டுபிடிப்பு நூலகத்தை ஏற்ற முடியவில்லை. உங்கள் இணைப்பை சரிபார்த்து மீண்டும் முயற்சிக்கவும்."
+  "error.announce": "ஏதோ தவறு நடந்தது — கண்டுபிடிப்பு நூலகத்தை ஏற்ற முடியவில்லை. உங்கள் இணைப்பை சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

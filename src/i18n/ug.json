@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "كۆرۈنۈش: ئاپتوماتىك",
   "settings.theme_dark_announce": "كۆرۈنۈش: قارا",
   "settings.theme_party_announce": "كۆرۈنۈش: توي!",
-  "error.announce": "خاتالىق كۆرۈلدى — تاپقىلى كۇتۇپخانىسى يۈكلىنەلمىدى. ئۇلىنىشىڭىزنى تەكشۈرۈپ قايتا سىناڭ."
+  "error.announce": "خاتالىق كۆرۈلدى — تاپقىلى كۇتۇپخانىسى يۈكلىنەلمىدى. ئۇلىنىشىڭىزنى تەكشۈرۈپ قايتا سىناڭ.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Hitsura: Awtomatiko",
   "settings.theme_dark_announce": "Hitsura: Madilim",
   "settings.theme_party_announce": "Hitsura: Party!",
-  "error.announce": "May naganap na error — hindi ma-load ang library ng mga natuklasan. Suriin ang iyong koneksyon at subukang muli."
+  "error.announce": "May naganap na error — hindi ma-load ang library ng mga natuklasan. Suriin ang iyong koneksyon at subukang muli.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

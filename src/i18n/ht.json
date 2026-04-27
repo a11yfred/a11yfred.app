@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Aparans: Otomatik",
   "settings.theme_dark_announce": "Aparans: Fonse",
   "settings.theme_party_announce": "Aparans: Fèt!",
-  "error.announce": "Yon bagay mal pase — bibliyotèk trouvay la pa t kapab chaje. Verifye koneksyon ou epi eseye ankò."
+  "error.announce": "Yon bagay mal pase — bibliyotèk trouvay la pa t kapab chaje. Verifye koneksyon ou epi eseye ankò.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Panangpennek: Awtomatiko",
   "settings.theme_dark_announce": "Panangpennek: Nadumidumi",
   "settings.theme_party_announce": "Panangpennek: Party!",
-  "error.announce": "Adda napasamak a saan a umiso — ti libreria ti nabirukan ket saan a maikarga. Kitaen ti koneksion mo ket subalen."
+  "error.announce": "Adda napasamak a saan a umiso — ti libreria ti nabirukan ket saan a maikarga. Kitaen ti koneksion mo ket subalen.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }

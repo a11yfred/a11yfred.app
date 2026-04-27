@@ -233,5 +233,7 @@
   "settings.theme_auto_announce": "Itxura: Automatikoa",
   "settings.theme_dark_announce": "Itxura: Iluna",
   "settings.theme_party_announce": "Itxura: Festa!",
-  "error.announce": "Zerbait gaizki atera da — aurkikuntza-liburutegia ezin izan da kargatu. Egiaztatu zure konexioa eta saiatu berriro."
+  "error.announce": "Zerbait gaizki atera da — aurkikuntza-liburutegia ezin izan da kargatu. Egiaztatu zure konexioa eta saiatu berriro.",
+  "settings.language_current_is": "The current language is {label}.",
+  "settings.language_select_one": "Select one"
 }
