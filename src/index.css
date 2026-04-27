@@ -995,7 +995,7 @@ select:disabled {
 .result-item__header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-2);
 }
 
@@ -1004,6 +1004,7 @@ select:disabled {
   align-items: center;
   gap: var(--space-1);
   flex-shrink: 0;
+  padding-top: 2px;
 }
 
 .result-item__title {
@@ -1041,6 +1042,10 @@ select:disabled {
 .source-badge {
   background: var(--source-bg);
   color: var(--source-text);
+}
+
+.result-item .source-badge {
+  display: none;
 }
 
 .wcag-badge {
@@ -1293,6 +1298,15 @@ input.search-input:focus {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 18ch;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 2px;
 }
 
 /* ─── View All section ────────────────────────────────────── */

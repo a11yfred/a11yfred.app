@@ -2,9 +2,17 @@ import { useRef, useState, useEffect } from 'react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 
+// Each phrase has a display label and an optional accessible expansion.
+// Clicking a phrase populates the search field with its `text` value.
 const TYPEWRITER_PHRASES = [
-  'modals', 'buttons', 'focus management', 'wcag 2.2',
-  'mobile devices', 'content', 'external keyboard mobile', 'voiceover',
+  { text: 'modals' },
+  { text: 'buttons' },
+  { text: 'focus management' },
+  { text: 'wcag 2.2' },
+  { text: 'mobile devices' },
+  { text: 'content' },
+  { text: 'ext kb mobile', aria: 'external keyboard mobile' },
+  { text: 'voiceover' },
 ]
 const CYCLE_MS = 2500
 
@@ -26,7 +34,13 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
     if (!liveSearch && e.key === 'Enter') onSearch()
   }
 
+  const handlePhraseClick = (phrase) => {
+    onChange(phrase.text)
+    inputRef.current?.focus()
+  }
+
   const platformLabel = platform === 'web' ? t('settings.platform_web') : t('settings.platform_native')
+  const currentPhrase = TYPEWRITER_PHRASES[phraseIdx]
 
   return (
     <search aria-label={t('search.aria_label')} className="search-bar">
@@ -36,9 +50,18 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
         </label>
         {query.length === 0 && !prefersReducedMotion && (
           <span className="search-typewriter">
-            Try: <span key={phraseIdx} className="search-typewriter__phrase">
-              {TYPEWRITER_PHRASES[phraseIdx]}
-            </span>
+            {t('search.typewriter_try')}{' '}
+            <button
+              key={phraseIdx}
+              type="button"
+              className="search-typewriter__phrase"
+              aria-label={currentPhrase.aria
+                ? `${t('search.typewriter_try')} ${currentPhrase.aria}`
+                : undefined}
+              onClick={() => handlePhraseClick(currentPhrase)}
+            >
+              {currentPhrase.text}
+            </button>
           </span>
         )}
       </div>

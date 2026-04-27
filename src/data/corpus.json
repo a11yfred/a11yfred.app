@@ -82,7 +82,8 @@
       "no focus",
       "missing focus",
       "outline none",
-      "focus invisible"
+      "focus invisible",
+      "kb"
     ],
     "desc": "Keyboard users cannot see which element is focused. The default focus outline may be removed, or the custom focus style is too faint to see clearly.",
     "rem": "Make sure every keyboard-focusable element shows a clear focus outline. Do not set outline: none without providing a visible custom focus style. The focus indicator must have at least a 3:1 contrast ratio against nearby colors."
@@ -116,7 +117,8 @@
       "span",
       "no role",
       "generic element",
-      "custom element"
+      "custom element",
+      "kb"
     ],
     "desc": "The control can only be used with a mouse. Keyboard users cannot focus or activate it. Custom elements built with div or span also lack a role, so screen readers do not know what the control is.",
     "rem": "Use native HTML elements like button or a whenever possible — they are keyboard accessible and have built-in roles. If a custom element must be used, add tabindex=\"0\", an appropriate ARIA role, and keyboard event handlers for Enter and Space."
@@ -273,7 +275,8 @@
       "screen reader only",
       "not visible",
       "bypass",
-      "sighted keyboard"
+      "sighted keyboard",
+      "kb"
     ],
     "desc": "A skip link exists but is hidden from sighted keyboard users. When a keyboard user tabs to it, nothing appears on screen.",
     "rem": "Make the skip link appear on screen when it receives keyboard focus. It can be hidden off-screen by default, but must become visible when focused."
@@ -752,7 +755,8 @@
       "slider",
       "drag movement",
       "no keyboard drag",
-      "2.5.7"
+      "2.5.7",
+      "kb"
     ],
     "desc": "A feature requires the user to drag an element with a pointer. There is no keyboard-accessible way to perform the same action.",
     "rem": "Provide keyboard-accessible controls (such as buttons) that perform the same action as dragging. Keyboard users should be able to complete every task without a mouse."
@@ -854,7 +858,8 @@
       "tab trap",
       "no keyboard trap",
       "datepicker trap",
-      "modal trap"
+      "modal trap",
+      "kb"
     ],
     "desc": "Keyboard focus gets stuck inside a component. Once a keyboard user tabs into it, there is no way out using only the keyboard.",
     "rem": "Make sure keyboard users can always tab out of any component. If a modal or dialog traps focus intentionally, add an Escape key handler and a visible close button so users can leave."
@@ -931,7 +936,8 @@
       "not keyboard",
       "hover content",
       "disappears",
-      "1.4.13"
+      "1.4.13",
+      "kb"
     ],
     "desc": "Extra content appears only when the user hovers with a mouse. Keyboard users and screen reader users cannot trigger or read this content.",
     "rem": "Make hover content also appear when the element receives keyboard focus. Users must be able to dismiss it without moving focus (for example, with Escape). The content should stay visible until the user moves focus away."
@@ -1005,7 +1011,8 @@
       "no warning",
       "opens new",
       "new window warning",
-      "external link"
+      "external link",
+      "kb"
     ],
     "desc": "A link or button opens a new browser window or tab without warning. This is disorienting, especially for screen reader users who may not realize the context has changed.",
     "rem": "Add a warning in the link text or accessible name. For example: \"Annual Report (opens in a new tab)\". You can also add an icon with alt text to indicate a new window will open."
@@ -1944,7 +1951,11 @@
       "iOS keyboard",
       "Android keyboard",
       "keyboard accessibility",
-      "tab key mobile"
+      "tab key mobile",
+      "kb",
+      "ext",
+      "ext kb",
+      "external keyboard mobile"
     ],
     "desc": "The mobile app does not support navigation or interaction using an external Bluetooth or hardware keyboard. Users with motor disabilities who pair a keyboard with their phone or tablet cannot use the app.",
     "rem": "Test the full app with an external keyboard connected to the device. All interactive controls must be reachable by Tab key and activatable by Enter or Space. Focus must be visible at all times, and focus order must follow a logical sequence. On iOS, implement UIKeyCommand and ensure all focusable elements are keyboard-reachable. On Android, handle key events appropriately."
