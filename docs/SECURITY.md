@@ -10,6 +10,9 @@ All user data is stored locally in `localStorage` only. Nothing is ever sent to 
 | Theme, language, platform, UI preferences | `localStorage` | No |
 | Finding ratings (upvotes, stars, archive) | `localStorage` | No |
 | Settings save count (Party Mode unlock) | `localStorage` | No |
+| Recent findings history (last 10 IDs) | `localStorage` key `recentFindings` | No |
+| User-created / copied findings | `localStorage` key `userFindings` | No |
+| Last selected finding ID (session only) | `sessionStorage` key `lastSelectedId` | No — cleared when the tab closes |
 
 ## API keys
 

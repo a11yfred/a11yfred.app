@@ -4,6 +4,24 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 27, 2026 — Session restore, recent history, export, user findings data layer
+
+### Remember where you were
+
+Refreshing the page now reopens whatever finding you had selected. The selected finding's ID is saved to sessionStorage when you open it and cleared when the tab closes, so it only persists for the current browsing session — not forever. The app also starts building a "recently viewed" list in the background (the last 10 findings you opened), ready for when a Recent section is added to the UI.
+
+### Export a finding
+
+The export utility is complete under the hood. `exportFinding(finding, format)` can generate a plain text file, a Markdown doc, or a CSV row from any finding — all client-side, no server. A button to trigger it will be added to the detail panel.
+
+### User findings data layer
+
+The foundation for copy, add, edit, and delete is wired. A new `userFindingsService` handles localStorage read/write for user-created findings using `USR-NNN` IDs so they never collide with corpus entries. The `useUserFindings` hook exposes reactive state and four actions (`addFinding`, `editFinding`, `deleteFinding`, `copyFinding`). User findings are already merged into search results alongside corpus entries — so once the UI forms exist, they'll appear in search immediately.
+
+### Privacy disclosure updated
+
+The privacy text in Settings now lists all storage keys the app uses, including the new sessionStorage entry and the user findings storage.
+
 ## April 27, 2026 — Focus fixes, debug plugin, NamesDebugger, Easter egg improvements, docs overhaul
 
 ### Focus management tightened

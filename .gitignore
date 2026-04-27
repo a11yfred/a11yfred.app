@@ -1,5 +1,5 @@
 node_modules
+LETTER_TO_KOFI.md
 dist/
 src/data/corpus_src/
 src/data/personal-corpus.json
-docs/LETTER_TO_KOFI.md

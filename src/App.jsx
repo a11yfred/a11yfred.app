@@ -22,6 +22,7 @@ import { Announcer, announce } from './plugins/announce/index.js'
 import { FocusDebugger, NamesDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher } from './plugins/debug/index.js'
 import { playPartySound, playSqueak } from './utils/partySounds.js'
 import { I18nProvider, useT } from './i18n/index.jsx'
+import useUserFindings from './hooks/useUserFindings.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 
@@ -211,7 +212,15 @@ function AppContent({
     if (finding) {
       if (!selected) findingTriggerRef.current = document.activeElement
       if (viewAll) returnViewAllRef.current = true
+      sessionStorage.setItem('lastSelectedId', finding.id)
+      try {
+        const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
+        const deduped = recent.filter(id => id !== finding.id)
+        deduped.unshift(finding.id)
+        localStorage.setItem('recentFindings', JSON.stringify(deduped.slice(0, 10)))
+      } catch { /* localStorage unavailable */ }
     } else {
+      sessionStorage.removeItem('lastSelectedId')
       const shouldReturn = returnViewAllRef.current
       returnViewAllRef.current = false
       if (shouldReturn) { navigate('/results/all'); return }
@@ -224,10 +233,13 @@ function AppContent({
   const returnToPanelRef = useRef(false)
   const findingTriggerRef = useRef(null)
   const returnViewAllRef = useRef(false)
+  const sessionRestoredRef = useRef(false)
 
   const { ratings, upvote, downvote, toggleStar, toggleArchive } = useFindingRatings()
+  const userFindingsHook = useUserFindings()
+  const { userFindings } = userFindingsHook
   const activeQuery = liveSearch ? query : submittedQuery
-  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings)
+  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings)
   const [viewAllLoading, setViewAllLoading] = useState(false)
 
   // Announce result count after a non-live-search submission only.
@@ -367,6 +379,21 @@ function AppContent({
     const found = allFindings.find(d => d.id === findingIdFromRoute)
     if (found) setSelected(found)
   }, [findingIdFromRoute, dataLoading]) // eslint-disable-line react-hooks/exhaustive-deps -- allFindings populated when dataLoading flips false
+
+  // Restore last-selected finding from sessionStorage when the URL is bare (no finding in path).
+  // Fires once per page load; URL-based routing always takes precedence.
+  useEffect(() => {
+    if (sessionRestoredRef.current || dataLoading || allFindings.length === 0) return
+    sessionRestoredRef.current = true
+    if (findingIdFromRoute) return
+    const lastId = sessionStorage.getItem('lastSelectedId')
+    if (!lastId) return
+    const found = allFindings.find(d => d.id === lastId)
+    if (found) {
+      setSelected(found)
+      navigate(`/finding/${found.id}/${findingSlug(found.title)}`)
+    }
+  }, [dataLoading, allFindings]) // eslint-disable-line react-hooks/exhaustive-deps -- fires once; findingIdFromRoute checked inline
 
   useEffect(() => {
     if (!selected || settingsOpen || aboutOpen) return

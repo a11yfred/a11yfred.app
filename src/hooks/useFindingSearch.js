@@ -20,8 +20,8 @@ const LOAD_TIMEOUT_MS = 8000
 
 const DEFAULT_RATING = { score: 0, starred: false, archived: false }
 
-export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}) {
-  const [allFindings, setAllFindings] = useState([])
+export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userFindings = []) {
+  const [corpusFindings, setCorpusFindings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
   const [dataError, setDataError] = useState(false)
   const [retryCount, setRetryCount] = useState(0)
@@ -57,7 +57,7 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
       .then(data => {
         if (cancelled) return
         clearTimeout(timeout)
-        setAllFindings(data)
+        setCorpusFindings(data)
         setDataLoading(false)
       })
       .catch(() => {
@@ -69,6 +69,12 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
 
     return () => { cancelled = true; clearTimeout(timeout) }
   }, [locale, retryCount])
+
+  // Merge corpus findings with user-created findings.
+  const allFindings = useMemo(
+    () => userFindings.length ? [...corpusFindings, ...userFindings] : corpusFindings,
+    [corpusFindings, userFindings]
+  )
 
   const platformFiltered = useMemo(() => {
     if (!platform || platform === 'web') {

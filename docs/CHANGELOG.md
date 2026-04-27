@@ -4,6 +4,29 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-27 — Session restore, recent findings, export utility, user findings data layer
+
+### Session persistence
+
+- `App.jsx`: `handleSelectFinding` writes selected finding ID to `sessionStorage` (`lastSelectedId`) and appends it to `localStorage` array `recentFindings` (max 10, deduped, newest-first)
+- `App.jsx`: added `sessionRestoredRef` + restore-on-mount `useEffect` — after corpus loads and only when URL is bare (`#/`), reads `lastSelectedId` from sessionStorage and reopens the finding; fires once per page load, URL routing takes precedence
+
+### Export utility
+
+- New `src/utils/exportFinding.js` — `exportFinding(finding, format)` triggers a browser download; formats: `text` (default), `markdown`, `csv`; uses Blob URL + synthetic anchor pattern, no server required
+
+### User findings data layer
+
+- New `src/services/userFindingsService.js` — localStorage-backed CRUD (`loadUserFindings`, `saveUserFinding`, `deleteUserFinding`, `createUserFinding`, `copyUserFinding`); IDs use `USR-NNN` prefix; Phase 2 Supabase swap requires changes to this file only
+- New `src/hooks/useUserFindings.js` — reactive wrapper exposing `userFindings` state + `addFinding`, `editFinding`, `deleteFinding`, `copyFinding` actions
+- `src/hooks/useFindingSearch.js`: accepts `userFindings = []` sixth parameter; internal corpus state renamed `corpusFindings`; new `allFindings` useMemo merges corpus + user findings; callers receive merged set transparently
+- `src/App.jsx`: instantiates `useUserFindings`, passes `userFindings` to `useFindingSearch`; CRUD actions available at App scope for future UI binding
+
+### Privacy & security
+
+- `docs/SECURITY.md`: added rows for `recentFindings` (localStorage), `userFindings` (localStorage), `lastSelectedId` (sessionStorage)
+- `src/i18n/en.json` `settings.privacy_body_2`: updated to describe all new storage keys including sessionStorage distinction
+
 ## 2026-04-27 — Focus management, debug plugin, command system, NamesDebugger, docs overhaul
 
 ### Data
