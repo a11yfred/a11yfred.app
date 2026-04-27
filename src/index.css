@@ -765,6 +765,10 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transition: var(--transition-btn);
 }
 
+.modal-footer .btn-tertiary {
+  color: var(--text-muted);
+}
+
 /* ─── Shared disabled state — before hover rules (specificity order) */
 
 .btn-ghost:disabled,
@@ -2237,14 +2241,14 @@ input.search-input:focus {
 @media print {
   .page-header,
   .page-footer,
-  .search-section,
+  .search-bar,
   .result-list-section,
   .sheet-chrome,
   .sheet-close-bottom,
   .field__actions,
   .detail-refine,
   .detail-field-row,
-  .drawer-backdrop,
+  .overlay-backdrop,
   .sheet-backdrop {
     display: none !important;
   }

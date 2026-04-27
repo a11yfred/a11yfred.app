@@ -118,7 +118,7 @@ export default function SettingsPanel({
   const privacyOpen = route === '/settings/privacy'
   const [rhgPending, setRhgPending] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
-  const [pendingLanguage, setPendingLanguage] = useState(language)
+  const [pendingLanguage, setPendingLanguage] = useState('')
   const [savedLanguage, setSavedLanguage] = useState(language)
   const [changedLanguage, setChangedLanguage] = useState(false)
   const [savedKeys, setSavedKeys] = useState(() => {
@@ -143,13 +143,14 @@ export default function SettingsPanel({
     liveSearch !== savedLiveSearch ||
     showVoting !== savedShowVoting ||
     aiEnabled !== savedAiEnabled ||
-    pendingLanguage !== savedLanguage
+    (pendingLanguage !== '' && pendingLanguage !== savedLanguage)
   const didMountLang = useRef(false)
 
-  // Sync pendingLanguage if the language prop changes externally (e.g. Reset All)
+  // Sync when language prop changes externally (e.g. Reset All)
   useEffect(() => {
     if (!didMountLang.current) { didMountLang.current = true; return }
-    setPendingLanguage(language)
+    setPendingLanguage('')
+    setSavedLanguage(language)
   }, [language])
 
   // Scroll to and focus the first invalid field when errors change
@@ -198,8 +199,10 @@ export default function SettingsPanel({
     setSavedLiveSearch(liveSearch)
     setSavedShowVoting(showVoting)
     setSavedAiEnabled(aiEnabled)
-    setSavedLanguage(pendingLanguage)
-    if (pendingLanguage !== language) onLanguageChange(pendingLanguage)
+    if (pendingLanguage !== '') {
+      setSavedLanguage(pendingLanguage)
+      if (pendingLanguage !== language) onLanguageChange(pendingLanguage)
+    }
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
     announce(t('settings.saved_announce'))
@@ -248,6 +251,13 @@ export default function SettingsPanel({
       {/* Language */}
       <div className="settings-group">
         <p className="settings-group__label">{t('settings.language_label')}</p>
+        {(() => {
+          const entry = LANGUAGES.find(l => l.value === language)
+          const label = entry
+            ? (language?.startsWith('en') && entry.en ? `${entry.label} (${entry.en})` : entry.label)
+            : LANGUAGES.find(l => l.value === language?.split('-')[0])?.label ?? language
+          return <p className="settings-group__desc">The current language is <strong>{label}</strong>.</p>
+        })()}
         <p className="settings-group__desc">{t('settings.language_desc')}</p>
         <div className="settings-language-row">
           <div className="settings-select-wrap settings-select-wrap--language">
@@ -257,6 +267,7 @@ export default function SettingsPanel({
               className="settings-select"
               aria-label={t('settings.language_aria')}
             >
+              <option value="">{t('settings.language_select_one')}</option>
               {LANGUAGES.map(lang => (
                 <option key={lang.value} value={lang.value}>
                   {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
@@ -268,6 +279,7 @@ export default function SettingsPanel({
           <button
             type="button"
             className={`btn-accent settings-language-change-btn${changedLanguage ? ' field-btn--success' : ''}`}
+            disabled={!pendingLanguage}
             onClick={() => {
               if (pendingLanguage === 'rhg') { setRhgPending(true) }
               else {
@@ -462,7 +474,7 @@ export default function SettingsPanel({
         heading="Rohingya (Ruáingga)"
         actions={[
           { label: 'Use anyway', onClick: () => { onLanguageChange(pendingLanguage); setRhgPending(false) }, className: 'btn-accent' },
-          { label: 'Cancel',     onClick: () => setRhgPending(false),                              className: 'btn-ghost'  },
+          { label: 'Cancel',     onClick: () => setRhgPending(false),                              className: 'btn-tertiary'  },
         ]}
       >
         <p>This translation was AI-generated and has not been reviewed by native Rohingya speakers.</p>
@@ -487,7 +499,7 @@ export default function SettingsPanel({
           {
             label: t('settings.unsaved_cancel'),
             onClick: () => setUnsavedOpen(false),
-            className: 'btn-ghost',
+            className: 'btn-tertiary',
           },
         ]}
       >
@@ -516,7 +528,7 @@ export default function SettingsPanel({
           {
             label: t('settings.confirm_reset_all_no'),
             onClick: () => { setResetConfirmOpen(false); announce(t('settings.preserved_announce')) },
-            className: 'btn-ghost',
+            className: 'btn-tertiary',
           },
         ]}
       >
