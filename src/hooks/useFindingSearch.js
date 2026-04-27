@@ -20,7 +20,9 @@ const LOAD_TIMEOUT_MS = 8000
 
 const DEFAULT_RATING = { score: 0, starred: false, archived: false }
 
-export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userFindings = []) {
+const DEFAULT_WCAG_FILTER = { show20: true, show21: true, show22: true }
+
+export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userFindings = [], wcagFilter = DEFAULT_WCAG_FILTER) {
   const [corpusFindings, setCorpusFindings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
   const [dataError, setDataError] = useState(false)
@@ -86,8 +88,20 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
     return allFindings
   }, [allFindings, platform])
 
+  const versionFiltered = useMemo(() => {
+    const { show20, show21, show22 } = wcagFilter
+    if (show20 && show21 && show22) return platformFiltered
+    return platformFiltered.filter(f => {
+      if (!f.wcagVersion) return true
+      if (f.wcagVersion === '2.0') return show20
+      if (f.wcagVersion === '2.1') return show21
+      if (f.wcagVersion === '2.2') return show22
+      return true
+    })
+  }, [platformFiltered, wcagFilter])
+
   const sortedFindings = useMemo(() =>
-    [...platformFiltered].sort((a, b) => {
+    [...versionFiltered].sort((a, b) => {
       const ra = ratings[a.id] || DEFAULT_RATING
       const rb = ratings[b.id] || DEFAULT_RATING
       if (ra.archived !== rb.archived) return ra.archived ? 1 : -1
@@ -97,9 +111,9 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
       if (pa !== pb) return pa - pb
       return (a.scLabel ?? '').localeCompare(b.scLabel ?? '')
     })
-  , [platformFiltered, ratings])
+  , [versionFiltered, ratings])
 
-  const fuse = useMemo(() => new Fuse(platformFiltered, FUSE_OPTIONS), [platformFiltered])
+  const fuse = useMemo(() => new Fuse(versionFiltered, FUSE_OPTIONS), [versionFiltered])
 
   const results = useMemo(() => {
     if (!query || query.trim().length < 2) return []

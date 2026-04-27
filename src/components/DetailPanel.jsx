@@ -61,6 +61,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   const [remHistory, setRemHistory] = useState([])
   const [reviseDesc, setReviseDesc] = useState(true)
   const [reviseRem, setReviseRem] = useState(true)
+  const [copiedAll, setCopiedAll] = useState(false)
   const typeTimerRef = useRef(null)
   const refineButtonRef = useRef(null)
 
@@ -94,6 +95,34 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       doReset()
     } else {
       setConfirmReset({ doReset })
+    }
+  }
+
+  const handleCopyAll = () => {
+    const descValue = location.trim() ? displayDesc : descText
+    if (!descValue?.trim() && !remText?.trim()) { setNothingToCopy(true); return }
+    const text = `Description:\n${descValue}\n\nRemediation:\n${remText}`
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedAll(true)
+      announce(t('detail.copy_all_announce'))
+      setTimeout(() => setCopiedAll(false), 2000)
+    })
+  }
+
+  const handleResetAllFields = () => {
+    const descChanged = isSignificantlyChanged(finding.desc, descText)
+    const remChanged = isSignificantlyChanged(finding.rem, remText)
+    const doReset = () => {
+      setDescText(finding.desc)
+      setRemText(finding.rem)
+      setDescHistory([])
+      setRemHistory([])
+      announce(t('detail.reset_all_fields_announce'))
+    }
+    if (descChanged || remChanged) {
+      setConfirmReset({ doReset })
+    } else {
+      doReset()
     }
   }
 
@@ -322,6 +351,12 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         aiEnabled={aiEnabled}
       />
 
+      {(descText !== finding.desc || remText !== finding.rem) && (
+        <p className="detail-edit-warning" role="status">
+          {t('detail.edit_lang_warning')}
+        </p>
+      )}
+
       <div className="detail-refine">
         <label htmlFor="revise-note" className="detail-label">{refineLabel}</label>
         <p className="detail-refine-hint">
@@ -373,6 +408,28 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                 : noteSaved
                   ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.saved_note_text')}</>
                   : t('detail.save_note_text')}
+          </button>
+        </div>
+        <div className="detail-actions-end">
+          <button
+            type="button"
+            className="btn-ghost detail-action-btn"
+            onClick={handleCopyAll}
+            aria-label={t('detail.copy_all_aria')}
+          >
+            {copiedAll
+              ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.copied_desktop')}</>
+              : <><Clipboard size={14} aria-hidden="true" />{' '}{t('detail.copy_all_text')}</>
+            }
+          </button>
+          <button
+            type="button"
+            className="btn-ghost detail-action-btn"
+            onClick={handleResetAllFields}
+            aria-label={t('detail.reset_all_fields_aria')}
+          >
+            <RotateCcw size={14} aria-hidden="true" />
+            {' '}{t('detail.reset_all_fields_text')}
           </button>
         </div>
       </div>

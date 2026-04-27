@@ -63,27 +63,28 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 - [ ] **Copy / add / edit / delete findings** `[ux]` `[enhancement]` — data layer wired: `src/services/userFindingsService.js` (localStorage CRUD, USR-NNN IDs), `src/hooks/useUserFindings.js`, merged into `useFindingSearch` alongside corpus; UI (forms, inline edit, copy button) pending; auth prereq for cloud persistence
 - [ ] **Narrow results mode** `[ux]` — when results are showing, display a toggle to enter "narrow" mode; the search input switches label and placeholder to reflect narrowing-within-results; the clear button becomes "Clear and reset" (clears the narrow filter and returns to the initial empty state); live-search setting governs whether narrowing updates in real time or on submit; show a count of narrowed vs. total results; replaced the original corpus `component` field approach
 - [ ] **Upvote / downvote results** `[ux]` `[corpus]` — add thumbs up/down buttons to each result card; store ratings in `localStorage` keyed by finding ID; use ratings to boost or demote entries in Fuse.js scoring so frequently used findings surface higher; if authentication is added later, sync ratings to Supabase so they persist across devices
-- [ ] **Audit report builder** `[ux]` — multi-select multiple findings from the result list, add occurrence counts and severity overrides, and export a formatted accessibility audit report in Markdown or plain text; this is the primary deliverable format for most audit engagements
-- [ ] **Language-specific edit warning** `[ux]` `[i18n]` — when users can save custom edits to a finding entry, show a notice that edits apply only to the currently active language and will not persist if the user switches to a different locale; display this warning in the edit UI before the user saves
+- [ ] **Export findings** `[ux]` — multi-select findings from the result list, add occurrence counts and severity overrides, and export a formatted accessibility audit report in Markdown or plain text; primary deliverable format for most audit engagements
+- [ ] **Language-specific edit warning** `[ux]` `[i18n]` — when text fields are modified, show an inline notice under each field that edits apply only to the current language session; also show a warning modal when the user first makes an edit and the active locale is non-English; modal + inline error
 - [ ] **Ko-fi link in footer** `[ux]` `[dormant]` — add a Ko-fi link in the footer as a fallback for when the floating widget is disabled
 
 ### Visual Design
 
-- [ ] **Gear icon replacement** `[design]` — the ⚙️ emoji renders differently across OSes and is not ideal for a refined UI; replace with an SVG gear icon that uses `currentColor` so it inherits the button's color and respects dark mode
-- [ ] **Empty state before search** `[design]` — the pre-search state (before any query is entered) shows only the search label and a help hint; add a short prompt, illustration, or sample query to make the tool feel more inviting and explain what to type
-- [ ] **Toggle design** `[design]` `[a11y]` — the current Toggle component uses a thin bar and circle; replace with a clearer on/off design using a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
-- [ ] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border; add a secondary visual cue (e.g. a filled accent left-edge bar or a checkmark) so the selection is unmistakable, especially for users with color vision deficiencies
-- [ ] **Monospace result description** `[design]` `[claude]` — consider rendering the `desc` preview in the result list using the mono font stack to more closely match how it will look when copied into a spreadsheet; evaluate whether it improves or hurts scannability
-- [ ] **Priority control placement** `[ux]` `[design]` — revisit where the priority badge and any future priority-setting control lives in the result card and detail panel; currently badge is top-right of card header; consider whether it belongs in a metadata row below the title alongside SC and platform for better scannability
-- [ ] **Button system unification** `[design]` `[code]` `[claude]` — the codebase has `.btn-accent`, `.btn-ghost`, `.btn-secondary`, `.btn-icon`, `.btn-icon-accent`, and `.field-btn`; consolidate into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, `.btn--field` variants; migrate all uses; enables extraction as a standalone UI plugin
+- ~~**Gear icon replacement** — replaced by Lucide `Settings` icon; no longer needed~~
+- [ ] **Empty state typewriter** `[design]` — in the pre-search state, add a typewriter animation that cycles through example phrases ("modals", "buttons", "focus management", "wcag 2.2", "mobile devices", "content", "external keyboard mobile", "voiceover") inside the search label or below it; visually only — wrap in `aria-hidden="true"` so screen readers are unaffected
+- [ ] **Toggle design** `[design]` `[a11y]` — replace the current thin-bar-and-circle Toggle with a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
+- [ ] **Result card fold on select** `[ux]` `[design]` — when a finding is selected, unselected result cards fold to a single line (animated collapse); opening the detail panel triggers the fold; closing the detail panel deselects and all cards unfold to full height; replaces the standalone visible-selection-indicator item
+- [ ] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border and a dot indicator; superseded by result card fold behavior above once that ships
+- ~~**Monospace result description** `[design]` `[claude]` — evaluated; not applied~~
+- [ ] **Severity badge placement** `[ux]` `[design]` — the severity badge (Critical / High / Medium / Low / Best Practice) currently sits top-right of the card header inline with the title; evaluate whether it reads better in a metadata row below the title alongside the SC label and source badge; the detail panel already groups these in a `detail-title-row` — consider aligning the list card to match
+- [ ] **Button system unification** `[priority]` `[design]` `[code]` `[claude]` — consolidate `.btn-accent`, `.btn-ghost`, `.btn-secondary`, `.btn-icon`, `.btn-icon-accent`, `.field-btn` into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, `.btn--field` variants; migrate all uses; prerequisite for extracting as a standalone UI component library
 
 ---
 
 ## Accessibility (A11Y)
 
-- [ ] **Skip links** `[a11y]` — add a visually-hidden "Skip to main content" link as the first focusable element in the page; on keyboard focus it becomes visible; target is the `<main>` element; also evaluate a "Skip to results" link when results are visible; WCAG 2.4.1 Bypass Blocks (Level A)
-- [ ] **Visible selection indicator** `[a11y]` `[design]` `[claude]` — see Visual Design; listed here for a11y tracking
-- [ ] **Toggle design** `[a11y]` `[design]` — see Visual Design; focus ring visibility is the a11y concern
+- [ ] **Skip links** `[priority]` `[a11y]` — add a visually-hidden "Skip to main content" link as the first focusable element in the page; on keyboard focus it becomes visible; clicking or activating it focuses the search input; WCAG 2.4.1 Bypass Blocks (Level A)
+- [ ] **Visible selection indicator** `[a11y]` `[design]` `[claude]` — the selected result card currently uses an accent-colored border; users with color vision differences may not notice the state change; add a non-color indicator (a filled accent left-edge bar, a checkmark, or a bold left border) alongside the color so the selection is perceivable without relying on color alone (WCAG 1.4.1); tracked here alongside Visual Design item
+- [ ] **Toggle design** `[a11y]` `[design]` — the focus ring concern is largely covered by FocusDebugger during dev; the outstanding a11y item is ensuring the toggle thumb contrast meets 1.4.11 (3:1 against adjacent background) at all themes including Party mode
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` `[dormant]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
 - ~~**`prefers-reduced-motion` in JS animations** `[a11y]` `[claude]` — CSS transitions already honor `prefers-reduced-motion: reduce`; add a `window.matchMedia('(prefers-reduced-motion: reduce)')` check for any future JS-driven animations~~
 
@@ -93,7 +94,7 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 
 ### AI Assist
 
-- [ ] **AI error surface** `[ai]` `[ux]` — refinement failures currently show a generic "Revision Failed" modal; parse HTTP status codes to show specific messages: 401 = invalid key, 429 = rate limit exceeded, 503 = service unavailable; network failures (no connection) should be distinguished from API errors; include the provider name in the message
+- [x] **AI error surface** `[ai]` `[ux]` — already implemented: `AiApiError` catch in DetailPanel maps `invalid_key`, `rate_limit`, `service_error`, `network_error` error types to specific localized messages including provider name; debug triggers available in dev mode
 - [ ] **Wire Microsoft Copilot** `[ai]` — requires `VITE_AZURE_OPENAI_ENDPOINT` env var set to a full Azure OpenAI deployment URL; implemented in `aiService.js` but untested; add the env var and verify the response parses correctly
 - [ ] **System prompt tuning** `[ai]` `[claude]` — test AI refinements across at least 20 different finding types covering a variety of SCs, priorities, and platforms; adjust the tone, length, and format instructions in `buildPrompt` in `aiService.js` if the output drifts from the established voice
 - ~~**AI refinement loading state** `[ux]` `[a11y]` — replace the "Revising…" button text with an animated spinner using CSS; add `aria-busy="true"` to the button during the request; respect `prefers-reduced-motion` by disabling the spin animation and showing text only instead~~
@@ -107,7 +108,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — extend the Refine section of `DetailPanel` to support a short back-and-forth conversation; store turn history in local component state as an array of `{ role, content }` objects; pass the full history in each subsequent API call; add a "Clear conversation" button that resets the history without closing the panel
 - [ ] **Agentic error and loop handling** `[agent]` `[ai]` `[claude]` — when using tool use, add a turn limit (e.g. 5 tool calls max) to prevent runaway loops; surface a clear error message if the limit is reached; log each tool call result to the browser console in development for debugging
 - [ ] **System prompt for agentic mode** `[agent]` `[ai]` `[claude]` — write a separate system prompt for the agentic workflow that instructs the model to always search the corpus before rewriting, to preserve the auditor's established voice, and to format the final output as two labeled lines (Description: / Remediation:); keep this separate from the single-shot `buildPrompt` in `aiService.js`
-- [ ] **Model selection for agent mode** `[agent]` `[ai]` `[claude]` — tool use and multi-turn workflows are better served by larger models; default to `claude-opus-4-7` when agent mode is active; make this configurable in Settings alongside the existing provider/key inputs
+- [ ] **Model selection** `[priority]` `[ai]` `[ux]` — add a model selector in Settings under AI Assist (alongside provider/key inputs); offer per-provider options (Anthropic: haiku/sonnet/opus; OpenAI: gpt-4o-mini/gpt-4o; Google: gemini-flash/pro); persist selected model to `localStorage` as `ai_model_{provider}`; use selected model in `aiService.js`
 
 ---
 
@@ -115,8 +116,8 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 50+ locale files covering Latin, CJK, RTL, and indigenous scripts. `en.json` is the source of truth; run `npm run translate` after adding keys.
 
-- [ ] **AI refinement locale pass** `[i18n]` `[ai]` `[claude]` — after `getAiRefinement` rewrites `desc` and `rem`, if the active locale is not English, have the AI respond in the active locale directly (update the system prompt to instruct the model to reply in `{locale}`) rather than post-translating
-- [ ] **Corpus pre-translation script** `[i18n]` `[corpus]` `[claude]` — write a Node.js script that calls an AI provider to translate all `corpus.json` `desc` and `rem` fields into each supported locale; output as `corpus.{lang}.json` files; update `dataService.js` to accept a `locale` param and load the appropriate file; run once, review for WCAG terminology accuracy before committing
+- [ ] **AI refinement locale pass** `[i18n]` `[ai]` `[claude]` `[enhancement]` — after `getAiRefinement` rewrites `desc` and `rem`, if the active locale is not English, have the AI respond in the active locale directly (update the system prompt to instruct the model to reply in `{locale}`) rather than post-translating; high API cost — enhancement only
+- [ ] **Corpus pre-translation script** `[i18n]` `[corpus]` `[claude]` `[enhancement]` — write a Node.js script that calls an AI provider to translate all `corpus.json` `desc` and `rem` fields into each supported locale; output as `corpus.{lang}.json` files; update `dataService.js` to accept a `locale` param and load the appropriate file; run once, review for WCAG terminology accuracy before committing
 
 ---
 

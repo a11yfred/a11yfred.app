@@ -108,6 +108,16 @@ export default function AboutPanel({ onClose }) {
         <p className="about-body">{t('settings.privacy_body_translations')}</p>
       </section>
 
+      <section className="about-section">
+        <h3 className="about-section-heading">{t('about.sources_heading')}</h3>
+        <p className="about-body">{t('about.sources_body')}</p>
+        <ul className="about-sources-list">
+          {['wcag', 'axe', 'webaim', 'deque'].map(key => (
+            <li key={key} className="about-body">{t(`about.sources_${key}`)}</li>
+          ))}
+        </ul>
+      </section>
+
       <section className="about-section about-section--last">
         <h3 className="about-section-heading">{t('about.coming_heading')}</h3>
         <ul className="about-coming">

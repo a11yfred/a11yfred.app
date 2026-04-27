@@ -88,6 +88,7 @@ export default function SettingsPanel({
   theme, onThemeChange,
   language, onLanguageChange,
   platform, onPlatformChange,
+  wcagFilter, onWcagFilterChange,
   partyUnlocked,
   onUnlock,
   onClose,
@@ -332,6 +333,32 @@ export default function SettingsPanel({
                   announce(t(val === 'web' ? 'settings.platform_web_announce' : 'settings.platform_native_announce'))
                 }}
               />
+            ))}
+          </div>
+        </fieldset>
+      </div>
+
+      {/* WCAG Version Filter */}
+      <div className="settings-group">
+        <p className="settings-group__label">{t('settings.wcag_filter_label')}</p>
+        <p className="settings-group__desc">{t('settings.wcag_filter_desc')}</p>
+        <fieldset className="settings-fieldset">
+          <legend className="sr-only">{t('settings.wcag_filter_legend')}</legend>
+          <div className="settings-checkbox-group">
+            {[
+              { key: 'show20', labelKey: 'settings.wcag_filter_20' },
+              { key: 'show21', labelKey: 'settings.wcag_filter_21' },
+              { key: 'show22', labelKey: 'settings.wcag_filter_22' },
+            ].map(({ key, labelKey }) => (
+              <label key={key} className="settings-checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={wcagFilter?.[key] ?? true}
+                  onChange={e => onWcagFilterChange?.({ ...(wcagFilter || { show20: true, show21: true, show22: true }), [key]: e.target.checked })}
+                  className="settings-checkbox"
+                />
+                {t(labelKey)}
+              </label>
             ))}
           </div>
         </fieldset>

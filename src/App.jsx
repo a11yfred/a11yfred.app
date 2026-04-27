@@ -126,6 +126,12 @@ function AppShell() {
   const [selected, setSelected] = useState(null)
   const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
   const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
+  const [wcagFilter, setWcagFilter] = useState(() => {
+    try {
+      const saved = localStorage.getItem('wcagFilter')
+      return saved ? JSON.parse(saved) : { show20: true, show21: true, show22: true }
+    } catch { return { show20: true, show21: true, show22: true } }
+  })
 
   return (
     <I18nProvider locale={language}>
@@ -141,6 +147,7 @@ function AppShell() {
         searchKey={searchKey} setSearchKey={setSearchKey}
         selected={selected} setSelected={setSelected}
         platform={platform} setPlatform={setPlatform}
+        wcagFilter={wcagFilter} setWcagFilter={setWcagFilter}
         panelFocusTrigger={panelFocusTrigger} setPanelFocusTrigger={setPanelFocusTrigger}
       />
     </I18nProvider>
@@ -159,6 +166,7 @@ function AppContent({
   searchKey, setSearchKey,
   selected, setSelected,
   platform, setPlatform,
+  wcagFilter, setWcagFilter,
   panelFocusTrigger, setPanelFocusTrigger,
 }) {
   const { route, navigate, appName } = useRouter()
@@ -239,7 +247,7 @@ function AppContent({
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
   const activeQuery = liveSearch ? query : submittedQuery
-  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings)
+  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter)
   const [viewAllLoading, setViewAllLoading] = useState(false)
 
   // Announce result count after a non-live-search submission only.
@@ -476,6 +484,7 @@ function AppContent({
     setTheme('auto')
     setLanguage(defaultLang)
     setPlatform('web')
+    setWcagFilter({ show20: true, show21: true, show22: true })
     setLiveSearch(true)
     setShowVoting(true)
     setAiEnabled(false)
@@ -510,6 +519,8 @@ function AppContent({
     onLanguageChange: (l) => { setLanguage(l) },
     platform,
     onPlatformChange: (p) => { setPlatform(p) },
+    wcagFilter,
+    onWcagFilterChange: (f) => { setWcagFilter(f); try { localStorage.setItem('wcagFilter', JSON.stringify(f)) } catch { /* localStorage unavailable */ } },
     partyUnlocked,
     onUnlock: unlock,
     onClose: () => {

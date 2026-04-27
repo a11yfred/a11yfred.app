@@ -1,11 +1,26 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
+
+const TYPEWRITER_PHRASES = [
+  'modals', 'buttons', 'focus management', 'wcag 2.2',
+  'mobile devices', 'content', 'external keyboard mobile', 'voiceover',
+]
+const CYCLE_MS = 2500
 
 export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showVoting }) {
   const { navigate } = useRouter()
   const t = useT()
   const inputRef = useRef(null)
+  const [phraseIdx, setPhraseIdx] = useState(0)
+  const prefersReducedMotion = typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  useEffect(() => {
+    if (prefersReducedMotion || query.length > 0) return
+    const id = setInterval(() => setPhraseIdx(i => (i + 1) % TYPEWRITER_PHRASES.length), CYCLE_MS)
+    return () => clearInterval(id)
+  }, [prefersReducedMotion, query.length])
 
   const handleKeyDown = (e) => {
     if (!liveSearch && e.key === 'Enter') onSearch()
@@ -18,6 +33,14 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
       <label htmlFor="finding-search" className="search-label">
         {t('search.label')}
       </label>
+      {query.length === 0 && !prefersReducedMotion && (
+        <p className="search-typewriter" aria-hidden="true">
+          Try:{' '}
+          <span key={phraseIdx} className="search-typewriter__phrase">
+            {TYPEWRITER_PHRASES[phraseIdx]}
+          </span>
+        </p>
+      )}
       <div className="search-row">
         <div className="search-input-wrap">
           <input

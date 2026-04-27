@@ -1241,6 +1241,44 @@ input.search-input:focus {
   color: var(--text);
 }
 
+/* ─── Search typewriter ───────────────────────────────────── */
+
+.search-typewriter {
+  font-size: var(--fs-body);
+  color: var(--text-faint);
+  margin-top: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+@keyframes typewriter-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.search-typewriter__phrase {
+  display: inline-block;
+  animation: typewriter-fade 2.5s ease both;
+  font-style: italic;
+  color: var(--accent-text);
+}
+
 /* ─── View All section ────────────────────────────────────── */
 
 .view-all-section {
@@ -1320,6 +1358,30 @@ input.search-input:focus {
 .settings-fieldset {
   border: none;
   padding: 0;
+}
+
+.settings-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.settings-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-body);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.settings-checkbox {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .radio-chip-group {
@@ -1945,6 +2007,43 @@ input.search-input:focus {
   }
 }
 
+/* Detail panel — copy-all / reset-all row */
+.detail-actions-end {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.detail-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-body);
+  padding: 0.375em 0.75em;
+  border-radius: var(--radius);
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-btn);
+}
+
+.detail-action-btn:hover {
+  background: var(--bg-subtle);
+  color: var(--text);
+  border-color: var(--border-control);
+}
+
+/* Detail panel — edit session warning */
+.detail-edit-warning {
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--border-control);
+  margin-bottom: var(--space-3);
+}
+
 /* ─── Related issues ─────────────────────────────────────── */
 
 .detail-related {
@@ -2268,6 +2367,15 @@ input.search-input:focus {
   font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+.about-sources-list {
+  list-style: disc;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
 }
 
 /* ─── Print ───────────────────────────────────────────────── */
