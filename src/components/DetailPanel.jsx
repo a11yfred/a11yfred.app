@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { Sparkles, RotateCcw, Clipboard, Check, ExternalLink } from 'lucide-react'
+import { Sparkles, RotateCcw, Clipboard, Check, ExternalLink, Loader2 } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -162,6 +162,34 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       if (note === 'debug 429')     { setRevisionFailed(t('detail.revise_error_rate_limit', { provider: providerLabel })); return }
       if (note === 'debug 503')     { setRevisionFailed(t('detail.revise_error_service_error', { provider: providerLabel, status: 503 })); return }
       if (note === 'debug network') { setRevisionFailed(t('detail.revise_error_network_error')); return }
+      if (note === 'debug ai assist') {
+        setRefining(true)
+        announce(t('detail.rewriting_text'), { priority: 'assertive' })
+        setTimeout(() => {
+          const newDesc = reviseDesc ? `${descText}\n\n[Revision note: ${reviseNote}]` : null
+          const newRem = reviseRem ? `${remText}\n\n[Revision note: ${reviseNote}]` : null
+          if (newDesc) setDescHistory(h => [...h, descText])
+          if (newRem) setRemHistory(h => [...h, remText])
+          setRefining(false)
+          setAnimating(true)
+          startTypewriter(newDesc, newRem, t)
+        }, 2000)
+        return
+      }
+      if (note === 'debug ok') {
+        setRefining(true)
+        announce(t('detail.rewriting_text'), { priority: 'assertive' })
+        setTimeout(() => {
+          const fakeDesc = reviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
+          const fakeRem = reviseRem ? '[Debug] Revised remediation: verify the fix was applied, then remove this placeholder before sharing the report.' : null
+          if (fakeDesc) setDescHistory(h => [...h, descText])
+          if (fakeRem) setRemHistory(h => [...h, remText])
+          setRefining(false)
+          setAnimating(true)
+          startTypewriter(fakeDesc, fakeRem, t)
+        }, 1200)
+        return
+      }
 
       setRefining(true)
       announce(t('detail.rewriting_text'), { priority: 'assertive' })
@@ -317,6 +345,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             ref={refineButtonRef}
             onClick={handleRefine}
             disabled={refining || animating || !reviseNote.trim()}
+            aria-busy={refining ? true : undefined}
             className={`btn-accent detail-revise-btn${noteSaved ? ' field-btn--success' : ''}`}
             aria-label={
               refining ? t('detail.rewriting_aria')
@@ -326,7 +355,10 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             }
           >
             {refining
-              ? <span className="detail-revising-text">{t('detail.rewriting_text')}</span>
+              ? <span className="detail-revising-text">
+                  <Loader2 size={12} strokeWidth={2} className="detail-revising-spinner" aria-hidden="true" />
+                  {' '}{t('detail.rewriting_text')}
+                </span>
               : aiEnabled && canRevise
                 ? <span className="detail-revise-label" aria-hidden="true">
                     <Sparkles size={12} strokeWidth={2} className="detail-revise-icon" />

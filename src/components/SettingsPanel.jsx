@@ -173,8 +173,10 @@ export default function SettingsPanel({
     return () => document.removeEventListener('keydown', handler)
   }, [onClose, hasUnsaved, unsavedOpen])
 
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+
   const handleSave = () => {
-    if (aiEnabled && !keys[activeProvider].trim()) {
+    if (aiEnabled && !keys[activeProvider].trim() && !isLocalhost) {
       setErrors({ apiKey: true })
       onToggleAi() // revert toggle — no key means AI can't work
       return
