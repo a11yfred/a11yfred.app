@@ -4,6 +4,7 @@ Record of every maintenance sweep. Newest first.
 
 | Date | Passed | Failed | Deferred | N/A | Notes |
 | ---- | ------ | ------ | -------- | --- | ----- |
+| 2026-04-27 | 6 | 0 | 2 | 2 | MAINTENANCE.md and TODO.md restructured to new category schema (DevOps subheads, Accessibility A11Y, Accounts & Cloud Sync, etc.); all linters clean; build 227kB gz; N/A: i18n, Electron; Deferred: manual a11y/keyboard, bundle size |
 | 2026-04-27 | 6 | 0 | 2 | 2 | Session restore, recent findings, export utility, user findings data layer; all linters clean; build 227kB gz; en.json + SECURITY.md updated; N/A: i18n parity (privacy_body_2 changed — stale translations, flagged for next translate run), Electron; Deferred: manual a11y/keyboard, bundle size (<200kB aspirational) |
 | 2026-04-27 | 6 | 0 | 2 | 2 | Post-commit verify: all linters clean, build 226kB gz; run log moved to MAINT-LOG.md |
 | 2026-04-27 | 6 | 0 | 2 | 2 | NamesDebugger added; all linters clean; build 226kB gz; ABOUT.md "Silly Languages"; N/A: i18n (en.json unchanged), Electron; Deferred: manual a11y/keyboard |

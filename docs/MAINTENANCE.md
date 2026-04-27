@@ -10,7 +10,9 @@ Run history lives in [docs/MAINT-LOG.md](MAINT-LOG.md). Add a row there after ev
 
 ---
 
-## Code quality
+## DevOps
+
+### Code Quality
 
 - [ ] **Linters** — run `npm run lint` (ESLint), `npm run lint:css` (Stylelint), and `markdownlint docs/ README.md` (Markdown); fix all errors and warnings before committing; new rule overrides should be justified in a comment
 - [ ] **Token audit** — grep `index.css` and all JSX for hardcoded color values (`#fff`, `#111`, `rgba`, `hsl`), hardcoded sizes that repeat 3+ times (px or em values), and anything that could be a named token; add tokens for values that have clear semantic meaning; update `tokens.css` first, then replace all instances; check that examples in this item stay current after any token additions
@@ -19,36 +21,7 @@ Run history lives in [docs/MAINT-LOG.md](MAINT-LOG.md). Add a row there after ev
 - [ ] **Unused tokens** — check `tokens.css` for custom properties no longer referenced anywhere in `index.css` or JSX; distinguish between truly dead tokens and tokens reserved for planned features (`--duration-slow`, `--ease-in`, `--mono` are intentional placeholders — do not remove without checking TODO)
 - [ ] **SCSS evaluation** — assess whether CSS custom properties are still sufficient for the current theming and component complexity; if repeated nesting patterns, complex selectors, or mixins would meaningfully reduce duplication, add a TODO item to evaluate SCSS migration; do not migrate without a dedicated session
 
----
-
-## Accessibility
-
-- [ ] **axe-core sweep** — run `npm run dev` and open DevTools; `@axe-core/react` runs automatically in development and logs all violations to the console; fix every violation before release; axe covers WCAG 2.0, 2.1, and 2.2 (Level A and AA) plus best practices
-- [ ] **Manual: keyboard** — tab through the entire interface; search, selection, copy, reset, refine, and settings must all be reachable and operable without a mouse; tab order follows visual reading order
-- [ ] **Manual: zoom** — zoom to 200% (text readable, no content hidden or truncated) and 400% (no horizontal scrolling required)
-- [ ] **Manual: screen reader** — test with NVDA + Firefox and VoiceOver + Safari; verify: result list announcements when a search fires, BottomSheet heading focus on select, copy/reset announcements via `announce()`, Settings open/close focus return, Drawer focus trap on mobile; `<html lang>` updates correctly when user switches language
-- [ ] **Manual: dark mode** — toggle dark theme; inspect all states: empty, results, selected defect, settings, AI active, all four priority badge levels
-- [ ] **Manual: responsive** — test at 375px, 768px, and 1280px; layout, text, and controls hold at each width
-- [ ] **Manual: prefers-contrast** — emulate `prefers-contrast: more`; contrast tokens apply without breaking layout
-- [ ] **Manual: text spacing** — apply WCAG text spacing bookmarklet; no content loss
-
----
-
-## Security & privacy
-
-- [ ] **API key handling** — keys in `localStorage` only; never logged; never in any fetch body except the provider's own endpoint
-- [ ] **`rel` audit** — all `target="_blank"` links have `rel="noreferrer"`
-- [ ] **No `innerHTML`** — search codebase; all DOM content goes through React JSX
-- [ ] **`localStorage` inventory** — keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, plus one `apikey_<provider>` per configured AI provider; total count grows with providers; verify count in SettingsPanel privacy disclosure matches reality
-- [ ] **Privacy disclosure** — SettingsPanel disclosure accurately lists all stored keys; update `settings.privacy_body_2` in `en.json` (and propagate to all locale files) whenever storage changes
-- [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget is currently disabled; re-enable only when console errors are resolved and selector patches are verified against live DOM
-- [ ] **Dependency audit** — run `npm audit`; resolve high/critical before release
-- [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates; read changelogs for anything touching a11y, security, or CSP before upgrading
-- [ ] **Dead dependencies** — check `package.json` against actual `import` usage in `src/`; remove any package that is no longer imported anywhere; verify the removal does not break the build
-
----
-
-## Performance & functionality
+### Performance & Functionality
 
 - [ ] **CSS minification** — confirm `css: { transformer: 'lightningcss' }` is still present in `vite.config.js`; verify the CSS output in `dist/` is minified after `npm run build` (JS is minified by default via esbuild)
 - [ ] **Bundle size** — `npm run build`; total < 200 kB gzipped; note individual chunk sizes
@@ -61,9 +34,19 @@ Run history lives in [docs/MAINT-LOG.md](MAINT-LOG.md). Add a row there after ev
 - [ ] **AI refinement** — valid key rewrites text; invalid key fails gracefully
 - [ ] **Persistence** — theme, typeahead, and platform all restore correctly after reload
 
----
+### Privacy & Security
 
-## Deployment
+- [ ] **API key handling** — keys in `localStorage` only; never logged; never in any fetch body except the provider's own endpoint
+- [ ] **`rel` audit** — all `target="_blank"` links have `rel="noreferrer"`
+- [ ] **No `innerHTML`** — search codebase; all DOM content goes through React JSX
+- [ ] **`localStorage` inventory** — keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `recentFindings`, `userFindings`, plus one `apikey_<provider>` per configured AI provider; `sessionStorage` key: `lastSelectedId`; verify count in SettingsPanel privacy disclosure matches reality
+- [ ] **Privacy disclosure** — SettingsPanel disclosure accurately lists all stored keys; update `settings.privacy_body_2` in `en.json` (and propagate to all locale files) whenever storage changes
+- [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget is currently disabled; re-enable only when console errors are resolved and selector patches are verified against live DOM
+- [ ] **Dependency audit** — run `npm audit`; resolve high/critical before release
+- [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates; read changelogs for anything touching a11y, security, or CSP before upgrading
+- [ ] **Dead dependencies** — check `package.json` against actual `import` usage in `src/`; remove any package that is no longer imported anywhere; verify the removal does not break the build
+
+### Deployment
 
 > **⚠ All auto-deploys currently suspended (2026-04-27).** `netlify.toml` has `ignore = "exit 0"` so no build triggers on push. Vercel and GitHub Pages were already dormant. Skip the live-deployment checks below until deploys are re-enabled; run only the local build check.
 
@@ -78,18 +61,20 @@ Three targets are configured (all currently paused). See `docs/DEPLOYING.md` for
 
 ---
 
-## SEO (Phase 3 — before public launch)
+## Accessibility (A11Y)
 
-- [ ] **Uncomment SEO block** — remove HTML comment wrapper in `index.html`; fill in canonical URL and OG image URL
-- [ ] **Remove `noindex`** — replace with `<meta name="robots" content="index, follow">`
-- [ ] **`robots.txt`** — replace with permissive version (`Allow: /`); add sitemap reference
-- [ ] **`sitemap.xml`** — generate `public/sitemap.xml`; add `<link rel="sitemap">` in `index.html`
-- [ ] **OG image** — create 1200×630 `public/og-image.png`; update `og:image` and `twitter:image` URLs
-- [ ] **JSON-LD** — fill in real URLs in the `WebApplication` structured data block in `index.html`
+- [ ] **axe-core sweep** — run `npm run dev` and open DevTools; `@axe-core/react` runs automatically in development and logs all violations to the console; fix every violation before release; axe covers WCAG 2.0, 2.1, and 2.2 (Level A and AA) plus best practices
+- [ ] **Manual: keyboard** — tab through the entire interface; search, selection, copy, reset, refine, and settings must all be reachable and operable without a mouse; tab order follows visual reading order
+- [ ] **Manual: zoom** — zoom to 200% (text readable, no content hidden or truncated) and 400% (no horizontal scrolling required)
+- [ ] **Manual: screen reader** — test with NVDA + Firefox and VoiceOver + Safari; verify: result list announcements when a search fires, BottomSheet heading focus on select, copy/reset announcements via `announce()`, Settings open/close focus return, Drawer focus trap on mobile; `<html lang>` updates correctly when user switches language
+- [ ] **Manual: dark mode** — toggle dark theme; inspect all states: empty, results, selected defect, settings, AI active, all four priority badge levels
+- [ ] **Manual: responsive** — test at 375px, 768px, and 1280px; layout, text, and controls hold at each width
+- [ ] **Manual: prefers-contrast** — emulate `prefers-contrast: more`; contrast tokens apply without breaking layout
+- [ ] **Manual: text spacing** — apply WCAG text spacing bookmarklet; no content loss
 
 ---
 
-## i18n
+## Internationalization (i18n)
 
 The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` wired into all components. `en.json` is the source of truth. RTL locales (`ar-PS`, `ug`) automatically set `dir="rtl"` on `<html>`.
 
@@ -138,6 +123,17 @@ Plugins (`src/plugins/router/`, `src/plugins/announce/`, `src/plugins/debug/`) a
 - [ ] **Import isolation** — verify no plugin file imports from app-level code (`../../App`, `../../hooks`, `../../services`, `../../i18n`, `../../data`); plugins may only import from React, react-dom, and declared external packages
 - [ ] **External dependency audit** — list any non-React external packages imported by plugins (currently: `lucide-react` in `router/`); document these in the plugin's `README.md` under a "Dependencies" heading so any project adopting the plugin knows what to install
 - [ ] **Plugin README accuracy** — verify the export lists and API docs in `src/plugins/router/README.md`, `src/plugins/announce/README.md`, and `src/plugins/debug/README.md` match current exported symbols; update if hooks or components were added, renamed, or removed
+
+---
+
+## SEO (Phase 3 — before public launch)
+
+- [ ] **Uncomment SEO block** — remove HTML comment wrapper in `index.html`; fill in canonical URL and OG image URL
+- [ ] **Remove `noindex`** — replace with `<meta name="robots" content="index, follow">`
+- [ ] **`robots.txt`** — replace with permissive version (`Allow: /`); add sitemap reference
+- [ ] **`sitemap.xml`** — generate `public/sitemap.xml`; add `<link rel="sitemap">` in `index.html`
+- [ ] **OG image** — create 1200×630 `public/og-image.png`; update `og:image` and `twitter:image` URLs
+- [ ] **JSON-LD** — fill in real URLs in the `WebApplication` structured data block in `index.html`
 
 ---
 
