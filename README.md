@@ -235,6 +235,8 @@ Type any command exactly into the search bar — fires immediately with live sea
 | `debug help` | Show full command reference panel |
 | `debug all on` | Enable KB focus toast + announce toast |
 | `debug all off` | Disable KB focus toast + announce toast |
+| `debug names on` | Show accessible name tooltip on hover |
+| `debug names off` | Hide accessible name tooltip |
 
 ### Custom commands (A11yTextHelper)
 

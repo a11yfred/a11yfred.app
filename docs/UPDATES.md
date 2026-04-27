@@ -4,7 +4,7 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## April 27, 2026 — Focus fixes, debug plugin, Easter egg improvements, docs overhaul
+## April 27, 2026 — Focus fixes, debug plugin, NamesDebugger, Easter egg improvements, docs overhaul
 
 ### Focus management tightened
 
@@ -34,6 +34,10 @@ The debug plugin now includes a floating action button that can be enabled for a
 Easter eggs no longer wipe your search results when they fire. If you had results on screen and typed `pig latin`, your results come back when the language changes. The detail panel also stays open.
 
 New off commands: `pig latin off`, `pirate off`, `klingon off`, `valyrian off` all restore the UI language to English. `party mode off` restores the appearance to Auto.
+
+### Accessible name tooltip (`debug names on`)
+
+The debug plugin now has a hover tooltip mode. Type `debug names on` in the search bar and every element you mouse over shows a small tooltip with its accessible name and where that name comes from — `aria-label`, `aria-labelledby`, a `<label for>` association, `alt` text, or just text content. Useful for quickly spotting unlabeled controls without opening DevTools. Turn it off with `debug names off`.
 
 ### About page restructured
 

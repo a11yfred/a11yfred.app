@@ -31,6 +31,8 @@ export function DebugHelp({ open, onClose, customCommands = [] }) {
               <tbody>
                 <tr><td><code>debug all on</code></td><td>Enable all dev toasts (KB focus + announce)</td></tr>
                 <tr><td><code>debug all off</code></td><td>Disable all dev toasts</td></tr>
+                <tr><td><code>debug names on</code></td><td>Show accessible name tooltip on hover</td></tr>
+                <tr><td><code>debug names off</code></td><td>Hide accessible name tooltip</td></tr>
               </tbody>
             </table>
           </section>

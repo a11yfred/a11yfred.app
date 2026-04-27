@@ -19,7 +19,7 @@ import {
   useMediaQuery,
 } from './plugins/router/index.js'
 import { Announcer, announce } from './plugins/announce/index.js'
-import { FocusDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher } from './plugins/debug/index.js'
+import { FocusDebugger, NamesDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher } from './plugins/debug/index.js'
 import { playPartySound, playSqueak } from './utils/partySounds.js'
 import { I18nProvider, useT } from './i18n/index.jsx'
 
@@ -181,6 +181,7 @@ function AppContent({
   const viewAllTriggerRef = useRef(null)
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
   const [devAllEnabled, setDevAllEnabled] = useState(true)
+  const [namesEnabled, setNamesEnabled] = useState(false)
   const [deployTarget, setDeployTarget] = useState(null)  // null | 'netlify' | 'pages' | 'vercel' | 'off'
   const [debugHelpOpen, setDebugHelpOpen] = useState(false)
   const handleCloseSettings = () => {
@@ -390,8 +391,10 @@ function AppContent({
     if (eggOff !== undefined) { setLanguage(eggOff); setQuery(submittedQuery); return true }
     if (lq === 'party mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
     // Universal debug commands
-    if (lq === 'debug all on')  { setDevAllEnabled(true);  setQuery(submittedQuery); return true }
-    if (lq === 'debug all off') { setDevAllEnabled(false); setQuery(submittedQuery); return true }
+    if (lq === 'debug all on')    { setDevAllEnabled(true);  setQuery(submittedQuery); return true }
+    if (lq === 'debug all off')   { setDevAllEnabled(false); setQuery(submittedQuery); return true }
+    if (lq === 'debug names on')  { setNamesEnabled(true);  setQuery(''); return true }
+    if (lq === 'debug names off') { setNamesEnabled(false); setQuery(''); return true }
     const dt = DEPLOY_TARGETS[lq]
     if (dt !== undefined) { setDeployTarget(dt); setQuery(submittedQuery); return true }
     if (lq === 'debug help') { setDebugHelpOpen(true); setQuery(''); return true }
@@ -589,6 +592,7 @@ function AppContent({
         <FocusDebugger enabled={devAllEnabled} />
         <Announcer devEnabled={devAllEnabled} />
       </div>
+      <NamesDebugger enabled={namesEnabled} />
       <DeployBanner target={deployTarget} />
       <DebugLauncher enabled={false} onCommand={runCommand} />
       <DebugHelp

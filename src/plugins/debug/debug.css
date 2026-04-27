@@ -384,6 +384,37 @@
   font-family: monospace;
 }
 
+/* Names tooltip (debug names on/off) */
+.names-tooltip {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  background: rgb(10 10 20 / 0.92);
+  border: 1px solid rgb(160 220 255 / 0.3);
+  border-radius: 6px;
+  padding: 0.3rem 0.55rem;
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: rgb(200 240 160);
+  max-width: 280px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.names-tooltip__source {
+  color: rgb(160 220 255 / 0.7);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.names-tooltip__name {
+  color: rgb(200 240 160);
+}
+
 /* Reduced-motion overrides */
 @media (prefers-reduced-motion: reduce) {
   .announce-toast--fading,

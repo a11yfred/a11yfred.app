@@ -6,7 +6,7 @@ A11yTextHelper started as a clipboard tool. Type an accessibility defect ID, cop
 
 ## The Easter Eggs
 
-### Fake Languages
+### Silly Languages
 
 Type `pirate`, `pig latin`, `klingon`, or `valyrian` into the search box and the entire UI switches to that language. Every label, button, heading, and WCAG explanation — in character. The pirate locale calls its theme section "The Ship's Hull." The settings panel is "Captain's Quarters." These don't persist to localStorage (you'd be annoyed if you came back the next day and couldn't read the app), so they vanish the moment you save settings or refresh.
 

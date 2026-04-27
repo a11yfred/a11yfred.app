@@ -8,6 +8,8 @@ Recurring sweeps to run before releases, after major changes, or on a regular sc
 
 | Date | Passed | Failed | Deferred | N/A | Notes |
 | ---- | ------ | ------ | -------- | --- | ----- |
+| 2026-04-27 | 6 | 0 | 2 | 2 | NamesDebugger added; all linters clean; build 226kB gz; ABOUT.md "Silly Languages"; N/A: i18n (en.json unchanged), Electron; Deferred: manual a11y/keyboard |
+| 2026-04-27 | 6 | 0 | 0 | 2 | Post-commit verification pass — all linters clean, build clean; N/A: i18n (en.json unchanged), Electron |
 | 2026-04-27 | 6 | 0 | 2 | 2 | Fixed 9 ESLint errors in debug plugin (unused imports, ref-in-render, backdrop onClick); 4 CSS errors in debug.css (@keyframes expansion, hover multi-declaration); build clean 225kB gz; plugin import isolation verified; ABOUT.md restructured; TODO.md reordered with `[dormant]` tags; `debug skeleton` moved to custom commands; Deferred: manual a11y/keyboard checks; N/A: i18n (en.json unchanged), Electron |
 | 2026-04-25 | — | — | — | — | Renamed "defect" to "finding" throughout: hooks (useDefectSearch/Ratings → useFindingSearch/Ratings), services (getDefects → getFindings), components, and all i18n user-facing strings; returnFocus utility added to router plugin; [data-focus-return]:focus CSS rule added; Modal/BottomSheet/Drawer wired to returnFocus; `npm run translate` pending (run with ANTHROPIC_API_KEY to propagate new i18n keys to all locales) |
 | 2026-04-25 | — | — | — | — | Fixed Reset All not clearing view-all state — focusCount=true on the stale result list was landing focus on "N results" heading instead of idle home screen; handleResetAll now resets setViewAll/setViewAllConfirmOpen/setViewAllLoading |

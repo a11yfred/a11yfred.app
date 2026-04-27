@@ -4,7 +4,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-04-27 — Focus management, debug plugin, command system, docs overhaul
+## 2026-04-27 — Focus management, debug plugin, command system, NamesDebugger, docs overhaul
 
 ### Data
 
@@ -46,6 +46,18 @@ All significant changes to A11yTextHelper, newest first.
 - Renamed `src/data/mikeys-corpus.json` → `src/data/personal-corpus.json`; `.gitignore` updated
 - `DetailPanel.jsx`: `aria-busy="true"` on Save & Revise button while refining; spinning `<Loader2>` icon before "Revising…" text
 - `SettingsPanel.jsx`: API key validation bypassed on `localhost` / `127.0.0.1`
+
+### `NamesDebugger` — accessible name tooltip
+
+- New `src/plugins/debug/NamesDebugger.jsx`: cursor-following tooltip showing the accessible name of any hovered element and the source that provides it (`aria-label`, `aria-labelledby`, `label[for]`, `alt`, `title`, `placeholder`, `text content`, etc.)
+- Toggled via `debug names on` / `debug names off`; `enabled` defaults to `false` in App.jsx (off by default, manual activation required)
+- CSS: `.names-tooltip`, `.names-tooltip__source`, `.names-tooltip__name` added to `debug.css`
+- Exported from `src/plugins/debug/index.js`; documented in plugin `README.md` (exports table + component section + A11y Testing commands)
+- `debug names on/off` added to `DebugHelp.jsx` A11y Testing section and main `README.md` Universal commands table
+
+### ABOUT.md and docs
+
+- `ABOUT.md`: "Fake Languages" sub-heading renamed to "Silly Languages" (Klingon and Valyrian are considered real languages by some)
 
 ### Debug command reclassification
 

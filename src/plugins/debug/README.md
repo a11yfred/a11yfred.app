@@ -11,6 +11,7 @@ Zero production dependencies. Copy the folder into any React/Vite project and mo
 | Export | Type | Description |
 | ------ | ---- | ----------- |
 | `FocusDebugger` | component | KB focus toast + element flash on every focus event |
+| `NamesDebugger` | component | Cursor-following tooltip showing accessible name of hovered element |
 | `DeployBanner` | component | Fixed bottom-left banner showing active deployment target |
 | `AiDebugToast` | component | Toast for AI assist on/off toggle (project-specific addon) |
 | `useAiDebugToast` | hook | State + timer logic for `AiDebugToast` |
@@ -56,6 +57,8 @@ Type these in the search bar (live search on) or submit them (live search off). 
 | `debug help` | Show the full command reference panel |
 | `debug all on` | Enable KB focus toast + announce toast visualization |
 | `debug all off` | Disable KB focus toast + announce toast visualization |
+| `debug names on` | Show accessible name tooltip on hover |
+| `debug names off` | Hide accessible name tooltip |
 
 ---
 
@@ -108,6 +111,16 @@ Also briefly flashes the focused element with a teal overlay so you can spot it 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | `enabled` | boolean | `true` | Set `false` to suppress (e.g. after `debug all off`) |
+
+### `NamesDebugger`
+
+Cursor-following tooltip that shows the accessible name of the element under the pointer, plus the source that provides the name (`aria-label`, `aria-labelledby`, `label[for]`, `alt`, `text content`, etc.). Useful for verifying that every interactive element has the expected accessible name without opening DevTools.
+
+Triggered by `debug names on`; hidden by `debug names off`.
+
+| Prop | Type | Default | Description |
+| ---- | ---- | ------- | ----------- |
+| `enabled` | boolean | `true` | Show or hide the tooltip |
 
 ### `DeployBanner`
 
