@@ -4,7 +4,7 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## April 27, 2026 — Corpus renamed, revise button loading state
+## April 27, 2026 — Corpus renamed, revise button loading state, dev debug tooling
 
 ### Corpus file renamed
 
@@ -13,6 +13,14 @@ The personal corpus file has been renamed from `mikeys-corpus.json` to `personal
 ### Better feedback on the Revise button
 
 The "Save & Revise Selected" button now shows a small spinning icon in front of "Revising…" while the AI request is in progress. The button also signals `aria-busy` to assistive technology during the request, so screen readers know an update is on its way. If you have Reduce Motion turned on in your OS, the spinner appears but does not rotate.
+
+### Dev-only debug tooling (localhost only)
+
+On localhost, AI assist can now be enabled in Settings without entering a real API key — useful for testing the UI without burning API credits.
+
+Two new revision note triggers let you test the full AI refinement flow without a key: `debug ai assist` runs a 2-second fake loading state then appends your note to the description and remediation fields; `debug ok` does the same with placeholder text and a typewriter animation.
+
+A keyboard focus debugger now runs alongside the existing ARIA announcer toast. Whenever focus moves via keyboard, a blue toast shows which element was targeted (tag + identifying classes) and whether it has a visible `:focus` outline and matches `:focus-visible`. The focused element also briefly flashes teal so you can spot it without reading the toast. Both toasts stack vertically when they appear at the same time, and both fade down and out when they clear.
 
 ---
 

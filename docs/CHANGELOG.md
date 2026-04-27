@@ -4,7 +4,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-04-27 — Corpus file rename, AI refinement loading state
+## 2026-04-27 — Corpus rename, AI refinement loading state, dev debug tooling
 
 ### Data
 
@@ -15,6 +15,15 @@ All significant changes to A11yTextHelper, newest first.
 - `DetailPanel.jsx`: added `aria-busy="true"` to the Save & Revise button while `refining` is true
 - `DetailPanel.jsx`: added a spinning `<Loader2>` icon (Lucide, 12px, `aria-hidden="true"`) before "Revising…" text during the request
 - `index.css`: added `@keyframes spinner-spin` and `.detail-revising-spinner` class; spin disabled under `prefers-reduced-motion: reduce`
+
+### Dev debug tooling (localhost only)
+
+- `SettingsPanel.jsx`: API key validation bypassed on `localhost` / `127.0.0.1` so AI assist can be enabled without a real key during development
+- `DetailPanel.jsx`: added `debug ai assist` revision trigger — 2s fake loading, appends revision note to desc/rem; added `debug ok` trigger — 1.2s fake loading, typewriters in placeholder text; all existing `debug wrong/401/429/503/network` error triggers preserved
+- `FocusDebugger.jsx` (new): listens for `focusin` events; shows a blue KB Focus toast with element tag + up to 2 identifying classes, `:focus` outline true/false, and `:focus-visible` true/false; flashes a teal (`rgb(0 210 230)`) overlay over the focused element's bounding rect; flash skipped under `prefers-reduced-motion: reduce`
+- `Announcer.jsx`: announce toasts now fade down and out (0.4s) instead of snapping away
+- `App.jsx`: `<Announcer />` and `<FocusDebugger />` wrapped in shared `div.dev-toast-stack` so both pills stack vertically when visible simultaneously
+- `index.css`: `.dev-toast-stack` container, `.focus-toast` two-row layout with green/red `:focus`/`:focus-visible` indicators, `.focus-debug-flash` overlay, `@keyframes toast-fade-out` shared by both toasts
 
 ---
 

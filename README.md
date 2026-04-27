@@ -224,15 +224,31 @@ Type any of the following exactly into the search bar and the action fires immed
 | `klingon` | Switches to tlhIngan Hol (Klingon) |
 | `valyrian` | Switches to High Valyrian |
 
-### AI revision triggers (detail panel, requires AI enabled)
+### AI revision triggers (detail panel — AI assist must be enabled)
+
+With AI assist on, type any of the following exactly into the Revision Notes field and click Save & Revise:
 
 | Input in note field | Effect |
 | ------------------- | ------ |
-| `debug wrong` | Forces the "Revision Failed" error modal |
+| `debug ai assist` | 2s fake loading, then appends the note text to both desc and rem fields |
+| `debug ok` | 1.2s fake loading, then typewriters in placeholder text for both fields |
+| `debug wrong` | Triggers the generic "Revision Failed" error modal |
+| `debug 401` | Triggers the invalid API key error for the active provider |
+| `debug 429` | Triggers the rate limit error for the active provider |
+| `debug 503` | Triggers the service unavailable error for the active provider |
+| `debug network` | Triggers the network error modal |
 
-### Visual ARIA monitor
+On `localhost`, AI assist can be enabled in Settings without entering a real API key.
 
-When running on `localhost`, every `announce()` call renders a large toast at the bottom of the screen showing the message text and priority level (`polite` or `assertive`). Assertive toasts use a red background. This is dev-only — the toast is not rendered in production.
+### Dev-only visual debuggers
+
+Both debuggers are active only on `localhost` and render nothing in production.
+
+**ARIA announcer toast** — every `announce()` call renders a pill toast at the bottom of the screen with the message text and priority badge (`polite` or `assertive`). Assertive toasts use a red background. Toasts fade down and out after ~4 seconds.
+
+**KB Focus toast** — whenever keyboard focus moves, a blue pill shows which element was targeted (`<tag.class1.class2>`), whether it has a visible `:focus` outline (green ✓ / red ✗), and whether `:focus-visible` is currently matching. The focused element also briefly flashes teal so you can spot it visually without reading the toast.
+
+When both toasts are visible at the same time they stack vertically. Both respect `prefers-reduced-motion: reduce` — the teal flash is skipped entirely and the fade animation is instant.
 
 ---
 

@@ -46,7 +46,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Wire Microsoft Copilot** `[ai]` — requires `VITE_AZURE_OPENAI_ENDPOINT` env var set to a full Azure OpenAI deployment URL; implemented in `aiService.js` but untested; add the env var and verify the response parses correctly
 - [ ] **AI error surface** `[ai]` `[ux]` — refinement failures currently show a generic "Revision Failed" modal; parse HTTP status codes to show specific messages: 401 = invalid key, 429 = rate limit exceeded, 503 = service unavailable; network failures (no connection) should be distinguished from API errors; include the provider name in the message
 - [ ] **System prompt tuning** `[ai]` `[claude]` — test AI refinements across at least 20 different finding types covering a variety of SCs, priorities, and platforms; adjust the tone, length, and format instructions in `buildPrompt` in `aiService.js` if the output drifts from the established voice
-- [ ] **AI refinement loading state** `[ux]` `[a11y]` — replace the "Revising…" button text with an animated spinner using CSS; add `aria-busy="true"` to the button during the request; respect `prefers-reduced-motion` by disabling the spin animation and showing text only instead
+- ~~**AI refinement loading state** `[ux]` `[a11y]` — replace the "Revising…" button text with an animated spinner using CSS; add `aria-busy="true"` to the button during the request; respect `prefers-reduced-motion` by disabling the spin animation and showing text only instead~~
 
 ---
 
@@ -82,7 +82,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Accessibility and Design
 
-- [ ] **`prefers-reduced-motion` in JS animations** `[a11y]` `[claude]` — CSS transitions already honor `prefers-reduced-motion: reduce`; add a `window.matchMedia('(prefers-reduced-motion: reduce)')` check for any future JS-driven animations (e.g. the planned loading spinner on AI refinement)
+- ~~**`prefers-reduced-motion` in JS animations** `[a11y]` `[claude]` — CSS transitions already honor `prefers-reduced-motion: reduce`; add a `window.matchMedia('(prefers-reduced-motion: reduce)')` check for any future JS-driven animations (e.g. the planned loading spinner on AI refinement)~~
 - [ ] **Toggle design** `[design]` `[a11y]` — the current Toggle component uses a thin bar and circle; replace with a clearer on/off design using a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
 - [ ] **Gear icon replacement** `[design]` — the ⚙️ emoji renders differently across OSes and is not ideal for a refined UI; replace with an SVG gear icon that uses `currentColor` so it inherits the button's color and respects dark mode
 - [ ] **Monospace result description** `[design]` `[claude]` — consider rendering the `desc` preview in the result list using the mono font stack to more closely match how it will look when copied into a spreadsheet; evaluate whether it improves or hurts scannability
