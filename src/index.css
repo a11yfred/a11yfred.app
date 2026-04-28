@@ -1405,6 +1405,27 @@ input.search-input:focus {
   margin-bottom: var(--space-5);
 }
 
+.settings-wcag-filter-row {
+  display: flex;
+  gap: var(--space-6);
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.settings-radio-legend {
+  font-size: var(--fs-sub);
+  font-weight: 500;
+  color: var(--text);
+  padding: 0;
+  margin-bottom: var(--space-2);
+}
+
+.settings-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
 .settings-checkbox-label {
   display: flex;
   align-items: center;

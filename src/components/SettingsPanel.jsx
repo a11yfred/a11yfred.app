@@ -338,30 +338,55 @@ export default function SettingsPanel({
         </fieldset>
       </div>
 
-      {/* WCAG Version Filter */}
+      {/* WCAG Version + Level Filter */}
       <div className="settings-group">
         <p className="settings-group__label">{t('settings.wcag_filter_label')}</p>
         <p className="settings-group__desc">{t('settings.wcag_filter_desc')}</p>
-        <fieldset className="settings-fieldset">
-          <legend className="sr-only">{t('settings.wcag_filter_legend')}</legend>
-          <div className="settings-checkbox-group">
-            {[
-              { key: 'show20', labelKey: 'settings.wcag_filter_20' },
-              { key: 'show21', labelKey: 'settings.wcag_filter_21' },
-              { key: 'show22', labelKey: 'settings.wcag_filter_22' },
-            ].map(({ key, labelKey }) => (
-              <label key={key} className="settings-checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={wcagFilter?.[key] ?? true}
-                  onChange={e => onWcagFilterChange?.({ ...(wcagFilter || { show20: true, show21: true, show22: true }), [key]: e.target.checked })}
-                  className="settings-checkbox"
-                />
-                {t(labelKey)}
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <div className="settings-wcag-filter-row">
+          <fieldset className="settings-fieldset">
+            <legend className="settings-radio-legend">{t('settings.wcag_filter_legend')}</legend>
+            <div className="settings-radio-group">
+              {[
+                { value: '2.0', labelKey: 'settings.wcag_filter_20' },
+                { value: '2.1', labelKey: 'settings.wcag_filter_21' },
+                { value: '2.2', labelKey: 'settings.wcag_filter_22' },
+              ].map(({ value, labelKey }) => (
+                <label key={value} className="settings-checkbox-label">
+                  <input
+                    type="radio"
+                    name="wcag-version"
+                    value={value}
+                    checked={(wcagFilter?.maxVersion ?? '2.2') === value}
+                    onChange={() => onWcagFilterChange?.({ maxVersion: value, maxLevel: wcagFilter?.maxLevel ?? 'AA' })}
+                    className="settings-checkbox"
+                  />
+                  {t(labelKey)}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset className="settings-fieldset">
+            <legend className="settings-radio-legend">{t('settings.wcag_level_legend')}</legend>
+            <div className="settings-radio-group">
+              {[
+                { value: 'A',  labelKey: 'settings.wcag_level_a'  },
+                { value: 'AA', labelKey: 'settings.wcag_level_aa' },
+              ].map(({ value, labelKey }) => (
+                <label key={value} className="settings-checkbox-label">
+                  <input
+                    type="radio"
+                    name="wcag-level"
+                    value={value}
+                    checked={(wcagFilter?.maxLevel ?? 'AA') === value}
+                    onChange={() => onWcagFilterChange?.({ maxVersion: wcagFilter?.maxVersion ?? '2.2', maxLevel: value })}
+                    className="settings-checkbox"
+                  />
+                  {t(labelKey)}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        </div>
       </div>
 
       {/* Live search */}

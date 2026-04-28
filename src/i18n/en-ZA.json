@@ -282,5 +282,8 @@
   "settings.wcag_filter_20": "WCAG 2.0 entries",
   "settings.wcag_filter_21": "WCAG 2.1 additions",
   "settings.wcag_filter_22": "WCAG 2.2 additions",
-  "detail.back_aria": "[TODO: translate] Back to previous finding"
+  "detail.back_aria": "[TODO: translate] Back to previous finding",
+  "settings.wcag_level_legend": "[TODO: translate] Conformance level",
+  "settings.wcag_level_a": "[TODO: translate] Level A",
+  "settings.wcag_level_aa": "[TODO: translate] Level AA"
 }

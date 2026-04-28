@@ -21,7 +21,9 @@ const LOAD_TIMEOUT_MS = 8000
 
 const DEFAULT_RATING = { score: 0, starred: false, archived: false }
 
-const DEFAULT_WCAG_FILTER = { show20: true, show21: true, show22: true }
+const DEFAULT_WCAG_FILTER = { maxVersion: '2.2', maxLevel: 'AA' }
+const VERSION_ORDER = { '2.0': 0, '2.1': 1, '2.2': 2 }
+const LEVEL_ORDER   = { 'A': 0, 'AA': 1, 'AAA': 2 }
 
 export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userFindings = [], wcagFilter = DEFAULT_WCAG_FILTER, userOverrides = {}) {
   const [corpusFindings, setCorpusFindings] = useState([])
@@ -93,13 +95,13 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
   }, [allFindings, platform])
 
   const versionFiltered = useMemo(() => {
-    const { show20, show21, show22 } = wcagFilter
-    if (show20 && show21 && show22) return platformFiltered
+    const { maxVersion = '2.2', maxLevel = 'AA' } = wcagFilter ?? {}
+    const vMax = VERSION_ORDER[maxVersion] ?? 2
+    const lMax = LEVEL_ORDER[maxLevel] ?? 1
+    if (vMax === 2 && lMax >= 1) return platformFiltered
     return platformFiltered.filter(f => {
-      if (!f.wcagVersion) return true
-      if (f.wcagVersion === '2.0') return show20
-      if (f.wcagVersion === '2.1') return show21
-      if (f.wcagVersion === '2.2') return show22
+      if (f.wcagVersion && (VERSION_ORDER[f.wcagVersion] ?? 0) > vMax) return false
+      if (f.wcagLevel  && (LEVEL_ORDER[f.wcagLevel]   ?? 0) > lMax) return false
       return true
     })
   }, [platformFiltered, wcagFilter])

@@ -131,8 +131,11 @@ function AppShell() {
   const [wcagFilter, setWcagFilter] = useState(() => {
     try {
       const saved = localStorage.getItem('wcagFilter')
-      return saved ? JSON.parse(saved) : { show20: true, show21: true, show22: true }
-    } catch { return { show20: true, show21: true, show22: true } }
+      if (!saved) return { maxVersion: '2.2', maxLevel: 'AA' }
+      const parsed = JSON.parse(saved)
+      if ('show20' in parsed) return { maxVersion: '2.2', maxLevel: 'AA' }
+      return parsed
+    } catch { return { maxVersion: '2.2', maxLevel: 'AA' } }
   })
 
   return (
