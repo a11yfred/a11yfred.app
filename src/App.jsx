@@ -369,7 +369,7 @@ function AppContent({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [theme])
 
-  const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val'])
+  const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val', 'blt'])
   const RTL_LOCALES = new Set(['ar-PS', 'ug'])
 
   useEffect(() => {
@@ -440,14 +440,14 @@ function AppContent({
     document.title = appName ? `${appName} | ${selected.title}` : selected.title
   }, [selected, settingsOpen, aboutOpen, appName])
 
-  const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val' }
+  const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt' }
 
   const activateEasterEgg = (egg) => {
     setLanguage(egg)
     setQuery(submittedQuery) // restore visible field to last submitted term; preserves non-live results
   }
 
-  const EASTER_EGG_OFFS = { 'pig latin off': 'en', 'pirate off': 'en', 'klingon off': 'en', 'valyrian off': 'en' }
+  const EASTER_EGG_OFFS = { 'pig latin off': 'en', 'pirate off': 'en', 'klingon off': 'en', 'valyrian off': 'en', 'belter off': 'en' }
 
   const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify', 'debug deploy netlify': 'netlify', 'debug deploy pages': 'pages', 'debug deploy vercel': 'vercel' }
 

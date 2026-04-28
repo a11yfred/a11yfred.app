@@ -49,6 +49,7 @@ import pig from './pig.json'
 import pir from './pir.json'
 import tlh from './tlh.json'
 import val from './val.json'
+import blt from './blt.json'
 
 const MESSAGES = {
   en,
@@ -65,7 +66,7 @@ const MESSAGES = {
   ceb, ilo, cbk,
   ug, 'ar-PS': arPS, zgh, rhg, crh,
   eo, pjt,
-  pig, pir, tlh, val,
+  pig, pir, tlh, val, blt,
 }
 
 const I18nContext = createContext(null)

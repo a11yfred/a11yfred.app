@@ -79,6 +79,8 @@ export function DebugHelp({ open, onClose, customCommands = [] }) {
                 <tr><td><code>klingon off</code></td><td>Restore language to English</td></tr>
                 <tr><td><code>valyrian</code></td><td>Switch UI to High Valyrian</td></tr>
                 <tr><td><code>valyrian off</code></td><td>Restore language to English</td></tr>
+                <tr><td><code>belter</code></td><td>Switch UI to Lang Belta (The Expanse)</td></tr>
+                <tr><td><code>belter off</code></td><td>Restore language to English</td></tr>
                 <tr><td><code>party mode off</code></td><td>Restore appearance to Auto</td></tr>
               </tbody>
             </table>
