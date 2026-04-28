@@ -241,7 +241,7 @@
   "settings.theme_party_announce": "外観：パーティー！",
   "error.announce": "エラーが発生しました — 指摘事項ライブラリを読み込めませんでした。接続状態を確認してから再度お試しください。",
   "settings.language_current_is": "The current language is {label}.",
-  "settings.language_select_one": "Select one",
+  "settings.language_select_one": "Choose Language",
   "about.sources_heading": "Data Sources",
   "about.sources_body": "Entries are written in plain language, near-duplicates are consolidated, and each is aligned to a specific WCAG success criterion. Sources consulted include:",
   "about.sources_wcag": "WCAG 2.2 Understanding documents (W3C / WAI)",
@@ -305,5 +305,15 @@
   "results.pin": "TODO: translate — EN: \"Pin {title}\"",
   "results.unpin": "TODO: translate — EN: \"Unpin {title}\"",
   "results.pinned_heading": "TODO: translate — EN: \"Pinned\"",
-  "settings.clear_pins": "TODO: translate — EN: \"Clear Pins\""
+  "settings.clear_pins": "TODO: translate — EN: \"Clear Pins\"",
+  "about.feature_pinning_label": "Pinned Results",
+  "about.feature_pinning_body": "Pin any finding to keep it at the top across all searches and views. Use the priority arrows to rank others, star to float a finding to the very top, or archive to remove it from view.",
+  "results.back_to_top": "Back to Top",
+  "results.unpin_all": "Unpin All",
+  "results.count_badge": "{count} Results — All results for \"{filter}\"",
+  "settings.pinned_results_label": "Pinned Results",
+  "settings.pinned_results_desc": "Items you've pinned appear above all search results.",
+  "settings.pinned_results_empty": "Nothing pinned.",
+  "settings.unpin_all": "Unpin All",
+  "settings.unpin_all_done": "All Unpinned"
 }
