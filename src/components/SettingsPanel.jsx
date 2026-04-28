@@ -256,7 +256,7 @@ export default function SettingsPanel({
 
       {/* Language */}
       <div className="settings-group">
-        <p className="settings-group__label">{t('settings.language_label')}</p>
+        <h3 className="settings-group__label">{t('settings.language_label')}</h3>
         {(() => {
           const entry = LANGUAGES.find(l => l.value === language)
           const label = entry
@@ -311,7 +311,7 @@ export default function SettingsPanel({
 
       {/* Platform */}
       <div className="settings-group">
-        <p className="settings-group__label">{t('settings.platform_label')}</p>
+        <h3 className="settings-group__label">{t('settings.platform_label')}</h3>
         <p className="settings-group__desc">
           {platform === 'web' ? t('settings.platform_web_desc') : t('settings.platform_native_desc')}
         </p>
@@ -340,7 +340,7 @@ export default function SettingsPanel({
 
       {/* WCAG Version + Level Filter */}
       <div className="settings-group">
-        <p className="settings-group__label">{t('settings.wcag_filter_label')}</p>
+        <h3 className="settings-group__label">{t('settings.wcag_filter_label')}</h3>
         <p className="settings-group__desc">{t('settings.wcag_filter_desc')}</p>
         <div className="settings-wcag-filter-row">
           <fieldset className="settings-fieldset">
@@ -392,9 +392,9 @@ export default function SettingsPanel({
       {/* Live search */}
       <div className="settings-toggle-row">
         <div>
-          <label htmlFor="toggle-live-search" className="settings-toggle-label">
-            {t('settings.live_search_label')}
-          </label>
+          <h3 className="settings-toggle-label">
+            <label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>
+          </h3>
           <p className="settings-toggle-desc">
             {liveSearch ? t('settings.live_search_on') : t('settings.live_search_off')}
           </p>
@@ -405,9 +405,9 @@ export default function SettingsPanel({
       {/* Result voting */}
       <div className="settings-toggle-row">
         <div>
-          <label htmlFor="toggle-voting" className="settings-toggle-label">
-            {t('settings.voting_label')}
-          </label>
+          <h3 className="settings-toggle-label">
+            <label htmlFor="toggle-voting">{t('settings.voting_label')}</label>
+          </h3>
           <p className="settings-toggle-desc">
             {showVoting ? t('settings.voting_on') : t('settings.voting_off')}
           </p>
