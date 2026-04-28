@@ -29,7 +29,7 @@ const PROVIDER_CONFIGS = {
       'anthropic-dangerous-direct-browser-access': 'true',
     }),
     buildBody: (prompt) => JSON.stringify({
-      model: 'claude-sonnet-4-6',
+      model: localStorage.getItem('ai_model_anthropic') || 'claude-sonnet-4-6',
       max_tokens: 1024,
       messages: [{ role: 'user', content: prompt }],
     }),
@@ -46,7 +46,7 @@ const PROVIDER_CONFIGS = {
       'Authorization': `Bearer ${key}`,
     }),
     buildBody: (prompt) => JSON.stringify({
-      model: 'gpt-4o',
+      model: localStorage.getItem('ai_model_openai') || 'gpt-4o',
       max_tokens: 1024,
       messages: [{ role: 'user', content: prompt }],
     }),
@@ -58,7 +58,7 @@ const PROVIDER_CONFIGS = {
 
   google: {
     buildUrl: (key) =>
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${localStorage.getItem('ai_model_google') || 'gemini-1.5-flash'}:generateContent?key=${key}`,
     buildHeaders: () => ({
       'Content-Type': 'application/json',
     }),

@@ -11,6 +11,36 @@ const PROVIDERS = [
   { id: 'microsoft', label: 'Microsoft (Copilot)', placeholderKey: 'settings.api_placeholder_default'   },
 ]
 
+const PROVIDER_MODELS = {
+  anthropic: [
+    { id: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5 — fast, low cost' },
+    { id: 'claude-sonnet-4-6',         label: 'Claude Sonnet 4.6 — balanced (default)' },
+    { id: 'claude-opus-4-7',           label: 'Claude Opus 4.7 — most capable' },
+  ],
+  openai: [
+    { id: 'gpt-4o-mini', label: 'GPT-4o Mini — fast, low cost' },
+    { id: 'gpt-4o',      label: 'GPT-4o — balanced (default)' },
+  ],
+  google: [
+    { id: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash — fast (default)' },
+    { id: 'gemini-1.5-pro',   label: 'Gemini 1.5 Pro — most capable' },
+  ],
+  microsoft: [],
+}
+
+const MODEL_DEFAULTS = {
+  anthropic: 'claude-sonnet-4-6',
+  openai:    'gpt-4o',
+  google:    'gemini-1.5-flash',
+  microsoft: '',
+}
+
+function initModels() {
+  return Object.fromEntries(
+    PROVIDERS.map(p => [p.id, localStorage.getItem(`ai_model_${p.id}`) || MODEL_DEFAULTS[p.id] || ''])
+  )
+}
+
 const LANGUAGES = [
   // A
   { value: 'af',    label: 'Afrikaans' },
@@ -135,6 +165,8 @@ export default function SettingsPanel({
   const [savedProvider, setSavedProvider] = useState(
     () => localStorage.getItem('ai_provider') || 'anthropic'
   )
+  const [models, setModels] = useState(initModels)
+  const [savedModels, setSavedModels] = useState(initModels)
   const [savedPlatform, setSavedPlatform] = useState(platform)
   const [savedLiveSearch, setSavedLiveSearch] = useState(liveSearch)
   const [savedShowVoting, setSavedShowVoting] = useState(showVoting)
@@ -142,7 +174,7 @@ export default function SettingsPanel({
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
   const hasUnsaved = activeProvider !== savedProvider ||
-    PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id]) ||
+    PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id] || models[p.id] !== savedModels[p.id]) ||
     platform !== savedPlatform ||
     liveSearch !== savedLiveSearch ||
     showVoting !== savedShowVoting ||
@@ -199,7 +231,11 @@ export default function SettingsPanel({
       }
     })
     localStorage.setItem('ai_provider', activeProvider)
+    PROVIDERS.forEach(p => {
+      if (models[p.id]) localStorage.setItem(`ai_model_${p.id}`, models[p.id])
+    })
     setSavedKeys({ ...keys })
+    setSavedModels({ ...models })
     setSavedProvider(activeProvider)
     setSavedPlatform(platform)
     setSavedLiveSearch(liveSearch)
@@ -215,7 +251,7 @@ export default function SettingsPanel({
   }
 
   return (
-    <div ref={settingsPanelRef}>
+    <div ref={settingsPanelRef} className="settings-panel">
       <div className="settings-header">
         <button
           onClick={() => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } }}
@@ -450,6 +486,28 @@ export default function SettingsPanel({
         </div>
       </div>
 
+      {PROVIDER_MODELS[activeProvider].length > 0 && (
+        <div className="settings-provider-group">
+          <label htmlFor="active-model" className="settings-field-label">
+            {t('settings.model_label')}
+          </label>
+          <div className="settings-select-wrap">
+            <select
+              id="active-model"
+              value={models[activeProvider]}
+              onChange={e => setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
+              disabled={!aiEnabled}
+              className="settings-select"
+            >
+              {PROVIDER_MODELS[activeProvider].map(m => (
+                <option key={m.id} value={m.id}>{m.label}</option>
+              ))}
+            </select>
+            <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
+          </div>
+        </div>
+      )}
+
       {PROVIDERS.filter(p => p.id === activeProvider).map(p => (
         <div key={p.id} className="settings-key-group">
           <label htmlFor={`apikey-${p.id}`} className="settings-field-label">
@@ -578,6 +636,7 @@ export default function SettingsPanel({
               setResetConfirmOpen(false)
               setSavedKeys(Object.fromEntries(PROVIDERS.map(p => [p.id, ''])))
               setSavedProvider('anthropic')
+              setSavedModels(Object.fromEntries(PROVIDERS.map(p => [p.id, MODEL_DEFAULTS[p.id] || ''])))
               setSavedPlatform('web')
               setSavedLiveSearch(true)
               setSavedShowVoting(true)
@@ -643,10 +702,10 @@ function Toggle({ id, checked, onChange }) {
       />
       <span aria-hidden="true" role="presentation" className="toggle__track">
         <span role="presentation" className="toggle__thumb">
-          {checked
-            ? <span role="presentation" className="toggle__check" />
-            : <span role="presentation" className="toggle__ring" />
-          }
+          <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" className="toggle__power">
+            <line x1="5" y1="1.5" x2="5" y2="5" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M 3 2.4 A 3.2 3.2 0 1 0 7 2.4" fill="none" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
         </span>
       </span>
     </span>
