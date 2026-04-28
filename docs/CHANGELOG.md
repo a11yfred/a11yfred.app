@@ -4,6 +4,55 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-28 — Skip link, toggle power button, card fold, model selector, agentic AI backend, Fuse profiling, platform audit
+
+### Skip link (WCAG 2.4.1)
+
+- `App.jsx` — `<a href="#finding-search" className="skip-link">` added as first child of `.app-background`; targets the existing search input ID
+- `index.css` — `.skip-link`: `position: absolute`, `transform: translateY(calc(-100% - var(--space-4)))` (off-screen); `:focus-visible` slides it in via `transform: translateY(0)`
+- `en.json` — `common.skip_to_main`: "Skip to main content"; `[TODO: translate]` placeholder added to all 49 non-English locale files
+
+### Toggle — power button indicator
+
+- `SettingsPanel.jsx` — replaced two-state conditional (`.toggle__check` / `.toggle__ring`) with a single always-visible SVG: `<line x1="5" y1="1.5" x2="5" y2="5">` + `<path d="M 3 2.4 A 3.2 3.2 0 1 0 7 2.4">` in a `.toggle__power` `<svg>`
+- `index.css` — `.toggle__power`: `stroke: var(--border-control)` default; `stroke: var(--accent)` when checked; `stroke: var(--accent-bg)` on hover+checked; removed old `.toggle__check` / `.toggle__ring` rules
+
+### Result card fold on select
+
+- `ResultList.jsx` — `<ul className={`result-list${selected ? ' result-list--has-selection' : ''}`}>` — adds `result-list--has-selection` when a card is selected
+- `index.css` — `.result-item__sc` and `.result-item__desc` get `max-height` + `overflow: hidden` + transition; fold rule via `.result-list--has-selection .result-row:not(:has(.result-item--selected))` collapses `max-height` to 0 and `opacity` to 0; specificity ordering fixed to satisfy stylelint `no-descending-specificity`
+
+### Model selector in Settings
+
+- `SettingsPanel.jsx` — `PROVIDER_MODELS` map (Anthropic: haiku/sonnet/opus, OpenAI: mini/4o, Google: flash/pro, Microsoft: none); per-provider `<select>` between provider selector and API key input; persisted to `localStorage` as `ai_model_{provider}`; Reset All restores defaults; `hasUnsaved` includes model changes
+- `aiService.js` — Anthropic and OpenAI `buildBody` read `localStorage.getItem('ai_model_{provider}')` with per-provider defaults; Google `buildUrl` is dynamic (model embedded in URL)
+- `en.json` — `settings.model_label`: "Model"; `[TODO: translate]` placeholder added to all 49 non-English locale files
+
+### Agentic AI backend
+
+- `src/services/searchCorpusTool.js` (new) — `SEARCH_CORPUS_TOOL_SCHEMA` (Anthropic tool-use JSON schema); `searchCorpus(query, corpus, limit=3)` creates a Fuse instance from the provided corpus array and returns `{ id, title, scLabel, priority, desc, rem }` objects
+- `src/services/agenticAiService.js` (new) — `getAgenticRefinement({ finding, descText, remText, note, corpus })`: Anthropic-only multi-turn tool-use loop; `AGENTIC_SYSTEM_PROMPT` instructs model to always call `search_corpus` first; `MAX_TOOL_TURNS = 5` guard; dev logging per turn; `AiApiError` on limit exceeded
+- DetailPanel UI wiring is pending (tracked in TODO)
+
+### Fuse.js profiling
+
+- `useFindingSearch.js` — `performance.now()` wraps `fuse.search()`; `console.warn` in dev when elapsed >20 ms, including query and corpus size
+
+### Platform audit
+
+- `corpus.json` — ATH-050 ("Content Announced Incorrectly by Screen Readers"): `platform` corrected from `"web"` to `"both"`; `desc` and `rem` updated to cover VoiceOver/TalkBack alongside NVDA/JAWS
+- Current counts: web 32, both 42, native 2; 44/76 (57.9%) native-relevant, above 40% target; gaps documented in TODO
+
+### Tiles responsive to vertical height
+
+- `index.css` — `.result-item__desc`: `@media (height >= 700px)` raises `-webkit-line-clamp` to 3; `@media (height >= 900px)` raises it to 4
+
+### docs/FEATURE-STATUS.md (new)
+
+- Living tracker of all features with status (Complete / Partial / Backend Only / Stubbed / Not Started), percentage, and what's missing; grouped by phase
+
+---
+
 ## 2026-04-28 — Badge desktop labels, WCAG filter layout, settings a11y, debugger fix
 
 ### Badges — desktop labels (≥ 768px)

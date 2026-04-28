@@ -63,3 +63,5 @@ Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
 - [ ] `badge.source_prefix` — added: "Source: "
 - [ ] `badge.wcag_prefix` — added: "WCAG "
 - [ ] `badge.level_prefix` — added: "Level "
+- [ ] `common.skip_to_main` — added: "Skip to main content"
+- [ ] `settings.model_label` — added: "Model"
