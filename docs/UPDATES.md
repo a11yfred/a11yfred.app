@@ -4,6 +4,18 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 28, 2026 — Debug commands from search bar, toggle hover, contrast fixes
+
+### Debug commands work from the search bar
+
+All `debug` commands (`debug ok`, `debug wrong`, `debug 401`, etc.) now work when typed into the main search field. Previously they only worked from the Revision Notes field inside a finding panel. With live search on, debug commands still require pressing Enter — they won't fire on every keystroke.
+
+### Unchecked toggle hover state
+
+Settings toggles that are currently off now show a subtle hover state (darker border and outline) that matches the existing hover effect on checked toggles.
+
+---
+
 ## April 28, 2026 — Badge filters, shareable links, Easter egg fonts, debug polish
 
 ### Filter by badge

@@ -4,6 +4,36 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-28 — Axe contrast fixes, debug commands from search bar, toggle hover, skip link nav landmark
+
+### axe color-contrast fixes (round 2)
+
+- `src/plugins/debug/debug.css` — `.focus-toast` background changed from `rgb(20 100 200 / 0.9)` (semi-transparent; blended against white page to ~4.4:1 — white text at `opacity: 0.75` and red/green indicators at `opacity: 0.9` all failed) to solid `#0e2040` (dark navy); all three flagged elements now pass at their existing opacity values (~9:1 label, ~5.5:1 red indicator, ~8.8:1 green indicator)
+- `src/index.css` — `@keyframes typewriter-fade` opacity keyframes removed; `opacity` values were causing axe to catch `.search-typewriter__phrase` at fractional opacity mid-animation (~2.5:1 effective contrast); animation now uses `transform` only; slide-in/out motion preserved
+
+### axe color-contrast fixes (round 1) and other axe violations
+
+- `src/tokens.css` — `--text-faint: #767676` (4.54:1 on white, borderline — axe rounds to fail) → `#696969` (5.5:1); dark-mode value `#909090` unchanged
+- `src/plugins/router/Modal.jsx` — `aria-label={heading}` on panel element replaces `aria-labelledby` referencing a conditionally-rendered heading (unreliable when content is `{open && ...}`)
+- `src/plugins/router/Modal.jsx`, `Drawer.jsx`, `BottomSheet.jsx` — `inert=""` → `inert={true}` / `inert={...||undefined}`; `inert=""` evaluates to `false` in React 19
+- `src/App.jsx` — `<Announcer>` moved inside `<main>` landmark; `dev-toast-stack` gets `aria-hidden="true"`; skip link wrapped in `<nav aria-label="Skip navigation">` — all three changes resolve axe `region` violations
+
+### Debug commands from search bar
+
+- `src/App.jsx` — `debugPanelCmd` state; `runCommand` routes `debug ok/wrong/401/429/503/network` by setting `debugPanelCmd` (previously these only worked from the Revision Notes textarea); `handleQueryChange` skips live-search for any query starting with "debug" — those require ENTER regardless of live-search setting
+- `src/components/DetailPanel.jsx` — accepts `debugPanelCmd` / `onDebugPanelCmdHandled` props; `useEffect` reacts to the prop and fires the appropriate revision UI state directly, bypassing the `aiEnabled && canRevise` guard
+
+### Skip link icon
+
+- `src/App.jsx` — `<ChevronDown size={14} aria-hidden="true" />` added after the skip link label text
+- `src/index.css` — `.skip-link` gets `display: flex; align-items: center; gap: var(--space-1)`
+
+### Toggle off-state hover styles
+
+- `src/index.css` — three `:hover:not(:has(.toggle__input:checked))` rules add track background/border, thumb outline, and ring border changes to unchecked toggles, matching the existing on-toggle hover behavior
+
+---
+
 ## 2026-04-28 — Badge click filter, shareable search URLs, Easter egg fonts, toggle revert, skip link fix, debug help polish
 
 ### Badge click filter
