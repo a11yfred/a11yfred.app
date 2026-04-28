@@ -3,6 +3,22 @@ import { useState, useEffect } from 'react'
 const IS_DEV = typeof window !== 'undefined' &&
   (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
 
+const CONTROL_TAGS = new Set(['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'IMG'])
+const INTERACTIVE_ROLES = new Set([
+  'button', 'checkbox', 'radio', 'combobox', 'listbox', 'menuitem',
+  'menuitemcheckbox', 'menuitemradio', 'option', 'slider', 'spinbutton',
+  'switch', 'tab', 'textbox', 'treeitem', 'link', 'searchbox',
+])
+
+function isControl(el) {
+  const tag = el.tagName.toUpperCase()
+  if (CONTROL_TAGS.has(tag)) return true
+  if (tag === 'A' && el.hasAttribute('href')) return true
+  const role = el.getAttribute('role')
+  if (role && INTERACTIVE_ROLES.has(role)) return true
+  return false
+}
+
 function getAccessibleName(el) {
   const tag = el.tagName.toUpperCase()
 
@@ -77,7 +93,7 @@ export function NamesDebugger({ enabled = true }) {
 
     const handleOver = (e) => {
       const el = e.target
-      if (!el || el === document.body || el === document.documentElement) {
+      if (!el || el === document.body || el === document.documentElement || !isControl(el)) {
         setTooltip(null)
         return
       }
