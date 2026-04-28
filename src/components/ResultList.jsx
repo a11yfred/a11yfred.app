@@ -1,18 +1,25 @@
-import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Pin } from 'lucide-react'
+import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Pin, PinOff } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 
-export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin }) {
+export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin, onClearPins }) {
   const t = useT()
   if (!findings.length) return null
   return (
     <div className="pinned-section">
-      <h2 className="pinned-section__heading">
-        {t('results.pinned_heading')}
-        <span className="pinned-section__count">{findings.length}</span>
-      </h2>
+      <div className="pinned-section__header">
+        <h2 className="pinned-section__heading">
+          {t('results.pinned_heading')}
+          <span className="pinned-section__count">{findings.length}</span>
+        </h2>
+        {onClearPins && (
+          <button type="button" className="btn-tertiary pinned-unpin-all-btn" onClick={onClearPins}>
+            {t('results.unpin_all')}
+          </button>
+        )}
+      </div>
       <ResultList
         results={findings}
         selected={selected}
@@ -32,10 +39,11 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
   )
 }
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel }) {
   const t = useT()
   const itemRefs = useRef({})
   const focusNextRef = useRef(null)
+  const countHeadingRef = useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
 
   useEffect(() => {
@@ -54,8 +62,15 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     <div className="result-list-section">
       {!hideCount && <div className="results-meta">
         <div className="results-count-row">
-          <h2 ref={countRef} tabIndex={countRef ? -1 : undefined} className="results-count">
-            {t('results.count', { count: results.length })}
+          <h2
+            ref={el => { countHeadingRef.current = el; if (countRef) countRef.current = el }}
+            tabIndex={-1}
+            className="results-count"
+          >
+            {filterLabel
+              ? t('results.count_badge', { count: results.length, filter: filterLabel })
+              : t('results.count', { count: results.length })
+            }
           </h2>
           {onCopyLink && (
             <button
@@ -150,6 +165,67 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               className={`result-row${archived ? ' result-row--archived' : ''}`}
               style={{ '--result-i': index }}
             >
+              <div className="result-card-wrap">
+                {onPin && (
+                  <button
+                    type="button"
+                    className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                    aria-label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                    title={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                    disabled={archived}
+                    onClick={handlePin}
+                  >
+                    {pinned
+                      ? <PinOff size={12} aria-hidden="true" fill="currentColor" />
+                      : <Pin size={12} aria-hidden="true" fill="none" />
+                    }
+                  </button>
+                )}
+                <button
+                  ref={el => { itemRefs.current[finding.id] = el }}
+                  aria-label={cardLabel}
+                  aria-disabled={archived ? 'true' : undefined}
+                  tabIndex={archived ? -1 : undefined}
+                  onClick={() => { if (!archived) onSelect(finding) }}
+                  onKeyDown={e => {
+                    if (e.key === 'ArrowDown') { e.preventDefault(); itemRefs.current[results[index + 1]?.id]?.focus() }
+                    if (e.key === 'ArrowUp')   { e.preventDefault(); itemRefs.current[results[index - 1]?.id]?.focus() }
+                  }}
+                  className={`result-item${isSelected ? ' result-item--selected' : ''}${onPin ? ' result-item--pinnable' : ''}`}
+                >
+                <div className="result-item__header">
+                  <span className="result-item__title">
+                    {isSelected && <span aria-hidden="true" className="result-item__dot" />}
+                    {finding.title}
+                  </span>
+                  <span className="result-item__badges">
+                    <span className="priority-badge" style={archived ? undefined : { background: p.bg, color: p.color }}>
+                      <span className="badge-prefix">{t('badge.severity_prefix')}</span>
+                      {t(p.key)}
+                    </span>
+                    {finding.source && (
+                      <span className="source-badge">
+                        <span className="badge-prefix">{t('badge.source_prefix')}</span>
+                        {finding.source}
+                      </span>
+                    )}
+                    {finding.wcagVersion && finding.wcagLevel && (
+                      <span className="wcag-badge">
+                        <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
+                        {finding.wcagVersion},{' '}
+                        <span className="badge-prefix">{t('badge.level_prefix')}</span>
+                        {finding.wcagLevel}
+                      </span>
+                    )}
+                  </span>
+                </div>
+
+                <div className="result-item__sc">{finding.scLabel}</div>
+
+                <div className="result-item__desc">{finding.desc}</div>
+              </button>
+              </div>
+
               {showVoting && <div className="result-vote-col">
                 <button
                   className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
@@ -201,62 +277,25 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   }
                 </button>
               </div>}
-
-              <div className="result-card-wrap">
-                {onPin && (
-                  <button
-                    type="button"
-                    className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
-                    aria-label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
-                    title={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
-                    onClick={handlePin}
-                  >
-                    <Pin size={12} aria-hidden="true" fill={pinned ? 'currentColor' : 'none'} />
-                  </button>
-                )}
-                <button
-                  ref={el => { itemRefs.current[finding.id] = el }}
-                  aria-label={cardLabel}
-                  tabIndex={archived ? -1 : undefined}
-                  onClick={() => { if (!archived) onSelect(finding) }}
-                  className={`result-item${isSelected ? ' result-item--selected' : ''}${onPin ? ' result-item--pinnable' : ''}`}
-                >
-                <div className="result-item__header">
-                  <span className="result-item__title">
-                    {isSelected && <span aria-hidden="true" className="result-item__dot" />}
-                    {finding.title}
-                  </span>
-                  <span className="result-item__badges">
-                    <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
-                      <span className="badge-prefix">{t('badge.severity_prefix')}</span>
-                      {t(p.key)}
-                    </span>
-                    {finding.source && (
-                      <span className="source-badge">
-                        <span className="badge-prefix">{t('badge.source_prefix')}</span>
-                        {finding.source}
-                      </span>
-                    )}
-                    {finding.wcagVersion && finding.wcagLevel && (
-                      <span className="wcag-badge">
-                        <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
-                        {finding.wcagVersion},{' '}
-                        <span className="badge-prefix">{t('badge.level_prefix')}</span>
-                        {finding.wcagLevel}
-                      </span>
-                    )}
-                  </span>
-                </div>
-
-                <div className="result-item__sc">{finding.scLabel}</div>
-
-                <div className="result-item__desc">{finding.desc}</div>
-              </button>
-              </div>
             </li>
           )
         })}
       </ul>
+      {results.length > 50 && (
+        <div className="view-all-section">
+          <button
+            type="button"
+            className="btn-secondary back-to-top-btn"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+              countHeadingRef.current?.focus()
+            }}
+          >
+            <ChevronUp size={16} aria-hidden="true" />
+            {t('results.back_to_top')}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

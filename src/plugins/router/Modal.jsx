@@ -18,11 +18,12 @@ import { returnFocus } from './returnFocus.js'
  * Props:
  *   open      boolean                              — whether the modal is visible
  *   onClose   fn                                   — called on Escape or default OK button
- *   heading   string                               — visible heading and aria-label for the dialog
- *   actions   [{ label, onClick, className }]      — footer buttons; defaults to a single OK button
- *   children  node                                 — rendered inside the modal body
+ *   heading     string                               — aria-label for the dialog and visible heading text
+ *   headingIcon ReactNode                           — optional icon rendered before heading text (visual only)
+ *   actions     [{ label, onClick, className }]     — footer buttons; defaults to a single OK button
+ *   children    node                                — rendered inside the modal body
  */
-export default function Modal({ open, onClose, heading = 'Information', actions, children, returnFocusRef }) {
+export default function Modal({ open, onClose, heading = 'Information', headingIcon, actions, children, returnFocusRef }) {
   const autoTriggerRef = useRef(null)
   const panelRef = useRef(null)
 
@@ -82,9 +83,8 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
         {open && (
           <>
             <div className="modal-body">
-              <h2
-                className="modal-heading"
-              >
+              <h2 className="modal-heading">
+                {headingIcon && <span className="modal-heading-icon" aria-hidden="true">{headingIcon}</span>}
                 {heading}
               </h2>
               <div className="modal-content">{children}</div>

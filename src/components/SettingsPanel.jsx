@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ChevronLeft, ChevronRight, ChevronDown, Check, Info } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronDown, Check, Info, PinOff, AlertTriangle } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -175,6 +175,7 @@ export default function SettingsPanel({
   const [savedAiEnabled, setSavedAiEnabled] = useState(aiEnabled)
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
+  const [unpinAllDone, setUnpinAllDone] = useState(false)
   const hasUnsaved = activeProvider !== savedProvider ||
     PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id] || models[p.id] !== savedModels[p.id]) ||
     platform !== savedPlatform ||
@@ -376,6 +377,19 @@ export default function SettingsPanel({
         </fieldset>
       </div>
 
+      {/* Live search */}
+      <div className="settings-toggle-row">
+        <div>
+          <h3 className="settings-toggle-label">
+            <label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>
+          </h3>
+          <p className="settings-toggle-desc">
+            {liveSearch ? t('settings.live_search_on') : t('settings.live_search_off')}
+          </p>
+        </div>
+        <Toggle id="toggle-live-search" checked={liveSearch} onChange={onToggleLiveSearch} />
+      </div>
+
       {/* WCAG Version + Level Filter */}
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.wcag_filter_label')}</h3>
@@ -427,19 +441,6 @@ export default function SettingsPanel({
         </div>
       </div>
 
-      {/* Live search */}
-      <div className="settings-toggle-row">
-        <div>
-          <h3 className="settings-toggle-label">
-            <label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>
-          </h3>
-          <p className="settings-toggle-desc">
-            {liveSearch ? t('settings.live_search_on') : t('settings.live_search_off')}
-          </p>
-        </div>
-        <Toggle id="toggle-live-search" checked={liveSearch} onChange={onToggleLiveSearch} />
-      </div>
-
       {/* Result voting */}
       <div className="settings-toggle-row">
         <div>
@@ -451,6 +452,31 @@ export default function SettingsPanel({
           </p>
         </div>
         <Toggle id="toggle-voting" checked={showVoting} onChange={onToggleVoting} />
+      </div>
+
+      {/* Pinned Results */}
+      <div className="settings-toggle-row">
+        <div>
+          <h3 className="settings-toggle-label">{t('settings.pinned_results_label')}</h3>
+          <p className="settings-toggle-desc">
+            {hasPins ? t('settings.pinned_results_desc') : t('settings.pinned_results_empty')}
+          </p>
+        </div>
+        <button
+          type="button"
+          className={`btn-accent settings-unpin-all-btn${unpinAllDone ? ' field-btn--success' : ''}`}
+          disabled={!hasPins}
+          onClick={() => {
+            onClearPins?.()
+            setUnpinAllDone(true)
+            setTimeout(() => setUnpinAllDone(false), 1500)
+          }}
+        >
+          {unpinAllDone
+            ? <><Check size={14} aria-hidden="true" />{' '}{t('settings.unpin_all_done')}</>
+            : <><PinOff size={14} aria-hidden="true" />{' '}{t('settings.unpin_all')}</>
+          }
+        </button>
       </div>
 
       {/* ── AI Assist ───────────────────────────────── */}
@@ -550,20 +576,11 @@ export default function SettingsPanel({
           {t('settings.privacy_button')}
         </button>
         <div className="settings-footer-actions">
-          {hasPins && (
-            <button
-              type="button"
-              onClick={onClearPins}
-              className="btn-secondary settings-clear-pins-btn"
-            >
-              {t('settings.clear_pins')}
-            </button>
-          )}
           <button
             type="button"
             ref={resetButtonRef}
             onClick={() => setResetConfirmOpen(true)}
-            className="btn-secondary settings-reset-btn"
+            className="btn-danger settings-reset-btn"
           >
             {t('settings.reset_all')}
           </button>
@@ -663,7 +680,10 @@ export default function SettingsPanel({
           },
         ]}
       >
-        <p>{t('settings.confirm_reset_all_body')}</p>
+        <p>
+          <AlertTriangle size={15} aria-hidden="true" className="settings-reset-warning-icon" />
+          {' '}{t('settings.confirm_reset_all_body')}
+        </p>
       </Modal>
 
       <Modal

@@ -26,6 +26,7 @@ import useUserFindings from './hooks/useUserFindings.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'
 import usePinnedFindings from './hooks/usePinnedFindings.js'
+import { PRIORITY_VARS } from './data/priorityStyles.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 
@@ -194,7 +195,16 @@ function AppContent({
   const aboutTriggerRef = useRef(null)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
   const viewAllTriggerRef = useRef(null)
-  const [badgeFilter, setBadgeFilter] = useState(null)
+  const [badgeFilter, setBadgeFilter] = useState(() => {
+    const badge = new URLSearchParams(window.location.search).get('badge')
+    if (!badge) return null
+    const colonIdx = badge.indexOf(':')
+    if (colonIdx < 0) return null
+    const type = badge.slice(0, colonIdx)
+    const value = badge.slice(colonIdx + 1)
+    if (!['priority', 'source', 'wcag'].includes(type) || !value) return null
+    return { type, value }
+  })
   const resultsCountRef = useRef(null)
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
   const [devAllEnabled, setDevAllEnabled] = useState(true)
@@ -292,6 +302,16 @@ function AppContent({
     [allFindings, pinnedIds]
   )
 
+  const badgeFilterLabel = useMemo(() => {
+    if (!badgeFilter) return null
+    if (badgeFilter.type === 'priority') {
+      const p = PRIORITY_VARS[badgeFilter.value]
+      return p ? t(p.key) : badgeFilter.value
+    }
+    if (badgeFilter.type === 'wcag') return `WCAG ${badgeFilter.value}`
+    return badgeFilter.value
+  }, [badgeFilter, t])
+
   const badgeResults = useMemo(() => {
     if (!badgeFilter) return []
     return sortedFindings.filter(f => {
@@ -304,6 +324,9 @@ function AppContent({
 
   const handleBadgeClick = (filter) => {
     setBadgeFilter(filter)
+    setQuery('')
+    setSubmittedQuery('')
+    syncBadgeUrl(filter)
     setSelected(null)
     navigate('/')
     setTimeout(() => resultsCountRef.current?.focus(), 80)
@@ -507,13 +530,25 @@ function AppContent({
     history.replaceState(null, '', url.pathname + url.search + url.hash)
   }
 
+  const syncBadgeUrl = (filter) => {
+    const url = new URL(window.location.href)
+    if (filter) {
+      url.searchParams.set('badge', `${filter.type}:${filter.value}`)
+      url.searchParams.delete('q')
+    } else {
+      url.searchParams.delete('badge')
+    }
+    history.replaceState(null, '', url.pathname + url.search + url.hash)
+  }
+
   const handleQueryChange = (q) => {
-    if (q) setBadgeFilter(null)
+    if (q) { setBadgeFilter(null); syncBadgeUrl(null) }
     if (liveSearch) {
       const egg = EASTER_EGGS[q.trim().toLowerCase()]
       if (egg) { activateEasterEgg(egg); return }
       // debug commands always require ENTER — never fire on each keystroke
       if (!q.trim().toLowerCase().startsWith('debug') && runCommand(q)) return
+      syncSearchUrl(q)
     }
     if (q && viewAll) navigate('/')
     setQuery(q)
@@ -527,6 +562,7 @@ function AppContent({
 
   const handleSearch = () => {
     setBadgeFilter(null)
+    syncBadgeUrl(null)
     const egg = EASTER_EGGS[query.trim().toLowerCase()]
     if (egg) { activateEasterEgg(egg); return }
     if (runCommand(query)) return
@@ -635,6 +671,7 @@ function AppContent({
           showVoting={showVoting}
           pinnedIds={pinnedIds}
           onPin={togglePin}
+          onClearPins={clearPins}
         />
       )}
       {dataError
@@ -695,6 +732,7 @@ function AppContent({
                     countRef={resultsCountRef}
                     pinnedIds={pinnedIds}
                     onPin={togglePin}
+                    filterLabel={badgeFilterLabel}
                   />
                 )
               : (

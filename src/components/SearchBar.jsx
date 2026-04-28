@@ -31,7 +31,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
   }, [prefersReducedMotion, query.length])
 
   const handleKeyDown = (e) => {
-    if (!liveSearch && e.key === 'Enter') onSearch()
+    if (e.key === 'Enter') onSearch()
   }
 
   const handlePhraseClick = (phrase) => {

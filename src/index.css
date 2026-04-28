@@ -573,6 +573,15 @@ body:has(.modal-panel.is-open) .drawer-panel {
   font-weight: 700;
   color: var(--text);
   margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.modal-heading-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--error);
 }
 
 .modal-content {
@@ -587,6 +596,12 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 .modal-content p:last-child {
   margin-bottom: 0;
+}
+
+.settings-reset-warning-icon {
+  vertical-align: middle;
+  color: var(--error);
+  flex-shrink: 0;
 }
 
 .modal-footer {
@@ -825,14 +840,31 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 
+/* ─── Danger button (red secondary — destructive actions only) ── */
+
+.btn-danger {
+  border: 1px solid var(--error);
+  background: transparent;
+  color: var(--error);
+  font-weight: 500;
+  transition: var(--transition-btn);
+}
+
 /* ─── Shared disabled state — before hover rules (specificity order) */
 
 .btn-ghost:disabled,
 .btn-secondary:disabled,
 .btn-accent:disabled,
-.btn-tertiary:disabled {
+.btn-tertiary:disabled,
+.btn-danger:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.btn-danger:not(:disabled):hover {
+  background: var(--error);
+  color: var(--bg);
+  border-color: var(--error);
 }
 
 .btn-ghost:not(:disabled):hover,
@@ -971,13 +1003,13 @@ select:disabled {
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: transparent;
-  color: var(--text-faint);
+  color: var(--accent);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  transition: color var(--duration-fast), background var(--duration-fast);
+  transition: color var(--duration-fast), background var(--duration-fast), border-color var(--duration-fast);
 }
 
 .result-vote-btn:focus-visible {
@@ -987,7 +1019,7 @@ select:disabled {
 
 .result-vote-btn:disabled {
   opacity: 0.3;
-  cursor: default;
+  cursor: not-allowed;
   pointer-events: none;
 }
 
@@ -1010,18 +1042,26 @@ select:disabled {
 }
 
 .result-vote-btn:hover:not(:disabled) {
-  color: var(--text-muted);
-  background: var(--bg-subtle);
+  color: var(--accent-text);
+  background: var(--accent-bg);
 }
 
-.result-vote-btn--active {
-  color: var(--accent);
+.result-vote-btn:active:not(:disabled) {
+  color: #fff;
+  background: var(--accent);
+}
+
+.result-vote-btn--active,
+.result-vote-btn--active:hover:not(:disabled) {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .result-vote-score {
   font-size: var(--fs-small);
   font-weight: 600;
-  color: var(--text-muted);
+  color: var(--text);
   line-height: 1;
   min-width: 24px;
   text-align: center;
@@ -1057,10 +1097,13 @@ select:disabled {
 }
 
 /* Archived row: dim everything except the restore button */
+.result-row--archived .result-card-wrap {
+  cursor: not-allowed;
+}
+
 .result-row--archived .result-item {
-  opacity: 0.4;
   pointer-events: none;
-  cursor: default;
+  filter: grayscale(1);
 }
 
 .result-item:hover:not(.result-item--selected) {
@@ -1076,14 +1119,14 @@ select:disabled {
 .result-pin-btn {
   position: absolute;
   top: 8px;
-  left: 8px;
+  inset-inline-start: 8px;
   z-index: 1;
   width: 22px;
   height: 22px;
   border-radius: var(--radius-sm);
   border: 1px solid transparent;
   background: transparent;
-  color: var(--text-faint);
+  color: var(--accent);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1106,14 +1149,33 @@ select:disabled {
   outline-offset: 1px;
 }
 
-/* Push card content right when pin button is present */
+.result-row--archived .result-pin-btn {
+  opacity: 0.4;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+/* Push card content to inline-start when pin button is present (RTL-aware) */
 .result-item--pinnable {
-  padding-left: 2.25rem;
+  padding-inline-start: 2.25rem;
 }
 
 /* Pinned section above main results */
 .pinned-section {
   margin-bottom: 0.5rem;
+}
+
+.pinned-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  padding-inline-end: calc(28px + var(--space-2));
+}
+
+.pinned-unpin-all-btn:not(:disabled):hover {
+  color: var(--text);
 }
 
 .pinned-section__heading {
@@ -1122,8 +1184,8 @@ select:disabled {
   gap: var(--space-2);
   font-size: var(--fs-body);
   font-weight: 600;
-  color: var(--accent-text);
-  margin-bottom: var(--space-2);
+  color: var(--text);
+  margin-bottom: 0;
 }
 
 .pinned-section__count {
@@ -1138,6 +1200,7 @@ select:disabled {
 
 .result-row--archived .result-vote-btn:not(.result-vote-btn--archive) {
   opacity: 0.3;
+  filter: grayscale(1);
 }
 
 .result-row--archived .result-vote-score {
@@ -1146,7 +1209,19 @@ select:disabled {
 
 .result-row--archived .result-vote-btn--archive {
   opacity: 1;
-  color: var(--accent);
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Dark-mode overrides: --accent (#7f77dd) is too light for white text (3.76:1);
+   use --accent-bg (#26215c, 14.9:1) as the filled bg instead. */
+[data-theme="dark"] .result-vote-btn:active:not(:disabled),
+[data-theme="dark"] .result-vote-btn.result-vote-btn--active,
+[data-theme="dark"] .result-vote-btn--active:hover:not(:disabled),
+[data-theme="dark"] .result-row--archived .result-vote-btn--archive {
+  background: var(--accent-bg);
+  border-color: var(--accent);
 }
 
 .result-item__header {
@@ -1215,6 +1290,13 @@ select:disabled {
   color: var(--wcag-text);
 }
 
+.result-row--archived .priority-badge,
+.result-row--archived .source-badge,
+.result-row--archived .wcag-badge {
+  background: var(--border);
+  color: var(--text-faint);
+}
+
 .badge-prefix {
   display: none;
 }
@@ -1227,6 +1309,7 @@ select:disabled {
 
 .result-item__sc {
   font-size: var(--fs-body);
+  font-weight: 600;
   color: var(--text-muted);
   margin-top: var(--space-1);
   margin-bottom: 0;
@@ -1257,6 +1340,12 @@ select:disabled {
 
 .result-item--selected .result-item__desc {
   color: var(--text-muted);
+}
+
+.result-row--archived .result-item__badges,
+.result-row--archived .result-item__sc,
+.result-row--archived .result-item__desc {
+  opacity: 0.4;
 }
 
 @media (height >= 700px) {
@@ -1516,6 +1605,18 @@ input.search-input:focus {
   text-align: center;
 }
 
+.back-to-top-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-size: var(--fs-body);
+  min-height: 3rem;
+}
+
 /* ─── Settings panel ──────────────────────────────────────── */
 
 .settings-header {
@@ -1728,7 +1829,8 @@ input.search-input:focus {
   min-width: 0;
 }
 
-.settings-language-change-btn {
+.settings-language-change-btn,
+.settings-unpin-all-btn {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -2473,8 +2575,8 @@ input.search-input:focus {
   align-items: center;
   gap: 4px;
   font-size: var(--fs-body);
-  padding: 2px 8px;
-  border-radius: 4px;
+  padding: 0.375em 0.75em;
+  border-radius: var(--radius);
   white-space: nowrap;
 }
 
@@ -2483,6 +2585,7 @@ input.search-input:focus {
 .btn-secondary.field-btn--success {
   color: var(--success);
   border-color: var(--success);
+  opacity: 1;
 }
 
 .btn-accent.field-btn--success:hover,
@@ -2671,7 +2774,7 @@ input.search-input:focus {
 
 .about-coming li {
   font-size: var(--fs-body);
-  color: var(--text-muted);
+  color: var(--text);
   line-height: 1.5;
 }
 
@@ -2780,24 +2883,40 @@ input.search-input:focus {
 :root[lang="pig"] .about-subheading,
 :root[lang="pig"] .settings-title,
 :root[lang="pig"] .settings-section-heading,
+:root[lang="pig"] .settings-group__label,
+:root[lang="pig"] .settings-toggle-label,
+:root[lang="pig"] .settings-modal-subhead,
+:root[lang="pig"] .settings-field-label,
 :root[lang="pig"] .detail-title,
 :root[lang="pig"] .detail-related__heading,
+:root[lang="pig"] .detail-label,
 :root[lang="pig"] .sheet-heading,
 :root[lang="pig"] .modal-heading,
 :root[lang="pig"] .no-results__heading,
 :root[lang="pig"] .not-found__heading,
+:root[lang="pig"] .search-label,
+:root[lang="pig"] .results-count,
+:root[lang="pig"] .pinned-section__heading,
 :root[lang="sim"] .page-title,
 :root[lang="sim"] .about-title,
 :root[lang="sim"] .about-section-heading,
 :root[lang="sim"] .about-subheading,
 :root[lang="sim"] .settings-title,
 :root[lang="sim"] .settings-section-heading,
+:root[lang="sim"] .settings-group__label,
+:root[lang="sim"] .settings-toggle-label,
+:root[lang="sim"] .settings-modal-subhead,
+:root[lang="sim"] .settings-field-label,
 :root[lang="sim"] .detail-title,
 :root[lang="sim"] .detail-related__heading,
+:root[lang="sim"] .detail-label,
 :root[lang="sim"] .sheet-heading,
 :root[lang="sim"] .modal-heading,
 :root[lang="sim"] .no-results__heading,
-:root[lang="sim"] .not-found__heading {
+:root[lang="sim"] .not-found__heading,
+:root[lang="sim"] .search-label,
+:root[lang="sim"] .results-count,
+:root[lang="sim"] .pinned-section__heading {
   font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
@@ -2808,24 +2927,40 @@ input.search-input:focus {
 :root[lang="pir"] .about-subheading,
 :root[lang="pir"] .settings-title,
 :root[lang="pir"] .settings-section-heading,
+:root[lang="pir"] .settings-group__label,
+:root[lang="pir"] .settings-toggle-label,
+:root[lang="pir"] .settings-modal-subhead,
+:root[lang="pir"] .settings-field-label,
 :root[lang="pir"] .detail-title,
 :root[lang="pir"] .detail-related__heading,
+:root[lang="pir"] .detail-label,
 :root[lang="pir"] .sheet-heading,
 :root[lang="pir"] .modal-heading,
 :root[lang="pir"] .no-results__heading,
 :root[lang="pir"] .not-found__heading,
+:root[lang="pir"] .search-label,
+:root[lang="pir"] .results-count,
+:root[lang="pir"] .pinned-section__heading,
 :root[lang="val"] .page-title,
 :root[lang="val"] .about-title,
 :root[lang="val"] .about-section-heading,
 :root[lang="val"] .about-subheading,
 :root[lang="val"] .settings-title,
 :root[lang="val"] .settings-section-heading,
+:root[lang="val"] .settings-group__label,
+:root[lang="val"] .settings-toggle-label,
+:root[lang="val"] .settings-modal-subhead,
+:root[lang="val"] .settings-field-label,
 :root[lang="val"] .detail-title,
 :root[lang="val"] .detail-related__heading,
+:root[lang="val"] .detail-label,
 :root[lang="val"] .sheet-heading,
 :root[lang="val"] .modal-heading,
 :root[lang="val"] .no-results__heading,
-:root[lang="val"] .not-found__heading {
+:root[lang="val"] .not-found__heading,
+:root[lang="val"] .search-label,
+:root[lang="val"] .results-count,
+:root[lang="val"] .pinned-section__heading {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
 }
 
@@ -2836,24 +2971,40 @@ input.search-input:focus {
 :root[lang="qya"] .about-subheading,
 :root[lang="qya"] .settings-title,
 :root[lang="qya"] .settings-section-heading,
+:root[lang="qya"] .settings-group__label,
+:root[lang="qya"] .settings-toggle-label,
+:root[lang="qya"] .settings-modal-subhead,
+:root[lang="qya"] .settings-field-label,
 :root[lang="qya"] .detail-title,
 :root[lang="qya"] .detail-related__heading,
+:root[lang="qya"] .detail-label,
 :root[lang="qya"] .sheet-heading,
 :root[lang="qya"] .modal-heading,
 :root[lang="qya"] .no-results__heading,
 :root[lang="qya"] .not-found__heading,
+:root[lang="qya"] .search-label,
+:root[lang="qya"] .results-count,
+:root[lang="qya"] .pinned-section__heading,
 :root[lang="sjn"] .page-title,
 :root[lang="sjn"] .about-title,
 :root[lang="sjn"] .about-section-heading,
 :root[lang="sjn"] .about-subheading,
 :root[lang="sjn"] .settings-title,
 :root[lang="sjn"] .settings-section-heading,
+:root[lang="sjn"] .settings-group__label,
+:root[lang="sjn"] .settings-toggle-label,
+:root[lang="sjn"] .settings-modal-subhead,
+:root[lang="sjn"] .settings-field-label,
 :root[lang="sjn"] .detail-title,
 :root[lang="sjn"] .detail-related__heading,
+:root[lang="sjn"] .detail-label,
 :root[lang="sjn"] .sheet-heading,
 :root[lang="sjn"] .modal-heading,
 :root[lang="sjn"] .no-results__heading,
-:root[lang="sjn"] .not-found__heading {
+:root[lang="sjn"] .not-found__heading,
+:root[lang="sjn"] .search-label,
+:root[lang="sjn"] .results-count,
+:root[lang="sjn"] .pinned-section__heading {
   font-family: "Book Antiqua", "Palatino Linotype", Palatino, serif;
 }
 
@@ -2864,36 +3015,60 @@ input.search-input:focus {
 :root[lang="tlh"] .about-subheading,
 :root[lang="tlh"] .settings-title,
 :root[lang="tlh"] .settings-section-heading,
+:root[lang="tlh"] .settings-group__label,
+:root[lang="tlh"] .settings-toggle-label,
+:root[lang="tlh"] .settings-modal-subhead,
+:root[lang="tlh"] .settings-field-label,
 :root[lang="tlh"] .detail-title,
 :root[lang="tlh"] .detail-related__heading,
+:root[lang="tlh"] .detail-label,
 :root[lang="tlh"] .sheet-heading,
 :root[lang="tlh"] .modal-heading,
 :root[lang="tlh"] .no-results__heading,
 :root[lang="tlh"] .not-found__heading,
+:root[lang="tlh"] .search-label,
+:root[lang="tlh"] .results-count,
+:root[lang="tlh"] .pinned-section__heading,
 :root[lang="hod"] .page-title,
 :root[lang="hod"] .about-title,
 :root[lang="hod"] .about-section-heading,
 :root[lang="hod"] .about-subheading,
 :root[lang="hod"] .settings-title,
 :root[lang="hod"] .settings-section-heading,
+:root[lang="hod"] .settings-group__label,
+:root[lang="hod"] .settings-toggle-label,
+:root[lang="hod"] .settings-modal-subhead,
+:root[lang="hod"] .settings-field-label,
 :root[lang="hod"] .detail-title,
 :root[lang="hod"] .detail-related__heading,
+:root[lang="hod"] .detail-label,
 :root[lang="hod"] .sheet-heading,
 :root[lang="hod"] .modal-heading,
 :root[lang="hod"] .no-results__heading,
 :root[lang="hod"] .not-found__heading,
+:root[lang="hod"] .search-label,
+:root[lang="hod"] .results-count,
+:root[lang="hod"] .pinned-section__heading,
 :root[lang="nws"] .page-title,
 :root[lang="nws"] .about-title,
 :root[lang="nws"] .about-section-heading,
 :root[lang="nws"] .about-subheading,
 :root[lang="nws"] .settings-title,
 :root[lang="nws"] .settings-section-heading,
+:root[lang="nws"] .settings-group__label,
+:root[lang="nws"] .settings-toggle-label,
+:root[lang="nws"] .settings-modal-subhead,
+:root[lang="nws"] .settings-field-label,
 :root[lang="nws"] .detail-title,
 :root[lang="nws"] .detail-related__heading,
+:root[lang="nws"] .detail-label,
 :root[lang="nws"] .sheet-heading,
 :root[lang="nws"] .modal-heading,
 :root[lang="nws"] .no-results__heading,
-:root[lang="nws"] .not-found__heading {
+:root[lang="nws"] .not-found__heading,
+:root[lang="nws"] .search-label,
+:root[lang="nws"] .results-count,
+:root[lang="nws"] .pinned-section__heading {
   font-family: Impact, "Arial Black", sans-serif;
 }
 
@@ -2904,36 +3079,60 @@ input.search-input:focus {
 :root[lang="blt"] .about-subheading,
 :root[lang="blt"] .settings-title,
 :root[lang="blt"] .settings-section-heading,
+:root[lang="blt"] .settings-group__label,
+:root[lang="blt"] .settings-toggle-label,
+:root[lang="blt"] .settings-modal-subhead,
+:root[lang="blt"] .settings-field-label,
 :root[lang="blt"] .detail-title,
 :root[lang="blt"] .detail-related__heading,
+:root[lang="blt"] .detail-label,
 :root[lang="blt"] .sheet-heading,
 :root[lang="blt"] .modal-heading,
 :root[lang="blt"] .no-results__heading,
 :root[lang="blt"] .not-found__heading,
+:root[lang="blt"] .search-label,
+:root[lang="blt"] .results-count,
+:root[lang="blt"] .pinned-section__heading,
 :root[lang="nds"] .page-title,
 :root[lang="nds"] .about-title,
 :root[lang="nds"] .about-section-heading,
 :root[lang="nds"] .about-subheading,
 :root[lang="nds"] .settings-title,
 :root[lang="nds"] .settings-section-heading,
+:root[lang="nds"] .settings-group__label,
+:root[lang="nds"] .settings-toggle-label,
+:root[lang="nds"] .settings-modal-subhead,
+:root[lang="nds"] .settings-field-label,
 :root[lang="nds"] .detail-title,
 :root[lang="nds"] .detail-related__heading,
+:root[lang="nds"] .detail-label,
 :root[lang="nds"] .sheet-heading,
 :root[lang="nds"] .modal-heading,
 :root[lang="nds"] .no-results__heading,
 :root[lang="nds"] .not-found__heading,
+:root[lang="nds"] .search-label,
+:root[lang="nds"] .results-count,
+:root[lang="nds"] .pinned-section__heading,
 :root[lang="csp"] .page-title,
 :root[lang="csp"] .about-title,
 :root[lang="csp"] .about-section-heading,
 :root[lang="csp"] .about-subheading,
 :root[lang="csp"] .settings-title,
 :root[lang="csp"] .settings-section-heading,
+:root[lang="csp"] .settings-group__label,
+:root[lang="csp"] .settings-toggle-label,
+:root[lang="csp"] .settings-modal-subhead,
+:root[lang="csp"] .settings-field-label,
 :root[lang="csp"] .detail-title,
 :root[lang="csp"] .detail-related__heading,
+:root[lang="csp"] .detail-label,
 :root[lang="csp"] .sheet-heading,
 :root[lang="csp"] .modal-heading,
 :root[lang="csp"] .no-results__heading,
-:root[lang="csp"] .not-found__heading {
+:root[lang="csp"] .not-found__heading,
+:root[lang="csp"] .search-label,
+:root[lang="csp"] .results-count,
+:root[lang="csp"] .pinned-section__heading {
   font-family: "Courier New", Courier, monospace;
 }
 
@@ -2944,12 +3143,20 @@ input.search-input:focus {
 :root[lang="dot"] .about-subheading,
 :root[lang="dot"] .settings-title,
 :root[lang="dot"] .settings-section-heading,
+:root[lang="dot"] .settings-group__label,
+:root[lang="dot"] .settings-toggle-label,
+:root[lang="dot"] .settings-modal-subhead,
+:root[lang="dot"] .settings-field-label,
 :root[lang="dot"] .detail-title,
 :root[lang="dot"] .detail-related__heading,
+:root[lang="dot"] .detail-label,
 :root[lang="dot"] .sheet-heading,
 :root[lang="dot"] .modal-heading,
 :root[lang="dot"] .no-results__heading,
-:root[lang="dot"] .not-found__heading {
+:root[lang="dot"] .not-found__heading,
+:root[lang="dot"] .search-label,
+:root[lang="dot"] .results-count,
+:root[lang="dot"] .pinned-section__heading {
   font-family: Georgia, "Times New Roman", serif;
 }
 
@@ -2960,12 +3167,20 @@ input.search-input:focus {
 :root[lang="tok"] .about-subheading,
 :root[lang="tok"] .settings-title,
 :root[lang="tok"] .settings-section-heading,
+:root[lang="tok"] .settings-group__label,
+:root[lang="tok"] .settings-toggle-label,
+:root[lang="tok"] .settings-modal-subhead,
+:root[lang="tok"] .settings-field-label,
 :root[lang="tok"] .detail-title,
 :root[lang="tok"] .detail-related__heading,
+:root[lang="tok"] .detail-label,
 :root[lang="tok"] .sheet-heading,
 :root[lang="tok"] .modal-heading,
 :root[lang="tok"] .no-results__heading,
-:root[lang="tok"] .not-found__heading {
+:root[lang="tok"] .not-found__heading,
+:root[lang="tok"] .search-label,
+:root[lang="tok"] .results-count,
+:root[lang="tok"] .pinned-section__heading {
   font-family: "Segoe Print", "Comic Sans MS", cursive;
 }
 
@@ -2976,12 +3191,20 @@ input.search-input:focus {
 :root[lang="dov"] .about-subheading,
 :root[lang="dov"] .settings-title,
 :root[lang="dov"] .settings-section-heading,
+:root[lang="dov"] .settings-group__label,
+:root[lang="dov"] .settings-toggle-label,
+:root[lang="dov"] .settings-modal-subhead,
+:root[lang="dov"] .settings-field-label,
 :root[lang="dov"] .detail-title,
 :root[lang="dov"] .detail-related__heading,
+:root[lang="dov"] .detail-label,
 :root[lang="dov"] .sheet-heading,
 :root[lang="dov"] .modal-heading,
 :root[lang="dov"] .no-results__heading,
-:root[lang="dov"] .not-found__heading {
+:root[lang="dov"] .not-found__heading,
+:root[lang="dov"] .search-label,
+:root[lang="dov"] .results-count,
+:root[lang="dov"] .pinned-section__heading {
   font-family: "Old English Text MT", "Palatino Linotype", fantasy;
 }
 
@@ -2992,12 +3215,20 @@ input.search-input:focus {
 :root[lang="mnd"] .about-subheading,
 :root[lang="mnd"] .settings-title,
 :root[lang="mnd"] .settings-section-heading,
+:root[lang="mnd"] .settings-group__label,
+:root[lang="mnd"] .settings-toggle-label,
+:root[lang="mnd"] .settings-modal-subhead,
+:root[lang="mnd"] .settings-field-label,
 :root[lang="mnd"] .detail-title,
 :root[lang="mnd"] .detail-related__heading,
+:root[lang="mnd"] .detail-label,
 :root[lang="mnd"] .sheet-heading,
 :root[lang="mnd"] .modal-heading,
 :root[lang="mnd"] .no-results__heading,
-:root[lang="mnd"] .not-found__heading {
+:root[lang="mnd"] .not-found__heading,
+:root[lang="mnd"] .search-label,
+:root[lang="mnd"] .results-count,
+:root[lang="mnd"] .pinned-section__heading {
   font-family: "Lucida Console", "Courier New", monospace;
 }
 
@@ -3008,12 +3239,20 @@ input.search-input:focus {
 :root[lang="ali"] .about-subheading,
 :root[lang="ali"] .settings-title,
 :root[lang="ali"] .settings-section-heading,
+:root[lang="ali"] .settings-group__label,
+:root[lang="ali"] .settings-toggle-label,
+:root[lang="ali"] .settings-modal-subhead,
+:root[lang="ali"] .settings-field-label,
 :root[lang="ali"] .detail-title,
 :root[lang="ali"] .detail-related__heading,
+:root[lang="ali"] .detail-label,
 :root[lang="ali"] .sheet-heading,
 :root[lang="ali"] .modal-heading,
 :root[lang="ali"] .no-results__heading,
-:root[lang="ali"] .not-found__heading {
+:root[lang="ali"] .not-found__heading,
+:root[lang="ali"] .search-label,
+:root[lang="ali"] .results-count,
+:root[lang="ali"] .pinned-section__heading {
   font-family: "Arial Black", Impact, sans-serif;
 }
 
