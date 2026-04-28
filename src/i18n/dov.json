@@ -67,6 +67,7 @@
   "results.aria_label": "Lovaas",
   "results.loading_announce": "Sirval lovaas",
   "results.count": "{count} Lovaas",
+  "results.badge_filter_aria": "",
   "results.vote_hint": "Suleyk lovaas alta ar sahlo — alta suleyk grind fin lovaas alta. Mid yestë. Qoth vanwa. (Ece grind).",
   "results.star": "Mid {title}",
   "results.unstar": "Du mid {title}",
@@ -150,6 +151,7 @@
   "detail.undo_last_aria": "Du grindë yestë: {label}",
   "detail.undo_last_announce": "Grindë du-nahl.",
   "detail.copy_all_text": "Gein Mul",
+  "detail.copy_all_copied_text": "",
   "detail.copy_all_aria": "Gein tinvaak ar grindë mul",
   "detail.copy_all_announce": "Siiv Lovaas / Tinvaak ar Grindë Lovaas geinëa",
   "detail.reset_all_fields_text": "Grind Mul",
@@ -293,5 +295,8 @@
   "kofi.support": "Epsë lein",
   "kofi.aria": "Epsë Mikey fin Ko-fi (pant lovaas)",
   "kofi.title": "Ko-fi antanë parwa",
-  "kofi.tooltip": "Alta lovaas"
+  "kofi.tooltip": "Alta lovaas",
+  "results.copy_link": "TODO: translate — EN: \"Copy link\"",
+  "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
+  "results.copied_link": "TODO: translate — EN: \"Copied!\""
 }

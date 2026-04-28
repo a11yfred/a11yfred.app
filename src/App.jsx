@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
 import { Settings, X, Info, ExternalLink } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError } from './components/ResultList.jsx'
@@ -122,8 +122,8 @@ function AppShell() {
   const partyUnlocked = saveCount >= 2 || theme === 'party'
   const [liveSearch, setLiveSearch] = useState(() => localStorage.getItem('liveSearch') !== 'false')
   const [showVoting, setShowVoting] = useState(() => localStorage.getItem('showVoting') !== 'false')
-  const [query, setQuery] = useState('')
-  const [submittedQuery, setSubmittedQuery] = useState('')
+  const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get('q') || '')
+  const [submittedQuery, setSubmittedQuery] = useState(() => new URLSearchParams(window.location.search).get('q') || '')
   const [searchKey, setSearchKey] = useState(0)
   const [selected, setSelected] = useState(null)
   const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
@@ -193,6 +193,8 @@ function AppContent({
   const aboutTriggerRef = useRef(null)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
   const viewAllTriggerRef = useRef(null)
+  const [badgeFilter, setBadgeFilter] = useState(null)
+  const resultsCountRef = useRef(null)
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
   const [devAllEnabled, setDevAllEnabled] = useState(true)
   const [namesEnabled, setNamesEnabled] = useState(false)
@@ -281,6 +283,23 @@ function AppContent({
   const activeQuery = liveSearch ? query : submittedQuery
   const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
+
+  const badgeResults = useMemo(() => {
+    if (!badgeFilter) return []
+    return sortedFindings.filter(f => {
+      if (badgeFilter.type === 'priority') return f.priority === badgeFilter.value
+      if (badgeFilter.type === 'source')   return f.source === badgeFilter.value
+      if (badgeFilter.type === 'wcag')     return f.wcagVersion === badgeFilter.value
+      return false
+    })
+  }, [sortedFindings, badgeFilter])
+
+  const handleBadgeClick = (filter) => {
+    setBadgeFilter(filter)
+    setSelected(null)
+    navigate('/')
+    setTimeout(() => resultsCountRef.current?.focus(), 80)
+  }
 
   // Announce result count after a non-live-search submission only.
   // Live search skips this — announcing on every keystroke would be unbearable.
@@ -456,20 +475,28 @@ function AppContent({
     if (eggOffBase !== null && eggOffBase in EASTER_EGGS) { setLanguage('en'); setQuery(submittedQuery); return true }
     if (lq === 'party mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
     // Universal debug commands
-    if (lq === 'debug all on')    { setDevAllEnabled(true);  setNamesEnabled(true);  setQuery(submittedQuery); return true }
-    if (lq === 'debug all off')   { setDevAllEnabled(false); setNamesEnabled(false); setQuery(submittedQuery); return true }
-    if (lq === 'debug names on')  { setNamesEnabled(true);  setQuery(''); return true }
-    if (lq === 'debug names off') { setNamesEnabled(false); setQuery(''); return true }
+    if (lq === 'debug all' || lq === 'debug all on')    { setDevAllEnabled(true);  setNamesEnabled(true);  setQuery(submittedQuery); return true }
+    if (lq === 'debug all off')                         { setDevAllEnabled(false); setNamesEnabled(false); setQuery(submittedQuery); return true }
+    if (lq === 'debug names' || lq === 'debug names on')  { setNamesEnabled(true);  setQuery(''); return true }
+    if (lq === 'debug names off')                         { setNamesEnabled(false); setQuery(''); return true }
     const dt = DEPLOY_TARGETS[lq]
     if (dt !== undefined) { setDeployTarget(dt); setQuery(submittedQuery); return true }
     if (lq === 'debug help') { setDebugHelpOpen(true); setQuery(''); return true }
     // Custom debug commands
-    if (lq === 'debug ai assist on')  { setAiEnabled(true);  fireAiDebugToast('on');  setQuery(''); return true }
-    if (lq === 'debug ai assist off') { setAiEnabled(false); fireAiDebugToast('off'); setQuery(''); return true }
+    if (lq === 'debug ai assist' || lq === 'debug ai assist on')  { setAiEnabled(true);  fireAiDebugToast('on');  setQuery(''); return true }
+    if (lq === 'debug ai assist off')                             { setAiEnabled(false); fireAiDebugToast('off'); setQuery(''); return true }
     return false
   }
 
+  const syncSearchUrl = (q) => {
+    const url = new URL(window.location.href)
+    if (q) url.searchParams.set('q', q)
+    else url.searchParams.delete('q')
+    history.replaceState(null, '', url.pathname + url.search + url.hash)
+  }
+
   const handleQueryChange = (q) => {
+    if (q) setBadgeFilter(null)
     if (liveSearch) {
       const egg = EASTER_EGGS[q.trim().toLowerCase()]
       if (egg) { activateEasterEgg(egg); return }
@@ -481,10 +508,12 @@ function AppContent({
       handleSelectFinding(null)
       returnToPanelRef.current = false // eslint-disable-line react-hooks/immutability
       setSubmittedQuery('')
+      syncSearchUrl('')
     }
   }
 
   const handleSearch = () => {
+    setBadgeFilter(null)
     const egg = EASTER_EGGS[query.trim().toLowerCase()]
     if (egg) { activateEasterEgg(egg); return }
     if (runCommand(query)) return
@@ -492,6 +521,7 @@ function AppContent({
     setSubmittedQuery(query)
     setSearchKey(k => k + 1)
     handleSelectFinding(null)
+    syncSearchUrl(query)
   }
 
   const handleOpenSettings = () => {
@@ -609,8 +639,26 @@ function AppContent({
                   onStar={toggleStar}
                   onArchive={toggleArchive}
                   showVoting={showVoting}
+                  onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                 />
               )
+              : badgeFilter
+                ? (
+                  <ResultList
+                    key="badge"
+                    results={badgeResults}
+                    selected={selected}
+                    onSelect={handleSelectFinding}
+                    query=""
+                    ratings={ratings}
+                    onUpvote={upvote}
+                    onDownvote={downvote}
+                    onStar={toggleStar}
+                    onArchive={toggleArchive}
+                    showVoting={showVoting}
+                    countRef={resultsCountRef}
+                  />
+                )
               : (
                 <div className="view-all-section">
                   <button
@@ -667,10 +715,10 @@ function AppContent({
         customCommands={[
           {
             heading: 'Custom — A11yTextHelper',
+            note: <>Append <code>off</code> to disable (e.g. <code>debug ai assist off</code>).</>,
             rows: [
-              { cmd: 'debug skeleton',      desc: 'Show skeleton loading state' },
-              { cmd: 'debug ai assist on',  desc: 'Enable AI assist + show toast' },
-              { cmd: 'debug ai assist off', desc: 'Disable AI assist + show toast' },
+              { cmd: 'debug skeleton',   desc: 'Skeleton loading state' },
+              { cmd: 'debug ai assist',  desc: 'AI Assist + debug toast' },
             ],
           },
           {
@@ -693,7 +741,11 @@ function AppContent({
       {theme === 'party' && <PartyBanner />}
 
       <div className="app-background" inert={backgroundInert ? '' : undefined} aria-hidden={backgroundInert ? true : undefined}>
-        <a href="#finding-search" className="skip-link">{t('common.skip_to_main')}</a>
+        <a
+          href="#/"
+          className="skip-link"
+          onClick={(e) => { e.preventDefault(); document.getElementById('finding-search')?.focus() }}
+        >{t('common.skip_to_main')}</a>
         <Header
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}
@@ -753,6 +805,7 @@ function AppContent({
             onSelect={handleSelectFinding}
             onSelectRelated={handleSelectRelated}
             onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
+            onBadgeClick={handleBadgeClick}
             locale={language}
             userOverridesHook={userOverridesHook}
             contributionQueueHook={contributionQueueHook}

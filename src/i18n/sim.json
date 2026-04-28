@@ -67,6 +67,7 @@
   "results.aria_label": "Ara'novor",
   "results.loading_announce": "Ven ara'novor sul sul",
   "results.count": "{count} Ara'novor",
+  "results.badge_filter_aria": "",
   "results.vote_hint": "Boolprop ori/nayc — ori snasa cuyir ori jii. Saviin jii. Heturam bic dag dag. (Myshuno liser).",
   "results.star": "Saviin {title}",
   "results.unstar": "Draar saviin {title}",
@@ -150,6 +151,7 @@
   "detail.undo_last_aria": "Draar ori smustle: {label}",
   "detail.undo_last_announce": "Ori smustle draar.",
   "detail.copy_all_text": "Sploob ori",
+  "detail.copy_all_copied_text": "",
   "detail.copy_all_aria": "Sploob ara'novor me firby nurbs cuun",
   "detail.copy_all_announce": "Ara'novor Sploob / Hooba me Snasa Firby Nurbs myshuno",
   "detail.reset_all_fields_text": "Ret ori",
@@ -293,5 +295,8 @@
   "kofi.support": "Naas Mikey",
   "kofi.aria": "Naas Mikey haar Ko-fi (ven haar)",
   "kofi.title": "Ko-fi nooboo sploob",
-  "kofi.tooltip": "Ori hooba noobie"
+  "kofi.tooltip": "Ori hooba noobie",
+  "results.copy_link": "TODO: translate — EN: \"Copy link\"",
+  "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
+  "results.copied_link": "TODO: translate — EN: \"Copied!\""
 }

@@ -26,10 +26,16 @@
       "x button",
       "dismiss",
       "voiceover",
-      "talkback"
+      "talkback",
+      "custom view",
+      "UIView",
+      "contentDescription",
+      "accessibilityLabel",
+      "native view",
+      "custom control"
     ],
-    "desc": "A button or link does not have an accessible name. Screen readers announce it as \"button\" or \"link\" with no context, so users cannot tell what it does.",
-    "rem": "Add a visible label or an aria-label attribute that describes what the control does. For example, a close button inside a modal should say \"Close\" or \"Close dialog\", not just show an X icon."
+    "desc": "A button, link, or custom native control does not have an accessible name. Screen readers announce it as \"button\" or \"link\" with no context, so users cannot tell what it does. On native platforms, custom UIView or View subclasses may lack accessibilityLabel (iOS) or contentDescription (Android).",
+    "rem": "For web: add aria-label, aria-labelledby, or a visible text label to every interactive control. For native iOS: set .accessibilityLabel on custom views; use accessibilityIdentifier only for testing, not for the label users hear. For native Android: set android:contentDescription on all interactive elements; do not rely on the view ID as a label."
   },
   {
     "id": "ATH-002",
@@ -525,7 +531,8 @@
       "magnify",
       "maximum-scale",
       "no zoom",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "The page prevents users from zooming in using a browser or pinch gesture. People with low vision rely on zooming to read content.",
     "rem": "Remove user-scalable=\"no\" from the viewport meta tag. Do not set maximum-scale below 2. Allow users to zoom freely."
@@ -920,7 +927,8 @@
       "no keyboard trap",
       "datepicker trap",
       "modal trap",
-      "kb"
+      "kb",
+      "mobile devices"
     ],
     "desc": "Keyboard focus gets stuck inside a component. Once a keyboard user tabs into it, there is no way out using only the keyboard.",
     "rem": "Make sure keyboard users can always tab out of any component. If a modal or dialog traps focus intentionally, add an Escape key handler and a visible close button so users can leave."
@@ -1404,7 +1412,7 @@
   },
   {
     "id": "ATH-059",
-    "title": "Live Region Not Announcing Updates",
+    "title": "Dynamic Updates Not Announced to Screen Readers",
     "sc": "4.1.3",
     "scLabel": "4.1.3 Status Messages (Level AA)",
     "wcagVersion": "2.1",
@@ -1414,7 +1422,7 @@
       "3.3.1 Error Identification (Level A)"
     ],
     "priority": "High",
-    "platform": "web",
+    "platform": "both",
     "source": "ATH",
     "keywords": [
       "aria-live",
@@ -1428,10 +1436,16 @@
       "aria-live polite",
       "notification",
       "voiceover",
-      "talkback"
+      "talkback",
+      "UIAccessibilityPostNotification",
+      "announceForAccessibility",
+      "native announce",
+      "accessibility event",
+      "AccessibilityEvent",
+      "LayoutChanged"
     ],
-    "desc": "Content that updates dynamically — like a search result count, a progress update, or a notification — is not announced by screen readers because the live region is missing or set up incorrectly.",
-    "rem": "Add aria-live=\"polite\" to a container that will receive the updated text. Use aria-live=\"assertive\" only for urgent alerts. Inject the message into the live region after it is already in the DOM — injecting the region and message at the same time may not be announced."
+    "desc": "Content that updates dynamically — like a search result count, a progress update, or a notification — is not announced by screen readers. On web, the live region is missing or misconfigured. On native iOS, UIAccessibilityPostNotification is not called; on Android, View.announceForAccessibility or AccessibilityEvent.TYPE_VIEW_FOCUSED is missing.",
+    "rem": "Web: mark status regions with role=\"status\" (polite) or role=\"alert\" (assertive), or aria-live=\"polite/assertive\". Keep the region in the DOM at page load; only update its content, do not inject it later. Native iOS: call UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, messageElement) or UIAccessibilityAnnouncementNotification for one-off messages. Native Android: use View.announceForAccessibility(\"Message\") or AccessibilityManager.sendAccessibilityEvent with TYPE_ANNOUNCEMENT."
   },
   {
     "id": "ATH-060",
@@ -1456,7 +1470,8 @@
       "2.5.1",
       "touch gesture",
       "multi-point",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "A feature requires a multi-finger gesture — like pinch-to-zoom or a two-finger swipe — with no single-tap or keyboard alternative. Users with motor disabilities who cannot perform multi-touch gestures are locked out.",
     "rem": "Provide a single-pointer alternative for every multi-point gesture. For example, add plus and minus zoom buttons alongside pinch-to-zoom. All gestures must have a keyboard-accessible equivalent."
@@ -1660,7 +1675,8 @@
       "wcag 2.2",
       "motor",
       "minimum target",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "Interactive elements — such as buttons, links, and icon controls — are smaller than 24×24 CSS pixels with insufficient spacing around them. Small targets are difficult to activate accurately for users with motor disabilities and touch screen users.",
     "rem": "Make all interactive targets at least 24×24 CSS pixels, including any spacing offset to neighboring targets. If the visible element is smaller, add padding to expand the clickable area without changing the visual design. Aim for 44×44 CSS pixels (WCAG 2.5.5 AAA) on touch interfaces."
@@ -1689,7 +1705,8 @@
       "disable rotation",
       "forced orientation",
       "wheelchair mount",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "The content is locked to a single screen orientation — portrait or landscape — and will not reflow when the device is rotated. Users who mount their device in a fixed position, such as on a wheelchair, cannot use the other orientation.",
     "rem": "Remove any code that forces a fixed screen orientation. Support both portrait and landscape using CSS media queries or flexible layouts. Only restrict orientation when a specific orientation is essential — such as a piano keyboard that only makes sense in landscape."
@@ -1812,7 +1829,8 @@
       "motion gesture",
       "no alternative",
       "device sensor",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "A feature is triggered by device motion — such as shaking to undo or tilting to scroll — and there is no other way to perform the same action. Users who cannot move their device, or whose device is mounted to a wheelchair, cannot access this feature.",
     "rem": "Provide a UI control — such as a button or menu option — that performs the same action as the device motion gesture. Also allow users to disable the motion trigger entirely to prevent accidental activation."
@@ -2000,7 +2018,8 @@
       "iOS",
       "Android",
       "forced orientation",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "The native app locks its interface to a single orientation — portrait or landscape — and does not respond when the user rotates their device. Users who mount their device in a fixed position, such as on a wheelchair, cannot use an app that ignores their device orientation.",
     "rem": "Remove any code that forces or restricts screen orientation. Use platform layout tools (Auto Layout on iOS, ConstraintLayout on Android) to support both orientations gracefully. Only restrict orientation when a specific orientation is genuinely essential to the functionality."
@@ -2027,7 +2046,8 @@
       "system theme",
       "night mode",
       "high contrast dark",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "The app does not support dark mode. Users who rely on dark mode — including those with photosensitivity, migraines, or low vision — cannot use a comfortable or accessible color scheme.",
     "rem": "Implement a dark color scheme that respects the system-level dark mode preference. On web, use the prefers-color-scheme media query. On native platforms, respond to the system appearance setting. Ensure all text, icons, and UI elements maintain sufficient contrast in dark mode."
@@ -2057,7 +2077,8 @@
       "accessible name",
       "spoken label",
       "voice navigation",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "Controls cannot be reliably operated by voice control software such as Dragon NaturallySpeaking or iOS Voice Control. Common causes include accessible names that do not contain the visible label text, controls without labels, or custom elements that do not expose a name to assistive technology.",
     "rem": "Ensure every interactive control has an accessible name that begins with or contains its visible label text. Do not use aria-label to override or replace visible text — the accessible name must match what the user can see and speak. Test with Dragon or iOS Voice Control to confirm controls can be spoken and activated."
@@ -2089,7 +2110,8 @@
       "kb",
       "ext",
       "ext kb",
-      "external keyboard mobile"
+      "external keyboard mobile",
+      "mobile devices"
     ],
     "desc": "The mobile app does not support navigation or interaction using an external Bluetooth or hardware keyboard. Users with motor disabilities who pair a keyboard with their phone or tablet cannot use the app.",
     "rem": "Test the full app with an external keyboard connected to the device. All interactive controls must be reachable by Tab key and activatable by Enter or Space. Focus must be visible at all times, and focus order must follow a logical sequence. On iOS, implement UIKeyCommand and ensure all focusable elements are keyboard-reachable. On Android, handle key events appropriately."
@@ -2118,7 +2140,8 @@
       "step scan",
       "iOS switch control",
       "Android switch access",
-      "mobile"
+      "mobile",
+      "mobile devices"
     ],
     "desc": "The interface cannot be fully operated using Switch Control (iOS) or Switch Access (Android). Switch users navigate by scanning through items sequentially with one or two switches. If items are inaccessible, grouped incorrectly, or the scan order is wrong, switch users cannot reach or activate them.",
     "rem": "Test with Switch Control on iOS and Switch Access on Android using auto-scan mode. Ensure all interactive elements are reachable in the scan order, that scan groups are logical, and that no interactive elements are skipped. Avoid focus traps. Custom components must expose the correct accessibility traits so the platform can include them in the scan."
@@ -2221,5 +2244,64 @@
     ],
     "desc": "Text that looks like a heading — because it is large, bold, or visually distinct — is not marked up with a heading element (h1–h6). Screen reader users cannot navigate by heading, cannot tell the text is a section title, and miss the structural cues that sighted users get from the visual design.",
     "rem": "Replace the styled element with the appropriate heading element (h1–h6). The heading level should reflect the document outline — not the visual size. Use CSS to control appearance separately from semantic level. Confirm the heading fits logically into the existing heading hierarchy on the page."
+  },
+  {
+    "id": "ATH-077",
+    "title": "Large Text / Dynamic Type Not Supported",
+    "sc": "1.4.4",
+    "scLabel": "1.4.4 Resize Text (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
+    "related": [],
+    "priority": "High",
+    "platform": "native",
+    "source": "ATH",
+    "keywords": [
+      "Dynamic Type",
+      "font scale",
+      "text size",
+      "large text",
+      "iOS accessibility",
+      "Android font size",
+      "scalable font",
+      "sp unit",
+      "UIFontMetrics",
+      "preferredFont",
+      "low vision",
+      "resize text",
+      "system font size",
+      "mobile devices",
+      "mobile"
+    ],
+    "desc": "The app does not scale with the system font size. On iOS, text is hardcoded to point sizes instead of using Dynamic Type styles (UIFont.preferredFont), so text stays small when users increase it in Settings → Accessibility. On Android, text is set in dp instead of sp, so the Android font scale setting has no effect.",
+    "rem": "iOS: use UIFont.preferredFont(forTextStyle:) or SwiftUI .font(.body) / .dynamicTypeSize() for all text. Opt the app in with UISupportsDocumentBrowser or set UIApplicationSupportsIndirectInputEvents. Ensure layouts use Auto Layout with flexible constraints so they can grow. Android: define all text sizes in sp (scale-independent pixels) in your styles. Test by changing system font size to \"Largest\" in Settings. Use spannable text if you need mixed sizes."
+  },
+  {
+    "id": "ATH-078",
+    "title": "Custom Accessibility Actions Not Provided",
+    "sc": "4.1.2",
+    "scLabel": "4.1.2 Name, Role, Value (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
+    "related": [],
+    "priority": "Medium",
+    "platform": "native",
+    "source": "ATH",
+    "keywords": [
+      "custom action",
+      "UIAccessibilityCustomAction",
+      "AccessibilityAction",
+      "swipe action",
+      "voiceover rotor",
+      "talkback action",
+      "context menu",
+      "delete action",
+      "reply action",
+      "native gesture",
+      "long press",
+      "mobile"
+    ],
+    "desc": "Contextual actions that are available through swipe gestures, long-press menus, or custom interactions are not exposed to assistive technology. VoiceOver users cannot swipe up/down to reveal actions, and TalkBack users have no equivalent accessibility action. Users who cannot perform complex gestures are locked out of these features.",
+    "rem": "iOS: add UIAccessibilityCustomAction objects to the accessibilityCustomActions array of the view. Provide a clear name and a handler block. For list rows with swipe actions, implement accessibilityCustomActions to mirror each swipe option (Delete, Reply, Archive, etc.). Android: override onInitializeAccessibilityNodeInfo and call info.addAction() with a custom AccessibilityNodeInfoCompat.AccessibilityActionCompat. For RecyclerView items, expose each contextual action this way. Test with VoiceOver (swipe up/down on the element) and TalkBack (double-tap-hold then drag)."
   }
 ]

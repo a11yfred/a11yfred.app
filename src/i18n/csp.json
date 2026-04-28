@@ -67,6 +67,7 @@
   "results.aria_label": "Ergebnisse — Résultats",
   "results.loading_announce": "Ergebnisse werden geladen",
   "results.count": "{count} Ergebnisse",
+  "results.badge_filter_aria": "",
   "results.vote_hint": "Priorität erhöhen oder verringern — monter ou descendre. Stern für zuerst. Archivieren zum Ausblenden. (Rückgängig möglich).",
   "results.star": "{title} markieren — marquer",
   "results.unstar": "{title} Markierung entfernen",
@@ -150,6 +151,7 @@
   "detail.undo_last_aria": "Letzte Überarbeitung rückgängig: {label}",
   "detail.undo_last_announce": "Überarbeitung rückgängig gemacht.",
   "detail.copy_all_text": "Alles kopieren",
+  "detail.copy_all_copied_text": "",
   "detail.copy_all_aria": "Beschreibung und Abhilfemaßnahmen zusammen kopieren",
   "detail.copy_all_announce": "Befund-Details / Beschreibung und mögliche Abhilfemaßnahmen kopiert",
   "detail.reset_all_fields_text": "Alles zurücksetzen",
@@ -293,5 +295,8 @@
   "kofi.support": "Unterstützen — Soutenir",
   "kofi.aria": "Mikey auf Ko-fi unterstützen (öffnet Panel)",
   "kofi.title": "Ko-fi Spendenwidget",
-  "kofi.tooltip": "Weitere Informationen"
+  "kofi.tooltip": "Weitere Informationen",
+  "results.copy_link": "TODO: translate — EN: \"Copy link\"",
+  "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
+  "results.copied_link": "TODO: translate — EN: \"Copied!\""
 }

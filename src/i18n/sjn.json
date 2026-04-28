@@ -67,6 +67,7 @@
   "results.aria_label": "Tirno",
   "results.loading_announce": "Tiryal tirno",
   "results.count": "{count} Tirno",
+  "results.badge_filter_aria": "",
   "results.vote_hint": "Tír tirno daer ar niben — daer tír envinyata i tirno daer. Gîl yestë. Mathon holo. (Ece envinyata).",
   "results.star": "Gîl {title}",
   "results.unstar": "Ú gîl {title}",
@@ -150,6 +151,7 @@
   "detail.undo_last_aria": "Ú-envinyata envinyatë yestë: {label}",
   "detail.undo_last_announce": "Envinyatë ú-cennir.",
   "detail.copy_all_text": "Cend Ilqua",
+  "detail.copy_all_copied_text": "",
   "detail.copy_all_aria": "Cend queth ar envinyatë ilqua",
   "detail.copy_all_announce": "Tirno Tîr / Queth ar Envinyatë Tîr cennir",
   "detail.reset_all_fields_text": "Envinyata Ilqua",
@@ -293,5 +295,8 @@
   "kofi.support": "Beria nin",
   "kofi.aria": "Beria Mikey i Ko-fi (panta tîr)",
   "kofi.title": "Ko-fi antanë parth",
-  "kofi.tooltip": "Daer tîr"
+  "kofi.tooltip": "Daer tîr",
+  "results.copy_link": "TODO: translate — EN: \"Copy link\"",
+  "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
+  "results.copied_link": "TODO: translate — EN: \"Copied!\""
 }

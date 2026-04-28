@@ -67,6 +67,7 @@
   "results.aria_label": "Hirnar",
   "results.loading_announce": "Hiryal hirnar",
   "results.count": "{count} Hirnar",
+  "results.badge_filter_aria": "",
   "results.vote_hint": "Ataformë hirnar alta ar pitya — alta ataformë envinyata i hirna alta. Elen yestë. Mathon vanwa. (Ece envinyata).",
   "results.star": "Elen {title}",
   "results.unstar": "Vanwa elen {title}",
@@ -150,6 +151,7 @@
   "detail.undo_last_aria": "Áv'envinyata envinyatë yestë: {label}",
   "detail.undo_last_announce": "Envinyatë telpë-vanwa.",
   "detail.copy_all_text": "Cendë Ilqua",
+  "detail.copy_all_copied_text": "",
   "detail.copy_all_aria": "Cendë quenta ar envinyatë ilqua",
   "detail.copy_all_announce": "Hirna Nótë / Quenta ar Envinyatë Nótë cendëa",
   "detail.reset_all_fields_text": "Envinyata Ilqua",
@@ -293,5 +295,8 @@
   "kofi.support": "Epsë anya",
   "kofi.aria": "Epsë Mikey i Ko-fi (panta nótë)",
   "kofi.title": "Ko-fi antanë parwa",
-  "kofi.tooltip": "Alta nótë"
+  "kofi.tooltip": "Alta nótë",
+  "results.copy_link": "TODO: translate — EN: \"Copy link\"",
+  "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
+  "results.copied_link": "TODO: translate — EN: \"Copied!\""
 }

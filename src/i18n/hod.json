@@ -67,6 +67,7 @@
   "results.aria_label": "Hodor",
   "results.loading_announce": "Hodor hodor",
   "results.count": "{count} Hodor",
+  "results.badge_filter_aria": "",
   "results.vote_hint": "Hodor hodor hodor hodor — hodor hodor hodor hodor hodor. Hodor hodor. Hodor hodor. (Hodor hodor).",
   "results.star": "Hodor {title}",
   "results.unstar": "Hodor hodor {title}",
@@ -150,6 +151,7 @@
   "detail.undo_last_aria": "Hodor hodor hodor hodor: {label}",
   "detail.undo_last_announce": "Hodor hodor.",
   "detail.copy_all_text": "Hodor hodor",
+  "detail.copy_all_copied_text": "",
   "detail.copy_all_aria": "Hodor hodor hodor hodor hodor",
   "detail.copy_all_announce": "Hodor Hodor / Hodor hodor Hodor Hodor Hodor hodor",
   "detail.reset_all_fields_text": "Hodor hodor",
@@ -293,5 +295,8 @@
   "kofi.support": "Hodor hodor",
   "kofi.aria": "Hodor Mikey hodor Ko-fi (hodor hodor)",
   "kofi.title": "Ko-fi hodor hodor",
-  "kofi.tooltip": "Hodor hodor"
+  "kofi.tooltip": "Hodor hodor",
+  "results.copy_link": "TODO: translate — EN: \"Copy link\"",
+  "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
+  "results.copied_link": "TODO: translate — EN: \"Copied!\""
 }

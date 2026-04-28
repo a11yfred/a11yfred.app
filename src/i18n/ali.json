@@ -67,6 +67,7 @@
   "results.aria_label": "Results",
   "results.loading_announce": "Loading results, please stand by",
   "results.count": "{count} Results. Impressive.",
+  "results.badge_filter_aria": "",
   "results.vote_hint": "Prioritize up or down — higher means it shows up higher. Star first. Archive to hide. All reversible, unlike some decisions I've made.",
   "results.star": "Star {title}",
   "results.unstar": "Unstar {title}, you fickle creature",
@@ -150,6 +151,7 @@
   "detail.undo_last_aria": "Undo last revision: {label}",
   "detail.undo_last_announce": "Revision undone. Time travel is possible after all.",
   "detail.copy_all_text": "Copy all",
+  "detail.copy_all_copied_text": "",
   "detail.copy_all_aria": "Copy description and remediation together",
   "detail.copy_all_announce": "Finding Details / Description and Possible Remediation Steps copied. Neat.",
   "detail.reset_all_fields_text": "Reset all",
@@ -293,5 +295,8 @@
   "kofi.support": "Support me",
   "kofi.aria": "Support Mikey on Ko-fi (opens panel)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "More information"
+  "kofi.tooltip": "More information",
+  "results.copy_link": "TODO: translate — EN: \"Copy link\"",
+  "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
+  "results.copied_link": "TODO: translate — EN: \"Copied!\""
 }

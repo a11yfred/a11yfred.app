@@ -67,6 +67,7 @@
   "results.aria_label": "Results",
   "results.loading_announce": "Loading results, O my brothers",
   "results.count": "{count} Results",
+  "results.badge_filter_aria": "",
   "results.vote_hint": "Prioritize results up or down — a higher priority means it shows up higher. Elen to show first. Archive to hide. (Can be undone, my droog).",
   "results.star": "Elen {title}",
   "results.unstar": "Un-elen {title}",
@@ -150,6 +151,7 @@
   "detail.undo_last_aria": "Undo last revision: {label}",
   "detail.undo_last_announce": "Revision undone, O my droog.",
   "detail.copy_all_text": "Gein all",
+  "detail.copy_all_copied_text": "",
   "detail.copy_all_aria": "Copy description and remediation together",
   "detail.copy_all_announce": "Finding Details and Possible Remediation Steps copied, real horrorshow",
   "detail.reset_all_fields_text": "Reset all",
@@ -293,5 +295,8 @@
   "kofi.support": "Support me, droog",
   "kofi.aria": "Support Mikey on Ko-fi (opens panel)",
   "kofi.title": "Ko-fi donation widget",
-  "kofi.tooltip": "More information"
+  "kofi.tooltip": "More information",
+  "results.copy_link": "TODO: translate — EN: \"Copy link\"",
+  "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
+  "results.copied_link": "TODO: translate — EN: \"Copied!\""
 }

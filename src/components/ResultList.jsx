@@ -1,13 +1,14 @@
-import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink }) {
   const t = useT()
   const itemRefs = useRef({})
   const focusNextRef = useRef(null)
+  const [linkCopied, setLinkCopied] = useState(false)
 
   useEffect(() => {
     if (!focusNextRef.current) return
@@ -24,9 +25,27 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   return (
     <div className="result-list-section">
       <div className="results-meta">
-        <h2 className="results-count">
-          {t('results.count', { count: results.length })}
-        </h2>
+        <div className="results-count-row">
+          <h2 ref={countRef} tabIndex={countRef ? -1 : undefined} className="results-count">
+            {t('results.count', { count: results.length })}
+          </h2>
+          {onCopyLink && (
+            <button
+              type="button"
+              className={`btn-ghost results-copy-link-btn${linkCopied ? ' field-btn--success' : ''}`}
+              aria-label={linkCopied ? t('results.copied_link') : t('results.copy_link_aria')}
+              title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
+              onClick={() => {
+                onCopyLink()
+                setLinkCopied(true)
+                setTimeout(() => setLinkCopied(false), 2000)
+              }}
+            >
+              <Link size={14} aria-hidden="true" />
+              {linkCopied ? t('results.copied_link') : t('results.copy_link')}
+            </button>
+          )}
+        </div>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
       </div>
 

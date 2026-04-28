@@ -36,7 +36,7 @@ function isSignificantlyChanged(original, current, threshold = 0.7) {
   return editDistance(original, current) / original.length > threshold
 }
 
-export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose }) {
+export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
@@ -62,6 +62,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   const [reviseDesc, setReviseDesc] = useState(true)
   const [reviseRem, setReviseRem] = useState(true)
   const [copiedAll, setCopiedAll] = useState(false)
+  const [resetAllDone, setResetAllDone] = useState(false)
   const typeTimerRef = useRef(null)
   const refineButtonRef = useRef(null)
 
@@ -118,6 +119,8 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       setDescHistory([])
       setRemHistory([])
       announce(t('detail.reset_all_fields_announce'))
+      setResetAllDone(true)
+      setTimeout(() => setResetAllDone(false), 2000)
     }
     if (descChanged || remChanged) {
       setConfirmReset({ doReset })
@@ -266,23 +269,41 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
           {finding.title}
         </h2>
         <div className="detail-badges">
-          <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
+          <button
+            type="button"
+            className="priority-badge"
+            style={{ '--badge-bg': p.bg, '--badge-text': p.color }}
+            onClick={() => onBadgeClick?.({ type: 'priority', value: finding.priority })}
+            aria-label={`${t('badge.severity_prefix')}${t(p.key)} — ${t('results.badge_filter_aria')}`}
+          >
             <span className="badge-prefix">{t('badge.severity_prefix')}</span>
             {t(p.key)}
-          </span>
+          </button>
           {finding.source && (
-            <span className="source-badge">
+            <button
+              type="button"
+              className="source-badge"
+              style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
+              onClick={() => onBadgeClick?.({ type: 'source', value: finding.source })}
+              aria-label={`${t('badge.source_prefix')}${finding.source} — ${t('results.badge_filter_aria')}`}
+            >
               <span className="badge-prefix">{t('badge.source_prefix')}</span>
               {finding.source}
-            </span>
+            </button>
           )}
           {finding.wcagVersion && finding.wcagLevel && (
-            <span className="wcag-badge">
+            <button
+              type="button"
+              className="wcag-badge"
+              style={{ '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }}
+              onClick={() => onBadgeClick?.({ type: 'wcag', value: finding.wcagVersion })}
+              aria-label={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel} — ${t('results.badge_filter_aria')}`}
+            >
               <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
               {finding.wcagVersion},{' '}
               <span className="badge-prefix">{t('badge.level_prefix')}</span>
               {finding.wcagLevel}
-            </span>
+            </button>
           )}
         </div>
 
@@ -426,21 +447,23 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       <div className="detail-actions-end">
         <button
           type="button"
-          className="btn-ghost detail-action-btn"
+          className={`btn-ghost detail-action-btn${resetAllDone ? ' field-btn--success' : ''}`}
           onClick={handleResetAllFields}
           aria-label={t('detail.reset_all_fields_aria')}
         >
-          <RotateCcw size={14} aria-hidden="true" />
-          {' '}{t('detail.reset_all_fields_text')}
+          {resetAllDone
+            ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.reset_done_desktop')}</>
+            : <><RotateCcw size={14} aria-hidden="true" />{' '}{t('detail.reset_all_fields_text')}</>
+          }
         </button>
         <button
           type="button"
-          className="btn-ghost detail-action-btn"
+          className={`btn-ghost detail-action-btn${copiedAll ? ' field-btn--success' : ''}`}
           onClick={handleCopyAll}
           aria-label={t('detail.copy_all_aria')}
         >
           {copiedAll
-            ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.copied_desktop')}</>
+            ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.copy_all_copied_text')}</>
             : <><Clipboard size={14} aria-hidden="true" />{' '}{t('detail.copy_all_text')}</>
           }
         </button>
