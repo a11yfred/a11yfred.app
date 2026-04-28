@@ -4,6 +4,26 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 28, 2026 — Archived items, URL sync, settings updates
+
+### Archived items look cleaner
+
+Archived result cards are redesigned: the title text stays fully readable (same as normal text color) while the badges, success criterion, and description fade out and turn neutral gray. All badges on an archived card now use the same consistent neutral color. The success criterion label is also now bold across all cards.
+
+### URL updates as you type
+
+When Live Search is on, the `?q=` URL parameter now updates immediately as you type or click a typewriter phrase — so the address bar always reflects what you're searching, not just after you press Enter.
+
+### Settings updates
+
+The Reset button is now labeled **Reset Settings & Clear Data** with a red style to make it clear it's a destructive action. The confirmation dialog has a matching heading and shows a warning icon inline with the body text. The Unpin All button briefly shows a checkmark and "All Unpinned" confirmation after you click it. When nothing is pinned, the Pinned Results section in Settings now says "Nothing pinned." instead of showing empty space.
+
+### Back to Top
+
+When the result list has more than 50 items, a **Back to Top** button appears at the bottom. Clicking it scrolls to the top and moves focus to the result count heading.
+
+---
+
 ## April 28, 2026 — Debug commands from search bar, toggle hover, contrast fixes
 
 ### Debug commands work from the search bar

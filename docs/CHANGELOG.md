@@ -4,6 +4,48 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-28 — Archived item polish, URL sync, pinning UI, settings renames, axe pin-button fix
+
+### Archived item appearance
+
+- `src/index.css` — `.result-row--archived .result-item` loses `opacity: 0.4`; opacity moved to children only (`.result-item__badges`, `.result-item__sc`, `.result-item__desc`) so the title text renders at full `var(--text)` color; `filter: grayscale(1)` remains on the parent
+- `src/index.css` — `.result-row--archived .priority-badge/source-badge/wcag-badge` — unified to `background: var(--border); color: var(--text-faint)` (after badge base definitions to satisfy no-descending-specificity)
+- `src/components/ResultList.jsx` — `.priority-badge` inline `style` skipped when `archived` so CSS archived override can take effect
+- `src/index.css` — `.result-item__sc` gains `font-weight: 600`
+
+### URL sync — live search
+
+- `src/App.jsx` — `handleQueryChange` now calls `syncSearchUrl(q)` inside the `liveSearch` path; clicking a typewriter phrase or typing with live search on immediately writes `?q=` to the URL (previously only `handleSearch` did this)
+
+### Settings — Unpin All, Reset rename, pinned-results row
+
+- `src/components/SettingsPanel.jsx` — Unpin All button: `PinOff` icon; success state shows `Check` + "All Unpinned" for 1500ms with `.field-btn--success`
+- `src/components/SettingsPanel.jsx` — Reset button renamed to "Reset Settings & Clear Data", class changed to `btn-danger`
+- `src/components/SettingsPanel.jsx` — Reset confirm modal: heading updated to "Reset Settings & Clear Data?"; `AlertTriangle` icon inline in body text
+- `src/index.css` — `.btn-danger`: red border/text, transparent bg, hover fills red; shared disabled rule extended
+- `src/index.css` — `.settings-reset-warning-icon` and `.modal-heading-icon` for inline icon positioning
+- `src/components/SettingsPanel.jsx` — Pinned Results row: desc text shows `t('settings.pinned_results_empty')` ("Nothing pinned.") when `!hasPins`
+
+### Back to Top button
+
+- `src/components/ResultList.jsx` — shown when `results.length > 50`; scrolls to top and focuses the results count `<h2>` via `countHeadingRef`
+- `src/components/ResultList.jsx` — count heading uses a callback ref to serve both `countHeadingRef` (internal) and `countRef` prop (external); always has `tabIndex={-1}`
+- `src/index.css` — `.back-to-top-btn` style
+
+### Modal headingIcon prop
+
+- `src/plugins/router/Modal.jsx` — optional `headingIcon` ReactNode rendered `aria-hidden` before heading text; `aria-label` stays a plain string
+
+### axe — archived pin button
+
+- `src/components/ResultList.jsx` — pin button gets `disabled={archived}`; marks it as a disabled control so axe skips its contrast check
+
+### i18n
+
+- `src/i18n/*.json` (63 locale files) — 10 missing keys added as English placeholders: `about.feature_pinning_label/body`, `results.back_to_top`, `results.unpin_all`, `results.count_badge`, `settings.pinned_results_label/desc/empty`, `settings.unpin_all`, `settings.unpin_all_done`
+
+---
+
 ## 2026-04-28 — Axe contrast fixes, debug commands from search bar, toggle hover, skip link nav landmark
 
 ### axe color-contrast fixes (round 2)
