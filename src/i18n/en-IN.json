@@ -174,7 +174,6 @@
   "settings.language_change": "Change",
   "settings.language_changed": "Changed",
   "settings.language_changed_announce": "Language: Changed, press Save button to confirm",
-  "results.count_announce": "{count} Results",
   "results.count": "{count} Results",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Star {title}",

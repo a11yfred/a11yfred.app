@@ -173,7 +173,6 @@
   "settings.language_change": "Aldatu",
   "settings.language_changed": "Aldatuta",
   "settings.language_changed_announce": "Hizkuntza: Aldatuta, sakatu Gorde botoia baieztatzen",
-  "results.count_announce": "{count} Emaitzak",
   "results.count": "{count} Emaitza",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Izarra jarri {title}(e)ri",

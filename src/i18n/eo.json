@@ -173,7 +173,6 @@
   "settings.language_change": "Ŝanĝi",
   "settings.language_changed": "Ŝanĝita",
   "settings.language_changed_announce": "Lingvo: Ŝanĝita, premu Konservi por konfirmi",
-  "results.count_announce": "{count} Rezultoj",
   "results.count": "{count} Rezultoj",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Stelumi {title}",

@@ -173,7 +173,6 @@
   "settings.language_change": "Thay đổi",
   "settings.language_changed": "Đã thay đổi",
   "settings.language_changed_announce": "Ngôn ngữ: Đã thay đổi, nhấn nút Lưu để xác nhận",
-  "results.count_announce": "{count} Kết quả",
   "results.count": "{count} kết quả",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Gắn sao {title}",

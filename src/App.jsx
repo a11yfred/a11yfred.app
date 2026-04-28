@@ -369,7 +369,7 @@ function AppContent({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [theme])
 
-  const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val', 'blt'])
+  const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val', 'blt', 'dot', 'tok', 'nav', 'qya', 'sjn', 'hod', 'dov', 'nds', 'nws', 'mnd', 'csp', 'sim', 'ali'])
   const RTL_LOCALES = new Set(['ar-PS', 'ug'])
 
   useEffect(() => {
@@ -440,22 +440,20 @@ function AppContent({
     document.title = appName ? `${appName} | ${selected.title}` : selected.title
   }, [selected, settingsOpen, aboutOpen, appName])
 
-  const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt' }
+  const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 
   const activateEasterEgg = (egg) => {
     setLanguage(egg)
     setQuery(submittedQuery) // restore visible field to last submitted term; preserves non-live results
   }
 
-  const EASTER_EGG_OFFS = { 'pig latin off': 'en', 'pirate off': 'en', 'klingon off': 'en', 'valyrian off': 'en', 'belter off': 'en' }
-
   const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify', 'debug deploy netlify': 'netlify', 'debug deploy pages': 'pages', 'debug deploy vercel': 'vercel' }
 
   const runCommand = (q) => {
     const lq = q.trim().toLowerCase()
-    // Easter egg offs
-    const eggOff = EASTER_EGG_OFFS[lq]
-    if (eggOff !== undefined) { setLanguage(eggOff); setQuery(submittedQuery); return true }
+    // Easter egg offs — any "X off" where X is a known egg command
+    const eggOffBase = lq.endsWith(' off') ? lq.slice(0, -4) : null
+    if (eggOffBase !== null && eggOffBase in EASTER_EGGS) { setLanguage('en'); setQuery(submittedQuery); return true }
     if (lq === 'party mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
     // Universal debug commands
     if (lq === 'debug all on')    { setDevAllEnabled(true);  setNamesEnabled(true);  setQuery(submittedQuery); return true }
@@ -525,9 +523,7 @@ function AppContent({
     setSelected(null)
     setViewAllConfirmOpen(false)
     setViewAllLoading(false)
-    navigate('/')
     announce(t('settings.reset_all_announce'), { priority: 'assertive' })
-    setTimeout(() => h1Ref.current?.focus(), 50)
   }
 
   function unlock() {

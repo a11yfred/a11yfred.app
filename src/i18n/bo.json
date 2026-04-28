@@ -173,7 +173,6 @@
   "settings.language_change": "བཅོས་",
   "settings.language_changed": "བཅོས་སོ།",
   "settings.language_changed_announce": "སྐད་ཡིག། བཅོས་སོ། གསོག་འཇོག་བྱས་ལ་ཐུག",
-  "results.count_announce": "{count} འབྲས་བུ།",
   "results.count": "འབྲས་བུ་{count}",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} ལ་སྐར་མ་གཏད།",

@@ -173,7 +173,6 @@
   "settings.language_change": "تغيير",
   "settings.language_changed": "تم التغيير",
   "settings.language_changed_announce": "اللغة: تم التغيير، اضغط زر حفظ للتأكيد",
-  "results.count_announce": "{count} نتائج",
   "results.count": "{count} نتيجة",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "نجّم {title}",

@@ -173,7 +173,6 @@
   "settings.language_change": "변경",
   "settings.language_changed": "변경됨",
   "settings.language_changed_announce": "언어: 변경됨, 저장 버튼을 눌러 확인하세요",
-  "results.count_announce": "결과 {count}개",
   "results.count": "{count}개의 결과",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} 별표 추가",

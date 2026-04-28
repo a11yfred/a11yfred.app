@@ -173,7 +173,6 @@
   "settings.language_change": "Tikrachi",
   "settings.language_changed": "Tikrachisqa",
   "settings.language_changed_announce": "Simi: Tikrachisqa, Waqaychay tuputa ñit'iy",
-  "results.count_announce": "{count} Tupusqakuna",
   "results.count": "{count} Resultadokuna",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} estrellachiy",

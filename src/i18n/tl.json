@@ -173,7 +173,6 @@
   "settings.language_change": "Baguhin",
   "settings.language_changed": "Nabago",
   "settings.language_changed_announce": "Wika: Nabago, pindutin ang I-save para kumpirmahin",
-  "results.count_announce": "{count} Mga resulta",
   "results.count": "{count} na Resulta",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "I-star ang {title}",

@@ -173,7 +173,6 @@
   "settings.language_change": "Angechay",
   "settings.language_changed": "Angedchay",
   "settings.language_changed_announce": "Anguagelay: Angedchay, esspray Avesay uttonbay otay onfirmcay",
-  "results.count_announce": "{count} Esultsray",
   "results.count": "{count} Results",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Star {title}",

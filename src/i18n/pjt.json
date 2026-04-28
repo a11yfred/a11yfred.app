@@ -173,7 +173,6 @@
   "settings.language_change": "Ngapartji",
   "settings.language_changed": "Ngapartjilpai",
   "settings.language_changed_announce": "Wangka: Ngapartjilpai, Kani-ku nyakula",
-  "results.count_announce": "{count} Tjukuritja",
   "results.count": "{count} Nipaluna",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Tali {title}",

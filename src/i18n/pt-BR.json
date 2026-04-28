@@ -173,7 +173,6 @@
   "settings.language_change": "Alterar",
   "settings.language_changed": "Alterado",
   "settings.language_changed_announce": "Idioma: Alterado, clique em Salvar para confirmar",
-  "results.count_announce": "{count} Resultados",
   "results.count": "{count} Resultados",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Destacar {title}",

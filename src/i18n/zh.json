@@ -173,7 +173,6 @@
   "settings.language_change": "更改",
   "settings.language_changed": "已更改",
   "settings.language_changed_announce": "语言：已更改，按\"保存\"按钮确认",
-  "results.count_announce": "{count} 个结果",
   "results.count": "{count} Results",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Star {title}",

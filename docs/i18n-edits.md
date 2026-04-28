@@ -65,3 +65,7 @@ Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
 - [ ] `badge.level_prefix` — added: "Level "
 - [ ] `common.skip_to_main` — added: "Skip to main content"
 - [ ] `settings.model_label` — added: "Model"
+- [ ] `results.loading_announce` — old: "Loading {count} Results" → new: "Loading results"
+- [ ] `detail.save_rewrite_text` — old: "Save & Rewrite" → new: "Save & Revise Selected"
+- [ ] `settings.language_desc` — old: "Defaults to your browser's language." → new: "Use the dropdown and Change button below to select a new one. The change won't be saved until you press the Save button at the bottom."
+- [ ] `settings.privacy_body_2` — old: "This app stores the following in your browser's localStorage: …sort priority setting, …voting data" → new: "…your browser: …active AI provider, …voting data, a list of recently viewed finding IDs (localStorage), any findings you create or copy (localStorage), and the ID of the last finding you had open (sessionStorage — cleared when the tab closes)."

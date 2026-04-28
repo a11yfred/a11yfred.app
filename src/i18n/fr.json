@@ -173,7 +173,6 @@
   "settings.language_change": "Modifier",
   "settings.language_changed": "Modifié",
   "settings.language_changed_announce": "Langue : Modifiée, appuyez sur Enregistrer pour confirmer",
-  "results.count_announce": "{count} Résultats",
   "results.count": "{count} résultats",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Mettre en favori {title}",

@@ -173,7 +173,6 @@
   "settings.language_change": "Moambuéta",
   "settings.language_changed": "Moambuetáma",
   "settings.language_changed_announce": "Ñe'ẽ: Moambuetáma, embyky Eñongatu moñepyrũ",
-  "results.count_announce": "{count} Okuatia",
   "results.count": "{count} Mba'e'oka",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Estrella {title}",

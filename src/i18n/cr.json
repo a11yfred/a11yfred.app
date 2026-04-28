@@ -173,7 +173,6 @@
   "settings.language_change": "Pāhkahcihtā",
   "settings.language_changed": "Pāhkahcihtāw",
   "settings.language_changed_announce": "Nêhiyawêwin: Pāhkahcihtāw, Nakatêyihtam kā-itōtaman",
-  "results.count_announce": "{count} Itwêhtamowina",
   "results.count": "{count} Ohpinamowina",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Achahkos {title}",

@@ -173,7 +173,6 @@
   "settings.language_change": "yIchoH",
   "settings.language_changed": "choHlu'",
   "settings.language_changed_announce": "Hol: choHlu', yIpol 'ev lo'",
-  "results.count_announce": "{count} mab'o'mey",
   "results.count": "{count} SIch",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} yIHo'",

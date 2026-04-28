@@ -173,7 +173,6 @@
   "settings.language_change": "Baliwan",
   "settings.language_changed": "Nabaliwan",
   "settings.language_changed_announce": "Pagsasao: Nabaliwan, i-klik ti Idulin tapno mapasingkedan",
-  "results.count_announce": "{count} Resulta",
   "results.count": "{count} na Resulta",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "I-star ang {title}",

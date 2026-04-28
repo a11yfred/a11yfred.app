@@ -247,6 +247,21 @@
   margin: 0 0 0.4rem;
 }
 
+.debug-help-subsection-title {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(160 220 130 / 0.6);
+  margin: 0.8rem 0 0.3rem;
+}
+
+.debug-help-note {
+  font-size: 0.75rem;
+  color: rgb(200 200 200 / 0.7);
+  margin: 0 0 0.5rem;
+}
+
 .debug-help-table {
   border-collapse: collapse;
   width: 100%;
@@ -264,7 +279,7 @@
   width: 1%;
 }
 
-.debug-help-table code {
+.debug-help-body code {
   background: rgb(255 255 255 / 0.08);
   border-radius: 3px;
   padding: 0.1em 0.35em;

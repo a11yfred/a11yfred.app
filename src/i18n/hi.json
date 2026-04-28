@@ -173,7 +173,6 @@
   "settings.language_change": "बदलें",
   "settings.language_changed": "बदला गया",
   "settings.language_changed_announce": "भाषा: बदला गया, पुष्टि के लिए सहेजें बटन दबाएं",
-  "results.count_announce": "{count} परिणाम",
   "results.count": "{count} परिणाम",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} को Star करें",

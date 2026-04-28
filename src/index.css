@@ -1511,7 +1511,8 @@ input.search-input:focus {
 }
 
 .settings-wcag-filter-row .settings-fieldset {
-  flex: 0 0 50%;
+  flex: 1;
+  min-width: 0;
   text-align: center;
 }
 
@@ -2006,17 +2007,12 @@ input.search-input:focus {
   }
 }
 
-.detail-title-row {
+.detail-badges {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-3);
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
   margin-bottom: 6px;
-}
-
-.detail-title-row .detail-title {
-  flex: 1;
-  margin-bottom: 0;
 }
 
 .detail-sc-list {
@@ -2631,6 +2627,22 @@ input.search-input:focus {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+/* ─── Na'vi locale: Papyrus headings ─────────────────────── */
+:root[lang="nav"] .page-title,
+:root[lang="nav"] .about-title,
+:root[lang="nav"] .about-section-heading,
+:root[lang="nav"] .about-subheading,
+:root[lang="nav"] .settings-title,
+:root[lang="nav"] .settings-section-heading,
+:root[lang="nav"] .detail-title,
+:root[lang="nav"] .detail-related__heading,
+:root[lang="nav"] .sheet-heading,
+:root[lang="nav"] .modal-heading,
+:root[lang="nav"] .no-results__heading,
+:root[lang="nav"] .not-found__heading {
+  font-family: Papyrus, fantasy;
 }
 
 /* ─── Dev-only styles live in src/plugins/debug/debug.css ── */

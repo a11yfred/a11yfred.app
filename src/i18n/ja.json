@@ -173,7 +173,6 @@
   "settings.language_change": "変更",
   "settings.language_changed": "変更済み",
   "settings.language_changed_announce": "言語：変更済み、保存ボタンを押して確認してください",
-  "results.count_announce": "{count} 件の結果",
   "results.count": "{count} 件の結果",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} にスターを付ける",

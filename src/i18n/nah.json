@@ -173,7 +173,6 @@
   "settings.language_change": "Xicpatlani",
   "settings.language_changed": "Opatlac",
   "settings.language_changed_announce": "Tlahtoa: Opatlac, ximopatlahtoa Pixca nāhuallahtōlli",
-  "results.count_announce": "{count} Ixtlahpantli",
   "results.count": "{count} Tlahtōliztli",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Xicuāuhcāuh {title}",

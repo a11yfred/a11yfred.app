@@ -173,7 +173,6 @@
   "settings.language_change": "Keliagon",
   "settings.language_changed": "Kelias",
   "settings.language_changed_announce": "Ȳdra: Kelias, Morghugon belmagon",
-  "results.count_announce": "{count} Tegot",
   "results.count": "{count} resultats",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Marca amb estrela {title}",

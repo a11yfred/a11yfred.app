@@ -173,7 +173,6 @@
   "settings.language_change": "Cambia",
   "settings.language_changed": "Cambiado",
   "settings.language_changed_announce": "Lengua: Cambiado, pindot el botón Guardar para confirmar",
-  "results.count_announce": "{count} Resultados",
   "results.count": "{count} Mga Resultado",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Estrella {title}",

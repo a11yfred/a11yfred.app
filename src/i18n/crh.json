@@ -173,7 +173,6 @@
   "settings.language_change": "Değiştir",
   "settings.language_changed": "Değiştirildi",
   "settings.language_changed_announce": "Til: Değiştirildi, onaylamak için Kaydet düğmesine basın",
-  "results.count_announce": "{count} Neticeler",
   "results.count": "{count} Netice",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} öğesine yıldız qoy",

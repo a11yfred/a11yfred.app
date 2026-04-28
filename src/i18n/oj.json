@@ -173,7 +173,6 @@
   "settings.language_change": "Giizhiitaa",
   "settings.language_changed": "Giizhiitaaw",
   "settings.language_changed_announce": "Anishinaabemowin: Giizhiitaaw, Ajijaak tigumiara",
-  "results.count_announce": "{count} Izhichigewin",
   "results.count": "{count} Ozhi'igaazowinan",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Anangoons {title}",

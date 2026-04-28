@@ -173,7 +173,6 @@
   "settings.language_change": "Wijzigen",
   "settings.language_changed": "Gewijzigd",
   "settings.language_changed_announce": "Taal: Gewijzigd, druk op Opslaan om te bevestigen",
-  "results.count_announce": "{count} Resultaten",
   "results.count": "{count} resultaten",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} markeren met ster",

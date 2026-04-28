@@ -173,7 +173,6 @@
   "settings.language_change": "Alter Course",
   "settings.language_changed": "Course Altered",
   "settings.language_changed_announce": "Tongue: Course Altered, press ye Stow button to confirm, arr!",
-  "results.count_announce": "{count} bounty finds, arr!",
   "results.count": "{count} Results",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Star {title}",

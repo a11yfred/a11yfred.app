@@ -173,7 +173,6 @@
   "settings.language_change": "Huri",
   "settings.language_changed": "Kua huri",
   "settings.language_changed_announce": "Reo: Kua huri, pēhia Tiaki hei whakaū",
-  "results.count_announce": "{count} Hua",
   "results.count": "{count} Ngā Hua",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Whetūria {title}",

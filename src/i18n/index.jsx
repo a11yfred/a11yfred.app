@@ -50,6 +50,19 @@ import pir from './pir.json'
 import tlh from './tlh.json'
 import val from './val.json'
 import blt from './blt.json'
+import dot from './dot.json'
+import tok from './tok.json'
+import nav from './nav.json'
+import qya from './qya.json'
+import sjn from './sjn.json'
+import hod from './hod.json'
+import dov from './dov.json'
+import nds from './nds.json'
+import nws from './nws.json'
+import mnd from './mnd.json'
+import csp from './csp.json'
+import sim from './sim.json'
+import ali from './ali.json'
 
 const MESSAGES = {
   en,
@@ -66,7 +79,8 @@ const MESSAGES = {
   ceb, ilo, cbk,
   ug, 'ar-PS': arPS, zgh, rhg, crh,
   eo, pjt,
-  pig, pir, tlh, val, blt,
+  pig, pir, tlh, val, blt, dot, tok, nav, qya, sjn, hod,
+  dov, nds, nws, mnd, csp, sim, ali,
 }
 
 const I18nContext = createContext(null)

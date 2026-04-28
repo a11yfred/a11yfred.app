@@ -173,7 +173,6 @@
   "settings.language_change": "மாற்று",
   "settings.language_changed": "மாற்றப்பட்டது",
   "settings.language_changed_announce": "மொழி: மாற்றப்பட்டது, சேமி பொத்தானை அழுத்தி உறுதிப்படுத்தவும்",
-  "results.count_announce": "{count} முடிவுகள்",
   "results.count": "{count} முடிவுகள்",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "{title} நட்சத்திரமிடவும்",

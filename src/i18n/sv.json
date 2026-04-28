@@ -173,7 +173,6 @@
   "settings.language_change": "Ändra",
   "settings.language_changed": "Ändrat",
   "settings.language_changed_announce": "Språk: Ändrat, tryck på Spara för att bekräfta",
-  "results.count_announce": "{count} Resultat",
   "results.count": "{count} resultat",
   "results.vote_hint": "Vote results up or down — higher-rated matches appear first. Star a result to always pin it to the top.",
   "results.star": "Stjärnmärk {title}",

@@ -262,10 +262,10 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   return (
     <div className="detail-panel">
       <div className="detail-header">
-        <div className="detail-title-row">
-          <h2 ref={titleRef} tabIndex={-1} className="detail-title">
-            {finding.title}
-          </h2>
+        <h2 ref={titleRef} tabIndex={-1} className="detail-title">
+          {finding.title}
+        </h2>
+        <div className="detail-badges">
           <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
             <span className="badge-prefix">{t('badge.severity_prefix')}</span>
             {t(p.key)}
