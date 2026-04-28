@@ -771,9 +771,6 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transition: var(--transition-btn);
 }
 
-.modal-footer .btn-tertiary {
-  color: var(--text-muted);
-}
 
 /* ─── Shared disabled state — before hover rules (specificity order) */
 
@@ -1057,6 +1054,16 @@ select:disabled {
 .wcag-badge {
   background: var(--wcag-bg);
   color: var(--wcag-text);
+}
+
+.badge-prefix {
+  display: none;
+}
+
+@media (width >= 768px) {
+  .badge-prefix {
+    display: inline;
+  }
 }
 
 .result-item__sc {
@@ -1395,6 +1402,7 @@ input.search-input:focus {
 .settings-fieldset {
   border: none;
   padding: 0;
+  margin: var(--space-1) var(--space-2) var(--space-3);
 }
 
 .settings-checkbox-group {
@@ -1412,18 +1420,29 @@ input.search-input:focus {
   margin-bottom: var(--space-5);
 }
 
+.settings-wcag-filter-row .settings-fieldset {
+  flex: 0 0 50%;
+  text-align: center;
+}
+
 .settings-radio-legend {
-  font-size: var(--fs-sub);
-  font-weight: 500;
+  font-size: var(--fs-body);
+  font-weight: 600;
   color: var(--text);
   padding: 0;
-  margin-bottom: var(--space-2);
+  margin: 0;
 }
 
 .settings-radio-group {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+}
+
+.settings-wcag-filter-row .settings-radio-group {
+  display: inline-flex;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .settings-checkbox-label {

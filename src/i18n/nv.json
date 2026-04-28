@@ -126,6 +126,10 @@
   "priority.medium": "Átʼéego",
   "priority.low": "Yázhí",
   "priority.best_practice": "Hózhó Nahasdlíí",
+  "badge.severity_prefix": "[TODO: translate] Severity: ",
+  "badge.source_prefix": "[TODO: translate] Source: ",
+  "badge.wcag_prefix": "[TODO: translate] WCAG ",
+  "badge.level_prefix": "[TODO: translate] Level ",
   "header.open_about": "App baa hane'",
   "about.sheet_label": "Baa hane'",
   "about.what_heading": "Díí haash át'é?",
@@ -244,10 +248,10 @@
   "about.sources_deque": "Deque University course materials",
   "detail.copy_all_text": "Copy all",
   "detail.copy_all_aria": "Copy description and remediation together",
-  "detail.copy_all_announce": "Description and remediation copied",
+  "detail.copy_all_announce": "[TODO: translate] Finding Details / Description and Possible Remediation Steps copied",
   "detail.reset_all_fields_text": "Reset all",
   "detail.reset_all_fields_aria": "Reset description and remediation to original values",
-  "detail.reset_all_fields_announce": "Description and remediation reset to original",
+  "detail.reset_all_fields_announce": "[TODO: translate] Finding Details / Description and Possible Remediation Steps reset",
   "detail.edit_lang_warning": "Edits are session-only — switching language or finding will reset them.",
   "edit.save_button": "Save changes",
   "edit.discard_button": "Discard",
@@ -285,5 +289,8 @@
   "detail.back_aria": "[TODO: translate] Back to previous finding",
   "settings.wcag_level_legend": "[TODO: translate] Conformance level",
   "settings.wcag_level_a": "[TODO: translate] Level A",
-  "settings.wcag_level_aa": "[TODO: translate] Level AA"
+  "settings.wcag_level_aa": "[TODO: translate] Level AA",
+  "search.typewriter_try": "Try:",
+  "search.typewriter_ext_kb": "ext kb",
+  "search.typewriter_ext_kb_full": "external keyboard"
 }

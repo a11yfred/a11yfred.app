@@ -157,13 +157,22 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   </span>
                   <span className="result-item__badges">
                     <span className="priority-badge" style={{ background: p.bg, color: p.color }}>
+                      <span className="badge-prefix">{t('badge.severity_prefix')}</span>
                       {t(p.key)}
                     </span>
                     {finding.source && (
-                      <span className="source-badge">{finding.source}</span>
+                      <span className="source-badge">
+                        <span className="badge-prefix">{t('badge.source_prefix')}</span>
+                        {finding.source}
+                      </span>
                     )}
                     {finding.wcagVersion && finding.wcagLevel && (
-                      <span className="wcag-badge">{finding.wcagVersion} {finding.wcagLevel}</span>
+                      <span className="wcag-badge">
+                        <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
+                        {finding.wcagVersion},{' '}
+                        <span className="badge-prefix">{t('badge.level_prefix')}</span>
+                        {finding.wcagLevel}
+                      </span>
                     )}
                   </span>
                 </div>
