@@ -1171,6 +1171,7 @@ select:disabled {
   font-weight: 500;
   color: var(--text);
   margin-bottom: 0;
+  white-space: nowrap;
 }
 
 .search-row {
