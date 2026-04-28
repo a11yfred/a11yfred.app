@@ -93,6 +93,30 @@ select:focus-visible {
   border-radius: var(--radius-sm);
 }
 
+/* ─── Skip link ───────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 999;
+  padding: var(--space-1) var(--space-3);
+  background: var(--accent);
+  color: var(--accent-bg);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  text-decoration: none;
+  transform: translateY(calc(-100% - var(--space-4)));
+  transition: transform var(--duration-fast);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
 /* ─── Layout ─────────────────────────────────────────────── */
 
 .app-container {
@@ -702,13 +726,34 @@ body:has(.modal-panel.is-open) .drawer-panel {
   .modal-panel {
     transition: none;
   }
+
+  .result-item,
+  .settings-panel {
+    animation: none;
+  }
 }
 
 /* ─── Settings page (desktop) ─────────────────────────────── */
 
-/* On desktop the settings panel renders inline inside <main>
-   rather than as an off-canvas overlay. No special class needed —
-   the component renders as a plain block. */
+@keyframes settings-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* On desktop the settings panel renders inline inside <main>.
+   Fade+slide-up entrance when it mounts (mobile uses the Drawer transition). */
+@media (width >= 768px) {
+  .settings-panel {
+    animation: settings-panel-in var(--duration-base) var(--ease-out) both;
+  }
+}
 
 /* ─── Touch targets ───────────────────────────────────────── */
 
@@ -952,6 +997,18 @@ select:disabled {
   padding: 2px 0;
 }
 
+@keyframes result-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .result-item {
   display: block;
   text-align: left;
@@ -964,6 +1021,8 @@ select:disabled {
   background: var(--bg);
   cursor: pointer;
   transition: border-color var(--duration-fast);
+  animation: result-item-in var(--duration-base) var(--ease-out) both;
+  animation-delay: calc(min(var(--result-i, 0), 5) * 50ms);
 }
 
 /* Archived row: dim everything except the restore button */
@@ -1071,6 +1130,12 @@ select:disabled {
   color: var(--text-muted);
   margin-top: var(--space-1);
   margin-bottom: 0;
+  max-height: 3em;
+  overflow: hidden;
+  transition:
+    max-height var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out),
+    margin-top var(--duration-base) var(--ease-out);
 }
 
 .result-item__desc {
@@ -1083,10 +1148,35 @@ select:disabled {
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.5;
+  max-height: 200px;
+  transition:
+    max-height var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out),
+    margin-top var(--duration-base) var(--ease-out);
 }
 
 .result-item--selected .result-item__desc {
   color: var(--text-muted);
+}
+
+@media (height >= 700px) {
+  .result-item__desc {
+    -webkit-line-clamp: 3;
+  }
+}
+
+@media (height >= 900px) {
+  .result-item__desc {
+    -webkit-line-clamp: 4;
+  }
+}
+
+/* Fold non-selected cards when another card is selected */
+.result-list--has-selection .result-row:not(:has(.result-item--selected)) .result-item__sc,
+.result-list--has-selection .result-row:not(:has(.result-item--selected)) .result-item__desc {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
 }
 
 /* ─── No results ──────────────────────────────────────────── */
@@ -1877,25 +1967,18 @@ input.search-input:focus {
   right: 21px;
 }
 
-.toggle__check {
+.toggle__power {
   display: block;
-  width: 2px;
-  height: 8px;
-  border-radius: 1px;
-  background: var(--accent);
+  stroke: var(--border-control);
+  transition: stroke var(--duration-fast);
 }
 
-.toggle:hover:has(.toggle__input:checked) .toggle__check {
-  background: var(--accent-bg);
+.toggle:has(.toggle__input:checked) .toggle__power {
+  stroke: var(--accent);
 }
 
-.toggle__ring {
-  display: block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: var(--border-width-control) solid var(--border-control);
-  background: transparent;
+.toggle:hover:has(.toggle__input:checked) .toggle__power {
+  stroke: var(--accent-bg);
 }
 
 /* ─── Detail panel ────────────────────────────────────────── */

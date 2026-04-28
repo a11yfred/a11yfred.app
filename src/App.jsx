@@ -697,6 +697,7 @@ function AppContent({
       {theme === 'party' && <PartyBanner />}
 
       <div className="app-background" inert={backgroundInert ? '' : undefined} aria-hidden={backgroundInert ? true : undefined}>
+        <a href="#finding-search" className="skip-link">{t('common.skip_to_main')}</a>
         <Header
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}

@@ -123,9 +123,15 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
 
   const results = useMemo(() => {
     if (!query || query.trim().length < 2) return []
-    return fuse
-      .search(query.trim())
-      .slice(0, 12)
+    // eslint-disable-next-line react-hooks/purity -- intentional: dev-only profiling, side-effect-free
+    const t0 = performance.now()
+    const raw = fuse.search(query.trim()).slice(0, 12)
+    // eslint-disable-next-line react-hooks/purity -- intentional: dev-only profiling, side-effect-free
+    const elapsed = performance.now() - t0
+    if (import.meta.env.DEV && elapsed > 20) {
+      console.warn(`[useFindingSearch] search took ${elapsed.toFixed(1)}ms for "${query}" over ${versionFiltered.length} entries`)
+    }
+    return raw
       .sort((a, b) => {
         const ra = ratings[a.item.id] || DEFAULT_RATING
         const rb = ratings[b.item.id] || DEFAULT_RATING

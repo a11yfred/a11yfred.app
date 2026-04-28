@@ -30,8 +30,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
       </div>
 
-      <ul className="result-list" aria-label={t('results.aria_label')}>
-        {results.map(finding => {
+      <ul className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>
+        {results.map((finding, index) => {
           const isSelected = selected?.id === finding.id
           const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
           const rating = ratings[finding.id] || DEFAULT_RATING
@@ -90,6 +90,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             <li
               key={finding.id}
               className={`result-row${archived ? ' result-row--archived' : ''}`}
+              style={{ '--result-i': index }}
             >
               {showVoting && <div className="result-vote-col">
                 <button
