@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useFocusTrap } from './useFocusTrap.js'
@@ -33,6 +33,14 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
   const dragStartY = useRef(null)
   const dragDelta = useRef(0)
   const dir = useDir()
+
+  // Keep children mounted during the exit animation so the sheet doesn't
+  // appear empty while sliding down. Unmount 250ms after close (--duration-base).
+  const [mounted, setMounted] = useState(open)
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(open), open ? 0 : 250)
+    return () => clearTimeout(timer)
+  }, [open])
   const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
 
   useFocusTrap(panelRef, open)
@@ -149,7 +157,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
 
         {/* Content area */}
         <div className="sheet-content">
-          {(open || keepMounted) && (
+          {(mounted || keepMounted) && (
             <>
               {children}
               {!hideCloseBottom && (
