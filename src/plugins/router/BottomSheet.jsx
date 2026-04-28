@@ -132,7 +132,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        inert={!open ? '' : undefined}
+        inert={!open || undefined}
       >
         {/* Chrome: drag handle centered, optional back button top-left, close button top-right */}
         <div className="sheet-chrome">

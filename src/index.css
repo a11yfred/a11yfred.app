@@ -107,6 +107,9 @@ select:focus-visible {
   font-weight: 600;
   font-size: var(--fs-sm);
   text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
   transform: translateY(calc(-100% - var(--space-4)));
   transition: transform var(--duration-fast);
 }
@@ -2077,6 +2080,15 @@ input.search-input:focus {
   background: var(--accent-bg);
 }
 
+.toggle:hover:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--bg-subtle);
+  border-color: var(--text-muted);
+}
+
+.toggle:hover:not(:has(.toggle__input:checked)) .toggle__thumb {
+  outline-color: var(--text-muted);
+}
+
 .toggle__ring {
   display: block;
   width: 8px;
@@ -2084,6 +2096,10 @@ input.search-input:focus {
   border-radius: 50%;
   border: var(--border-width-control) solid var(--border-control);
   background: transparent;
+}
+
+.toggle:hover:not(:has(.toggle__input:checked)) .toggle__ring {
+  border-color: var(--text-muted);
 }
 
 /* ─── Detail panel ────────────────────────────────────────── */

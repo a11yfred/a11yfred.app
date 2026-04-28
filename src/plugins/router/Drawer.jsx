@@ -67,7 +67,7 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
         aria-modal="true"
         aria-label={label}
         tabIndex={-1}
-        inert={!open ? '' : undefined}
+        inert={!open || undefined}
       >
         {/* Only mount children while open — useFocusOnMount fires on each open */}
         {open && children}

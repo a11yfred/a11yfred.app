@@ -18,7 +18,7 @@
      All values checked for ≥ 4.5:1 contrast against --bg (#fff). */
   --text:            #111;  /* 15.9:1 */
   --text-muted:      #666;  /* 5.7:1  */
-  --text-faint:      #767676;  /* 4.5:1 — minimum passing value */
+  --text-faint:      #696969;  /* 5.5:1 on white — comfortable passing margin */
   --text-disabled:   #b5b5b5;  /* intentionally below 4.5:1 — disabled controls (WCAG 1.4.3 exception) */
 
   /* Color — accent */

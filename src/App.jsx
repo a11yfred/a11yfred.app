@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
-import { Settings, X, Info, ExternalLink } from 'lucide-react'
+import { Settings, X, Info, ExternalLink, ChevronDown } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
@@ -201,6 +201,7 @@ function AppContent({
   const [namesEnabled, setNamesEnabled] = useState(false)
   const [deployTarget, setDeployTarget] = useState(null)  // null | 'netlify' | 'pages' | 'vercel' | 'off'
   const [debugHelpOpen, setDebugHelpOpen] = useState(false)
+  const [debugPanelCmd, setDebugPanelCmd] = useState(null)
   const handleCloseSettings = () => {
     if (returnViewAllRef.current && !returnToPanelRef.current) {
       returnViewAllRef.current = false
@@ -492,6 +493,10 @@ function AppContent({
     // Custom debug commands
     if (lq === 'debug ai assist' || lq === 'debug ai assist on')  { setAiEnabled(true);  fireAiDebugToast('on');  setQuery(''); return true }
     if (lq === 'debug ai assist off')                             { setAiEnabled(false); fireAiDebugToast('off'); setQuery(''); return true }
+    // Detail Panel debug triggers — routed via prop; require a finding to be selected
+    if (['debug ok', 'debug wrong', 'debug 401', 'debug 429', 'debug 503', 'debug network'].includes(lq)) {
+      setDebugPanelCmd(lq); setQuery(submittedQuery); return true
+    }
     return false
   }
 
@@ -507,7 +512,8 @@ function AppContent({
     if (liveSearch) {
       const egg = EASTER_EGGS[q.trim().toLowerCase()]
       if (egg) { activateEasterEgg(egg); return }
-      if (runCommand(q)) return
+      // debug commands always require ENTER — never fire on each keystroke
+      if (!q.trim().toLowerCase().startsWith('debug') && runCommand(q)) return
     }
     if (q && viewAll) navigate('/')
     setQuery(q)
@@ -733,10 +739,9 @@ function AppContent({
 
   return (
     <div className="app-container">
-      <div className="dev-toast-stack">
+      <div className="dev-toast-stack" aria-hidden="true">
         <AiDebugToast state={aiDebugToast} fading={aiDebugToastFading} />
         <FocusDebugger enabled={devAllEnabled} />
-        <Announcer devEnabled={devAllEnabled} />
       </div>
       <NamesDebugger enabled={namesEnabled} />
       <DeployBanner target={deployTarget} />
@@ -772,12 +777,17 @@ function AppContent({
       <PartyMusicPlayer active={theme === 'party'} />
       {theme === 'party' && <PartyBanner />}
 
-      <div className="app-background" inert={backgroundInert ? '' : undefined} aria-hidden={backgroundInert ? true : undefined}>
-        <a
-          href="#/"
-          className="skip-link"
-          onClick={(e) => { e.preventDefault(); document.getElementById('finding-search')?.focus() }}
-        >{t('common.skip_to_main')}</a>
+      <div className="app-background" inert={backgroundInert ? true : undefined} aria-hidden={backgroundInert ? true : undefined}>
+        <nav aria-label="Skip navigation">
+          <a
+            href="#/"
+            className="skip-link"
+            onClick={(e) => { e.preventDefault(); document.getElementById('finding-search')?.focus() }}
+          >
+            {t('common.skip_to_main')}
+            <ChevronDown size={14} aria-hidden="true" />
+          </a>
+        </nav>
         <Header
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}
@@ -789,6 +799,7 @@ function AppContent({
           isDesktop={isDesktop}
         />
         <main className="app-main">
+          <Announcer devEnabled={devAllEnabled} />
           <Suspense fallback={null}>
             {isNotFound
               ? <NotFoundPage />
@@ -841,6 +852,8 @@ function AppContent({
             locale={language}
             userOverridesHook={userOverridesHook}
             contributionQueueHook={contributionQueueHook}
+            debugPanelCmd={debugPanelCmd}
+            onDebugPanelCmdHandled={() => setDebugPanelCmd(null)}
           />
         )}
       </BottomSheet>

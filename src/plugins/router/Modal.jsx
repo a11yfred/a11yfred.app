@@ -75,15 +75,14 @@ export default function Modal({ open, onClose, heading = 'Information', actions,
         className={`modal-panel${open ? ' is-open' : ''}`}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-heading"
+        aria-label={heading}
         tabIndex={-1}
-        inert={!open ? '' : undefined}
+        inert={!open || undefined}
       >
         {open && (
           <>
             <div className="modal-body">
               <h2
-                id="modal-heading"
                 className="modal-heading"
               >
                 {heading}

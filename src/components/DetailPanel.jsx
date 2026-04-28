@@ -36,7 +36,7 @@ function isSignificantlyChanged(original, current, threshold = 0.7) {
   return editDistance(original, current) / original.length > threshold
 }
 
-export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick }) {
+export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
@@ -71,6 +71,32 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   useEffect(() => {
     if (focusTrigger > 0) titleRef.current?.focus()
   }, [focusTrigger])
+
+  useEffect(() => {
+    if (!debugPanelCmd) return
+    const provider = localStorage.getItem('ai_provider') || 'anthropic'
+    const PROVIDER_LABELS = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }
+    const providerLabel = PROVIDER_LABELS[provider] || provider
+    if (debugPanelCmd === 'debug wrong')   { setRevisionFailed(t('detail.revise_error_body')); onDebugPanelCmdHandled?.(); return } // eslint-disable-line react-hooks/set-state-in-effect
+    if (debugPanelCmd === 'debug 401')     { setRevisionFailed(t('detail.revise_error_invalid_key', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === 'debug 429')     { setRevisionFailed(t('detail.revise_error_rate_limit', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === 'debug 503')     { setRevisionFailed(t('detail.revise_error_service_error', { provider: providerLabel, status: 503 })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === 'debug network') { setRevisionFailed(t('detail.revise_error_network_error')); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === 'debug ok') {
+      setRefining(true)
+      announce(t('detail.rewriting_text'), { priority: 'assertive' })
+      setTimeout(() => {
+        const fakeDesc = reviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
+        const fakeRem = reviseRem ? '[Debug] Revised remediation: verify the fix was applied, then remove this placeholder before sharing the report.' : null
+        if (fakeDesc) setDescHistory(h => [...h, descText])
+        if (fakeRem) setRemHistory(h => [...h, remText])
+        setRefining(false)
+        setAnimating(true)
+        startTypewriter(fakeDesc, fakeRem, t)
+      }, 1200)
+      onDebugPanelCmdHandled?.()
+    }
+  }, [debugPanelCmd]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const displayDesc = location.trim()
     ? `${location.trim().replace(/:?\s*$/, ':')} ${finding.desc}`
