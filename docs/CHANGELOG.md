@@ -4,6 +4,35 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-28 — Badge desktop labels, WCAG filter layout, settings a11y, debugger fix
+
+### Badges — desktop labels (≥ 768px)
+
+- `ResultList.jsx`, `DetailPanel.jsx` — priority badge shows "Severity: {value}", source badge shows "Source: {value}", WCAG badge shows "WCAG {version}, Level {level}" on desktop; mobile shows short form with comma: "{version}, {level}"
+- `en.json` — 4 new keys: `badge.severity_prefix`, `badge.source_prefix`, `badge.wcag_prefix`, `badge.level_prefix`; placeholder added to all 49 non-English locales
+- `index.css` — `.badge-prefix { display: none }` base; revealed via `@media (width >= 768px)`
+
+### WCAG filter radio group layout
+
+- `.settings-fieldset` — `margin: var(--space-1) var(--space-2) var(--space-3)` (moved from `.settings-radio-legend`)
+- `.settings-wcag-filter-row .settings-fieldset` — `flex: 0 0 50%; text-align: center`
+- `.settings-wcag-filter-row .settings-radio-group` — `display: inline-flex; align-items: flex-start; text-align: left` (centers group within fieldset without breaking legend flow)
+- `.settings-radio-legend` — `margin: 0` (margin now lives on fieldset)
+
+### Settings group headings — a11y fix
+
+- `SettingsPanel.jsx` — Language, Platform, WCAG Filter, Live Search, Voting group labels changed from `<p>` to `<h3>` (correct heading semantics for labelling grouped controls)
+
+### NamesDebugger — controls only
+
+- `NamesDebugger.jsx` — tooltip now fires only on interactive elements (button, input, select, textarea, img, a[href], elements with interactive ARIA roles); static text (p, h*, div, span) no longer trigger the overlay
+
+### Announce string corrections
+
+- `en.json` — `detail.copy_all_announce`: "Finding Details / Description and Possible Remediation Steps copied"; `detail.reset_all_fields_announce`: "Finding Details / Description and Possible Remediation Steps reset"; updated in all 49 locale files
+
+---
+
 ## 2026-04-27 — Related issue back navigation, Copy/Reset layout
 
 ### BottomSheet — back button for related issue navigation

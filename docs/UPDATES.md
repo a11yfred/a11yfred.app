@@ -4,6 +4,22 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 28, 2026 — Badge labels on desktop, WCAG filter layout, accessibility fixes
+
+### Badge labels on wider screens
+
+On desktop, the severity, source, and WCAG badges now include a text label: **Severity: Critical**, **Source: ATH**, **WCAG 2.1, Level AA**. On mobile the short form remains — **Critical**, **ATH**, **2.1, AA** — to keep the card compact. Translations are queued for the next i18n pass.
+
+### WCAG filter layout
+
+The WCAG Version and Conformance Level radio groups in Settings now sit evenly side by side with their options centered under each heading.
+
+### Accessible name debugger — controls only
+
+The dev-mode accessible name tooltip (debug → Names) now only fires on interactive controls (buttons, links, inputs, images). Hovering over paragraphs, headings, and other static text no longer shows a tooltip, so the overlay is less noisy during keyboard and focus audits.
+
+---
+
 ## April 27, 2026 — Related issue back navigation, Copy/Reset button layout
 
 ### Navigate back through related findings
