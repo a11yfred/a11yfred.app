@@ -2092,17 +2092,7 @@ input.search-input:focus {
   font-size: var(--fs-body);
   padding: 0.375em 0.75em;
   border-radius: var(--radius);
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
   cursor: pointer;
-  transition: var(--transition-btn);
-}
-
-.detail-action-btn:hover {
-  background: var(--bg-subtle);
-  color: var(--text);
-  border-color: var(--border-control);
 }
 
 /* Detail panel — edit session warning */
