@@ -2053,6 +2053,10 @@ input.search-input:focus {
   margin-top: var(--space-5);
 }
 
+[dir="rtl"] .detail-actions-end {
+  justify-content: flex-start;
+}
+
 /* When detail-actions-end is the last child before .sheet-close-bottom, suppress the double border */
 .detail-panel + .sheet-close-bottom {
   border-top: none;
