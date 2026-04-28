@@ -315,21 +315,18 @@
     "source": "ATH",
     "keywords": [
       "heading",
-      "not marked",
-      "heading-like",
-      "visual heading",
-      "bold",
-      "larger text",
-      "no heading role",
-      "unmarked heading",
       "heading hierarchy",
       "skipped heading",
       "heading order",
       "heading levels",
+      "wrong level",
+      "h1 h2 h3",
+      "heading depth",
+      "heading sequence",
       "voiceover",
       "talkback"
     ],
-    "desc": "Text that looks like a heading is not marked as one, or heading levels skip numbers (for example, jumping from h1 to h3). Screen reader users navigate pages by headings, so a broken structure makes it hard to find content.",
+    "desc": "Heading levels skip numbers (for example, jumping from h1 to h3). Screen reader users navigate pages by headings, so a broken structure makes it hard to find content.",
     "rem": "Use h1–h6 elements for all section titles. Do not skip levels — each sub-section should use the next heading level down. Do not use heading elements just to make text larger or bolder."
   },
   {
@@ -536,7 +533,7 @@
   },
   {
     "id": "ATH-023",
-    "title": "Form Field Missing a Label",
+    "title": "Text Input Missing a Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
     "wcagVersion": "2.0",
@@ -550,7 +547,9 @@
     "source": "ATH",
     "keywords": [
       "no visible label",
+      "text input",
       "input",
+      "textarea",
       "form",
       "placeholder",
       "label",
@@ -562,11 +561,9 @@
       "label association",
       "for attribute",
       "not associated",
-      "form label",
-      "unlabeled form",
-      "form inputs"
+      "form label"
     ],
-    "desc": "A form field has no visible label, or its label is not programmatically linked to the field. Placeholder text disappears when the user starts typing and is not a substitute for a proper label.",
+    "desc": "A text input, textarea, or similar text-entry field has no visible label, or its label is not programmatically linked to the field. Placeholder text disappears when the user starts typing and is not a substitute for a proper label.",
     "rem": "Give every form field a visible label element that describes what to enter. Link the label to the input using matching for and id attributes. Avoid using placeholder text as the only label."
   },
   {
@@ -1255,9 +1252,12 @@
       "listbox",
       "combobox",
       "missing label",
-      "form select"
+      "form select",
+      "native select",
+      "custom dropdown",
+      "choice list"
     ],
-    "desc": "A dropdown menu or select element has no label. Screen reader users do not know what choice they are making.",
+    "desc": "A select element or custom dropdown has no label. Screen reader users hear the control announced without context -- for example, hearing the options without knowing whether the field is for country, language, or quantity.",
     "rem": "Add a visible label element with a for attribute that matches the select element's id. If you cannot show a visible label, use aria-label or aria-labelledby instead."
   },
   {

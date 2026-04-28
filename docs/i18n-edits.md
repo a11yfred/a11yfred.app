@@ -6,6 +6,15 @@ Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
 
 ---
 
+## Corpus entry changes (need retranslation of desc/title fields)
+
+- [ ] `ATH-013` desc — old: "Text that looks like a heading is not marked as one, or heading levels skip numbers…" → new: "Heading levels skip numbers…" (scoped to skipped levels only; unmarked-heading language removed)
+- [ ] `ATH-023` title — old: "Form Field Missing a Label" → new: "Text Input Missing a Label"
+- [ ] `ATH-023` desc — old: "A form field has no visible label…" → new: "A text input, textarea, or similar text-entry field has no visible label…" (scoped to text inputs)
+- [ ] `ATH-053` desc — old: "A dropdown menu or select element has no label. Screen reader users do not know what choice they are making." → new: added concrete screen reader example (combo box announcement context)
+
+---
+
 - [ ] `detail.copy_all_text` — added: "Copy all"
 - [ ] `detail.copy_all_copied_text` — added: "Copied all"
 - [ ] `detail.copy_all_aria` — added: "Copy description and remediation to clipboard"
