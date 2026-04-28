@@ -32,16 +32,13 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 - [ ] **Keyword audit** `[corpus]` `[manual]` — after the batch import, review the `keywords` array on every entry; keywords drive Fuse.js relevance more than any other field, and imported entries from spreadsheets often need additional synonyms and component names added
 - [ ] **Platform coverage** `[corpus]` — verify that native-only findings are flagged `"platform": "native"` and that `"both"` entries make sense on each platform; aim for roughly 40% native or both entries to make the Native filter useful
 - [ ] **Related SC links** `[corpus]` — spot-check the `related` arrays for accuracy; some starter entries are missing secondary success criteria that are commonly cited alongside the primary SC
-- [x] **Corpus provenance field** `[corpus]` `[claude]` — `source` field added to all 76 corpus entries (`"ATH"` = Mikey's original entries); indigo source badge displayed in ResultList and DetailPanel alongside priority badge; tokens `--source-text`/`--source-bg` in light + dark mode (both ≥ 4.5:1)
 - [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — switching is already available via debug command (internal only); public-facing toggle requires authentication as a prerequisite — see Accounts & Cloud Sync
-- [x] **Batch import tooling** `[corpus]` `[claude]` — `src/services/importService.js` handles .csv/.xlsx/.xls/.json; fuzzy column-name mapping; priority + platform normalization; USR-NNN ID generation; `importFromFile` + `importFromUrl` exposed on `useUserFindings` hook; SheetJS (xlsx) lazy-loaded as a separate chunk; file upload UI pending
 - [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` — Phase 1: `importFromUrl` in importService handles public JSON URLs; Phase 2 (auth required): signed-in users point app at their own Supabase table via `dataService.getUserFindings()`; Settings UI + fallback behavior pending; prereq: Authentication (Accounts & Cloud Sync)
 - [ ] **Public corpus bootstrap** `[corpus]` `[phase3]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as Phase 1; the `source` badge field enables clear attribution per entry; this corpus is never mixed with Mikey's personal corpus
 - [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` `[phase3]` — serve Mikey's private corpus from a Supabase RLS-protected table; unauthenticated users get `corpus.json` only; the private corpus never ships in any public build; prereq: Authentication
 
 ### Competitive / Differentiators
 
-- [x] **WCAG version tagging** `[corpus]` `[claude]` — `wcagVersion` + `wcagLevel` added to all 76 corpus entries (2.0/2.1/2.2 mapped from SC number; Level A/AA/AAA per spec); teal WCAG badge (`--wcag-text`/`--wcag-bg`, light + dark, both ≥ 4.5:1) displayed alongside source badge in ResultList and DetailPanel; N/A entries left blank
 - [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` — add pre-populated deep links to Jira and Linear that open a new ticket with the finding description and remediation already filled in; no API key or auth required for deep links; document the URL format for each tracker
 - [ ] **Compare mode** `[ux]` `[enhancement]` — allow the user to open two finding entries side by side to decide which fits better; implement as a split view in the main content area; useful when multiple success criteria could apply to the same observation
 
@@ -53,19 +50,13 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 
 - [ ] **Email results** `[ux]` `[enhancement]` — add a button to send the selected finding description and remediation via an email provider (server-side); useful for quickly forwarding a finding write-up
 - [ ] **Copy both fields at once + reset** `[ux]` — add a "Copy all" button (below the refine textarea, right side) that copies description and remediation together as formatted plain text (`Description: …\n\nRemediation: …`); also add a "Reset all" button beside it that resets both text areas to original values; useful for pasting into email or a report
-- [x] **Persist last selected finding** `[ux]` — `sessionStorage.setItem('lastSelectedId')` wired in `handleSelectFinding`; restore-on-mount `useEffect` fires once after data loads when URL is bare; cleared on deselect and tab close
-- [x] **Recent findings** `[ux]` — `localStorage` key `recentFindings` (max 10, deduped, newest first) updated on every selection in `handleSelectFinding`; display UI pending
 - [ ] **Frequent findings** `[ux]` `[privacy]` — track implicit usage: increment open count when a finding's panel is opened, copy count when a copy button is used; persist per-finding `{ opens, copies }` to `localStorage` as `frequentFindings`; settings option to show a "Frequent" section above results (followed by "Starred" from ratings); update privacy statement to document the new storage key
 - [ ] **Pin results to home page** `[ux]` `[privacy]` — add a pin toggle button inside each result tile (top-right, visible on hover/focus); pinned findings appear in a "Pinned" section on the home page before any search; persist as `pinnedFindings` (array of IDs) in `localStorage`; reset all clears pins; update privacy statement; **open question:** clarify how pinning differs from starring — possible distinction: pin = task-scoped / "keep on screen right now", star = permanent saved favourite; decide if both are needed or if one replaces the other
 - [ ] **How to use page** `[ux]` — onboarding modal on first visit (check `localStorage` flag `showHowToUse`); workflow: search → select → add location prefix → refine → copy; "Show this on startup" checkbox defaults checked; Help button in the header can also open it as a panel (same content, more detail); settings toggle to re-enable the startup modal; brief enough to read in under 30 seconds
-- [x] **About / data sources** `[ux]` `[corpus]` — data sources section added to AboutPanel; WCAG, axe-core, WebAIM, Deque; panel scrolls as content grows
-- [x] **WCAG version filter** `[ux]` `[corpus]` — checkboxes in SettingsPanel; persisted as `wcagFilter`; `versionFiltered` useMemo stage in `useFindingSearch`
-- [x] **Export findings to formats** `[ux]` — `exportFinding(finding, format)` utility complete in `src/utils/exportFinding.js`; supports `text`, `markdown`, `csv`; button UI pending
 - [ ] **Copy / add / edit / delete findings** `[ux]` `[enhancement]` — data layer wired: `src/services/userFindingsService.js` (localStorage CRUD, USR-NNN IDs), `src/hooks/useUserFindings.js`, merged into `useFindingSearch` alongside corpus; UI (forms, inline edit, copy button) pending; auth prereq for cloud persistence
 - [ ] **Narrow results mode** `[ux]` — when results are showing, display a toggle to enter "narrow" mode; the search input switches label and placeholder to reflect narrowing-within-results; the clear button becomes "Clear and reset" (clears the narrow filter and returns to the initial empty state); live-search setting governs whether narrowing updates in real time or on submit; show a count of narrowed vs. total results; replaced the original corpus `component` field approach
 - [ ] **Upvote / downvote results** `[ux]` `[corpus]` — add thumbs up/down buttons to each result card; store ratings in `localStorage` keyed by finding ID; use ratings to boost or demote entries in Fuse.js scoring so frequently used findings surface higher; if authentication is added later, sync ratings to Supabase so they persist across devices
 - [ ] **Export findings** `[ux]` — multi-select findings from the result list, add occurrence counts and severity overrides, and export a formatted accessibility audit report in Markdown or plain text; primary deliverable format for most audit engagements
-- [x] **Language-specific edit warning (inline)** `[ux]` `[i18n]` — inline `role="status"` warning shown in DetailPanel when edited fields diverge from the original; edit-flow dialogs and modal pending (see Multilingual Edit Flow below)
 
 ### Multilingual Edit Flow
 
@@ -83,12 +74,9 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Visual Design
 
-- ~~**Gear icon replacement** — replaced by Lucide `Settings` icon; no longer needed~~
-- [x] **Empty state typewriter** `[design]` — fade-cycle animation in SearchBar cycling 8 phrases; `aria-hidden="true"`; disabled under `prefers-reduced-motion`; stops cycling when query non-empty
 - [ ] **Toggle design** `[design]` `[a11y]` — replace the current thin-bar-and-circle Toggle with a power-button-style indicator symbol inside the thumb; ensure the focus ring is visible at all zoom levels
 - [ ] **Result card fold on select** `[ux]` `[design]` — when a finding is selected, unselected result cards fold to a single line (animated collapse); opening the detail panel triggers the fold; closing the detail panel deselects and all cards unfold to full height; replaces the standalone visible-selection-indicator item
 - [ ] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border and a dot indicator; superseded by result card fold behavior above once that ships
-- ~~**Monospace result description** `[design]` `[claude]` — evaluated; not applied~~
 - [ ] **Severity badge placement** `[ux]` `[design]` — the severity badge (Critical / High / Medium / Low / Best Practice) currently sits top-right of the card header inline with the title; evaluate whether it reads better in a metadata row below the title alongside the SC label and source badge; the detail panel already groups these in a `detail-title-row` — consider aligning the list card to match
 - [ ] **Tiles responsive to vertical height** `[ux]` `[design]` — result cards should account for short viewports (landscape phone, small browser window); explore options: compress card padding, reduce visible text lines, or introduce a "compact" tile mode that shows only the title and priority badge; tie into the result card fold behaviour if that ships; test at 568px viewport height (iPhone SE landscape)
 - [ ] **Button system unification** `[priority]` `[design]` `[code]` `[claude]` — consolidate `.btn-accent`, `.btn-ghost`, `.btn-secondary`, `.btn-icon`, `.btn-icon-accent`, `.field-btn` into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, `.btn--field` variants; migrate all uses; prerequisite for extracting as a standalone UI component library
@@ -103,7 +91,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Visible selection indicator** `[a11y]` `[design]` `[claude]` — the selected result card currently uses an accent-colored border; users with color vision differences may not notice the state change; add a non-color indicator (a filled accent left-edge bar, a checkmark, or a bold left border) alongside the color so the selection is perceivable without relying on color alone (WCAG 1.4.1); tracked here alongside Visual Design item
 - [ ] **Toggle design** `[a11y]` `[design]` — the focus ring concern is largely covered by FocusDebugger during dev; the outstanding a11y item is ensuring the toggle thumb contrast meets 1.4.11 (3:1 against adjacent background) at all themes including Party mode
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` `[dormant]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
-- ~~**`prefers-reduced-motion` in JS animations** `[a11y]` `[claude]` — CSS transitions already honor `prefers-reduced-motion: reduce`; add a `window.matchMedia('(prefers-reduced-motion: reduce)')` check for any future JS-driven animations~~
 
 ---
 
@@ -111,10 +98,8 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### AI Assist
 
-- [x] **AI error surface** `[ai]` `[ux]` — already implemented: `AiApiError` catch in DetailPanel maps `invalid_key`, `rate_limit`, `service_error`, `network_error` error types to specific localized messages including provider name; debug triggers available in dev mode
 - [ ] **Wire Microsoft Copilot** `[ai]` — requires `VITE_AZURE_OPENAI_ENDPOINT` env var set to a full Azure OpenAI deployment URL; implemented in `aiService.js` but untested; add the env var and verify the response parses correctly
 - [ ] **System prompt tuning** `[ai]` `[claude]` — test AI refinements across at least 20 different finding types covering a variety of SCs, priorities, and platforms; adjust the tone, length, and format instructions in `buildPrompt` in `aiService.js` if the output drifts from the established voice
-- ~~**AI refinement loading state** `[ux]` `[a11y]` — replace the "Revising…" button text with an animated spinner using CSS; add `aria-busy="true"` to the button during the request; respect `prefers-reduced-motion` by disabling the spin animation and showing text only instead~~
 
 ### AI Agent Support
 
