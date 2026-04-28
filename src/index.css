@@ -732,9 +732,9 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 .btn-ghost,
 .btn-secondary {
-  border: 1px solid var(--border-control);
+  border: 1px solid var(--accent);
   background: transparent;
-  color: var(--text-muted);
+  color: var(--accent-text);
   font-weight: 500;
   transition: var(--transition-btn);
 }
@@ -786,9 +786,9 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 .btn-ghost:not(:disabled):hover,
 .btn-secondary:not(:disabled):hover {
-  background: var(--bg-subtle);
-  color: var(--text);
-  border-color: var(--text-faint);
+  background: var(--accent-text);
+  color: var(--accent-bg);
+  border-color: var(--accent-text);
 }
 
 .btn-accent:not(:disabled):hover {
