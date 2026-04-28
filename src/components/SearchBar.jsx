@@ -16,7 +16,7 @@ const TYPEWRITER_PHRASES = [
 ]
 const CYCLE_MS = 2500
 
-export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showVoting }) {
+export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showVoting, hasPins }) {
   const { navigate } = useRouter()
   const t = useT()
   const inputRef = useRef(null)
@@ -106,6 +106,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {t('search.hint_platform', { platform: platformLabel })}
           {aiEnabled && providerName ? ` ${t('search.hint_ai', { provider: providerName })}` : ''}
           {showVoting ? ` ${t('search.hint_voting')}` : ''}
+          {hasPins ? ` ${t('search.hint_pin')}` : ''}
           {' '}
           {t('search.hint_change_in')}{' '}
           <button onClick={() => navigate('/settings')} className="search-hint-link">

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
 import { Settings, X, Info, ExternalLink } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
-import ResultList, { ResultListSkeleton, DataError } from './components/ResultList.jsx'
+import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
 import AboutPanel from './components/AboutPanel.jsx'
 import Confetti from './components/Confetti.jsx'
@@ -25,6 +25,7 @@ import { I18nProvider, useT } from './i18n/index.jsx'
 import useUserFindings from './hooks/useUserFindings.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'
+import usePinnedFindings from './hooks/usePinnedFindings.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 
@@ -275,6 +276,7 @@ function AppContent({
   const sessionRestoredRef = useRef(false)
 
   const { ratings, upvote, downvote, toggleStar, toggleArchive } = useFindingRatings()
+  const { pinnedIds, togglePin, clearPins } = usePinnedFindings()
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
   const userOverridesHook = useUserOverrides()
@@ -283,6 +285,11 @@ function AppContent({
   const activeQuery = liveSearch ? query : submittedQuery
   const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
+
+  const pinnedResults = useMemo(() =>
+    allFindings.filter(f => pinnedIds.has(f.id)),
+    [allFindings, pinnedIds]
+  )
 
   const badgeResults = useMemo(() => {
     if (!badgeFilter) return []
@@ -553,6 +560,7 @@ function AppContent({
     setSelected(null)
     setViewAllConfirmOpen(false)
     setViewAllLoading(false)
+    clearPins()
     announce(t('settings.reset_all_announce'), { priority: 'assertive' })
   }
 
@@ -586,6 +594,8 @@ function AppContent({
       else handleCloseSettings()
     },
     onReset: handleResetAll,
+    hasPins: pinnedIds.size > 0,
+    onClearPins: clearPins,
   }
 
   // Provider name for the search hint (read from localStorage; updates on next render after save)
@@ -604,7 +614,23 @@ function AppContent({
         aiEnabled={aiEnabled}
         providerName={providerName}
         showVoting={showVoting}
+        hasPins={pinnedIds.size > 0}
       />
+      {!dataError && !dataLoading && !viewAllLoading && pinnedIds.size > 0 && (
+        <PinnedSection
+          findings={pinnedResults}
+          selected={selected}
+          onSelect={handleSelectFinding}
+          ratings={ratings}
+          onUpvote={upvote}
+          onDownvote={downvote}
+          onStar={toggleStar}
+          onArchive={toggleArchive}
+          showVoting={showVoting}
+          pinnedIds={pinnedIds}
+          onPin={togglePin}
+        />
+      )}
       {dataError
         ? <DataError onRetry={retryData} />
         : dataLoading || viewAllLoading
@@ -623,6 +649,8 @@ function AppContent({
                 onStar={toggleStar}
                 onArchive={toggleArchive}
                 showVoting={showVoting}
+                pinnedIds={pinnedIds}
+                onPin={togglePin}
               />
             )
             : activeQuery.length >= 2
@@ -640,6 +668,8 @@ function AppContent({
                   onArchive={toggleArchive}
                   showVoting={showVoting}
                   onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
+                  pinnedIds={pinnedIds}
+                  onPin={togglePin}
                 />
               )
               : badgeFilter
@@ -657,6 +687,8 @@ function AppContent({
                     onArchive={toggleArchive}
                     showVoting={showVoting}
                     countRef={resultsCountRef}
+                    pinnedIds={pinnedIds}
+                    onPin={togglePin}
                   />
                 )
               : (

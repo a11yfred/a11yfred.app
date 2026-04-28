@@ -141,7 +141,6 @@
     "wcagVersion": "2.0",
     "wcagLevel": "AA",
     "related": [
-      "1.4.6 Contrast (Enhanced) (Level AAA)",
       "1.4.11 Non-text Contrast (Level AA)"
     ],
     "priority": "Critical",
@@ -170,8 +169,7 @@
     "wcagVersion": "2.1",
     "wcagLevel": "AA",
     "related": [
-      "1.4.3 Contrast (Minimum) (Level AA)",
-      "1.4.6 Contrast (Enhanced) (Level AAA)"
+      "1.4.3 Contrast (Minimum) (Level AA)"
     ],
     "priority": "Critical",
     "platform": "both",
@@ -342,8 +340,7 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.4.6 Headings and Labels (Level AA)",
-      "2.4.10 Section Headings (Level AAA)"
+      "2.4.6 Headings and Labels (Level AA)"
     ],
     "priority": "Medium",
     "platform": "both",
@@ -1299,7 +1296,6 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.4.9 Link Purpose (Link Only) (Level AAA)",
       "1.3.1 Info and Relationships (Level A)"
     ],
     "priority": "High",
@@ -1598,7 +1594,6 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.3.2 Three Flashes (Level AAA)",
       "2.2.2 Pause, Stop, Hide (Level A)"
     ],
     "priority": "Critical",
@@ -1679,7 +1674,7 @@
       "mobile devices"
     ],
     "desc": "Interactive elements — such as buttons, links, and icon controls — are smaller than 24×24 CSS pixels with insufficient spacing around them. Small targets are difficult to activate accurately for users with motor disabilities and touch screen users.",
-    "rem": "Make all interactive targets at least 24×24 CSS pixels, including any spacing offset to neighboring targets. If the visible element is smaller, add padding to expand the clickable area without changing the visual design. Aim for 44×44 CSS pixels (WCAG 2.5.5 AAA) on touch interfaces."
+    "rem": "Make all interactive targets at least 24×24 CSS pixels, including any spacing offset to neighboring targets. If the visible element is smaller, add padding to expand the clickable area without changing the visual design. Aim for 44×44 CSS pixels on touch interfaces."
   },
   {
     "id": "ATH-024",

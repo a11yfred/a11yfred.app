@@ -1,10 +1,38 @@
-import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link } from 'lucide-react'
+import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Pin } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink }) {
+export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin }) {
+  const t = useT()
+  if (!findings.length) return null
+  return (
+    <div className="pinned-section">
+      <h2 className="pinned-section__heading">
+        {t('results.pinned_heading')}
+        <span className="pinned-section__count">{findings.length}</span>
+      </h2>
+      <ResultList
+        results={findings}
+        selected={selected}
+        onSelect={onSelect}
+        query=""
+        ratings={ratings}
+        onUpvote={onUpvote}
+        onDownvote={onDownvote}
+        onStar={onStar}
+        onArchive={onArchive}
+        showVoting={showVoting}
+        pinnedIds={pinnedIds}
+        onPin={onPin}
+        hideCount
+      />
+    </div>
+  )
+}
+
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false }) {
   const t = useT()
   const itemRefs = useRef({})
   const focusNextRef = useRef(null)
@@ -24,7 +52,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
   return (
     <div className="result-list-section">
-      <div className="results-meta">
+      {!hideCount && <div className="results-meta">
         <div className="results-count-row">
           <h2 ref={countRef} tabIndex={countRef ? -1 : undefined} className="results-count">
             {t('results.count', { count: results.length })}
@@ -47,7 +75,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           )}
         </div>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
-      </div>
+      </div>}
 
       <ul className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>
         {results.map((finding, index) => {
@@ -102,6 +130,17 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             announce(archived
               ? t('announce.unarchived', { title: finding.title })
               : t('announce.archived', { title: finding.title })
+            )
+          }
+
+          const pinned = pinnedIds.has(finding.id)
+
+          function handlePin(e) {
+            e.stopPropagation()
+            onPin?.(finding.id)
+            announce(pinned
+              ? t('announce.unpinned', { title: finding.title })
+              : t('announce.pinned', { title: finding.title })
             )
           }
 
@@ -163,13 +202,25 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 </button>
               </div>}
 
-              <button
-                ref={el => { itemRefs.current[finding.id] = el }}
-                aria-label={cardLabel}
-                tabIndex={archived ? -1 : undefined}
-                onClick={() => { if (!archived) onSelect(finding) }}
-                className={`result-item${isSelected ? ' result-item--selected' : ''}`}
-              >
+              <div className="result-card-wrap">
+                {onPin && (
+                  <button
+                    type="button"
+                    className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                    aria-label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                    title={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                    onClick={handlePin}
+                  >
+                    <Pin size={12} aria-hidden="true" fill={pinned ? 'currentColor' : 'none'} />
+                  </button>
+                )}
+                <button
+                  ref={el => { itemRefs.current[finding.id] = el }}
+                  aria-label={cardLabel}
+                  tabIndex={archived ? -1 : undefined}
+                  onClick={() => { if (!archived) onSelect(finding) }}
+                  className={`result-item${isSelected ? ' result-item--selected' : ''}${onPin ? ' result-item--pinnable' : ''}`}
+                >
                 <div className="result-item__header">
                   <span className="result-item__title">
                     {isSelected && <span aria-hidden="true" className="result-item__dot" />}
@@ -201,6 +252,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
                 <div className="result-item__desc">{finding.desc}</div>
               </button>
+              </div>
             </li>
           )
         })}

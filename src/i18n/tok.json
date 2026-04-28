@@ -298,5 +298,12 @@
   "search.typewriter_ext_kb_full": "ilo toki pi lon ala",
   "results.copy_link": "TODO: translate — EN: \"Copy link\"",
   "results.copy_link_aria": "TODO: translate — EN: \"Copy link to these search results\"",
-  "results.copied_link": "TODO: translate — EN: \"Copied!\""
+  "results.copied_link": "TODO: translate — EN: \"Copied!\"",
+  "search.hint_pin": "TODO: translate — EN: \"Pin any result to keep it at the top across all views.\"",
+  "announce.pinned": "TODO: translate — EN: \"{title} pinned.\"",
+  "announce.unpinned": "TODO: translate — EN: \"{title} unpinned.\"",
+  "results.pin": "TODO: translate — EN: \"Pin {title}\"",
+  "results.unpin": "TODO: translate — EN: \"Unpin {title}\"",
+  "results.pinned_heading": "TODO: translate — EN: \"Pinned\"",
+  "settings.clear_pins": "TODO: translate — EN: \"Clear Pins\""
 }

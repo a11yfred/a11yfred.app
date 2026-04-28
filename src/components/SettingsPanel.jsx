@@ -123,6 +123,8 @@ export default function SettingsPanel({
   onUnlock,
   onClose,
   onReset,
+  hasPins,
+  onClearPins,
 }) {
   const headingRef = useFocusOnMount()
   const saveButtonRef = useRef(null)
@@ -548,6 +550,15 @@ export default function SettingsPanel({
           {t('settings.privacy_button')}
         </button>
         <div className="settings-footer-actions">
+          {hasPins && (
+            <button
+              type="button"
+              onClick={onClearPins}
+              className="btn-secondary settings-clear-pins-btn"
+            >
+              {t('settings.clear_pins')}
+            </button>
+          )}
           <button
             type="button"
             ref={resetButtonRef}
@@ -701,7 +712,12 @@ function Toggle({ id, checked, onChange }) {
         className="toggle__input"
       />
       <span aria-hidden="true" role="presentation" className="toggle__track">
-        <span role="presentation" className="toggle__thumb" />
+        <span role="presentation" className="toggle__thumb">
+          {checked
+            ? <span role="presentation" className="toggle__check" />
+            : <span role="presentation" className="toggle__ring" />
+          }
+        </span>
       </span>
     </span>
   )

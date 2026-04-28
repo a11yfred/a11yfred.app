@@ -11,9 +11,10 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Feature | Status | % | Phase |
 | --- | --- | --- | --- |
 | Core Search | ✅ | 95 | 1 |
-| Result List | ✅ | 90 | 1 |
+| Result List | ✅ | 95 | 1 |
 | Detail Panel | 🟡 | 75 | 1 |
 | Ratings (Upvote / Star / Archive) | 🟡 | 85 | 1 |
+| Pinned Findings | ✅ | 100 | 1 |
 | Settings Panel | 🟡 | 90 | 1 |
 | Session Persistence | ✅ | 100 | 1 |
 | Debug Tools | ✅ | 100 | 1 |
@@ -54,7 +55,7 @@ Missing:
 
 ---
 
-### Result List — 90%
+### Result List — 95%
 
 Done:
 
@@ -64,6 +65,9 @@ Done:
 - Card fold on select — non-selected cards collapse to title-only (CSS `:has()`)
 - Skip link (WCAG 2.4.1) — slides in on focus
 - No-results empty state with SVG illustration
+- Badge click filter — click any priority/source/WCAG badge to filter by it
+- Shareable search URLs — `?q=` param synced via `history.replaceState`
+- Copy link button in results header copies `?q=` URL to clipboard
 
 Missing:
 
@@ -148,6 +152,19 @@ Done:
 - `DebugHelp` — full command reference panel
 - `DebugLauncher` — FAB + spotlight command input
 - Unified command dispatcher: `debug all/names/deploy/ai assist/skeleton on|off`, party/language off commands
+
+---
+
+### Pinned Findings — 100%
+
+Done:
+
+- Pin button on every result tile (absolutely positioned inside card)
+- `usePinnedFindings.js` — localStorage-backed `Set` of pinned IDs
+- Pinned section above main results, visible across home / search / badge filter / view-all
+- Persists until unpinned or Reset All; Clear Pins button in Settings (shown only when pins exist)
+- Pin hint shown in search bar hint text when pins are active
+- Accessible announce strings for pin / unpin; RTL-safe layout
 
 ---
 
