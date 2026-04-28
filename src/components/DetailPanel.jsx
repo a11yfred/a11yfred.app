@@ -36,7 +36,7 @@ function isSignificantlyChanged(original, current, threshold = 0.7) {
   return editDistance(original, current) / original.length > threshold
 }
 
-export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated }) {
+export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
@@ -435,6 +435,15 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             : <><Clipboard size={14} aria-hidden="true" />{' '}{t('detail.copy_all_text')}</>
           }
         </button>
+        {onClose && (
+          <button
+            type="button"
+            className="btn-accent detail-close-btn"
+            onClick={onClose}
+          >
+            {t('common.close')}
+          </button>
+        )}
       </div>
 
       <Modal

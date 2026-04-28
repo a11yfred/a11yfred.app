@@ -741,6 +741,7 @@ function AppContent({
         returnFocusRef={findingTriggerRef}
         onBack={findingHistory.length > 0 ? handleBack : undefined}
         backLabel={t('detail.back_aria')}
+        hideCloseBottom
       >
         {selected && (
           <DetailPanel
@@ -751,6 +752,7 @@ function AppContent({
             allFindings={allFindings}
             onSelect={handleSelectFinding}
             onSelectRelated={handleSelectRelated}
+            onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
             locale={language}
             userOverridesHook={userOverridesHook}
             contributionQueueHook={contributionQueueHook}

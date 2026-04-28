@@ -608,6 +608,7 @@ function App() {
 | `keepMounted` | boolean | `false` | Keep children in the DOM while the sheet is visually closed. Use when you need to preserve React state (e.g. text edits) while a secondary panel covers the sheet. The sheet is still `inert` when closed; only the state is preserved. |
 | `onBack` | fn \| undefined | `undefined` | When provided, renders a back-chevron button in the top-left of the chrome. Call it to navigate to a previous context; the button is hidden when `onBack` is `undefined`. |
 | `backLabel` | string | `'Back'` | Accessible label for the optional back button. |
+| `hideCloseBottom` | boolean | `false` | Suppress the default bottom close button. Use when the content (e.g. a detail panel) renders its own close button inline with other footer actions. |
 | `children` | node | — | Rendered inside the sheet only while open (unless `keepMounted` is true) |
 
 **`keepMounted` use case — settings ↔ detail panel navigation:**

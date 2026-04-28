@@ -27,7 +27,7 @@ import { useDir } from './useDir.js'
  *                                      fire before parent effects in React)
  *   children        node             — rendered inside the sheet
  */
-export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, onBack, backLabel = 'Back', children }) {
+export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, onBack, backLabel = 'Back', hideCloseBottom = false, children }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
   const dragStartY = useRef(null)
@@ -152,11 +152,13 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
           {(open || keepMounted) && (
             <>
               {children}
-              <div className="sheet-close-bottom">
-                <button onClick={onClose} className="btn-accent sheet-close-bottom-btn">
-                  {closeLabel}
-                </button>
-              </div>
+              {!hideCloseBottom && (
+                <div className="sheet-close-bottom">
+                  <button onClick={onClose} className="btn-accent sheet-close-bottom-btn">
+                    {closeLabel}
+                  </button>
+                </div>
+              )}
             </>
           )}
         </div>
