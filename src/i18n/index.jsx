@@ -89,7 +89,7 @@ export function I18nProvider({ locale, children }) {
   const t = useMemo(() => {
     const msgs = MESSAGES[locale] ?? MESSAGES[locale?.split('-')[0]] ?? MESSAGES.en
     return (key, vars) => {
-      let str = msgs[key] ?? MESSAGES.en[key] ?? key
+      let str = (msgs[key] != null && msgs[key] !== '') ? msgs[key] : (MESSAGES.en[key] ?? key)
       if (vars) {
         Object.entries(vars).forEach(([k, v]) => {
           str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v))
