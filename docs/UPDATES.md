@@ -4,6 +4,28 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 28, 2026 — Badge filters, shareable links, Easter egg fonts, debug polish
+
+### Filter by badge
+
+Clicking any badge in a finding panel (severity, source, or WCAG version) now filters the result list to show all findings with that tag. Click a different badge or start a new search to clear the filter.
+
+### Shareable search URLs
+
+Performing a search now writes a `?q=` parameter to the URL. The Copy Link button (next to the result count) copies the full URL including the query, so you can paste it in a message and the recipient lands on the same results. Navigating to a shared link pre-fills the search automatically.
+
+### Easter egg locale heading fonts
+
+Each of the 17 secret language modes now has its own heading font family: Pirate and High Valyrian get elegant old-world serif; Klingon, Hodor, and Newspeak get Impact; Belter, Nadsat, and Cityspeak get Courier New; Dovahzul gets Old English Text MT; Pig Latin and Simlish get Comic Sans; and so on.
+
+### Toggle restored
+
+The settings toggles are back to a plain circular thumb. The power-button icon experiment has been removed.
+
+### Debug commands simplified
+
+`debug all`, `debug names`, and `debug ai assist` now work without typing `on` — the bare command enables the tool. Append `off` to disable. The debug help panel (`debug help`) has been reformatted to match.
+
 ## April 28, 2026 — Badge labels on desktop, WCAG filter layout, accessibility fixes
 
 ### Badge labels on wider screens

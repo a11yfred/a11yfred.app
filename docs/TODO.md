@@ -35,7 +35,7 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 - [ ] **Related SC links** `[corpus]` — spot-check the `related` arrays for accuracy; some starter entries are missing secondary success criteria that are commonly cited alongside the primary SC
 - [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` — switching is already available via debug command (internal only); public-facing toggle requires authentication as a prerequisite — see Accounts & Cloud Sync
 - [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` — Phase 1: `importFromUrl` in importService handles public JSON URLs; Phase 2 (auth required): signed-in users point app at their own Supabase table via `dataService.getUserFindings()`; Settings UI + fallback behavior pending; prereq: Authentication (Accounts & Cloud Sync)
-- [ ] **Public corpus bootstrap** `[corpus]` `[phase3]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 200+ entries before any Phase 3 public launch; same JSON schema as Phase 1; the `source` badge field enables clear attribution per entry; this corpus is never mixed with Mikey's personal corpus
+- [ ] **Public corpus bootstrap** `[corpus]` `[phase3]` — seed the generic public corpus from WAI Understanding docs, axe-core rules, and Deque University entries; target 80–100 well-sourced entries at launch; same JSON schema as Phase 1; the `source` badge field enables clear attribution per entry; this corpus is never mixed with Mikey's personal corpus
 - [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` `[phase3]` — serve Mikey's private corpus from a Supabase RLS-protected table; unauthenticated users get `corpus.json` only; the private corpus never ships in any public build; prereq: Authentication
 
 ### Competitive / Differentiators
@@ -76,7 +76,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 ### Visual Design
 
 - [ ] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border and a dot indicator; this visual-only treatment will be superseded by the result card fold behavior (shipped 2026-04-28) once a dedicated non-color selection indicator is designed; for now the border+dot treatment remains
-- [ ] **Severity badge placement** `[ux]` `[design]` — the severity badge (Critical / High / Medium / Low / Best Practice) currently sits top-right of the card header inline with the title; evaluate whether it reads better in a metadata row below the title alongside the SC label and source badge; the detail panel already groups these in a `detail-title-row` — consider aligning the list card to match
+- [x] **Severity badge placement** `[ux]` `[design]` — detail panel badges moved below h2 into `detail-badges` div; result card badges remain inline with title (different layout context, intentional)
 - [ ] **Tiles responsive to vertical height** `[ux]` `[design]` — result cards should account for short viewports (landscape phone, small browser window); explore options: compress card padding, reduce visible text lines, or introduce a "compact" tile mode that shows only the title and priority badge; tie into the result card fold behaviour if that ships; test at 568px viewport height (iPhone SE landscape)
 - [ ] **Button system unification** `[priority]` `[design]` `[code]` `[claude]` — consolidate `.btn-accent`, `.btn-ghost`, `.btn-secondary`, `.btn-icon`, `.btn-icon-accent`, `.field-btn` into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, `.btn--field` variants; migrate all uses; prerequisite for extracting as a standalone UI component library
 
@@ -119,6 +119,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ## Plugins
 
+- [ ] **Easter egg locale bundle** `[code]` `[i18n]` — extract the 18 Easter egg locale JSON files (`pig`, `pir`, `tlh`, `val`, `blt`, `dot`, `tok`, `nav`, `qya`, `sjn`, `hod`, `dov`, `nds`, `nws`, `mnd`, `csp`, `sim`, `ali`) and the `EASTER_EGGS` / `EASTER_EGG_LOCALES` constants from `App.jsx` into a self-contained package (`src/plugins/easter-eggs/` or a standalone npm package); the bundle would export the locale map, the trigger→code map, and the heading-font CSS block so other React projects can drop in the same Easter egg language experience; prerequisite: lazy-loading strategy for locale JSON so the 18 files don't bloat the main bundle
 - [ ] **Ko-fi a11y patch as standalone plugin** `[code]` `[a11y]` `[dormant]` — extract `patchKofiA11y` from `App.jsx` into `src/plugins/kofi/KofiWidget.jsx` and `src/plugins/kofi/index.js`; the plugin should be drop-in for any React project that embeds the Ko-fi overlay widget; include a self-contained CSS file (`kofi.css`) that applies accessible styling patches — focus ring on the trigger button, visible outline on the popup container, improved close-button target size — since Ko-fi's widget is visually styled outside our control and CSS patches are the safest lever we have; document selectors used and note they may need updating if Ko-fi changes its markup
 
 ---

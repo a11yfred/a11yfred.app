@@ -701,12 +701,7 @@ function Toggle({ id, checked, onChange }) {
         className="toggle__input"
       />
       <span aria-hidden="true" role="presentation" className="toggle__track">
-        <span role="presentation" className="toggle__thumb">
-          <svg aria-hidden="true" width="10" height="10" viewBox="0 0 10 10" className="toggle__power">
-            <line x1="5" y1="1.5" x2="5" y2="5" strokeWidth="1.5" strokeLinecap="round" />
-            <path d="M 3 2.4 A 3.2 3.2 0 1 0 7 2.4" fill="none" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </span>
+        <span role="presentation" className="toggle__thumb" />
       </span>
     </span>
   )

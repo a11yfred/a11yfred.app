@@ -10,7 +10,7 @@ const IS_DEV = typeof window !== 'undefined' &&
  * Props:
  *   open            boolean
  *   onClose         fn
- *   customCommands  [{ heading, rows: [{ cmd, desc }] }]  — project-specific sections
+ *   customCommands  [{ heading, note?, rows: [{ cmd, desc }] }]
  */
 export function DebugHelp({ open, onClose, customCommands = [] }) {
   if (!IS_DEV || !open) return null
@@ -28,12 +28,11 @@ export function DebugHelp({ open, onClose, customCommands = [] }) {
 
           <section className="debug-help-section">
             <h3 className="debug-help-section-title">A11y Testing</h3>
+            <p className="debug-help-note">Append <code>off</code> to disable any toggle (e.g. <code>debug all off</code>).</p>
             <table className="debug-help-table">
               <tbody>
-                <tr><td><code>debug all on</code></td><td>Enable all debug tools (KB focus, announce, names tooltip)</td></tr>
-                <tr><td><code>debug all off</code></td><td>Disable all debug tools</td></tr>
-                <tr><td><code>debug names on</code></td><td>Show accessible name tooltip on hover</td></tr>
-                <tr><td><code>debug names off</code></td><td>Hide accessible name tooltip</td></tr>
+                <tr><td><code>debug all</code></td><td>All debug tools (KB focus, announce, names)</td></tr>
+                <tr><td><code>debug names</code></td><td>Accessible name tooltip on hover</td></tr>
               </tbody>
             </table>
           </section>
@@ -42,11 +41,11 @@ export function DebugHelp({ open, onClose, customCommands = [] }) {
             <h3 className="debug-help-section-title">Deployment</h3>
             <table className="debug-help-table">
               <tbody>
-                <tr><td><code>debug deploy off</code></td><td>Show "Deploying OFF" banner</td></tr>
-                <tr><td><code>debug deploy on</code></td><td>Show "Deploying to Netlify" (active target)</td></tr>
-                <tr><td><code>debug deploy netlify</code></td><td>Show Netlify banner</td></tr>
-                <tr><td><code>debug deploy pages</code></td><td>Show GitHub Pages banner</td></tr>
-                <tr><td><code>debug deploy vercel</code></td><td>Show Vercel banner</td></tr>
+                <tr><td><code>debug deploy off</code></td><td>Off (no banner)</td></tr>
+                <tr><td><code>debug deploy on</code></td><td>Netlify — active target</td></tr>
+                <tr><td><code>debug deploy netlify</code></td><td>Netlify banner</td></tr>
+                <tr><td><code>debug deploy pages</code></td><td>GitHub Pages</td></tr>
+                <tr><td><code>debug deploy vercel</code></td><td>Vercel</td></tr>
               </tbody>
             </table>
           </section>
@@ -54,6 +53,7 @@ export function DebugHelp({ open, onClose, customCommands = [] }) {
           {customCommands.map(section => (
             <section key={section.heading} className="debug-help-section">
               <h3 className="debug-help-section-title">{section.heading}</h3>
+              {section.note && <p className="debug-help-note">{section.note}</p>}
               <table className="debug-help-table">
                 <tbody>
                   {section.rows.map(row => (

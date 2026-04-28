@@ -148,6 +148,7 @@ select:focus-visible {
 
 .page-header {
   position: relative;
+  z-index: 1;
   text-align: center;
   margin-bottom: var(--space-8);
   padding-top: calc(var(--space-8) + var(--space-6));
@@ -747,10 +748,14 @@ body:has(.modal-panel.is-open) .drawer-panel {
   }
 }
 
-/* On desktop the settings panel renders inline inside <main>.
-   Fade+slide-up entrance when it mounts (mobile uses the Drawer transition). */
+/* On desktop the settings/about panels render inline inside <main>.
+   Push them down to align their headings with where the H1 sits in the normal view.
+   The compact header has zero flow-height (children are absolute/sr-only), so without
+   this padding the panel titles appear at the very top of the viewport. */
 @media (width >= 768px) {
-  .settings-panel {
+  .settings-panel,
+  .about-panel {
+    padding-top: calc(var(--space-8) + var(--space-6));
     animation: settings-panel-in var(--duration-base) var(--ease-out) both;
   }
 }
@@ -899,11 +904,27 @@ select:disabled {
   margin-bottom: var(--space-3);
 }
 
+.results-count-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
 .results-count {
   font-size: var(--fs-sub);
   font-weight: 600;
   color: var(--text);
   margin-bottom: var(--space-1);
+}
+
+.results-copy-link-btn {
+  font-size: var(--fs-body);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
 }
 
 .results-vote-hint {
@@ -1101,6 +1122,11 @@ select:disabled {
   flex-shrink: 0;
 }
 
+.priority-badge {
+  background: var(--badge-bg);
+  color: var(--badge-text);
+}
+
 .source-badge {
   background: var(--source-bg);
   color: var(--source-text);
@@ -1120,7 +1146,7 @@ select:disabled {
 }
 
 @media (width >= 768px) {
-  .badge-prefix {
+  .detail-badges .badge-prefix {
     display: inline;
   }
 }
@@ -1968,20 +1994,6 @@ input.search-input:focus {
   right: 21px;
 }
 
-.toggle__power {
-  display: block;
-  stroke: var(--border-control);
-  transition: stroke var(--duration-fast);
-}
-
-.toggle:has(.toggle__input:checked) .toggle__power {
-  stroke: var(--accent);
-}
-
-.toggle:hover:has(.toggle__input:checked) .toggle__power {
-  stroke: var(--accent-bg);
-}
-
 /* ─── Detail panel ────────────────────────────────────────── */
 
 .detail-panel {
@@ -2013,6 +2025,23 @@ input.search-input:focus {
   gap: var(--space-2);
   margin-top: var(--space-2);
   margin-bottom: 6px;
+}
+
+.detail-badges button:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
+}
+
+.detail-badges button:hover {
+  background: var(--badge-text);
+  color: var(--badge-bg);
+}
+
+.detail-badges button:active {
+  background: var(--badge-text);
+  color: var(--badge-bg);
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
 }
 
 .detail-sc-list {
@@ -2356,12 +2385,16 @@ input.search-input:focus {
   white-space: nowrap;
 }
 
-.btn-accent.field-btn--success {
+.btn-accent.field-btn--success,
+.btn-ghost.field-btn--success,
+.btn-secondary.field-btn--success {
   color: var(--success);
   border-color: var(--success);
 }
 
-.btn-accent.field-btn--success:hover {
+.btn-accent.field-btn--success:hover,
+.btn-ghost.field-btn--success:hover,
+.btn-secondary.field-btn--success:hover {
   color: var(--success);
   background: var(--accent-bg);
   border-color: var(--success);
@@ -2643,6 +2676,252 @@ input.search-input:focus {
 :root[lang="nav"] .no-results__heading,
 :root[lang="nav"] .not-found__heading {
   font-family: Papyrus, fantasy;
+}
+
+/* ─── Easter egg locale heading fonts ───────────────────── */
+
+/* Pig Latin + Simlish: playful */
+:root[lang="pig"] .page-title,
+:root[lang="pig"] .about-title,
+:root[lang="pig"] .about-section-heading,
+:root[lang="pig"] .about-subheading,
+:root[lang="pig"] .settings-title,
+:root[lang="pig"] .settings-section-heading,
+:root[lang="pig"] .detail-title,
+:root[lang="pig"] .detail-related__heading,
+:root[lang="pig"] .sheet-heading,
+:root[lang="pig"] .modal-heading,
+:root[lang="pig"] .no-results__heading,
+:root[lang="pig"] .not-found__heading,
+:root[lang="sim"] .page-title,
+:root[lang="sim"] .about-title,
+:root[lang="sim"] .about-section-heading,
+:root[lang="sim"] .about-subheading,
+:root[lang="sim"] .settings-title,
+:root[lang="sim"] .settings-section-heading,
+:root[lang="sim"] .detail-title,
+:root[lang="sim"] .detail-related__heading,
+:root[lang="sim"] .sheet-heading,
+:root[lang="sim"] .modal-heading,
+:root[lang="sim"] .no-results__heading,
+:root[lang="sim"] .not-found__heading {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+/* Pirate + High Valyrian: elegant old-world serif */
+:root[lang="pir"] .page-title,
+:root[lang="pir"] .about-title,
+:root[lang="pir"] .about-section-heading,
+:root[lang="pir"] .about-subheading,
+:root[lang="pir"] .settings-title,
+:root[lang="pir"] .settings-section-heading,
+:root[lang="pir"] .detail-title,
+:root[lang="pir"] .detail-related__heading,
+:root[lang="pir"] .sheet-heading,
+:root[lang="pir"] .modal-heading,
+:root[lang="pir"] .no-results__heading,
+:root[lang="pir"] .not-found__heading,
+:root[lang="val"] .page-title,
+:root[lang="val"] .about-title,
+:root[lang="val"] .about-section-heading,
+:root[lang="val"] .about-subheading,
+:root[lang="val"] .settings-title,
+:root[lang="val"] .settings-section-heading,
+:root[lang="val"] .detail-title,
+:root[lang="val"] .detail-related__heading,
+:root[lang="val"] .sheet-heading,
+:root[lang="val"] .modal-heading,
+:root[lang="val"] .no-results__heading,
+:root[lang="val"] .not-found__heading {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+}
+
+/* Quenya + Sindarin: Tolkien Elvish */
+:root[lang="qya"] .page-title,
+:root[lang="qya"] .about-title,
+:root[lang="qya"] .about-section-heading,
+:root[lang="qya"] .about-subheading,
+:root[lang="qya"] .settings-title,
+:root[lang="qya"] .settings-section-heading,
+:root[lang="qya"] .detail-title,
+:root[lang="qya"] .detail-related__heading,
+:root[lang="qya"] .sheet-heading,
+:root[lang="qya"] .modal-heading,
+:root[lang="qya"] .no-results__heading,
+:root[lang="qya"] .not-found__heading,
+:root[lang="sjn"] .page-title,
+:root[lang="sjn"] .about-title,
+:root[lang="sjn"] .about-section-heading,
+:root[lang="sjn"] .about-subheading,
+:root[lang="sjn"] .settings-title,
+:root[lang="sjn"] .settings-section-heading,
+:root[lang="sjn"] .detail-title,
+:root[lang="sjn"] .detail-related__heading,
+:root[lang="sjn"] .sheet-heading,
+:root[lang="sjn"] .modal-heading,
+:root[lang="sjn"] .no-results__heading,
+:root[lang="sjn"] .not-found__heading {
+  font-family: "Book Antiqua", "Palatino Linotype", Palatino, serif;
+}
+
+/* Klingon + Hodor + Newspeak: harsh and blunt */
+:root[lang="tlh"] .page-title,
+:root[lang="tlh"] .about-title,
+:root[lang="tlh"] .about-section-heading,
+:root[lang="tlh"] .about-subheading,
+:root[lang="tlh"] .settings-title,
+:root[lang="tlh"] .settings-section-heading,
+:root[lang="tlh"] .detail-title,
+:root[lang="tlh"] .detail-related__heading,
+:root[lang="tlh"] .sheet-heading,
+:root[lang="tlh"] .modal-heading,
+:root[lang="tlh"] .no-results__heading,
+:root[lang="tlh"] .not-found__heading,
+:root[lang="hod"] .page-title,
+:root[lang="hod"] .about-title,
+:root[lang="hod"] .about-section-heading,
+:root[lang="hod"] .about-subheading,
+:root[lang="hod"] .settings-title,
+:root[lang="hod"] .settings-section-heading,
+:root[lang="hod"] .detail-title,
+:root[lang="hod"] .detail-related__heading,
+:root[lang="hod"] .sheet-heading,
+:root[lang="hod"] .modal-heading,
+:root[lang="hod"] .no-results__heading,
+:root[lang="hod"] .not-found__heading,
+:root[lang="nws"] .page-title,
+:root[lang="nws"] .about-title,
+:root[lang="nws"] .about-section-heading,
+:root[lang="nws"] .about-subheading,
+:root[lang="nws"] .settings-title,
+:root[lang="nws"] .settings-section-heading,
+:root[lang="nws"] .detail-title,
+:root[lang="nws"] .detail-related__heading,
+:root[lang="nws"] .sheet-heading,
+:root[lang="nws"] .modal-heading,
+:root[lang="nws"] .no-results__heading,
+:root[lang="nws"] .not-found__heading {
+  font-family: Impact, "Arial Black", sans-serif;
+}
+
+/* Belter + Nadsat + Cityspeak: typewriter / industrial */
+:root[lang="blt"] .page-title,
+:root[lang="blt"] .about-title,
+:root[lang="blt"] .about-section-heading,
+:root[lang="blt"] .about-subheading,
+:root[lang="blt"] .settings-title,
+:root[lang="blt"] .settings-section-heading,
+:root[lang="blt"] .detail-title,
+:root[lang="blt"] .detail-related__heading,
+:root[lang="blt"] .sheet-heading,
+:root[lang="blt"] .modal-heading,
+:root[lang="blt"] .no-results__heading,
+:root[lang="blt"] .not-found__heading,
+:root[lang="nds"] .page-title,
+:root[lang="nds"] .about-title,
+:root[lang="nds"] .about-section-heading,
+:root[lang="nds"] .about-subheading,
+:root[lang="nds"] .settings-title,
+:root[lang="nds"] .settings-section-heading,
+:root[lang="nds"] .detail-title,
+:root[lang="nds"] .detail-related__heading,
+:root[lang="nds"] .sheet-heading,
+:root[lang="nds"] .modal-heading,
+:root[lang="nds"] .no-results__heading,
+:root[lang="nds"] .not-found__heading,
+:root[lang="csp"] .page-title,
+:root[lang="csp"] .about-title,
+:root[lang="csp"] .about-section-heading,
+:root[lang="csp"] .about-subheading,
+:root[lang="csp"] .settings-title,
+:root[lang="csp"] .settings-section-heading,
+:root[lang="csp"] .detail-title,
+:root[lang="csp"] .detail-related__heading,
+:root[lang="csp"] .sheet-heading,
+:root[lang="csp"] .modal-heading,
+:root[lang="csp"] .no-results__heading,
+:root[lang="csp"] .not-found__heading {
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Dothraki: ancient tribal */
+:root[lang="dot"] .page-title,
+:root[lang="dot"] .about-title,
+:root[lang="dot"] .about-section-heading,
+:root[lang="dot"] .about-subheading,
+:root[lang="dot"] .settings-title,
+:root[lang="dot"] .settings-section-heading,
+:root[lang="dot"] .detail-title,
+:root[lang="dot"] .detail-related__heading,
+:root[lang="dot"] .sheet-heading,
+:root[lang="dot"] .modal-heading,
+:root[lang="dot"] .no-results__heading,
+:root[lang="dot"] .not-found__heading {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Toki Pona: handwritten simplicity */
+:root[lang="tok"] .page-title,
+:root[lang="tok"] .about-title,
+:root[lang="tok"] .about-section-heading,
+:root[lang="tok"] .about-subheading,
+:root[lang="tok"] .settings-title,
+:root[lang="tok"] .settings-section-heading,
+:root[lang="tok"] .detail-title,
+:root[lang="tok"] .detail-related__heading,
+:root[lang="tok"] .sheet-heading,
+:root[lang="tok"] .modal-heading,
+:root[lang="tok"] .no-results__heading,
+:root[lang="tok"] .not-found__heading {
+  font-family: "Segoe Print", "Comic Sans MS", cursive;
+}
+
+/* Dovahzul: Gothic runic */
+:root[lang="dov"] .page-title,
+:root[lang="dov"] .about-title,
+:root[lang="dov"] .about-section-heading,
+:root[lang="dov"] .about-subheading,
+:root[lang="dov"] .settings-title,
+:root[lang="dov"] .settings-section-heading,
+:root[lang="dov"] .detail-title,
+:root[lang="dov"] .detail-related__heading,
+:root[lang="dov"] .sheet-heading,
+:root[lang="dov"] .modal-heading,
+:root[lang="dov"] .no-results__heading,
+:root[lang="dov"] .not-found__heading {
+  font-family: "Old English Text MT", "Palatino Linotype", fantasy;
+}
+
+/* Mandoa: sci-fi terminal */
+:root[lang="mnd"] .page-title,
+:root[lang="mnd"] .about-title,
+:root[lang="mnd"] .about-section-heading,
+:root[lang="mnd"] .about-subheading,
+:root[lang="mnd"] .settings-title,
+:root[lang="mnd"] .settings-section-heading,
+:root[lang="mnd"] .detail-title,
+:root[lang="mnd"] .detail-related__heading,
+:root[lang="mnd"] .sheet-heading,
+:root[lang="mnd"] .modal-heading,
+:root[lang="mnd"] .no-results__heading,
+:root[lang="mnd"] .not-found__heading {
+  font-family: "Lucida Console", "Courier New", monospace;
+}
+
+/* Alienese: stark alien */
+:root[lang="ali"] .page-title,
+:root[lang="ali"] .about-title,
+:root[lang="ali"] .about-section-heading,
+:root[lang="ali"] .about-subheading,
+:root[lang="ali"] .settings-title,
+:root[lang="ali"] .settings-section-heading,
+:root[lang="ali"] .detail-title,
+:root[lang="ali"] .detail-related__heading,
+:root[lang="ali"] .sheet-heading,
+:root[lang="ali"] .modal-heading,
+:root[lang="ali"] .no-results__heading,
+:root[lang="ali"] .not-found__heading {
+  font-family: "Arial Black", Impact, sans-serif;
 }
 
 /* ─── Dev-only styles live in src/plugins/debug/debug.css ── */

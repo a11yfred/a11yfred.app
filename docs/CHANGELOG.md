@@ -4,6 +4,49 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-28 — Badge click filter, shareable search URLs, Easter egg fonts, toggle revert, skip link fix, debug help polish
+
+### Badge click filter
+
+- `DetailPanel.jsx` — all three badge `<span>` elements converted to `<button>` with `onClick={() => onBadgeClick?.({ type, value })}`; `--badge-bg`/`--badge-text` CSS vars set inline so the hover swap rule in `index.css` works without per-badge overrides; `aria-label` includes badge value + "Show all findings with this tag"
+- `App.jsx` — `badgeFilter` state + `badgeResults` memo; `handleBadgeClick` clears selected, navigates to `/`, and focuses `resultsCountRef`; a second `<ResultList key="badge">` renders filtered results when `badgeFilter` is set
+- `index.css` — `.priority-badge` gets `--badge-bg`/`--badge-text` vars to support the hover inversion shared by `.source-badge` and `.wcag-badge`; `.detail-badges button` hover + focus-visible rules
+
+### Shareable search URLs
+
+- `App.jsx` — `query` and `submittedQuery` now initialise from `new URLSearchParams(window.location.search).get('q')` on first render; `syncSearchUrl(q)` calls `history.replaceState` to write `?q=...` on submit/clear without adding history entries; `handleCopyLink` syncs the URL before copying `window.location.href`
+- `ResultList.jsx` — `countRef` and `onCopyLink` props; `results-count-row` flex wrapper around h2 + copy button; copy button shows "Copy link" / "Copied!" with 2 s timeout; `Link` icon from lucide-react
+- `index.css` — `.results-count-row`, `.results-copy-link-btn` styles
+- `en.json` — `results.copy_link`, `results.copy_link_aria`, `results.copied_link`
+
+### Toggle — power button reverted
+
+- `SettingsPanel.jsx` — removed `<svg className="toggle__power">` from `.toggle__thumb`; thumb is now a plain circular span again
+- `index.css` — removed `.toggle__power`, `.toggle:has(.toggle__input:checked) .toggle__power`, `.toggle:hover:has(.toggle__input:checked) .toggle__power`
+
+### Skip link — hash router 404 fix
+
+- `App.jsx` — `href="#finding-search"` → `href="#/"` so that even without JS the link stays on the root route instead of routing to a non-existent path; `onClick` handler with `e.preventDefault()` + programmatic focus is retained
+
+### Easter egg locale heading fonts
+
+- `index.css` — 9 new font-family rules covering all 17 Easter egg locales (excluding Na'vi which already had Papyrus): Comic Sans MS (pig, sim); Palatino Linotype (pir, val); Book Antiqua (qya, sjn); Impact (tlh, hod, nws); Courier New (blt, nds, csp); Georgia (dot); Segoe Print (tok); Old English Text MT (dov); Lucida Console (mnd); Arial Black (ali); applied to 12 heading class selectors per locale
+
+### Reset All feedback
+
+- `DetailPanel.jsx` — `resetAllDone` state; "Reset all" button briefly shows `<Check>` + "Reset" text for 2 s after firing, matching the copy-all success pattern
+- `en.json` — `detail.reset_done_desktop`, `detail.reset_done_mobile`, `detail.reset_done_aria`
+
+### Debug help panel polish
+
+- `DebugHelp.jsx` — A11y Testing section condensed: note about `off` suffix + 2 rows (vs. 4 with paired on/off); Deployment descriptions shortened; `customCommands` sections now support optional `note` field rendered as `.debug-help-note`; `debug all` / `debug names` / `debug ai assist` now work without the `on` suffix (bare command = enable)
+- `debug.css` — overlay: `pointer-events: none` removed, semi-transparent backdrop added so click-outside-to-close works
+- `App.jsx` — `runCommand` accepts `debug all`, `debug names`, `debug ai assist` (no `on` required); custom commands updated to condensed format
+
+### Settings/About desktop padding
+
+- `index.css` — `.settings-panel, .about-panel` on `width >= 768px` get `padding-top: calc(var(--space-8) + var(--space-6))` to align headings with the compact header layout; `.page-header` gets `z-index: 1` to stay above panels
+
 ## 2026-04-28 — Skip link, toggle power button, card fold, model selector, agentic AI backend, Fuse profiling, platform audit
 
 ### Skip link (WCAG 2.4.1)

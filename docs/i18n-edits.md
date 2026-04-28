@@ -7,6 +7,7 @@ Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
 ---
 
 - [ ] `detail.copy_all_text` — added: "Copy all"
+- [ ] `detail.copy_all_copied_text` — added: "Copied all"
 - [ ] `detail.copy_all_aria` — added: "Copy description and remediation to clipboard"
 - [ ] `detail.copy_all_announce` — old: "Description and remediation copied" → new: "Finding Details / Description and Possible Remediation Steps copied"
 - [ ] `detail.reset_all_fields_text` — added: "Reset all"
@@ -69,3 +70,6 @@ Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
 - [ ] `detail.save_rewrite_text` — old: "Save & Rewrite" → new: "Save & Revise Selected"
 - [ ] `settings.language_desc` — old: "Defaults to your browser's language." → new: "Use the dropdown and Change button below to select a new one. The change won't be saved until you press the Save button at the bottom."
 - [ ] `settings.privacy_body_2` — old: "This app stores the following in your browser's localStorage: …sort priority setting, …voting data" → new: "…your browser: …active AI provider, …voting data, a list of recently viewed finding IDs (localStorage), any findings you create or copy (localStorage), and the ID of the last finding you had open (sessionStorage — cleared when the tab closes)."
+- [ ] `results.copy_link` — added: "Copy link"
+- [ ] `results.copy_link_aria` — added: "Copy link to these search results"
+- [ ] `results.copied_link` — added: "Copied!"

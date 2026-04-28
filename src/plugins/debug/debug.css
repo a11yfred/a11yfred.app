@@ -7,7 +7,7 @@
 /* Toast stack — shared container for all dev toasts */
 .dev-toast-stack {
   position: fixed;
-  bottom: 5.5rem;
+  top: 1rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
@@ -180,7 +180,7 @@
   align-items: flex-start;
   justify-content: center;
   padding: 2rem 1rem;
-  pointer-events: none;
+  background: rgb(0 0 0 / 0.35);
 }
 
 .debug-help-panel {
