@@ -2,6 +2,7 @@
 node_modules
 LETTER_TO_KOFI.md
 dist/
+dist-extension/
 src/data/personal-corpus.json
 docs/GDPR-DRAFT.md
 docs/PRODUCT-PLAN.md
