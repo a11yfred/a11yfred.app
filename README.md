@@ -115,10 +115,10 @@ scripts/
   en-snapshot.json        # Last-translated English values; drives stale-detection
   tag-wcag.mjs            # Script that added wcagVersion/wcagLevel to all corpus entries
 
-electron/                 # Electron desktop app scaffold (deps not yet installed)
-  main.js                 # Main process: BrowserWindow, safeStorage IPC handlers
+electron/                 # Electron desktop app (active on feature/electron-app)
+  main.js                 # Main process: BrowserWindow, safeStorage IPC handlers (complete)
   preload.js              # Context bridge: exposes window.electronAPI to renderer
-  electron-builder.json   # Packaging config (macOS/Windows)
+  electron-builder.json   # Packaging config (macOS/Windows/Linux)
 
 public/
   robots.txt              # Disallow all crawlers (dev deployment — replace before launch)
@@ -178,7 +178,7 @@ Each entry in `corpus.json` follows this schema:
 
 With AI assist toggled on, the Revision Notes field rewrites the description and remediation based on a short note. AI is **off by default**.
 
-Open Settings to select a provider and add your API key. Keys are stored in `localStorage` only — never sent to any server other than the provider's own API. You supply your own key; usage is billed directly to your account.
+Open Settings to select a provider and add your API key. Keys are stored locally — in `localStorage` for web and extension builds, in the OS keychain (`safeStorage`) for the Electron desktop build. Keys are never sent to any server other than the provider's own API. You supply your own key; usage is billed directly to your account.
 
 An agentic AI backend (`agenticAiService.js`) uses a corpus search tool (`searchCorpusTool.js`) to ground AI responses in real findings.
 
@@ -199,17 +199,39 @@ Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill in missing or stale
 
 ---
 
-## Electron (offline desktop)
+## Distribution targets
 
-The scaffold is in `electron/`. The app is already fully offline-capable (bundled corpus JSON, no server required). To activate the Electron build:
+| Target | Branch | Build command | Output | Status |
+| ------ | ------ | ------------- | ------ | ------ |
+| **Web** | `main` | `npm run build` | `dist/` | Active — auto-deploys to Netlify |
+| **Chrome extension** | `feature/chrome-extension` | `npm run build:extension` | `dist-extension/` | Scaffold complete — needs icons + smoke test |
+| **Firefox extension** | `feature/firefox-extension` | `npm run build:extension:firefox` | `dist-extension-firefox/` | Scaffold complete — needs icons + smoke test |
+| **Electron desktop** | `feature/electron-app` | `npm run electron:build` | `release/` | Nearly complete — needs icons + OS testing |
+
+All targets build from the same React source. `localStorage` is used in web and extension contexts; Electron uses `safeStorage` (OS keychain encryption) for API keys. See `docs/FEATURE-STATUS.md` for per-target completion details and remaining tasks.
+
+### Electron — loading the dev build
 
 ```bash
-npm install --save-dev electron electron-builder concurrently
-npm run electron:dev    # Dev: Vite + Electron together
-npm run electron:build  # Production: Vite build + electron-builder package
+npm run electron:dev    # Vite dev server + Electron together
+npm run electron:build  # Production: Vite build + electron-builder package → release/
 ```
 
-API keys will use `window.electronAPI.keys` (Electron `safeStorage`) instead of `localStorage`. SettingsPanel currently uses `localStorage` directly — that's the last wiring task before packaging.
+The app is fully offline once built (bundled corpus JSON, no server required). AI Assist still requires internet to reach the provider API. App icons (`build/icon.icns`, `build/icon.ico`, `build/icon.png`) are required before packaging.
+
+### Chrome extension — loading unpacked
+
+```bash
+npm run build:extension         # builds dist-extension/
+# chrome://extensions → Enable Developer mode → Load unpacked → dist-extension/
+```
+
+### Firefox extension — loading temporarily
+
+```bash
+npm run build:extension:firefox # builds dist-extension-firefox/
+# about:debugging → This Firefox → Load Temporary Add-on → dist-extension-firefox/manifest.json
+```
 
 ---
 
@@ -352,6 +374,7 @@ See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for how to fork, run locally, a
 | [docs/DEPLOYING.md](docs/DEPLOYING.md) | Deployment options and switching guide |
 | [docs/SECURITY.md](docs/SECURITY.md) | Data storage, API keys, CSP, and vulnerability reporting |
 | [docs/i18n-edits.md](docs/i18n-edits.md) | Pending en.json key changes awaiting translation run |
+| [docs/FEATURE-STATUS.md](docs/FEATURE-STATUS.md) | Per-feature completion tracker including distribution targets |
 
 ---
 

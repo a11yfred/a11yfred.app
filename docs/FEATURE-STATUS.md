@@ -10,6 +10,9 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 | Feature | Status | % | Phase |
 | --- | --- | --- | --- |
+| Chrome Extension | 🟡 | 60 | — |
+| Firefox Extension | 🟡 | 60 | — |
+| Electron Desktop | 🟡 | 80 | — |
 | Core Search | ✅ | 95 | 1 |
 | Result List | ✅ | 95 | 1 |
 | Detail Panel | 🟡 | 75 | 1 |
@@ -433,6 +436,73 @@ Missing:
 ### Ad Tiles — 0%
 
 Needs: sponsored result tile component matching corpus card dimensions, `[Sponsored]` aria-label, frequency placement (every 8 results), `debug ads on|off` toggle, ad delivery infrastructure, documentation in DebugHelp.
+
+---
+
+## Distribution Targets
+
+### Chrome Extension — 60%
+
+Branch: `feature/chrome-extension`
+
+Done:
+
+- Manifest V3 with `side_panel` and `sidePanel` permission
+- Minimal service worker wires action icon to open the side panel
+- Vite extension build config (`base: './'`, relative asset paths, `dist-extension/` output)
+- `build:extension` npm script
+- Hash-based router and `localStorage` work unchanged in side panel context
+- Build verified clean
+
+Missing:
+
+- PNG icons at 16 / 48 / 128px (Chrome shows generic icon without them)
+- Smoke test: load unpacked, verify search / copy / settings / AI in Chrome
+- Side panel layout check at ~400px width
+- Merge to `main`
+
+---
+
+### Firefox Extension — 60%
+
+Branch: `feature/firefox-extension`
+
+Done:
+
+- Manifest V3 with `sidebar_action` and `browser_specific_settings.gecko` ID
+- No background script needed — Firefox opens sidebar automatically
+- Vite Firefox build config (`dist-extension-firefox/` output)
+- `build:extension:firefox` npm script
+- Build verified clean
+
+Missing:
+
+- PNG icons at 16 / 48 / 96px
+- Smoke test via `about:debugging` → Load Temporary Add-on
+- AMO account + extension ID registration
+- Merge to `main`
+
+---
+
+### Electron Desktop — 80%
+
+Branch: `feature/electron-app`
+
+Done:
+
+- `electron`, `electron-builder`, `concurrently` installed as devDependencies
+- `electron/main.js` — `keys:set` / `keys:get` / `keys:delete` IPC handlers complete with `safeStorage` encryption and `fs` persistence to `app.getPath('userData')`
+- `electron/preload.js` — context bridge fully wired (`window.electronAPI.keys`, `theme`, `version`)
+- `src/services/aiService.js` and `agenticAiService.js` — API key reads guarded with `window.electronAPI` check
+- `src/components/SettingsPanel.jsx` — key init and save routed through `electronAPI.keys` in Electron context
+- Dev and production build scripts in place
+
+Missing:
+
+- App icons (`build/icon.icns`, `build/icon.ico`, `build/icon.png`) — required by `electron-builder`
+- End-to-end test on macOS and Windows
+- macOS code signing (required for distribution outside the App Store)
+- Merge to `main`
 
 ---
 

@@ -4,6 +4,18 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 29, 2026 — Multi-platform builds (Chrome extension, Firefox extension, Electron)
+
+Three distribution targets are now in active development on feature branches. The same React app powers all of them — no source rewrites needed.
+
+**Chrome extension** (`feature/chrome-extension`) — runs as a Chrome side panel, which opens beside whatever page you're auditing. That's the natural fit for an audit tool: you search A11yTextHelper on the left, review the page on the right, copy and paste. Build with `npm run build:extension`, then load the `dist-extension/` folder as an unpacked extension in Chrome.
+
+**Firefox extension** (`feature/firefox-extension`) — same idea, using Firefox's sidebar instead. No background script needed; Firefox opens the sidebar automatically when you click the extension icon. Build with `npm run build:extension:firefox`, load temporarily via `about:debugging`.
+
+**Electron desktop** (`feature/electron-app`) — the desktop app scaffold is now functionally complete. API keys are stored using the operating system's encrypted keychain (`safeStorage`) instead of the browser's localStorage, so they're protected at rest. The app is fully offline for search; AI Assist still requires internet to reach the provider API.
+
+---
+
 ## April 28, 2026 — Archived items, URL sync, settings updates
 
 ### Archived items look cleaner

@@ -19,11 +19,23 @@ All user data is stored locally in `localStorage` only. Nothing is ever sent to 
 
 ## API keys
 
-Keys are entered by the user and stored only in `localStorage`. They are sent exclusively to the configured AI provider's API (Anthropic, OpenAI, Google, or Microsoft) when a revision request is made. No key is ever sent to any A11yTextHelper server — there is no A11yTextHelper server.
+Keys are entered by the user and stored locally. Storage location varies by platform:
+
+| Platform | Storage | Notes |
+| -------- | ------- | ----- |
+| Web (browser) | `localStorage` | Scoped to the deployment origin |
+| Chrome / Firefox extension | `localStorage` | Scoped to the extension origin (`chrome-extension://` or `moz-extension://`) — isolated from all websites |
+| Electron desktop | `safeStorage` (OS keychain) via encrypted file in `app.getPath('userData')` | Encrypted at rest using OS-level encryption; never written to `localStorage` |
+
+Keys are sent exclusively to the configured AI provider's API when a revision request is made. No key is ever sent to any A11yTextHelper server — there is no A11yTextHelper server.
+
+## Browser extension context
+
+In the Chrome and Firefox extensions, the app runs inside an isolated extension origin. `localStorage` is scoped to that origin and is not accessible to any website the user visits. No content scripts are injected into web pages; the extension only runs in the side panel / sidebar UI.
 
 ## No backend
 
-This is a fully static single-page application. There is no database, authentication server, or backend of any kind. Corpus data is a local JSON file bundled with the app.
+This is a fully static application in all delivery formats. There is no database, authentication server, or backend of any kind. Corpus data is a local JSON file bundled with the app. The Electron build additionally bundles the app shell so it runs fully offline (AI Assist still requires internet to reach the provider API).
 
 ## Corpus and translation data
 

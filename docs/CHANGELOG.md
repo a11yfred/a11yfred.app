@@ -4,6 +4,33 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-29 — Multi-platform distribution scaffolds
+
+Three feature branches scaffolded for non-web distribution. No existing source files on `main` were modified; all changes are additive and branch-isolated.
+
+### Chrome extension (`feature/chrome-extension`)
+
+- `extension-static/manifest.json` — Manifest V3; `side_panel` target, `sidePanel` permission
+- `extension-static/background.js` — minimal service worker; calls `chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })`
+- `vite.extension.config.js` — `base: './'`, `publicDir: 'extension-static'`, `outDir: 'dist-extension'`
+- `package.json` — `build:extension` script added
+
+### Firefox extension (`feature/firefox-extension`)
+
+- `extension-firefox-static/manifest.json` — Manifest V3; `sidebar_action` + `browser_specific_settings.gecko` ID; no background script (Firefox opens sidebar automatically)
+- `vite.firefox.config.js` — `publicDir: 'extension-firefox-static'`, `outDir: 'dist-extension-firefox'`
+- `package.json` — `build:extension:firefox` script added
+
+### Electron desktop (`feature/electron-app`)
+
+- `electron/main.js` — `keys:set` / `keys:get` / `keys:delete` IPC stubs completed: `safeStorage.encryptString` / `decryptString` with `fs.writeFileSync` / `readFileSync` to `app.getPath('userData')`; `require('fs')` added
+- `src/services/aiService.js` — `getAiRefinement`: API key read guarded with `window.electronAPI ? await window.electronAPI.keys.get(...) : localStorage.getItem(...)`
+- `src/services/agenticAiService.js` — same guard for `apikey_anthropic`
+- `src/components/SettingsPanel.jsx` — `keys` / `savedKeys` init skips localStorage in Electron; `useEffect` loads keys from `electronAPI.keys.get` after mount; `handleSave` routes writes through `electronAPI.keys.set/delete` vs `localStorage` depending on context
+- `package.json` — `electron`, `electron-builder`, `concurrently` added to `devDependencies`
+
+---
+
 ## 2026-04-29 — Sources schema upgrade, corpus re-pass ATH-001–005, sources.json registry
 
 ### Sources field schema
