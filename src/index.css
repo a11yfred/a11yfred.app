@@ -2495,6 +2495,30 @@ input.search-input:focus {
   border-radius: 2px;
 }
 
+/* ─── Source links ────────────────────────────────────────── */
+
+.detail-links__single {
+  margin-bottom: var(--space-4);
+}
+
+.detail-links__link {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-size: var(--fs-body);
+  overflow-wrap: break-word;
+}
+
+.detail-links__link:hover {
+  color: var(--text);
+}
+
+.detail-links__link:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* ─── Field ───────────────────────────────────────────────── */
 
 .field {

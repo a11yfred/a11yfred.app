@@ -76,6 +76,8 @@ Three targets are configured (all currently paused). See `docs/DEPLOYING.md` for
 
 ## Internationalization (i18n)
 
+> **⚠ Hold off on translate runs during active content-editing periods.** Running `npm run translate` while English content is still changing wastes the effort — edits to existing keys require re-translation of all 64 locales, not just additions. Keep logging changes in `docs/i18n-edits.md` and do one batch translate run when the English content has stabilized. Do not prompt for a translate run unless there is a clear content freeze or the user explicitly asks.
+
 The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` wired into all components. `en.json` is the source of truth. RTL locales (`ar-PS`, `ug`) automatically set `dir="rtl"` on `<html>`.
 
 - [ ] **String coverage** — any new UI text must use `t('key')` from `src/i18n/en.json`; never hardcode English strings in components
@@ -143,6 +145,12 @@ Plugins (`src/plugins/router/`, `src/plugins/announce/`, `src/plugins/debug/`) a
 - [ ] **docs/UPDATES.md** — plain-language entry for anything user-facing
 - [ ] **docs/TODO.md** — move any `[x]` items to the bottom of their section with `~~strikethrough~~`; fully retired backlog items go to `## Resolved`; recurring sweep tasks that belong in MAINTENANCE.md should be removed from TODO; one-time project tasks that do not recur should not appear in MAINTENANCE.md
 - [ ] **All docs accuracy** — review every file in `docs/` and `README.md`; feature descriptions must match current implementation; remove stale content; deploy section in README must reflect all configured targets; project structure must list actual files with accurate descriptions
+- [ ] **Debug command accuracy** — open `src/App.jsx` and read the `runCommand()` function; every command it handles must appear in the README Dev/Debug table and in `DebugHelp.jsx`'s `customCommands` prop; remove any documented commands that no longer exist in `runCommand()`; note that debug commands **always require ENTER** and never fire during live typing — the README must state this clearly
+- [ ] **Easter egg list accuracy** — open `src/App.jsx` and read the `EASTER_EGGS` object; every key must appear in the README Easter Eggs table; remove any table entries whose key is no longer in the object
+- [ ] **Finding schema accuracy** — open `src/data/corpus.json` and read the fields of any entry; the schema block in README must list every field with its type, allowed values, and a note on blank/N/A behavior; update whenever a field is added or renamed (recent additions: `wcagVersion`, `wcagLevel`, `source`)
+- [ ] **Corpus entry count** — README project structure lists the corpus entry count; run `node -e "console.log(require('./src/data/corpus.json').length)"` and update the count whenever entries are added
+- [ ] **Hooks and services list** — `ls src/hooks/` and `ls src/services/`; every file must appear in the README project structure with an accurate one-line description; add new files when they are created, remove entries when files are deleted
+- [ ] **Phase table** — README Phases table must reflect the actual current state of each phase; update status column after any major feature lands or is deferred
 - [ ] **docs/CONTRIBUTING.md** — defect schema example matches `corpus.json` fields exactly; update if fields are added or renamed
 - [ ] **docs/MAINT-LOG.md** — add a row after every sweep; keep newest first
 - [ ] **TODO ↔ MAINT sync** — scan `docs/TODO.md` for any recurring sweep-style tasks that belong in MAINTENANCE.md instead; scan MAINTENANCE.md for any one-time project tasks that belong in TODO.md; recurring items (audits, checks, reviews) live here; one-time items (build a feature, migrate a system, wire a provider) live in TODO

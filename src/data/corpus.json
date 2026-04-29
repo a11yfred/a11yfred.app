@@ -11,7 +11,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "unlabeled",
       "no label",
@@ -35,7 +34,13 @@
       "custom control"
     ],
     "desc": "A button, link, or custom native control does not have an accessible name. Screen readers announce it as \"button\" or \"link\" with no context, so users cannot tell what it does. On native platforms, custom UIView or View subclasses may lack accessibilityLabel (iOS) or contentDescription (Android).",
-    "rem": "For web: add aria-label, aria-labelledby, or a visible text label to every interactive control. For native iOS: set .accessibilityLabel on custom views; use accessibilityIdentifier only for testing, not for the label users hear. For native Android: set android:contentDescription on all interactive elements; do not rely on the view ID as a label."
+    "rem": "For web: add aria-label, aria-labelledby, or a visible text label to every interactive control. For native iOS: set .accessibilityLabel on custom views; use accessibilityIdentifier only for testing, not for the label users hear. For native Android: set android:contentDescription on all interactive elements; do not rely on the view ID as a label.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-002",
@@ -49,7 +54,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "focus",
       "modal",
@@ -66,7 +70,13 @@
       "talkback"
     ],
     "desc": "When a modal, dialog, or drawer opens, keyboard focus stays where it was. Screen reader and keyboard users cannot easily reach the new content.",
-    "rem": "Move focus to the first element inside the new content when it opens. Use tabindex=\"-1\" on a heading if the first focusable element comes later. Trap focus inside while it is open, and return focus to the trigger button when it closes."
+    "rem": "Move focus to the first element inside the new content when it opens. Use tabindex=\"-1\" on a heading if the first focusable element comes later. Trap focus inside while it is open, and return focus to the trigger button when it closes.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-003",
@@ -77,11 +87,10 @@
     "wcagLevel": "AA",
     "related": [
       "1.4.11 Non-text Contrast (Level AA)",
-      "2.1.1 Keyboard (Level A)"
+      "2.4.11 Focus Appearance (Level AA)"
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "focus indicator",
       "focus state",
@@ -96,7 +105,13 @@
       "kb"
     ],
     "desc": "Keyboard users cannot see which element is focused. The default focus outline may be removed, or the custom focus style is too faint to see clearly.",
-    "rem": "Make sure every keyboard-focusable element shows a clear focus outline. Do not set outline: none without providing a visible custom focus style. The focus indicator must have at least a 3:1 contrast ratio against nearby colors."
+    "rem": "Make sure every keyboard-focusable element shows a clear focus outline. Do not set outline: none without providing a visible custom focus style. The focus indicator must have at least a 3:1 contrast ratio against nearby colors.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-005",
@@ -106,12 +121,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.4.7 Focus Visible (Level AA)",
       "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "keyboard",
       "inaccessible",
@@ -131,7 +144,13 @@
       "kb"
     ],
     "desc": "The control can only be used with a mouse. Keyboard users cannot focus or activate it. Custom elements built with div or span also lack a role, so screen readers do not know what the control is.",
-    "rem": "Use native HTML elements like button or a whenever possible — they are keyboard accessible and have built-in roles. If a custom element must be used, add tabindex=\"0\", an appropriate ARIA role, and keyboard event handlers for Enter and Space."
+    "rem": "Use native HTML elements like button or a whenever possible — they are keyboard accessible and have built-in roles. If a custom element must be used, add tabindex=\"0\", an appropriate ARIA role, and keyboard event handlers for Enter and Space.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-007",
@@ -145,7 +164,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "contrast",
       "color contrast",
@@ -159,7 +177,13 @@
       "fails contrast"
     ],
     "desc": "Text does not have enough contrast against its background. People with low vision or color blindness may not be able to read it.",
-    "rem": "Change the text color, background color, or both so the contrast ratio is at least 4.5:1. Use a color contrast checker tool to verify."
+    "rem": "Change the text color, background color, or both so the contrast ratio is at least 4.5:1. Use a color contrast checker tool to verify.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-008",
@@ -173,7 +197,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "non-text contrast",
       "icon contrast",
@@ -186,7 +209,13 @@
       "input border"
     ],
     "desc": "Icons, form input borders, or UI component edges do not have enough contrast against nearby colors. People with low vision may not be able to see or identify them.",
-    "rem": "Update the color of the element so it has at least a 3:1 contrast ratio against the colors next to it."
+    "rem": "Update the color of the element so it has at least a 3:1 contrast ratio against the colors next to it.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-009",
@@ -196,11 +225,11 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "1.3.1 Info and Relationships (Level A)"
+      "1.3.1 Info and Relationships (Level A)",
+      "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "alt text",
       "alternative text",
@@ -213,11 +242,31 @@
       "banner",
       "img",
       "no alt",
+      "functional image",
+      "image button",
+      "linked image",
+      "purpose",
+      "describe purpose",
+      "bad alt text",
+      "wrong alt text",
+      "filename as alt",
       "voiceover",
       "talkback"
     ],
-    "desc": "An image has no alt text, has alt text that does not describe the image's purpose, or has alt text that repeats nearby visible text.",
-    "rem": "Decide if the image carries meaning or is purely decorative. Meaningful images need short, descriptive alt text that explains the purpose. Decorative images should use alt=\"\" so screen readers skip them."
+    "desc": "An image has no alt text, has alt text that describes visual appearance rather than purpose, or has alt text that repeats nearby visible text. Screen readers read alt text aloud — missing or inaccurate alt text gives users no useful information.",
+    "rem": "Ask what the image is for, not what it looks like. Meaningful images need alt text that conveys purpose or action — a submit button showing a magnifying glass gets alt=\"Search\", not alt=\"magnifying glass icon\". Decorative images use alt=\"\" so screen readers skip them. Linked images describe the destination. Never use the filename as alt text.",
+    "links": [
+      {
+        "text": "Deque: Alt text should describe purpose, not appearance",
+        "url": "https://dequeuniversity.com/tips/alt-text-should-describe-the-purpose"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Deque",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-010",
@@ -231,7 +280,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "poorly labeled",
       "poor label",
@@ -246,7 +294,13 @@
       "talkback"
     ],
     "desc": "A control's accessible name describes how it looks rather than what it does. For example, a button labeled \"magnifying glass icon\" should instead say \"Search\".",
-    "rem": "Write labels that describe the action or destination of the control, not its visual appearance. Change labels like \"arrow icon\" to \"Next page\" or \"Search icon\" to \"Search\"."
+    "rem": "Write labels that describe the action or destination of the control, not its visual appearance. Change labels like \"arrow icon\" to \"Next page\" or \"Search icon\" to \"Search\".",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-011",
@@ -260,7 +314,6 @@
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "skip link",
       "bypass",
@@ -271,21 +324,27 @@
       "navigation"
     ],
     "desc": "There is no skip link at the top of the page. Keyboard users must tab through all navigation links on every page before reaching the main content.",
-    "rem": "Add a \"Skip to main content\" link as the first focusable element on the page. Make it visible when focused, and have it move focus to the start of the main content area."
+    "rem": "Add a \"Skip to main content\" link as the first focusable element on the page. Make it visible when focused, and have it move focus to the start of the main content area.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-012",
     "title": "Skip Link Not Visible When Focused",
-    "sc": "2.1.1",
-    "scLabel": "2.1.1 Keyboard (Level A)",
+    "sc": "2.4.7",
+    "scLabel": "2.4.7 Focus Visible (Level AA)",
     "wcagVersion": "2.0",
-    "wcagLevel": "A",
+    "wcagLevel": "AA",
     "related": [
-      "2.4.1 Bypass Blocks (Level A)"
+      "2.4.1 Bypass Blocks (Level A)",
+      "2.4.11 Focus Appearance (Level AA)"
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "skip link",
       "invisible",
@@ -297,7 +356,13 @@
       "kb"
     ],
     "desc": "A skip link exists but is hidden from sighted keyboard users. When a keyboard user tabs to it, nothing appears on screen.",
-    "rem": "Make the skip link appear on screen when it receives keyboard focus. It can be hidden off-screen by default, but must become visible when focused."
+    "rem": "Make the skip link appear on screen when it receives keyboard focus. It can be hidden off-screen by default, but must become visible when focused.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-013",
@@ -312,36 +377,47 @@
     ],
     "priority": "Medium",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "heading",
       "heading hierarchy",
-      "skipped heading",
+      "reversed heading",
       "heading order",
       "heading levels",
       "wrong level",
       "h1 h2 h3",
-      "heading depth",
+      "heading structure",
       "heading sequence",
+      "nested heading",
       "voiceover",
       "talkback"
     ],
-    "desc": "Heading levels skip numbers (for example, jumping from h1 to h3). Screen reader users navigate pages by headings, so a broken structure makes it hard to find content.",
-    "rem": "Use h1–h6 elements for all section titles. Do not skip levels — each sub-section should use the next heading level down. Do not use heading elements just to make text larger or bolder."
+    "desc": "Heading levels are used in a way that does not reflect the document structure — for example, an h3 appears before an h2 in the same section, or a sub-heading uses a higher level number than its parent. Screen reader users rely on the heading tree to understand page hierarchy; an incoherent or reversed structure misrepresents the information relationships on the page.",
+    "rem": "Assign heading levels based on document hierarchy, not visual styling. A section that is conceptually a sub-item should use a lower-numbered heading than its parent. Note: skipping heading levels (e.g. h1 then h3) is a best practice concern but not a WCAG failure; reversing hierarchy — using a higher-numbered heading for a conceptually more prominent section — does fail 1.3.1.",
+    "links": [
+      {
+        "text": "TPGi: When do headings fail WCAG?",
+        "url": "https://www.tpgi.com/when-do-headings-fail-wcag/"
+      }
+    ],
+    "sources": [
+      {
+        "name": "TPGi",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-014",
     "title": "No H1 on the Page",
-    "sc": "1.3.1",
-    "scLabel": "1.3.1 Info and Relationships (Level A)",
-    "wcagVersion": "2.0",
-    "wcagLevel": "A",
+    "sc": "N/A",
+    "scLabel": "Best Practice",
+    "wcagVersion": "",
+    "wcagLevel": "",
     "related": [
       "2.4.6 Headings and Labels (Level AA)"
     ],
-    "priority": "Medium",
+    "priority": "Best Practice",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "no h1",
       "heading level one",
@@ -352,8 +428,20 @@
       "voiceover",
       "talkback"
     ],
-    "desc": "The page has no h1 heading. The h1 is the main title of the page and helps screen reader users understand where they are.",
-    "rem": "Add a single h1 element to each page that describes the page's main topic. All other headings should follow in order below it."
+    "desc": "The page has no h1 heading. WCAG does not require an h1, but including one is strongly recommended — it names the page topic and is the most predictable entry point when screen reader users navigate by heading.",
+    "rem": "Add a single h1 to each page that names the main topic or page title. All other section headings should use h2–h6 in descending order below it. Multiple h1s on a single page should be avoided.",
+    "links": [
+      {
+        "text": "TPGi: When do headings fail WCAG?",
+        "url": "https://www.tpgi.com/when-do-headings-fail-wcag/"
+      }
+    ],
+    "sources": [
+      {
+        "name": "TPGi",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-016",
@@ -368,7 +456,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "asterisk",
       "undefined",
@@ -380,7 +467,13 @@
       "undefined symbol"
     ],
     "desc": "The form uses asterisks (*) to mark required fields, but the meaning of the asterisk is never explained. Some users may not know what it means.",
-    "rem": "Add a note at the top of the form that explains the asterisk, such as \"Fields marked with * are required.\" Also mark required fields programmatically using the required or aria-required attribute."
+    "rem": "Add a note at the top of the form that explains the asterisk, such as \"Fields marked with * are required.\" Also add the required or aria-required attribute to each required field so screen readers announce it as required.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-017",
@@ -391,11 +484,10 @@
     "wcagLevel": "A",
     "related": [
       "1.3.1 Info and Relationships (Level A)",
-      "4.1.2 Name, Role, Value (Level A)"
+      "3.3.3 Error Suggestion (Level AA)"
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "error",
       "form error",
@@ -409,8 +501,14 @@
       "voiceover",
       "talkback"
     ],
-    "desc": "When a form shows an error message, screen readers do not announce it because it is not programmatically linked to the input field.",
-    "rem": "Use aria-describedby to connect the error message to its input field. When errors appear, move keyboard focus to the first field with an error so all users know where to fix the problem."
+    "desc": "When a form shows an error message, screen readers do not announce it because the error message has no code-level link to the input field.",
+    "rem": "Use aria-describedby to connect the error message to its input field. When errors appear, move keyboard focus to the first field with an error so all users know where to fix the problem.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-018",
@@ -424,7 +522,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "status message",
       "no status",
@@ -441,7 +538,13 @@
       "talkback"
     ],
     "desc": "After a user action such as submitting a form or loading results, nothing is announced to screen reader users. They do not know if the action worked.",
-    "rem": "Use role=\"status\" or aria-live=\"polite\" on a container that receives the result message. This lets screen readers announce updates without moving focus. Only use aria-live=\"assertive\" or role=\"alert\" for urgent messages."
+    "rem": "Use role=\"status\" or aria-live=\"polite\" on a container that receives the result message. This lets screen readers announce updates without moving focus. Only use aria-live=\"assertive\" or role=\"alert\" for urgent messages.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-019",
@@ -455,7 +558,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "aria",
       "role alert",
@@ -473,7 +575,13 @@
       "talkback"
     ],
     "desc": "ARIA attributes are applied incorrectly. Common problems: aria-hidden is placed on a focusable element, role=\"alert\" is used for routine messages, or ARIA roles conflict with the element's native behavior.",
-    "rem": "Follow the ARIA specification closely. Never put aria-hidden on an element that is focusable or contains focusable children. Use role=\"alert\" only for urgent, time-sensitive messages — use aria-live=\"polite\" for everything else."
+    "rem": "Follow the ARIA specification closely. Never put aria-hidden on an element that is focusable or contains focusable children. Use role=\"alert\" only for urgent, time-sensitive messages — use aria-live=\"polite\" for everything else.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-021",
@@ -487,7 +595,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "color",
       "sole use of color",
@@ -497,10 +604,31 @@
       "selected",
       "state",
       "indication",
-      "color only"
+      "color only",
+      "colorblind",
+      "color blind",
+      "color-only",
+      "required field",
+      "error state",
+      "error color",
+      "link underline",
+      "chart",
+      "graph",
+      "data visualization",
+      "legend",
+      "status",
+      "green red",
+      "pass fail",
+      "validation"
     ],
     "desc": "Information is communicated using color alone. For example, a required field is highlighted in red but has no other indicator. People who are colorblind or cannot see colors will miss this information.",
-    "rem": "Always pair color with a second visual indicator — such as an underline, bold text, an icon, or a text label. Make sure any state changes are also communicated to assistive technology."
+    "rem": "Add a non-color indicator alongside the color cue — for example, an icon, pattern, text label, border, or underline. Required fields should include an asterisk or the word \"required\" in the label. Error states should include an inline error message or icon, not just a red border. Links in body text should be underlined or otherwise visually distinct from surrounding text without relying on color alone. Charts and graphs should use patterns or labels in addition to color to distinguish data series.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-022",
@@ -514,7 +642,6 @@
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "zoom",
       "scaling",
@@ -529,7 +656,13 @@
       "mobile devices"
     ],
     "desc": "The page prevents users from zooming in using a browser or pinch gesture. People with low vision rely on zooming to read content.",
-    "rem": "Remove user-scalable=\"no\" from the viewport meta tag. Do not set maximum-scale below 2. Allow users to zoom freely."
+    "rem": "Remove user-scalable=\"no\" from the viewport meta tag. Do not set maximum-scale below 2. Allow users to zoom freely.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-023",
@@ -544,7 +677,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "no visible label",
       "text input",
@@ -563,8 +695,14 @@
       "not associated",
       "form label"
     ],
-    "desc": "A text input, textarea, or similar text-entry field has no visible label, or its label is not programmatically linked to the field. Placeholder text disappears when the user starts typing and is not a substitute for a proper label.",
-    "rem": "Give every form field a visible label element that describes what to enter. Link the label to the input using matching for and id attributes. Avoid using placeholder text as the only label."
+    "desc": "A text input, textarea, or similar text-entry field has no visible label, or its label is not linked to the field in code. Placeholder text disappears when the user starts typing and is not a substitute for a proper label.",
+    "rem": "Give every form field a visible label element that describes what to enter. Link the label to the input using matching for and id attributes. Avoid using placeholder text as the only label.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-025",
@@ -578,7 +716,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "hidden",
       "screen reader",
@@ -593,7 +730,13 @@
       "talkback"
     ],
     "desc": "Content that is visually hidden (such as a closed dropdown or collapsed panel) is still readable by screen readers. Users may hear content that seems to have no context.",
-    "rem": "Use display: none or visibility: hidden to hide content from both visual and screen reader users. Or use aria-hidden=\"true\" on content that should be invisible to screen readers. Make sure the chosen method actually hides the content from assistive technology."
+    "rem": "Use display: none or visibility: hidden to hide content from both visual and screen reader users. Or use aria-hidden=\"true\" on content that should be invisible to screen readers. Make sure the chosen method actually hides the content from assistive technology.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-026",
@@ -608,7 +751,6 @@
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "text spacing",
       "letter spacing",
@@ -620,7 +762,13 @@
       "line-height"
     ],
     "desc": "The page does not support minimum text spacing. When users apply custom spacing through browser settings, content breaks or becomes unreadable.",
-    "rem": "Design and code so the page still works with these values applied: line height at least 1.5× the font size, paragraph spacing at least 2× the font size, letter spacing at least 0.12× the font size, word spacing at least 0.16× the font size."
+    "rem": "Design and code so the page still works with these values applied: line height at least 1.5× the font size, paragraph spacing at least 2× the font size, letter spacing at least 0.12× the font size, word spacing at least 0.16× the font size.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-027",
@@ -634,7 +782,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "label in name",
       "aria-label",
@@ -645,24 +792,35 @@
       "voice control",
       "visible label mismatch",
       "voiceover",
-      "talkback"
+      "talkback",
+      "aria-labelledby",
+      "label mismatch",
+      "visible label",
+      "overridden label",
+      "aria-label overuse",
+      "code smell"
     ],
     "desc": "A control's accessible name is different from its visible text label. Voice input users speak the visible label to activate the control, but it does not match what the control is actually named.",
-    "rem": "Make sure the accessible name starts with or contains the visible label text. Remove aria-label values that replace the visible text — let the visible text serve as the accessible name."
+    "rem": "Make sure the accessible name starts with or contains the visible label text. Remove aria-label values that replace the visible text — let the visible text serve as the accessible name. When using aria-label, ensure the value contains the visible label text as a substring — voice control users activate controls by speaking the visible label, so a mismatch breaks activation. Avoid using aria-label to replace visible text entirely; if text is important enough to need words, make it visible in the DOM.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-028",
     "title": "ARIA Tabs Pattern",
-    "sc": "2.1.1",
-    "scLabel": "2.1.1 Keyboard (Level A)",
-    "wcagVersion": "2.0",
-    "wcagLevel": "A",
+    "sc": "N/A",
+    "scLabel": "Best Practice",
+    "wcagVersion": "",
+    "wcagLevel": "",
     "related": [
       "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "Best Practice",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "aria tabs",
       "tablist",
@@ -674,21 +832,26 @@
       "overengineering"
     ],
     "desc": "The component uses ARIA tabs, which require arrow key navigation that many users do not expect. ARIA tab patterns are easy to break and hard to implement correctly.",
-    "rem": "Consider replacing ARIA tabs with a simpler pattern. Accordion, links, or a button-panel structure often provide the same content without the added complexity."
+    "rem": "Consider replacing ARIA tabs with a simpler pattern. Accordion, links, or a button-panel structure often provide the same content without the added complexity.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-029",
     "title": "Non-interactive Element in Tab Order",
-    "sc": "2.1.1",
-    "scLabel": "2.1.1 Keyboard (Level A)",
+    "sc": "2.4.3",
+    "scLabel": "2.4.3 Focus Order (Level A)",
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.4.3 Focus Order (Level A)"
+      "2.1.1 Keyboard (Level A)"
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "tabbable",
       "non-control",
@@ -701,13 +864,19 @@
       "tabindex on div"
     ],
     "desc": "A non-interactive element (such as a div, paragraph, or progress bar) is in the tab order. Keyboard users tab to it but cannot do anything with it, which is confusing.",
-    "rem": "Remove the tabindex attribute from non-interactive elements. Only native interactive elements or elements that need programmatic focus (such as dialog headings) should receive focus."
+    "rem": "Remove the tabindex attribute from non-interactive elements. Only native interactive elements or elements that need programmatic focus (such as dialog headings) should receive focus.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-030",
     "title": "Repeated Links to the Same Destination",
-    "sc": "1.1.1",
-    "scLabel": "1.1.1 Non-text Content (Level A)",
+    "sc": "2.4.4",
+    "scLabel": "2.4.4 Link Purpose (In Context) (Level A)",
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
@@ -715,7 +884,6 @@
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "redundant",
       "duplicate links",
@@ -728,7 +896,13 @@
       "redundant link"
     ],
     "desc": "A content block has multiple separate links or buttons that all go to the same place — for example, a card with a linked image, a linked title, and a \"Read more\" button. Keyboard users must tab through all of them, and screen reader users hear repeated announcements.",
-    "rem": "Combine them into a single link. Mark the image as decorative (alt=\"\") and use the text as the link label. Or wrap the entire card in one link element."
+    "rem": "Combine them into a single link. Mark the image as decorative (alt=\"\") and use the text as the link label. Or wrap the entire card in one link element.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-031",
@@ -742,7 +916,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "language",
       "lang",
@@ -757,7 +930,13 @@
       "talkback"
     ],
     "desc": "The page contains text in more than one language, but the language change is not marked in the HTML. Screen readers may read foreign words using the wrong pronunciation.",
-    "rem": "Add a lang attribute to the element wrapping the text in a different language. For example: <span lang=\"es\">Hola</span>."
+    "rem": "Add a lang attribute to the element wrapping the text in a different language. For example: <span lang=\"es\">Hola</span>.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-032",
@@ -771,7 +950,6 @@
     ],
     "priority": "High",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "lang attribute",
       "missing lang",
@@ -781,7 +959,13 @@
       "page language"
     ],
     "desc": "The html element has no lang attribute. Screen readers may use the wrong language profile to read the page, causing incorrect pronunciation.",
-    "rem": "Add a lang attribute to the html element that matches the primary language of the page. For example: <html lang=\"en\">."
+    "rem": "Add a lang attribute to the html element that matches the primary language of the page. For example: <html lang=\"en\">.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-033",
@@ -795,7 +979,6 @@
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "drag",
       "dragging",
@@ -808,7 +991,13 @@
       "kb"
     ],
     "desc": "A feature requires the user to drag an element with a pointer. There is no keyboard-accessible way to perform the same action.",
-    "rem": "Provide keyboard-accessible controls (such as buttons) that perform the same action as dragging. Keyboard users should be able to complete every task without a mouse."
+    "rem": "Provide keyboard-accessible controls (such as buttons) that perform the same action as dragging. Keyboard users should be able to complete every task without a mouse.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-034",
@@ -818,12 +1007,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.2.1 Timing Adjustable (Level A)",
-      "2.3.1 Three Flashes or Below Threshold (Level A)"
+      "2.2.1 Timing Adjustable (Level A)"
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "animation",
       "continuous",
@@ -839,7 +1026,13 @@
       "mobile"
     ],
     "desc": "An animation or moving element starts automatically and loops without stopping. There is no way for the user to pause, stop, or hide it. This can be distracting or harmful for people with certain conditions.",
-    "rem": "Provide a visible, keyboard-accessible button to pause or stop the animation. Or set it to stop automatically within 5 seconds. If the animation conveys live data (like a news ticker), a pause button is required."
+    "rem": "Provide a visible, keyboard-accessible button to pause or stop the animation. Or set it to stop automatically within 5 seconds. If the animation conveys live data (like a news ticker), a pause button is required.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-035",
@@ -849,12 +1042,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.4.1 Bypass Blocks (Level A)",
-      "4.1.2 Name, Role, Value (Level A)"
+      "2.4.1 Bypass Blocks (Level A)"
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "landmarks",
       "no landmarks",
@@ -870,7 +1061,13 @@
       "poor landmark"
     ],
     "desc": "Page content is not organized inside HTML landmark elements. Screen reader users cannot jump between sections of the page — they must read everything from the start.",
-    "rem": "Wrap all page content in semantic HTML elements: header, nav, main, aside, and footer. Every page needs at least one main element. Use ARIA landmark roles only when the right HTML element is not available."
+    "rem": "Wrap all page content in semantic HTML elements: header, nav, main, aside, and footer. Every page needs at least one main element. Use ARIA landmark roles only when the right HTML element is not available.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-037",
@@ -880,12 +1077,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "3.2.3 Consistent Navigation (Level AA)",
-      "3.2.4 Consistent Identification (Level AA)"
+      "3.2.3 Consistent Navigation (Level AA)"
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "page title",
       "static title",
@@ -896,7 +1091,13 @@
       "2.4.2"
     ],
     "desc": "The page title (shown in the browser tab) stays the same on all pages. Users cannot tell which page they are on from the tab alone.",
-    "rem": "Update the document title on each page to describe what that page is about. For example: \"Cart — My Store\" or \"Settings — App Name\". In a single-page app, update the title on each route change."
+    "rem": "Update the document title on each page to describe what that page is about. For example: \"Cart — My Store\" or \"Settings — App Name\". In a single-page app, update the title on each route change.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-038",
@@ -906,12 +1107,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.1.1 Keyboard (Level A)",
-      "3.2.2 On Input (Level A)"
+      "2.1.1 Keyboard (Level A)"
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "keyboard trap",
       "trap",
@@ -925,7 +1124,13 @@
       "mobile devices"
     ],
     "desc": "Keyboard focus gets stuck inside a component. Once a keyboard user tabs into it, there is no way out using only the keyboard.",
-    "rem": "Make sure keyboard users can always tab out of any component. If a modal or dialog traps focus intentionally, add an Escape key handler and a visible close button so users can leave."
+    "rem": "Make sure keyboard users can always tab out of any component. If a modal or dialog traps focus intentionally, add an Escape key handler and a visible close button so users can leave.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-039",
@@ -939,7 +1144,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "chart",
       "graph",
@@ -954,7 +1158,13 @@
       "talkback"
     ],
     "desc": "Charts and graphs convey data visually but have no text alternative. Screen reader users cannot access the information the chart contains.",
-    "rem": "Provide a text summary that describes what the chart shows — its type, key trends, and main takeaways. When possible, also provide the underlying data in a table."
+    "rem": "Provide a text summary that describes what the chart shows — its type, key trends, and main takeaways. When possible, also provide the underlying data in a table.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-040",
@@ -964,12 +1174,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "4.1.2 Name, Role, Value (Level A)",
-      "1.3.2 Meaningful Sequence (Level A)"
+      "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "table",
       "tabular",
@@ -981,7 +1189,13 @@
       "not in table"
     ],
     "desc": "Data organized in rows and columns is not using HTML table markup. Screen reader users cannot understand the relationship between column headers and data cells.",
-    "rem": "Use proper table markup with table, thead, tbody, tr, th, and td elements. Make sure column and row headers use th elements with appropriate scope attributes."
+    "rem": "Use proper table markup with table, thead, tbody, tr, th, and td elements. Make sure column and row headers use th elements with appropriate scope attributes.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-041",
@@ -995,7 +1209,6 @@
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "hover",
       "tooltip",
@@ -1008,7 +1221,13 @@
       "kb"
     ],
     "desc": "Extra content appears only when the user hovers with a mouse. Keyboard users and screen reader users cannot trigger or read this content.",
-    "rem": "Make hover content also appear when the element receives keyboard focus. Users must be able to dismiss it without moving focus (for example, with Escape). The content should stay visible until the user moves focus away."
+    "rem": "Make hover content also appear when the element receives keyboard focus. Users must be able to dismiss it without moving focus (for example, with Escape). The content should stay visible until the user moves focus away.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-043",
@@ -1022,7 +1241,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "focus order",
       "tab order",
@@ -1035,7 +1253,13 @@
       "talkback"
     ],
     "desc": "When tabbing through the page, focus jumps in an order that does not match what is shown on screen. This is confusing for keyboard users.",
-    "rem": "Make the HTML source order match the visual layout. Avoid using positive tabindex values to control tab order — they create maintenance problems and usually make things worse."
+    "rem": "Make the HTML source order match the visual layout. Avoid using positive tabindex values to control tab order — they create maintenance problems and usually make things worse.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-045",
@@ -1049,7 +1273,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "inaccessible content",
       "hidden from at",
@@ -1063,7 +1286,13 @@
       "talkback"
     ],
     "desc": "Content that carries meaning (like a star rating or status icon) is hidden from screen readers using aria-hidden. Screen reader users cannot access that information.",
-    "rem": "Remove aria-hidden from content that carries meaning. Add an accessible name or supplemental text that conveys the same information. For example, instead of hiding a star rating, add hidden text like \"Rating: 4 out of 5 stars\"."
+    "rem": "Remove aria-hidden from content that carries meaning. Add an accessible name or supplemental text that conveys the same information. For example, instead of hiding a star rating, add hidden text like \"Rating: 4 out of 5 stars\".",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-046",
@@ -1073,12 +1302,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.4.4 Link Purpose (In Context) (Level A)",
-      "3.2.1 On Focus (Level A)"
+      "2.4.4 Link Purpose (In Context) (Level A)"
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "new window",
       "new tab",
@@ -1090,7 +1317,13 @@
       "kb"
     ],
     "desc": "A link or button opens a new browser window or tab without warning. This is disorienting, especially for screen reader users who may not realize the context has changed.",
-    "rem": "Add a warning in the link text or accessible name. For example: \"Annual Report (opens in a new tab)\". You can also add an icon with alt text to indicate a new window will open."
+    "rem": "Add a warning in the link text or accessible name. For example: \"Annual Report (opens in a new tab)\". You can also add an icon with alt text to indicate a new window will open.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-047",
@@ -1104,7 +1337,6 @@
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "change on focus",
       "on focus",
@@ -1115,7 +1347,13 @@
       "3.2.1"
     ],
     "desc": "When an element receives keyboard or pointer focus, the page changes — for example, a form submits or a new page loads. This is unexpected and disorienting.",
-    "rem": "Do not trigger any actions when an element receives focus. Actions should only happen when the user deliberately activates a control (for example, by pressing Enter, Space, or clicking)."
+    "rem": "Do not trigger any actions when an element receives focus. Actions should only happen when the user deliberately activates a control (for example, by pressing Enter, Space, or clicking).",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-048",
@@ -1129,7 +1367,6 @@
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "change on input",
       "on input",
@@ -1141,7 +1378,13 @@
       "page reload on select"
     ],
     "desc": "Selecting an option in a dropdown or changing a form value automatically causes the page to reload or navigate. Users who keyboard through a list of options may trigger an unintended change.",
-    "rem": "Do not trigger page-level changes when the user changes a form value. Instead, wait for a deliberate submit action — like pressing a \"Go\" button — before acting on the selection."
+    "rem": "Do not trigger page-level changes when the user changes a form value. Instead, wait for a deliberate submit action — like pressing a \"Go\" button — before acting on the selection.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-050",
@@ -1151,12 +1394,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "4.1.2 Name, Role, Value (Level A)",
-      "4.1.3 Status Messages (Level AA)"
+      "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "inaccurate",
       "price",
@@ -1172,7 +1413,13 @@
       "talkback"
     ],
     "desc": "Content is formatted in a way that causes screen readers to read it incorrectly. For example, a price of \"$1,200\" may be read as garbled text depending on how it is marked up. On native apps, incorrect accessibility labels or groupings cause VoiceOver or TalkBack to announce content that is out of order or missing context.",
-    "rem": "Test the content with the target screen reader — VoiceOver, TalkBack, or NVDA/JAWS. On web, fix the HTML markup or text formatting. On native, review accessibility labels, container groupings, and element ordering so the announced output conveys the intended meaning accurately."
+    "rem": "Test the content with the target screen reader — VoiceOver, TalkBack, or NVDA/JAWS. On web, fix the HTML markup or text formatting. On native, review accessibility labels, container groupings, and element ordering so the announced output conveys the intended meaning accurately.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-051",
@@ -1186,7 +1433,6 @@
     ],
     "priority": "High",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "figure",
       "figcaption",
@@ -1201,7 +1447,13 @@
       "talkback"
     ],
     "desc": "An image or diagram uses a figure element but has no figcaption or accessible description. Screen reader users hear the image file name or a generic announcement instead of what the image shows.",
-    "rem": "Add a figcaption element inside the figure that explains what the image shows or why it matters. For more complex visuals, link to a longer text description nearby."
+    "rem": "Add a figcaption element inside the figure that explains what the image shows or why it matters. For more complex visuals, link to a longer text description nearby.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-052",
@@ -1215,7 +1467,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "conflicting label",
       "duplicate label",
@@ -1228,7 +1479,13 @@
       "talkback"
     ],
     "desc": "A form field has both a visible label and an aria-label that say different things. Screen reader users hear the aria-label while sighted users read the visible label, which creates confusion.",
-    "rem": "Use only one labeling method, or make sure both labels say the same thing. The accessible name (aria-label or aria-labelledby) must contain the visible label text."
+    "rem": "Use only one labeling method, or make sure both labels say the same thing. The accessible name (aria-label or aria-labelledby) must contain the visible label text.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-053",
@@ -1238,11 +1495,11 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "4.1.2 Name, Role, Value (Level A)"
+      "4.1.2 Name, Role, Value (Level A)",
+      "3.3.2 Labels or Instructions (Level A)"
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "select",
       "dropdown",
@@ -1258,7 +1515,13 @@
       "choice list"
     ],
     "desc": "A select element or custom dropdown has no label. Screen reader users hear the control announced without context -- for example, hearing the options without knowing whether the field is for country, language, or quantity.",
-    "rem": "Add a visible label element with a for attribute that matches the select element's id. If you cannot show a visible label, use aria-label or aria-labelledby instead."
+    "rem": "Add a visible label element with a for attribute that matches the select element's id. If you cannot show a visible label, use aria-label or aria-labelledby instead.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-054",
@@ -1272,7 +1535,6 @@
     ],
     "priority": "High",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "text resize",
       "zoom text",
@@ -1286,7 +1548,13 @@
       "200 percent"
     ],
     "desc": "When users increase text size in their browser to 200%, the page layout breaks. Text overlaps other content, gets cut off, or disappears. Low vision users who rely on larger text cannot read the page.",
-    "rem": "Use flexible layouts and relative units (rem, em, %) instead of fixed pixel heights. Test the page at 200% text size in your browser settings to make sure everything remains readable and nothing overflows."
+    "rem": "Use flexible layouts and relative units (rem, em, %) instead of fixed pixel heights. Test the page at 200% text size in your browser settings to make sure everything remains readable and nothing overflows.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-055",
@@ -1300,7 +1568,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "click here",
       "learn more",
@@ -1313,10 +1580,21 @@
       "link purpose",
       "descriptive link",
       "voiceover",
-      "talkback"
+      "talkback",
+      "see more",
+      "this link",
+      "this page",
+      "link text outside anchor",
+      "descriptive text outside link"
     ],
     "desc": "Links use generic text like \"Click here\", \"Read more\", or \"Learn more\". Screen reader users who navigate by links cannot tell where each link goes.",
-    "rem": "Write link text that describes the destination or action. Instead of \"Click here\", use \"Download the accessibility checklist\" or \"Read the full WCAG 1.1.1 explanation\"."
+    "rem": "Write link text that describes the destination or action. Instead of \"Click here\", use \"Download the accessibility checklist\" or \"Read the full WCAG 1.1.1 explanation\".",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-056",
@@ -1330,7 +1608,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "audio",
       "video",
@@ -1347,7 +1624,13 @@
       "talkback"
     ],
     "desc": "A video or audio recording has no captions or transcript. Deaf and hard of hearing users cannot access the spoken content.",
-    "rem": "For audio-only content, provide a full text transcript. For video with audio, provide synchronized captions. Place the transcript near the media or link to it clearly. Auto-generated captions must be reviewed and corrected before publishing."
+    "rem": "For audio-only content, provide a full text transcript. For video with audio, provide synchronized captions. Place the transcript near the media or link to it clearly. Auto-generated captions must be reviewed and corrected before publishing.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-057",
@@ -1361,7 +1644,6 @@
     ],
     "priority": "High",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "fieldset",
       "legend",
@@ -1375,7 +1657,13 @@
       "no fieldset"
     ],
     "desc": "A group of related form controls (like radio buttons or checkboxes) has no group label. Screen reader users hear each option without understanding what question it answers.",
-    "rem": "Wrap the group in a fieldset element and add a legend as its first child. The legend text should be the question or category the group belongs to. For example: \"Choose your preferred contact method\"."
+    "rem": "Wrap the group in a fieldset element and add a legend as its first child. The legend text should be the question or category the group belongs to. For example: \"Choose your preferred contact method\".",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-058",
@@ -1385,12 +1673,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "4.1.2 Name, Role, Value (Level A)",
-      "1.3.2 Meaningful Sequence (Level A)"
+      "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "list",
       "no list markup",
@@ -1404,7 +1690,13 @@
       "semantic list"
     ],
     "desc": "Content that looks like a list — such as navigation links, steps, or options — is built with divs or paragraphs instead of HTML list elements. Screen readers cannot announce how many items are in the list.",
-    "rem": "Use ul for unordered lists, ol for numbered lists, and dl for definition-style lists. Pair each list with li or dt/dd items. This also helps with navigation menus and step-by-step instructions."
+    "rem": "Use ul for unordered lists, ol for numbered lists, and dl for definition-style lists. Pair each list with li or dt/dd items. This also helps with navigation menus and step-by-step instructions.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-059",
@@ -1414,12 +1706,10 @@
     "wcagVersion": "2.1",
     "wcagLevel": "AA",
     "related": [
-      "4.1.2 Name, Role, Value (Level A)",
-      "3.3.1 Error Identification (Level A)"
+      "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "aria-live",
       "live region",
@@ -1441,7 +1731,13 @@
       "LayoutChanged"
     ],
     "desc": "Content that updates dynamically — like a search result count, a progress update, or a notification — is not announced by screen readers. On web, the live region is missing or misconfigured. On native iOS, UIAccessibilityPostNotification is not called; on Android, View.announceForAccessibility or AccessibilityEvent.TYPE_VIEW_FOCUSED is missing.",
-    "rem": "Web: mark status regions with role=\"status\" (polite) or role=\"alert\" (assertive), or aria-live=\"polite/assertive\". Keep the region in the DOM at page load; only update its content, do not inject it later. Native iOS: call UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, messageElement) or UIAccessibilityAnnouncementNotification for one-off messages. Native Android: use View.announceForAccessibility(\"Message\") or AccessibilityManager.sendAccessibilityEvent with TYPE_ANNOUNCEMENT."
+    "rem": "Web: mark status regions with role=\"status\" (polite) or role=\"alert\" (assertive), or aria-live=\"polite/assertive\". Keep the region in the DOM at page load; only update its content, do not inject it later. Native iOS: call UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, messageElement) or UIAccessibilityAnnouncementNotification for one-off messages. Native Android: use View.announceForAccessibility(\"Message\") or AccessibilityManager.sendAccessibilityEvent with TYPE_ANNOUNCEMENT.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-060",
@@ -1455,7 +1751,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "pinch",
       "zoom gesture",
@@ -1470,7 +1765,13 @@
       "mobile devices"
     ],
     "desc": "A feature requires a multi-finger gesture — like pinch-to-zoom or a two-finger swipe — with no single-tap or keyboard alternative. Users with motor disabilities who cannot perform multi-touch gestures are locked out.",
-    "rem": "Provide a single-pointer alternative for every multi-point gesture. For example, add plus and minus zoom buttons alongside pinch-to-zoom. All gestures must have a keyboard-accessible equivalent."
+    "rem": "Provide a single-pointer alternative for every multi-point gesture. For example, add plus and minus zoom buttons alongside pinch-to-zoom. All gestures must have a keyboard-accessible equivalent.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-061",
@@ -1484,7 +1785,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "error suggestion",
       "validation message",
@@ -1500,7 +1800,13 @@
       "talkback"
     ],
     "desc": "A form shows an error when the user submits, but the message does not say how to fix it. For example, it may say \"Invalid input\" without explaining what format is expected.",
-    "rem": "Write specific, actionable error messages. Tell users exactly what went wrong and how to correct it. For example: \"Phone number must be 10 digits, numbers only\" instead of \"Invalid phone number\"."
+    "rem": "Write specific, actionable error messages. Tell users exactly what went wrong and how to correct it. For example: \"Phone number must be 10 digits, numbers only\" instead of \"Invalid phone number\".",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-062",
@@ -1514,7 +1820,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "captions",
       "closed captions",
@@ -1528,7 +1833,13 @@
       "1.2.2"
     ],
     "desc": "A prerecorded video has spoken audio but no captions. Deaf and hard of hearing users cannot access the spoken content, and users watching in noisy or sound-sensitive environments cannot follow along.",
-    "rem": "Add accurate captions to every prerecorded video that has a spoken audio track. Captions must be synchronized with the audio, include speaker identification where relevant, and describe important non-speech sounds (like [applause] or [doorbell]). Review auto-generated captions for accuracy before publishing."
+    "rem": "Add accurate captions to every prerecorded video that has a spoken audio track. Captions must be synchronized with the audio, include speaker identification where relevant, and describe important non-speech sounds (like [applause] or [doorbell]). Review auto-generated captions for accuracy before publishing.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-063",
@@ -1542,7 +1853,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "audio description",
       "video description",
@@ -1557,7 +1867,13 @@
       "talkback"
     ],
     "desc": "A prerecorded video contains visual information that is not described in the audio — such as on-screen text, actions, or diagrams. Blind and low vision users miss this content entirely.",
-    "rem": "Add an audio description track that narrates key visual content during natural pauses in the dialogue. If there are not enough pauses, create an extended audio description version with the video paused at relevant moments. An alternative is a full text description, but an audio track is preferred."
+    "rem": "Add an audio description track that narrates key visual content during natural pauses in the dialogue. If there are not enough pauses, create an extended audio description version with the video paused at relevant moments. An alternative is a full text description, but an audio track is preferred.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-004",
@@ -1571,7 +1887,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "session timeout",
       "time limit",
@@ -1584,7 +1899,13 @@
       "session expiry"
     ],
     "desc": "A timed session expires without warning the user. Users who are slow to complete a task — due to disability, distraction, or assistive technology — lose their work with no chance to extend the time.",
-    "rem": "Warn users at least 20 seconds before a time limit expires and give them a way to extend it. Users must be able to turn off, adjust, or extend the time limit unless it is longer than 20 hours or is essential to the activity. Use auto-save where possible to preserve partial progress."
+    "rem": "Warn users at least 20 seconds before a time limit expires and give them a way to extend it. Users must be able to turn off, adjust, or extend the time limit unless it is longer than 20 hours or is essential to the activity. Use auto-save where possible to preserve partial progress.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-006",
@@ -1598,7 +1919,6 @@
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "flash",
       "flicker",
@@ -1613,7 +1933,13 @@
       "2.3.1"
     ],
     "desc": "Content on the page flashes or blinks more than 3 times per second. Rapidly flashing content can trigger photosensitive seizures, which are a medical emergency.",
-    "rem": "Remove or redesign any content that flashes more than 3 times per second. If flashing is needed, reduce the frequency to 3 times per second or below and ensure the flashing area is small. Test animated GIFs, CSS animations, and video clips. Use the Photosensitive Epilepsy Analysis Tool (PEAT) for borderline cases."
+    "rem": "Remove or redesign any content that flashes more than 3 times per second. If flashing is needed, reduce the frequency to 3 times per second or below and ensure the flashing area is small. Test animated GIFs, CSS animations, and video clips. Use the Photosensitive Epilepsy Analysis Tool (PEAT) for borderline cases.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-015",
@@ -1627,7 +1953,6 @@
     ],
     "priority": "Critical",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "reflow",
       "400 percent",
@@ -1642,7 +1967,13 @@
       "small viewport"
     ],
     "desc": "When zoomed to 400% in the browser, the page requires horizontal scrolling to read content. Low vision users who zoom in lose context when content flows off-screen instead of wrapping.",
-    "rem": "Design content so it remains readable in a single scrolling direction at the equivalent of a 320 CSS pixel viewport width. Use flexible layouts, relative units (rem, em, %), and avoid fixed pixel widths on containers. Test by setting browser zoom to 400% on a 1280px-wide window, or by setting the viewport to 320px wide in DevTools."
+    "rem": "Design content so it remains readable in a single scrolling direction at the equivalent of a 320 CSS pixel viewport width. Use flexible layouts, relative units (rem, em, %), and avoid fixed pixel widths on containers. Test by setting browser zoom to 400% on a 1280px-wide window, or by setting the viewport to 320px wide in DevTools.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-020",
@@ -1656,7 +1987,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "touch target",
       "click target",
@@ -1674,7 +2004,13 @@
       "mobile devices"
     ],
     "desc": "Interactive elements — such as buttons, links, and icon controls — are smaller than 24×24 CSS pixels with insufficient spacing around them. Small targets are difficult to activate accurately for users with motor disabilities and touch screen users.",
-    "rem": "Make all interactive targets at least 24×24 CSS pixels, including any spacing offset to neighboring targets. If the visible element is smaller, add padding to expand the clickable area without changing the visual design. Aim for 44×44 CSS pixels on touch interfaces."
+    "rem": "Make all interactive targets at least 24×24 CSS pixels, including any spacing offset to neighboring targets. If the visible element is smaller, add padding to expand the clickable area without changing the visual design. Aim for 44×44 CSS pixels on touch interfaces.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-024",
@@ -1688,7 +2024,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "orientation",
       "portrait",
@@ -1704,7 +2039,13 @@
       "mobile devices"
     ],
     "desc": "The content is locked to a single screen orientation — portrait or landscape — and will not reflow when the device is rotated. Users who mount their device in a fixed position, such as on a wheelchair, cannot use the other orientation.",
-    "rem": "Remove any code that forces a fixed screen orientation. Support both portrait and landscape using CSS media queries or flexible layouts. Only restrict orientation when a specific orientation is essential — such as a piano keyboard that only makes sense in landscape."
+    "rem": "Remove any code that forces a fixed screen orientation. Support both portrait and landscape using CSS media queries or flexible layouts. Only restrict orientation when a specific orientation is essential — such as a piano keyboard that only makes sense in landscape.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-036",
@@ -1718,7 +2059,6 @@
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "autocomplete",
       "autofill",
@@ -1735,7 +2075,13 @@
       "browser autofill"
     ],
     "desc": "Form fields that collect personal information — such as name, email, phone number, and address — are missing the autocomplete attribute. Users with motor disabilities or cognitive impairments who rely on browser autofill must enter data manually every time.",
-    "rem": "Add the autocomplete attribute to all personal data fields using the correct HTML token values. For example: autocomplete=\"name\", autocomplete=\"email\", autocomplete=\"tel\", autocomplete=\"street-address\", autocomplete=\"new-password\". A full list of valid values is available in the HTML specification."
+    "rem": "Add the autocomplete attribute to all personal data fields using the correct HTML token values. For example: autocomplete=\"name\", autocomplete=\"email\", autocomplete=\"tel\", autocomplete=\"street-address\", autocomplete=\"new-password\". A full list of valid values is available in the HTML specification.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-042",
@@ -1745,12 +2091,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "1.3.1 Info and Relationships (Level A)",
-      "2.4.2 Page Titled (Level A)"
+      "1.3.1 Info and Relationships (Level A)"
     ],
     "priority": "High",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "iframe",
       "embedded content",
@@ -1765,7 +2109,13 @@
       "embed title"
     ],
     "desc": "An iframe element does not have a title attribute. Screen reader users cannot tell what the embedded content is before they enter it — they hear only \"frame\" with no context.",
-    "rem": "Add a descriptive title attribute to every iframe. For example: <iframe title=\"Google Maps showing our office location\">. If the iframe contains no meaningful content, hide it from assistive technology with aria-hidden=\"true\"."
+    "rem": "Add a descriptive title attribute to every iframe. For example: <iframe title=\"Google Maps showing our office location\">. If the iframe contains no meaningful content, hide it from assistive technology with aria-hidden=\"true\".",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-044",
@@ -1779,7 +2129,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "aria-expanded",
       "expanded",
@@ -1797,7 +2146,13 @@
       "talkback"
     ],
     "desc": "A button that opens or closes a panel, accordion, menu, or disclosure widget does not communicate whether the content is currently open or closed. Screen reader users cannot tell the current state from the button alone.",
-    "rem": "Add aria-expanded=\"false\" to the trigger button by default and toggle it to aria-expanded=\"true\" when the content opens. Update the value every time the state changes. Do not rely on visual indicators like a chevron icon — those are not perceived by screen reader users."
+    "rem": "Add aria-expanded=\"false\" to the trigger button by default and toggle it to aria-expanded=\"true\" when the content opens. Update the value every time the state changes. Do not rely on visual indicators like a chevron icon — those are not perceived by screen reader users.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-049",
@@ -1811,7 +2166,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "device motion",
       "shake",
@@ -1828,7 +2182,13 @@
       "mobile devices"
     ],
     "desc": "A feature is triggered by device motion — such as shaking to undo or tilting to scroll — and there is no other way to perform the same action. Users who cannot move their device, or whose device is mounted to a wheelchair, cannot access this feature.",
-    "rem": "Provide a UI control — such as a button or menu option — that performs the same action as the device motion gesture. Also allow users to disable the motion trigger entirely to prevent accidental activation."
+    "rem": "Provide a UI control — such as a button or menu option — that performs the same action as the device motion gesture. Also allow users to disable the motion trigger entirely to prevent accidental activation.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-064",
@@ -1842,7 +2202,6 @@
     ],
     "priority": "High",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "reading order",
       "dom order",
@@ -1860,7 +2219,13 @@
       "talkback"
     ],
     "desc": "CSS properties like order, position: absolute, or float cause content to appear in a different sequence visually than it does in the DOM. Screen readers and other assistive technologies follow DOM order, so content may be read in a confusing or meaningless sequence.",
-    "rem": "Ensure the DOM order matches the intended reading order. If CSS repositioning is necessary, test with a screen reader to confirm the content sequence makes sense. Avoid relying on the CSS order property to define meaning — use it only for visual adjustments when the DOM order is already correct."
+    "rem": "Ensure the DOM order matches the intended reading order. If CSS repositioning is necessary, test with a screen reader to confirm the content sequence makes sense. Avoid relying on the CSS order property to define meaning — use it only for visual adjustments when the DOM order is already correct.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-065",
@@ -1874,7 +2239,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "confirmation",
       "undo",
@@ -1894,7 +2258,13 @@
       "talkback"
     ],
     "desc": "An action that cannot be easily undone — such as deleting data, completing a purchase, or submitting a legal or financial form — has no confirmation or review step. A user who activates it by accident has no way to recover.",
-    "rem": "Before completing any significant or irreversible action, give users a chance to review, confirm, or cancel. Options include a confirmation dialog, a review-and-edit summary screen, or a brief undo window after the action completes. Clearly label destructive actions so users understand the consequence before they commit."
+    "rem": "Before completing any significant or irreversible action, give users a chance to review, confirm, or cancel. Options include a confirmation dialog, a review-and-edit summary screen, or a brief undo window after the action completes. Clearly label destructive actions so users understand the consequence before they commit.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-066",
@@ -1909,7 +2279,6 @@
     ],
     "priority": "High",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "focus appearance",
       "focus indicator area",
@@ -1923,7 +2292,13 @@
       "focus ring size"
     ],
     "desc": "The keyboard focus indicator is present but does not meet the WCAG 2.2 minimum requirements. The indicator area must be at least as large as the perimeter of the focused component times 2 CSS pixels, and must have sufficient contrast between focused and unfocused states.",
-    "rem": "Use a focus outline that is at least 2 CSS pixels thick around the full perimeter of the component. Ensure at least a 3:1 contrast ratio between the focused and unfocused appearance. A solid 2px offset outline that encircles the component and changes color on focus is a reliable approach."
+    "rem": "Use a focus outline that is at least 2 CSS pixels thick around the full perimeter of the component. Ensure at least a 3:1 contrast ratio between the focused and unfocused appearance. A solid 2px offset outline that encircles the component and changes color on focus is a reliable approach.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-067",
@@ -1937,7 +2312,6 @@
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "sensory",
       "shape",
@@ -1958,7 +2332,13 @@
       "talkback"
     ],
     "desc": "Instructions for using the interface describe content by its visual appearance, shape, or position only — for example: \"Click the round button\" or \"See the options on the right\". Users who cannot see the screen cannot follow these instructions.",
-    "rem": "Always accompany visual references with the element's name or function. Instead of \"Click the button on the right\", write \"Click the Settings button\". Instead of \"See the items below\", reference the heading or label by name. Never rely on shape, color, or position as the only way to identify something."
+    "rem": "Always accompany visual references with the element's name or function. Instead of \"Click the button on the right\", write \"Click the Settings button\". Instead of \"See the items below\", reference the heading or label by name. Never rely on shape, color, or position as the only way to identify something.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-068",
@@ -1972,7 +2352,6 @@
     ],
     "priority": "Medium",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "consistent navigation",
       "navigation order",
@@ -1986,7 +2365,13 @@
       "page nav"
     ],
     "desc": "Navigation links appear in a different order or position on different pages of the same site or app. Users who rely on consistent placement — including screen reader users and keyboard users — must relearn the layout on each page.",
-    "rem": "Keep navigation menus in the same relative order and position on every page. If new items are added to navigation, insert them consistently so the rest of the order is preserved. Users may personalize their own navigation, but the default layout must remain the same across pages."
+    "rem": "Keep navigation menus in the same relative order and position on every page. If new items are added to navigation, insert them consistently so the rest of the order is preserved. Users may personalize their own navigation, but the default layout must remain the same across pages.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-071",
@@ -2000,7 +2385,6 @@
     ],
     "priority": "Critical",
     "platform": "native",
-    "source": "ATH",
     "keywords": [
       "orientation",
       "portrait",
@@ -2017,7 +2401,13 @@
       "mobile devices"
     ],
     "desc": "The native app locks its interface to a single orientation — portrait or landscape — and does not respond when the user rotates their device. Users who mount their device in a fixed position, such as on a wheelchair, cannot use an app that ignores their device orientation.",
-    "rem": "Remove any code that forces or restricts screen orientation. Use platform layout tools (Auto Layout on iOS, ConstraintLayout on Android) to support both orientations gracefully. Only restrict orientation when a specific orientation is genuinely essential to the functionality."
+    "rem": "Remove any code that forces or restricts screen orientation. Use platform layout tools (Auto Layout on iOS, ConstraintLayout on Android) to support both orientations gracefully. Only restrict orientation when a specific orientation is genuinely essential to the functionality.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-072",
@@ -2031,7 +2421,6 @@
     ],
     "priority": "Best Practice",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "dark mode",
       "dark theme",
@@ -2045,7 +2434,13 @@
       "mobile devices"
     ],
     "desc": "The app does not support dark mode. Users who rely on dark mode — including those with photosensitivity, migraines, or low vision — cannot use a comfortable or accessible color scheme.",
-    "rem": "Implement a dark color scheme that respects the system-level dark mode preference. On web, use the prefers-color-scheme media query. On native platforms, respond to the system appearance setting. Ensure all text, icons, and UI elements maintain sufficient contrast in dark mode."
+    "rem": "Implement a dark color scheme that respects the system-level dark mode preference. On web, use the prefers-color-scheme media query. On native platforms, respond to the system appearance setting. Ensure all text, icons, and UI elements maintain sufficient contrast in dark mode.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-073",
@@ -2055,12 +2450,10 @@
     "wcagVersion": "2.1",
     "wcagLevel": "A",
     "related": [
-      "4.1.2 Name, Role, Value (Level A)",
-      "2.1.1 Keyboard (Level A)"
+      "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "voice control",
       "voice access",
@@ -2076,7 +2469,13 @@
       "mobile devices"
     ],
     "desc": "Controls cannot be reliably operated by voice control software such as Dragon NaturallySpeaking or iOS Voice Control. Common causes include accessible names that do not contain the visible label text, controls without labels, or custom elements that do not expose a name to assistive technology.",
-    "rem": "Ensure every interactive control has an accessible name that begins with or contains its visible label text. Do not use aria-label to override or replace visible text — the accessible name must match what the user can see and speak. Test with Dragon or iOS Voice Control to confirm controls can be spoken and activated."
+    "rem": "Ensure every interactive control has an accessible name that begins with or contains its visible label text. Do not use aria-label to override or replace visible text — the accessible name must match what the user can see and speak. Test with Dragon or iOS Voice Control to confirm controls can be spoken and activated.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-074",
@@ -2086,12 +2485,11 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.4.7 Focus Visible (Level AA)",
-      "2.4.3 Focus Order (Level A)"
+      "2.4.3 Focus Order (Level A)",
+      "2.4.7 Focus Visible (Level AA)"
     ],
     "priority": "Critical",
     "platform": "native",
-    "source": "ATH",
     "keywords": [
       "external keyboard",
       "bluetooth keyboard",
@@ -2109,7 +2507,13 @@
       "mobile devices"
     ],
     "desc": "The mobile app does not support navigation or interaction using an external Bluetooth or hardware keyboard. Users with motor disabilities who pair a keyboard with their phone or tablet cannot use the app.",
-    "rem": "Test the full app with an external keyboard connected to the device. All interactive controls must be reachable by Tab key and activatable by Enter or Space. Focus must be visible at all times, and focus order must follow a logical sequence. On iOS, implement UIKeyCommand and ensure all focusable elements are keyboard-reachable. On Android, handle key events appropriately."
+    "rem": "Test the full app with an external keyboard connected to the device. All interactive controls must be reachable by Tab key and activatable by Enter or Space. Focus must be visible at all times, and focus order must follow a logical sequence. On iOS, implement UIKeyCommand and ensure all focusable elements are keyboard-reachable. On Android, handle key events appropriately.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-075",
@@ -2119,11 +2523,11 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "2.4.3 Focus Order (Level A)"
+      "2.4.3 Focus Order (Level A)",
+      "4.1.2 Name, Role, Value (Level A)"
     ],
     "priority": "Critical",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "switch control",
       "switch access",
@@ -2139,7 +2543,13 @@
       "mobile devices"
     ],
     "desc": "The interface cannot be fully operated using Switch Control (iOS) or Switch Access (Android). Switch users navigate by scanning through items sequentially with one or two switches. If items are inaccessible, grouped incorrectly, or the scan order is wrong, switch users cannot reach or activate them.",
-    "rem": "Test with Switch Control on iOS and Switch Access on Android using auto-scan mode. Ensure all interactive elements are reachable in the scan order, that scan groups are logical, and that no interactive elements are skipped. Avoid focus traps. Custom components must expose the correct accessibility traits so the platform can include them in the scan."
+    "rem": "Test with Switch Control on iOS and Switch Access on Android using auto-scan mode. Ensure all interactive elements are reachable in the scan order, that scan groups are logical, and that no interactive elements are skipped. Avoid focus traps. Custom components must expose the correct accessibility traits so the platform can include them in the scan.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-069",
@@ -2149,12 +2559,10 @@
     "wcagVersion": "2.0",
     "wcagLevel": "A",
     "related": [
-      "1.3.1 Info and Relationships (Level A)",
-      "2.4.4 Link Purpose (In Context) (Level A)"
+      "1.3.1 Info and Relationships (Level A)"
     ],
     "priority": "High",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "pdf",
       "document",
@@ -2174,7 +2582,13 @@
       "xlsx"
     ],
     "desc": "A linked document — such as a PDF, Word file, or spreadsheet — is not accessible. Common problems include scanned PDFs with no text layer, untagged PDFs that screen readers cannot navigate, missing document headings, and no alt text on images inside the document.",
-    "rem": "For PDFs: use the Accessibility Checker in Adobe Acrobat to add tags, set a document language, add alt text to images, and define a logical reading order. Avoid scanned-image PDFs — export from the original source document whenever possible. For Word and Excel files, use the built-in Accessibility Checker and add heading styles, alt text, and descriptive sheet names. If a document cannot be made accessible, provide an accessible HTML alternative and link to it alongside the document."
+    "rem": "For PDFs: use the Accessibility Checker in Adobe Acrobat to add tags, set a document language, add alt text to images, and define a logical reading order. Avoid scanned-image PDFs — export from the original source document whenever possible. For Word and Excel files, use the built-in Accessibility Checker and add heading styles, alt text, and descriptive sheet names. If a document cannot be made accessible, provide an accessible HTML alternative and link to it alongside the document.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-070",
@@ -2188,7 +2602,6 @@
     ],
     "priority": "Medium",
     "platform": "both",
-    "source": "ATH",
     "keywords": [
       "emoji",
       "special characters",
@@ -2206,7 +2619,13 @@
       "talkback"
     ],
     "desc": "Emoji or special characters are used in ways that disrupt screen reader output. Screen readers announce the full Unicode description of every emoji — for example, \"face with tears of joy\" — so repeated or decorative emoji create verbose, disruptive announcements. Special characters like dashes, arrows, or symbols may also be read unexpectedly.",
-    "rem": "Hide purely decorative emoji from assistive technology with aria-hidden=\"true\". If an emoji carries meaning, replace it with visible text or supplement it with a visually hidden text alternative. Avoid using sequences of emoji or special characters to convey information (such as a row of stars to represent a rating). Test the full reading experience with a screen reader before publishing emoji-heavy content."
+    "rem": "Hide purely decorative emoji from assistive technology with aria-hidden=\"true\". If an emoji carries meaning, replace it with visible text or supplement it with a visually hidden text alternative. Avoid using sequences of emoji or special characters to convey information (such as a row of stars to represent a rating). Test the full reading experience with a screen reader before publishing emoji-heavy content.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-076",
@@ -2220,7 +2639,6 @@
     ],
     "priority": "High",
     "platform": "web",
-    "source": "ATH",
     "keywords": [
       "heading",
       "not marked up",
@@ -2238,7 +2656,13 @@
       "1.3.1"
     ],
     "desc": "Text that looks like a heading — because it is large, bold, or visually distinct — is not marked up with a heading element (h1–h6). Screen reader users cannot navigate by heading, cannot tell the text is a section title, and miss the structural cues that sighted users get from the visual design.",
-    "rem": "Replace the styled element with the appropriate heading element (h1–h6). The heading level should reflect the document outline — not the visual size. Use CSS to control appearance separately from semantic level. Confirm the heading fits logically into the existing heading hierarchy on the page."
+    "rem": "Replace the styled element with the appropriate heading element (h1–h6). The heading level should reflect the document outline — not the visual size. Use CSS to control appearance separately from semantic level. Confirm the heading fits logically into the existing heading hierarchy on the page.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-077",
@@ -2247,10 +2671,11 @@
     "scLabel": "1.4.4 Resize Text (Level AA)",
     "wcagVersion": "2.0",
     "wcagLevel": "AA",
-    "related": [],
+    "related": [
+      "1.4.10 Reflow (Level AA)"
+    ],
     "priority": "High",
     "platform": "native",
-    "source": "ATH",
     "keywords": [
       "Dynamic Type",
       "font scale",
@@ -2269,7 +2694,13 @@
       "mobile"
     ],
     "desc": "The app does not scale with the system font size. On iOS, text is hardcoded to point sizes instead of using Dynamic Type styles (UIFont.preferredFont), so text stays small when users increase it in Settings → Accessibility. On Android, text is set in dp instead of sp, so the Android font scale setting has no effect.",
-    "rem": "iOS: use UIFont.preferredFont(forTextStyle:) or SwiftUI .font(.body) / .dynamicTypeSize() for all text. Opt the app in with UISupportsDocumentBrowser or set UIApplicationSupportsIndirectInputEvents. Ensure layouts use Auto Layout with flexible constraints so they can grow. Android: define all text sizes in sp (scale-independent pixels) in your styles. Test by changing system font size to \"Largest\" in Settings. Use spannable text if you need mixed sizes."
+    "rem": "iOS: use UIFont.preferredFont(forTextStyle:) or SwiftUI .font(.body) / .dynamicTypeSize() for all text. Opt the app in with UISupportsDocumentBrowser or set UIApplicationSupportsIndirectInputEvents. Ensure layouts use Auto Layout with flexible constraints so they can grow. Android: define all text sizes in sp (scale-independent pixels) in your styles. Test by changing system font size to \"Largest\" in Settings. Use spannable text if you need mixed sizes.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
   },
   {
     "id": "ATH-078",
@@ -2278,10 +2709,11 @@
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
     "wcagVersion": "2.0",
     "wcagLevel": "A",
-    "related": [],
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
     "priority": "Medium",
     "platform": "native",
-    "source": "ATH",
     "keywords": [
       "custom action",
       "UIAccessibilityCustomAction",
@@ -2297,6 +2729,460 @@
       "mobile"
     ],
     "desc": "Contextual actions that are available through swipe gestures, long-press menus, or custom interactions are not exposed to assistive technology. VoiceOver users cannot swipe up/down to reveal actions, and TalkBack users have no equivalent accessibility action. Users who cannot perform complex gestures are locked out of these features.",
-    "rem": "iOS: add UIAccessibilityCustomAction objects to the accessibilityCustomActions array of the view. Provide a clear name and a handler block. For list rows with swipe actions, implement accessibilityCustomActions to mirror each swipe option (Delete, Reply, Archive, etc.). Android: override onInitializeAccessibilityNodeInfo and call info.addAction() with a custom AccessibilityNodeInfoCompat.AccessibilityActionCompat. For RecyclerView items, expose each contextual action this way. Test with VoiceOver (swipe up/down on the element) and TalkBack (double-tap-hold then drag)."
+    "rem": "iOS: add UIAccessibilityCustomAction objects to the accessibilityCustomActions array of the view. Provide a clear name and a handler block. For list rows with swipe actions, implement accessibilityCustomActions to mirror each swipe option (Delete, Reply, Archive, etc.). Android: override onInitializeAccessibilityNodeInfo and call info.addAction() with a custom AccessibilityNodeInfoCompat.AccessibilityActionCompat. For RecyclerView items, expose each contextual action this way. Test with VoiceOver (swipe up/down on the element) and TalkBack (double-tap-hold then drag).",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-079",
+    "title": "Heading Does Not Describe the Section",
+    "sc": "2.4.6",
+    "scLabel": "2.4.6 Headings and Labels (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
+    "related": [
+      "1.3.1 Info and Relationships (Level A)"
+    ],
+    "priority": "Medium",
+    "platform": "both",
+    "keywords": [
+      "heading",
+      "non-descriptive heading",
+      "vague heading",
+      "generic heading",
+      "descriptive heading",
+      "heading label",
+      "section title",
+      "heading purpose",
+      "heading text",
+      "heading content",
+      "voiceover",
+      "talkback"
+    ],
+    "desc": "A heading does not describe the topic or purpose of the section it introduces. Generic headings like \"More information\", \"Section 1\", or \"Details\" give screen reader users navigating the heading list no useful information about the content that follows.",
+    "rem": "Write headings that describe the specific content of the section they introduce. Avoid generic labels — instead of \"Details\", use the subject matter such as \"Shipping and Returns\" or \"Eligibility Requirements\". Every heading should make sense when read in isolation on the page heading list.",
+    "links": [
+      {
+        "text": "TPGi: When do headings fail WCAG?",
+        "url": "https://www.tpgi.com/when-do-headings-fail-wcag/"
+      }
+    ],
+    "sources": [
+      {
+        "name": "TPGi",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-080",
+    "title": "Audio or Video Autoplays Without Controls",
+    "sc": "1.4.2",
+    "scLabel": "1.4.2 Audio Control (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
+    "related": [
+      "2.2.2 Pause, Stop, Hide (Level A)"
+    ],
+    "priority": "High",
+    "platform": "both",
+    "keywords": [
+      "autoplay",
+      "auto-play",
+      "audio",
+      "video",
+      "background audio",
+      "media",
+      "mute",
+      "pause",
+      "stop",
+      "sound",
+      "music",
+      "noise",
+      "screen reader",
+      "voiceover",
+      "talkback"
+    ],
+    "desc": "Audio or video content starts playing automatically and continues for more than 3 seconds without a mechanism to pause, stop, or mute it. This disrupts screen reader users whose speech output competes with the auto-playing audio.",
+    "rem": "Do not autoplay audio or video that contains sound. If autoplay is required for a legitimate reason, provide a clearly labeled pause, stop, or mute control at the very top of the page — before the media in the DOM. On web, avoid the autoplay attribute on <audio> and <video> elements unless the content is muted.",
+    "links": [
+      {
+        "text": "Deque axe rule: no-autoplay-audio",
+        "url": "https://dequeuniversity.com/rules/axe/4.11/no-autoplay-audio"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Deque",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-081",
+    "title": "Text Embedded in an Image",
+    "sc": "1.4.5",
+    "scLabel": "1.4.5 Images of Text (Level AA)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "AA",
+    "related": [
+      "1.1.1 Non-text Content (Level A)"
+    ],
+    "priority": "Medium",
+    "platform": "web",
+    "keywords": [
+      "images of text",
+      "text in image",
+      "banner text",
+      "image text",
+      "graphic text",
+      "rasterized text",
+      "text as image",
+      "hero text",
+      "infographic text",
+      "non-scalable text",
+      "stylized text",
+      "canvas text",
+      "canvas element",
+      "webgl text",
+      "html5 canvas",
+      "canvas accessibility",
+      "rasterized text"
+    ],
+    "desc": "Text is rendered inside an image rather than as real HTML text. Users who need to resize text, change fonts, increase letter spacing, or use a high-contrast color scheme cannot do so — the text is locked inside the image at a fixed size and style.",
+    "rem": "Replace text-in-images with real HTML text styled with CSS. If a specific visual treatment is essential (such as a logo), provide equivalent alt text on the image. Avoid images for banners, buttons, callouts, or any content that conveys meaningful information. Canvas elements that render text are also covered by this criterion — canvas text cannot be resized, reflowed, or read by assistive technology; use HTML or SVG instead.",
+    "links": [
+      {
+        "text": "Deque: Use real text, not images of text",
+        "url": "https://dequeuniversity.com/tips/use-real-text"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Deque",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-082",
+    "title": "Placeholder Used as the Only Label",
+    "sc": "3.3.2",
+    "scLabel": "3.3.2 Labels or Instructions (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
+    "related": [
+      "1.3.1 Info and Relationships (Level A)",
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
+    "priority": "High",
+    "platform": "web",
+    "keywords": [
+      "placeholder",
+      "placeholder text",
+      "placeholder label",
+      "form label",
+      "input label",
+      "missing label",
+      "ghost text",
+      "watermark text",
+      "hint text",
+      "disappearing label",
+      "input hint"
+    ],
+    "desc": "A form input uses placeholder text as its only label. Placeholder text disappears the moment the user starts typing, leaving no reminder of what the field requires. Placeholder text also typically fails minimum contrast requirements and is not reliably announced as a label by all screen readers.",
+    "rem": "Use a persistent <label> element associated with every input via matching for and id attributes. Placeholder may be used as a supplementary example or hint alongside a real label, but never as the sole means of identifying the field. If space is limited, use a visually hidden label that remains in the DOM.",
+    "links": [
+      {
+        "text": "Smashing Magazine: Don't Use The Placeholder Attribute",
+        "url": "https://www.smashingmagazine.com/2018/06/placeholder-attribute/"
+      }
+    ],
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-083",
+    "title": "Single-Character Keyboard Shortcut Cannot Be Remapped",
+    "sc": "2.1.4",
+    "scLabel": "2.1.4 Character Key Shortcuts (Level A)",
+    "wcagVersion": "2.1",
+    "wcagLevel": "A",
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
+    "priority": "Medium",
+    "platform": "web",
+    "keywords": [
+      "keyboard shortcut",
+      "character key",
+      "single key",
+      "hotkey",
+      "key shortcut",
+      "accesskey",
+      "speech input",
+      "voice control",
+      "remap",
+      "disable shortcut",
+      "key conflict",
+      "single character shortcut"
+    ],
+    "desc": "The page implements keyboard shortcuts using a single character — a letter, number, or punctuation mark — that cannot be turned off or remapped to a modifier-key combination. Speech input users who dictate text can accidentally trigger these shortcuts mid-dictation.",
+    "rem": "Provide a settings mechanism to turn off or remap single-character shortcuts to combinations that require a modifier key (Ctrl, Alt, Shift). Alternatively, make shortcuts active only when a specific component holds keyboard focus, so they cannot fire during free-form text entry.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-084",
+    "title": "Authentication Requires Solving a Cognitive Test",
+    "sc": "3.3.8",
+    "scLabel": "3.3.8 Accessible Authentication (Minimum) (Level AA)",
+    "wcagVersion": "2.2",
+    "wcagLevel": "AA",
+    "related": [
+      "3.3.2 Labels or Instructions (Level A)"
+    ],
+    "priority": "High",
+    "platform": "both",
+    "keywords": [
+      "authentication",
+      "login",
+      "captcha",
+      "cognitive test",
+      "password",
+      "memory test",
+      "puzzle",
+      "transcription",
+      "sign in",
+      "cognitive function test",
+      "math test",
+      "copy characters",
+      "accessible auth",
+      "wcag 2.2"
+    ],
+    "desc": "The authentication or login flow requires users to memorize, transcribe, or solve a cognitive function test — such as copying characters from a distorted image, solving a math problem, or recalling a secret code — with no alternative method available.",
+    "rem": "Provide at least one authentication method that does not require a cognitive test. Acceptable approaches include: allowing paste into password and username fields, supporting password managers and autofill, using email-link or OAuth sign-in, or using an object-recognition CAPTCHA where users click images rather than transcribe text.",
+    "sources": [
+      {
+        "name": "ATH",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-085",
+    "title": "Positive Tabindex Disrupts Focus Order",
+    "sc": "N/A",
+    "scLabel": "Best Practice",
+    "wcagVersion": "",
+    "wcagLevel": "",
+    "related": [
+      "2.4.3 Focus Order (Level A)"
+    ],
+    "priority": "Best Practice",
+    "platform": "web",
+    "keywords": [
+      "tabindex",
+      "positive tabindex",
+      "tab order",
+      "focus order",
+      "tab index",
+      "tabindex 1",
+      "tabindex 2",
+      "keyboard navigation",
+      "focus management",
+      "tab sequence"
+    ],
+    "desc": "Elements use positive tabindex values (tabindex=\"1\", tabindex=\"2\", etc.) to manually control keyboard focus sequence. Positive tabindex creates a separate priority tab ring that is nearly impossible to maintain correctly as content changes, and routinely produces confusing or unpredictable focus order.",
+    "rem": "Remove all positive tabindex values. Use tabindex=\"0\" to include a custom element in the natural tab order, and tabindex=\"-1\" to make an element focusable by script without placing it in the tab sequence. Correct focus order by reordering elements in the DOM rather than overriding it with tabindex.",
+    "links": [
+      {
+        "text": "Deque: Don't use positive tabindex values",
+        "url": "https://dequeuniversity.com/tips/tabindex-positive-numbers"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Deque",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-086",
+    "title": "ARIA Menu Roles Used on Navigation Links",
+    "sc": "4.1.2",
+    "scLabel": "4.1.2 Name, Role, Value (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
+    "priority": "High",
+    "platform": "web",
+    "keywords": [
+      "aria menu",
+      "role menu",
+      "role menuitem",
+      "nav menu",
+      "site nav",
+      "navigation",
+      "menu role",
+      "menuitem",
+      "wrong role",
+      "aria misuse",
+      "keyboard expectations",
+      "arrow keys",
+      "tab navigation"
+    ],
+    "desc": "Navigation links use role=\"menu\" and role=\"menuitem\" ARIA roles. These roles signal a widget that should respond to arrow-key navigation (like a desktop application menu), but site navigation links use the Tab key. Screen readers enter a special interaction mode for menus and users expect a different keyboard contract, making the navigation confusing or broken.",
+    "rem": "Use a <nav> element with a <ul>/<li> list of <a> links for site navigation. Do not apply role=\"menu\" or role=\"menuitem\" to navigation. If you need a true application menu (e.g. a toolbar with File/Edit/View actions), the ARIA menu pattern is appropriate — but only when arrow-key navigation between items is fully implemented.",
+    "links": [
+      {
+        "text": "Adrian Roselli: Don't Use ARIA Menu Roles for Site Nav",
+        "url": "https://adrianroselli.com/2017/10/dont-use-aria-menu-roles-for-site-nav.html"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Adrian Roselli",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-087",
+    "title": "CSS display:contents Removes Element Semantics",
+    "sc": "1.3.1",
+    "scLabel": "1.3.1 Info and Relationships (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
+    "related": [
+      "4.1.2 Name, Role, Value (Level A)"
+    ],
+    "priority": "High",
+    "platform": "web",
+    "keywords": [
+      "display contents",
+      "display: contents",
+      "css semantics",
+      "role stripped",
+      "button semantics",
+      "table semantics",
+      "list semantics",
+      "semantic html",
+      "css layout",
+      "grid layout",
+      "flexbox layout",
+      "eric bailey"
+    ],
+    "desc": "An element uses CSS display:contents, which removes the element's own box from the layout but keeps its children. Many browsers also strip the element's ARIA role, meaning a <button> is no longer announced as a button, a <table> is no longer recognized as a table, and a <ul> is no longer navigable as a list. The rendering looks correct visually but the semantic structure is broken for assistive technology.",
+    "rem": "Avoid display:contents on elements whose role carries meaning (buttons, links, headings, tables, lists, landmarks). Use a wrapper <div> or <span> for layout purposes instead, and apply display:contents only to that neutral wrapper. Check browser support tables — behavior has improved but remains inconsistent.",
+    "links": [
+      {
+        "text": "Eric Bailey: display:contents considered harmful",
+        "url": "https://ericwbailey.website/published/display-contents-considered-harmful"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Eric Bailey",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-088",
+    "title": "Interactive Element Nested Inside Another Interactive Element",
+    "sc": "4.1.2",
+    "scLabel": "4.1.2 Name, Role, Value (Level A)",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
+    "related": [
+      "2.1.1 Keyboard (Level A)"
+    ],
+    "priority": "High",
+    "platform": "web",
+    "keywords": [
+      "nested interactive",
+      "button in button",
+      "link in button",
+      "nested button",
+      "nested link",
+      "interactive nesting",
+      "content model",
+      "invalid html",
+      "role nesting",
+      "clickable card",
+      "card link",
+      "voiceover",
+      "talkback"
+    ],
+    "desc": "A focusable, interactive element (such as a link or button) is nested inside another interactive element. HTML does not permit interactive content descendants inside buttons or links. Screen readers and keyboard users encounter unpredictable behavior — some AT reads both elements, others only one, and focus order becomes ambiguous.",
+    "rem": "Separate the nested controls so they are siblings, not parent/child. A common pattern is a \"clickable card\" where the whole card and an inner link both navigate — use a single anchor on the card, or use CSS positioning to extend a single link's click area over the card without nesting. Never place a <button> or <a> inside another <button> or <a>.",
+    "links": [
+      {
+        "text": "Adrian Roselli: Be wary of nesting roles",
+        "url": "https://adrianroselli.com/2016/12/be-wary-of-nesting-roles.html"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Adrian Roselli",
+        "url": null
+      }
+    ]
+  },
+  {
+    "id": "ATH-089",
+    "title": "Custom CSS Scrollbar Overrides User Accessibility Settings",
+    "sc": "N/A",
+    "scLabel": "Best Practice",
+    "wcagVersion": "",
+    "wcagLevel": "",
+    "related": [
+      "1.4.11 Non-text Contrast (Level AA)"
+    ],
+    "priority": "Best Practice",
+    "platform": "web",
+    "keywords": [
+      "custom scrollbar",
+      "css scrollbar",
+      "scrollbar styling",
+      "::-webkit-scrollbar",
+      "scrollbar-color",
+      "forced colors",
+      "windows high contrast",
+      "high contrast mode",
+      "low vision",
+      "scrollbar visibility",
+      "scrollbar contrast"
+    ],
+    "desc": "The page applies custom CSS scrollbar styles that override the operating system's native scrollbars. Custom scrollbars often become invisible or unusable in Windows Forced Colors Mode (High Contrast), ignore OS-level scrollbar width preferences set by low-vision users, and frequently fail the 3:1 non-text contrast requirement.",
+    "rem": "Remove custom scrollbar CSS (::-webkit-scrollbar, scrollbar-color, scrollbar-width: thin). Let the browser render native scrollbars that automatically adapt to OS accessibility settings including Forced Colors Mode and user-defined scrollbar sizes. If a visible scrollbar track is required for UX reasons, ensure it passes 3:1 contrast in all color schemes including forced-colors.",
+    "links": [
+      {
+        "text": "Eric Bailey: Don't use custom CSS scrollbars",
+        "url": "https://ericwbailey.website/published/dont-use-custom-css-scrollbars"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Eric Bailey",
+        "url": null
+      }
+    ]
   }
 ]

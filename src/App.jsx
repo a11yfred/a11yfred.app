@@ -29,6 +29,9 @@ import usePinnedFindings from './hooks/usePinnedFindings.js'
 import { PRIORITY_VARS } from './data/priorityStyles.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
+const AdminPanel = import.meta.env.DEV
+  ? lazy(() => import('./plugins/debug/AdminPanel.jsx'))
+  : () => null
 
 // CSS custom properties overridden when party mode is active.
 // Cleaned up when switching to any other theme.
@@ -181,12 +184,13 @@ function AppContent({
   const t = useT()
   const settingsOpen = route === '/settings' || route === '/settings/privacy'
   const aboutOpen = route === '/about'
+  const adminOpen = route === '/admin'
   const viewAll = route === '/results/all'
   const findingMatchSlug = useRouteMatch('/finding/:id/:slug')
   const findingMatchBare = useRouteMatch('/finding/:id')
   const findingMatch = findingMatchSlug ?? findingMatchBare
   const findingIdFromRoute = findingMatch?.id ?? null
-  const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/results/all'])
+  const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/results/all', '/admin'])
   const isNotFound = !KNOWN_ROUTES.has(route) && !findingMatch
   const h1Ref = useRef(null)
   const didMount = useRef(false)
@@ -209,6 +213,7 @@ function AppContent({
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
   const [devAllEnabled, setDevAllEnabled] = useState(true)
   const [namesEnabled, setNamesEnabled] = useState(false)
+  const [fabEnabled, setFabEnabled] = useState(true)
   const [deployTarget, setDeployTarget] = useState(null)  // null | 'netlify' | 'pages' | 'vercel' | 'off'
   const [debugHelpOpen, setDebugHelpOpen] = useState(false)
   const [debugPanelCmd, setDebugPanelCmd] = useState(null)
@@ -316,11 +321,19 @@ function AppContent({
     if (!badgeFilter) return []
     return sortedFindings.filter(f => {
       if (badgeFilter.type === 'priority') return f.priority === badgeFilter.value
-      if (badgeFilter.type === 'source')   return f.source === badgeFilter.value
+      if (badgeFilter.type === 'source')   return f.sources?.some(s => s.name === badgeFilter.value)
       if (badgeFilter.type === 'wcag')     return f.wcagVersion === badgeFilter.value
       return false
     })
   }, [sortedFindings, badgeFilter])
+
+  const handleAdminSearch = (q) => {
+    setQuery(q)
+    setSubmittedQuery(q)
+    setBadgeFilter(null)
+    syncSearchUrl(q)
+    navigate('/')
+  }
 
   const handleBadgeClick = (filter) => {
     setBadgeFilter(filter)
@@ -359,7 +372,7 @@ function AppContent({
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
   // to the settings drawer — exclude the panel from triggering it separately.
-  const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!!selected && !settingsOpen && !aboutOpen)
+  const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!!selected && !settingsOpen && !aboutOpen && !adminOpen)
 
   useEffect(() => {
     // Clean up any palette inline styles from a previous party activation
@@ -486,9 +499,9 @@ function AppContent({
   }, [dataLoading, allFindings]) // eslint-disable-line react-hooks/exhaustive-deps -- fires once; findingIdFromRoute checked inline
 
   useEffect(() => {
-    if (!selected || settingsOpen || aboutOpen) return
+    if (!selected || settingsOpen || aboutOpen || adminOpen) return
     document.title = appName ? `${appName} | ${selected.title}` : selected.title
-  }, [selected, settingsOpen, aboutOpen, appName])
+  }, [selected, settingsOpen, aboutOpen, adminOpen, appName])
 
   const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 
@@ -516,6 +529,9 @@ function AppContent({
     // Custom debug commands
     if (lq === 'debug ai assist' || lq === 'debug ai assist on')  { setAiEnabled(true);  fireAiDebugToast('on');  setQuery(''); return true }
     if (lq === 'debug ai assist off')                             { setAiEnabled(false); fireAiDebugToast('off'); setQuery(''); return true }
+    if (lq === 'debug fab' || lq === 'debug fab on')  { setFabEnabled(true);  setQuery(''); return true }
+    if (lq === 'debug fab off')                       { setFabEnabled(false); setQuery(''); return true }
+    if (lq === 'debug admin')                         { navigate('/admin');   setQuery(''); return true }
     // Detail Panel debug triggers — routed via prop; require a finding to be selected
     if (['debug ok', 'debug wrong', 'debug 401', 'debug 429', 'debug 503', 'debug network'].includes(lq)) {
       setDebugPanelCmd(lq); setQuery(submittedQuery); return true
@@ -638,6 +654,18 @@ function AppContent({
     onReset: handleResetAll,
     hasPins: pinnedIds.size > 0,
     onClearPins: clearPins,
+  }
+
+  const adminProps = {
+    devAllEnabled, setDevAllEnabled,
+    namesEnabled, setNamesEnabled,
+    fabEnabled, setFabEnabled,
+    aiEnabled,
+    onToggleAi: () => setAiEnabled(a => !a),
+    deployTarget, setDeployTarget,
+    onSearch: handleAdminSearch,
+    onFilter: handleBadgeClick,
+    onClose: () => navigate('/'),
   }
 
   // Provider name for the search hint (read from localStorage; updates on next render after save)
@@ -777,39 +805,70 @@ function AppContent({
 
   return (
     <div className="app-container">
-      <div className="dev-toast-stack" aria-hidden="true">
-        <AiDebugToast state={aiDebugToast} fading={aiDebugToastFading} />
-        <FocusDebugger enabled={devAllEnabled} />
-      </div>
-      <NamesDebugger enabled={namesEnabled} />
-      <DeployBanner target={deployTarget} />
-      <DebugLauncher enabled={false} onCommand={runCommand} />
-      <DebugHelp
-        open={debugHelpOpen}
-        onClose={() => setDebugHelpOpen(false)}
-        customCommands={[
-          {
-            heading: 'Custom — A11yTextHelper',
-            note: <>Append <code>off</code> to disable (e.g. <code>debug ai assist off</code>).</>,
-            rows: [
-              { cmd: 'debug skeleton',   desc: 'Skeleton loading state' },
-              { cmd: 'debug ai assist',  desc: 'AI Assist + debug toast' },
-            ],
-          },
-          {
-            heading: 'Detail Panel (AI assist enabled)',
-            rows: [
-              { cmd: 'debug ai assist on',  desc: 'Same as above, typed in Revision Notes' },
-              { cmd: 'debug ok',            desc: '1.2 s fake load, typewriter placeholder text' },
-              { cmd: 'debug wrong',         desc: 'Trigger generic Revision Failed error' },
-              { cmd: 'debug 401',           desc: 'Trigger invalid API key error' },
-              { cmd: 'debug 429',           desc: 'Trigger rate limit error' },
-              { cmd: 'debug 503',           desc: 'Trigger service unavailable error' },
-              { cmd: 'debug network',       desc: 'Trigger network error modal' },
-            ],
-          },
-        ]}
-      />
+      {import.meta.env.DEV && <>
+        <div className="dev-toast-stack" aria-hidden="true">
+          <AiDebugToast state={aiDebugToast} fading={aiDebugToastFading} />
+          {devAllEnabled && <FocusDebugger />}
+        </div>
+        <NamesDebugger enabled={namesEnabled} />
+        <DeployBanner target={deployTarget} />
+      </>}
+      {import.meta.env.DEV && <>
+        <DebugLauncher
+          enabled={fabEnabled}
+          onCommand={runCommand}
+          customSections={[
+            {
+              heading: 'Custom — A11yTextHelper',
+              rows: [
+                { cmd: 'debug skeleton',  desc: 'Skeleton loading state' },
+                { cmd: 'debug ai assist', desc: 'AI Assist on' },
+                { cmd: 'debug fab off',   desc: 'Hide this FAB' },
+                { cmd: 'debug admin',     desc: 'Open Admin panel' },
+              ],
+            },
+            {
+              heading: 'Detail Panel (AI assist on)',
+              rows: [
+                { cmd: 'debug ok',      desc: 'Fake load + typewriter' },
+                { cmd: 'debug wrong',   desc: 'Revision Failed error' },
+                { cmd: 'debug 401',     desc: 'Invalid API key error' },
+                { cmd: 'debug 429',     desc: 'Rate limit error' },
+                { cmd: 'debug 503',     desc: 'Service unavailable' },
+                { cmd: 'debug network', desc: 'Network error modal' },
+              ],
+            },
+          ]}
+        />
+        <DebugHelp
+          open={debugHelpOpen}
+          onClose={() => setDebugHelpOpen(false)}
+          customCommands={[
+            {
+              heading: 'Custom — A11yTextHelper',
+              note: <>Append <code>off</code> to disable (e.g. <code>debug ai assist off</code>).</>,
+              rows: [
+                { cmd: 'debug skeleton',   desc: 'Skeleton loading state' },
+                { cmd: 'debug ai assist',  desc: 'AI Assist + debug toast' },
+                { cmd: 'debug fab',        desc: 'Floating debug button (DebugLauncher)' },
+                { cmd: 'debug admin',      desc: 'Admin panel (corpus stats + debug controls)' },
+              ],
+            },
+            {
+              heading: 'Detail Panel (AI assist enabled)',
+              rows: [
+                { cmd: 'debug ai assist on',  desc: 'Same as above, typed in Revision Notes' },
+                { cmd: 'debug ok',            desc: '1.2 s fake load, typewriter placeholder text' },
+                { cmd: 'debug wrong',         desc: 'Trigger generic Revision Failed error' },
+                { cmd: 'debug 401',           desc: 'Trigger invalid API key error' },
+                { cmd: 'debug 429',           desc: 'Trigger rate limit error' },
+                { cmd: 'debug 503',           desc: 'Trigger service unavailable error' },
+                { cmd: 'debug network',       desc: 'Trigger network error modal' },
+              ],
+            },
+          ]}
+        />
+      </>}
       <Confetti active={theme === 'party'} />
       <PartySparkles active={theme === 'party'} />
       <PartyMusicPlayer active={theme === 'party'} />
@@ -841,11 +900,13 @@ function AppContent({
           <Suspense fallback={null}>
             {isNotFound
               ? <NotFoundPage />
-              : isDesktop && settingsOpen
-                ? <SettingsPanel {...settingsProps} />
-                : isDesktop && aboutOpen
-                  ? <AboutPanel onClose={handleCloseAbout} />
-                  : searchView}
+              : adminOpen
+                ? <AdminPanel {...adminProps} />
+                : isDesktop && settingsOpen
+                  ? <SettingsPanel {...settingsProps} />
+                  : isDesktop && aboutOpen
+                    ? <AboutPanel onClose={handleCloseAbout} />
+                    : searchView}
           </Suspense>
         </main>
         <Footer />
@@ -866,9 +927,9 @@ function AppContent({
       )}
 
       <BottomSheet
-        open={!!selected && !settingsOpen && !aboutOpen}
+        open={!!selected && !settingsOpen && !aboutOpen && !adminOpen}
         onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
-        keepMounted={(settingsOpen || aboutOpen) && !!selected}
+        keepMounted={(settingsOpen || aboutOpen || adminOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
         returnFocusRef={findingTriggerRef}

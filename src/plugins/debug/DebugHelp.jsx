@@ -1,6 +1,5 @@
 
-const IS_DEV = typeof window !== 'undefined' &&
-  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+const IS_DEV = import.meta.env.DEV
 
 /**
  * Dev-only command reference panel. Triggered by "debug help" in the search bar.

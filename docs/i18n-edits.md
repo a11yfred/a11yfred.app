@@ -8,10 +8,45 @@ Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
 
 ## Corpus entry changes (need retranslation of desc/title fields)
 
-- [ ] `ATH-013` desc — old: "Text that looks like a heading is not marked as one, or heading levels skip numbers…" → new: "Heading levels skip numbers…" (scoped to skipped levels only; unmarked-heading language removed)
+- [ ] `ATH-109` — added: 2.5.2 "Activation Fires on Pointer Down Instead of Pointer Up"
+- [ ] `ATH-110` — added: 3.3.7 "Form Requires Re-entry of Previously Provided Information"
+- [ ] `ATH-111` — added: 3.2.6 "Help Mechanism Absent or Repositioned Across Pages"
+- [ ] `ATH-009` desc/rem — tightened to emphasize purpose vs. visual description; source changed to Deque
+- [ ] `ATH-016` rem — old: "…programmatically using the required…" → new: "…add the required or aria-required attribute…so screen readers announce it as required"
+- [ ] `ATH-017` desc — old: "…not programmatically linked to the input field" → new: "…no code-level link to the input field"
+- [ ] `ATH-023` desc — old: "…not programmatically linked to the field…" → new: "…not linked to the field in code…"
+- [ ] `ATH-085` rem — old: "…make an element programmatically focusable…" → new: "…make an element focusable by script…"
+- [ ] `ATH-013` desc/rem/keywords — repurposed from "skipped levels" to "reversed heading hierarchy" (real 1.3.1 failure per TPGi); source TPGi
+- [ ] `ATH-014` — demoted to Best Practice (sc N/A, scLabel "Best Practice", wcagVersion/Level cleared); desc/rem updated; source TPGi
+- [ ] `ATH-021` keywords — bulked up (colorblind, error state, link underline, chart, graph, etc.); rem expanded with specific non-color indicator guidance
 - [ ] `ATH-023` title — old: "Form Field Missing a Label" → new: "Text Input Missing a Label"
 - [ ] `ATH-023` desc — old: "A form field has no visible label…" → new: "A text input, textarea, or similar text-entry field has no visible label…" (scoped to text inputs)
 - [ ] `ATH-053` desc — old: "A dropdown menu or select element has no label. Screen reader users do not know what choice they are making." → new: added concrete screen reader example (combo box announcement context)
+- [ ] `ATH-079` — added: 2.4.6 "Heading Does Not Describe the Section" (TPGi)
+- [ ] `ATH-080` — added: 1.4.2 "Audio or Video Autoplays Without Controls" (Deque)
+- [ ] `ATH-081` — added: 1.4.5 "Text Embedded in an Image" (Deque)
+- [ ] `ATH-082` — added: 3.3.2 "Placeholder Used as the Only Label"
+- [ ] `ATH-083` — added: 2.1.4 "Single-Character Keyboard Shortcut Cannot Be Remapped" (WCAG 2.1)
+- [ ] `ATH-084` — added: 3.3.8 "Authentication Requires Solving a Cognitive Test" (WCAG 2.2)
+- [ ] `ATH-085` — added: Best Practice "Positive Tabindex Disrupts Focus Order" (Deque)
+- [ ] `ATH-086` — added: 4.1.2 "ARIA Menu Roles Used on Navigation Links" (Adrian Roselli)
+- [ ] `ATH-087` — added: 1.3.1 "CSS display:contents Removes Element Semantics" (Eric Bailey)
+- [ ] `ATH-088` — added: 4.1.2 "Interactive Element Nested Inside Another Interactive Element" (Adrian Roselli)
+- [ ] `ATH-089` — added: Best Practice "Custom CSS Scrollbar Overrides User Accessibility Settings" (Eric Bailey)
+- [ ] `ATH-027` rem — expanded with aria-label substring rule (Eric Bailey) and voice control activation guidance
+- [ ] `ATH-055` keywords — added: click here, read more, here, more, learn more, link text outside anchor (Eric Bailey / Heydon Pickering)
+- [ ] `ATH-081` rem/keywords — added canvas-specific instance (Heydon Pickering)
+- [ ] `ATH-097` — added: 3.2.4 "Inconsistent Identification" (ATH)
+- [ ] `ATH-098` — added: 4.1.2 "Link Used as Button" (ATH)
+- [ ] `ATH-099` — added: 4.1.2 "Accessible Name Contains Role or State" (ATH)
+- [ ] `ATH-100` — added: 4.1.2 "Disabled Control Exposed to Assistive Technology" (ATH)
+- [ ] `ATH-101` — added: 2.1.1 "Scrollable Region Not Keyboard Accessible" (ATH)
+- [ ] `ATH-102` — added: 1.1.1 "Decorative Content Exposed to Assistive Technology" (ATH)
+- [ ] `ATH-103` — added: Best Practice "All-Caps Text" (ATH)
+- [ ] `ATH-104` — added: 2.4.2 "SPA Route Change Not Announced" (ATH)
+- [ ] `ATH-105` — added: 2.1.1 "Unfamiliar or Non-Standard Keyboard Control" (ATH)
+- [ ] `ATH-106` — added: 3.3.1 "Error Only Visible When Field Is Focused" (ATH)
+- [ ] `ATH-107` — added: 1.3.1 "Non-Link Style" (ATH)
 
 ---
 
@@ -96,3 +131,4 @@ Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
 - [ ] `about.feature_pinning_body` — added: "Pin any finding to keep it at the top across all searches and views. Use the priority arrows to rank others, star to float a finding to the very top, or archive to remove it from view."
 - [ ] `settings.privacy_body_2` — old: "…voting data (votes, stars…" → new: "…priority data (priorities, stars…"
 - [ ] `settings.language_select_one` — old: "Select one" → new: "Choose Language"
+- [ ] `detail.source_heading` — added: "Source:"

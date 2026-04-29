@@ -315,5 +315,6 @@
   "settings.pinned_results_desc": "Items you've pinned appear above all search results.",
   "settings.pinned_results_empty": "Nothing pinned.",
   "settings.unpin_all": "Unpin All",
-  "settings.unpin_all_done": "All Unpinned"
+  "settings.unpin_all_done": "All Unpinned",
+  "detail.source_heading": "Source:"
 }

@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { _subscribe } from './announce.js'
+import './announce.css'
 
-const IS_DEV = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+const IS_DEV = import.meta.env.DEV
 
 /**
  * Renders two visually-hidden ARIA live regions: one polite, one assertive.

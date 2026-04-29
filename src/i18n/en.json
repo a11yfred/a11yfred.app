@@ -141,6 +141,7 @@
   "detail.confirm_reset_no": "No, nevermind",
   "detail.confirm_reset_body": "You've made significant changes to this text. Resetting will remove all of your edits.",
   "detail.related_heading": "Similar or related issues:",
+  "detail.source_heading": "Source:",
   "detail.copied_announce": "{label}: Copied to clipboard",
   "detail.reset_announce": "{label}: Reset to original",
   "detail.reset_done_aria": "{label} reset",

@@ -200,15 +200,27 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   </span>
                   <span className="result-item__badges">
                     <span className="priority-badge" style={archived ? undefined : { background: p.bg, color: p.color }}>
-                      <span className="badge-prefix">{t('badge.severity_prefix')}</span>
+                      {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
                       {t(p.key)}
                     </span>
-                    {finding.source && (
-                      <span className="source-badge">
+                    {finding.sources?.map(src => src.url ? (
+                      <a
+                        key={src.name}
+                        href={src.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="source-badge"
+                        aria-label={`${t('badge.source_prefix')}${src.name}`}
+                      >
                         <span className="badge-prefix">{t('badge.source_prefix')}</span>
-                        {finding.source}
+                        {src.name}
+                      </a>
+                    ) : (
+                      <span key={src.name} className="source-badge">
+                        <span className="badge-prefix">{t('badge.source_prefix')}</span>
+                        {src.name}
                       </span>
-                    )}
+                    ))}
                     {finding.wcagVersion && finding.wcagLevel && (
                       <span className="wcag-badge">
                         <span className="badge-prefix">{t('badge.wcag_prefix')}</span>

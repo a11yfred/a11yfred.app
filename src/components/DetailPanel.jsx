@@ -300,23 +300,37 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             className="priority-badge"
             style={{ '--badge-bg': p.bg, '--badge-text': p.color }}
             onClick={() => onBadgeClick?.({ type: 'priority', value: finding.priority })}
-            aria-label={`${t('badge.severity_prefix')}${t(p.key)} — ${t('results.badge_filter_aria')}`}
+            aria-label={`${finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)} — ${t('results.badge_filter_aria')}`}
           >
-            <span className="badge-prefix">{t('badge.severity_prefix')}</span>
+            {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
             {t(p.key)}
           </button>
-          {finding.source && (
+          {finding.sources?.map(src => src.url ? (
+            <a
+              key={src.name}
+              href={src.url}
+              target="_blank"
+              rel="noreferrer"
+              className="source-badge"
+              style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
+              aria-label={`${t('badge.source_prefix')}${src.name}`}
+            >
+              <span className="badge-prefix">{t('badge.source_prefix')}</span>
+              {src.name}
+            </a>
+          ) : (
             <button
+              key={src.name}
               type="button"
               className="source-badge"
               style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
-              onClick={() => onBadgeClick?.({ type: 'source', value: finding.source })}
-              aria-label={`${t('badge.source_prefix')}${finding.source} — ${t('results.badge_filter_aria')}`}
+              onClick={() => onBadgeClick?.({ type: 'source', value: src.name })}
+              aria-label={`${t('badge.source_prefix')}${src.name} — ${t('results.badge_filter_aria')}`}
             >
               <span className="badge-prefix">{t('badge.source_prefix')}</span>
-              {finding.source}
+              {src.name}
             </button>
-          )}
+          ))}
           {finding.wcagVersion && finding.wcagLevel && (
             <button
               type="button"
@@ -469,6 +483,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       </div>
 
       <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} />
+      <SourceLinks links={finding.links} />
 
       <div className="detail-actions-end">
         <button
@@ -572,6 +587,34 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
           </li>
         ))}
       </ul>
+    </div>
+  )
+}
+
+function SourceLinks({ links }) {
+  const t = useT()
+  if (!links?.length) return null
+
+  return (
+    <div className="detail-related">
+      <p className="detail-related__heading">{t('detail.source_heading')}</p>
+      {links.length === 1 ? (
+        <p className="detail-links__single">
+          <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
+            {links[0].text}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
+          </a>
+        </p>
+      ) : (
+        <ul className="detail-related__list">
+          {links.map(link => (
+            <li key={link.url}>
+              <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
+                {link.text}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

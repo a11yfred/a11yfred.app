@@ -4,6 +4,27 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-29 — Sources schema upgrade, corpus re-pass ATH-001–005, sources.json registry
+
+### Sources field schema
+
+- `src/data/corpus.json`, `src/data/personal-corpus.json` — `sources` field migrated from `string[]` to `{ name: string, url: string | null }[]`; all existing entries converted via migration script
+- `src/data/sources.json` — new fallback registry mapping author/org names to homepage URLs
+- `src/components/DetailPanel.jsx` — source badge renders as `<a>` link when `url` is non-null, otherwise stays as filter `<button>`
+- `src/components/ResultList.jsx` — same link/span pattern for result card source badges
+- `src/App.jsx` — badge filter updated to `f.sources?.some(s => s.name === badgeFilter.value)`
+- `src/plugins/debug/AdminPanel.jsx` — stats accumulation updated to use `src.name`
+- `README.md` — schema block and field description updated to reflect `sources` object array
+
+### Corpus re-pass (ATH-001–005)
+
+- ATH-001–004: deep source URLs added (WCAG Understanding docs, APG dialog-modal pattern)
+- ATH-003: desc rewritten to explain compound failure (1.4.11 + 2.4.7); Critical priority confirmed and justified
+- ATH-004: desc and rem tightened; keywords expanded (web, outline: none, outline: 0, css)
+- ATH-005: desc and rem rewritten; rem now prescribes native elements first, then tabindex + ARIA role + keyboard handlers together
+
+---
+
 ## 2026-04-28 — Archived item polish, URL sync, pinning UI, settings renames, axe pin-button fix
 
 ### Archived item appearance

@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 
-const IS_DEV = typeof window !== 'undefined' &&
-  (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+const IS_DEV = import.meta.env.DEV
 
 /**
  * Dev-only toast indicating whether an AI assist feature was toggled on or off.

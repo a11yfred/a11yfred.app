@@ -27,7 +27,7 @@ import { useDir } from './useDir.js'
  *                                      fire before parent effects in React)
  *   children        node             — rendered inside the sheet
  */
-export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, onBack, backLabel = 'Back', hideCloseBottom = false, children }) {
+export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, onBack, backLabel = 'Back', hideCloseBottom = false, closeIcon: CloseIcon = X, backLtrIcon: BackLtrIcon = ChevronLeft, backRtlIcon: BackRtlIcon = ChevronRight, children }) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
   const dragStartY = useRef(null)
@@ -41,7 +41,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
     const timer = setTimeout(() => setMounted(open), open ? 0 : 250)
     return () => clearTimeout(timer)
   }, [open])
-  const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
+  const BackChevron = dir === 'rtl' ? BackRtlIcon : BackLtrIcon
 
   useFocusTrap(panelRef, open)
   useAriaHide(panelRef, open)
@@ -143,7 +143,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
               aria-label={backLabel}
               className="btn-icon btn-icon-accent sheet-back-btn"
             >
-              <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
+              <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" role="presentation" />
             </button>
           )}
           <button
@@ -151,7 +151,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
             aria-label={closeLabel}
             className="btn-icon btn-icon-accent sheet-close-btn"
           >
-            <X size={20} strokeWidth={2.5} aria-hidden="true" />
+            <CloseIcon size={20} strokeWidth={2.5} aria-hidden="true" />
           </button>
         </div>
 
