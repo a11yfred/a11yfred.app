@@ -15,6 +15,7 @@
 
 const { app, BrowserWindow, ipcMain, safeStorage, nativeTheme } = require('electron')
 const path = require('path')
+const fs = require('fs')
 
 const isDev = process.env.NODE_ENV === 'development'
 const DEV_SERVER_URL = 'http://localhost:5173'
@@ -60,29 +61,22 @@ app.on('window-all-closed', () => {
 const KEY_PREFIX = 'apikey_'
 
 ipcMain.handle('keys:set', (_event, keyName, value) => {
-  if (!safeStorage.isEncryptionAvailable()) {
-    // Fallback: store unencrypted (dev only or unsupported platform)
-    app.getPath('userData') // just accessed for side effects in stub
-    return false
-  }
+  if (!safeStorage.isEncryptionAvailable()) return false
   const encrypted = safeStorage.encryptString(value)
-  // TODO: persist encrypted buffer to a file in app.getPath('userData')
-  // e.g. fs.writeFileSync(path.join(userData, `${KEY_PREFIX}${keyName}`), encrypted)
-  console.log(`[stub] keys:set ${keyName} (${encrypted.length} bytes encrypted)`)
+  fs.writeFileSync(path.join(app.getPath('userData'), `${KEY_PREFIX}${keyName}`), encrypted)
   return true
 })
 
 ipcMain.handle('keys:get', (_event, keyName) => {
-  // TODO: read encrypted buffer from app.getPath('userData') and decrypt
-  // e.g. const buf = fs.readFileSync(path.join(userData, `${KEY_PREFIX}${keyName}`))
-  //      return safeStorage.decryptString(buf)
-  console.log(`[stub] keys:get ${keyName}`)
-  return null
+  if (!safeStorage.isEncryptionAvailable()) return null
+  const filePath = path.join(app.getPath('userData'), `${KEY_PREFIX}${keyName}`)
+  if (!fs.existsSync(filePath)) return null
+  return safeStorage.decryptString(fs.readFileSync(filePath))
 })
 
 ipcMain.handle('keys:delete', (_event, keyName) => {
-  // TODO: remove file from app.getPath('userData')
-  console.log(`[stub] keys:delete ${keyName}`)
+  const filePath = path.join(app.getPath('userData'), `${KEY_PREFIX}${keyName}`)
+  if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
   return true
 })
 

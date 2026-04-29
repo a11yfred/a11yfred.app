@@ -78,7 +78,9 @@ async function callAnthropicMessages({ key, model, messages }) {
  * @returns {Promise<{ desc: string|null, rem: string|null }>}
  */
 export async function getAgenticRefinement({ finding, descText, remText, note, corpus }) {
-  const key = localStorage.getItem('apikey_anthropic')
+  const key = window.electronAPI
+    ? await window.electronAPI.keys.get('apikey_anthropic')
+    : localStorage.getItem('apikey_anthropic')
   if (!key) {
     throw new Error('Anthropic API key required for agentic mode. Add one in Settings → AI Assist.')
   }
