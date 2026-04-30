@@ -4,6 +4,22 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 30, 2026 (late evening) — Button styling and interaction refinements
+
+### Better visual feedback and consistency
+
+Copy buttons throughout the detail panel now use the "double page" copy icon for clarity — visually distinct from a paste or clipboard icon. Hovering over a title or success criterion row highlights it with a subtle background, but only on devices with a mouse (not on touch devices where this creates unwanted hover states).
+
+### Improved form field spacing and alignment
+
+Location prefix field now has proper spacing between the label and "(optional)" text, making the relationship clearer. The clear button inside the field is now properly vertically centered when text is present, fixing a visual misalignment.
+
+### Consistent button labeling
+
+Reset buttons within description and remediation fields show "Reset", while the bottom "Reset All Content" button shows that full label before clicking and "All Content Reset" after — clearer communication of scope. Copy All button now consistently uses title casing ("Copy All" / "Copied All"). All button text throughout the app has been updated to use NY Times title casing for consistency.
+
+---
+
 ## April 30, 2026 (evening) — Finding details UI refinements
 
 ### Copy buttons throughout the finding detail panel

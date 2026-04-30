@@ -4,6 +4,36 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-30 — Button styling, spacing, alignment, and label consistency
+
+### Copy button icons and interaction refinements
+
+- `src/components/DetailPanel.jsx` — Changed Clipboard icon to Copy icon for all copy buttons (more visually distinct)
+- `src/i18n/en.json` — Updated button text to use consistent NY Times title casing throughout
+  - `results.copy_link`: "Copy link" → "Copy Link"
+  - `edit.save_button`: "Save changes" → "Save Changes"
+  - `contributions.export_button`: "Export as JSON" → "Export As JSON"
+  - `detail.copy_all_text`: "Copy all" → "Copy All" (matching "Copied All" state)
+- `src/index.css` — Added mouse-only hover states via `@media (pointer: fine)` for detail rows:
+  - `.detail-title-row:hover` and `.detail-sc-item-row:hover` show subtle background highlight
+  - Prevents unwanted hover states on touch devices
+
+### Form field and button label improvements
+
+- `src/components/DetailPanel.jsx` — Added space between "Location Prefix" label and "(optional)" text
+- `src/index.css` — Updated `.detail-location-input-wrap` to use `align-items: center` for proper vertical centering of clear button
+- `src/components/DetailPanel.jsx` — Separated reset button labels for clarity:
+  - Field-level reset buttons show "Reset" (unchanged)
+  - Bottom "Reset All Content" button shows different states: "Reset All Content" → "All Content Reset" after click
+  - Added new i18n key `detail.reset_all_done_desktop`: "All Content Reset"
+
+### Visual consistency
+
+- All button text now uses NY Times title casing (capitalize most words except small articles/prepositions unless they're the first word)
+- Copy buttons styled with transparent background and corner-radius hover states for subtle interaction feedback
+
+---
+
 ## 2026-04-30 — Finding detail UI refinements + narrow mode icon updates
 
 ### Copy buttons for finding details
