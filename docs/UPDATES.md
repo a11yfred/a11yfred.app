@@ -4,6 +4,56 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 30, 2026 (evening) — Finding details UI refinements
+
+### Copy buttons throughout the finding detail panel
+
+You can now copy individual pieces of a finding without copying the entire detail:
+
+- **Copy title button** next to the finding title — useful when you want to reference just the issue name
+- **Copy primary SC button** next to the "Fails" success criterion — copy the WCAG reference separately
+- **Copy related SCs button** next to "Related" success criteria — get all related standards at once
+
+All copy buttons show a Check icon for 2 seconds after copying, with a spoken announcement.
+
+### Better location prefix UX
+
+The Location Prefix field now behaves more intelligently:
+
+- **(optional) label disappears** when you've entered a value, reappears if you clear it — less clutter once you've started typing
+- **Clear button** (×) appears inside the field when you have text — same style and placement as the search bar's clear button, so behavior is consistent across the app
+
+### Improved narrow mode UI
+
+The narrow mode button now has a visual design that better matches the rest of the app:
+
+- **Filter icon** makes the button's purpose clearer at a glance
+- **Button moved below** the search input and left-aligned with it — visually distinct from the search controls but still associated with the search area
+- **Focus restoration** — when you click the Narrow button, focus returns to the search input automatically so you can start typing immediately
+- **Exit button is now an X icon** (not text) — consistent with other icon buttons in the UI (like the location prefix clear button), and matches the reset icon's visual style
+- **Label changed** from "Narrow results" to "Narrowing results" when you're in narrow mode — clearer communication of state
+
+All of these changes make the interface more self-documenting: copy buttons appear where content is, the clear button placement is consistent, and state changes are communicated through labels and visual placement rather than relying on modal dialogs.
+
+---
+
+## April 30, 2026 (late afternoon) — Narrow results mode
+
+### Filter within search results
+
+New "Narrow" button appears next to the results count when you have search results showing. Click it to enter narrow mode — the search input label and placeholder change to reflect you're now filtering *within* the current results rather than doing a new search. The narrow filter uses the same Fuse.js fuzzy search logic on title, description, keywords, and source names.
+
+In narrow mode:
+
+- The count display shows "X of Y results" so you see the filtered vs. total
+- The clear button now says "Clear and reset" which wipes the narrow filter and returns to the original search
+- An "Exit" button returns you to viewing all results
+- The narrow filter respects the live-search setting — updates in real-time if live search is on, otherwise updates on Enter
+
+This gives you a two-step refinement workflow: (1) broad search to get a candidate set, (2) narrow to find the specific match within that set. Much faster than retyping a more specific query.
+
+---
+
 ## April 30, 2026 (afternoon) — Improved Reset All dialog
 
 ### Reset All is now a BottomSheet with explicit lists

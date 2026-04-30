@@ -15,7 +15,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Electron Desktop | 🟡 | 80 | — |
 | Core Search | ✅ | 95 | 1 |
 | Result List | ✅ | 100 | 1 |
-| Detail Panel | ✅ | 85 | 1 |
+| Detail Panel | ✅ | 95 | 1 |
 | Ratings (Upvote / Star / Archive) | ✅ | 100 | 1 |
 | Pinned Findings | ✅ | 100 | 1 |
 | Settings Panel | ✅ | 95 | 1 |
@@ -31,6 +31,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Multilingual Edit Flow | 🔧 | 40 | 2 |
 | Export Findings | 🔧 | 10 | 2 |
 | Frequent Findings (implicit signal) | ✅ | 100 | 2 |
+| Narrow Results Mode | ✅ | 100 | 2 |
 | Advanced Search Syntax | 🔲 | 0 | 2 |
 | How To Use | 🔲 | 0 | 2 |
 | Ko-fi Integration | 🟡 | 70 | 2 |
@@ -82,7 +83,7 @@ Missing:
 
 ---
 
-### Detail Panel — 75%
+### Detail Panel — 95%
 
 Done:
 
@@ -92,12 +93,20 @@ Done:
 - Reset confirmation modal when >70% of text changed
 - Edit distance guard; `aria-busy` + spinner on AI refine
 - `exportFinding.js` utility (text / markdown / csv) — data layer only
+- **Copy button next to title** — copy just the finding name
+- **Copy buttons for SCs** — copy primary success criterion and related criteria separately
+- Location prefix field with **dynamic "(optional)" label** — disappears when field has value
+- **Clear button for location prefix** — × positioned inside field (matches search clear button UX)
+- Reset button renamed to **"Reset content"**
+- All copy buttons show Check icon for 2 seconds on success, with accessibility announcements
 
 Missing:
 
 - Export UI — multi-select, format picker, Download/Email delivery options
 - Save changes button (triggers multilingual edit flow)
 - Personal override indicator badge (`_hasOverride` flag exists, badge missing)
+- Field restructuring: move copy/reset buttons below textarea, "include title when copied" toggle
+- Location prefix value persistence between findings
 
 ---
 
@@ -350,6 +359,32 @@ Missing:
 
 - Widget currently disabled — third-party script caused console reload loop; needs selector re-verification against live DOM
 - Ko-fi link fallback in footer (for when widget is off)
+
+---
+
+## Phase 2 — Partial/Complete
+
+### Narrow Results Mode — 100%
+
+Files: `src/App.jsx`, `src/components/SearchBar.jsx`, `src/components/ResultList.jsx`
+
+Done:
+
+- "Narrow" button appears next to results count when search results are showing
+- Search input label, placeholder, and clear button change context-sensitively
+- Results filtered via secondary Fuse.js search on title, desc, keywords, sources
+- Count display shows "{narrowed} of {total} Results" in narrow mode
+- Clear button becomes "Clear and reset" — clears narrow filter and returns to base search
+- Live-search setting governs filter updates (real-time vs. on-submit)
+- Responsive: works on mobile and desktop, narrow mode accessible via keyboard
+- **UI refinements (2026-04-30 evening)**:
+  - **Filter icon** next to narrow button for visual clarity
+  - **Button repositioned below search input**, left-aligned (distinct from search submit controls)
+  - **Focus restoration** — clicking Narrow button returns focus to search input automatically
+  - **Label changed** from "Narrow results" to "Narrowing results" when in narrow mode
+  - **Removed badge pill** — cleaner visual; state is now communicated through label and button placement
+  - **Exit button redesigned** from text to **X icon** (matches reset icon style for consistency)
+- All i18n keys added and updated in `en.json`; placeholders propagate automatically
 
 ---
 

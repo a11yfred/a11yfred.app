@@ -4,7 +4,58 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-04-30 — Reset All redesign + UI refinements
+## 2026-04-30 — Finding detail UI refinements + narrow mode icon updates
+
+### Copy buttons for finding details
+
+- `src/components/DetailPanel.jsx` — Added state for `copiedTitle`, `copiedPrimarySc`, `copiedRelatedSc`
+- Added handlers: `copyTitle()`, `copyPrimarySc()`, `copyRelatedSc()` using existing `copy()` utility
+- **Title copy button**: Added `.detail-title-row` flex layout with title + Clipboard icon button
+- **SC copy buttons**: Wrapped SC list items in `.detail-sc-item-row` flex layout with copy buttons for each
+- All copy buttons show Check icon for 2 seconds on success, matching existing copy button behavior
+- `src/i18n/en.json` — Added `detail.copy_title_aria`, `detail.copy_sc_aria`, updated `detail.reset_all_fields_text` to "Reset content"
+- `src/index.css` — Added `.detail-title-row`, `.detail-copy-btn`, `.detail-sc-item-row`, `.detail-sc-copy-btn` classes
+
+### Location prefix UX improvements
+
+- `src/components/DetailPanel.jsx` — Updated location field label to conditionally show `(optional)` only when field is empty
+- **Clear button**: Added × button with `.detail-location-clear-btn` positioned absolutely inside input (same pattern as search clear)
+- `src/index.css` — Added `.detail-location-input-wrap`, `.detail-location-clear-btn` classes for input wrapper and positioned clear button
+
+### Narrow mode UI refinements
+
+- `src/components/SearchBar.jsx` — Imported Filter and X icons from lucide-react
+- **Filter icon**: Added Filter icon to narrow button
+- **Button repositioning**: Moved narrow button below search input via new `.search-narrow-button-row` container with left alignment
+- **Exit button redesign**: Changed from text "Exit" to X icon using `btn-icon` class for consistency with reset icon style
+- **Focus restoration**: Added `handleNarrowClick()` to focus input after entering narrow mode via `setTimeout(...inputRef.current?.focus())`
+- **Label update**: Changed `search.narrow_label` key usage to `search.narrowing_results` for "Narrowing results" in narrow mode
+- **Removed badge**: Deleted `.search-narrow-badge` pill from label row (simplified visual)
+- `src/i18n/en.json` — Added `search.narrowing_results`, `search.exit_narrow_aria`
+- `src/index.css` — Updated `.search-exit-narrow-btn` to use `btn-icon` styling; added `.search-narrow-button-row`, `.search-narrow-btn` for below-input placement and Filter icon
+
+---
+
+## 2026-04-30 — Narrow results mode + Reset All redesign
+
+### Narrow results mode
+
+- `src/App.jsx` — Added `narrowMode` and `narrowQuery` state in AppShell; passed through AppContent tree
+- `src/components/SearchBar.jsx` — Conditional label, placeholder, and clear button text when `narrowMode` is true
+- Search input switches label to "Narrow results" and placeholder to "Filter within {count} results…"
+- "Exit" button appears instead of Search button to exit narrow mode
+- Narrow badge pill shows to right of label when active
+- `src/components/ResultList.jsx` — Added `narrowMode`, `narrowQuery`, `narrowResults`, `onNarrow` props
+- Results filtered via fuzzy search on title, description, keywords, source names (same Fuse.js logic)
+- Count display shows "{narrowed} of {total} Results" format when in narrow mode
+- "Narrow" button appears next to results count when not already narrowing
+- Live-search setting governs narrow filter updates (real-time vs. on-submit)
+- Clear button behavior: in narrow mode, clears narrow filter and returns to base search; normally clears search entirely
+- `useMemo` in App computes `narrowedResults` based on `narrowQuery` filtering `results` array
+- `src/i18n/en.json` — Added 11 new keys for narrow mode UI labels and placeholders
+- `src/index.css` — Added `.search-narrow-badge`, `.search-exit-narrow-btn`, `.results-count-actions`, `.results-narrow-btn` classes
+
+### Reset All redesign + UI refinements
 
 ### Reset All BottomSheet with explicit lists
 

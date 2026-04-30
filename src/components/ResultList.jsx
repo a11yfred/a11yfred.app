@@ -39,12 +39,21 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
   )
 }
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow }) {
   const t = useT()
   const itemRefs = useRef({})
   const focusNextRef = useRef(null)
   const countHeadingRef = useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
+
+  // Use narrowResults if provided (filtered), otherwise use all results
+  const displayResults = narrowMode && narrowResults ? narrowResults : results
+  const displayCount = narrowMode && narrowResults
+    ? t('results.narrow_count', { narrowed: narrowResults.length, total: results.length })
+    : (filterLabel
+      ? t('results.count_badge', { count: results.length, filter: filterLabel })
+      : t('results.count', { count: results.length })
+    )
 
   useEffect(() => {
     if (!focusNextRef.current) return
@@ -54,6 +63,10 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
   if (results.length === 0) {
     return <NoResults query={query} />
+  }
+
+  if (narrowMode && narrowResults && narrowResults.length === 0) {
+    return <NoResults query={narrowQuery} />
   }
 
   const DEFAULT_RATING = { score: 0, starred: false, archived: false }
@@ -67,33 +80,43 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             tabIndex={-1}
             className="results-count"
           >
-            {filterLabel
-              ? t('results.count_badge', { count: results.length, filter: filterLabel })
-              : t('results.count', { count: results.length })
-            }
+            {displayCount}
           </h2>
-          {onCopyLink && (
-            <button
-              type="button"
-              className={`btn-ghost results-copy-link-btn${linkCopied ? ' field-btn--success' : ''}`}
-              aria-label={linkCopied ? t('results.copied_link') : t('results.copy_link_aria')}
-              title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
-              onClick={() => {
-                onCopyLink()
-                setLinkCopied(true)
-                setTimeout(() => setLinkCopied(false), 2000)
-              }}
-            >
-              <Link size={14} aria-hidden="true" />
-              {linkCopied ? t('results.copied_link') : t('results.copy_link')}
-            </button>
-          )}
+          <div className="results-count-actions">
+            {!narrowMode && results.length > 0 && onNarrow && (
+              <button
+                type="button"
+                className="btn-ghost results-narrow-btn"
+                aria-label={t('results.narrow_aria')}
+                title={t('results.narrow_title')}
+                onClick={onNarrow}
+              >
+                {t('results.narrow')}
+              </button>
+            )}
+            {onCopyLink && (
+              <button
+                type="button"
+                className={`btn-ghost results-copy-link-btn${linkCopied ? ' field-btn--success' : ''}`}
+                aria-label={linkCopied ? t('results.copied_link') : t('results.copy_link_aria')}
+                title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
+                onClick={() => {
+                  onCopyLink()
+                  setLinkCopied(true)
+                  setTimeout(() => setLinkCopied(false), 2000)
+                }}
+              >
+                <Link size={14} aria-hidden="true" />
+                {linkCopied ? t('results.copied_link') : t('results.copy_link')}
+              </button>
+            )}
+          </div>
         </div>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
       </div>}
 
       <ul className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>
-        {results.map((finding, index) => {
+        {displayResults.map((finding, index) => {
           const isSelected = selected?.id === finding.id
           const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
           const rating = ratings[finding.id] || DEFAULT_RATING

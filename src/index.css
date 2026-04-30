@@ -957,6 +957,22 @@ select:disabled {
   margin-bottom: var(--space-1);
 }
 
+.results-count-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.results-narrow-btn {
+  font-size: var(--fs-body);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+}
+
 .results-copy-link-btn {
   font-size: var(--fs-body);
   display: inline-flex;
@@ -1589,6 +1605,43 @@ input.search-input:focus {
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: 2px;
+}
+
+/* ─── Search narrow mode ──────────────────────────────────── */
+
+.search-narrow-badge {
+  display: inline-block;
+  font-size: 0.8125rem;
+  color: var(--accent-text);
+  background: var(--accent-bg);
+  padding: 0.25em 0.75em;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.search-exit-narrow-btn {
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.search-narrow-button-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.search-narrow-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-body);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
 }
 
 /* ─── View All section ────────────────────────────────────── */
@@ -2263,6 +2316,12 @@ input.search-input:focus {
   margin-bottom: 1rem;
 }
 
+.detail-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
 .detail-title {
   font-size: var(--fs-heading);
   line-height: 1em;
@@ -2270,6 +2329,12 @@ input.search-input:focus {
   color: var(--text);
   margin-bottom: 6px;
   outline: none;
+  flex: 1;
+}
+
+.detail-copy-btn {
+  flex-shrink: 0;
+  padding: 4px 8px;
 }
 
 @media (width >= 768px) {
@@ -2317,6 +2382,18 @@ input.search-input:focus {
   margin-bottom: 2px;
 }
 
+.detail-sc-item-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  justify-content: space-between;
+}
+
+.detail-sc-copy-btn {
+  flex-shrink: 0;
+  padding: 4px 8px;
+}
+
 .detail-sc-label {
   color: var(--text-muted);
   font-weight: 500;
@@ -2349,6 +2426,11 @@ input.search-input:focus {
   font-weight: 400;
 }
 
+.detail-location-input-wrap {
+  position: relative;
+  display: flex;
+}
+
 .detail-input {
   width: 100%;
   padding: 6px 10px;
@@ -2358,6 +2440,25 @@ input.search-input:focus {
   border-radius: var(--radius);
   color: var(--text);
   margin-bottom: 0;
+}
+
+.detail-input:focus {
+  border-color: var(--focus);
+}
+
+.detail-location-clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: var(--fs-body);
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .detail-input--textarea {

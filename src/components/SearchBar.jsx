@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
+import { Filter, X } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -16,7 +17,7 @@ const TYPEWRITER_PHRASES = [
 ]
 const CYCLE_MS = 2500
 
-export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showVoting, hasPins }) {
+export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showVoting, hasPins, narrowMode = false, narrowQuery = '', onNarrowChange, onNarrowToggle, resultsCount = null }) {
   const { navigate } = useRouter()
   const t = useT()
   const inputRef = useRef(null)
@@ -30,10 +31,6 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
     return () => clearInterval(id)
   }, [prefersReducedMotion, query.length])
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') onSearch()
-  }
-
   const handlePhraseClick = (phrase) => {
     onChange(phrase.text)
     inputRef.current?.focus()
@@ -42,13 +39,46 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
   const platformLabel = platform === 'web' ? t('settings.platform_web') : t('settings.platform_native')
   const currentPhrase = TYPEWRITER_PHRASES[phraseIdx]
 
+  const currentInput = narrowMode ? narrowQuery : query
+  const currentInputLength = currentInput.length
+  const inputLabel = narrowMode ? t('search.narrowing_results') : t('search.label')
+  const inputPlaceholder = narrowMode && resultsCount
+    ? t('search.narrow_placeholder', { count: resultsCount })
+    : (narrowMode ? 'Filter results…' : t('search.placeholder'))
+  const clearAriaLabel = narrowMode ? t('search.narrow_clear_aria') : t('search.clear_aria')
+  const handleClear = () => {
+    if (narrowMode) {
+      onNarrowChange('')
+    } else {
+      onChange('')
+    }
+    inputRef.current?.focus()
+  }
+  const handleInput = (value) => {
+    if (narrowMode) {
+      onNarrowChange(value)
+    } else {
+      onChange(value)
+    }
+  }
+  const handleKeyDownInner = (e) => {
+    if (e.key === 'Enter') {
+      if (narrowMode) return
+      onSearch()
+    }
+  }
+  const handleNarrowClick = () => {
+    onNarrowToggle()
+    setTimeout(() => inputRef.current?.focus(), 50)
+  }
+
   return (
     <search aria-label={t('search.aria_label')} className="search-bar">
       <div className="search-label-row">
         <label htmlFor="finding-search" className="search-label">
-          {t('search.label')}
+          {inputLabel}
         </label>
-        {query.length === 0 && !prefersReducedMotion && (
+        {currentInputLength === 0 && !narrowMode && !prefersReducedMotion && (
           <span className="search-typewriter">
             {t('search.typewriter_try')}{' '}
             <button
@@ -71,25 +101,25 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
             ref={inputRef}
             id="finding-search"
             type="text"
-            value={query}
-            onChange={e => onChange(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={t('search.placeholder')}
+            value={currentInput}
+            onChange={e => handleInput(e.target.value)}
+            onKeyDown={handleKeyDownInner}
+            placeholder={inputPlaceholder}
             autoComplete="off"
             spellCheck={false}
-            className={`search-input${query ? ' search-input--has-value' : ''}`}
+            className={`search-input${currentInputLength ? ' search-input--has-value' : ''}`}
           />
-          {query && (
+          {currentInputLength > 0 && (
             <button
-              onClick={() => { onChange(''); inputRef.current?.focus() }}
-              aria-label={t('search.clear_aria')}
+              onClick={handleClear}
+              aria-label={narrowMode ? t('search.narrow_clear_and_reset_aria') : clearAriaLabel}
               className="btn-accent search-clear-btn"
             >
               ↺
             </button>
           )}
         </div>
-        {!liveSearch && (
+        {!liveSearch && !narrowMode && (
           <button
             onClick={onSearch}
             disabled={query.length < 2}
@@ -98,8 +128,30 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
             {t('search.button')}
           </button>
         )}
+        {narrowMode && onNarrowToggle && (
+          <button
+            onClick={onNarrowToggle}
+            aria-label={t('search.exit_narrow_aria')}
+            title={t('search.exit_narrow_aria')}
+            className="btn-icon search-exit-narrow-btn"
+          >
+            <X size={20} aria-hidden="true" />
+          </button>
+        )}
       </div>
-      {query.length === 0 && (
+      {narrowMode && (
+        <div className="search-narrow-button-row">
+          <button
+            onClick={handleNarrowClick}
+            aria-label={t('results.narrow_aria')}
+            className="btn-ghost search-narrow-btn"
+          >
+            <Filter size={16} aria-hidden="true" />
+            <span>{t('results.narrow')}</span>
+          </button>
+        </div>
+      )}
+      {currentInputLength === 0 && !narrowMode && (
         <p className="search-hint">
           {liveSearch ? t('search.hint_live') : t('search.hint_submit')}
           {' '}

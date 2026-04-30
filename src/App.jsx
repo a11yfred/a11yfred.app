@@ -142,6 +142,8 @@ function AppShell() {
       return parsed
     } catch { return { maxVersion: '2.2', maxLevel: 'AA' } }
   })
+  const [narrowMode, setNarrowMode] = useState(false)
+  const [narrowQuery, setNarrowQuery] = useState('')
 
   return (
     <I18nProvider locale={language}>
@@ -159,6 +161,8 @@ function AppShell() {
         platform={platform} setPlatform={setPlatform}
         wcagFilter={wcagFilter} setWcagFilter={setWcagFilter}
         panelFocusTrigger={panelFocusTrigger} setPanelFocusTrigger={setPanelFocusTrigger}
+        narrowMode={narrowMode} setNarrowMode={setNarrowMode}
+        narrowQuery={narrowQuery} setNarrowQuery={setNarrowQuery}
       />
     </I18nProvider>
   )
@@ -178,6 +182,8 @@ function AppContent({
   platform, setPlatform,
   wcagFilter, setWcagFilter,
   panelFocusTrigger, setPanelFocusTrigger,
+  narrowMode, setNarrowMode,
+  narrowQuery, setNarrowQuery,
 }) {
   const { route, navigate, appName } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
@@ -326,6 +332,19 @@ function AppContent({
       return false
     })
   }, [sortedFindings, badgeFilter])
+
+  // Narrow results filter: applies narrowQuery as a secondary filter within current results
+  const narrowedResults = useMemo(() => {
+    if (!narrowMode || !narrowQuery) return null
+    if (!results || results.length === 0) return null
+    const lowerNarrow = narrowQuery.toLowerCase()
+    return results.filter(f =>
+      f.title.toLowerCase().includes(lowerNarrow) ||
+      f.desc.toLowerCase().includes(lowerNarrow) ||
+      f.keywords?.some(k => k.toLowerCase().includes(lowerNarrow)) ||
+      f.sources?.some(s => s.name.toLowerCase().includes(lowerNarrow))
+    )
+  }, [narrowMode, narrowQuery, results])
 
   const handleAdminSearch = (q) => {
     setQuery(q)
@@ -685,6 +704,17 @@ function AppContent({
         providerName={providerName}
         showVoting={showVoting}
         hasPins={pinnedIds.size > 0}
+        narrowMode={narrowMode}
+        narrowQuery={narrowQuery}
+        onNarrowChange={setNarrowQuery}
+        onNarrowToggle={() => {
+          setNarrowMode(false)
+          setNarrowQuery('')
+          setQuery('')
+          setSubmittedQuery('')
+          syncSearchUrl('')
+        }}
+        resultsCount={narrowMode ? results.length : null}
       />
       {!dataError && !dataLoading && !viewAllLoading && pinnedIds.size > 0 && (
         <PinnedSection
@@ -741,6 +771,10 @@ function AppContent({
                   onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                   pinnedIds={pinnedIds}
                   onPin={togglePin}
+                  narrowMode={narrowMode}
+                  narrowQuery={narrowQuery}
+                  narrowResults={narrowedResults}
+                  onNarrow={() => setNarrowMode(true)}
                 />
               )
               : badgeFilter

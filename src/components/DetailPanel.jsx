@@ -49,6 +49,9 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   const [noteSaved, setNoteSaved] = useState(false)
   const [copiedDesc, setCopiedDesc] = useState(false)
   const [copiedRem, setCopiedRem] = useState(false)
+  const [copiedTitle, setCopiedTitle] = useState(false)
+  const [copiedPrimarySc, setCopiedPrimarySc] = useState(false)
+  const [copiedRelatedSc, setCopiedRelatedSc] = useState(false)
   const [resetDesc, setResetDesc] = useState(false)
   const [resetRem, setResetRem] = useState(false)
   const [refining, setRefining] = useState(false)
@@ -171,6 +174,19 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
     announce(t('detail.undo_last_announce'))
   }
 
+  const copyTitle = () => {
+    copy(finding.title, setCopiedTitle, t('detail.copy_title_aria'))
+  }
+
+  const copyPrimarySc = () => {
+    copy(finding.scLabel, setCopiedPrimarySc, t('detail.copy_sc_aria'))
+  }
+
+  const copyRelatedSc = () => {
+    if (!finding.related.length) return
+    copy(finding.related.join(', '), setCopiedRelatedSc, t('detail.copy_sc_aria'))
+  }
+
   function startTypewriter(newDesc, newRem, tFunc) {
     clearTimeout(typeTimerRef.current)
     const total = (newDesc?.length ?? 0) + (newRem?.length ?? 0)
@@ -291,9 +307,20 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   return (
     <div className="detail-panel">
       <div className="detail-header">
-        <h2 ref={titleRef} tabIndex={-1} className="detail-title">
-          {finding.title}
-        </h2>
+        <div className="detail-title-row">
+          <h2 ref={titleRef} tabIndex={-1} className="detail-title">
+            {finding.title}
+          </h2>
+          <button
+            type="button"
+            onClick={copyTitle}
+            aria-label={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
+            className={`btn-accent detail-copy-btn${copiedTitle ? ' detail-copy-btn--success' : ''}`}
+            title={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
+          >
+            {copiedTitle ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+          </button>
+        </div>
         <div className="detail-badges">
           <button
             type="button"
@@ -349,18 +376,44 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
 
         <ul className="detail-sc-list">
           <li className="detail-sc-item">
-            <span className="detail-sc-label">{t('detail.fails')}</span>{' '}
-            <ScLink label={finding.scLabel} />
+            <div className="detail-sc-item-row">
+              <span>
+                <span className="detail-sc-label">{t('detail.fails')}</span>{' '}
+                <ScLink label={finding.scLabel} />
+              </span>
+              <button
+                type="button"
+                onClick={copyPrimarySc}
+                aria-label={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+                className={`btn-accent detail-sc-copy-btn${copiedPrimarySc ? ' detail-sc-copy-btn--success' : ''}`}
+                title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+              >
+                {copiedPrimarySc ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+              </button>
+            </div>
           </li>
           {finding.related.length > 0 && (
             <li className="detail-sc-item">
-              <span className="detail-sc-label">{t('detail.related')}</span>{' '}
-              {finding.related.map((r, i) => (
-                <span key={r}>
-                  {i > 0 && ', '}
-                  <ScLink label={r} />
+              <div className="detail-sc-item-row">
+                <span>
+                  <span className="detail-sc-label">{t('detail.related')}</span>{' '}
+                  {finding.related.map((r, i) => (
+                    <span key={r}>
+                      {i > 0 && ', '}
+                      <ScLink label={r} />
+                    </span>
+                  ))}
                 </span>
-              ))}
+                <button
+                  type="button"
+                  onClick={copyRelatedSc}
+                  aria-label={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+                  className={`btn-accent detail-sc-copy-btn${copiedRelatedSc ? ' detail-sc-copy-btn--success' : ''}`}
+                  title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+                >
+                  {copiedRelatedSc ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+                </button>
+              </div>
             </li>
           )}
         </ul>
@@ -368,17 +421,29 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
 
       <div className="detail-field-row">
         <label htmlFor="location-prefix" className="detail-label">
-          {t('detail.location_label')}{' '}
-          <span className="detail-optional">{t('detail.location_optional')}</span>
+          {t('detail.location_label')}
+          {!location.trim() && <span className="detail-optional">{t('detail.location_optional')}</span>}
         </label>
-        <input
-          id="location-prefix"
-          type="text"
-          value={location}
-          onChange={e => setLocation(e.target.value)}
-          placeholder={t('detail.location_placeholder')}
-          className="detail-input"
-        />
+        <div className="detail-location-input-wrap">
+          <input
+            id="location-prefix"
+            type="text"
+            value={location}
+            onChange={e => setLocation(e.target.value)}
+            placeholder={t('detail.location_placeholder')}
+            className="detail-input"
+          />
+          {location && (
+            <button
+              onClick={() => setLocation('')}
+              aria-label={t('search.clear_aria')}
+              className="btn-accent detail-location-clear-btn"
+              type="button"
+            >
+              ↺
+            </button>
+          )}
+        </div>
       </div>
 
       <Field
