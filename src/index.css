@@ -590,6 +590,10 @@ body:has(.modal-panel.is-open) .drawer-panel {
   line-height: 1.6;
 }
 
+.settings-reset-warning p {
+  margin: 0;
+}
+
 .modal-content p + p {
   margin-top: 0.75em;
 }
@@ -1909,6 +1913,66 @@ input.search-input:focus {
 }
 
 .settings-save-btn,
+.settings-reset-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.settings-reset-warning {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: rgb(255 0 0 / 0.05);
+  border: 1px solid rgb(255 0 0 / 0.2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-weight: 500;
+}
+
+.settings-reset-warning svg {
+  flex-shrink: 0;
+  color: var(--alert-color, #d32f2f);
+  margin-top: 2px;
+}
+
+.settings-reset-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.settings-reset-section h3 {
+  margin: 0;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.settings-reset-list {
+  margin: 0;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+  list-style-type: disc;
+}
+
+.settings-reset-list li {
+  line-height: 1.5;
+}
+
+.settings-reset-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
 .settings-reset-btn {
   padding: var(--space-3) var(--space-4);
   font-size: var(--fs-body);

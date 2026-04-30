@@ -652,39 +652,72 @@ export default function SettingsPanel({
         <p>{t('settings.unsaved_body')}</p>
       </Modal>
 
-      <Modal
+      <BottomSheet
         open={resetConfirmOpen}
         onClose={() => setResetConfirmOpen(false)}
-        returnFocusRef={resetButtonRef}
-        heading={t('settings.confirm_reset_all_heading')}
-        actions={[
-          {
-            label: t('settings.confirm_reset_all_yes'),
-            onClick: () => {
-              setResetConfirmOpen(false)
-              setSavedKeys(Object.fromEntries(PROVIDERS.map(p => [p.id, ''])))
-              setSavedProvider('anthropic')
-              setSavedModels(Object.fromEntries(PROVIDERS.map(p => [p.id, MODEL_DEFAULTS[p.id] || ''])))
-              setSavedPlatform('web')
-              setSavedLiveSearch(true)
-              setSavedShowVoting(true)
-              setSavedAiEnabled(false)
-              onReset?.()
-            },
-            className: 'btn-accent',
-          },
-          {
-            label: t('settings.confirm_reset_all_no'),
-            onClick: () => { setResetConfirmOpen(false); announce(t('settings.preserved_announce')) },
-            className: 'btn-tertiary',
-          },
-        ]}
+        label={t('settings.confirm_reset_all_heading')}
+        closeLabel={t('common.close')}
+        hideCloseBottom={false}
       >
-        <p>
-          <AlertTriangle size={15} aria-hidden="true" className="settings-reset-warning-icon" />
-          {' '}{t('settings.confirm_reset_all_body')}
-        </p>
-      </Modal>
+        <div className="settings-reset-sheet">
+          <h2 className="sheet-heading">{t('settings.confirm_reset_all_heading')}</h2>
+
+          <div className="settings-reset-warning">
+            <AlertTriangle size={18} aria-hidden="true" />
+            <p>{t('settings.confirm_reset_all_intro')}</p>
+          </div>
+
+          <div className="settings-reset-section">
+            <h3>{t('settings.confirm_reset_all_will_clear')}</h3>
+            <ul className="settings-reset-list">
+              <li>{t('settings.confirm_reset_all_item_api_keys')}</li>
+              <li>{t('settings.confirm_reset_all_item_ratings')}</li>
+              <li>{t('settings.confirm_reset_all_item_pins')}</li>
+              <li>{t('settings.confirm_reset_all_item_frequency')}</li>
+              <li>{t('settings.confirm_reset_all_item_recent')}</li>
+              <li>{t('settings.confirm_reset_all_item_overrides')}</li>
+              <li>{t('settings.confirm_reset_all_item_contributions')}</li>
+            </ul>
+          </div>
+
+          <div className="settings-reset-section">
+            <h3>{t('settings.confirm_reset_all_will_keep')}</h3>
+            <ul className="settings-reset-list">
+              <li>{t('settings.confirm_reset_all_keep_item_theme')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_language')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_platform')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_ai_enabled')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_live_search')}</li>
+            </ul>
+          </div>
+
+          <div className="settings-reset-actions">
+            <button
+              onClick={() => {
+                setResetConfirmOpen(false)
+                setSavedKeys(Object.fromEntries(PROVIDERS.map(p => [p.id, ''])))
+                setSavedProvider('anthropic')
+                setSavedModels(Object.fromEntries(PROVIDERS.map(p => [p.id, MODEL_DEFAULTS[p.id] || ''])))
+                setSavedPlatform('web')
+                setSavedLiveSearch(true)
+                setSavedShowVoting(true)
+                setSavedAiEnabled(false)
+                onReset?.()
+                announce(t('settings.reset_all_announce'))
+              }}
+              className="btn-accent"
+            >
+              {t('settings.confirm_reset_all_yes')}
+            </button>
+            <button
+              onClick={() => { setResetConfirmOpen(false); announce(t('settings.preserved_announce')) }}
+              className="btn-secondary"
+            >
+              {t('settings.confirm_reset_all_no')}
+            </button>
+          </div>
+        </div>
+      </BottomSheet>
 
       <Modal
         open={noChangesOpen}
