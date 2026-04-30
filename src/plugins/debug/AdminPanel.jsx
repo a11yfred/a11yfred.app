@@ -122,16 +122,16 @@ export default function AdminPanel({
   onFilter,
   onClose,
 }) {
-  if (!IS_DEV) return null
-
   const [dataset, setDataset] = useState('public')
-  const corpus = dataset === 'public' ? publicCorpus : personalCorpus
-  const stats = useMemo(() => computeStats(corpus), [corpus])
-
   const [scFilter, setScFilter] = useState('all')
   const [levelFilter, setLevelFilter] = useState('all')
   const [versionFilter, setVersionFilter] = useState('all')
   const [copied, setCopied] = useState(null)
+
+  const corpus = dataset === 'public' ? publicCorpus : personalCorpus
+  const stats = useMemo(() => computeStats(corpus), [corpus])
+
+  if (!IS_DEV) return null
 
   const filtered = WCAG_CRITERIA.filter(c => {
     if (levelFilter !== 'all' && c.level !== levelFilter) return false

@@ -4,10 +4,21 @@
    The sr-only live regions have no visible styling needs.
    ────────────────────────────────────────────────────────────────────────── */
 
+/* keyframes */
+
 @keyframes announce-toast-fade-out {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(10px); }
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
 }
+
+/* toast element */
 
 .announce-toast {
   background: rgb(0 0 0 / 0.88);

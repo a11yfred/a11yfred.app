@@ -419,7 +419,6 @@
   transition: opacity 0.1s;
 }
 
-.admin-sc-item:hover .admin-sc-copy,
 .admin-sc-copy:focus {
   opacity: 1;
 }
@@ -427,4 +426,8 @@
 .admin-sc-copy:hover {
   color: var(--text);
   background: var(--bg-subtle);
+}
+
+.admin-sc-item:hover .admin-sc-copy {
+  opacity: 1;
 }
