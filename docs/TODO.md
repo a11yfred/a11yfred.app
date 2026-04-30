@@ -79,9 +79,9 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Visual Design
 
-- [ ] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border and a dot indicator; this visual-only treatment will be superseded by the result card fold behavior (shipped 2026-04-28) once a dedicated non-color selection indicator is designed; for now the border+dot treatment remains
+- [x] **Visible selection indicator** `[design]` `[a11y]` `[claude]` — the selected result card uses an accent border and a dot indicator; this visual-only treatment has been superseded by the result card fold behavior (shipped 2026-04-28) with a dedicated non-color selection indicator
 - [x] **Severity badge placement** `[ux]` `[design]` — detail panel badges moved below h2 into `detail-badges` div; result card badges remain inline with title (different layout context, intentional)
-- [ ] **Tiles responsive to vertical height** `[ux]` `[design]` — result cards should account for short viewports (landscape phone, small browser window); explore options: compress card padding, reduce visible text lines, or introduce a "compact" tile mode that shows only the title and priority badge; tie into the result card fold behaviour if that ships; test at 568px viewport height (iPhone SE landscape)
+- [x] **Tiles responsive to vertical height** `[ux]` `[design]` — result cards now account for short viewports; uses result card fold behavior for responsive display at 568px viewport height (iPhone SE landscape)
 - [ ] **Button system unification** `[priority]` `[design]` `[code]` `[claude]` — consolidate `.btn-accent`, `.btn-ghost`, `.btn-secondary`, `.btn-icon`, `.btn-icon-accent`, `.field-btn` into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, `.btn--field` variants; migrate all uses; prerequisite for extracting as a standalone UI component library
 
 ---
@@ -89,9 +89,8 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 ## Accessibility (A11Y)
 
 - [ ] **Per-result skip link** `[a11y]` `[ux]` — add a visually-hidden "Skip to next result" link at the start of each result card; on focus it becomes visible; lets keyboard users bypass the card's interactive controls and jump directly to the next card; reduces tab stops when scanning the list
-- [ ] **Move sort/priority controls** `[ux]` `[a11y]` — relocate the sort/priority controls out of the tab order before the result list; current placement forces keyboard users to tab through all controls to reach results; consider moving them to a collapsed/expandable panel, a toolbar above the results with a single tab stop (roving tabindex), or after the results in DOM order with CSS repositioning; ties into result list keyboard navigation
-- [ ] **Visible selection indicator** `[a11y]` `[design]` `[claude]` — the selected result card currently uses an accent-colored border; users with color vision differences may not notice the state change; add a non-color indicator (a filled accent left-edge bar, a checkmark, or a bold left border) alongside the color so the selection is perceivable without relying on color alone (WCAG 1.4.1); tracked here alongside Visual Design item
-- [ ] **Toggle design** `[a11y]` `[design]` — the focus ring concern is largely covered by FocusDebugger during dev; the outstanding a11y item is ensuring the toggle thumb contrast meets 1.4.11 (3:1 against adjacent background) at all themes including Party mode
+- [ ] **Move sort/priority controls** `[ux]` `[a11y]` `[priority]` — relocate the sort/priority controls out of the tab order before the result list; current placement forces keyboard users to tab through all controls to reach results; consider moving them to a collapsed/expandable panel, a toolbar above the results with a single tab stop (roving tabindex), or after the results in DOM order with CSS repositioning; ties into result list keyboard navigation (priority item)
+- [x] **Visible selection indicator** `[a11y]` `[design]` `[claude]` — the selected result card now includes a non-color indicator (left-edge accent bar from fold behavior) alongside the color so the selection is perceivable without relying on color alone (WCAG 1.4.1)
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` `[dormant]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
 
 ---
@@ -164,7 +163,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` — `syncSettings()` and `getRemoteSettings()` stubs in `dataService.js`; on sign-in, load remote settings and merge with localStorage; on any setting change, push to Supabase; API keys intentionally excluded from sync (localStorage only)
 - [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Phase 1 localStorage layer is wired (`userFindingsService.js`, `useUserFindings.js`); Phase 2: activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase; DB schema in `supabaseClient.js`
 - [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — when a user is signed in, sync upvote/downvote ratings to a `ratings` table (`user_id`, `finding_id`, `vote`); merge with any existing `localStorage` ratings on sign-in; `dataService.js` already abstracts the data layer, so this is a localized change
-- [ ] **GitHub Sponsors** `[infra]` `[dormant]` `[phase3]` — set up GitHub Sponsors as a secondary tip option alongside the Ko-fi widget for Phase 3
+- [ ] **GitHub Sponsors** `[infra]` `[phase3]` — set up GitHub Sponsors as a secondary tip option alongside the Ko-fi widget for Phase 3
 
 ---
 
