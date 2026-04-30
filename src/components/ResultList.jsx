@@ -1,4 +1,4 @@
-import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Pin, PinOff } from 'lucide-react'
+import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -87,11 +87,11 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               <button
                 type="button"
                 className="btn-ghost results-narrow-btn"
-                aria-label={t('results.narrow_aria')}
                 title={t('results.narrow_title')}
                 onClick={onNarrow}
               >
-                {t('results.narrow')}
+                <Filter size={16} aria-hidden="true" />
+                <span>{t('results.narrow_results')}</span>
               </button>
             )}
             {onCopyLink && (
@@ -106,7 +106,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   setTimeout(() => setLinkCopied(false), 2000)
                 }}
               >
-                <Link size={14} aria-hidden="true" />
+                {linkCopied ? <Check size={14} aria-hidden="true" /> : <Link size={14} aria-hidden="true" />}
                 {linkCopied ? t('results.copied_link') : t('results.copy_link')}
               </button>
             )}

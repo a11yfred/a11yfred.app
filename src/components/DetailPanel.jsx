@@ -315,7 +315,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             type="button"
             onClick={copyTitle}
             aria-label={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
-            className={`btn-accent detail-copy-btn${copiedTitle ? ' detail-copy-btn--success' : ''}`}
+            className={`detail-copy-btn${copiedTitle ? ' detail-copy-btn--success' : ''}`}
             title={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
           >
             {copiedTitle ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
@@ -385,7 +385,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                 type="button"
                 onClick={copyPrimarySc}
                 aria-label={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
-                className={`btn-accent detail-sc-copy-btn${copiedPrimarySc ? ' detail-sc-copy-btn--success' : ''}`}
+                className={`detail-sc-copy-btn${copiedPrimarySc ? ' detail-sc-copy-btn--success' : ''}`}
                 title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
               >
                 {copiedPrimarySc ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
@@ -408,7 +408,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                   type="button"
                   onClick={copyRelatedSc}
                   aria-label={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
-                  className={`btn-accent detail-sc-copy-btn${copiedRelatedSc ? ' detail-sc-copy-btn--success' : ''}`}
+                  className={`detail-sc-copy-btn${copiedRelatedSc ? ' detail-sc-copy-btn--success' : ''}`}
                   title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
                 >
                   {copiedRelatedSc ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
@@ -758,26 +758,6 @@ function Field({
             )}
           </label>
         </div>
-        <div className="field__actions">
-          <button
-            onClick={handleResetOrUndo}
-            aria-label={resetBtnLabel}
-            className={`btn-accent field-btn${reset ? ' field-btn--success' : ''}`}
-            disabled={animating}
-          >
-            {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
-            {isDesktop && <span>{resetBtnText}</span>}
-          </button>
-          <button
-            onClick={onCopy}
-            aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
-            className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
-            disabled={animating}
-          >
-            {copied ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
-            {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
-          </button>
-        </div>
       </div>
       <textarea
         ref={taRef}
@@ -787,6 +767,26 @@ function Field({
         readOnly={animating}
         className={`field__textarea${animating ? ' field__textarea--animating' : ''}`}
       />
+      <div className="field__actions">
+        <button
+          onClick={handleResetOrUndo}
+          aria-label={resetBtnLabel}
+          className={`btn-accent field-btn${reset ? ' field-btn--success' : ''}`}
+          disabled={animating}
+        >
+          {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
+          {isDesktop && <span>{resetBtnText}</span>}
+        </button>
+        <button
+          onClick={onCopy}
+          aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
+          className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
+          disabled={animating}
+        >
+          {copied ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+          {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
+        </button>
+      </div>
     </div>
   )
 }

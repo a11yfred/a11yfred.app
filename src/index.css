@@ -973,6 +973,10 @@ select:disabled {
   border-radius: var(--radius);
 }
 
+.results-narrow-btn svg {
+  flex-shrink: 0;
+}
+
 .results-copy-link-btn {
   font-size: var(--fs-body);
   display: inline-flex;
@@ -2034,6 +2038,9 @@ input.search-input:focus {
 
 .settings-save-btn {
   flex: 1;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-body);
+  border-radius: var(--radius);
 }
 
 .settings-footer-row {
@@ -2335,6 +2342,16 @@ input.search-input:focus {
 .detail-copy-btn {
   flex-shrink: 0;
   padding: 4px 8px;
+  border: none;
+  background: transparent;
+  color: var(--accent-text);
+  font-weight: 500;
+  transition: background var(--duration-fast);
+}
+
+.detail-copy-btn:not(:disabled):hover {
+  background: var(--bg-subtle);
+  border-radius: var(--radius);
 }
 
 @media (width >= 768px) {
@@ -2392,6 +2409,16 @@ input.search-input:focus {
 .detail-sc-copy-btn {
   flex-shrink: 0;
   padding: 4px 8px;
+  border: none;
+  background: transparent;
+  color: var(--accent-text);
+  font-weight: 500;
+  transition: background var(--duration-fast);
+}
+
+.detail-sc-copy-btn:not(:disabled):hover {
+  background: var(--bg-subtle);
+  border-radius: var(--radius);
 }
 
 .detail-sc-label {
@@ -2759,8 +2786,9 @@ input.search-input:focus {
 
 .field__actions {
   display: flex;
+  justify-content: flex-end;
   gap: 4px;
-  margin-bottom: 0.5em;
+  margin-top: 0.5em;
 }
 
 .field-btn {

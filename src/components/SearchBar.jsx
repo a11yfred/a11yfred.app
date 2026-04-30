@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { Filter, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -30,6 +30,12 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
     const id = setInterval(() => setPhraseIdx(i => (i + 1) % TYPEWRITER_PHRASES.length), CYCLE_MS)
     return () => clearInterval(id)
   }, [prefersReducedMotion, query.length])
+
+  useEffect(() => {
+    if (narrowMode) {
+      inputRef.current?.focus()
+    }
+  }, [narrowMode])
 
   const handlePhraseClick = (phrase) => {
     onChange(phrase.text)
@@ -66,10 +72,6 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
       if (narrowMode) return
       onSearch()
     }
-  }
-  const handleNarrowClick = () => {
-    onNarrowToggle()
-    setTimeout(() => inputRef.current?.focus(), 50)
   }
 
   return (
@@ -139,18 +141,6 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           </button>
         )}
       </div>
-      {narrowMode && (
-        <div className="search-narrow-button-row">
-          <button
-            onClick={handleNarrowClick}
-            aria-label={t('results.narrow_aria')}
-            className="btn-ghost search-narrow-btn"
-          >
-            <Filter size={16} aria-hidden="true" />
-            <span>{t('results.narrow')}</span>
-          </button>
-        </div>
-      )}
       {currentInputLength === 0 && !narrowMode && (
         <p className="search-hint">
           {liveSearch ? t('search.hint_live') : t('search.hint_submit')}
