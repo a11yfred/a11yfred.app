@@ -4,6 +4,34 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 30, 2026 (afternoon) — Improved Reset All dialog
+
+### Reset All is now a BottomSheet with explicit lists
+
+The Reset All confirmation changed from a Modal to a BottomSheet to accommodate detailed, explicit information about what gets permanently deleted and what gets reset to defaults. Users now see:
+
+**Will permanently delete:**
+
+- All AI provider API keys
+- All finding ratings (upvotes, downvotes, stars, archived state)
+- All pinned findings
+- Usage frequency tracking (opens, copies count)
+- Recent findings history
+- Personal text overrides for findings
+- Pending contribution suggestions
+
+**Will reset to factory defaults (with specific values shown):**
+
+- Theme → Light
+- Language → English
+- Platform → Web
+- AI Assist → Off
+- Live Search → On
+
+This replaces the vague "clear all saved settings" copy with explicit, itemized lists so users understand the full scope before confirming. Red warning box at the top reminds users the action cannot be undone.
+
+---
+
 ## April 30, 2026 — UI refinements, result card display fixes
 
 ### Related findings now display compactly

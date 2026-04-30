@@ -18,7 +18,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Detail Panel | ✅ | 85 | 1 |
 | Ratings (Upvote / Star / Archive) | ✅ | 100 | 1 |
 | Pinned Findings | ✅ | 100 | 1 |
-| Settings Panel | 🟡 | 90 | 1 |
+| Settings Panel | ✅ | 95 | 1 |
 | Session Persistence | ✅ | 100 | 1 |
 | Debug Tools | ✅ | 100 | 1 |
 | Internationalization | 🟡 | 80 | 1 |
@@ -117,7 +117,7 @@ Missing:
 
 ---
 
-### Settings Panel — 90%
+### Settings Panel — 95%
 
 Done:
 
@@ -127,13 +127,12 @@ Done:
 - Live search toggle
 - WCAG version (2.0 / 2.1 / 2.2) + level (A / AA) radio filters
 - AI Assist: toggle, provider, API key validation, model selector
-- Reset All with confirmation modal
+- Reset All as BottomSheet with explicit lists (what gets deleted, what resets to defaults with values shown)
 - Privacy & Storage disclosure sheet
 
 Missing:
 
-- Reset All description is vague — should enumerate exactly what gets cleared
-- Reset All does not yet clear `userOverrides` or `pendingContributions` (edit flow not wired)
+- Reset All does not yet clear `userOverrides` or `pendingContributions` (edit flow not wired; Phase 2 feature)
 
 ---
 

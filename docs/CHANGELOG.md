@@ -4,6 +4,20 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-30 — Reset All redesign + UI refinements
+
+### Reset All BottomSheet with explicit lists
+
+- `src/components/SettingsPanel.jsx` — Changed from Modal to BottomSheet to show detailed lists
+- `src/i18n/en.json` — Added 18 new keys with granular copy for what gets cleared and reset values
+- Red warning box with AlertTriangle icon at top
+- Two sections: "Will permanently delete" (7 items) and "Will reset to defaults" (5 settings with explicit values)
+- BottomSheet allows room for detailed lists; Modal was too cramped
+- Button layout in drawer footer with accent/secondary button pair
+- Added `.settings-reset-sheet`, `.settings-reset-warning`, `.settings-reset-section`, `.settings-reset-list`, `.settings-reset-actions` CSS classes
+
+---
+
 ## 2026-04-30 — UI refinements and feature completions
 
 ### Related findings display
