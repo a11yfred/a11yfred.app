@@ -2463,6 +2463,10 @@ input.search-input:focus {
   margin-bottom: var(--space-2);
 }
 
+.detail-related__single {
+  margin-bottom: var(--space-4);
+}
+
 .detail-related__list {
   list-style: disc;
   padding-left: var(--space-5);

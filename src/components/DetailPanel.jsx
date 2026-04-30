@@ -571,22 +571,36 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
 
   if (!related.length || !onSelect) return null
 
+  const headingKey = related.length === 1 ? 'detail.related_issue_heading' : 'detail.related_heading'
+
   return (
     <div className="detail-related">
-      <p className="detail-related__heading">{t('detail.related_heading')}</p>
-      <ul className="detail-related__list">
-        {related.map(d => (
-          <li key={d.id}>
-            <button
-              type="button"
-              className="detail-related__btn"
-              onClick={() => onSelect(d)}
-            >
-              {d.title}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <p className="detail-related__heading">{t(headingKey)}</p>
+      {related.length === 1 ? (
+        <p className="detail-related__single">
+          <button
+            type="button"
+            className="detail-related__btn"
+            onClick={() => onSelect(related[0])}
+          >
+            {related[0].title}
+          </button>
+        </p>
+      ) : (
+        <ul className="detail-related__list">
+          {related.map(d => (
+            <li key={d.id}>
+              <button
+                type="button"
+                className="detail-related__btn"
+                onClick={() => onSelect(d)}
+              >
+                {d.title}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }
