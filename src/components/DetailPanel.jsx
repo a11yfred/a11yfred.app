@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { Sparkles, RotateCcw, Clipboard, Check, ExternalLink, Loader2 } from 'lucide-react'
+import { Sparkles, RotateCcw, Copy, Check, ExternalLink, Loader2 } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -318,7 +318,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             className={`detail-copy-btn${copiedTitle ? ' detail-copy-btn--success' : ''}`}
             title={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
           >
-            {copiedTitle ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+            {copiedTitle ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
           </button>
         </div>
         <div className="detail-badges">
@@ -388,7 +388,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                 className={`detail-sc-copy-btn${copiedPrimarySc ? ' detail-sc-copy-btn--success' : ''}`}
                 title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
               >
-                {copiedPrimarySc ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+                {copiedPrimarySc ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
               </button>
             </div>
           </li>
@@ -411,7 +411,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                   className={`detail-sc-copy-btn${copiedRelatedSc ? ' detail-sc-copy-btn--success' : ''}`}
                   title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
                 >
-                  {copiedRelatedSc ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+                  {copiedRelatedSc ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
                 </button>
               </div>
             </li>
@@ -422,7 +422,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       <div className="detail-field-row">
         <label htmlFor="location-prefix" className="detail-label">
           {t('detail.location_label')}
-          {!location.trim() && <span className="detail-optional">{t('detail.location_optional')}</span>}
+          {!location.trim() && <span className="detail-optional">{' '}{t('detail.location_optional')}</span>}
         </label>
         <div className="detail-location-input-wrap">
           <input
@@ -558,7 +558,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
           aria-label={t('detail.reset_all_fields_aria')}
         >
           {resetAllDone
-            ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.reset_done_desktop')}</>
+            ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.reset_all_done_desktop')}</>
             : <><RotateCcw size={14} aria-hidden="true" />{' '}{t('detail.reset_all_fields_text')}</>
           }
         </button>
@@ -570,7 +570,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         >
           {copiedAll
             ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.copy_all_copied_text')}</>
-            : <><Clipboard size={14} aria-hidden="true" />{' '}{t('detail.copy_all_text')}</>
+            : <><Copy size={14} aria-hidden="true" />{' '}{t('detail.copy_all_text')}</>
           }
         </button>
         {onClose && (
@@ -783,7 +783,7 @@ function Field({
           className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
           disabled={animating}
         >
-          {copied ? <Check size={14} aria-hidden="true" /> : <Clipboard size={14} aria-hidden="true" />}
+          {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
           {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
         </button>
       </div>

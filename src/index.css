@@ -2327,6 +2327,16 @@ input.search-input:focus {
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
+  padding: 4px;
+  margin: -4px;
+  border-radius: var(--radius);
+  transition: background var(--duration-fast);
+}
+
+@media (pointer: fine) {
+  .detail-title-row:hover {
+    background: var(--bg-subtle);
+  }
 }
 
 .detail-title {
@@ -2404,6 +2414,16 @@ input.search-input:focus {
   align-items: center;
   gap: var(--space-1);
   justify-content: space-between;
+  padding: 4px;
+  margin: -4px;
+  border-radius: var(--radius);
+  transition: background var(--duration-fast);
+}
+
+@media (pointer: fine) {
+  .detail-sc-item-row:hover {
+    background: var(--bg-subtle);
+  }
 }
 
 .detail-sc-copy-btn {
@@ -2456,6 +2476,7 @@ input.search-input:focus {
 .detail-location-input-wrap {
   position: relative;
   display: flex;
+  align-items: center;
 }
 
 .detail-input {
