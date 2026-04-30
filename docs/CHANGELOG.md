@@ -4,6 +4,40 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-04-30 — UI refinements and feature completions
+
+### Related findings display
+
+- `src/components/DetailPanel.jsx` — `RelatedIssues` component detects single vs. multiple findings
+- Single finding: renders inline via `.detail-related__single` (no list markup)
+- Multiple findings: stack as bulleted list via `.detail-related__list`
+- `src/i18n/en.json` — `detail.related_issue_heading` (singular) added alongside `detail.related_heading` (plural)
+- Single-item display reduces visual clutter and follows the same UX pattern as `SourceLinks`
+
+### Animations and responsive design
+
+- All entrance/exit transitions now consistent app-wide
+- BottomSheet: slide-up entrance + slide-down exit
+- ResultList: stagger animation on load
+- SettingsPanel: smooth transition on desktop
+- All animations respect `prefers-reduced-motion: reduce`
+- Result cards responsive to 568px viewport height (iPhone SE landscape) via fold behavior
+
+### WCAG 1.4.1 selection indicator
+
+- Selected result card includes non-color indicator (left-edge accent bar from fold)
+- Selection state now perceivable without relying on color alone
+- Meets WCAG 2.2 1.4.1 Use of Color
+
+### PWA offline support
+
+- Service Worker caches app shell and corpus JSON
+- Web App Manifest enables home screen installation
+- Full search functionality available offline after first load
+- Tested on mobile Chrome
+
+---
+
 ## 2026-04-29 — Multi-platform distribution scaffolds
 
 Three feature branches scaffolded for non-web distribution. No existing source files on `main` were modified; all changes are additive and branch-isolated.

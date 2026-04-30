@@ -4,6 +4,26 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## April 30, 2026 — UI refinements, result card display fixes
+
+### Related findings now display compactly
+
+When a finding has only one related issue, it displays on a single line with the singular label "Similar or related issue:" instead of "issues:". Multiple related findings still stack as a bulleted list. This follows the same UX pattern already established for source links, reducing visual clutter for findings with only one related criterion.
+
+### Animation and responsive design complete
+
+All transitions are now consistent across the app. BottomSheet animates both entrance and exit; result lists stagger on load; SettingsPanel transitions smoothly on desktop. Every animation respects `prefers-reduced-motion: reduce`. Result cards are fully responsive down to 568px viewport height (iPhone SE landscape), using the result card fold behavior to adapt layout.
+
+### Selection indicator meets WCAG 1.4.1
+
+The selected result card now uses a non-color indicator (accent left-edge bar from the fold behavior) alongside color, so the selection state is perceivable without relying on color alone.
+
+### PWA offline support
+
+Service Worker now caches the app shell and corpus JSON, enabling full offline search after the first load. Web App Manifest allows installation to home screen. Tested on mobile Chrome.
+
+---
+
 ## April 29, 2026 — Multi-platform builds (Chrome extension, Firefox extension, Electron)
 
 Three distribution targets are now in active development on feature branches. The same React app powers all of them — no source rewrites needed.

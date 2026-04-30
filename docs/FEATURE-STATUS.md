@@ -14,28 +14,30 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Firefox Extension | 🟡 | 60 | — |
 | Electron Desktop | 🟡 | 80 | — |
 | Core Search | ✅ | 95 | 1 |
-| Result List | ✅ | 95 | 1 |
-| Detail Panel | 🟡 | 75 | 1 |
-| Ratings (Upvote / Star / Archive) | 🟡 | 85 | 1 |
+| Result List | ✅ | 100 | 1 |
+| Detail Panel | ✅ | 85 | 1 |
+| Ratings (Upvote / Star / Archive) | ✅ | 100 | 1 |
 | Pinned Findings | ✅ | 100 | 1 |
 | Settings Panel | 🟡 | 90 | 1 |
 | Session Persistence | ✅ | 100 | 1 |
 | Debug Tools | ✅ | 100 | 1 |
 | Internationalization | 🟡 | 80 | 1 |
 | Corpus / Finding Data | 🟡 | 65 | 1 |
+| Animations & Transitions | ✅ | 100 | 1 |
+| Responsive Design | ✅ | 100 | 1 |
 | AI Assist (single-shot) | 🟡 | 85 | 2 |
 | AI Agent (agentic mode) | 🔧 | 40 | 2 |
 | User Findings (custom) | 🔧 | 30 | 2 |
 | Multilingual Edit Flow | 🔧 | 40 | 2 |
 | Export Findings | 🔧 | 10 | 2 |
-| Frequent Findings (implicit signal) | 🔲 | 0 | 2 |
+| Frequent Findings (implicit signal) | ✅ | 100 | 2 |
 | Advanced Search Syntax | 🔲 | 0 | 2 |
 | How To Use | 🔲 | 0 | 2 |
 | Ko-fi Integration | 🟡 | 70 | 2 |
 | Import / Custom Data Source | 🔧 | 20 | 2 |
 | Authentication | 💤 | 10 | 3 |
 | Cloud Sync | 💤 | 5 | 3 |
-| PWA / Offline | 🔲 | 0 | 3 |
+| PWA / Offline | ✅ | 100 | 3 |
 | Analytics (Umami) | 💤 | 5 | 3 |
 | Ad Tiles | 🔲 | 0 | 3 |
 | Party Mode | ✅ | 100 | 1 |

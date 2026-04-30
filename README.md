@@ -185,6 +185,26 @@ An agentic AI backend (`agenticAiService.js`) uses a corpus search tool (`search
 Currently implemented: **Anthropic (Claude)**
 Stubbed (ready to wire up): OpenAI, Google Gemini, Microsoft Copilot
 
+## Ratings & Discovery
+
+Every finding card has upvote/downvote and star buttons. Ratings are stored locally and influence result ranking over time — the app learns which findings are most useful for your workflow. Upvoted findings bubble to the top; archived findings drop to the bottom.
+
+## Pin frequently-used findings
+
+Click the pin icon on any result to pin it to the home page. Pinned findings appear at the top in a dedicated "Pinned" section before any search results. Useful for findings you reach repeatedly across audits.
+
+## Result frequency tracking
+
+The app tracks implicit usage: how many times you've opened each finding panel and how many times you've copied its text. Combined with upvote/downvote signals, frequency shapes the result ranking so the list self-organizes around your actual workflow.
+
+## Offline-first support
+
+The Service Worker caches the app shell and corpus JSON on first load. Once cached, full search, filtering, and rating features work completely offline. The Web App Manifest lets you install the app to your phone home screen. AI Assist still requires internet (to reach the provider API), but search doesn't.
+
+## Animations and responsive design
+
+All transitions respect `prefers-reduced-motion: reduce`. Result cards fold on select, compressing unselected cards to title-only view. Layout adapts responsively down to 568px viewport height (iPhone SE landscape).
+
 ## Themes
 
 Settings includes Light, Auto, and Dark theme options, plus Party Mode.

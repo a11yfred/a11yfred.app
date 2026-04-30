@@ -9,6 +9,8 @@ All user data is stored locally in `localStorage` only. Nothing is ever sent to 
 | AI provider API key | `localStorage` per provider | Only to that provider's API endpoint when AI assist is used |
 | Theme, language, platform, UI preferences | `localStorage` | No |
 | Finding ratings (upvotes, stars, archive) | `localStorage` | No |
+| Finding frequency (opens, copies count) | `localStorage` key `frequentFindings` | No |
+| Pinned findings (favorites) | `localStorage` key `pinnedFindings` | No |
 | Settings save count (Party Mode unlock) | `localStorage` | No |
 | Recent findings history (last 10 IDs) | `localStorage` key `recentFindings` | No |
 | User-created / copied findings | `localStorage` key `userFindings` | No |
@@ -35,7 +37,13 @@ In the Chrome and Firefox extensions, the app runs inside an isolated extension 
 
 ## No backend
 
-This is a fully static application in all delivery formats. There is no database, authentication server, or backend of any kind. Corpus data is a local JSON file bundled with the app. The Electron build additionally bundles the app shell so it runs fully offline (AI Assist still requires internet to reach the provider API).
+This is a fully static application in all delivery formats. There is no database, authentication server, or backend of any kind. Corpus data is a local JSON file bundled with the app.
+
+### Offline-first support
+
+The app includes a Service Worker that caches the app shell and corpus JSON on the first load. Subsequent visits use the cached assets, allowing full search functionality offline. The Web App Manifest enables installation to the home screen on mobile. AI Assist still requires internet to reach the provider API endpoint, but all search, filtering, and rating features work offline.
+
+The Electron build bundles the app shell directly, enabling offline use without a prior online visit.
 
 ## Corpus and translation data
 
