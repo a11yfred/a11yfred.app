@@ -707,17 +707,25 @@ function SourceLinks({ links }) {
       <p className="detail-related__heading">{t('detail.source_heading')}</p>
       {links.length === 1 ? (
         <p className="detail-links__single">
-          <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
-            {links[0].text}{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
-          </a>
+          {links[0].url ? (
+            <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
+              {links[0].text}{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
+            </a>
+          ) : (
+            <span className="detail-links__link">{links[0].text}</span>
+          )}
         </p>
       ) : (
         <ul className="detail-related__list">
           {links.map(link => (
-            <li key={link.url}>
-              <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
-                {link.text}{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
-              </a>
+            <li key={link.url || link.text}>
+              {link.url ? (
+                <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
+                  {link.text}{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
+                </a>
+              ) : (
+                <span className="detail-links__link">{link.text}</span>
+              )}
             </li>
           ))}
         </ul>

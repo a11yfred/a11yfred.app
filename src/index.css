@@ -776,7 +776,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
    this padding the panel titles appear at the very top of the viewport. */
 @media (width >= 768px) {
   .settings-panel,
-  .about-panel {
+  .about-panel,
+  .help-panel {
     padding-top: calc(var(--space-8) + var(--space-6));
     animation: settings-panel-in var(--duration-base) var(--ease-out) both;
   }
