@@ -25,6 +25,31 @@ const DEFAULT_WCAG_FILTER = { maxVersion: '2.2', maxLevel: 'AA' }
 const VERSION_ORDER = { '2.0': 0, '2.1': 1, '2.2': 2 }
 const LEVEL_ORDER   = { 'A': 0, 'AA': 1, 'AAA': 2 }
 
+// Parse boolean search operators: +term (required), -term (excluded)
+function parseSearchQuery(query) {
+  const trimmed = query.trim()
+  const required = []
+  const excluded = []
+
+  // Extract all +term and -term operators
+  const opPattern = /([+-])(\S+)/g
+  let match
+  while ((match = opPattern.exec(trimmed)) !== null) {
+    const operator = match[1]
+    const term = match[2]
+    if (operator === '+') {
+      required.push(term)
+    } else {
+      excluded.push(term)
+    }
+  }
+
+  // Remove operators to get the freetext search terms
+  const baseQuery = trimmed.replace(/[+-]\S+/g, '').trim()
+
+  return { baseQuery, required, excluded }
+}
+
 export default function useFindingSearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userFindings = [], wcagFilter = DEFAULT_WCAG_FILTER, userOverrides = {}) {
   const [corpusFindings, setCorpusFindings] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
@@ -123,15 +148,39 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
 
   const results = useMemo(() => {
     if (!query || query.trim().length < 2) return []
+    const { baseQuery, required, excluded } = parseSearchQuery(query)
+
     // eslint-disable-next-line react-hooks/purity -- intentional: dev-only profiling, side-effect-free
     const t0 = performance.now()
-    const raw = fuse.search(query.trim()).slice(0, 12)
+    const searchTerm = baseQuery || query.trim()
+    const raw = fuse.search(searchTerm).slice(0, 12)
     // eslint-disable-next-line react-hooks/purity -- intentional: dev-only profiling, side-effect-free
     const elapsed = performance.now() - t0
     if (import.meta.env.DEV && elapsed > 20) {
       console.warn(`[useFindingSearch] search took ${elapsed.toFixed(1)}ms for "${query}" over ${versionFiltered.length} entries`)
     }
-    return raw
+
+    // Apply boolean filters: required terms and excluded terms
+    const filtered = raw.filter(r => {
+      const item = r.item
+      const searchableText = [
+        item.title, item.desc, item.rem, (item.keywords || []).join(' ')
+      ].join(' ').toLowerCase()
+
+      // Check required terms (all must be present)
+      for (const term of required) {
+        if (!searchableText.includes(term.toLowerCase())) return false
+      }
+
+      // Check excluded terms (none should be present)
+      for (const term of excluded) {
+        if (searchableText.includes(term.toLowerCase())) return false
+      }
+
+      return true
+    })
+
+    return filtered
       .sort((a, b) => {
         const ra = ratings[a.item.id] || DEFAULT_RATING
         const rb = ratings[b.item.id] || DEFAULT_RATING

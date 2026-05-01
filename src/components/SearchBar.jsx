@@ -150,6 +150,8 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {showVoting ? ` ${t('search.hint_voting')}` : ''}
           {hasPins ? ` ${t('search.hint_pin')}` : ''}
           {' '}
+          {t('search.hint_syntax')}
+          {' '}
           {t('search.hint_change_in')}{' '}
           <button onClick={() => navigate('/settings')} className="search-hint-link">
             {t('search.hint_settings_link')}

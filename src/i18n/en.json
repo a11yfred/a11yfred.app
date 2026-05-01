@@ -68,6 +68,7 @@
   "search.hint_ai": "AI assist is active ({provider}).",
   "search.hint_voting": "Prioritize results up or down to change their ranking — starred results always appear first.",
   "search.hint_pin": "Pin any result to keep it at the top across all views.",
+  "search.hint_syntax": "Try +required -excluded to narrow results (e.g. keyboard +screen reader -wcag2.2).",
   "search.view_all": "View All",
   "search.view_all_confirm_heading": "Are You Sure?",
   "search.view_all_confirm_body": "This will show {count} results on this single page.",

@@ -313,6 +313,11 @@ function AppContent({
     [allFindings, pinnedIds]
   )
 
+  const unpinnedResults = useMemo(() =>
+    results.filter(f => !pinnedIds.has(f.id)),
+    [results, pinnedIds]
+  )
+
   const badgeFilterLabel = useMemo(() => {
     if (!badgeFilter) return null
     if (badgeFilter.type === 'priority') {
@@ -758,7 +763,7 @@ function AppContent({
               ? (
                 <ResultList
                   key="search"
-                  results={results}
+                  results={unpinnedResults}
                   selected={selected}
                   onSelect={handleSelectFinding}
                   query={activeQuery}
