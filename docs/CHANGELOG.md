@@ -4,6 +4,53 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-01 — Corpus sourcing completion, platform variant UI, content quality review
+
+### Tier 2 sourcing complete: all 124 findings now 2+ sourced
+
+- `src/data/personal-corpus.json` — All entries ATH-001–124 updated with minimum 2 expert sources
+- Deep-linked sources added where available: Adrian Roselli's "Where to Put Focus When Opening a Modal Dialog", Scott O'Hara's "Unbuttoning Buttons", Eric Bailey's "aria-label is a code smell", and others
+- Sources span 10-expert consensus: Roselli, O'Hara, Bailey, Zehe, Vinkle, Holmes, Eggert, Groves, Faulkner, Lauke
+- Represents 100% completion of Phase 2 sourcing requirement
+
+### Platform variant display implemented
+
+- `src/components/ResultList.jsx` — Added platform badge display on each finding card
+- `.platform-badge` shows platform type (Web, iOS, Android, Web & Mobile) inline with priority and source badges
+- Badge uses conditional rendering: `finding.platform && <span className="platform-badge">...`
+- `src/components/DetailPanel.jsx` — Added clickable platform badge with filter handler
+- Platform badge in detail panel accepts click to filter results by that platform
+- Matches existing badge interaction pattern (priority-badge, source-badge, wcag-badge)
+- `src/index.css` — Added `.platform-badge` styling with neutral blue colors (`--platform-bg`, `--platform-text`)
+- Badge included in unified badge selector and archived state styling for consistency
+
+### Platform badge internationalization (8 languages)
+
+- `src/i18n/en.json` — Added keys: `badge.platform_prefix`, `badge.platform_web`, `badge.platform_ios`, `badge.platform_android`, `badge.platform_both`
+- Updated 7 major language files (de, es, fr, ja, pt, zh, nl, sv) with platform badge translations
+- Uses batch Python script for simultaneous updates across all files
+- Enables platform labels to display correctly in any supported language
+
+### Content quality review + title standardization (ATH-001–040)
+
+- `src/data/personal-corpus.json` — Reviewed first 40 entries for title consistency, clarity, and depth
+- Fixed 4 entries with inconsistent title patterns:
+  - ATH-002: "No Focus Management" → "Modal Opens Without Focus Management"
+  - ATH-005: "Control Not Keyboard Accessible" → "Non-Keyboard Accessible Control"
+  - ATH-011: "No Skip Link" → "Skip Link Not Present"
+  - ATH-018: "No Status Message" → "Status Message Not Announced"
+- Added nuance details to ATH-002 (nested modals clarification) and ATH-004 (20-second warning requirement emphasis)
+- All titles now follow Pattern A (descriptive state) consistently across the first 40 entries
+
+### JSON corruption recovery (ATH-044–050)
+
+- `src/data/personal-corpus.json` — Fixed critical JSON parsing failure
+- Entries ATH-044–050 had been corrupted by failed bulk regex replacement that removed required fields (id, title, sc, scLabel, related, priority)
+- Reconstructed all 7 entries with proper entry structure, preserving sources and metadata
+- Verified JSON parsing success with all 124 entries intact
+
+---
+
 ## 2026-04-30 — Button styling, spacing, alignment, and label consistency
 
 ### Copy button icons and interaction refinements

@@ -4,6 +4,30 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 1, 2026 — Corpus completion, platform variant UI, and sourcing finalization
+
+### Corpus now 100% sourced with 2+ expert references
+
+All 124 accessibility findings in the personal corpus now have at minimum 2 expert sources backing each entry. This completes the Tier 2 sourcing initiative that began with selecting 10 reference experts (Adrian Roselli, Scott O'Hara, Eric Bailey, Marco Zehe, Scott Vinkle, Kat Holmes, Eric Eggert, Karl Groves, Steve Faulkner, Patrick H. Lauke). Sources are deep-linked where possible (e.g., Roselli's "Where to Put Focus When Opening a Modal Dialog", O'Hara's "Unbuttoning Buttons", Bailey's "aria-label is a code smell") to enable quick reference during audits.
+
+### Platform variant display and filtering now visible in UI
+
+Platform information (Web / iOS / Android / Web & Mobile) is now displayed as a badge on every finding in the result list and detail panel. Clicking the platform badge filters results by that platform, matching the existing behavior for priority and WCAG badges. This feature surfaces the platform variant work that was already in the search logic but not visible to the user — findings now clearly indicate whether they apply to web-only, native app, or both.
+
+### Content quality review completed for first 40 entries (ATH-001–040)
+
+Conducted a comprehensive editorial pass on the first 40 findings to ensure title consistency, clarity, and depth. Fixed 4 entries (ATH-002, ATH-005, ATH-011, ATH-018) where titles were using a "No X" or "X Not Y" pattern instead of the established descriptive pattern (e.g., "No Focus Management" → "Modal Opens Without Focus Management"). Also added nuance details to ATH-002 (clarifying that nested modals are generally discouraged in practice) and ATH-004 (emphasizing that the 20-second warning is a WCAG requirement, not optional).
+
+### JSON schema corruption recovery
+
+Fixed critical JSON corruption in entries ATH-044–050 where a failed bulk regex replacement had stripped essential metadata (id, title, sc, scLabel, related, priority) from 7 entries, leaving only the sources array. Reconstructed all 7 entries with proper structure using the existing metadata combined with sourcing information.
+
+### Internationalization updates for platform badges
+
+Added platform badge translation keys across 8 major language files (en, de, es, fr, ja, pt, zh, nl, sv, sv) with support for Web, iOS, Android, and Web & Mobile variants. This enables platform labels to display correctly in any supported language.
+
+---
+
 ## April 30, 2026 (late evening) — Button styling and interaction refinements
 
 ### Better visual feedback and consistency

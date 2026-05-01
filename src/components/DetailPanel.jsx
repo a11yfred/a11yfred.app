@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useRef, useEffect, useMemo, forwardRef } from 'react'
 import { Sparkles, RotateCcw, Copy, Check, ExternalLink, Loader2 } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
@@ -66,8 +66,12 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   const [reviseRem, setReviseRem] = useState(true)
   const [copiedAll, setCopiedAll] = useState(false)
   const [resetAllDone, setResetAllDone] = useState(false)
+  const [includeDescTitle, setIncludeDescTitle] = useState(false)
+  const [includeRemTitle, setIncludeRemTitle] = useState(false)
   const typeTimerRef = useRef(null)
   const refineButtonRef = useRef(null)
+  const descCopyBtnRef = useRef(null)
+  const remCopyBtnRef = useRef(null)
 
   useEffect(() => () => clearTimeout(typeTimerRef.current), [])
 
@@ -105,21 +109,25 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
     ? `${location.trim().replace(/:?\s*$/, ':')} ${finding.desc}`
     : descText
 
-  const copy = (text, setCopied, label) => {
+  const copy = (text, setCopied, label, prefix = null, includePrefix = false) => {
     if (!text?.trim()) { setNothingToCopy(true); return }
-    navigator.clipboard.writeText(text).then(() => {
+    const textToCopy = prefix && includePrefix ? `${prefix}\n${text}` : text
+    navigator.clipboard.writeText(textToCopy).then(() => {
       setCopied(true)
       announce(t('detail.copied_announce', { label }))
       setTimeout(() => setCopied(false), 2000)
     })
   }
 
-  const handleReset = (original, current, setText, setFlag, label) => {
+  const handleReset = (original, current, setText, setFlag, label, focusRef) => {
     const doReset = () => {
       setText(original)
       announce(t('detail.reset_announce', { label }))
       setFlag(true)
-      setTimeout(() => setFlag(false), 2000)
+      setTimeout(() => {
+        setFlag(false)
+        focusRef?.current?.focus()
+      }, 2000)
     }
     if (!current?.trim() || !isSignificantlyChanged(original, current)) {
       doReset()
@@ -147,9 +155,11 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       setRemText(finding.rem)
       setDescHistory([])
       setRemHistory([])
-      announce(t('detail.reset_all_fields_announce'))
+      announce(t('detail.reset_all_content_announce'))
       setResetAllDone(true)
-      setTimeout(() => setResetAllDone(false), 2000)
+      setTimeout(() => {
+        setResetAllDone(false)
+      }, 2000)
     }
     if (descChanged || remChanged) {
       setConfirmReset({ doReset })
@@ -175,16 +185,16 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   }
 
   const copyTitle = () => {
-    copy(finding.title, setCopiedTitle, t('detail.copy_title_aria'))
+    copy(finding.title, setCopiedTitle, t('detail.title_label'))
   }
 
   const copyPrimarySc = () => {
-    copy(finding.scLabel, setCopiedPrimarySc, t('detail.copy_sc_aria'))
+    copy(finding.scLabel, setCopiedPrimarySc, t('detail.sc_label'))
   }
 
   const copyRelatedSc = () => {
     if (!finding.related.length) return
-    copy(finding.related.join(', '), setCopiedRelatedSc, t('detail.copy_sc_aria'))
+    copy(finding.related.join(', '), setCopiedRelatedSc, t('detail.sc_label'))
   }
 
   function startTypewriter(newDesc, newRem, tFunc) {
@@ -294,7 +304,6 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       setNoteSaved(true)
       announce(t('detail.saved_note_aria'))
       setTimeout(() => setNoteSaved(false), 2000)
-      setReviseNote('')
     }
   }
 
@@ -372,13 +381,26 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
               {finding.wcagLevel}
             </button>
           )}
+          {finding.platform && (
+            <button
+              type="button"
+              className="platform-badge"
+              style={{ '--badge-bg': 'var(--platform-bg, #e8eef5)', '--badge-text': 'var(--platform-text, #3c4558)' }}
+              onClick={() => onBadgeClick?.({ type: 'platform', value: finding.platform })}
+              aria-label={`${t('badge.platform_prefix')}${t(`badge.platform_${finding.platform}`, finding.platform)} — ${t('results.badge_filter_aria')}`}
+              title={`${t('badge.platform_prefix')}${t(`badge.platform_${finding.platform}`, finding.platform)}`}
+            >
+              <span className="badge-prefix">{t('badge.platform_prefix')}</span>
+              {t(`badge.platform_${finding.platform}`, finding.platform)}
+            </button>
+          )}
         </div>
 
         <ul className="detail-sc-list">
           <li className="detail-sc-item">
             <div className="detail-sc-item-row">
               <span>
-                <span className="detail-sc-label">{t('detail.fails')}</span>{' '}
+                <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
                 <ScLink label={finding.scLabel} />
               </span>
               <button
@@ -396,7 +418,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             <li className="detail-sc-item">
               <div className="detail-sc-item-row">
                 <span>
-                  <span className="detail-sc-label">{t('detail.related')}</span>{' '}
+                  <span className="detail-sc-label">{t('detail.related_sc')}</span>{' '}
                   {finding.related.map((r, i) => (
                     <span key={r}>
                       {i > 0 && ', '}
@@ -447,14 +469,15 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       </div>
 
       <Field
+        ref={descCopyBtnRef}
         id="finding-desc"
         label={descLabel}
         value={location.trim() ? displayDesc : descText}
         onChange={setDescText}
         copied={copiedDesc}
-        onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel)}
+        onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel, t('detail.desc_prefix'), includeDescTitle)}
         reset={resetDesc}
-        onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel)}
+        onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel, descCopyBtnRef)}
         undoable={descHistory.length > 1}
         onUndo={handleUndoDesc}
         selected={reviseDesc}
@@ -464,17 +487,21 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         wasUpdated={descHistory.length > 0}
         isDesktop={isDesktop}
         aiEnabled={aiEnabled}
+        hasChanged={descText !== finding.desc}
+        includeTitle={includeDescTitle}
+        onIncludeTitleChange={setIncludeDescTitle}
       />
 
       <Field
+        ref={remCopyBtnRef}
         id="finding-rem"
         label={remLabel}
         value={remText}
         onChange={setRemText}
         copied={copiedRem}
-        onCopy={() => copy(remText, setCopiedRem, remLabel)}
+        onCopy={() => copy(remText, setCopiedRem, remLabel, t('detail.rem_prefix'), includeRemTitle)}
         reset={resetRem}
-        onReset={() => handleReset(finding.rem, remText, setRemText, setResetRem, remLabel)}
+        onReset={() => handleReset(finding.rem, remText, setRemText, setResetRem, remLabel, remCopyBtnRef)}
         undoable={remHistory.length > 1}
         onUndo={handleUndoRem}
         selected={reviseRem}
@@ -484,6 +511,9 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         wasUpdated={remHistory.length > 0}
         isDesktop={isDesktop}
         aiEnabled={aiEnabled}
+        hasChanged={remText !== finding.rem}
+        includeTitle={includeRemTitle}
+        onIncludeTitleChange={setIncludeRemTitle}
       />
 
       {(descText !== finding.desc || remText !== finding.rem) && (
@@ -556,6 +586,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
           className={`btn-ghost detail-action-btn${resetAllDone ? ' field-btn--success' : ''}`}
           onClick={handleResetAllFields}
           aria-label={t('detail.reset_all_fields_aria')}
+          disabled={descText === finding.desc && remText === finding.rem}
         >
           {resetAllDone
             ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.reset_all_done_desktop')}</>
@@ -698,7 +729,7 @@ function SourceLinks({ links }) {
   )
 }
 
-function Field({
+const Field = forwardRef(function Field({
   id, label, value, onChange,
   copied, onCopy,
   reset, onReset,
@@ -706,7 +737,9 @@ function Field({
   selected, onSelectChange, selectLabel,
   animating, wasUpdated,
   isDesktop, aiEnabled,
-}) {
+  hasChanged,
+  includeTitle, onIncludeTitleChange,
+}, copyBtnRef) {
   const t = useT()
   const taRef = useRef(null)
 
@@ -767,29 +800,45 @@ function Field({
         readOnly={animating}
         className={`field__textarea${animating ? ' field__textarea--animating' : ''}`}
       />
-      <div className="field__actions">
-        <button
-          onClick={handleResetOrUndo}
-          aria-label={resetBtnLabel}
-          className={`btn-accent field-btn${reset ? ' field-btn--success' : ''}`}
-          disabled={animating}
-        >
-          {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
-          {isDesktop && <span>{resetBtnText}</span>}
-        </button>
-        <button
-          onClick={onCopy}
-          aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
-          className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
-          disabled={animating}
-        >
-          {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-          {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
-        </button>
+      <div className="field__footer">
+        <div className="field__include-title">
+          <input
+            type="checkbox"
+            id={`${id}-include-title`}
+            checked={includeTitle}
+            onChange={e => onIncludeTitleChange(e.target.checked)}
+            disabled={animating}
+            className="field-include-title-checkbox"
+          />
+          <label htmlFor={`${id}-include-title`} className="field-include-title-label">
+            {t('detail.include_title_when_copied')}
+          </label>
+        </div>
+        <div className="field__actions">
+          <button
+            onClick={handleResetOrUndo}
+            aria-label={resetBtnLabel}
+            className={`btn-accent field-btn${reset ? ' field-btn--success' : ''}`}
+            disabled={animating || (!undoable && !hasChanged)}
+          >
+            {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
+            {isDesktop && <span>{resetBtnText}</span>}
+          </button>
+          <button
+            ref={copyBtnRef}
+            onClick={onCopy}
+            aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
+            className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
+            disabled={animating}
+          >
+            {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+            {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
+          </button>
+        </div>
       </div>
     </div>
   )
-}
+})
 
 function ScLink({ label }) {
   const href = scToWaiUrl(label)

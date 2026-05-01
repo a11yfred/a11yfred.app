@@ -226,6 +226,12 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
                       {t(p.key)}
                     </span>
+                    {finding.platform && (
+                      <span className="platform-badge" title={`Platform: ${finding.platform}`}>
+                        <span className="badge-prefix">{t('badge.platform_prefix')}</span>
+                        {t(`badge.platform_${finding.platform}`, finding.platform)}
+                      </span>
+                    )}
                     {finding.sources?.map(src => src.url ? (
                       <a
                         key={src.name}
