@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
-import { Settings, X, Info, ExternalLink, ChevronDown } from 'lucide-react'
+import { Settings, X, Info, HelpCircle, ExternalLink, ChevronDown } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
 import AboutPanel from './components/AboutPanel.jsx'
+import HelpPanel from './components/HelpPanel.jsx'
 import Confetti from './components/Confetti.jsx'
 import PartySparkles from './components/PartySparkles.jsx'
 import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
@@ -190,19 +191,21 @@ function AppContent({
   const t = useT()
   const settingsOpen = route === '/settings' || route === '/settings/privacy'
   const aboutOpen = route === '/about'
+  const helpOpen = route === '/help'
   const adminOpen = route === '/admin'
   const viewAll = route === '/results/all'
   const findingMatchSlug = useRouteMatch('/finding/:id/:slug')
   const findingMatchBare = useRouteMatch('/finding/:id')
   const findingMatch = findingMatchSlug ?? findingMatchBare
   const findingIdFromRoute = findingMatch?.id ?? null
-  const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/results/all', '/admin'])
+  const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/help', '/results/all', '/admin'])
   const isNotFound = !KNOWN_ROUTES.has(route) && !findingMatch
   const h1Ref = useRef(null)
   const didMount = useRef(false)
   const aboutWasOpenRef = useRef(false)
   const settingsTriggerRef = useRef(null)
   const aboutTriggerRef = useRef(null)
+  const helpTriggerRef = useRef(null)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
   const viewAllTriggerRef = useRef(null)
   const [badgeFilter, setBadgeFilter] = useState(() => {
@@ -237,6 +240,21 @@ function AppContent({
     navigate('/about')
   }
   const handleCloseAbout = () => {
+    if (selected) {
+      navigate(`/finding/${selected.id}/${findingSlug(selected.title)}`)
+    } else if (returnViewAllRef.current) {
+      returnViewAllRef.current = false
+      navigate('/results/all')
+    } else {
+      navigate('/')
+    }
+  }
+  const handleOpenHelp = () => {
+    helpTriggerRef.current = document.activeElement
+    if (viewAll) returnViewAllRef.current = true
+    navigate('/help')
+  }
+  const handleCloseHelp = () => {
     if (selected) {
       navigate(`/finding/${selected.id}/${findingSlug(selected.title)}`)
     } else if (returnViewAllRef.current) {
@@ -331,25 +349,29 @@ function AppContent({
   const badgeResults = useMemo(() => {
     if (!badgeFilter) return []
     return sortedFindings.filter(f => {
+      if (pinnedIds.has(f.id)) return false
       if (badgeFilter.type === 'priority') return f.priority === badgeFilter.value
       if (badgeFilter.type === 'source')   return f.sources?.some(s => s.name === badgeFilter.value)
       if (badgeFilter.type === 'wcag')     return f.wcagVersion === badgeFilter.value
       return false
     })
-  }, [sortedFindings, badgeFilter])
+  }, [sortedFindings, badgeFilter, pinnedIds])
 
   // Narrow results filter: applies narrowQuery as a secondary filter within current results
   const narrowedResults = useMemo(() => {
     if (!narrowMode || !narrowQuery) return null
     if (!results || results.length === 0) return null
     const lowerNarrow = narrowQuery.toLowerCase()
-    return results.filter(f =>
+    const narrowFiltered = results.filter(f =>
       f.title.toLowerCase().includes(lowerNarrow) ||
       f.desc.toLowerCase().includes(lowerNarrow) ||
       f.keywords?.some(k => k.toLowerCase().includes(lowerNarrow)) ||
       f.sources?.some(s => s.name.toLowerCase().includes(lowerNarrow))
     )
-  }, [narrowMode, narrowQuery, results])
+    const pinnedMatches = narrowFiltered.filter(f => pinnedIds.has(f.id))
+    const unpinnedMatches = narrowFiltered.filter(f => !pinnedIds.has(f.id))
+    return [...pinnedMatches, ...unpinnedMatches]
+  }, [narrowMode, narrowQuery, results, pinnedIds])
 
   const handleAdminSearch = (q) => {
     setQuery(q)
@@ -745,7 +767,7 @@ function AppContent({
             ? (
               <ResultList
                 key="view-all"
-                results={sortedFindings}
+                results={sortedFindings.filter(f => !pinnedIds.has(f.id))}
                 selected={selected}
                 onSelect={handleSelectFinding}
                 query=""
@@ -928,10 +950,13 @@ function AppContent({
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}
           aboutOpen={aboutOpen}
+          helpOpen={helpOpen}
           onOpenSettings={handleOpenSettings}
           onCloseSettings={handleCloseSettings}
           onOpenAbout={handleOpenAbout}
           onCloseAbout={handleCloseAbout}
+          onOpenHelp={handleOpenHelp}
+          onCloseHelp={handleCloseHelp}
           isDesktop={isDesktop}
         />
         <main className="app-main">
@@ -945,7 +970,9 @@ function AppContent({
                   ? <SettingsPanel {...settingsProps} />
                   : isDesktop && aboutOpen
                     ? <AboutPanel onClose={handleCloseAbout} />
-                    : searchView}
+                    : isDesktop && helpOpen
+                      ? <HelpPanel onClose={handleCloseHelp} />
+                      : searchView}
           </Suspense>
         </main>
         <Footer />
@@ -965,10 +992,16 @@ function AppContent({
         </Drawer>
       )}
 
+      {!isDesktop && (
+        <Drawer open={helpOpen} onClose={handleCloseHelp} label={t('help.sheet_label')} focusOnClose={helpTriggerRef}>
+          <HelpPanel onClose={handleCloseHelp} />
+        </Drawer>
+      )}
+
       <BottomSheet
-        open={!!selected && !settingsOpen && !aboutOpen && !adminOpen}
+        open={!!selected && !settingsOpen && !aboutOpen && !helpOpen && !adminOpen}
         onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
-        keepMounted={(settingsOpen || aboutOpen || adminOpen) && !!selected}
+        keepMounted={(settingsOpen || aboutOpen || helpOpen || adminOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
         returnFocusRef={findingTriggerRef}
@@ -999,7 +1032,7 @@ function AppContent({
   )
 }
 
-function Header({ h1Ref, settingsOpen, aboutOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, isDesktop }) {
+function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, isDesktop }) {
   const t = useT()
   const compact = isDesktop && (settingsOpen || aboutOpen)
   return (
@@ -1028,6 +1061,19 @@ function Header({ h1Ref, settingsOpen, aboutOpen, onOpenSettings, onCloseSetting
       <div className="page-header__actions">
         {!compact && (
           <button
+            onClick={helpOpen ? onCloseHelp : onOpenHelp}
+            aria-label={helpOpen ? t('common.close') : t('help.open_help')}
+            title={helpOpen ? t('common.close') : t('help.open_help')}
+            className="btn-icon btn-icon-accent page-header__help-btn"
+          >
+            {helpOpen
+              ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
+              : <HelpCircle size={20} strokeWidth={2} aria-hidden="true" />
+            }
+          </button>
+        )}
+        {!compact && (
+          <button
             onClick={aboutOpen ? onCloseAbout : onOpenAbout}
             aria-label={aboutOpen ? t('common.close') : t('header.open_about')}
             title={aboutOpen ? t('common.close') : t('header.open_about')}
@@ -1040,12 +1086,12 @@ function Header({ h1Ref, settingsOpen, aboutOpen, onOpenSettings, onCloseSetting
           </button>
         )}
         <button
-          onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : onOpenSettings}
-          aria-label={settingsOpen ? t('header.close_settings') : aboutOpen ? t('common.close') : t('header.open_settings')}
-          title={settingsOpen ? t('header.close_settings') : aboutOpen ? t('common.close') : t('header.open_settings')}
+          onClick={settingsOpen ? onCloseSettings : (aboutOpen || helpOpen) ? (aboutOpen ? onCloseAbout : onCloseHelp) : onOpenSettings}
+          aria-label={settingsOpen ? t('header.close_settings') : (aboutOpen || helpOpen) ? t('common.close') : t('header.open_settings')}
+          title={settingsOpen ? t('header.close_settings') : (aboutOpen || helpOpen) ? t('common.close') : t('header.open_settings')}
           className="btn-icon btn-icon-accent page-header__settings-btn"
         >
-          {settingsOpen || aboutOpen
+          {settingsOpen || aboutOpen || helpOpen
             ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
             : <Settings size={20} strokeWidth={2} aria-hidden="true" />
           }

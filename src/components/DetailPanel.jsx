@@ -381,19 +381,6 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
               {finding.wcagLevel}
             </button>
           )}
-          {finding.platform && (
-            <button
-              type="button"
-              className="platform-badge"
-              style={{ '--badge-bg': 'var(--platform-bg, #e8eef5)', '--badge-text': 'var(--platform-text, #3c4558)' }}
-              onClick={() => onBadgeClick?.({ type: 'platform', value: finding.platform })}
-              aria-label={`${t('badge.platform_prefix')}${t(`badge.platform_${finding.platform}`, finding.platform)} — ${t('results.badge_filter_aria')}`}
-              title={`${t('badge.platform_prefix')}${t(`badge.platform_${finding.platform}`, finding.platform)}`}
-            >
-              <span className="badge-prefix">{t('badge.platform_prefix')}</span>
-              {t(`badge.platform_${finding.platform}`, finding.platform)}
-            </button>
-          )}
         </div>
 
         <ul className="detail-sc-list">
@@ -578,7 +565,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       </div>
 
       <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} />
-      <SourceLinks links={finding.links} />
+      <SourceLinks links={finding.sources?.map(s => ({ url: s.url, text: s.name }))} />
 
       <div className="detail-actions-end">
         <button
@@ -705,13 +692,23 @@ function SourceLinks({ links }) {
   const t = useT()
   if (!links?.length) return null
 
+  const isExternalLink = (url) => {
+    try {
+      const linkUrl = new URL(url)
+      const currentHost = window.location.hostname
+      return linkUrl.protocol.startsWith('http') && linkUrl.hostname !== currentHost
+    } catch {
+      return false
+    }
+  }
+
   return (
     <div className="detail-related">
       <p className="detail-related__heading">{t('detail.source_heading')}</p>
       {links.length === 1 ? (
         <p className="detail-links__single">
           <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
-            {links[0].text}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
+            {links[0].text}{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
           </a>
         </p>
       ) : (
@@ -719,7 +716,7 @@ function SourceLinks({ links }) {
           {links.map(link => (
             <li key={link.url}>
               <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
-                {link.text}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
+                {link.text}{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
               </a>
             </li>
           ))}

@@ -1,5 +1,5 @@
 import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
@@ -45,6 +45,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   const focusNextRef = useRef(null)
   const countHeadingRef = useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
+  const listRef = useRef(null)
 
   // Use narrowResults if provided (filtered), otherwise use all results
   const displayResults = narrowMode && narrowResults ? narrowResults : results
@@ -60,6 +61,80 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     const el = itemRefs.current[focusNextRef.current]
     if (el) { el.focus(); focusNextRef.current = null }
   })
+
+  const handleKeyDown = useCallback((e) => {
+    if (!listRef.current) return
+    const focusedBtn = document.activeElement?.closest('.result-item')
+    if (!focusedBtn) return
+
+    const currentIndex = displayResults.findIndex(r => itemRefs.current[r.id] === document.activeElement)
+    if (currentIndex === -1) return
+
+    const DEFAULT_RATING = { score: 0, starred: false, archived: false }
+    const currentFinding = displayResults[currentIndex]
+    const rating = ratings[currentFinding.id] || DEFAULT_RATING
+    const { starred, archived } = rating
+    const searchInput = document.querySelector('input[type="search"]')
+    const isTyping = searchInput === document.activeElement
+
+    if (isTyping) return
+
+    switch (e.key.toLowerCase()) {
+      case 'j':
+        e.preventDefault()
+        if (currentIndex < displayResults.length - 1) {
+          itemRefs.current[displayResults[currentIndex + 1].id]?.focus()
+        }
+        break
+      case 'k':
+        e.preventDefault()
+        if (currentIndex > 0) {
+          itemRefs.current[displayResults[currentIndex - 1].id]?.focus()
+        }
+        break
+      case 's':
+        e.preventDefault()
+        onStar?.(currentFinding.id)
+        announce(starred
+          ? t('announce.unstarred', { title: currentFinding.title })
+          : t('announce.starred', { title: currentFinding.title })
+        )
+        break
+      case 'e':
+        e.preventDefault()
+        onArchive?.(currentFinding.id)
+        announce(archived
+          ? t('announce.unarchived', { title: currentFinding.title })
+          : t('announce.archived', { title: currentFinding.title })
+        )
+        break
+      case 'u':
+        e.preventDefault()
+        if (archived) {
+          onArchive?.(currentFinding.id)
+          announce(t('announce.unarchived', { title: currentFinding.title }))
+        }
+        break
+      default:
+        if (e.shiftKey && (e.key === 'ArrowUp' || e.key === '↑')) {
+          e.preventDefault()
+          onUpvote?.(currentFinding.id)
+          const newRating = ratings[currentFinding.id] || DEFAULT_RATING
+          announce(t('announce.upvoted', { title: currentFinding.title, score: newRating.score + 1 }))
+        } else if (e.shiftKey && (e.key === 'ArrowDown' || e.key === '↓')) {
+          e.preventDefault()
+          onDownvote?.(currentFinding.id)
+          const newRating = ratings[currentFinding.id] || DEFAULT_RATING
+          announce(t('announce.downvoted', { title: currentFinding.title, score: newRating.score - 1 }))
+        }
+    }
+  }, [displayResults, ratings, onStar, onArchive, onUpvote, onDownvote, t])
+
+  useEffect(() => {
+    const listEl = listRef.current
+    listEl?.addEventListener('keydown', handleKeyDown)
+    return () => listEl?.removeEventListener('keydown', handleKeyDown)
+  }, [handleKeyDown])
 
   if (results.length === 0) {
     return <NoResults query={query} />
@@ -115,7 +190,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
       </div>}
 
-      <ul className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>
+      <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>
         {displayResults.map((finding, index) => {
           const isSelected = selected?.id === finding.id
           const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
@@ -226,12 +301,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
                       {t(p.key)}
                     </span>
-                    {finding.platform && (
-                      <span className="platform-badge" title={`Platform: ${finding.platform}`}>
-                        <span className="badge-prefix">{t('badge.platform_prefix')}</span>
-                        {t(`badge.platform_${finding.platform}`, finding.platform)}
-                      </span>
-                    )}
                     {finding.sources?.map(src => src.url ? (
                       <a
                         key={src.name}
