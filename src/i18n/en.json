@@ -222,6 +222,8 @@
   "detail.copy_title_aria": "Copy title",
   "detail.copy_sc_aria": "Copy success criterion",
   "detail.include_title_when_copied": "Include title when copied",
+  "detail.include_desc_title_when_copied": "Include Description title when copied",
+  "detail.include_rem_title_when_copied": "Include Suggested Remediation title when copied",
   "detail.desc_prefix": "Description",
   "detail.rem_prefix": "Suggested Remediation",
   "detail.edit_lang_warning": "Edits are session-only — switching language or finding will reset them.",

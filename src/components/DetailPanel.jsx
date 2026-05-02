@@ -816,7 +816,7 @@ const Field = forwardRef(function Field({
             className="field-include-title-checkbox"
           />
           <label htmlFor={`${id}-include-title`} className="field-include-title-label">
-            {t('detail.include_title_when_copied')}
+            {id === 'finding-desc' ? t('detail.include_desc_title_when_copied') : id === 'finding-rem' ? t('detail.include_rem_title_when_copied') : t('detail.include_title_when_copied')}
           </label>
         </div>
         <div className="field__actions">
