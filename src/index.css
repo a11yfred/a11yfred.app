@@ -2736,6 +2736,9 @@ input.search-input:focus {
 /* ─── Source links ────────────────────────────────────────── */
 
 .detail-links__single {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
   margin-bottom: var(--space-4);
 }
 

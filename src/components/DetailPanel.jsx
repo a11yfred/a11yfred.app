@@ -712,7 +712,7 @@ function SourceLinks({ links }) {
               {links[0].text}{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
             </a>
           ) : (
-            <span className="detail-links__link">{links[0].text}</span>
+            <span>{links[0].text}</span>
           )}
         </p>
       ) : (
@@ -724,7 +724,7 @@ function SourceLinks({ links }) {
                   {link.text}{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
                 </a>
               ) : (
-                <span className="detail-links__link">{link.text}</span>
+                <span>{link.text}</span>
               )}
             </li>
           ))}
