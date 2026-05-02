@@ -60,23 +60,6 @@ export default function AboutPanel({ onClose }) {
       </section>
 
       <section className="about-section">
-        <h3 className="about-section-heading">{t('about.how_heading')}</h3>
-        <ol className="about-steps">
-          {[1, 2, 3, 4, 5].map(n => (
-            <li key={n} className="about-step">
-              <span className="about-step-label">
-                {t(`about.step_${n}_label`)}
-                {(n === 2 || n === 4) && (
-                  <span className="about-step-optional">{' '}{t('about.step_optional')}</span>
-                )}
-              </span>
-              <span className="about-step-body">{t(`about.step_${n}_body`)}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="about-section">
         <h3 className="about-section-heading">{t('about.features_heading')}</h3>
         <ul className="about-features">
           {['a11y', 'languages', 'pinning'].map(key => (

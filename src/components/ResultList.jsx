@@ -301,7 +301,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
                       {t(p.key)}
                     </span>
-                    {finding.sources?.map(src => src.url ? (
+                    {finding.sources?.filter(src => src.name !== 'ATH').map(src => src.url ? (
                       <a
                         key={src.name}
                         href={src.url}
