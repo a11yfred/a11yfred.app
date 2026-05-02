@@ -1059,43 +1059,43 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onOpenSettings, onCl
       )}
 
       <div className="page-header__actions">
-        {!compact && (
+        {compact ? (
           <button
-            onClick={helpOpen ? onCloseHelp : onOpenHelp}
-            aria-label={helpOpen ? t('common.close') : t('help.open_help')}
-            title={helpOpen ? t('common.close') : t('help.open_help')}
-            className="btn-icon btn-icon-accent page-header__help-btn"
+            onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : onCloseHelp}
+            aria-label={t('common.close')}
+            title={t('common.close')}
+            className="btn-icon btn-icon-accent page-header__close-btn"
           >
-            {helpOpen
-              ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
-              : <HelpCircle size={20} strokeWidth={2} aria-hidden="true" />
-            }
+            <X size={20} strokeWidth={2.5} aria-hidden="true" />
           </button>
+        ) : (
+          <>
+            <button
+              onClick={onOpenHelp}
+              aria-label={t('help.open_help')}
+              title={t('help.open_help')}
+              className="btn-icon btn-icon-accent page-header__help-btn"
+            >
+              <HelpCircle size={20} strokeWidth={2} aria-hidden="true" />
+            </button>
+            <button
+              onClick={onOpenAbout}
+              aria-label={t('header.open_about')}
+              title={t('header.open_about')}
+              className="btn-icon btn-icon-accent page-header__about-btn"
+            >
+              <Info size={20} strokeWidth={2} aria-hidden="true" />
+            </button>
+            <button
+              onClick={onOpenSettings}
+              aria-label={t('header.open_settings')}
+              title={t('header.open_settings')}
+              className="btn-icon btn-icon-accent page-header__settings-btn"
+            >
+              <Settings size={20} strokeWidth={2} aria-hidden="true" />
+            </button>
+          </>
         )}
-        {!compact && (
-          <button
-            onClick={aboutOpen ? onCloseAbout : onOpenAbout}
-            aria-label={aboutOpen ? t('common.close') : t('header.open_about')}
-            title={aboutOpen ? t('common.close') : t('header.open_about')}
-            className="btn-icon btn-icon-accent page-header__about-btn"
-          >
-            {aboutOpen
-              ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
-              : <Info size={20} strokeWidth={2} aria-hidden="true" />
-            }
-          </button>
-        )}
-        <button
-          onClick={settingsOpen ? onCloseSettings : onOpenSettings}
-          aria-label={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
-          title={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
-          className="btn-icon btn-icon-accent page-header__settings-btn"
-        >
-          {settingsOpen
-            ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
-            : <Settings size={20} strokeWidth={2} aria-hidden="true" />
-          }
-        </button>
       </div>
 
       <h1
