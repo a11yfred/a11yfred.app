@@ -1636,12 +1636,13 @@ input.search-input:focus {
 }
 
 .search-exit-narrow-btn {
+  width: 44px;
+  height: 44px;
   min-width: 44px;
   min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  align-self: stretch;
 }
 
 .search-narrow-button-row {
