@@ -703,10 +703,10 @@ function SourceLinks({ links }) {
   }
 
   return (
-    <div className="detail-related">
-      <p className="detail-related__heading">{t('detail.source_heading')}</p>
+    <p className="detail-sources">
+      <span className="detail-sources__heading">{t('detail.source_heading')}</span>
       {links.length === 1 ? (
-        <p className="detail-links__single">
+        <>
           {links[0].url ? (
             <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
               {links[0].text}{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
@@ -714,9 +714,9 @@ function SourceLinks({ links }) {
           ) : (
             <span>{links[0].text}</span>
           )}
-        </p>
+        </>
       ) : (
-        <ul className="detail-related__list">
+        <ul className="detail-sources__list">
           {links.map(link => (
             <li key={link.url || link.text}>
               {link.url ? (
@@ -730,7 +730,7 @@ function SourceLinks({ links }) {
           ))}
         </ul>
       )}
-    </div>
+    </p>
   )
 }
 

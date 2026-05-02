@@ -2701,6 +2701,24 @@ input.search-input:focus {
   margin-bottom: var(--space-4);
 }
 
+/* ─── Source ───────────────────────────────────────────────── */
+
+.detail-sources {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.detail-sources__heading {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text);
+}
+
 .detail-related__list {
   list-style: disc;
   padding-left: var(--space-5);
@@ -2733,13 +2751,14 @@ input.search-input:focus {
   border-radius: 2px;
 }
 
-/* ─── Source links ────────────────────────────────────────── */
+/* ─── Related issues ─────────────────────────────────────── */
 
-.detail-links__single {
+.detail-sources__list {
+  list-style: disc;
+  padding-left: var(--space-5);
   display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  margin-bottom: var(--space-4);
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 .detail-links__link {
