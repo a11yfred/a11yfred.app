@@ -42,6 +42,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
 export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow }) {
   const t = useT()
   const itemRefs = useRef({})
+  const skipBtnRefs = useRef({})
   const focusNextRef = useRef(null)
   const countHeadingRef = useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
@@ -257,6 +258,15 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             )
           }
 
+          function handleSkipToNext() {
+            const nextIndex = index + 1
+            if (nextIndex < displayResults.length) {
+              skipBtnRefs.current[displayResults[nextIndex].id]?.focus()
+            } else {
+              skipBtnRefs.current[displayResults[0].id]?.focus()
+            }
+          }
+
           return (
             <li
               key={finding.id}
@@ -264,6 +274,14 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               style={{ '--result-i': index }}
             >
               <div className="result-card-wrap">
+                <button
+                  ref={el => { skipBtnRefs.current[finding.id] = el }}
+                  type="button"
+                  onClick={handleSkipToNext}
+                  aria-label={t('results.skip_to_next')}
+                  className="result-skip-btn"
+                />
+
                 {onPin && (
                   <button
                     type="button"
