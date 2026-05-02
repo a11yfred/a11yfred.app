@@ -1192,7 +1192,7 @@ select:disabled {
   width: 100%;
   height: 100%;
   border: none;
-  background: rgb(0 0 0 / 0.3);
+  background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1203,24 +1203,39 @@ select:disabled {
   border-radius: var(--radius);
   font-size: var(--fs-body);
   font-weight: 600;
-  color: var(--accent-text);
   transition: opacity var(--duration-fast);
-  padding: var(--space-2) var(--space-4);
 }
 
 .result-skip-btn:focus-visible {
   opacity: 1;
   pointer-events: auto;
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
 }
 
-.result-skip-btn::after {
+.result-skip-btn:focus-visible::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgb(0 0 0 / 0.3);
+  border-radius: var(--radius);
+  z-index: -1;
+}
+
+.result-skip-btn:focus-visible::after {
   content: 'Skip to next result';
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent);
+  color: var(--accent-text);
+  border-radius: var(--radius);
+  white-space: nowrap;
 }
 
-.result-skip-btn:focus-visible:hover {
-  background: rgb(0 0 0 / 0.4);
+.result-skip-btn:focus-visible:hover::after {
+  background: var(--accent-hover, var(--accent));
 }
 
 /* Pinned section above main results */

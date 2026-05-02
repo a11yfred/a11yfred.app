@@ -274,14 +274,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               style={{ '--result-i': index }}
             >
               <div className="result-card-wrap">
-                <button
-                  ref={el => { skipBtnRefs.current[finding.id] = el }}
-                  type="button"
-                  onClick={handleSkipToNext}
-                  aria-label={t('results.skip_to_next')}
-                  className="result-skip-btn"
-                />
-
                 {onPin && (
                   <button
                     type="button"
@@ -352,6 +344,15 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
                 <div className="result-item__desc">{finding.desc}</div>
               </button>
+
+              <button
+                ref={el => { skipBtnRefs.current[finding.id] = el }}
+                type="button"
+                tabIndex={archived ? -1 : undefined}
+                onClick={handleSkipToNext}
+                aria-label={t('results.skip_to_next')}
+                className="result-skip-btn"
+              />
               </div>
 
               {showVoting && <div className="result-vote-col">
