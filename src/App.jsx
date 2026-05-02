@@ -1034,7 +1034,7 @@ function AppContent({
 
 function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, isDesktop }) {
   const t = useT()
-  const compact = isDesktop && (settingsOpen || aboutOpen)
+  const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen)
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
       {!compact && (
@@ -1086,12 +1086,12 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onOpenSettings, onCl
           </button>
         )}
         <button
-          onClick={settingsOpen ? onCloseSettings : (aboutOpen || helpOpen) ? (aboutOpen ? onCloseAbout : onCloseHelp) : onOpenSettings}
-          aria-label={settingsOpen ? t('header.close_settings') : (aboutOpen || helpOpen) ? t('common.close') : t('header.open_settings')}
-          title={settingsOpen ? t('header.close_settings') : (aboutOpen || helpOpen) ? t('common.close') : t('header.open_settings')}
+          onClick={settingsOpen ? onCloseSettings : onOpenSettings}
+          aria-label={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
+          title={settingsOpen ? t('header.close_settings') : t('header.open_settings')}
           className="btn-icon btn-icon-accent page-header__settings-btn"
         >
-          {settingsOpen || aboutOpen || helpOpen
+          {settingsOpen
             ? <X size={20} strokeWidth={2.5} aria-hidden="true" />
             : <Settings size={20} strokeWidth={2} aria-hidden="true" />
           }
