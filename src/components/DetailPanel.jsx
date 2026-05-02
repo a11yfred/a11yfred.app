@@ -341,7 +341,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
             {t(p.key)}
           </button>
-          {finding.sources?.map(src => src.url ? (
+          {finding.sources?.filter(src => src.name !== 'ATH').map(src => src.url ? (
             <a
               key={src.name}
               href={src.url}
@@ -565,7 +565,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       </div>
 
       <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} />
-      <SourceLinks links={finding.sources?.map(s => ({ url: s.url, text: s.name }))} />
+      <SourceLinks links={finding.sources?.filter(s => s.name !== 'ATH' && s.url).map(s => ({ url: s.url, text: s.name }))} />
 
       <div className="detail-actions-end">
         <button
