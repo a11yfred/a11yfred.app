@@ -88,8 +88,8 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ## Accessibility (A11Y)
 
-- [ ] **Per-result skip-to-next button** `[a11y]` `[ux]` `[claude]` — add "Skip to next" button inside each result card container; normally hidden/dimmed; on focus or hover, becomes visible with primary button styling; button is centered vertically and horizontally on the card, positioned above all interactive elements (z-index); clicking skips over all controls (pin, rating buttons, title) and moves focus to the next result card's "Skip to next" button or to the first result if at end of list; use `aria-label="Skip to next result"` to describe the action
-- [ ] **Move sort/priority controls** `[ux]` `[a11y]` `[priority]` — relocate the sort/priority controls out of the tab order before the result list; current placement forces keyboard users to tab through all controls to reach results; consider moving them to a collapsed/expandable panel, a toolbar above the results with a single tab stop (roving tabindex), or after the results in DOM order with CSS repositioning; ties into result list keyboard navigation (priority item)
+- [x] **Per-result skip-to-next button** `[a11y]` `[ux]` `[claude]` — completed 2026-05-01; adds "Skip to next result" button on each result card; appears only on focus; dims tile background with overlay; centered primary button; wraps to first result at end of list
+- [x] **Move sort/priority controls** `[ux]` `[a11y]` `[priority]` — completed 2026-05-01; controls positioned after result items in DOM, keyboard users can tab through results first, then controls; no longer blocks keyboard navigation to results
 - [x] **Visible selection indicator** `[a11y]` `[design]` `[claude]` — the selected result card now includes a non-color indicator (left-edge accent bar from fold behavior) alongside the color so the selection is perceivable without relying on color alone (WCAG 1.4.1)
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` `[dormant]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
 
