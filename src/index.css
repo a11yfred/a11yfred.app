@@ -2987,7 +2987,6 @@ input[type="radio"].settings-checkbox:checked {
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  height: var(--btn-height-compact);
   padding: 0 0.75em;
   font-size: var(--fs-body);
   border-radius: var(--radius);
