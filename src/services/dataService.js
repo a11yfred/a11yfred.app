@@ -11,7 +11,7 @@
  * No other file needs to change.
  */
 
-import corpusData from '../data/corpus.json'
+import corpusData from '../data/personal-corpus.json'
 
 // Raw overlay data cache — avoids re-fetching the same JSON module
 const overlayCache = {}
