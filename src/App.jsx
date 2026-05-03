@@ -1017,12 +1017,14 @@ function AppContent({
           settingsOpen={settingsOpen}
           aboutOpen={aboutOpen}
           helpOpen={helpOpen}
+          onboardingOpen={onboardingOpen}
           onOpenSettings={handleOpenSettings}
           onCloseSettings={handleCloseSettings}
           onOpenAbout={handleOpenAbout}
           onCloseAbout={handleCloseAbout}
           onOpenHelp={handleOpenHelp}
           onCloseHelp={handleCloseHelp}
+          onCloseOnboarding={handleCloseOnboarding}
           isDesktop={isDesktop}
         />
         <main className="app-main">
@@ -1106,9 +1108,9 @@ function AppContent({
   )
 }
 
-function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, isDesktop }) {
+function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop }) {
   const t = useT()
-  const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen)
+  const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
       {!compact && (
@@ -1135,7 +1137,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onOpenSettings, onCl
       <div className="page-header__actions">
         {compact ? (
           <button
-            onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : onCloseHelp}
+            onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : helpOpen ? onCloseHelp : onCloseOnboarding}
             aria-label={t('common.close')}
             title={t('common.close')}
             className="btn-icon btn-icon-accent page-header__close-btn"
