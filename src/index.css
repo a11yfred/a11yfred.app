@@ -3638,7 +3638,6 @@ input[type="radio"].settings-checkbox:checked {
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  height: var(--btn-height-compact);
   padding: 0 var(--space-2);
   border-radius: var(--radius);
   flex-shrink: 0;
@@ -3690,7 +3689,6 @@ input[type="radio"].settings-checkbox:checked {
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  height: var(--btn-height-compact);
   padding: 0 var(--space-2);
   border-radius: var(--radius);
   white-space: nowrap;
