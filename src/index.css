@@ -845,7 +845,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 /* ─── Danger button (red — destructive actions only) ────────── */
 
-.btn--danger {
+.btn--warning {
   border: 1px solid var(--error);
   background: transparent;
   color: var(--error);
@@ -859,12 +859,12 @@ body:has(.modal-panel.is-open) .drawer-panel {
 .btn--secondary:disabled,
 .btn--primary:disabled,
 .btn--tertiary:disabled,
-.btn--danger:disabled {
+.btn--warning:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.btn--danger:not(:disabled):hover {
+.btn--warning:not(:disabled):hover {
   background: var(--error);
   color: var(--bg);
   border-color: var(--error);

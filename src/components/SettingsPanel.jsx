@@ -580,7 +580,7 @@ export default function SettingsPanel({
             type="button"
             ref={resetButtonRef}
             onClick={() => setResetConfirmOpen(true)}
-            className="btn--danger settings-reset-btn"
+            className="btn--warning settings-reset-btn"
           >
             {t('settings.reset_all')}
           </button>
