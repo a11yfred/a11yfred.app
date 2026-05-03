@@ -1,4 +1,4 @@
-import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter, X } from 'lucide-react'
+import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -167,7 +167,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 title={t('results.clear_results')}
                 onClick={onClear}
               >
-                <X size={16} aria-hidden="true" />
+                <RotateCcw size={16} aria-hidden="true" />
                 <span>{t('results.clear_results')}</span>
               </button>
             )}
