@@ -539,7 +539,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             onClick={handleRefine}
             disabled={refining || animating || !reviseNote.trim()}
             aria-busy={refining ? true : undefined}
-            className={`btn--primary detail-revise-btn${noteSaved ? ' btn__field--success' : ''}`}
+            className={`btn--primary detail-revise-btn btn--height-standard${noteSaved ? ' btn__field--success' : ''}`}
             aria-label={
               refining ? t('detail.rewriting_aria')
               : aiEnabled && canRevise ? t('detail.rewrite_aria')
@@ -570,7 +570,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       <div className="detail-actions-end">
         <button
           type="button"
-          className={`btn--secondary detail-action-btn${resetAllDone ? ' btn__field--success' : ''}`}
+          className={`btn--secondary detail-action-btn btn--height-standard${resetAllDone ? ' btn__field--success' : ''}`}
           onClick={handleResetAllFields}
           aria-label={t('detail.reset_all_fields_aria')}
           disabled={descText === finding.desc && remText === finding.rem}
@@ -582,7 +582,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         </button>
         <button
           type="button"
-          className={`btn--secondary detail-action-btn${copiedAll ? ' btn__field--success' : ''}`}
+          className={`btn--secondary detail-action-btn btn--height-standard${copiedAll ? ' btn__field--success' : ''}`}
           onClick={handleCopyAll}
           aria-label={t('detail.copy_all_aria')}
         >
@@ -594,7 +594,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         {onClose && (
           <button
             type="button"
-            className="btn--primary detail-close-btn"
+            className="btn--primary detail-close-btn btn--height-standard"
             onClick={onClose}
           >
             {t('common.close')}
