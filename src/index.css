@@ -810,10 +810,21 @@ body:has(.modal-panel.is-open) .drawer-panel {
   min-width: var(--touch-target);
   min-height: var(--touch-target);
   color: var(--text-muted);
+  border-radius: var(--radius);
+  transition: background var(--duration-fast);
+}
+
+.btn--icon:hover {
+  background: var(--bg-subtle);
 }
 
 .btn--icon:focus-visible {
-  border-radius: 50%;
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.btn--icon:active {
+  background: var(--border);
 }
 
 /* ─── Secondary button (neutral border, outline style) ────── */
@@ -830,11 +841,17 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 .btn--icon-accent {
   color: var(--accent-text);
-  transition: color var(--duration-fast);
+  transition: color var(--duration-fast), background var(--duration-fast);
 }
 
 .btn--icon-accent:hover {
   color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.btn--icon-accent:active {
+  background: var(--accent-text);
+  color: var(--accent-bg);
 }
 
 .btn--primary {
