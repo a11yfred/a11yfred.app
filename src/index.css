@@ -1252,7 +1252,7 @@ select:disabled {
 
 .result-pin-btn:hover {
   color: var(--accent-text);
-  background: var(--bg-subtle);
+  background: var(--accent-bg);
 }
 
 .result-pin-btn--active {
