@@ -2283,8 +2283,8 @@ input.search-input:focus {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: var(--space-3) var(--space-4);
-  min-height: 3rem;
+  height: var(--btn-height-standard);
+  padding: 0 var(--space-4);
   border-radius: 0;
   margin-left: -1px;
   border: 1px solid var(--border-control);
