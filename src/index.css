@@ -1058,12 +1058,10 @@ select:disabled {
   margin-bottom: 0;
 }
 
-.results-count-actions {
+.results-count-actions-left {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  justify-content: flex-end;
-  margin-top: var(--space-2);
+  gap: var(--space-1);
 }
 
 .results-narrow-btn {
