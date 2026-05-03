@@ -185,7 +185,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             {onCopyLink && (
               <button
                 type="button"
-                className={`btn--secondary results-copy-link-btn${linkCopied ? ' btn--field--success' : ''}`}
+                className={`btn--secondary results-copy-link-btn${linkCopied ? ' btn__field--success' : ''}`}
                 aria-label={linkCopied ? t('results.copied_link') : t('results.copy_link_aria')}
                 title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
                 onClick={() => {

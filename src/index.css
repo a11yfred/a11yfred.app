@@ -855,9 +855,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 /* ─── Shared disabled state — before hover rules (specificity order) */
 
-.btn--secondary:disabled,
-.btn--secondary:disabled,
 .btn--primary:disabled,
+.btn--secondary:disabled,
 .btn--tertiary:disabled,
 .btn--warning:disabled {
   opacity: 0.5;
@@ -870,7 +869,6 @@ body:has(.modal-panel.is-open) .drawer-panel {
   border-color: var(--error);
 }
 
-.btn--secondary:not(:disabled):hover,
 .btn--secondary:not(:disabled):hover {
   background: var(--accent-text);
   color: var(--accent-bg);
@@ -3073,17 +3071,15 @@ input.search-input:focus {
   white-space: nowrap;
 }
 
-.btn--primary.btn--field--success,
-.btn--secondary.btn--field--success,
-.btn--secondary.btn--field--success {
+.btn--primary.btn__field--success,
+.btn--secondary.btn__field--success {
   color: var(--success);
   border-color: var(--success);
   opacity: 1;
 }
 
-.btn--primary.btn--field--success:hover,
-.btn--secondary.btn--field--success:hover,
-.btn--secondary.btn--field--success:hover {
+.btn--primary.btn__field--success:hover,
+.btn--secondary.btn__field--success:hover {
   color: var(--success);
   background: var(--accent-bg);
   border-color: var(--success);

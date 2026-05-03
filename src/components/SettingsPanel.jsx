@@ -323,7 +323,7 @@ export default function SettingsPanel({
           </div>
           <button
             type="button"
-            className={`btn--primary settings-language-change-btn${changedLanguage ? ' btn--field--success' : ''}`}
+            className={`btn--primary settings-language-change-btn${changedLanguage ? ' btn__field--success' : ''}`}
             disabled={!pendingLanguage}
             onClick={() => {
               if (pendingLanguage === 'rhg') { setRhgPending(true) }
@@ -464,7 +464,7 @@ export default function SettingsPanel({
         </div>
         <button
           type="button"
-          className={`btn--primary settings-unpin-all-btn${unpinAllDone ? ' btn--field--success' : ''}`}
+          className={`btn--primary settings-unpin-all-btn${unpinAllDone ? ' btn__field--success' : ''}`}
           disabled={!hasPins}
           onClick={() => {
             onClearPins?.()
@@ -584,7 +584,7 @@ export default function SettingsPanel({
           >
             {t('settings.reset_all')}
           </button>
-          <button ref={saveButtonRef} onClick={handleSave} className={`btn--primary settings-save-btn${saved ? ' btn--field--success' : ''}`}>
+          <button ref={saveButtonRef} onClick={handleSave} className={`btn--primary settings-save-btn${saved ? ' btn__field--success' : ''}`}>
             {saved
               ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
               : t('settings.save')

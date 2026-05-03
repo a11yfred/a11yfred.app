@@ -539,7 +539,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             onClick={handleRefine}
             disabled={refining || animating || !reviseNote.trim()}
             aria-busy={refining ? true : undefined}
-            className={`btn--primary detail-revise-btn${noteSaved ? ' btn--field--success' : ''}`}
+            className={`btn--primary detail-revise-btn${noteSaved ? ' btn__field--success' : ''}`}
             aria-label={
               refining ? t('detail.rewriting_aria')
               : aiEnabled && canRevise ? t('detail.rewrite_aria')
@@ -570,7 +570,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       <div className="detail-actions-end">
         <button
           type="button"
-          className={`btn--secondary detail-action-btn${resetAllDone ? ' btn--field--success' : ''}`}
+          className={`btn--secondary detail-action-btn${resetAllDone ? ' btn__field--success' : ''}`}
           onClick={handleResetAllFields}
           aria-label={t('detail.reset_all_fields_aria')}
           disabled={descText === finding.desc && remText === finding.rem}
@@ -582,7 +582,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         </button>
         <button
           type="button"
-          className={`btn--secondary detail-action-btn${copiedAll ? ' btn--field--success' : ''}`}
+          className={`btn--secondary detail-action-btn${copiedAll ? ' btn__field--success' : ''}`}
           onClick={handleCopyAll}
           aria-label={t('detail.copy_all_aria')}
         >
@@ -823,7 +823,7 @@ const Field = forwardRef(function Field({
           <button
             onClick={handleResetOrUndo}
             aria-label={resetBtnLabel}
-            className={`btn--primary btn--field${reset ? ' btn--field--success' : ''}`}
+            className={`btn--primary btn--field${reset ? ' btn__field--success' : ''}`}
             disabled={animating || (!undoable && !hasChanged)}
           >
             {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
@@ -833,7 +833,7 @@ const Field = forwardRef(function Field({
             ref={copyBtnRef}
             onClick={onCopy}
             aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
-            className={`btn--primary btn--field${copied ? ' btn--field--success' : ''}`}
+            className={`btn--primary btn--field${copied ? ' btn__field--success' : ''}`}
             disabled={animating}
           >
             {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
