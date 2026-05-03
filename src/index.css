@@ -842,6 +842,16 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transition: var(--transition-btn);
 }
 
+/* ─── Button sizing modifiers — two standard heights ─── */
+
+.btn--height-compact {
+  height: var(--btn-height-compact);
+}
+
+.btn--height-standard {
+  height: var(--btn-height-standard);
+}
+
 
 /* ─── Danger button (red — destructive actions only) ────────── */
 
@@ -965,8 +975,10 @@ select:disabled {
   font-size: var(--fs-body);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
+  height: var(--btn-height-compact);
+  padding: 0 var(--space-2);
   border-radius: var(--radius);
 }
 
@@ -979,8 +991,10 @@ select:disabled {
   font-size: var(--fs-body);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
+  height: var(--btn-height-compact);
+  padding: 0 var(--space-2);
   border-radius: var(--radius);
 }
 
@@ -2059,8 +2073,10 @@ input.search-input:focus {
 .settings-unpin-all-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  padding: 6px var(--space-3);
+  height: var(--btn-height-compact);
+  padding: 0 var(--space-3);
   font-size: var(--fs-body);
   border-radius: var(--radius);
   white-space: nowrap;
@@ -2196,14 +2212,22 @@ input.search-input:focus {
 }
 
 .settings-reset-btn {
-  padding: var(--space-3) var(--space-4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btn-height-standard);
+  padding: 0 var(--space-4);
   font-size: var(--fs-body);
   border-radius: var(--radius);
 }
 
 .settings-save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   flex: 1;
-  padding: var(--space-3) var(--space-4);
+  height: var(--btn-height-standard);
+  padding: 0 var(--space-4);
   font-size: var(--fs-body);
   border-radius: var(--radius);
 }
@@ -2724,10 +2748,10 @@ input.search-input:focus {
 .detail-revise-btn {
   display: inline-flex;
   align-items: center;
-  align-self: stretch;
   justify-content: center;
   gap: 4px;
-  padding: 0.625em 1.25em;
+  height: var(--btn-height-standard);
+  padding: 0 1.25em;
   font-size: var(--fs-body);
   border-radius: var(--radius);
   white-space: normal;
@@ -2818,9 +2842,11 @@ input.search-input:focus {
 .detail-action-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-1);
+  height: var(--btn-height-compact);
+  padding: 0 0.75em;
   font-size: var(--fs-body);
-  padding: 0.375em 0.75em;
   border-radius: var(--radius);
   cursor: pointer;
 }
@@ -3064,9 +3090,11 @@ input.search-input:focus {
 .btn--field {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
+  height: var(--btn-height-compact);
+  padding: 0 0.75em;
   font-size: var(--fs-body);
-  padding: 0.375em 0.75em;
   border-radius: var(--radius);
   white-space: nowrap;
 }
@@ -3455,8 +3483,10 @@ input.search-input:focus {
   font-size: var(--fs-body);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
+  height: var(--btn-height-compact);
+  padding: 0 var(--space-2);
   border-radius: var(--radius);
   flex-shrink: 0;
 }
@@ -3505,8 +3535,10 @@ input.search-input:focus {
   font-size: var(--fs-body);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
+  height: var(--btn-height-compact);
+  padding: 0 var(--space-2);
   border-radius: var(--radius);
   white-space: nowrap;
   flex-shrink: 0;
@@ -3542,9 +3574,13 @@ input.search-input:focus {
 .help-tour-btn {
   align-self: flex-start;
   margin-top: var(--space-2);
-  padding: var(--space-1) var(--space-2);
+  height: var(--btn-height-compact);
+  padding: 0 var(--space-2);
   border-radius: var(--radius);
   font-size: var(--fs-body);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ─── Print ───────────────────────────────────────────────── */

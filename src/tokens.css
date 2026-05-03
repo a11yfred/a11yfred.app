@@ -95,6 +95,12 @@
   /* WCAG 2.5.5 minimum touch target size. */
   --touch-target: 44px;
 
+  /* Button sizing — two standard heights for UI consistency */
+  /* --btn-height-compact: used for small action buttons, inline fields, compact layouts */
+  --btn-height-compact: 28px;
+  /* --btn-height-standard: used for primary actions, footer buttons, dialogs */
+  --btn-height-standard: 40px;
+
   /* Overlay */
   --overlay-bg: rgb(0 0 0 / 0.45);
 
