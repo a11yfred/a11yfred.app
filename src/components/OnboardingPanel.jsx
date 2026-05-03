@@ -86,7 +86,7 @@ export default function OnboardingPanel({ onClose }) {
         </h2>
         <button
           type="button"
-          className="btn--secondary onboarding-skip-btn"
+          className="btn--secondary onboarding-skip-btn btn--height-standard"
           onClick={handleRequestClose}
         >
           {t('onboarding.skip')}
@@ -110,7 +110,7 @@ export default function OnboardingPanel({ onClose }) {
       <nav aria-label={t('onboarding.step_of', { step: step + 1, total })} className="onboarding-nav">
         <button
           type="button"
-          className="btn--secondary onboarding-nav-btn"
+          className="btn--secondary onboarding-nav-btn btn--height-standard"
           onClick={() => setStep(s => s - 1)}
           aria-label={t('onboarding.prev_aria')}
           disabled={isFirst}
@@ -129,7 +129,7 @@ export default function OnboardingPanel({ onClose }) {
 
         <button
           type="button"
-          className="btn--primary onboarding-nav-btn onboarding-nav-btn--next"
+          className="btn--primary onboarding-nav-btn onboarding-nav-btn--next btn--height-standard"
           onClick={() => isLast ? commitClose() : setStep(s => s + 1)}
           aria-label={isLast ? t('onboarding.done_aria') : t('onboarding.next_aria')}
         >

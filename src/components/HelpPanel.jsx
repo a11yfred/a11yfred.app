@@ -43,7 +43,7 @@ export default function HelpPanel({ onClose, onStartTour }) {
         {onStartTour && (
           <button
             type="button"
-            className="btn--secondary help-tour-btn"
+            className="btn--secondary help-tour-btn btn--height-standard"
             onClick={() => { onClose(); onStartTour() }}
           >
             {t('help.take_tour')}
