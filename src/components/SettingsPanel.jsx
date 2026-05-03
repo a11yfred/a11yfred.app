@@ -705,13 +705,13 @@ export default function SettingsPanel({
                 onReset?.()
                 announce(t('settings.reset_all_announce'))
               }}
-              className="btn--primary"
+              className="btn--primary btn--height-standard"
             >
               {t('settings.confirm_reset_all_yes')}
             </button>
             <button
               onClick={() => { setResetConfirmOpen(false); announce(t('settings.preserved_announce')) }}
-              className="btn--secondary"
+              className="btn--secondary btn--height-standard"
             >
               {t('settings.confirm_reset_all_no')}
             </button>
