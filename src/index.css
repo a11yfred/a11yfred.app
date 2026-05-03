@@ -51,6 +51,21 @@ button {
   border: none;
 }
 
+/* ─── Button default styling ──────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  font-size: var(--fs-body);
+  border-radius: var(--radius);
+  padding: 0 var(--space-2);
+  height: var(--btn-height-standard);
+  white-space: nowrap;
+  transition: background-color var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+}
+
 /* ─── Focus ───────────────────────────────────────────────── */
 
 /* Keyboard focus ring — 3:1 min contrast against all surfaces.
@@ -2207,7 +2222,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .settings-language-change-btn,
-.settings-unpin-all-btn {
+.settings-unpin-all-btn,
+.settings-unstar-all-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
