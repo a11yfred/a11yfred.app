@@ -1287,6 +1287,57 @@ select:disabled {
   opacity: 0.3;
 }
 
+/* ── Pinned results in search (when pinned finding matches active query) ── */
+
+.pinned-search-matches {
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+}
+
+.pinned-search-matches__heading {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--accent-text);
+  margin-bottom: var(--space-2);
+}
+
+.pinned-search-matches__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.pinned-search-match-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+}
+
+.pinned-search-match-title {
+  color: var(--accent-text);
+  font-weight: 500;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pinned-search-match-unpin {
+  flex-shrink: 0;
+  font-size: var(--fs-small);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius);
+}
+
 .result-row--archived .result-vote-btn--archive {
   opacity: 1;
   color: #fff;

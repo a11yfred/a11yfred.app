@@ -346,6 +346,11 @@ function AppContent({
     [results, pinnedIds]
   )
 
+  const pinnedSearchMatches = useMemo(() =>
+    activeQuery.length >= 2 ? results.filter(f => pinnedIds.has(f.id)) : [],
+    [results, pinnedIds, activeQuery]
+  )
+
   const badgeFilterLabel = useMemo(() => {
     if (!badgeFilter) return null
     if (badgeFilter.type === 'priority') {
@@ -816,29 +821,51 @@ function AppContent({
             )
             : activeQuery.length >= 2
               ? (
-                <ResultList
-                  key="search"
-                  results={unpinnedResults}
-                  selected={selected}
-                  onSelect={handleSelectFinding}
-                  query={activeQuery}
-                  ratings={ratings}
-                  onUpvote={upvote}
-                  onDownvote={downvote}
-                  onStar={toggleStar}
-                  onArchive={toggleArchive}
-                  showVoting={showVoting}
-                  onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
-                  pinnedIds={pinnedIds}
-                  onPin={togglePin}
-                  narrowMode={narrowMode}
-                  narrowQuery={narrowQuery}
-                  narrowResults={narrowedResults}
-                  onNarrow={() => setNarrowMode(true)}
-                  showAds={showAds}
-                  adFrequency={adFrequency}
-                  onClear={handleClearResults}
-                />
+                <>
+                  {pinnedSearchMatches.length > 0 && (
+                    <div className="pinned-search-matches">
+                      <h3 className="pinned-search-matches__heading">{t('results.pinned_in_search_heading')}</h3>
+                      <ul className="pinned-search-matches__list">
+                        {pinnedSearchMatches.map(finding => (
+                          <li key={finding.id} className="pinned-search-match-item">
+                            <span className="pinned-search-match-title">{finding.title}</span>
+                            <button
+                              type="button"
+                              className="btn-secondary pinned-search-match-unpin"
+                              onClick={() => togglePin(finding.id)}
+                              aria-label={t('results.unpin_from_search', { title: finding.title })}
+                            >
+                              {t('results.unpin_from_search_btn')}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <ResultList
+                    key="search"
+                    results={unpinnedResults}
+                    selected={selected}
+                    onSelect={handleSelectFinding}
+                    query={activeQuery}
+                    ratings={ratings}
+                    onUpvote={upvote}
+                    onDownvote={downvote}
+                    onStar={toggleStar}
+                    onArchive={toggleArchive}
+                    showVoting={showVoting}
+                    onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
+                    pinnedIds={pinnedIds}
+                    onPin={togglePin}
+                    narrowMode={narrowMode}
+                    narrowQuery={narrowQuery}
+                    narrowResults={narrowedResults}
+                    onNarrow={() => setNarrowMode(true)}
+                    showAds={showAds}
+                    adFrequency={adFrequency}
+                    onClear={handleClearResults}
+                  />
+                </>
               )
               : badgeFilter
                 ? (
