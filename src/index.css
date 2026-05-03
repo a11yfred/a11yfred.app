@@ -3518,10 +3518,15 @@ input.search-input:focus {
   align-items: center;
   font-size: var(--fs-body);
   color: var(--text);
+  transition: color var(--duration-fast);
+}
+
+.help-shortcut:hover {
+  color: var(--bg);
 }
 
 .help-shortcut-key {
-  background: var(--bg-secondary);
+  background: var(--bg-subtle);
   color: var(--text);
   padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
@@ -3531,6 +3536,12 @@ input.search-input:focus {
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+
+.help-shortcut:hover .help-shortcut-key {
+  background: var(--text);
+  color: var(--bg);
 }
 
 /* ─── Onboarding panel ────────────────────────────────────── */
