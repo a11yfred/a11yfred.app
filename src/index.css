@@ -835,6 +835,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   color: var(--accent-text);
   font-weight: 500;
   transition: var(--transition-btn);
+  border-radius: var(--radius);
 }
 
 /* ─── Icon accent (colored icon buttons) ─────────────────── */
@@ -860,6 +861,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   color: var(--accent-text);
   font-weight: 500;
   transition: var(--transition-btn);
+  border-radius: var(--radius);
 }
 
 /* ─── Tertiary button (text-link style — no border, underlined) ── */
@@ -872,6 +874,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   text-underline-offset: 2px;
   font-weight: 500;
   transition: var(--transition-btn);
+  border-radius: var(--radius);
 }
 
 /* ─── Button sizing modifiers — two standard heights ─── */
@@ -893,6 +896,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   color: var(--error);
   font-weight: 500;
   transition: var(--transition-btn);
+  border-radius: var(--radius);
 }
 
 /* ─── Shared disabled state — before hover rules (specificity order) */
@@ -905,10 +909,21 @@ body:has(.modal-panel.is-open) .drawer-panel {
   cursor: not-allowed;
 }
 
-.btn--warning:not(:disabled):hover {
-  background: var(--error);
+.btn--primary:not(:disabled):hover {
+  background: var(--accent-text);
+  color: var(--accent-bg);
+  border-color: var(--accent-text);
+}
+
+.btn--primary:not(:disabled):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.btn--primary:not(:disabled):active {
+  background: var(--accent);
   color: var(--bg);
-  border-color: var(--error);
+  border-color: var(--accent);
 }
 
 .btn--secondary:not(:disabled):hover {
@@ -917,15 +932,47 @@ body:has(.modal-panel.is-open) .drawer-panel {
   border-color: var(--accent-text);
 }
 
-.btn--primary:not(:disabled):hover {
-  background: var(--accent-text);
-  color: var(--accent-bg);
-  border-color: var(--accent-text);
+.btn--secondary:not(:disabled):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
-.btn--tertiary:not(:disabled):hover,
-.btn--tertiary:not(:disabled):focus-visible {
+.btn--secondary:not(:disabled):active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.btn--tertiary:not(:disabled):hover {
   background: var(--bg-subtle);
+}
+
+.btn--tertiary:not(:disabled):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.btn--tertiary:not(:disabled):active {
+  background: var(--border);
+  color: var(--text);
+}
+
+.btn--warning:not(:disabled):hover {
+  background: var(--error);
+  color: var(--bg);
+  border-color: var(--error);
+}
+
+.btn--warning:not(:disabled):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.btn--warning:not(:disabled):active {
+  background: var(--error);
+  color: var(--bg);
+  border-color: var(--error);
+  opacity: 0.8;
 }
 
 .error-retry-inline {
