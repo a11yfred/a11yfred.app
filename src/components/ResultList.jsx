@@ -159,48 +159,47 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           >
             {displayCount}
           </h2>
-          <div className="results-count-actions">
-            {query && results.length > 0 && onClear && (
-              <button
-                type="button"
-                className="btn--secondary results-clear-btn"
-                title={t('results.clear_results')}
-                onClick={onClear}
-              >
-                <RotateCcw size={16} aria-hidden="true" />
-                <span>{t('results.clear_results')}</span>
-              </button>
-            )}
-            {!narrowMode && results.length > 0 && onNarrow && (
-              <button
-                type="button"
-                className="btn--secondary results-narrow-btn"
-                title={t('results.narrow_title')}
-                onClick={onNarrow}
-              >
-                <Filter size={16} aria-hidden="true" />
-                <span>{t('results.narrow_results')}</span>
-              </button>
-            )}
-            {onCopyLink && (
-              <button
-                type="button"
-                className={`btn--secondary results-copy-link-btn${linkCopied ? ' btn__field--success' : ''}`}
-                aria-label={linkCopied ? t('results.copied_link') : t('results.copy_link_aria')}
-                title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
-                onClick={() => {
-                  onCopyLink()
-                  setLinkCopied(true)
-                  setTimeout(() => setLinkCopied(false), 2000)
-                }}
-              >
-                {linkCopied ? <Check size={14} aria-hidden="true" /> : <Link size={14} aria-hidden="true" />}
-                {linkCopied ? t('results.copied_link') : t('results.copy_link')}
-              </button>
-            )}
-          </div>
+          {onCopyLink && (
+            <button
+              type="button"
+              className={`btn--secondary results-copy-link-btn${linkCopied ? ' btn__field--success' : ''}`}
+              aria-label={linkCopied ? t('results.copied_link') : t('results.copy_link_aria')}
+              title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
+              onClick={() => {
+                onCopyLink()
+                setLinkCopied(true)
+                setTimeout(() => setLinkCopied(false), 2000)
+              }}
+            >
+              {linkCopied ? <Check size={14} aria-hidden="true" /> : <Link size={14} aria-hidden="true" />}
+              {linkCopied ? t('results.copied_link') : t('results.copy_link')}
+            </button>
+          )}
         </div>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
+        <div className="results-count-actions">
+          {query && results.length > 0 && onClear && (
+            <button
+              type="button"
+              className="btn--tertiary results-clear-btn"
+              title={t('results.clear_results')}
+              onClick={onClear}
+            >
+              {t('results.clear_results')}
+            </button>
+          )}
+          {!narrowMode && results.length > 0 && onNarrow && (
+            <button
+              type="button"
+              className="btn--secondary results-narrow-btn"
+              title={t('results.narrow_title')}
+              onClick={onNarrow}
+            >
+              <Filter size={16} aria-hidden="true" />
+              <span>{t('results.narrow_results')}</span>
+            </button>
+          )}
+        </div>
       </div>}
 
       <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>
