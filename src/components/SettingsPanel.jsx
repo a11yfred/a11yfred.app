@@ -704,6 +704,8 @@ export default function SettingsPanel({
                 setSavedAiEnabled(false)
                 onReset?.()
                 announce(t('settings.reset_all_announce'))
+                resetButtonRef.current?.setAttribute('disabled', '')
+                saveButtonRef.current?.focus()
               }}
               className="btn--primary btn--height-standard"
             >

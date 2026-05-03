@@ -368,7 +368,7 @@
   "settings.confirm_reset_all_keep_item_live_search": "Live Search → On",
   "settings.confirm_reset_all_yes": "Yes, reset everything",
   "settings.confirm_reset_all_no": "No, cancel",
-  "settings.reset_all_announce": "All settings reset",
+  "settings.reset_all_announce": "Settings: Reset",
   "settings.unsaved_heading": "Unsaved Changes",
   "settings.unsaved_body": "You have unsaved changes to your AI settings. What would you like to do?",
   "settings.unsaved_save_close": "Save & Close",
