@@ -283,7 +283,7 @@ select:focus-visible {
 /* Extra bottom clearance on mobile so the Ko-fi floating button doesn't overlap */
 @media (width < 768px) {
   .page-footer {
-    padding-bottom: 5rem;
+    padding-bottom: var(--clearance-kofi);
   }
 }
 
@@ -352,7 +352,7 @@ select:focus-visible {
   overflow-y: auto;
   padding: var(--space-6) var(--space-5);
   /* Extra bottom clearance on mobile so the Ko-fi floating button doesn't overlap */
-  padding-bottom: 5rem;
+  padding-bottom: var(--clearance-kofi);
   transform: translateX(-100%);
   transition: transform var(--duration-base) var(--ease-in-out);
   will-change: transform;
@@ -1611,6 +1611,31 @@ select:disabled {
   justify-content: space-between;
   align-items: center;
   gap: var(--space-2);
+}
+
+/* Skeleton line widths — for shimmer cards */
+.skeleton-line--sm {
+  width: 3.5rem;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.skeleton-line--md {
+  width: 38%;
+}
+
+.skeleton-line--lg {
+  width: 92%;
+}
+
+.skeleton-line--title {
+  width: 55%;
+}
+
+.skeleton-line--count {
+  width: 7rem;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 /* ─── Search bar ──────────────────────────────────────────── */

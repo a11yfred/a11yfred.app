@@ -80,6 +80,9 @@
   --space-6: 1.5rem;
   --space-8: 2rem;
 
+  /* Clearance — special spacing for third-party overlays */
+  --clearance-kofi: 5rem;  /* Mobile bottom clearance for Ko-fi floating button */
+
   /* Borders */
   --radius-sm:   4px;
   --radius:      6px;

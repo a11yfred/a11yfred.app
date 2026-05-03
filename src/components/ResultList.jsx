@@ -490,7 +490,7 @@ export function ResultListSkeleton({ count = SKELETON_CARDS }) {
     <div className="result-list-section" aria-busy="true" aria-live="polite">
       <div className="results-meta">
         <p className="results-count">
-          <span className="skeleton-line" style={{ display: 'inline-block', height: '1em', width: '7rem', verticalAlign: 'middle' }} />
+          <span className="skeleton-line skeleton-line--count" style={{ height: '1em' }} />
         </p>
       </div>
       <ul className="result-list">
@@ -498,12 +498,12 @@ export function ResultListSkeleton({ count = SKELETON_CARDS }) {
           <li key={i} className="result-row" role="presentation">
             <div className="skeleton-card">
               <div className="skeleton-card__header">
-                <span className="skeleton-line" style={{ display: 'block', height: '1em', width: '55%' }} />
-                <span className="skeleton-line" style={{ display: 'block', height: '1em', width: '3.5rem', borderRadius: '999px', flexShrink: 0 }} />
+                <span className="skeleton-line skeleton-line--title" style={{ height: '1em' }} />
+                <span className="skeleton-line skeleton-line--sm" style={{ height: '1em' }} />
               </div>
-              <span className="skeleton-line" style={{ display: 'block', height: '0.85em', width: '38%' }} />
-              <span className="skeleton-line" style={{ display: 'block', height: '0.8em', width: '92%' }} />
-              <span className="skeleton-line" style={{ display: 'block', height: '0.8em', width: '70%' }} />
+              <span className="skeleton-line skeleton-line--md" style={{ height: '0.85em' }} />
+              <span className="skeleton-line skeleton-line--lg" style={{ height: '0.8em' }} />
+              <span className="skeleton-line" style={{ height: '0.8em', width: '70%' }} />
             </div>
           </li>
         ))}
