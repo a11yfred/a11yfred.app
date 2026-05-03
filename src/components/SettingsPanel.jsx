@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ChevronLeft, ChevronRight, ChevronDown, Check, Info, PinOff, AlertTriangle } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronDown, Check, Info, PinOff, Star, AlertTriangle } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -125,6 +125,8 @@ export default function SettingsPanel({
   onReset,
   hasPins,
   onClearPins,
+  hasStarred,
+  onClearStarred,
 }) {
   const headingRef = useFocusOnMount()
   const saveButtonRef = useRef(null)
@@ -176,6 +178,7 @@ export default function SettingsPanel({
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
   const [unpinAllDone, setUnpinAllDone] = useState(false)
+  const [unstarAllDone, setUnstarAllDone] = useState(false)
   const hasUnsaved = activeProvider !== savedProvider ||
     PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id] || models[p.id] !== savedModels[p.id]) ||
     platform !== savedPlatform ||
@@ -475,6 +478,31 @@ export default function SettingsPanel({
           {unpinAllDone
             ? <><Check size={14} aria-hidden="true" />{' '}{t('settings.unpin_all_done')}</>
             : <><PinOff size={14} aria-hidden="true" />{' '}{t('settings.unpin_all')}</>
+          }
+        </button>
+      </div>
+
+      {/* Starred Results */}
+      <div className="settings-toggle-row">
+        <div>
+          <h3 className="settings-toggle-label">{t('settings.starred_results_label')}</h3>
+          <p className="settings-toggle-desc">
+            {hasStarred ? t('settings.starred_results_desc') : t('settings.starred_results_empty')}
+          </p>
+        </div>
+        <button
+          type="button"
+          className={`btn--primary settings-unstar-all-btn${unstarAllDone ? ' btn__field--success' : ''}`}
+          disabled={!hasStarred}
+          onClick={() => {
+            onClearStarred?.()
+            setUnstarAllDone(true)
+            setTimeout(() => setUnstarAllDone(false), 1500)
+          }}
+        >
+          {unstarAllDone
+            ? <><Check size={14} aria-hidden="true" />{' '}{t('settings.unstar_all_done')}</>
+            : <><Star size={14} aria-hidden="true" />{' '}{t('settings.unstar_all')}</>
           }
         </button>
       </div>

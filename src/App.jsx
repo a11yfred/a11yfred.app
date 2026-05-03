@@ -700,6 +700,14 @@ function AppContent({
     announce(t('settings.reset_all_announce'), { priority: 'assertive' })
   }
 
+  const handleClearStarred = () => {
+    Object.keys(ratings).forEach(id => {
+      if (ratings[id]?.starred) {
+        toggleStar(id)
+      }
+    })
+  }
+
   function unlock() {
     setSaveCount(c => {
       const next = c + 1
@@ -732,6 +740,8 @@ function AppContent({
     onReset: handleResetAll,
     hasPins: pinnedIds.size > 0,
     onClearPins: clearPins,
+    hasStarred: Object.values(ratings).some(r => r.starred),
+    onClearStarred: handleClearStarred,
   }
 
   const adminProps = {
