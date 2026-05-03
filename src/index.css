@@ -2225,7 +2225,8 @@ input[type="radio"].settings-checkbox:checked {
 
 .settings-language-change-btn,
 .settings-unpin-all-btn,
-.settings-unstar-all-btn {
+.settings-unstar-all-btn,
+.settings-unarchive-all-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;

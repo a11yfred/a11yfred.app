@@ -708,6 +708,14 @@ function AppContent({
     })
   }
 
+  const handleClearArchived = () => {
+    Object.keys(ratings).forEach(id => {
+      if (ratings[id]?.archived) {
+        toggleArchive(id)
+      }
+    })
+  }
+
   function unlock() {
     setSaveCount(c => {
       const next = c + 1
@@ -742,6 +750,8 @@ function AppContent({
     onClearPins: clearPins,
     hasStarred: Object.values(ratings).some(r => r.starred),
     onClearStarred: handleClearStarred,
+    hasArchived: Object.values(ratings).some(r => r.archived),
+    onClearArchived: handleClearArchived,
   }
 
   const adminProps = {

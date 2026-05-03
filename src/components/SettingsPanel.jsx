@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { ChevronLeft, ChevronRight, ChevronDown, Check, Info, PinOff, Star, AlertTriangle } from 'lucide-react'
+import { ChevronLeft, ChevronRight, ChevronDown, Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -127,6 +127,8 @@ export default function SettingsPanel({
   onClearPins,
   hasStarred,
   onClearStarred,
+  hasArchived,
+  onClearArchived,
 }) {
   const headingRef = useFocusOnMount()
   const saveButtonRef = useRef(null)
@@ -179,6 +181,7 @@ export default function SettingsPanel({
   const [noChangesOpen, setNoChangesOpen] = useState(false)
   const [unpinAllDone, setUnpinAllDone] = useState(false)
   const [unstarAllDone, setUnstarAllDone] = useState(false)
+  const [unarchiveAllDone, setUnarchiveAllDone] = useState(false)
   const hasUnsaved = activeProvider !== savedProvider ||
     PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id] || models[p.id] !== savedModels[p.id]) ||
     platform !== savedPlatform ||
@@ -503,6 +506,31 @@ export default function SettingsPanel({
           {unstarAllDone
             ? <><Check size={14} aria-hidden="true" />{' '}{t('settings.unstar_all_done')}</>
             : <><Star size={14} aria-hidden="true" />{' '}{t('settings.unstar_all')}</>
+          }
+        </button>
+      </div>
+
+      {/* Archived Results */}
+      <div className="settings-toggle-row">
+        <div>
+          <h3 className="settings-toggle-label">{t('settings.archived_results_label')}</h3>
+          <p className="settings-toggle-desc">
+            {hasArchived ? t('settings.archived_results_desc') : t('settings.archived_results_empty')}
+          </p>
+        </div>
+        <button
+          type="button"
+          className={`btn--primary settings-unarchive-all-btn${unarchiveAllDone ? ' btn__field--success' : ''}`}
+          disabled={!hasArchived}
+          onClick={() => {
+            onClearArchived?.()
+            setUnarchiveAllDone(true)
+            setTimeout(() => setUnarchiveAllDone(false), 1500)
+          }}
+        >
+          {unarchiveAllDone
+            ? <><Check size={14} aria-hidden="true" />{' '}{t('settings.unarchive_all_done')}</>
+            : <><ArchiveRestore size={14} aria-hidden="true" />{' '}{t('settings.unarchive_all')}</>
           }
         </button>
       </div>
