@@ -1,8 +1,9 @@
-import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter, X } from 'lucide-react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
+import SponsoredTile from './SponsoredTile.jsx'
 
 export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin, onClearPins }) {
   const t = useT()
@@ -39,7 +40,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
   )
 }
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, showPrioritySort = false, showAds = false, adFrequency = 8, onClear }) {
   const t = useT()
   const itemRefs = useRef({})
   const skipBtnRefs = useRef({})
@@ -159,6 +160,17 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             {displayCount}
           </h2>
           <div className="results-count-actions">
+            {query && results.length > 0 && onClear && (
+              <button
+                type="button"
+                className="btn-ghost results-clear-btn"
+                title={t('results.clear_results')}
+                onClick={onClear}
+              >
+                <X size={16} aria-hidden="true" />
+                <span>{t('results.clear_results')}</span>
+              </button>
+            )}
             {!narrowMode && results.length > 0 && onNarrow && (
               <button
                 type="button"
@@ -193,6 +205,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
       <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>
         {displayResults.map((finding, index) => {
+          const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
           const isSelected = selected?.id === finding.id
           const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
           const rating = ratings[finding.id] || DEFAULT_RATING
@@ -261,15 +274,15 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           function handleSkipToNext() {
             const nextIndex = index + 1
             if (nextIndex < displayResults.length) {
-              skipBtnRefs.current[displayResults[nextIndex].id]?.focus()
+              itemRefs.current[displayResults[nextIndex].id]?.focus()
             } else {
-              skipBtnRefs.current[displayResults[0].id]?.focus()
+              itemRefs.current[displayResults[0].id]?.focus()
             }
           }
 
           return (
+            <Fragment key={finding.id}>
             <li
-              key={finding.id}
               className={`result-row${archived ? ' result-row--archived' : ''}`}
               style={{ '--result-i': index }}
             >
@@ -345,14 +358,19 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <div className="result-item__desc">{finding.desc}</div>
               </button>
 
-              <button
-                ref={el => { skipBtnRefs.current[finding.id] = el }}
-                type="button"
-                tabIndex={archived ? -1 : undefined}
-                onClick={handleSkipToNext}
-                aria-label={t('results.skip_to_next')}
-                className="result-skip-btn"
-              />
+              {showPrioritySort && (
+                <button
+                  ref={el => { skipBtnRefs.current[finding.id] = el }}
+                  type="button"
+                  tabIndex={archived ? -1 : undefined}
+                  onClick={handleSkipToNext}
+                  aria-label={t('results.skip_to_next')}
+                  className="result-skip-btn"
+                >
+                  {t('results.skip_to_next')}
+                  <ChevronDown size={14} aria-hidden="true" />
+                </button>
+              )}
               </div>
 
               {showVoting && <div className="result-vote-col">
@@ -407,6 +425,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 </button>
               </div>}
             </li>
+            {showAdAfter && <SponsoredTile />}
+            </Fragment>
           )
         })}
       </ul>

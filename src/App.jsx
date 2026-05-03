@@ -5,6 +5,7 @@ import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './comp
 import DetailPanel from './components/DetailPanel.jsx'
 import AboutPanel from './components/AboutPanel.jsx'
 import HelpPanel from './components/HelpPanel.jsx'
+import OnboardingPanel from './components/OnboardingPanel.jsx'
 import Confetti from './components/Confetti.jsx'
 import PartySparkles from './components/PartySparkles.jsx'
 import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
@@ -192,13 +193,14 @@ function AppContent({
   const settingsOpen = route === '/settings' || route === '/settings/privacy'
   const aboutOpen = route === '/about'
   const helpOpen = route === '/help'
+  const onboardingOpen = route === '/onboarding'
   const adminOpen = route === '/admin'
   const viewAll = route === '/results/all'
   const findingMatchSlug = useRouteMatch('/finding/:id/:slug')
   const findingMatchBare = useRouteMatch('/finding/:id')
   const findingMatch = findingMatchSlug ?? findingMatchBare
   const findingIdFromRoute = findingMatch?.id ?? null
-  const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/help', '/results/all', '/admin'])
+  const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/help', '/onboarding', '/results/all', '/admin'])
   const isNotFound = !KNOWN_ROUTES.has(route) && !findingMatch
   const h1Ref = useRef(null)
   const didMount = useRef(false)
@@ -206,6 +208,7 @@ function AppContent({
   const settingsTriggerRef = useRef(null)
   const aboutTriggerRef = useRef(null)
   const helpTriggerRef = useRef(null)
+  const onboardingTriggerRef = useRef(null)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
   const viewAllTriggerRef = useRef(null)
   const [badgeFilter, setBadgeFilter] = useState(() => {
@@ -223,6 +226,8 @@ function AppContent({
   const [devAllEnabled, setDevAllEnabled] = useState(true)
   const [namesEnabled, setNamesEnabled] = useState(false)
   const [fabEnabled, setFabEnabled] = useState(true)
+  const [adFrequency, setAdFrequency] = useState(8)
+  const [showAds, setShowAds] = useState(false)
   const [deployTarget, setDeployTarget] = useState(null)  // null | 'netlify' | 'pages' | 'vercel' | 'off'
   const [debugHelpOpen, setDebugHelpOpen] = useState(false)
   const [debugPanelCmd, setDebugPanelCmd] = useState(null)
@@ -264,6 +269,11 @@ function AppContent({
       navigate('/')
     }
   }
+  const handleOpenOnboarding = () => {
+    onboardingTriggerRef.current = document.activeElement
+    navigate('/onboarding')
+  }
+  const handleCloseOnboarding = () => navigate('/')
   const handleSelectFinding = (finding) => {
     if (finding) {
       if (!selected) findingTriggerRef.current = document.activeElement
@@ -418,7 +428,7 @@ function AppContent({
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
   // to the settings drawer — exclude the panel from triggering it separately.
-  const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!!selected && !settingsOpen && !aboutOpen && !adminOpen)
+  const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!isDesktop && onboardingOpen) || (!!selected && !settingsOpen && !aboutOpen && !adminOpen)
 
   useEffect(() => {
     // Clean up any palette inline styles from a previous party activation
@@ -549,6 +559,12 @@ function AppContent({
     document.title = appName ? `${appName} | ${selected.title}` : selected.title
   }, [selected, settingsOpen, aboutOpen, adminOpen, appName])
 
+  useEffect(() => {
+    if (!localStorage.getItem('onboardingSeen') && route === '/') {
+      navigate('/onboarding')
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- fires once on mount
+
   const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 
   const activateEasterEgg = (egg) => {
@@ -635,6 +651,17 @@ function AppContent({
     syncSearchUrl(query)
   }
 
+  const handleClearResults = () => {
+    setQuery('')
+    setSubmittedQuery('')
+    setBadgeFilter(null)
+    syncBadgeUrl(null)
+    handleSelectFinding(null)
+    if (document.querySelector('.search-input')) {
+      document.querySelector('.search-input').focus()
+    }
+  }
+
   const handleOpenSettings = () => {
     settingsTriggerRef.current = document.activeElement
     aboutWasOpenRef.current = false  // prevent about-close focus competing with settings-open focus
@@ -709,6 +736,8 @@ function AppContent({
     aiEnabled,
     onToggleAi: () => setAiEnabled(a => !a),
     deployTarget, setDeployTarget,
+    showAds, setShowAds,
+    adFrequency, setAdFrequency,
     onSearch: handleAdminSearch,
     onFilter: handleBadgeClick,
     onClose: () => navigate('/'),
@@ -779,6 +808,10 @@ function AppContent({
                 showVoting={showVoting}
                 pinnedIds={pinnedIds}
                 onPin={togglePin}
+                showPrioritySort={true}
+                showAds={showAds}
+                adFrequency={adFrequency}
+                onClear={handleClearResults}
               />
             )
             : activeQuery.length >= 2
@@ -802,6 +835,9 @@ function AppContent({
                   narrowQuery={narrowQuery}
                   narrowResults={narrowedResults}
                   onNarrow={() => setNarrowMode(true)}
+                  showAds={showAds}
+                  adFrequency={adFrequency}
+                  onClear={handleClearResults}
                 />
               )
               : badgeFilter
@@ -822,6 +858,9 @@ function AppContent({
                     pinnedIds={pinnedIds}
                     onPin={togglePin}
                     filterLabel={badgeFilterLabel}
+                    showAds={showAds}
+                    adFrequency={adFrequency}
+                    onClear={handleClearResults}
                   />
                 )
               : (
@@ -971,8 +1010,10 @@ function AppContent({
                   : isDesktop && aboutOpen
                     ? <AboutPanel onClose={handleCloseAbout} />
                     : isDesktop && helpOpen
-                      ? <HelpPanel onClose={handleCloseHelp} />
-                      : searchView}
+                      ? <HelpPanel onClose={handleCloseHelp} onStartTour={handleOpenOnboarding} />
+                      : isDesktop && onboardingOpen
+                        ? <OnboardingPanel onClose={handleCloseOnboarding} />
+                        : searchView}
           </Suspense>
         </main>
         <Footer />
@@ -994,14 +1035,20 @@ function AppContent({
 
       {!isDesktop && (
         <Drawer open={helpOpen} onClose={handleCloseHelp} label={t('help.sheet_label')} focusOnClose={helpTriggerRef}>
-          <HelpPanel onClose={handleCloseHelp} />
+          <HelpPanel onClose={handleCloseHelp} onStartTour={handleOpenOnboarding} />
+        </Drawer>
+      )}
+
+      {!isDesktop && (
+        <Drawer open={onboardingOpen} onClose={handleCloseOnboarding} label={t('onboarding.heading')} focusOnClose={onboardingTriggerRef}>
+          <OnboardingPanel onClose={handleCloseOnboarding} />
         </Drawer>
       )}
 
       <BottomSheet
-        open={!!selected && !settingsOpen && !aboutOpen && !helpOpen && !adminOpen}
+        open={!!selected && !settingsOpen && !aboutOpen && !helpOpen && !onboardingOpen && !adminOpen}
         onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
-        keepMounted={(settingsOpen || aboutOpen || helpOpen || adminOpen) && !!selected}
+        keepMounted={(settingsOpen || aboutOpen || helpOpen || onboardingOpen || adminOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
         returnFocusRef={findingTriggerRef}
