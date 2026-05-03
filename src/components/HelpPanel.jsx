@@ -2,7 +2,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, useDir } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 
-export default function HelpPanel({ onClose }) {
+export default function HelpPanel({ onClose, onStartTour }) {
   const t = useT()
   const headingRef = useFocusOnMount()
   const dir = useDir()
@@ -40,6 +40,15 @@ export default function HelpPanel({ onClose }) {
             </li>
           ))}
         </ol>
+        {onStartTour && (
+          <button
+            type="button"
+            className="btn-secondary help-tour-btn"
+            onClick={() => { onClose(); onStartTour() }}
+          >
+            {t('help.take_tour')}
+          </button>
+        )}
       </section>
 
       <section className="help-section help-section--last">

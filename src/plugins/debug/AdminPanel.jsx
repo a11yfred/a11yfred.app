@@ -118,6 +118,8 @@ export default function AdminPanel({
   fabEnabled, setFabEnabled,
   aiEnabled, onToggleAi,
   deployTarget, setDeployTarget,
+  showAds, setShowAds,
+  adFrequency, setAdFrequency,
   onSearch,
   onFilter,
   onClose,
@@ -200,6 +202,38 @@ export default function AdminPanel({
                 </button>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* ── Ad Tiles ────────────────────────────────────────── */}
+        <section className="admin-section">
+          <h2 className="admin-section__title">Ad Tiles</h2>
+          <div className="admin-toggle-row">
+            <span className="admin-toggle-label">Show ads</span>
+            <button
+              className={`admin-toggle-btn ${showAds ? 'admin-toggle-btn--on' : ''}`}
+              onClick={() => setShowAds(v => !v)}
+            >
+              {showAds ? 'ON' : 'OFF'}
+            </button>
+          </div>
+          <div className="admin-deploy-row">
+            <label htmlFor="admin-ad-freq" className="admin-toggle-label">
+              Every N results
+            </label>
+            <input
+              id="admin-ad-freq"
+              type="number"
+              min={1}
+              max={50}
+              value={adFrequency}
+              onChange={e => {
+                const v = parseInt(e.target.value, 10)
+                if (!isNaN(v) && v >= 1) setAdFrequency(v)
+              }}
+              className="admin-number-input"
+              disabled={!showAds}
+            />
           </div>
         </section>
 

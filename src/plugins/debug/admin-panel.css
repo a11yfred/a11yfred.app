@@ -147,6 +147,22 @@
   color: var(--accent-text);
 }
 
+.admin-number-input {
+  width: 4rem;
+  padding: 0.2em 0.5em;
+  border-radius: 4px;
+  border: 1px solid var(--border-control);
+  background: var(--bg-subtle);
+  color: var(--text);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.admin-number-input:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* ── Corpus tabs ─────────────────────────────────────────────────────────── */
 
 .admin-dataset-tabs {

@@ -4,6 +4,57 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-02 — Onboarding panel, skip-to-next, priority sort, ad tile preview, and UX housekeeping
+
+### Onboarding panel
+
+- `src/components/OnboardingPanel.jsx` — New 3-slide paginated panel (Find, Refine, Copy); uses Drawer on mobile, inline on desktop; icons-only illustrations; step headings receive focus on navigation via `usePaginationFocus`; Escape before the last slide shows a confirm modal rather than closing immediately
+- `src/App.jsx` — Auto-navigates to `/onboarding` on first visit (`onboardingSeen` localStorage flag); re-launchable from Help panel via `onStartTour` prop; `onboardingOpen` wired into `backgroundInert` and `BottomSheet` suppression
+- `src/components/HelpPanel.jsx` — "Take a tour" button at bottom of How to Use section
+- `src/i18n/en.json` — Added `onboarding.*` keys (all 3 slides, nav labels, confirm modal) and `help.take_tour`
+
+### Ad tile preview (dev only)
+
+- `src/components/SponsoredTile.jsx` — Placeholder sponsored result tile matching corpus card dimensions; "Sponsored" badge; `aria-label="Sponsored content"`
+- `src/plugins/debug/AdminPanel.jsx` — New Ad Tiles section: ON/OFF toggle + configurable "Every N results" number input; state held in App and passed through `adminProps`
+- `src/components/ResultList.jsx` — Accepts `showAds` and `adFrequency` props; injects `SponsoredTile` after every nth result using `Fragment` key wrapper; off by default in all builds
+
+### Keyboard navigation + skip-to-next
+
+- `src/components/ResultList.jsx` — Per-result skip-to-next button: appears on focus, dims tile, wraps to first result; only shown when priority-sorted results are active (`showPrioritySort` prop)
+- `src/App.jsx` — Sort/priority controls moved after result items in DOM so keyboard users reach results first
+
+### Result list prioritization
+
+- `src/components/ResultList.jsx` — `showPrioritySort` prop gates skip button display; passed as `true` from View All mode only
+- `src/hooks/useFindingSearch.js` — Results sorted by archived → starred → priority → SC label
+
+### UX completions
+
+- `src/hooks/useFindingRatings.js` + `src/App.jsx` — Frequent findings: open/copy counts tracked implicitly; boost composite relevance score
+- `src/hooks/usePinnedFindings.js` + `src/App.jsx` — Pin results to home page; persisted in `pinnedFindings` localStorage key; Pinned section shown above search
+- `src/components/ResultList.jsx` — Upvote/downvote buttons per result card; ratings stored in `defect_ratings` localStorage
+- `src/components/ResultList.jsx` — Narrow results mode: search-within-results with count display `X of Y`
+- `src/components/DetailPanel.jsx` — Singular/plural related findings label; single source inline display; multiple sources as bullet list
+- `src/components/SettingsPanel.jsx` — Reset All redesigned as BottomSheet with explicit lists of what clears and what resets
+
+### Visual design
+
+- `src/components/ResultList.jsx` + `src/index.css` — Visible selection indicator: left-edge accent bar (non-color, WCAG 1.4.1)
+- `src/components/DetailPanel.jsx` + `src/index.css` — Severity badge moved below h2 in detail panel; result card badges remain inline with title
+- `src/index.css` — Result cards responsive to short viewports (iPhone SE landscape, 568px)
+
+### Corpus & content
+
+- `src/data/personal-corpus.json` — All 124 entries (ATH-001–124) sourced with minimum 2 expert references; content quality review on ATH-001–040; 4 titles standardised
+- `src/data/personal-corpus.json` — Corpus keyboard navigation: Gmail-style J/K/S/E/U/Shift+↑↓ shortcuts implemented; Help panel shortcut reference added
+
+### Infrastructure
+
+- `src/` — Offline-first PWA: Service Worker caches app shell + corpus; Web App Manifest added; installable to home screen
+
+---
+
 ## 2026-05-01 — Corpus sourcing completion, platform variant UI, content quality review
 
 ### Tier 2 sourcing complete: all 124 findings now 2+ sourced

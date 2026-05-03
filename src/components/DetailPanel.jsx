@@ -565,7 +565,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       </div>
 
       <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} />
-      <SourceLinks links={finding.sources?.filter(s => s.name !== 'ATH' && s.url).map(s => ({ url: s.url, text: s.name }))} />
+      <SourceLinks links={finding.sources?.filter(s => s.name !== 'ATH').map(s => ({ url: s.url, text: s.name }))} />
 
       <div className="detail-actions-end">
         <button
