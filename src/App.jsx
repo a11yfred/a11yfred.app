@@ -831,7 +831,7 @@ function AppContent({
                             <span className="pinned-search-match-title">{finding.title}</span>
                             <button
                               type="button"
-                              className="btn-secondary pinned-search-match-unpin"
+                              className="btn--secondary pinned-search-match-unpin"
                               onClick={() => togglePin(finding.id)}
                               aria-label={t('results.unpin_from_search', { title: finding.title })}
                             >
@@ -894,7 +894,7 @@ function AppContent({
                 <div className="view-all-section">
                   <button
                     type="button"
-                    className="btn-secondary view-all-btn"
+                    className="btn--secondary view-all-btn"
                     onClick={() => { viewAllTriggerRef.current = document.activeElement; setViewAllConfirmOpen(true) }}
                   >
                     {t('search.view_all')}
@@ -916,12 +916,12 @@ function AppContent({
               navigate('/results/all')
               setViewAllConfirmOpen(false)
             },
-            className: 'btn-accent modal-ok-btn',
+            className: 'btn--primary modal-ok-btn',
           },
           {
             label: t('search.view_all_confirm_no'),
             onClick: () => setViewAllConfirmOpen(false),
-            className: 'btn-secondary modal-ok-btn',
+            className: 'btn--secondary modal-ok-btn',
           },
         ]}
       >
@@ -1140,7 +1140,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
             onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : helpOpen ? onCloseHelp : onCloseOnboarding}
             aria-label={t('common.close')}
             title={t('common.close')}
-            className="btn-icon btn-icon-accent page-header__close-btn"
+            className="btn--icon btn--icon-accent page-header__close-btn"
           >
             <X size={20} strokeWidth={2.5} aria-hidden="true" />
           </button>
@@ -1150,7 +1150,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               onClick={onOpenHelp}
               aria-label={t('help.open_help')}
               title={t('help.open_help')}
-              className="btn-icon btn-icon-accent page-header__help-btn"
+              className="btn--icon btn--icon-accent page-header__help-btn"
             >
               <HelpCircle size={20} strokeWidth={2} aria-hidden="true" />
             </button>
@@ -1158,7 +1158,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               onClick={onOpenAbout}
               aria-label={t('header.open_about')}
               title={t('header.open_about')}
-              className="btn-icon btn-icon-accent page-header__about-btn"
+              className="btn--icon btn--icon-accent page-header__about-btn"
             >
               <Info size={20} strokeWidth={2} aria-hidden="true" />
             </button>
@@ -1166,7 +1166,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               onClick={onOpenSettings}
               aria-label={t('header.open_settings')}
               title={t('header.open_settings')}
-              className="btn-icon btn-icon-accent page-header__settings-btn"
+              className="btn--icon btn--icon-accent page-header__settings-btn"
             >
               <Settings size={20} strokeWidth={2} aria-hidden="true" />
             </button>
@@ -1226,7 +1226,7 @@ function NotFoundPage() {
       <p className="not-found__body">{t('notfound.body')}</p>
       <button
         onClick={() => navigate('/')}
-        className="btn-accent not-found__btn"
+        className="btn--primary not-found__btn"
       >
         {t('notfound.button')}
       </button>

@@ -72,7 +72,7 @@ export default function OnboardingPanel({ onClose }) {
         <button
           type="button"
           onClick={handleRequestClose}
-          className="btn-icon btn-icon-accent"
+          className="btn--icon btn--icon-accent"
           aria-label={t('common.close')}
         >
           <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
@@ -86,7 +86,7 @@ export default function OnboardingPanel({ onClose }) {
         </h2>
         <button
           type="button"
-          className="btn-ghost onboarding-skip-btn"
+          className="btn--secondary onboarding-skip-btn"
           onClick={handleRequestClose}
         >
           {t('onboarding.skip')}
@@ -110,7 +110,7 @@ export default function OnboardingPanel({ onClose }) {
       <nav aria-label={t('onboarding.step_of', { step: step + 1, total })} className="onboarding-nav">
         <button
           type="button"
-          className="btn-ghost onboarding-nav-btn"
+          className="btn--secondary onboarding-nav-btn"
           onClick={() => setStep(s => s - 1)}
           aria-label={t('onboarding.prev_aria')}
           disabled={isFirst}
@@ -129,7 +129,7 @@ export default function OnboardingPanel({ onClose }) {
 
         <button
           type="button"
-          className="btn-accent onboarding-nav-btn onboarding-nav-btn--next"
+          className="btn--primary onboarding-nav-btn onboarding-nav-btn--next"
           onClick={() => isLast ? commitClose() : setStep(s => s + 1)}
           aria-label={isLast ? t('onboarding.done_aria') : t('onboarding.next_aria')}
         >
@@ -146,12 +146,12 @@ export default function OnboardingPanel({ onClose }) {
           {
             label: t('onboarding.confirm_exit'),
             onClick: () => { setConfirmOpen(false); commitClose() },
-            className: 'btn-accent modal-ok-btn',
+            className: 'btn--primary modal-ok-btn',
           },
           {
             label: t('onboarding.confirm_stay'),
             onClick: () => setConfirmOpen(false),
-            className: 'btn-secondary modal-ok-btn',
+            className: 'btn--secondary modal-ok-btn',
           },
         ]}
       >

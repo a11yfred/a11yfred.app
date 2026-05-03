@@ -115,7 +115,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
             <button
               onClick={handleClear}
               aria-label={narrowMode ? t('search.narrow_clear_and_reset_aria') : clearAriaLabel}
-              className="btn-accent search-clear-btn"
+              className="btn--primary search-clear-btn"
             >
               ↺
             </button>
@@ -125,7 +125,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           <button
             onClick={onSearch}
             disabled={query.length < 2}
-            className="btn-accent search-submit-btn"
+            className="btn--primary search-submit-btn"
           >
             {t('search.button')}
           </button>
@@ -135,7 +135,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
             onClick={onNarrowToggle}
             aria-label={t('search.exit_narrow_aria')}
             title={t('search.exit_narrow_aria')}
-            className="btn-icon search-exit-narrow-btn"
+            className="btn--icon search-exit-narrow-btn"
           >
             <X size={20} aria-hidden="true" />
           </button>

@@ -446,7 +446,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             <button
               onClick={() => setLocation('')}
               aria-label={t('search.clear_aria')}
-              className="btn-accent detail-location-clear-btn"
+              className="btn--primary detail-location-clear-btn"
               type="button"
             >
               ↺
@@ -539,7 +539,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             onClick={handleRefine}
             disabled={refining || animating || !reviseNote.trim()}
             aria-busy={refining ? true : undefined}
-            className={`btn-accent detail-revise-btn${noteSaved ? ' field-btn--success' : ''}`}
+            className={`btn--primary detail-revise-btn${noteSaved ? ' btn--field--success' : ''}`}
             aria-label={
               refining ? t('detail.rewriting_aria')
               : aiEnabled && canRevise ? t('detail.rewrite_aria')
@@ -570,7 +570,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       <div className="detail-actions-end">
         <button
           type="button"
-          className={`btn-ghost detail-action-btn${resetAllDone ? ' field-btn--success' : ''}`}
+          className={`btn--secondary detail-action-btn${resetAllDone ? ' btn--field--success' : ''}`}
           onClick={handleResetAllFields}
           aria-label={t('detail.reset_all_fields_aria')}
           disabled={descText === finding.desc && remText === finding.rem}
@@ -582,7 +582,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         </button>
         <button
           type="button"
-          className={`btn-ghost detail-action-btn${copiedAll ? ' field-btn--success' : ''}`}
+          className={`btn--secondary detail-action-btn${copiedAll ? ' btn--field--success' : ''}`}
           onClick={handleCopyAll}
           aria-label={t('detail.copy_all_aria')}
         >
@@ -594,7 +594,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         {onClose && (
           <button
             type="button"
-            className="btn-accent detail-close-btn"
+            className="btn--primary detail-close-btn"
             onClick={onClose}
           >
             {t('common.close')}
@@ -627,12 +627,12 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
           {
             label: t('detail.confirm_reset_yes'),
             onClick: () => { confirmReset?.doReset(); setConfirmReset(null) },
-            className: 'btn-accent modal-ok-btn',
+            className: 'btn--primary modal-ok-btn',
           },
           {
             label: t('detail.confirm_reset_no'),
             onClick: () => setConfirmReset(null),
-            className: 'btn-tertiary modal-ok-btn',
+            className: 'btn--tertiary modal-ok-btn',
           },
         ]}
       >
@@ -823,7 +823,7 @@ const Field = forwardRef(function Field({
           <button
             onClick={handleResetOrUndo}
             aria-label={resetBtnLabel}
-            className={`btn-accent field-btn${reset ? ' field-btn--success' : ''}`}
+            className={`btn--primary btn--field${reset ? ' btn--field--success' : ''}`}
             disabled={animating || (!undoable && !hasChanged)}
           >
             {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
@@ -833,7 +833,7 @@ const Field = forwardRef(function Field({
             ref={copyBtnRef}
             onClick={onCopy}
             aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
-            className={`btn-accent field-btn${copied ? ' field-btn--success' : ''}`}
+            className={`btn--primary btn--field${copied ? ' btn--field--success' : ''}`}
             disabled={animating}
           >
             {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}

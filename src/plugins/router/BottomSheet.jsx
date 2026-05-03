@@ -141,7 +141,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
             <button
               onClick={onBack}
               aria-label={backLabel}
-              className="btn-icon btn-icon-accent sheet-back-btn"
+              className="btn--icon btn--icon-accent sheet-back-btn"
             >
               <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" role="presentation" />
             </button>
@@ -149,7 +149,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
           <button
             onClick={onClose}
             aria-label={closeLabel}
-            className="btn-icon btn-icon-accent sheet-close-btn"
+            className="btn--icon btn--icon-accent sheet-close-btn"
           >
             <CloseIcon size={20} strokeWidth={2.5} aria-hidden="true" />
           </button>
@@ -162,7 +162,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
               {children}
               {!hideCloseBottom && (
                 <div className="sheet-close-bottom">
-                  <button onClick={onClose} className="btn-accent sheet-close-bottom-btn">
+                  <button onClick={onClose} className="btn--primary sheet-close-bottom-btn">
                     {closeLabel}
                   </button>
                 </div>

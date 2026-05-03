@@ -90,12 +90,12 @@ export default function Modal({ open, onClose, heading = 'Information', headingI
               <div className="modal-content">{children}</div>
             </div>
             <div className="modal-footer">
-              {(actions ?? [{ label: 'OK', onClick: onClose, className: 'btn-accent modal-ok-btn' }])
+              {(actions ?? [{ label: 'OK', onClick: onClose, className: 'btn--primary modal-ok-btn' }])
                 .map(action => (
                   <button
                     key={action.label}
                     onClick={action.onClick}
-                    className={action.className ?? 'btn-accent modal-ok-btn'}
+                    className={action.className ?? 'btn--primary modal-ok-btn'}
                   >
                     {action.label}
                   </button>

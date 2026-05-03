@@ -16,7 +16,7 @@ export default function HelpPanel({ onClose, onStartTour }) {
         <button
           onClick={onClose}
           aria-label={t('settings.back')}
-          className="btn-icon btn-icon-accent"
+          className="btn--icon btn--icon-accent"
         >
           <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>
@@ -43,7 +43,7 @@ export default function HelpPanel({ onClose, onStartTour }) {
         {onStartTour && (
           <button
             type="button"
-            className="btn-secondary help-tour-btn"
+            className="btn--secondary help-tour-btn"
             onClick={() => { onClose(); onStartTour() }}
           >
             {t('help.take_tour')}

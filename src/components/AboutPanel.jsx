@@ -16,7 +16,7 @@ export default function AboutPanel({ onClose }) {
         <button
           onClick={onClose}
           aria-label={t('settings.back')}
-          className="btn-icon btn-icon-accent"
+          className="btn--icon btn--icon-accent"
         >
           <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>

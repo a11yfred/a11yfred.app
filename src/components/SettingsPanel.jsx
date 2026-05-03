@@ -259,7 +259,7 @@ export default function SettingsPanel({
         <button
           onClick={() => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } }}
           aria-label={t('settings.back')}
-          className="btn-icon btn-icon-accent"
+          className="btn--icon btn--icon-accent"
         >
           <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>
@@ -323,7 +323,7 @@ export default function SettingsPanel({
           </div>
           <button
             type="button"
-            className={`btn-accent settings-language-change-btn${changedLanguage ? ' field-btn--success' : ''}`}
+            className={`btn--primary settings-language-change-btn${changedLanguage ? ' btn--field--success' : ''}`}
             disabled={!pendingLanguage}
             onClick={() => {
               if (pendingLanguage === 'rhg') { setRhgPending(true) }
@@ -464,7 +464,7 @@ export default function SettingsPanel({
         </div>
         <button
           type="button"
-          className={`btn-accent settings-unpin-all-btn${unpinAllDone ? ' field-btn--success' : ''}`}
+          className={`btn--primary settings-unpin-all-btn${unpinAllDone ? ' btn--field--success' : ''}`}
           disabled={!hasPins}
           onClick={() => {
             onClearPins?.()
@@ -580,11 +580,11 @@ export default function SettingsPanel({
             type="button"
             ref={resetButtonRef}
             onClick={() => setResetConfirmOpen(true)}
-            className="btn-danger settings-reset-btn"
+            className="btn--danger settings-reset-btn"
           >
             {t('settings.reset_all')}
           </button>
-          <button ref={saveButtonRef} onClick={handleSave} className={`btn-accent settings-save-btn${saved ? ' field-btn--success' : ''}`}>
+          <button ref={saveButtonRef} onClick={handleSave} className={`btn--primary settings-save-btn${saved ? ' btn--field--success' : ''}`}>
             {saved
               ? <><Check size={14} strokeWidth={2.5} aria-hidden="true" className="inline-icon" />{t('settings.saved')}</>
               : t('settings.save')
@@ -619,8 +619,8 @@ export default function SettingsPanel({
         onClose={() => setRhgPending(false)}
         heading="Rohingya (Ruáingga)"
         actions={[
-          { label: 'Use anyway', onClick: () => { onLanguageChange(pendingLanguage); setRhgPending(false) }, className: 'btn-accent' },
-          { label: 'Cancel',     onClick: () => setRhgPending(false),                              className: 'btn-tertiary'  },
+          { label: 'Use anyway', onClick: () => { onLanguageChange(pendingLanguage); setRhgPending(false) }, className: 'btn--primary' },
+          { label: 'Cancel',     onClick: () => setRhgPending(false),                              className: 'btn--tertiary'  },
         ]}
       >
         <p>This translation was AI-generated and has not been reviewed by native Rohingya speakers.</p>
@@ -635,17 +635,17 @@ export default function SettingsPanel({
           {
             label: t('settings.unsaved_save_close'),
             onClick: () => { handleSave(); setUnsavedOpen(false); onClose() },
-            className: 'btn-accent',
+            className: 'btn--primary',
           },
           {
             label: t('settings.unsaved_discard'),
             onClick: () => { setUnsavedOpen(false); onClose() },
-            className: 'btn-secondary',
+            className: 'btn--secondary',
           },
           {
             label: t('settings.unsaved_cancel'),
             onClick: () => setUnsavedOpen(false),
-            className: 'btn-tertiary',
+            className: 'btn--tertiary',
           },
         ]}
       >
@@ -705,13 +705,13 @@ export default function SettingsPanel({
                 onReset?.()
                 announce(t('settings.reset_all_announce'))
               }}
-              className="btn-accent"
+              className="btn--primary"
             >
               {t('settings.confirm_reset_all_yes')}
             </button>
             <button
               onClick={() => { setResetConfirmOpen(false); announce(t('settings.preserved_announce')) }}
-              className="btn-secondary"
+              className="btn--secondary"
             >
               {t('settings.confirm_reset_all_no')}
             </button>

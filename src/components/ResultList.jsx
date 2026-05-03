@@ -16,7 +16,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
           <span className="pinned-section__count">{findings.length}</span>
         </h2>
         {onClearPins && (
-          <button type="button" className="btn-tertiary pinned-unpin-all-btn" onClick={onClearPins}>
+          <button type="button" className="btn--tertiary pinned-unpin-all-btn" onClick={onClearPins}>
             {t('results.unpin_all')}
           </button>
         )}
@@ -163,7 +163,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             {query && results.length > 0 && onClear && (
               <button
                 type="button"
-                className="btn-ghost results-clear-btn"
+                className="btn--secondary results-clear-btn"
                 title={t('results.clear_results')}
                 onClick={onClear}
               >
@@ -174,7 +174,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             {!narrowMode && results.length > 0 && onNarrow && (
               <button
                 type="button"
-                className="btn-ghost results-narrow-btn"
+                className="btn--secondary results-narrow-btn"
                 title={t('results.narrow_title')}
                 onClick={onNarrow}
               >
@@ -185,7 +185,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             {onCopyLink && (
               <button
                 type="button"
-                className={`btn-ghost results-copy-link-btn${linkCopied ? ' field-btn--success' : ''}`}
+                className={`btn--secondary results-copy-link-btn${linkCopied ? ' btn--field--success' : ''}`}
                 aria-label={linkCopied ? t('results.copied_link') : t('results.copy_link_aria')}
                 title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
                 onClick={() => {
@@ -434,7 +434,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
         <div className="view-all-section">
           <button
             type="button"
-            className="btn-secondary back-to-top-btn"
+            className="btn--secondary back-to-top-btn"
             onClick={() => {
               window.scrollTo({ top: 0, behavior: 'smooth' })
               countHeadingRef.current?.focus()
@@ -539,7 +539,7 @@ export function DataError({ onRetry }) {
       <p className="no-results__body">
         {t('error.body')}{' '}
         {onRetry && (
-          <button type="button" className="btn-tertiary error-retry-inline" onClick={onRetry}>
+          <button type="button" className="btn--tertiary error-retry-inline" onClick={onRetry}>
             <RotateCcw size={12} aria-hidden="true" />
             {t('error.retry')}
           </button>

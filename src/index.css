@@ -788,7 +788,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 /* Icon-only buttons: invisible padding keeps the visual size
    unchanged while meeting the 44px minimum tap target. */
-.btn-icon {
+.btn--icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -797,16 +797,13 @@ body:has(.modal-panel.is-open) .drawer-panel {
   color: var(--text-muted);
 }
 
-.btn-icon:focus-visible {
+.btn--icon:focus-visible {
   border-radius: 50%;
 }
 
-/* ─── Ghost / secondary button (neutral border, muted text) ─
-   .btn-secondary is the preferred name for new code.
-   .btn-ghost is kept as a back-compat alias — both are identical. */
+/* ─── Secondary button (neutral border, outline style) ────── */
 
-.btn-ghost,
-.btn-secondary {
+.btn--secondary {
   border: 1px solid var(--accent);
   background: transparent;
   color: var(--accent-text);
@@ -814,18 +811,18 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transition: var(--transition-btn);
 }
 
-/* ─── Accent button (Save, Reset, Copy, Revise) ─────────── */
+/* ─── Icon accent (colored icon buttons) ─────────────────── */
 
-.btn-icon-accent {
+.btn--icon-accent {
   color: var(--accent-text);
   transition: color var(--duration-fast);
 }
 
-.btn-icon-accent:hover {
+.btn--icon-accent:hover {
   color: var(--accent);
 }
 
-.btn-accent {
+.btn--primary {
   border: 1px solid var(--accent);
   background: var(--accent-bg);
   color: var(--accent-text);
@@ -835,7 +832,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 /* ─── Tertiary button (text-link style — no border, underlined) ── */
 
-.btn-tertiary {
+.btn--tertiary {
   border: 1px solid transparent;
   background: transparent;
   color: var(--accent-text);
@@ -846,9 +843,9 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 
-/* ─── Danger button (red secondary — destructive actions only) ── */
+/* ─── Danger button (red — destructive actions only) ────────── */
 
-.btn-danger {
+.btn--danger {
   border: 1px solid var(--error);
   background: transparent;
   color: var(--error);
@@ -858,36 +855,36 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 /* ─── Shared disabled state — before hover rules (specificity order) */
 
-.btn-ghost:disabled,
-.btn-secondary:disabled,
-.btn-accent:disabled,
-.btn-tertiary:disabled,
-.btn-danger:disabled {
+.btn--secondary:disabled,
+.btn--secondary:disabled,
+.btn--primary:disabled,
+.btn--tertiary:disabled,
+.btn--danger:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.btn-danger:not(:disabled):hover {
+.btn--danger:not(:disabled):hover {
   background: var(--error);
   color: var(--bg);
   border-color: var(--error);
 }
 
-.btn-ghost:not(:disabled):hover,
-.btn-secondary:not(:disabled):hover {
+.btn--secondary:not(:disabled):hover,
+.btn--secondary:not(:disabled):hover {
   background: var(--accent-text);
   color: var(--accent-bg);
   border-color: var(--accent-text);
 }
 
-.btn-accent:not(:disabled):hover {
+.btn--primary:not(:disabled):hover {
   background: var(--accent-text);
   color: var(--accent-bg);
   border-color: var(--accent-text);
 }
 
-.btn-tertiary:not(:disabled):hover,
-.btn-tertiary:not(:disabled):focus-visible {
+.btn--tertiary:not(:disabled):hover,
+.btn--tertiary:not(:disabled):focus-visible {
   background: var(--bg-subtle);
 }
 
@@ -1862,7 +1859,7 @@ input.search-input:focus {
     gap: var(--space-1);
   }
 
-  .settings-header .btn-icon {
+  .settings-header .btn--icon {
     margin-inline-start: calc(var(--space-2) * -1);
   }
 }
@@ -3066,7 +3063,7 @@ input.search-input:focus {
   cursor: pointer;
 }
 
-.field-btn {
+.btn--field {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -3076,17 +3073,17 @@ input.search-input:focus {
   white-space: nowrap;
 }
 
-.btn-accent.field-btn--success,
-.btn-ghost.field-btn--success,
-.btn-secondary.field-btn--success {
+.btn--primary.btn--field--success,
+.btn--secondary.btn--field--success,
+.btn--secondary.btn--field--success {
   color: var(--success);
   border-color: var(--success);
   opacity: 1;
 }
 
-.btn-accent.field-btn--success:hover,
-.btn-ghost.field-btn--success:hover,
-.btn-secondary.field-btn--success:hover {
+.btn--primary.btn--field--success:hover,
+.btn--secondary.btn--field--success:hover,
+.btn--secondary.btn--field--success:hover {
   color: var(--success);
   background: var(--accent-bg);
   border-color: var(--success);
@@ -3131,7 +3128,7 @@ input.search-input:focus {
     gap: var(--space-1);
   }
 
-  .about-header .btn-icon {
+  .about-header .btn--icon {
     margin-inline-start: calc(var(--space-2) * -1);
   }
 }
@@ -3302,7 +3299,7 @@ input.search-input:focus {
     gap: var(--space-1);
   }
 
-  .help-header .btn-icon {
+  .help-header .btn--icon {
     margin-inline-start: calc(var(--space-2) * -1);
   }
 }
@@ -3444,7 +3441,7 @@ input.search-input:focus {
     gap: var(--space-1);
   }
 
-  .onboarding-header .btn-icon {
+  .onboarding-header .btn--icon {
     margin-inline-start: calc(var(--space-2) * -1);
   }
 }
