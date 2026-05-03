@@ -657,7 +657,7 @@ export default function SettingsPanel({
         onClose={() => setResetConfirmOpen(false)}
         label={t('settings.confirm_reset_all_heading')}
         closeLabel={t('common.close')}
-        hideCloseBottom={false}
+        hideCloseBottom={true}
       >
         <div className="settings-reset-sheet">
           <h2 className="sheet-heading">{t('settings.confirm_reset_all_heading')}</h2>
