@@ -1160,7 +1160,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
       )}
 
       <div className="page-header__actions">
-        {compact ? (
+        {compact && !onboardingOpen ? (
           <button
             onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : helpOpen ? onCloseHelp : onCloseOnboarding}
             aria-label={t('common.close')}
@@ -1169,7 +1169,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
           >
             <X size={20} strokeWidth={2.5} aria-hidden="true" />
           </button>
-        ) : (
+        ) : !onboardingOpen && (
           <>
             <button
               onClick={onOpenHelp}
