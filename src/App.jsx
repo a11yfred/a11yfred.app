@@ -1199,13 +1199,15 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
         )}
       </div>
 
-      <h1
-        ref={h1Ref}
-        tabIndex={-1}
-        className={compact ? 'sr-only' : 'page-title'}
-      >
-        <a href="/" className="page-title-link">{t('app.name')}</a>
-      </h1>
+      <a href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
+        <h1
+          ref={h1Ref}
+          tabIndex={-1}
+          className={compact ? 'sr-only' : 'page-title'}
+        >
+          {t('app.name')}
+        </h1>
+      </a>
 
       {!compact && (
         <p className="page-tagline">{t('app.tagline')}</p>
