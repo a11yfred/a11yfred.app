@@ -341,32 +341,53 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
             {t(p.key)}
           </button>
-          {finding.sources?.filter(src => src.name !== 'ATH').map(src => src.url ? (
-            <a
-              key={src.name}
-              href={src.url}
-              target="_blank"
-              rel="noreferrer"
-              className="source-badge"
-              style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
-              aria-label={`${t('badge.source_prefix')}${src.name}`}
-            >
-              <span className="badge-prefix">{t('badge.source_prefix')}</span>
-              {src.name}
-            </a>
-          ) : (
-            <button
-              key={src.name}
-              type="button"
-              className="source-badge"
-              style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
-              onClick={() => onBadgeClick?.({ type: 'source', value: src.name })}
-              aria-label={`${t('badge.source_prefix')}${src.name} — ${t('results.badge_filter_aria')}`}
-            >
-              <span className="badge-prefix">{t('badge.source_prefix')}</span>
-              {src.name}
-            </button>
-          ))}
+          {(() => {
+            const sources = finding.sources?.filter(src => src.name !== 'ATH') || []
+            if (sources.length === 0) return null
+            if (sources.length === 1) {
+              const src = sources[0]
+              return src.url ? (
+                <a
+                  key={src.name}
+                  href={src.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="source-badge"
+                  style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
+                  aria-label={`${t('badge.source_prefix')}${src.name}`}
+                >
+                  <span className="badge-prefix">{t('badge.source_prefix')}</span>
+                  {src.name}
+                </a>
+              ) : (
+                <button
+                  key={src.name}
+                  type="button"
+                  className="source-badge"
+                  style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
+                  onClick={() => onBadgeClick?.({ type: 'source', value: src.name })}
+                  aria-label={`${t('badge.source_prefix')}${src.name} — ${t('results.badge_filter_aria')}`}
+                >
+                  <span className="badge-prefix">{t('badge.source_prefix')}</span>
+                  {src.name}
+                </button>
+              )
+            }
+            // Multiple sources: show single "Sources" badge that scrolls to section
+            return (
+              <button
+                key="sources-badge"
+                type="button"
+                className="source-badge"
+                style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
+                onClick={() => document.querySelector('.detail-sources-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                aria-label={t('badge.source_prefix_plural') || 'Sources'}
+              >
+                <span className="badge-prefix">{t('badge.source_prefix')}</span>
+                {sources.length}
+              </button>
+            )
+          })()}
           {finding.wcagVersion && finding.wcagLevel && (
             <button
               type="button"
