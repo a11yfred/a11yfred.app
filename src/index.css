@@ -3633,9 +3633,6 @@ input[type="radio"].settings-checkbox:checked {
 
 .help-tour-section {
   margin-top: var(--space-3);
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--border);
-  margin-bottom: var(--space-6);
 }
 
 .help-tour-description {
@@ -3657,9 +3654,15 @@ input[type="radio"].settings-checkbox:checked {
 
 .onboarding-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: var(--space-6);
+  gap: var(--space-2);
+}
+
+.onboarding-close-btn {
+  margin-top: -0.25rem;
+  margin-right: -0.5rem;
 }
 
 .onboarding-title {
