@@ -724,7 +724,10 @@ function LinkTitle({ url, fallback }) {
     if (!url) return
 
     // Try to fetch page title from meta tags
-    fetch(url)
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 5000)
+
+    fetch(url, { signal: controller.signal })
       .then(response => {
         if (!response.ok) {
           setTitle(fallback)
@@ -732,11 +735,13 @@ function LinkTitle({ url, fallback }) {
         }
         return response.text()
       })
-      .catch(() => {
+      .catch((error) => {
+        // CORS errors or timeout - fall back to the source name
         setTitle(fallback)
         return null
       })
       .then(html => {
+        clearTimeout(timeoutId)
         if (!html) return
         // Extract title from <title> tag
         const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i)
@@ -755,6 +760,11 @@ function LinkTitle({ url, fallback }) {
           setTitle(fallback)
         }
       })
+
+    return () => {
+      clearTimeout(timeoutId)
+      controller.abort()
+    }
   }, [url, fallback])
 
   return title
