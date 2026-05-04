@@ -354,9 +354,9 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                   rel="noreferrer"
                   className="source-badge"
                   style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
-                  aria-label={`${t('badge.source_prefix')}${src.name}`}
+                  aria-label={`Source: ${src.name}`}
                 >
-                  <span className="badge-prefix">{t('badge.source_prefix')}</span>
+                  <span className="badge-prefix">Source:</span>
                   {src.name}
                 </a>
               ) : (
@@ -366,9 +366,9 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                   className="source-badge"
                   style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
                   onClick={() => onBadgeClick?.({ type: 'source', value: src.name })}
-                  aria-label={`${t('badge.source_prefix')}${src.name} — ${t('results.badge_filter_aria')}`}
+                  aria-label={`Source: ${src.name} — ${t('results.badge_filter_aria')}`}
                 >
-                  <span className="badge-prefix">{t('badge.source_prefix')}</span>
+                  <span className="badge-prefix">Source:</span>
                   {src.name}
                 </button>
               )
@@ -383,8 +383,8 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                 onClick={() => document.querySelector('.detail-sources-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                 aria-label="Sources"
               >
-                <span className="badge-prefix">{t('badge.source_prefix')}</span>
-                Sources
+                <span className="badge-prefix">Sources:</span>
+                {sources.length}
               </button>
             )
           })()}
