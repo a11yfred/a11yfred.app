@@ -831,8 +831,13 @@ function AppContent({
                 onStar={toggleStar}
                 onArchive={toggleArchive}
                 showVoting={showVoting}
+                onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                 pinnedIds={pinnedIds}
                 onPin={togglePin}
+                narrowMode={narrowMode}
+                narrowQuery={narrowQuery}
+                narrowResults={narrowedResults}
+                onNarrow={() => setNarrowMode(true)}
                 showPrioritySort={true}
                 showAds={showAds}
                 adFrequency={adFrequency}
