@@ -3647,6 +3647,7 @@ input[type="radio"].settings-checkbox:checked {
 .onboarding-panel {
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
 }
