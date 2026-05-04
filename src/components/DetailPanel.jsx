@@ -381,10 +381,10 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                 className="source-badge"
                 style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
                 onClick={() => document.querySelector('.detail-sources-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                aria-label={t('badge.source_prefix_plural') || 'Sources'}
+                aria-label="Sources"
               >
                 <span className="badge-prefix">{t('badge.source_prefix')}</span>
-                {sources.length}
+                Sources
               </button>
             )
           })()}
