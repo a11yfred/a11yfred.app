@@ -712,6 +712,40 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
   )
 }
 
+function LinkTitle({ url, fallback }) {
+  const [title, setTitle] = useState(fallback)
+
+  useEffect(() => {
+    if (!url) return
+
+    // Try to fetch page title from meta tags
+    fetch(url, { mode: 'no-cors' })
+      .then(response => response.text())
+      .catch(() => null)
+      .then(html => {
+        if (!html) {
+          setTitle(fallback)
+          return
+        }
+        // Extract title from <title> tag
+        const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i)
+        if (titleMatch?.[1]) {
+          setTitle(titleMatch[1].trim())
+          return
+        }
+        // Extract from og:title or similar meta tags as fallback
+        const ogMatch = html.match(/<meta\s+property=["']og:title["']\s+content=["']([^"']+)["']/i)
+        if (ogMatch?.[1]) {
+          setTitle(ogMatch[1].trim())
+        } else {
+          setTitle(fallback)
+        }
+      })
+  }, [url, fallback])
+
+  return title
+}
+
 function SourceLinks({ links }) {
   const t = useT()
   if (!links?.length) return null
@@ -733,7 +767,7 @@ function SourceLinks({ links }) {
           <span className="detail-sources__heading">{t('detail.source_heading')}</span>
           {links[0].url ? (
             <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
-              {links[0].text}{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
+              <LinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
             </a>
           ) : (
             <span>{links[0].text}</span>
@@ -749,7 +783,7 @@ function SourceLinks({ links }) {
               <li key={link.url || link.text}>
                 {link.url ? (
                   <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
-                    {link.text}{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
+                    <LinkTitle url={link.url} fallback={link.text} />{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
                   </a>
                 ) : (
                   <span>{link.text}</span>
