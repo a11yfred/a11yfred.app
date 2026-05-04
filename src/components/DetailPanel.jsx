@@ -712,7 +712,22 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
 }
 
 function LinkTitle({ url, fallback }) {
-  const [title, setTitle] = useState(fallback)
+  const [title, setTitle] = useState(() => {
+    // Try to generate title from W3C/WAI URL pattern
+    if (url?.includes('w3.org/WAI/WCAG')) {
+      const match = url.match(/Understanding\/([a-z-]+)/)
+      if (match?.[1]) {
+        const slug = match[1]
+        // Convert slug to title: "name-role-value" -> "Name, Role, Value"
+        const titleText = slug
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(', ')
+        return `Understanding ${titleText}`
+      }
+    }
+    return fallback
+  })
 
   const decodeHtml = (html) => {
     const txt = document.createElement('textarea')
@@ -730,14 +745,12 @@ function LinkTitle({ url, fallback }) {
     fetch(url, { signal: controller.signal })
       .then(response => {
         if (!response.ok) {
-          setTitle(fallback)
           return null
         }
         return response.text()
       })
-      .catch((error) => {
-        // CORS errors or timeout - fall back to the source name
-        setTitle(fallback)
+      .catch(() => {
+        // CORS errors or timeout - keep the initial title
         return null
       })
       .then(html => {
@@ -756,8 +769,6 @@ function LinkTitle({ url, fallback }) {
         const ogMatch = html.match(/<meta\s+property=["']og:title["']\s+content=["']([^"']+)["']/i)
         if (ogMatch?.[1]) {
           setTitle(decodeHtml(ogMatch[1]).trim())
-        } else {
-          setTitle(fallback)
         }
       })
 
@@ -765,7 +776,7 @@ function LinkTitle({ url, fallback }) {
       clearTimeout(timeoutId)
       controller.abort()
     }
-  }, [url, fallback])
+  }, [url])
 
   return title
 }
