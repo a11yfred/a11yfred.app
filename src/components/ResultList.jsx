@@ -229,16 +229,22 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
           function handleUpvote(e) {
             e.stopPropagation()
+            // Force animation restart by removing and re-adding the class
+            e.currentTarget.classList.remove('animating')
+            void e.currentTarget.offsetWidth // Trigger reflow
             e.currentTarget.classList.add('animating')
-            setTimeout(() => e.currentTarget.classList.remove('animating'), 100)
+            setTimeout(() => e.currentTarget.classList.remove('animating'), 400)
             onUpvote?.(finding.id)
             announce(t('announce.upvoted', { title: finding.title, score: score + 1 }))
           }
 
           function handleDownvote(e) {
             e.stopPropagation()
+            // Force animation restart by removing and re-adding the class
+            e.currentTarget.classList.remove('animating')
+            void e.currentTarget.offsetWidth // Trigger reflow
             e.currentTarget.classList.add('animating')
-            setTimeout(() => e.currentTarget.classList.remove('animating'), 100)
+            setTimeout(() => e.currentTarget.classList.remove('animating'), 400)
             onDownvote?.(finding.id)
             announce(t('announce.downvoted', { title: finding.title, score: score - 1 }))
           }
