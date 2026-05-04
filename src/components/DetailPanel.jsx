@@ -658,9 +658,9 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
 
   return (
     <div className="detail-related">
-      <p className="detail-related__heading">{t(headingKey)}</p>
       {related.length === 1 ? (
-        <p className="detail-related__single">
+        <p className="detail-related__heading detail-related__heading--single">
+          {t(headingKey)}{' '}
           <button
             type="button"
             className="detail-related__btn"
@@ -670,19 +670,22 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
           </button>
         </p>
       ) : (
-        <ul className="detail-related__list">
-          {related.map(d => (
-            <li key={d.id}>
-              <button
-                type="button"
-                className="detail-related__btn"
-                onClick={() => onSelect(d)}
-              >
-                {d.title}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <>
+          <p className="detail-related__heading">{t(headingKey)}</p>
+          <ul className="detail-related__list">
+            {related.map(d => (
+              <li key={d.id}>
+                <button
+                  type="button"
+                  className="detail-related__btn"
+                  onClick={() => onSelect(d)}
+                >
+                  {d.title}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </div>
   )
@@ -703,37 +706,39 @@ function SourceLinks({ links }) {
   }
 
   return (
-    <>
-      <p className="detail-sources">
-        <span className="detail-sources__heading">{t('detail.source_heading')}</span>
-        {links.length === 1 && (
-          <>
-            {links[0].url ? (
-              <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
-                {links[0].text}{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
-              </a>
-            ) : (
-              <span>{links[0].text}</span>
-            )}
-          </>
-        )}
-      </p>
-      {links.length > 1 && (
-        <ul className="detail-sources__list">
-          {links.map(link => (
-            <li key={link.url || link.text}>
-              {link.url ? (
-                <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
-                  {link.text}{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
-                </a>
-              ) : (
-                <span>{link.text}</span>
-              )}
-            </li>
-          ))}
-        </ul>
+    <div className="detail-sources-section">
+      {links.length === 1 ? (
+        <p className="detail-sources detail-sources--single">
+          <span className="detail-sources__heading">{t('detail.source_heading')}</span>
+          {links[0].url ? (
+            <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
+              {links[0].text}{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
+            </a>
+          ) : (
+            <span>{links[0].text}</span>
+          )}
+        </p>
+      ) : (
+        <>
+          <p className="detail-sources">
+            <span className="detail-sources__heading">{t('detail.source_heading')}</span>
+          </p>
+          <ul className="detail-sources__list">
+            {links.map(link => (
+              <li key={link.url || link.text}>
+                {link.url ? (
+                  <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
+                    {link.text}{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
+                  </a>
+                ) : (
+                  <span>{link.text}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </>
       )}
-    </>
+    </div>
   )
 }
 

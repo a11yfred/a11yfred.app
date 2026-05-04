@@ -3036,20 +3036,32 @@ input[type="radio"].settings-checkbox:checked {
   margin-bottom: var(--space-2);
 }
 
-.detail-related__single {
+.detail-related__heading--single {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  flex-wrap: wrap;
   margin-bottom: var(--space-4);
 }
 
 /* ─── Source ───────────────────────────────────────────────── */
 
-.detail-sources {
+.detail-sources-section {
   margin-top: var(--space-5);
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
+}
+
+.detail-sources {
+  margin-bottom: 0;
+}
+
+.detail-sources--single {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
-  align-items: center;
+  align-items: baseline;
+  margin-bottom: var(--space-4);
 }
 
 .detail-sources__heading {
