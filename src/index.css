@@ -3657,22 +3657,20 @@ input[type="radio"].settings-checkbox:checked {
 
 .onboarding-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: var(--space-6);
 }
 
-.onboarding-close-btn {
-  margin: -0.5rem 0 0 -0.5rem;
-}
-
 .onboarding-title {
-  font-size: var(--fs-h3);
-  line-height: 1.2;
+  font-size: var(--fs-sub);
   font-weight: 600;
-  color: var(--text);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   outline: none;
   margin: 0;
+  flex: 1;
 }
 
 .onboarding-skip-btn {
@@ -3681,6 +3679,12 @@ input[type="radio"].settings-checkbox:checked {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.onboarding-skip-btn:not(:disabled):hover,
+.onboarding-skip-btn:not(:disabled):active,
+.onboarding-skip-btn:not(:disabled):focus-visible {
+  color: white;
 }
 
 .onboarding-content {

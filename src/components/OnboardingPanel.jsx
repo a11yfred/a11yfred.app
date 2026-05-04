@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Search, Star, Pin, Copy, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Search, Star, Pin, Copy, Sparkles, ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 
@@ -36,7 +36,7 @@ export default function OnboardingPanel({ onClose }) {
 
   const total = SLIDES.length
   const isFirst = step === 0
-  const isLast  = step === total - 1
+  const isLast = step === total - 1
 
   function commitClose() {
     localStorage.setItem('onboardingSeen', '1')
@@ -69,20 +69,21 @@ export default function OnboardingPanel({ onClose }) {
   return (
     <div className="onboarding-panel">
       <div className="onboarding-header">
-        <button
-          type="button"
-          className="btn--icon btn--icon-accent onboarding-close-btn"
-          aria-label={t('common.close')}
-          onClick={handleRequestClose}
-        >
-          <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
-        </button>
         <h2
           tabIndex={-1}
-          className="onboarding-title help-section-heading"
+          className="onboarding-title"
         >
           {t('onboarding.heading')}
         </h2>
+        <button
+          type="button"
+          onClick={handleRequestClose}
+          aria-label={t('common.close')}
+          title={t('common.close')}
+          className="btn--icon btn--icon-accent page-header__close-btn"
+        >
+          <X size={20} strokeWidth={2.5} aria-hidden="true" />
+        </button>
       </div>
 
       <div className="onboarding-content" aria-live="polite" aria-atomic="true">
