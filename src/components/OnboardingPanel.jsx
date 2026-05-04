@@ -24,8 +24,8 @@ const SLIDES = [
 export default function OnboardingPanel({ onClose }) {
   const t = useT()
   const dir = useDir()
-  const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
   const FwdChevron  = dir === 'rtl' ? ChevronLeft  : ChevronRight
+  const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
 
   const [step, setStep] = useState(0)
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -69,14 +69,6 @@ export default function OnboardingPanel({ onClose }) {
   return (
     <div className="onboarding-panel">
       <div className="onboarding-header">
-        <button
-          type="button"
-          onClick={handleRequestClose}
-          className="btn--icon btn--icon-accent"
-          aria-label={t('common.close')}
-        >
-          <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
-        </button>
         <h2
           ref={stepHeadingRef}
           tabIndex={-1}
@@ -86,7 +78,7 @@ export default function OnboardingPanel({ onClose }) {
         </h2>
         <button
           type="button"
-          className="btn--secondary onboarding-skip-btn btn--height-standard"
+          className="btn--tertiary onboarding-skip-btn"
           onClick={handleRequestClose}
         >
           {t('onboarding.skip')}
@@ -94,14 +86,16 @@ export default function OnboardingPanel({ onClose }) {
       </div>
 
       <div className="onboarding-content" aria-live="polite" aria-atomic="true">
-        <div className="onboarding-icons" aria-hidden="true">
-          {slide.icons.map((Icon, i) => (
-            <Icon key={i} size={40} strokeWidth={1.5} className="onboarding-icon" />
-          ))}
+        <div className="onboarding-step-heading-row">
+          <div className="onboarding-icons" aria-hidden="true">
+            {slide.icons.map((Icon, i) => (
+              <Icon key={i} size={40} strokeWidth={1.5} className="onboarding-icon" />
+            ))}
+          </div>
+          <h3 className="onboarding-step-heading">
+            {t(slide.headingKey)}
+          </h3>
         </div>
-        <h3 className="onboarding-step-heading">
-          {t(slide.headingKey)}
-        </h3>
         <p className="onboarding-step-body">
           {t(slide.bodyKey)}
         </p>

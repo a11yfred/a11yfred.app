@@ -1,4 +1,4 @@
-import { Star, ChevronUp, ChevronDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -229,12 +229,16 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
           function handleUpvote(e) {
             e.stopPropagation()
+            e.currentTarget.classList.add('animating')
+            setTimeout(() => e.currentTarget.classList.remove('animating'), 100)
             onUpvote?.(finding.id)
             announce(t('announce.upvoted', { title: finding.title, score: score + 1 }))
           }
 
           function handleDownvote(e) {
             e.stopPropagation()
+            e.currentTarget.classList.add('animating')
+            setTimeout(() => e.currentTarget.classList.remove('animating'), 100)
             onDownvote?.(finding.id)
             announce(t('announce.downvoted', { title: finding.title, score: score - 1 }))
           }
@@ -391,7 +395,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   disabled={archived}
                   onClick={handleUpvote}
                 >
-                  <ChevronUp size={14} aria-hidden="true" />
+                  <ThumbsUp size={14} aria-hidden="true" />
                 </button>
 
                 <span
@@ -409,7 +413,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   disabled={archived}
                   onClick={handleDownvote}
                 >
-                  <ChevronDown size={14} aria-hidden="true" />
+                  <ThumbsDown size={14} aria-hidden="true" />
                 </button>
 
                 <button

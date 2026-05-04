@@ -41,13 +41,16 @@ export default function HelpPanel({ onClose, onStartTour }) {
           ))}
         </ol>
         {onStartTour && (
-          <button
-            type="button"
-            className="btn--secondary help-tour-btn btn--height-standard"
-            onClick={() => { onClose(); onStartTour() }}
-          >
-            {t('help.take_tour')}
-          </button>
+          <div className="help-tour-section">
+            <button
+              type="button"
+              className="btn--primary help-tour-btn btn--height-standard"
+              onClick={() => { onClose(); onStartTour() }}
+            >
+              {t('help.take_tour')}
+            </button>
+            <p className="help-tour-description">{t('help.take_tour_description')}</p>
+          </div>
         )}
       </section>
 
@@ -55,13 +58,13 @@ export default function HelpPanel({ onClose, onStartTour }) {
         <h3 className="help-section-heading">{t('help.shortcuts_heading')}</h3>
         <p className="help-shortcuts-note">{t('help.shortcuts_note')}</p>
         <ul className="help-shortcuts">
-          <li className="help-shortcut"><code className="help-shortcut-key">J</code> {t('help.shortcut_j')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key">K</code> {t('help.shortcut_k')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key">S</code> {t('help.shortcut_s')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key">E</code> {t('help.shortcut_e')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key">U</code> {t('help.shortcut_u')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key">Shift+↑</code> {t('help.shortcut_upvote')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key">Shift+↓</code> {t('help.shortcut_downvote')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">J</code> {t('help.shortcut_j')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">K</code> {t('help.shortcut_k')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">S</code> {t('help.shortcut_s')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">E</code> {t('help.shortcut_e')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">U</code> {t('help.shortcut_u')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↑</code> {t('help.shortcut_upvote')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↓</code> {t('help.shortcut_downvote')}</li>
         </ul>
       </section>
     </div>

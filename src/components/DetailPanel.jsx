@@ -714,6 +714,12 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
 function LinkTitle({ url, fallback }) {
   const [title, setTitle] = useState(fallback)
 
+  const decodeHtml = (html) => {
+    const txt = document.createElement('textarea')
+    txt.innerHTML = html
+    return txt.value
+  }
+
   useEffect(() => {
     if (!url) return
 
@@ -735,7 +741,7 @@ function LinkTitle({ url, fallback }) {
         // Extract title from <title> tag
         const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i)
         if (titleMatch?.[1]) {
-          const rawTitle = titleMatch[1].trim()
+          const rawTitle = decodeHtml(titleMatch[1]).trim()
           // Clean up overly long titles by taking just the main part before separators
           const cleanTitle = rawTitle.split(/\s*[|·—-]\s*/)[0].trim()
           setTitle(cleanTitle || rawTitle)
@@ -744,7 +750,7 @@ function LinkTitle({ url, fallback }) {
         // Extract from og:title as fallback
         const ogMatch = html.match(/<meta\s+property=["']og:title["']\s+content=["']([^"']+)["']/i)
         if (ogMatch?.[1]) {
-          setTitle(ogMatch[1].trim())
+          setTitle(decodeHtml(ogMatch[1]).trim())
         } else {
           setTitle(fallback)
         }
@@ -784,7 +790,7 @@ function SourceLinks({ links }) {
       ) : (
         <>
           <p className="detail-sources">
-            <span className="detail-sources__heading">{t('detail.source_heading')}</span>
+            <span className="detail-sources__heading">{t('detail.sources_heading')}</span>
           </p>
           <ul className="detail-sources__list">
             {links.map(link => (
