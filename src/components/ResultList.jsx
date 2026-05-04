@@ -1,4 +1,4 @@
-import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter, ChevronDown } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'

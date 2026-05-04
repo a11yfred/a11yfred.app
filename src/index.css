@@ -1877,7 +1877,7 @@ input.search-input:focus {
   display: inline-block;
   animation: typewriter-fade 2.5s ease both;
   font-style: italic;
-  color: var(--accent-text);
+  color: var(--accent);
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 18ch;
@@ -1894,7 +1894,7 @@ input.search-input:focus {
 }
 
 .search-typewriter__phrase:hover {
-  color: white;
+  color: var(--accent);
 }
 
 /* ─── Search narrow mode ──────────────────────────────────── */
