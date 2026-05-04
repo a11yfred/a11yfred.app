@@ -383,8 +383,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                 onClick={() => document.querySelector('.detail-sources-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                 aria-label="Sources"
               >
-                <span className="badge-prefix">Sources:</span>
-                {sources.length}
+                Sources
               </button>
             )
           })()}
@@ -719,21 +718,30 @@ function LinkTitle({ url, fallback }) {
     if (!url) return
 
     // Try to fetch page title from meta tags
-    fetch(url, { mode: 'no-cors' })
-      .then(response => response.text())
-      .catch(() => null)
-      .then(html => {
-        if (!html) {
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
           setTitle(fallback)
-          return
+          return null
         }
+        return response.text()
+      })
+      .catch(() => {
+        setTitle(fallback)
+        return null
+      })
+      .then(html => {
+        if (!html) return
         // Extract title from <title> tag
         const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i)
         if (titleMatch?.[1]) {
-          setTitle(titleMatch[1].trim())
+          const rawTitle = titleMatch[1].trim()
+          // Clean up overly long titles by taking just the main part before separators
+          const cleanTitle = rawTitle.split(/\s*[|·—-]\s*/)[0].trim()
+          setTitle(cleanTitle || rawTitle)
           return
         }
-        // Extract from og:title or similar meta tags as fallback
+        // Extract from og:title as fallback
         const ogMatch = html.match(/<meta\s+property=["']og:title["']\s+content=["']([^"']+)["']/i)
         if (ogMatch?.[1]) {
           setTitle(ogMatch[1].trim())
