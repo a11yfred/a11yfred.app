@@ -1160,14 +1160,25 @@ select:disabled {
   pointer-events: none;
 }
 
+@keyframes vote-up {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes vote-down {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+  100% { transform: translateY(0); }
+}
+
 .result-vote-btn--up:not(:disabled) {
   transition: transform 120ms ease-out;
 }
 
 .result-vote-btn--up:active:not(:disabled),
 .result-vote-btn--up.animating:not(:disabled) {
-  transform: translateY(-2px);
-  transition-duration: 40ms;
+  animation: vote-up 400ms ease-out;
 }
 
 .result-vote-btn--down:not(:disabled) {
@@ -1176,8 +1187,7 @@ select:disabled {
 
 .result-vote-btn--down:active:not(:disabled),
 .result-vote-btn--down.animating:not(:disabled) {
-  transform: translateY(2px);
-  transition-duration: 40ms;
+  animation: vote-down 400ms ease-out;
 }
 
 .result-vote-btn:hover:not(:disabled) {
