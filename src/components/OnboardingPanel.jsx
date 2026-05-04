@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Search, Star, Pin, Copy, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -29,7 +29,7 @@ export default function OnboardingPanel({ onClose }) {
 
   const [step, setStep] = useState(0)
   const [confirmOpen, setConfirmOpen] = useState(false)
-  const stepHeadingRef = useFocusOnMount()
+  const stepHeadingRef = useRef(null)
   usePaginationFocus(stepHeadingRef, step)
 
   usePageTitle(t('onboarding.heading'))
@@ -69,20 +69,20 @@ export default function OnboardingPanel({ onClose }) {
   return (
     <div className="onboarding-panel">
       <div className="onboarding-header">
+        <button
+          type="button"
+          className="btn--icon btn--icon-accent onboarding-close-btn"
+          aria-label={t('common.close')}
+          onClick={handleRequestClose}
+        >
+          <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
+        </button>
         <h2
-          ref={stepHeadingRef}
           tabIndex={-1}
-          className="onboarding-title"
+          className="onboarding-title help-section-heading"
         >
           {t('onboarding.heading')}
         </h2>
-        <button
-          type="button"
-          className="btn--tertiary onboarding-skip-btn"
-          onClick={handleRequestClose}
-        >
-          {t('onboarding.skip')}
-        </button>
       </div>
 
       <div className="onboarding-content" aria-live="polite" aria-atomic="true">
@@ -92,7 +92,11 @@ export default function OnboardingPanel({ onClose }) {
               <Icon key={i} size={40} strokeWidth={1.5} className="onboarding-icon" />
             ))}
           </div>
-          <h3 className="onboarding-step-heading">
+          <h3
+            ref={stepHeadingRef}
+            tabIndex={-1}
+            className="onboarding-step-heading"
+          >
             {t(slide.headingKey)}
           </h3>
         </div>
@@ -131,6 +135,16 @@ export default function OnboardingPanel({ onClose }) {
           {!isLast && <FwdChevron size={16} aria-hidden="true" />}
         </button>
       </nav>
+
+      <div className="onboarding-footer">
+        <button
+          type="button"
+          className="btn--tertiary onboarding-skip-btn"
+          onClick={handleRequestClose}
+        >
+          {t('onboarding.skip_tour')}
+        </button>
+      </div>
 
       <Modal
         open={confirmOpen}

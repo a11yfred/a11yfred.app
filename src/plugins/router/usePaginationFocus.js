@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react'
 
 /**
  * Moves focus to `ref.current` whenever `page` changes — but NOT on initial
- * mount. Use inside paginated modals and bottom sheets so keyboard and screen
+ * mount, and NOT if the element's innerHTML is the same as the previous page.
+ * Use inside paginated modals and bottom sheets so keyboard and screen
  * reader users land at the top of the new page content rather than wherever
  * focus happened to be inside the previous page.
  *
@@ -17,12 +18,20 @@ import { useEffect, useRef } from 'react'
  */
 export function usePaginationFocus(ref, page) {
   const isMountRef = useRef(true)
+  const previousContentRef = useRef(null)
 
   useEffect(() => {
     if (isMountRef.current) {
       isMountRef.current = false
+      previousContentRef.current = ref.current?.innerHTML
       return
     }
-    ref.current?.focus()
+
+    const currentContent = ref.current?.innerHTML
+    // Only focus if the content has changed
+    if (currentContent !== previousContentRef.current) {
+      ref.current?.focus()
+    }
+    previousContentRef.current = currentContent
   }, [ref, page])
 }

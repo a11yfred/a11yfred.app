@@ -35,6 +35,7 @@
   "help.take_tour_description": "See an interactive walkthrough of how to search, prioritize, and export findings.",
   "onboarding.heading": "Welcome to A11yTextHelper",
   "onboarding.skip": "Skip",
+  "onboarding.skip_tour": "Skip Tour",
   "onboarding.next": "Next",
   "onboarding.back": "Back",
   "onboarding.done": "Get started",

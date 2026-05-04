@@ -25,6 +25,22 @@ export default function HelpPanel({ onClose, onStartTour }) {
         </h2>
       </div>
 
+      {onStartTour && (
+        <section className="help-section">
+          <h3 className="help-section-heading">{t('help.take_tour')}</h3>
+          <div className="help-tour-section">
+            <button
+              type="button"
+              className="btn--primary help-tour-btn btn--height-standard"
+              onClick={() => { onClose(); onStartTour() }}
+            >
+              {t('help.take_tour')}
+            </button>
+            <p className="help-tour-description">{t('help.take_tour_description')}</p>
+          </div>
+        </section>
+      )}
+
       <section className="help-section">
         <h3 className="help-section-heading">{t('help.how_heading')}</h3>
         <ol className="help-steps">
@@ -40,18 +56,6 @@ export default function HelpPanel({ onClose, onStartTour }) {
             </li>
           ))}
         </ol>
-        {onStartTour && (
-          <div className="help-tour-section">
-            <button
-              type="button"
-              className="btn--primary help-tour-btn btn--height-standard"
-              onClick={() => { onClose(); onStartTour() }}
-            >
-              {t('help.take_tour')}
-            </button>
-            <p className="help-tour-description">{t('help.take_tour_description')}</p>
-          </div>
-        )}
       </section>
 
       <section className="help-section help-section--last">

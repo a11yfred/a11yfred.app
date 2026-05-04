@@ -3633,6 +3633,9 @@ input[type="radio"].settings-checkbox:checked {
 
 .help-tour-section {
   margin-top: var(--space-3);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-6);
 }
 
 .help-tour-description {
@@ -3654,9 +3657,13 @@ input[type="radio"].settings-checkbox:checked {
 
 .onboarding-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: var(--space-6);
+}
+
+.onboarding-close-btn {
+  margin: -0.5rem 0 0 -0.5rem;
 }
 
 .onboarding-title {
@@ -3665,6 +3672,7 @@ input[type="radio"].settings-checkbox:checked {
   font-weight: 600;
   color: var(--text);
   outline: none;
+  margin: 0;
 }
 
 .onboarding-skip-btn {
@@ -3719,7 +3727,13 @@ input[type="radio"].settings-checkbox:checked {
   padding-top: var(--space-6);
   border-top: 1px solid var(--border);
   margin-top: auto;
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+}
+
+.onboarding-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-2);
 }
 
 .onboarding-nav-btn {
