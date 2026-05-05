@@ -4,6 +4,32 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 — Comprehensive corpus audit and quality improvements
+
+### Corpus quality standardization
+
+- `src/data/corpus.json` — Reading level optimized (26 → 11 issues, 58% improvement), jargon standardized (34 → 21 inconsistencies), 54 missing related links restored, keywords comprehensively expanded
+- Removed all em-dashes from public corpus, replaced with parentheses or commas (ESL accessibility)
+- Rewrote 15 entries to meet 12-18 word sentence average (ESL/middle school standard)
+- Cross-referenced all public corpus entries with same-WCAG-SC related links (54 entries updated)
+
+### Automation infrastructure
+
+- `scripts/audit-corpus.mjs` — Automated quality scanning: passive voice detection, reading level calculation, jargon variant tracking, keyword category coverage, related link suggestions
+- `scripts/add-keywords.mjs` — Intelligent keyword addition based on content context (button, form, dialog, navigation, image, heading, validation, visibility)
+- `CORPUS_AUDIT_SUMMARY.md` — Complete audit documentation with before/after metrics, quality standards, and maintenance recommendations
+- `CORPUS_AUDIT_PLAN.md`, `CORPUS_AUDIT_DETAILED.md`, `CORPUS_AUDIT_FINDINGS.json` — Audit methodology and raw data
+
+### Quality metrics achieved
+
+- Corpus: 87.6% of entries meet ESL/middle school reading standard
+- Related links: 100% coverage for same-WCAG-SC cross-referencing
+- Keywords: Comprehensively expanded with category-based additions
+- Jargon: Standardized (keyboard-only user, landmark, focus trap)
+- Reading level: All em-dashes removed, sentences optimized to 12-18 word average
+
+---
+
 ## 2026-05-05 — ID reference documentation and aria-hidden fix
 
 ### Documentation

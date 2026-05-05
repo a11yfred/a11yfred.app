@@ -23,6 +23,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Debug Tools | ✅ | 100 | 1 |
 | Internationalization | 🟡 | 80 | 1 |
 | Corpus / Finding Data | ✅ | 100 | 1 |
+| Corpus Quality Standards | ✅ | 100 | 1 |
 | Platform Variant Display | ✅ | 100 | 1 |
 | Animations & Transitions | ✅ | 100 | 1 |
 | Responsive Design | ✅ | 100 | 1 |

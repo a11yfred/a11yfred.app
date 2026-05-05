@@ -4,6 +4,35 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 5, 2026 (evening) — Comprehensive corpus audit and quality improvements
+
+### Corpus quality standardization and accessibility improvements
+
+Completed a comprehensive audit of the corpus focused on ensuring entries meet plain-language, ESL/middle school reading standards with consistent jargon and complete cross-referencing.
+
+**Corpus improvements** (87.6% now meet ESL standard):
+
+- Reading level: 26 issues → 11 issues (58% improvement)
+  - Broke long sentences into shorter 12-18 word constructions
+  - Removed all em-dashes, replaced with parentheses or commas
+  - 15 entries rewritten for clarity and accessibility
+- Jargon standardization: 34 inconsistencies → 21 (38% improvement)
+  - "keyboard user" → "keyboard-only user" (24 entries)
+  - "ARIA landmark" → "landmark" (3 entries)
+  - "trap focus" → "focus trap" (1 entry)
+- Related links: 54 missing → 0 missing (100% complete)
+  - Added same-WCAG-SC cross-references for all corpus entries
+- Keywords: Comprehensive category-based expansion across all entries
+- No em-dashes: 100% compliant
+
+**Automation infrastructure**:
+
+- `scripts/audit-corpus.mjs` — Automated quality scanning (passive voice, reading level, jargon consistency, keywords, related links)
+- `scripts/add-keywords.mjs` — Intelligent keyword categorization
+- `CORPUS_AUDIT_SUMMARY.md` — Complete audit documentation with before/after metrics
+
+---
+
 ## May 5, 2026 — ID consolidation documentation and console error fixes
 
 ### Corpus ID reference complete
