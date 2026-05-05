@@ -12,15 +12,6 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 **Day 1 for Phase 1 public release** (ship with these):
 
-- [x] **89-entry public corpus** `[corpus]` `[data]` — Fully sourced, WCAG-mapped, keywords complete
-- [x] **All linters passing** `[code]` — ESLint, Stylelint, Markdownlint clean
-- [x] **Privacy & security baseline** `[privacy]` — No cookies, no third-party tracking, localStorage inventory documented
-- [x] **Offline-first support** `[infra]` — Service Worker caching, PWA manifest, full search works offline
-- [x] **Accessibility verified** `[a11y]` — axe-core integration, WCAG 2.2 AA baseline, keyboard + screen reader tested
-- [x] **Documentation complete** `[docs]` — README, CONTRIBUTING, SECURITY, DEPLOYING, CHANGELOG, UPDATES
-- [x] **robots.txt configured** `[seo]` — Allows crawlers with 1s crawl-delay, references sitemap.xml
-- [x] **Sitemap.xml generated** `[seo]` — Single-page app sitemap (one root URL entry) created at public/sitemap.xml
-- [x] **SEO meta tags uncommented** `[seo]` — Core meta, OG, Twitter card, JSON-LD structured data all active; URLs updated to a11ytexthelper.com placeholder
 - [ ] **Ko-fi donations live** `[infra]` `[manual]` — Widget added to footer. **Remaining**: (1) create Ko-fi account if not done, (2) add Ko-fi username to footer link, (3) test widget loads and accepts donations
 - [ ] **GitHub README badges** `[docs]` `[manual]` — Add build status, license, version. **Remaining**: (1) add GitHub actions badge once CI is set up, (2) add license badge, (3) add Netlify deploy badge once live
 - [ ] **Production domain configured** `[infra]` `[manual]` — Current: a11ytexthelper.com placeholder. **Remaining**: (1) confirm final domain, (2) configure DNS records, (3) enable HTTPS/SSL on hosting provider, (4) update canonical URL if domain differs from a11ytexthelper.com
@@ -134,13 +125,10 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 ### Search & Visibility
 
 - [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` — Verify domain ownership and monitor search performance. **Remaining**: (1) create Google Search Console account, (2) verify ownership via DNS/HTML/file, (3) submit sitemap.xml, (4) monitor indexing status, (5) check for crawl errors, (6) track impressions/clicks/CTR for initial keywords
-- [ ] **SEO optimization for Phase 3** `[seo]` `[code]` — Enable SEO meta tags in index.html (currently commented out). **Remaining**: (1) uncomment meta description/OG/Twitter cards in index.html, (2) fill in canonical URL (yourdomain.com), (3) generate dynamic OG image, (4) verify all internal links use hash routing, (5) test with Rich Results tester, (6) confirm structured data (WebApplication JSON-LD) is valid
-- [ ] **Sitemap generation** `[infra]` `[seo]` — Single-page app sitemap needed. **Remaining**: (1) generate `public/sitemap.xml` (single entry for SPA root), (2) link in index.html head, (3) submit to Search Console, (4) set crawl budget/user-agent rules if needed
-- [ ] **robots.txt for Phase 3** `[seo]` `[code]` — Currently blocks all crawlers (dev mode). **Remaining**: (1) update `public/robots.txt` to allow crawlers on prod domain, (2) set crawl delay/rate-limit if needed, (3) reference sitemap.xml
+- [ ] **Update canonical URL to production domain** `[seo]` `[code]` — SEO meta tags already active in index.html (Phase 1). **Remaining**: (1) confirm final production domain, (2) update canonical URL and all OG/Twitter URLs to final domain, (3) verify rich results with Rich Results tester, (4) test hash routing for all internal links
 
 ### Analytics & Monitoring
 
-- [ ] **Umami analytics setup** `[infra]` `[manual]` — Privacy-first, cookieless analytics. **Remaining**: (1) create free account at umami.is or self-host, (2) add site and get WEBSITE_ID, (3) replace `YOUR_WEBSITE_ID` and uncomment script in index.html, (4) verify zero cookies in dashboard, (5) enable on production deployment
 - [ ] **Error tracking / crash reporting** `[infra]` `[monitoring]` — Optional but recommended for early-stage visibility. **Remaining**: (1) evaluate Sentry (free tier covers 5k events/mo, good for startups), (2) add error boundary to App.jsx, (3) capture unhandled promise rejections, (4) configure release tracking, (5) notify on critical errors, (6) set up Slack/email alerts
 - [ ] **GitHub releases page** `[infra]` `[manual]` — Document milestones and version history. **Remaining**: (1) create GitHub release for v0.1.0 on Phase 3 launch, (2) add release notes, (3) attach build artifacts if distributing binaries, (4) enable auto-updates tracking (Electron desktop users can subscribe)
 
@@ -162,7 +150,21 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 Completed or obsolete items have been cleaned from the active list. See CHANGELOG.md and UPDATES.md for documentation.
 
-**Completed (documented in CHANGELOG/UPDATES):**
+**Completed (Phase 1 Day-One Essentials):**
+
+- 89-entry public corpus — Fully sourced, WCAG-mapped, keywords complete (May 5)
+- All linters passing — ESLint, Stylelint, Markdownlint clean (May 5)
+- Privacy & security baseline — No cookies, no third-party tracking, localStorage inventory documented (May 5)
+- Offline-first support — Service Worker caching, PWA manifest, full search works offline (Phase 1)
+- Accessibility verified — axe-core integration, WCAG 2.2 AA baseline, keyboard + screen reader tested (Phase 1)
+- Documentation complete — README, CONTRIBUTING, SECURITY, DEPLOYING, CHANGELOG, UPDATES (May 5)
+- robots.txt configured — Allows crawlers with 1s crawl-delay, references sitemap.xml (May 5)
+- Sitemap.xml generated — Single-page app sitemap (one root URL entry) at public/sitemap.xml (May 5)
+- SEO meta tags uncommented — Core meta, OG, Twitter card, JSON-LD structured data all active (May 5)
+- Agentic AI wired — DetailPanel toggle, SettingsPanel config, full corpus-search integration (May 5)
+- AI provider privacy comparison — README table with training data policies for all 4 providers (May 5)
+
+**Completed (Phase 1 Pre-Launch):**
 
 - Keyword audit — 89 public corpus entries fully populated
 - Related SC links — all entries have `related` arrays, 54 entries with same-WCAG-SC cross-references documented in May 5 updates
