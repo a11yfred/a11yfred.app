@@ -1,4 +1,8 @@
-# Development deployment — block all crawlers until the public release.
-# Remove this file and replace with a permissive robots.txt before Phase 3 launch.
+# A11yTextHelper — Privacy-first accessibility tool
+# Single-page app (SPA); all content served from root with hash routing
+
 User-agent: *
-Disallow: /
+Allow: /
+Crawl-delay: 1
+
+Sitemap: https://a11ytexthelper.com/sitemap.xml

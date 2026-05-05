@@ -8,6 +8,25 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ---
 
+## Phase 1 — Launch Day Essentials
+
+**Day 1 for Phase 1 public release** (ship with these):
+
+- [x] **89-entry public corpus** `[corpus]` `[data]` — Fully sourced, WCAG-mapped, keywords complete
+- [x] **All linters passing** `[code]` — ESLint, Stylelint, Markdownlint clean
+- [x] **Privacy & security baseline** `[privacy]` — No cookies, no third-party tracking, localStorage inventory documented
+- [x] **Offline-first support** `[infra]` — Service Worker caching, PWA manifest, full search works offline
+- [x] **Accessibility verified** `[a11y]` — axe-core integration, WCAG 2.2 AA baseline, keyboard + screen reader tested
+- [x] **Documentation complete** `[docs]` — README, CONTRIBUTING, SECURITY, DEPLOYING, CHANGELOG, UPDATES
+- [x] **robots.txt configured** `[seo]` — Allows crawlers with 1s crawl-delay, references sitemap.xml
+- [x] **Sitemap.xml generated** `[seo]` — Single-page app sitemap (one root URL entry) created at public/sitemap.xml
+- [x] **SEO meta tags uncommented** `[seo]` — Core meta, OG, Twitter card, JSON-LD structured data all active; URLs updated to a11ytexthelper.com placeholder
+- [ ] **Ko-fi donations live** `[infra]` `[manual]` — Widget added to footer. **Remaining**: (1) create Ko-fi account if not done, (2) add Ko-fi username to footer link, (3) test widget loads and accepts donations
+- [ ] **GitHub README badges** `[docs]` `[manual]` — Add build status, license, version. **Remaining**: (1) add GitHub actions badge once CI is set up, (2) add license badge, (3) add Netlify deploy badge once live
+- [ ] **Production domain configured** `[infra]` `[manual]` — Current: a11ytexthelper.com placeholder. **Remaining**: (1) confirm final domain, (2) configure DNS records, (3) enable HTTPS/SSL on hosting provider, (4) update canonical URL if domain differs from a11ytexthelper.com
+
+---
+
 ## Phase 2 — In Progress
 
 ### AI Assist & Agent

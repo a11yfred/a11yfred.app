@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- A11yTextHelper is a single-page app (SPA) with hash routing.
+       All content is served from the root URL; hash routes are not crawlable.
+       Search engines discover internal navigation through links in the app. -->
+  <url>
+    <loc>https://a11ytexthelper.com/</loc>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
