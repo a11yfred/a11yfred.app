@@ -5,3 +5,10 @@ dist-extension/
 dist-extension-firefox/
 release/
 src/data/personal-corpus.json
+
+# Work-in-progress audit and planning docs
+CORPUS_AUDIT*.md
+PHASE*.md
+docs/CONSOLIDATION*.md
+docs/SOURCE_AUDIT*.md
+docs/DATA_MODEL_CONSOLIDATION.md
