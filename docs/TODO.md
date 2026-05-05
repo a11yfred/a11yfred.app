@@ -86,7 +86,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Chrome extension — validate and merge** `[infra]` — Scaffold complete on `feature/chrome-extension`. **Remaining**: (1) add 16/48/128px PNG icons, (2) load unpacked from `dist-extension/`, (3) smoke-test search/copy/settings/AI refine at ~400px width, (4) merge when layout confirmed
 - [ ] **Firefox extension — validate and merge** `[infra]` — Scaffold complete on `feature/firefox-extension`. **Remaining**: (1) add PNG icons, (2) load via `about:debugging`, (3) confirm sidebar behavior, (4) merge when confirmed
 - [ ] **Electron desktop app — icons, test, merge** `[infra]` — Functionally complete on `feature/electron-app`. **Remaining**: (1) add app icons (`.icns` / `.ico` / `.png`), (2) test end-to-end on macOS/Windows (safeStorage persistence, AI refine), (3) code-sign macOS build, (4) merge when icons ready
-- [ ] **Umami analytics** `[infra]` `[manual]` — Integration point is clear. **Remaining**: (1) sign up at umami.is, (2) replace `YOUR_WEBSITE_ID` in `index.html`, (3) verify zero cookies in dashboard, (4) enable on deployment
+- [ ] **Umami analytics activation** `[infra]` `[manual]` — Integration point in `index.html` (cookieless, GDPR-compliant). **Remaining**: (1) create free account at umami.is or self-host, (2) add your site and get WEBSITE_ID, (3) replace `YOUR_WEBSITE_ID` and uncomment script tag in index.html, (4) verify zero cookies in Umami dashboard, (5) enable on deployment (Phase 3 public launch)
 
 ### Privacy & Security
 
@@ -111,10 +111,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` — Stubs exist in `dataService.js`. **Remaining**: (1) activate `syncSettings()` and `getRemoteSettings()` via Supabase, (2) on sign-in merge remote with localStorage, (3) on setting change push to Supabase; API keys excluded from sync (localStorage only)
 - [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Phase 1 localStorage layer wired (`userFindingsService.js`, `useUserFindings.js`). **Remaining**: (1) activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase, (2) verify DB schema, (3) test CRUD operations
 - [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — Ratings data layer exists. **Remaining**: (1) wire up/downvote sync to `ratings` table (`user_id`, `finding_id`, `vote`), (2) merge localStorage ratings on sign-in, (3) test sync behavior
-
-### Analytics
-
-- [ ] **Umami analytics (Phase 3 activation)** `[infra]` `[phase3]` `[manual]` — Integration point established. **Remaining**: (1) sign up at umami.is, (2) set `YOUR_WEBSITE_ID` in `index.html`, (3) verify zero cookies in dashboard, (4) enable on deployment
 
 ### Monetization
 
