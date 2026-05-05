@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
+import { InputWithClear } from '../ui/index.js'
 
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.
@@ -98,29 +99,22 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
         )}
       </div>
       <div className="search-row">
-        <div className="search-input-wrap">
-          <input
-            ref={inputRef}
-            id="finding-search"
-            type="text"
-            value={currentInput}
-            onChange={e => handleInput(e.target.value)}
-            onKeyDown={handleKeyDownInner}
-            placeholder={inputPlaceholder}
-            autoComplete="off"
-            spellCheck={false}
-            className={`search-input${currentInputLength ? ' search-input--has-value' : ''}`}
-          />
-          {currentInputLength > 0 && (
-            <button
-              onClick={handleClear}
-              aria-label={narrowMode ? t('search.narrow_clear_and_reset_aria') : clearAriaLabel}
-              className="btn--primary search-clear-btn"
-            >
-              ↺
-            </button>
-          )}
-        </div>
+        <InputWithClear
+          id="finding-search"
+          type="text"
+          value={currentInput}
+          onChange={handleInput}
+          onKeyDown={handleKeyDownInner}
+          onClear={handleClear}
+          placeholder={inputPlaceholder}
+          autoComplete="off"
+          spellCheck={false}
+          clearAriaLabel={narrowMode ? t('search.narrow_clear_and_reset_aria') : clearAriaLabel}
+          wrapClassName="search-input-wrap"
+          inputClassName={`search-input${currentInputLength ? ' search-input--has-value' : ''}`}
+          clearButtonClassName="btn--primary search-clear-btn"
+          inputRef={inputRef}
+        />
         {!liveSearch && !narrowMode && (
           <button
             onClick={onSearch}
