@@ -88,7 +88,8 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Code Quality
 
-- [ ] **UI component library extraction** `[code]` `[enhancement]` `[deferred]` — Accessible SPA primitives fully built and in production (router, announcer, focus/names debuggers, BottomSheet, Drawer, Modal, form controls, button system). **Rationale for deferral**: (1) extraction requires monorepo setup and package management complexity, (2) component APIs are stable but not yet battle-tested in multiple projects, (3) publishing adds maintenance burden for minimal v1.0 gain. **Recommendation**: Defer to v1.1 or later (post-launch). If extraction becomes important, (1) confirm button unification complete, (2) audit component APIs for cross-project reusability, (3) scaffold monorepo structure, (4) publish to npm
+- [x] **Extract inline UI primitives to `src/components/ui/`** `[code]` — Toggle, RadioChip, and Select extracted from SettingsPanel.jsx private functions into `src/components/ui/`. Barrel export at `src/components/ui/index.js`. SettingsPanel updated to import from `../ui/`.
+- [ ] **UI component library extraction (npm publishing)** `[code]` `[enhancement]` `[deferred]` — Accessible SPA primitives fully built and in production (router, announcer, focus/names debuggers, BottomSheet, Drawer, Modal, form controls, button system). **Rationale for deferral**: (1) extraction requires monorepo setup and package management complexity, (2) component APIs are stable but not yet battle-tested in multiple projects, (3) publishing adds maintenance burden for minimal v1.0 gain. **Recommendation**: Defer to v1.1 or later (post-launch). If extraction becomes important, (1) confirm button unification complete, (2) audit component APIs for cross-project reusability, (3) scaffold monorepo structure, (4) publish to npm
 
 ### Infrastructure
 

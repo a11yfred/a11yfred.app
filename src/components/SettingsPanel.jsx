@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
-import { ChevronLeft, ChevronRight, ChevronDown, Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useDir, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
+import { Toggle, RadioChip, Select } from '../ui/index.js'
 
 const PROVIDERS = [
   { id: 'anthropic', label: 'Anthropic (Claude)', placeholderKey: 'settings.api_placeholder_anthropic' },
@@ -320,22 +321,19 @@ export default function SettingsPanel({
         })()}
         <p className="settings-group__desc">{t('settings.language_desc')}</p>
         <div className="settings-language-row">
-          <div className="settings-select-wrap settings-select-wrap--language">
-            <select
-              value={pendingLanguage}
-              onChange={e => setPendingLanguage(e.target.value)}
-              className="settings-select"
-              aria-label={t('settings.language_aria')}
-            >
-              <option value="">{t('settings.language_select_one')}</option>
-              {LANGUAGES.map(lang => (
-                <option key={lang.value} value={lang.value}>
-                  {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
-                </option>
-              ))}
-            </select>
-            <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
-          </div>
+          <Select
+            value={pendingLanguage}
+            onChange={e => setPendingLanguage(e.target.value)}
+            wrapClass="settings-select-wrap--language"
+            aria-label={t('settings.language_aria')}
+          >
+            <option value="">{t('settings.language_select_one')}</option>
+            {LANGUAGES.map(lang => (
+              <option key={lang.value} value={lang.value}>
+                {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
+              </option>
+            ))}
+          </Select>
           <button
             type="button"
             className={`btn--primary settings-language-change-btn${changedLanguage ? ' btn__field--success' : ''}`}
@@ -563,20 +561,16 @@ export default function SettingsPanel({
         <label htmlFor="active-provider" className="settings-field-label">
           {t('settings.provider_label')}
         </label>
-        <div className="settings-select-wrap">
-          <select
-            id="active-provider"
-            value={activeProvider}
-            onChange={e => setActiveProvider(e.target.value)}
-            disabled={!aiEnabled}
-            className="settings-select"
-          >
-            {PROVIDERS.map(p => (
-              <option key={p.id} value={p.id}>{p.label}</option>
-            ))}
-          </select>
-          <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
-        </div>
+        <Select
+          id="active-provider"
+          value={activeProvider}
+          onChange={e => setActiveProvider(e.target.value)}
+          disabled={!aiEnabled}
+        >
+          {PROVIDERS.map(p => (
+            <option key={p.id} value={p.id}>{p.label}</option>
+          ))}
+        </Select>
       </div>
 
       {PROVIDER_MODELS[activeProvider].length > 0 && (
@@ -584,20 +578,16 @@ export default function SettingsPanel({
           <label htmlFor="active-model" className="settings-field-label">
             {t('settings.model_label')}
           </label>
-          <div className="settings-select-wrap">
-            <select
-              id="active-model"
-              value={models[activeProvider]}
-              onChange={e => setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
-              disabled={!aiEnabled}
-              className="settings-select"
-            >
-              {PROVIDER_MODELS[activeProvider].map(m => (
-                <option key={m.id} value={m.id}>{m.label}</option>
-              ))}
-            </select>
-            <ChevronDown size={14} aria-hidden="true" className="settings-select-chevron" />
-          </div>
+          <Select
+            id="active-model"
+            value={models[activeProvider]}
+            onChange={e => setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
+            disabled={!aiEnabled}
+          >
+            {PROVIDER_MODELS[activeProvider].map(m => (
+              <option key={m.id} value={m.id}>{m.label}</option>
+            ))}
+          </Select>
         </div>
       )}
 
@@ -808,47 +798,3 @@ export default function SettingsPanel({
   )
 }
 
-function RadioChip({ name, value, label, current, onChange }) {
-  const isActive = current === value
-  return (
-    <label className={`radio-chip${isActive ? ' radio-chip--active' : ''}`}>
-      <input
-        type="radio"
-        name={name}
-        value={value}
-        checked={isActive}
-        onChange={() => onChange(value)}
-        className="radio-chip__input"
-        aria-label={label.replace(/\n/g, ' ')}
-      />
-      <span className="radio-chip__indicator" aria-hidden="true" role="presentation" />
-      <span aria-hidden="true">
-        {label.split('\n').flatMap((part, i) => i === 0 ? [part] : [<br key={i} />, part])}
-      </span>
-    </label>
-  )
-}
-
-function Toggle({ id, checked, onChange }) {
-  return (
-    <span className="toggle">
-      <input
-        type="checkbox"
-        role="switch"
-        id={id}
-        checked={checked}
-        onChange={onChange}
-        onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onChange(e) } }}
-        className="toggle__input"
-      />
-      <span aria-hidden="true" role="presentation" className="toggle__track">
-        <span role="presentation" className="toggle__thumb">
-          {checked
-            ? <span role="presentation" className="toggle__check" />
-            : <span role="presentation" className="toggle__ring" />
-          }
-        </span>
-      </span>
-    </span>
-  )
-}
