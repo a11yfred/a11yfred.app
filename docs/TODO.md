@@ -16,7 +16,6 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 - [x] **Document AI provider privacy comparison in README** `[privacy]` `[ai]` — Comparison table added showing training data policies, retention, and privacy commitments for all 4 providers (Anthropic, OpenAI, Google, Microsoft)
 - [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — Extends agentic AI. **Remaining**: (1) extend Refine section to show turn history, (2) store history in component state as `{ role, content }[]`, (3) pass full history in subsequent calls, (4) add "Clear conversation" button
 - [ ] **System prompt tuning** `[ai]` `[claude]` — Baseline prompt established. **Remaining**: test refinements across 20+ finding types covering variety of SCs, priorities, and platforms; adjust tone/length/format in `buildPrompt` if output drifts; document final prompt version
-- [ ] **Extend agentic AI to remaining providers** `[ai]` `[agent]` `[phase3]` `[enhancement]` — Agentic mode is Claude-only by design (tool use is provider-specific). **Decision**: Keep agentic mode exclusive to Claude. Standard AI assist works for all 4 providers (OpenAI/Google/Microsoft) without corpus search. If user feedback indicates strong demand for provider parity, implement OpenAI/Google/Microsoft tool use with provider-specific schemas (Phase 3 enhancement). **Current state**: Agentic mode complete for Claude; standard AI assist sufficient for other providers.
 
 ### User Findings & Editing
 
@@ -96,6 +95,10 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 ---
 
 ## Phase 3 — Planned
+
+### AI Assist & Agent
+
+- [ ] **Extend agentic AI to remaining providers** `[ai]` `[agent]` `[enhancement]` — Agentic mode is Claude-only by design (tool use is provider-specific). **Decision**: Keep agentic mode exclusive to Claude. Standard AI assist works for all 4 providers (OpenAI/Google/Microsoft) without corpus search. If user feedback indicates strong demand for provider parity, implement OpenAI/Google/Microsoft tool use with provider-specific schemas (Phase 3 enhancement). **Current state**: Agentic mode complete for Claude; standard AI assist sufficient for other providers.
 
 ### Authentication
 
