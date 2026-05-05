@@ -88,7 +88,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Code Quality
 
-- [ ] **UI component library extraction** `[code]` `[claude]` — Accessible SPA primitives are built (router, announcer, focus/names debuggers, form controls, button system). **Remaining**: (1) confirm button unification is fully complete, (2) audit component APIs for stability, (3) scaffold monorepo structure (`packages/core`, `packages/ui`, `packages/app`), (4) extract plugins and UI components. Defer to post-v1.0 when APIs stabilize; complexity is high and not critical path
+- [ ] **UI component library extraction** `[code]` `[enhancement]` `[deferred]` — Accessible SPA primitives fully built and in production (router, announcer, focus/names debuggers, BottomSheet, Drawer, Modal, form controls, button system). **Rationale for deferral**: (1) extraction requires monorepo setup and package management complexity, (2) component APIs are stable but not yet battle-tested in multiple projects, (3) publishing adds maintenance burden for minimal v1.0 gain. **Recommendation**: Defer to v1.1 or later (post-launch). If extraction becomes important, (1) confirm button unification complete, (2) audit component APIs for cross-project reusability, (3) scaffold monorepo structure, (4) publish to npm
 
 ### Infrastructure
 
