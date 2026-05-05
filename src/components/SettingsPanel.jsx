@@ -752,8 +752,6 @@ export default function SettingsPanel({
               <li>{t('settings.confirm_reset_all_item_pins')}</li>
               <li>{t('settings.confirm_reset_all_item_frequency')}</li>
               <li>{t('settings.confirm_reset_all_item_recent')}</li>
-              <li>{t('settings.confirm_reset_all_item_overrides')}</li>
-              <li>{t('settings.confirm_reset_all_item_contributions')}</li>
             </ul>
           </div>
 

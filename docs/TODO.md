@@ -42,11 +42,11 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **English switch transition (lang_and_en flow)** `[ux]` `[design]` — Only needed for `lang_and_en` flow. **Remaining**: (1) animate bottom sheet close/reopen showing English version, (2) show dialog first giving chance to skip, (3) do not change app-wide locale, only finding panel content
 - [ ] **Personal override indicator in DetailPanel** `[ux]` `[design]` — Visual feedback when editing. **Remaining**: when `finding._hasOverride` is true, show badge/label near title with timestamp from `_overrideEditedAt`; nice-to-have but not blocking multilingual edit
 - [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` — Maintainer-only feature. **Remaining**: add section in SettingsPanel listing pending contributions with approve/reject/export controls; wire `useContributionQueue` and `exportJson()`; merge still runs via `scripts/apply-contributions.mjs`
-- [ ] **Reset All includes personal overrides and contributions** `[ux]` `[privacy]` — Reset All exists. **Remaining**: (1) verify Reset All calls `clearAllOverrides()` and `clearContributions()`, (2) confirm UI lists both when clearing, (3) test in UI
+- [ ] **Reset All excludes personal overrides and contributions** `[ux]` `[privacy]` `[design]` — Reset All currently calls `localStorage.clear()`. **Remaining**: (1) separate overrides/contributions from general Reset All, (2) require separate explicit user action to clear them (different confirmation, or manual collection cleanup), (3) update Reset All dialog to NOT list overrides/contributions in clear list, (4) update documentation warning about data loss scope
 
 ### Search & Results
 
-- [ ] **Advanced search syntax** `[ux]` `[search]` — Concept clear. **Remaining**: (1) implement query parser for `+term` and `-term` operators, (2) integrate pre-filter step before Fuse.js, (3) add syntax hint tooltip near search bar, (4) test edge cases (operators + fuzzy search together)
+- [x] **Advanced search syntax** `[ux]` `[search]` — Query parser implemented for `+term` (required) and `-term` (excluded) operators; filters applied post-Fuse.js; syntax hint displayed in SearchBar hint text with working example
 
 ### Export & Sharing
 
