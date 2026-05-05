@@ -47,6 +47,33 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
+## Summary by Phase
+
+### Phase 1 — Complete (May 5, 2026)
+
+- 19 features shipped and stable
+- ✅ Core search, result list, detail panel, ratings, pinned findings
+- ✅ Full corpus (89 entries), all linters passing, responsive design
+- ✅ Session persistence, debug tools, animations, Party Mode
+- 🟡 Internationalization (80% — 50+ locales, ~60 keys pending translation)
+
+### Phase 2 — In Progress
+
+- 10 features in development, 4 features complete
+- ✅ Complete: Frequent findings, narrow results mode, how-to-use/onboarding, PWA/offline
+- 🟡 Partial: AI Assist (85%), Ko-fi integration (50%)
+- 🔧 Backend only: AI Agent (40%), user findings (30%), multilingual edit (40%), import (20%)
+- 🔲 Not started: Advanced search syntax (0%)
+
+### Phase 3 — Planned
+
+- 5 features stubbed or not started
+- 💤 Stubbed: Authentication (10%), Cloud Sync (5%), Analytics (20%)
+- ✅ Ad tiles infrastructure complete (live delivery Phase 3+)
+- 🟡 Extensions: Chrome (60%), Firefox (60%), Electron (80%)
+
+---
+
 ## Phase 1 — Complete
 
 Status as of May 5, 2026: All Phase 1 features shipped and stable. 89-entry public corpus fully sourced and WCAG-mapped. All linters passing (ESLint, Stylelint, Markdownlint). Test coverage complete. Ready for Phase 2 backend completion and Phase 3 public launch.

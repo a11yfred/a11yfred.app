@@ -8,30 +8,19 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ---
 
-## Data & Content
+## Phase 2 — In Progress
 
-### Corpus & Findings
+### AI Assist & Agent
 
-- [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` — 44/76 entries are platform-relevant to native (57.9%); Phase 1 target met. **Remaining**: Phase 2 expansion to add 4 native-specific entries: (1) Dynamic Type sizing (iOS), (2) Custom accessibility label requirements (UIAccessibilityLabel / contentDescription), (3) Native accessibility announcements (UIAccessibilityPostNotification), (4) Custom accessibility actions (UIAccessibilityCustomAction)
-- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` `[manual]` — Switching works via debug command (`debug corpus personal|public`). **Remaining**: (1) add Settings UI toggle (not debug-only), (2) document behavior in README and feature docs
-- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` `[phase2]` — `importFromUrl` function handles public JSON URLs. **Remaining**: (1) Settings UI with URL input + load button + error handling, (2) activate Supabase backend for authenticated users in Phase 2
-- [ ] **Auth-gated custom findings** `[corpus]` `[privacy]` `[phase3]` `[launch-blocker]` — Sync user-created findings to Supabase RLS-protected table; unauthenticated users use localStorage only; custom data never ships in public build. **Requires**: Phase 3 authentication infrastructure (Google/GitHub OAuth)
+- [ ] **Wire agentic AI in DetailPanel** `[agent]` `[ai]` `[ux]` — Backend (`agenticAiService.js` with tool use + search_corpus + error handling) is implemented. **Remaining**: (1) wire toggle in Refine section of DetailPanel, (2) expose mode toggle in Settings under AI Assist, (3) document agentic workflow in How-To-Use page
+- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — Extends agentic AI. **Remaining**: (1) extend Refine section to show turn history, (2) store history in component state as `{ role, content }[]`, (3) pass full history in subsequent calls, (4) add "Clear conversation" button
+- [ ] **System prompt tuning** `[ai]` `[claude]` — Baseline prompt established. **Remaining**: test refinements across 20+ finding types covering variety of SCs, priorities, and platforms; adjust tone/length/format in `buildPrompt` if output drifts; document final prompt version
+- [ ] **Wire Microsoft Copilot** `[ai]` — Requires Azure OpenAI. **Remaining**: (1) set `VITE_AZURE_OPENAI_ENDPOINT` in `.env.local`, (2) verify response parses correctly in `aiService.js`, (3) test against sample finding
 
-### Competitive / Differentiators
+### User Findings & Editing
 
-- [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` — Concept is clear and deep-link generation without auth is straightforward. **Remaining**: (1) implement URL format generation for Jira/Linear in export flow, (2) test deep links against live Jira/Linear instances, (3) document URL format in README
-
----
-
-## User Experience Design
-
-### UX
-
-- [ ] **Email results** `[ux]` `[enhancement]` — Concept clear and wired to export pipeline. **Remaining**: (1) complete Export findings implementation (multi-select + report generation), (2) add Email delivery option to export dialog, (3) wire email service provider (SendGrid/Resend), (4) test end-to-end
-- [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` — Sections exist in DetailPanel. **Remaining**: (1) audit layout consistency across all three sections, (2) ensure empty states are clear, (3) verify keyboard navigation is consistent, (4) standardize spacing patterns
 - [ ] **Copy / add / edit / delete findings** `[ux]` `[enhancement]` — Data layer wired (`userFindingsService.js`, `useUserFindings.js`, merged into `useFindingSearch`); UI forms and inline edit pending. **Remaining**: (1) build forms and inline edit UI, (2) wire copy button to trigger duplication flow, (3) activate cloud persistence via Supabase in Phase 2 (requires auth)
-- [ ] **Advanced search syntax** `[ux]` `[search]` — Concept clear. **Remaining**: (1) implement query parser for `+term` and `-term` operators, (2) integrate pre-filter step before Fuse.js, (3) add syntax hint tooltip near search bar, (4) test edge cases (operators + fuzzy search together)
-- [ ] **Export findings** `[ux]` — Architecture planned (integrate with Email results via shared report pipeline). **Remaining**: (1) multi-select UI in ResultList, (2) report generation (Markdown/plain text templates), (3) integrate with Email results, (4) test formatting and ensure findings export cleanly
+- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` `[manual]` — Switching works via debug command (`debug corpus personal|public`). **Remaining**: (1) add Settings UI toggle (not debug-only), (2) document behavior in README and feature docs
 
 ### Multilingual Edit Flow
 
@@ -45,27 +34,30 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` — Maintainer-only feature. **Remaining**: add section in SettingsPanel listing pending contributions with approve/reject/export controls; wire `useContributionQueue` and `exportJson()`; merge still runs via `scripts/apply-contributions.mjs`
 - [ ] **Reset All includes personal overrides and contributions** `[ux]` `[privacy]` — Reset All exists. **Remaining**: (1) verify Reset All calls `clearAllOverrides()` and `clearContributions()`, (2) confirm UI lists both when clearing, (3) test in UI
 
+### Search & Results
+
+- [ ] **Advanced search syntax** `[ux]` `[search]` — Concept clear. **Remaining**: (1) implement query parser for `+term` and `-term` operators, (2) integrate pre-filter step before Fuse.js, (3) add syntax hint tooltip near search bar, (4) test edge cases (operators + fuzzy search together)
+
+### Export & Sharing
+
+- [ ] **Export findings** `[ux]` — Architecture planned (integrate with Email results via shared report pipeline). **Remaining**: (1) multi-select UI in ResultList, (2) report generation (Markdown/plain text templates), (3) integrate with Email results, (4) test formatting and ensure findings export cleanly
+- [ ] **Email results** `[ux]` `[enhancement]` — Concept clear and wired to export pipeline. **Remaining**: (1) complete Export findings implementation (multi-select + report generation), (2) add Email delivery option to export dialog, (3) wire email service provider (SendGrid/Resend), (4) test end-to-end
+- [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` — Concept is clear and deep-link generation without auth is straightforward. **Remaining**: (1) implement URL format generation for Jira/Linear in export flow, (2) test deep links against live Jira/Linear instances, (3) document URL format in README
+
+### Data & Content
+
+- [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` — 44/76 entries are platform-relevant to native (57.9%); Phase 1 target met. **Remaining**: Phase 2 expansion to add 4 native-specific entries: (1) Dynamic Type sizing (iOS), (2) Custom accessibility label requirements (UIAccessibilityLabel / contentDescription), (3) Native accessibility announcements (UIAccessibilityPostNotification), (4) Custom accessibility actions (UIAccessibilityCustomAction)
+- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` `[phase2]` — `importFromUrl` function handles public JSON URLs. **Remaining**: (1) Settings UI with URL input + load button + error handling, (2) activate Supabase backend for authenticated users in Phase 2
+
+### Design & Polish
+
+- [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` — Sections exist in DetailPanel. **Remaining**: (1) audit layout consistency across all three sections, (2) ensure empty states are clear, (3) verify keyboard navigation is consistent, (4) standardize spacing patterns
+
 ---
 
 ## Accessibility (A11Y)
 
 - [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` — Patches work in development. **Remaining**: open deployed app, confirm selectors still match live Ko-fi DOM (selectors may drift with Ko-fi updates), adjust if needed; manual testing only
-
----
-
-## AI
-
-### AI Assist
-
-- [ ] **Wire Microsoft Copilot** `[ai]` — Requires Azure OpenAI. **Remaining**: (1) set `VITE_AZURE_OPENAI_ENDPOINT` in `.env.local`, (2) verify response parses correctly in `aiService.js`, (3) test against sample finding
-- [ ] **System prompt tuning** `[ai]` `[claude]` — Baseline prompt established. **Remaining**: test refinements across 20+ finding types covering variety of SCs, priorities, and platforms; adjust tone/length/format in `buildPrompt` if output drifts; document final prompt version
-
-### AI Agent Support
-
-Agent support means upgrading the single-shot AI refinement call into a multi-step, tool-using workflow. Goals: more accurate rewrites, corpus-aware suggestions, and eventually autonomous finding research.
-
-- [ ] **Wire agentic AI in DetailPanel** `[agent]` `[ai]` `[ux]` — Backend (`agenticAiService.js` with tool use + search_corpus + error handling) is implemented. **Remaining**: (1) wire toggle in Refine section of DetailPanel, (2) expose mode toggle in Settings under AI Assist, (3) document agentic workflow in How-To-Use page
-- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — Extends agentic AI. **Remaining**: (1) extend Refine section to show turn history, (2) store history in component state as `{ role, content }[]`, (3) pass full history in subsequent calls, (4) add "Clear conversation" button
 
 ---
 
@@ -102,7 +94,7 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ---
 
-## Accounts & Cloud Sync
+## Phase 3 — Planned
 
 ### Authentication
 
@@ -116,9 +108,11 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 - [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Phase 1 localStorage layer wired (`userFindingsService.js`, `useUserFindings.js`). **Remaining**: (1) activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase, (2) verify DB schema, (3) test CRUD operations
 - [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — Ratings data layer exists. **Remaining**: (1) wire up/downvote sync to `ratings` table (`user_id`, `finding_id`, `vote`), (2) merge localStorage ratings on sign-in, (3) test sync behavior
 
----
+### Analytics
 
-## Monetization
+- [ ] **Umami analytics (Phase 3 activation)** `[infra]` `[phase3]` `[manual]` — Integration point established. **Remaining**: (1) sign up at umami.is, (2) set `YOUR_WEBSITE_ID` in `index.html`, (3) verify zero cookies in dashboard, (4) enable on deployment
+
+### Monetization
 
 - [ ] **Free vs. premium feature tiers** `[phase3]` `[manual]` — Strategic business decision. **Remaining**: (1) define free tier (AI Assist monthly tokens? corpus size limits?), (2) define premium tier (more tokens, custom findings, cloud sync, export formats), (3) think through usage limits (rate limiting, server-side counters, grace periods), (4) document tier requirements before Phase 3 launch
 - [ ] **Ad services, pricing, and what's included** `[phase3]` `[manual]` — Strategic business decision. **Remaining**: (1) research ad networks (Carbon Ads, EthicalAds, self-served), (2) document starting CPM/CPC, minimum traffic, reporting, targeting, payment terms for each, (3) decide on network vs. direct-sell model, (4) define ad slot count per page, starter package for direct buyers, sponsorship (fixed monthly) vs. impression-based model before Phase 3
