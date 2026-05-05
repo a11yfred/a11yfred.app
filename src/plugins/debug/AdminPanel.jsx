@@ -108,7 +108,8 @@ function computeStats(corpus) {
     byVersion[v] = (byVersion[v] || 0) + 1
     const p = entry.priority || 'Unknown'
     byPriority[p] = (byPriority[p] || 0) + 1
-    const sources = entry.sourceCredits ?? entry.sources ?? []
+    // sourceCredits is string[] (author names); sources is object[] ({ name, url })
+    const sources = entry.sourceCredits ?? []
     for (const src of sources) {
       bySource[src] = (bySource[src] || 0) + 1
     }
