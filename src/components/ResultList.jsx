@@ -3,6 +3,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
+import { StateButton, Badge } from '../ui/index.js'
 import SponsoredTile from './SponsoredTile.jsx'
 
 function findingSlug(title) {
@@ -168,20 +169,23 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             {displayCount}
           </h2>
           {onCopyLink && (
-            <button
-              type="button"
-              className={`btn--secondary results-copy-link-btn${linkCopied ? ' btn__field--success' : ''}`}
-              aria-label={linkCopied ? t('results.copied_link') : t('results.copy_link_aria')}
+            <StateButton
+              active={linkCopied}
+              icon={<Link size={14} aria-hidden="true" />}
+              activeIcon={<Check size={14} aria-hidden="true" />}
+              label={t('results.copy_link_aria')}
+              activeLabel={t('results.copied_link')}
+              className="btn--secondary results-copy-link-btn"
+              showLabel
+              labelText={t('results.copy_link')}
+              activeLabelText={t('results.copied_link')}
               title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
               onClick={() => {
                 onCopyLink()
                 setLinkCopied(true)
                 setTimeout(() => setLinkCopied(false), 2000)
               }}
-            >
-              {linkCopied ? <Check size={14} aria-hidden="true" /> : <Link size={14} aria-hidden="true" />}
-              {linkCopied ? t('results.copied_link') : t('results.copy_link')}
-            </button>
+            />
           )}
         </div>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
@@ -337,27 +341,34 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                     {finding.title}
                   </span>
                   <span className="result-item__badges">
-                    <span className="priority-badge" style={archived ? undefined : { background: p.bg, color: p.color }}>
-                      {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
+                    <Badge
+                      variant="priority"
+                      bg={archived ? undefined : p.bg}
+                      color={archived ? undefined : p.color}
+                      prefix={finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
+                    >
                       {t(p.key)}
-                    </span>
+                    </Badge>
                     {finding.sourceCredits?.filter(src => src !== 'ATH').map(src => (
-                      <span
+                      <Badge
                         key={src}
-                        className="source-badge"
+                        variant="source"
+                        prefix={t('badge.source_prefix')}
                         title={`Source: ${src}`}
                       >
-                        <span className="badge-prefix">{t('badge.source_prefix')}</span>
                         {src}
-                      </span>
+                      </Badge>
                     ))}
                     {finding.wcagVersion && finding.wcagLevel && (
-                      <span className="wcag-badge">
+                      <Badge
+                        variant="wcag"
+                        title={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel}`}
+                      >
                         <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
                         {finding.wcagVersion},{' '}
                         <span className="badge-prefix">{t('badge.level_prefix')}</span>
                         {finding.wcagLevel}
-                      </span>
+                      </Badge>
                     )}
                   </span>
                 </div>
