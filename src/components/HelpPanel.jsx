@@ -1,29 +1,23 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, useDir } from '../plugins/router/index.js'
+import { useFocusOnMount, usePageTitle } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
+import { PanelShell } from '../ui/index.js'
 
 export default function HelpPanel({ onClose, onStartTour }) {
   const t = useT()
   const headingRef = useFocusOnMount()
-  const dir = useDir()
-  const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
 
   usePageTitle(t('help.sheet_label'))
 
   return (
-    <div className="help-panel">
-      <div className="help-header">
-        <button
-          onClick={onClose}
-          aria-label={t('settings.back')}
-          className="btn--icon btn--icon-accent"
-        >
-          <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
-        </button>
-        <h2 ref={headingRef} tabIndex={-1} className="help-title">
-          {t('help.sheet_label')}
-        </h2>
-      </div>
+    <PanelShell
+      panelClassName="help-panel"
+      headerClassName="help-header"
+      titleClassName="help-title"
+      heading={t('help.sheet_label')}
+      headingRef={headingRef}
+      onClose={onClose}
+      closeAriaLabel={t('settings.back')}
+    >
 
       {onStartTour && (
         <section className="help-section">
@@ -71,6 +65,6 @@ export default function HelpPanel({ onClose, onStartTour }) {
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↓</code> {t('help.shortcut_downvote')}</li>
         </ul>
       </section>
-    </div>
+    </PanelShell>
   )
 }

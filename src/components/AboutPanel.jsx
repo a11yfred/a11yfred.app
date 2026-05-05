@@ -1,29 +1,24 @@
-import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, useDir, useRouter } from '../plugins/router/index.js'
+import { ExternalLink } from 'lucide-react'
+import { useFocusOnMount, usePageTitle, useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
+import { PanelShell } from '../ui/index.js'
 
 export default function AboutPanel({ onClose }) {
   const t = useT()
   const headingRef = useFocusOnMount()
-  const dir = useDir()
   const { navigate } = useRouter()
   usePageTitle(t('about.sheet_label'))
-  const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
 
   return (
-    <div className="about-panel">
-      <div className="about-header">
-        <button
-          onClick={onClose}
-          aria-label={t('settings.back')}
-          className="btn--icon btn--icon-accent"
-        >
-          <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
-        </button>
-        <h2 ref={headingRef} tabIndex={-1} className="about-title">
-          {t('about.sheet_label')}
-        </h2>
-      </div>
+    <PanelShell
+      panelClassName="about-panel"
+      headerClassName="about-header"
+      titleClassName="about-title"
+      heading={t('about.sheet_label')}
+      headingRef={headingRef}
+      onClose={onClose}
+      closeAriaLabel={t('settings.back')}
+    >
 
       <section className="about-section">
         <h3 className="about-section-heading">{t('about.what_heading')}</h3>
@@ -109,6 +104,6 @@ export default function AboutPanel({ onClose }) {
           <li>{t('about.coming_ai')}</li>
         </ul>
       </section>
-    </div>
+    </PanelShell>
   )
 }
