@@ -18,7 +18,7 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 
 ## Priority
 
-- [ ] **Button system unification** `[priority]` `[design]` `[code]` `[claude]` — consolidate `.btn-accent`, `.btn-ghost`, `.btn-secondary`, `.btn-icon`, `.btn-icon-accent`, `.field-btn` into a clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--icon`, `.btn--field` variants; migrate all uses; prerequisite for extracting as a standalone UI component library
+- [x] ~~**Button system unification**~~ `[priority]` `[design]` `[code]` `[claude]` — **COMPLETE**: consolidated old classes into clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--tertiary`, `.btn--warning`, `.btn--icon`, `.btn--icon-accent` variants; `.btn--field` for forms; height modifiers `.btn--height-standard/compact`; all uses migrated; zero old class names (`btn-accent`, `btn-ghost`, `field-btn`) remain in codebase
 
 ---
 
