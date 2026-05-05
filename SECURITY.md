@@ -12,7 +12,7 @@ A11yTextHelper is a client-side web application currently in pre-release (Phase 
 
 Please **do not** open a public GitHub issue for security vulnerabilities.
 
-To report a vulnerability, email **ilagan@gmail.com** with:
+To report a vulnerability, email **<ilagan@gmail.com>** with:
 
 - A description of the vulnerability and its potential impact
 - Steps to reproduce or a proof-of-concept (if applicable)
