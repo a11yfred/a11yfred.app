@@ -36,7 +36,8 @@ Three deployment targets are configured. See [docs/DEPLOYING.md](docs/DEPLOYING.
 ```text
 src/
   data/
-    corpus.json           # Public corpus — 89 WCAG-aligned finding entries; default data source
+    corpus.json           # Public corpus — 89 entries (56 consolidated to personal corpus IDs, 33 public-only); fully sourced with links and credits
+    personal-corpus.json  # Personal corpus (gitignored) — 126 entries with expert sourcing; source of truth
   i18n/
     index.jsx             # I18nProvider + useT() hook (zero-dep, React Context)
     en.json               # Source of truth (~240 keys)
@@ -142,37 +143,50 @@ Each entry in `corpus.json` follows this schema:
   "title": "Finding Title",
   "sc": "2.4.6",
   "scLabel": "2.4.6 Headings and Labels (Level AA)",
-  "wcagVersion": "2.0",
+  "wcagVersion": "2.1",
   "wcagLevel": "AA",
-  "related": ["1.3.1 Info and Relationships (Level A)"],
-  "priority": "Medium",
+  "priority": "High",
   "platform": "web",
-  "sources": [{ "name": "TPGi", "url": "https://www.tpgi.com/articles/" }],
-  "keywords": ["keyword1", "keyword2", "element name", "component"],
+  "related": ["1.3.1 Info and Relationships (Level A)"],
+  "sourceCredits": ["Adrian Roselli", "WebAIM"],
+  "links": [
+    { "text": "Understanding SC 2.4.6: Headings and Labels (Level AA)", "url": "https://www.w3.org/WAI/WCAG21/Understanding/headings-and-labels" },
+    { "text": "Adrian Roselli - Where to Put Focus When Opening a Modal", "url": "https://adrianroselli.com/2020/10/aria-modal-and-the-backdrop.html" }
+  ],
+  "keywords": ["keyboard", "form", "label", "skip link", "navigation"],
   "desc": "Finding description text.",
   "rem": "Possible remediation steps."
 }
 ```
 
-**`platform`** values:
-
-- `"web"` — only surfaces in Web mode
-- `"native"` — only surfaces in Native app mode
-- `"both"` — surfaces in both modes
+**`platform`** values: `"web"` / `"native"` / `"both"`
 
 **`priority`** values: `Critical` / `High` / `Medium` / `Low` / `Best Practice`
 
-**`sc`** — WCAG success criterion number (e.g. `"1.3.1"`). Use `"N/A"` for best-practice entries that don't map to a specific SC.
+**`sc`** — WCAG success criterion (e.g. `"1.3.1"`); use `"N/A"` for best-practice entries
 
-**`wcagVersion`** — `"2.0"`, `"2.1"`, or `"2.2"` (blank for best-practice entries).
+**`wcagVersion`** — `"2.0"`, `"2.1"`, `"2.2"`, or empty for best-practice
 
-**`wcagLevel`** — `"A"`, `"AA"`, or `"AAA"` (blank for best-practice entries).
+**`wcagLevel`** — `"A"`, `"AA"`, `"AAA"`, or empty for best-practice
 
-**`sources`** — array of source objects `{ "name": "...", "url": "..." }`. `url` is a deep link to the specific article or spec page (e.g. a WCAG Understanding document or APG pattern); set to `null` when no specific URL is known. The fallback homepage registry lives in `src/data/sources.json`.
+**`sourceCredits`** — array of author/entity names (e.g. `["Adrian Roselli", "WebAIM"]`)
 
-**Keywords** are the highest-weight search field. Include the element name, component, issue type, and any terms an auditor would naturally type.
+**`links`** — array of objects with `{ "text": "...", "url": "..." }`. Deep links to WCAG Understanding pages, expert articles, or specifications.
+
+**`keywords`** — array of searchable terms (highest-weight field); include element names, components, issue types, and terms auditors naturally type
 
 ---
+
+## Corpus
+
+The app includes two corpus files:
+
+- **Public corpus** (`corpus.json`, 89 entries) — general accessibility findings with full sourcing and WCAG mapping. IDs from ATH-001 to ATH-159 with gaps where entries don't have personal equivalents.
+- **Personal corpus** (`personal-corpus.json`, 126 entries, gitignored) — includes all public findings plus additional variants and audit-sourced findings for personal use.
+
+Public entries with matching content share IDs with personal entries (e.g., both have ATH-001 "Unlabeled Button or Link"). Public-only entries have new unique IDs (ATH-127+).
+
+Every entry includes WCAG mapping (success criterion, version, level), priority, platform classification (web/native/both), keywords, description, remediation, and deep-linked sources attributed to expert articles or specifications.
 
 ## AI assist
 
