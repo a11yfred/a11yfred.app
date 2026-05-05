@@ -33,6 +33,29 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 — SEO enablement, Phase 1 launch readiness, and Phase 3 roadmap
+
+### SEO infrastructure activated
+
+- `index.html` — Uncommented all SEO meta tags (core, Open Graph, Twitter Card, JSON-LD structured data); updated canonical URL to [https://a11ytexthelper.com/](https://a11ytexthelper.com/)
+- `public/robots.txt` — Changed from blocking all crawlers to allowing them; added 1s crawl-delay and sitemap reference
+- `public/sitemap.xml` — Created SPA single-entry sitemap with root URL, lastmod date (2026-05-05), weekly changefreq, priority 1.0
+
+### Phase 1 launch readiness checklist
+
+- Phase 1 essentials: 89-entry corpus, all linters passing, documentation complete, SEO enabled, privacy baseline established
+- Remaining Phase 1: Ko-fi donations, GitHub badges, production domain configuration
+- Phase 3 Launch Readiness Roadmap: Comprehensive pre-launch checklist added covering search visibility, analytics, monetization, and growth
+
+### TODO.md reorganization
+
+- Moved 11 completed Phase 1 items to Archived section
+- Consolidated duplicate SEO and Umami entries
+- Phase 1 now shows 3 remaining tasks (Ko-fi, badges, domain)
+- Separated Phase 2 and Phase 3 with explicit scope boundaries
+
+---
+
 ## 2026-05-05 — Documentation cleanup, linting complete, and project status consolidated
 
 ### Documentation reorganization

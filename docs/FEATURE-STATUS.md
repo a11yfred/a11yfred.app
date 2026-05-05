@@ -49,13 +49,15 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Summary by Phase
 
-### Phase 1 — Complete (May 5, 2026)
+### Phase 1 — Nearly Complete (May 5, 2026)
 
-- 19 features shipped and stable
+- 19 features shipped and stable; SEO enabled
 - ✅ Core search, result list, detail panel, ratings, pinned findings
 - ✅ Full corpus (89 entries), all linters passing, responsive design
 - ✅ Session persistence, debug tools, animations, Party Mode
+- ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
 - 🟡 Internationalization (80% — 50+ locales, ~60 keys pending translation)
+- Remaining Phase 1: Ko-fi donations, GitHub badges, production domain
 
 ### Phase 2 — In Progress
 
@@ -295,9 +297,9 @@ Missing:
 
 ---
 
-### AI Agent (Agentic Mode) — 40%
+### AI Agent (Agentic Mode) — 65%
 
-Files: `src/services/agenticAiService.js`, `src/services/searchCorpusTool.js`
+Files: `src/services/agenticAiService.js`, `src/services/searchCorpusTool.js`, `src/components/DetailPanel.jsx`, `src/components/SettingsPanel.jsx`
 
 Done:
 
@@ -305,10 +307,13 @@ Done:
 - `searchCorpusTool.js` — `SEARCH_CORPUS_TOOL_SCHEMA` + Fuse.js `searchCorpus()` handler
 - System prompt: always call `search_corpus` first, preserve auditor voice, exact output format
 - `MAX_TOOL_TURNS = 5` guard; dev logging for each turn
+- `DetailPanel.jsx` — Agentic mode toggle wired in Refine section; visible only when Claude is active; dispatches to `getAgenticRefinement` when enabled
+- `SettingsPanel.jsx` — Agentic mode configuration exposed; toggle disabled for non-Claude providers; state persisted to localStorage
+- `App.jsx` — Passes agentic mode state from localStorage to DetailPanel
+- 5 i18n keys added for UI strings (settings label/description, detail label/help/hint)
 
 Missing:
 
-- Not wired into `DetailPanel` — no UI toggle to switch single-shot → agentic
 - Multi-turn conversation UI (turn history, Clear conversation button)
 - `corpus` (allFindings array) not yet passed through from App to DetailPanel to the service
 

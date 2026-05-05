@@ -4,6 +4,53 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 5, 2026 (Phase 1 Launch Readiness) — SEO enabled, Phase 1 essentials checklist, Phase 3 launch roadmap
+
+### Phase 1 Launch Day Essentials Complete
+
+Identified and completed all critical items for Phase 1 public release:
+
+**Already done:**
+
+- 89-entry public corpus with full WCAG mapping, sourcing, keywords
+- All linters passing (ESLint, Stylelint, Markdownlint)
+- Privacy & security baseline (no cookies, localStorage inventory)
+- Offline-first support (Service Worker + PWA)
+- Accessibility verified (axe-core, WCAG 2.2 AA)
+- Full documentation (README, CONTRIBUTING, SECURITY, DEPLOYING)
+
+**Just wired (SEO & visibility):**
+
+- robots.txt — Now allows crawlers, 1s crawl-delay, references sitemap
+- sitemap.xml — Created at `public/sitemap.xml` (SPA single-entry format)
+- SEO meta tags — Uncommented in index.html (core, OG, Twitter Card, JSON-LD)
+- Canonical URL — Set to a11ytexthelper.com (production placeholder)
+- Structured data — JSON-LD WebApplication schema for rich results
+
+**Remaining for Phase 1 public release:**
+
+- Ko-fi donations (account + footer link)
+- GitHub badges (once CI/hosting configured)
+- Production domain configuration (DNS + HTTPS)
+
+### Phase 3 Launch Readiness Roadmap Added
+
+Comprehensive checklist for day-one success covering:
+
+- Search & visibility (Search Console, domain updates)
+- Analytics (Umami analytics activation, error tracking, GitHub releases)
+- Monetization & growth (tiers, ad networks, social proof, community)
+- Pre/post-launch checklists
+
+### TODO.md Reorganization
+
+- Moved 11 completed Phase 1 items to Archived section
+- Consolidated duplicate SEO/Umami entries
+- Phase 1 now shows only 3 remaining tasks (Ko-fi, badges, domain)
+- Phase 2 & 3 clearly separated with explicit remaining scope
+
+---
+
 ## May 5, 2026 (Phase 2) — Agentic AI wired in DetailPanel and Settings; AI provider privacy comparison published
 
 ### Agentic AI integration complete

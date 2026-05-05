@@ -10,11 +10,11 @@ A personal accessibility audit writing assistant. Search a corpus of WCAG-aligne
 
 As of May 5, 2026:
 
-- **Phase 1 (Personal Library)**: Complete — 89-entry public corpus, all linters passing, documentation reorganized
-- **Phase 2 (AI + Sharing)**: Partial — AI assist working, user overrides infrastructure complete, multilingual edit flow designed but UI deferred
-- **Phase 3 (Public Launch)**: Not started — requires auth (Supabase), GDPR review, analytics setup
+- **Phase 1 (Personal Library)**: Nearly complete — 89-entry public corpus, all linters passing, SEO enabled, documentation complete. Remaining: Ko-fi donations, GitHub badges, production domain.
+- **Phase 2 (AI + Sharing)**: Partial — Agentic AI wired (Claude/Anthropic), user overrides infrastructure complete, multilingual edit flow designed but UI deferred
+- **Phase 3 (Public Launch)**: Planning phase — Comprehensive roadmap drafted; requires auth (Supabase), GDPR review, analytics setup
 - **All tests and linters**: Passing (ESLint, Stylelint, Markdownlint; 34 markdown files validated)
-- **Documentation**: Organized into active docs (`docs/`) and archive (`docs/archive/`); TODO cleaned up
+- **Documentation**: Organized into active docs (`docs/`) and archive (`docs/archive/`); TODO cleaned up by phase
 
 ---
 
