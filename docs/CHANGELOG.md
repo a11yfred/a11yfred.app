@@ -4,6 +4,29 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 — Documentation cleanup, linting complete, and project status consolidated
+
+### Documentation reorganization
+
+- `docs/archive/` — Moved historical work docs to archive folder
+- `TODO.md` — Cleaned up: completed items removed, obsolete items deleted, partial items re-written with explicit remaining scope
+- All markdown files (34 total) validated and passing markdownlint
+- README.md — Added "Project Status" section summarizing Phase 1 completion, Phase 2 partial status, Phase 3 not started
+
+### Linting and code quality
+
+- ESLint: 0 errors, 0 warnings
+- Stylelint: 0 errors, 0 warnings
+- Markdownlint: 0 errors, 34/34 files passing
+
+### Project status as of May 5, 2026
+
+- Phase 1: Complete (personal library, 89 entries, all tests passing)
+- Phase 2: Partial (AI assist working, user overrides infrastructure wired, multilingual UI deferred)
+- Phase 3: Not started (auth, analytics, public launch)
+
+---
+
 ## 2026-05-05 — Comprehensive corpus audit and quality improvements
 
 ### Corpus quality standardization

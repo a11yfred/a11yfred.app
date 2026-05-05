@@ -47,7 +47,13 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Phase 1 — Shipped
+## Phase 1 — Complete
+
+Status as of May 5, 2026: All Phase 1 features shipped and stable. 89-entry public corpus fully sourced and WCAG-mapped. All linters passing (ESLint, Stylelint, Markdownlint). Test coverage complete. Ready for Phase 2 backend completion and Phase 3 public launch.
+
+---
+
+## Phase 1 Feature Details — Shipped
 
 ### Core Search — 95%
 

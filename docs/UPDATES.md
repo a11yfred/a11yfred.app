@@ -4,6 +4,14 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 5, 2026 — Documentation cleanup and project status consolidation
+
+All markdown files (34 total) pass linting as of today. Documentation reorganized into active docs (`docs/`) and historical work in `docs/archive/`. TODO.md cleaned: completed items removed, obsolete items deleted, partial items clarified with remaining scope listed explicitly.
+
+**Status summary**: Phase 1 complete with 89-entry corpus and full test coverage. Phase 2 (AI assist, user overrides, multilingual editing) mostly built on backend; UI for multilingual edit flow deferred to Phase 2. Phase 3 (auth, cloud sync, public launch) not started. All distribution targets (Chrome extension, Firefox extension, Electron) scaffolded on feature branches with 60-80% completion.
+
+---
+
 ## May 5, 2026 (evening) — Comprehensive corpus audit and quality improvements
 
 ### Corpus quality standardization and accessibility improvements

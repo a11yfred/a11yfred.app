@@ -6,6 +6,18 @@ A personal accessibility audit writing assistant. Search a corpus of WCAG-aligne
 
 ---
 
+## Project Status
+
+As of May 5, 2026:
+
+- **Phase 1 (Personal Library)**: Complete — 89-entry public corpus, all linters passing, documentation reorganized
+- **Phase 2 (AI + Sharing)**: Partial — AI assist working, user overrides infrastructure complete, multilingual edit flow designed but UI deferred
+- **Phase 3 (Public Launch)**: Not started — requires auth (Supabase), GDPR review, analytics setup
+- **All tests and linters**: Passing (ESLint, Stylelint, Markdownlint; 34 markdown files validated)
+- **Documentation**: Organized into active docs (`docs/`) and archive (`docs/archive/`); TODO cleaned up
+
+---
+
 ## Setup
 
 ```bash
