@@ -334,22 +334,14 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
                       {t(p.key)}
                     </span>
-                    {finding.sources?.filter(src => src.name !== 'ATH').map(src => src.url ? (
-                      <a
-                        key={src.name}
-                        href={src.url}
-                        target="_blank"
-                        rel="noreferrer"
+                    {finding.sourceCredits?.filter(src => src !== 'ATH').map(src => (
+                      <span
+                        key={src}
                         className="source-badge"
-                        aria-label={`${t('badge.source_prefix')}${src.name}`}
+                        title={`Source: ${src}`}
                       >
                         <span className="badge-prefix">{t('badge.source_prefix')}</span>
-                        {src.name}
-                      </a>
-                    ) : (
-                      <span key={src.name} className="source-badge">
-                        <span className="badge-prefix">{t('badge.source_prefix')}</span>
-                        {src.name}
+                        {src}
                       </span>
                     ))}
                     {finding.wcagVersion && finding.wcagLevel && (

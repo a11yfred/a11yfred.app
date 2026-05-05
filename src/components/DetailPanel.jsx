@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo, forwardRef } from 'react'
-import { Sparkles, RotateCcw, Copy, Check, ExternalLink, Loader2 } from 'lucide-react'
+import { Sparkles, RotateCcw, Copy, Check, ExternalLink, Loader2, AlertCircle, Edit } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -342,34 +342,21 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
             {t(p.key)}
           </button>
           {(() => {
-            const sources = finding.sources?.filter(src => src.name !== 'ATH') || []
+            const sources = finding.sourceCredits?.filter(src => src !== 'ATH') || []
             if (sources.length === 0) return null
             if (sources.length === 1) {
               const src = sources[0]
-              return src.url ? (
-                <a
-                  key={src.name}
-                  href={src.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="source-badge"
-                  style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
-                  aria-label={`Source: ${src.name}`}
-                >
-                  <span className="badge-prefix">Source:</span>
-                  {src.name}
-                </a>
-              ) : (
+              return (
                 <button
-                  key={src.name}
+                  key={src}
                   type="button"
                   className="source-badge"
                   style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
-                  onClick={() => onBadgeClick?.({ type: 'source', value: src.name })}
-                  aria-label={`Source: ${src.name} — ${t('results.badge_filter_aria')}`}
+                  onClick={() => onBadgeClick?.({ type: 'source', value: src })}
+                  aria-label={`Source: ${src} — ${t('results.badge_filter_aria')}`}
                 >
                   <span className="badge-prefix">Source:</span>
-                  {src.name}
+                  {src}
                 </button>
               )
             }
@@ -523,12 +510,6 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
         onIncludeTitleChange={setIncludeRemTitle}
       />
 
-      {(descText !== finding.desc || remText !== finding.rem) && (
-        <p className="detail-edit-warning" role="status">
-          {t('detail.edit_lang_warning')}
-        </p>
-      )}
-
       <div className="detail-refine">
         <label htmlFor="revise-note" className="detail-label">{refineLabel}</label>
         <p className="detail-refine-hint">
@@ -575,17 +556,23 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
               : aiEnabled && canRevise
                 ? <span className="detail-revise-label" aria-hidden="true">
                     <Sparkles size={12} strokeWidth={2} className="detail-revise-icon" />
-                    {' '}Save &<br />Revise Selected
+                    {' '}Save & Revise Selected
                   </span>
                 : noteSaved
                   ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.saved_note_text')}</>
                   : t('detail.save_note_text')}
           </button>
         </div>
+        {(descText !== finding.desc || remText !== finding.rem) && (
+          <p className="detail-edit-warning" role="status">
+            <AlertCircle size={16} aria-hidden="true" className="detail-edit-warning-icon" />
+            {t('detail.edit_lang_warning')}
+          </p>
+        )}
       </div>
 
       <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} />
-      <SourceLinks links={finding.sources?.filter(s => s.name !== 'ATH').map(s => ({ url: s.url, text: s.name }))} />
+      <SourceLinks links={finding.links} />
 
       <div className="detail-actions-end">
         <button
@@ -888,6 +875,7 @@ const Field = forwardRef(function Field({
             />
           )}
           <label htmlFor={id} className="field__label">
+            {selected && <Edit size={14} aria-hidden="true" className="field__label-icon" />}
             {label}
             {wasUpdated && (
               <span className="field__updated-badge">{t('detail.updated_label')}</span>
@@ -914,6 +902,7 @@ const Field = forwardRef(function Field({
             className="field-include-title-checkbox"
           />
           <label htmlFor={`${id}-include-title`} className="field-include-title-label">
+            {includeTitle && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
             {id === 'finding-desc' ? t('detail.include_desc_title_when_copied') : id === 'finding-rem' ? t('detail.include_rem_title_when_copied') : t('detail.include_title_when_copied')}
           </label>
         </div>
