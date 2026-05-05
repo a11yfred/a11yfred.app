@@ -36,8 +36,7 @@ Three deployment targets are configured. See [docs/DEPLOYING.md](docs/DEPLOYING.
 ```text
 src/
   data/
-    corpus.json           # Public corpus — 89 entries (56 consolidated to personal corpus IDs, 33 public-only); fully sourced with links and credits
-    personal-corpus.json  # Personal corpus (gitignored) — 126 entries with expert sourcing; source of truth
+    corpus.json           # Public corpus — 89 entries; fully sourced with links and credits
   i18n/
     index.jsx             # I18nProvider + useT() hook (zero-dep, React Context)
     en.json               # Source of truth (~240 keys)
@@ -179,14 +178,7 @@ Each entry in `corpus.json` follows this schema:
 
 ## Corpus
 
-The app includes two corpus files:
-
-- **Public corpus** (`corpus.json`, 89 entries) — general accessibility findings with full sourcing and WCAG mapping. IDs from ATH-001 to ATH-159 with gaps where entries don't have personal equivalents.
-- **Personal corpus** (`personal-corpus.json`, 126 entries, gitignored) — includes all public findings plus additional variants and audit-sourced findings for personal use.
-
-Public entries with matching content share IDs with personal entries (e.g., both have ATH-001 "Unlabeled Button or Link"). Public-only entries have new unique IDs (ATH-127+).
-
-Every entry includes WCAG mapping (success criterion, version, level), priority, platform classification (web/native/both), keywords, description, remediation, and deep-linked sources attributed to expert articles or specifications.
+The app includes a public corpus (`corpus.json`, 89 entries) with general accessibility findings, full sourcing, and WCAG mapping. Every entry includes WCAG mapping (success criterion, version, level), priority, platform classification (web/native/both), keywords, description, remediation, and deep-linked sources attributed to expert articles or specifications.
 
 ## AI assist
 

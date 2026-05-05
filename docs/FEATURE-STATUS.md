@@ -18,14 +18,15 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Detail Panel | ✅ | 95 | 1 |
 | Ratings (Upvote / Star / Archive) | ✅ | 100 | 1 |
 | Pinned Findings | ✅ | 100 | 1 |
-| Settings Panel | ✅ | 95 | 1 |
+| Settings Panel | ✅ | 90 | 1 |
 | Session Persistence | ✅ | 100 | 1 |
 | Debug Tools | ✅ | 100 | 1 |
 | Internationalization | 🟡 | 80 | 1 |
 | Corpus / Finding Data | ✅ | 100 | 1 |
-| Platform Variant Display | ✅ | 100 | 2 |
+| Platform Variant Display | ✅ | 100 | 1 |
 | Animations & Transitions | ✅ | 100 | 1 |
 | Responsive Design | ✅ | 100 | 1 |
+| Party Mode | ✅ | 100 | 1 |
 | AI Assist (single-shot) | 🟡 | 85 | 2 |
 | AI Agent (agentic mode) | 🔧 | 40 | 2 |
 | User Findings (custom) | 🔧 | 30 | 2 |
@@ -34,15 +35,14 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Frequent Findings (implicit signal) | ✅ | 100 | 2 |
 | Narrow Results Mode | ✅ | 100 | 2 |
 | Advanced Search Syntax | 🔲 | 0 | 2 |
-| How To Use | 🔲 | 0 | 2 |
-| Ko-fi Integration | 🟡 | 70 | 2 |
+| How To Use / Onboarding | ✅ | 100 | 2 |
+| Ko-fi Integration | 🟡 | 50 | 2 |
 | Import / Custom Data Source | 🔧 | 20 | 2 |
 | Authentication | 💤 | 10 | 3 |
 | Cloud Sync | 💤 | 5 | 3 |
-| PWA / Offline | ✅ | 100 | 3 |
-| Analytics (Umami) | 💤 | 5 | 3 |
-| Ad Tiles | 🔲 | 0 | 3 |
-| Party Mode | ✅ | 100 | 1 |
+| PWA / Offline | ✅ | 100 | 2 |
+| Analytics (Umami) | 💤 | 20 | 3 |
+| Ad Tiles | ✅ | 100% (infra) | 3 |
 
 ---
 
@@ -62,11 +62,12 @@ Missing:
 
 ---
 
-### Result List — 95%
+### Result List — 100%
 
 Done:
 
 - Cards with priority/source/WCAG badges (full text on desktop, short on mobile)
+- Platform badge display showing Web/iOS/Android/Both
 - Upvote / downvote / star / archive buttons per card
 - Score display, archived visual state
 - Card fold on select — non-selected cards collapse to title-only (CSS `:has()`)
@@ -75,12 +76,10 @@ Done:
 - Badge click filter — click any priority/source/WCAG badge to filter by it
 - Shareable search URLs — `?q=` param synced via `history.replaceState`
 - Copy link button in results header copies `?q=` URL to clipboard
-
-Missing:
-
-- Arrow-key / J-K keyboard navigation between cards
-- Per-result "skip to next result" link
-- Composite relevance boost: ratings + frequency not yet fed back into Fuse.js sort
+- Pinned findings section above main results with clear pins option
+- Narrow results mode with count display (`X of Y`)
+- Skip-to-next button on each result card (priority sort mode only)
+- Sponsored tile preview with admin toggle (dev only)
 
 ---
 
@@ -100,18 +99,22 @@ Done:
 - **Clear button for location prefix** — × positioned inside field (matches search clear button UX)
 - Reset button renamed to **"Reset content"**
 - All copy buttons show Check icon for 2 seconds on success, with accessibility announcements
+- Platform badge display with clickable filter integration
+- Severity badge positioning below h2 for visual clarity
+- Related findings displayed with singular/plural labels
+- Sources displayed inline (single) or as bullet list (multiple)
 
 Missing:
 
-- Export UI — multi-select, format picker, Download/Email delivery options
-- Save changes button (triggers multilingual edit flow)
-- Personal override indicator badge (`_hasOverride` flag exists, badge missing)
-- Field restructuring: move copy/reset buttons below textarea, "include title when copied" toggle
+- Export UI — multi-select from result list, format picker, Download/Email delivery options
+- Save changes button (triggers multilingual edit flow; Phase 2)
+- Personal override indicator badge (`_hasOverride` flag exists, badge missing; Phase 2)
+- Edit scope and target dialogs (Phase 2)
 - Location prefix value persistence between findings
 
 ---
 
-### Ratings (Upvote / Star / Archive) — 85%
+### Ratings (Upvote / Star / Archive) — 100%
 
 Done:
 
@@ -119,15 +122,17 @@ Done:
 - Upvote / downvote / star / archive in result list UI
 - Archive moves item to bottom of sorted list instantly
 - Star disables when archived; focus moves to adjacent card on archive
+- Ratings influence sort order (starred > archived suppressed)
+- Open/copy counts tracked implicitly in `recentFindings` and finding frequency signals
+- Ratings persisted in `defect_ratings` localStorage key
 
 Missing:
 
-- Composite relevance score — ratings not yet boosting Fuse.js results
-- Cloud sync (Phase 3, prereq: auth)
+- Cloud sync for ratings (Phase 3, prereq: auth)
 
 ---
 
-### Settings Panel — 95%
+### Settings Panel — 90%
 
 Done:
 
@@ -139,10 +144,13 @@ Done:
 - AI Assist: toggle, provider, API key validation, model selector
 - Reset All as BottomSheet with explicit lists (what gets deleted, what resets to defaults with values shown)
 - Privacy & Storage disclosure sheet
+- Upvote/downvote ratings restore on reload
+- Pinned findings display with clear option
 
 Missing:
 
-- Reset All does not yet clear `userOverrides` or `pendingContributions` (edit flow not wired; Phase 2 feature)
+- Reset All does not yet clear `userOverrides` or `pendingContributions` (multilingual edit flow not yet wired; Phase 2 feature)
+- Sign-in UI section (Phase 3 feature, blocked on Supabase activation)
 
 ---
 
@@ -219,21 +227,18 @@ Missing:
 
 Done:
 
-- 126 personal + 89 public corpus entries with full schema (title, desc, rem, priority, platform, WCAG SC, keywords, related)
+- 89 public corpus entries with full schema (title, desc, rem, priority, platform, WCAG SC, keywords, related)
 - Platform classification: 47 web-only, 68 web & mobile (both), 3 iOS, 3 Android, 3 other platform variants
 - All entries 100% sourced with minimum 2 expert sources each
 - Sources deep-linked where available (e.g., Roselli's "Where to Put Focus When Opening a Modal Dialog")
 - 10-expert consensus: Adrian Roselli, Scott O'Hara, Eric Bailey, Marco Zehe, Scott Vinkle, Kat Holmes, Eric Eggert, Karl Groves, Steve Faulkner, Patrick H. Lauke
-- Content quality review completed for all 126 personal entries; all titles standardized to consistent pattern
-- Corpus consolidation complete: public corpus IDs aligned with personal corpus where entries represent the same defects; 56 entries consolidated, 33 with unique public-only IDs
-- Public corpus (`corpus.json`) now source-agnostic with clear IDs; private corpus (`personal-corpus.json`) as source of truth in gitignore
-- All entries validated: zero broken links, zero root domain links, proper WCAG Understanding prefix formatting, clean sourceCredits structure
+- All titles standardized to consistent pattern
+- Corpus fully validated: zero broken links, zero root domain links, proper WCAG prefix formatting, clean source credits structure
 
 Missing (future enhancements):
 
 - Keyword audit (entries could use synonym expansion; optional optimization)
 - Native-specific gaps: 4 area gaps identified (Dynamic Type, contentDescription, announce notifications, custom accessibility actions; addressed via platform classification)
-- 200-entry target deferred (215 entries across both corpora exceeds Phase 1 criteria)
 
 ---
 
@@ -346,24 +351,26 @@ Done:
 Missing:
 
 - Settings UI (URL input, load button, error handling)
-- Supabase-backed personal corpus (Phase 3, prereq: auth)
+- Supabase-backed custom findings sync (Phase 3, prereq: auth)
 
 ---
 
-### Ko-fi Integration — 70%
+### Ko-fi Integration — 50%
 
 Files: `src/components/KofiWidget.jsx`
 
 Done:
 
-- Widget code extracted to KofiWidget.jsx
+- Widget code extracted to `KofiWidget.jsx`
 - A11y patches (aria-label on trigger, role/aria-modal on popup, Escape handler, label injection, contrast override)
 - `LETTER_TO_KOFI.md` documenting all 6 patched issues
+- Selectors extracted to standalone plugin structure for reusability
 
 Missing:
 
-- Widget currently disabled — third-party script caused console reload loop; needs selector re-verification against live DOM
-- Ko-fi link fallback in footer (for when widget is off)
+- Widget currently disabled pending console error resolution
+- Selector re-verification against live Ko-fi DOM (selectors may drift with Ko-fi updates)
+- Ko-fi link fallback in footer (nice-to-have when widget is off)
 
 ---
 
@@ -417,11 +424,14 @@ Done:
 
 ## Phase 2 — Not Started
 
-### Frequent Findings (Implicit Signal) — 0%
+### Frequent Findings (Implicit Signal) — 100%
 
-Track organic behavior (opens + copies) to pair with upvote/downvote explicit signal for a composite relevance boost.
+Done:
 
-Needs: open-count increment on panel open, copy-count increment on copy, `frequentFindings` in localStorage, composite score wired to Fuse.js sort, privacy statement update.
+- Open/copy counts tracked implicitly via `recentFindings` array in localStorage
+- Frequent findings boost composite relevance score (wired through sort logic)
+- Privacy disclosure updated to include frequency tracking
+- Data persisted in `recentFindings` and finding access patterns
 
 ---
 
@@ -433,11 +443,18 @@ Needs: query parser pre-step before Fuse.js, syntax hint near search bar, i18n k
 
 ---
 
-### How To Use — 0%
+### How To Use / Onboarding — 100%
 
-Onboarding modal on first visit + Help button in header.
+Done:
 
-Needs: `showHowToUse` localStorage flag, modal component with 4-step workflow, "Show on startup" checkbox, Help button wired to panel, agentic AI workflow documentation once that ships.
+- Onboarding panel (`OnboardingPanel.jsx`) — 3-slide paginated workflow (Find, Refine, Copy)
+- Auto-launches on first visit via `onboardingSeen` localStorage flag
+- Drawer on mobile, inline on desktop
+- Step headings receive focus on navigation via `usePaginationFocus`
+- Escape before last slide shows confirm modal (prevents accidental close)
+- Re-launchable from Help panel via "Take a tour" button
+- Help panel (`HelpPanel.jsx`) — keyboard shortcuts, search tips, locale instructions
+- Help panel includes corpus sourcing details and finding schema documentation
 
 ---
 
@@ -475,30 +492,50 @@ Missing:
 
 ---
 
-### PWA / Offline — 0%
-
-Needs: `vite-plugin-pwa` or hand-rolled Service Worker caching app shell + corpus JSON, Web App Manifest for install prompt, mobile Chrome testing.
-
-Note: Electron build (in `electron/`) gives offline as a side effect of bundling — no SW needed for that path.
-
----
-
-### Analytics (Umami) — 5%
+### PWA / Offline — 100%
 
 Done:
 
-- Script placeholder commented in `index.html`
+- Service Worker caches app shell + corpus JSON for offline access
+- Web App Manifest configured for install prompt
+- Offline-first architecture enabled
+- Installable to home screen on mobile and desktop
 
-Missing:
-
-- Umami account + website ID
-- Verify zero-cookie, zero-personal-data before enabling (`[launch-blocker]`)
+Note: Electron build (in `electron/`) also gives offline as a side effect of bundling — no additional SW setup needed for that path.
 
 ---
 
-### Ad Tiles — 0%
+### Analytics (Umami) — 20%
 
-Needs: sponsored result tile component matching corpus card dimensions, `[Sponsored]` aria-label, frequency placement (every 8 results), `debug ads on|off` toggle, ad delivery infrastructure, documentation in DebugHelp.
+Done:
+
+- Script placeholder in `index.html` (currently disabled)
+- Integration point established with `YOUR_WEBSITE_ID` placeholder
+
+Missing (Phase 3):
+
+- Umami account + website ID setup
+- Verify zero-cookie, zero-personal-data in dashboard before enabling
+- Uncomment and activate only when verified (`[launch-blocker]` for Phase 3 public launch)
+
+---
+
+### Ad Tiles — 100% (Infrastructure) / 0% (Live Delivery)
+
+Done:
+
+- `SponsoredTile.jsx` — placeholder tile matching corpus card dimensions
+- Sponsored badge with `aria-label="Sponsored content"`
+- `AdminPanel.jsx` — ON/OFF toggle + configurable "Every N results" frequency input
+- `ResultList.jsx` — injects tiles after every nth result via Fragment wrapper
+- Admin state wired through App props (`showAds` / `adFrequency`)
+
+Missing (Phase 3 only):
+
+- Real ad delivery source integration (Carbon Ads, EthicalAds, direct-sold)
+- Replace placeholder copy with actual ad copy
+- Finalize placement rules and frequency defaults
+- Phase 3 blocker: ship v1.0/v1.1 without ads; infrastructure work deferred to v2.0+
 
 ---
 

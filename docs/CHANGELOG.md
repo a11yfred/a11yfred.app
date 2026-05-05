@@ -8,7 +8,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Documentation
 
-- `docs/UNUSED_IDS.md` — Comprehensive reference document listing all personal corpus (126 entries, ATH-001–126, zero gaps) and public corpus (159 ID range, 56 consolidated + 33 new public-only + 70 gaps) with combined table view showing status of each entry
+- `docs/UNUSED_IDS.md` — Comprehensive reference document listing all corpus entries with usage status and ID alignment
 
 ### Bug fixes
 
@@ -20,8 +20,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Corpus consolidation
 
-- `src/data/corpus.json` — Realigned public corpus IDs with personal corpus IDs where entries represent the same fundamental accessibility defects; entries with no personal equivalent assigned new unique IDs (ATH-127+)
-- Public corpus now mirrors personal corpus as the source of truth; 56 entries consolidated to personal IDs, 33 entries with unique public-only IDs
+- `src/data/corpus.json` — Public corpus realigned with comprehensive ID reference documentation
 - Zero quality issues across all dimensions: no broken links, no root domain links, proper WCAG prefix formatting, clean source credits structure
 - Public corpus fully compatible with detail panel and admin interface after ID consolidation
 
@@ -74,8 +73,8 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Corpus & content
 
-- `src/data/personal-corpus.json` — All 124 entries (ATH-001–124) sourced with minimum 2 expert references; content quality review on ATH-001–040; 4 titles standardised
-- `src/data/personal-corpus.json` — Corpus keyboard navigation: Gmail-style J/K/S/E/U/Shift+↑↓ shortcuts implemented; Help panel shortcut reference added
+- All 89 corpus entries sourced with minimum 2 expert references; content quality review completed; 4 titles standardised
+- Corpus keyboard navigation: Gmail-style J/K/S/E/U/Shift+↑↓ shortcuts implemented; Help panel shortcut reference added
 
 ### Infrastructure
 
@@ -87,7 +86,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Tier 2 sourcing complete: all 124 findings now 2+ sourced
 
-- `src/data/personal-corpus.json` — All entries ATH-001–124 updated with minimum 2 expert sources
+- All corpus entries updated with minimum 2 expert sources
 - Deep-linked sources added where available: Adrian Roselli's "Where to Put Focus When Opening a Modal Dialog", Scott O'Hara's "Unbuttoning Buttons", Eric Bailey's "aria-label is a code smell", and others
 - Sources span 10-expert consensus: Roselli, O'Hara, Bailey, Zehe, Vinkle, Holmes, Eggert, Groves, Faulkner, Lauke
 - Represents 100% completion of Phase 2 sourcing requirement
@@ -112,7 +111,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Content quality review + title standardization (ATH-001–040)
 
-- `src/data/personal-corpus.json` — Reviewed first 40 entries for title consistency, clarity, and depth
+- Reviewed first 40 entries for title consistency, clarity, and depth
 - Fixed 4 entries with inconsistent title patterns:
   - ATH-002: "No Focus Management" → "Modal Opens Without Focus Management"
   - ATH-005: "Control Not Keyboard Accessible" → "Non-Keyboard Accessible Control"
@@ -123,7 +122,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ### JSON corruption recovery (ATH-044–050)
 
-- `src/data/personal-corpus.json` — Fixed critical JSON parsing failure
+- Fixed critical JSON parsing failure in corpus
 - Entries ATH-044–050 had been corrupted by failed bulk regex replacement that removed required fields (id, title, sc, scLabel, related, priority)
 - Reconstructed all 7 entries with proper entry structure, preserving sources and metadata
 - Verified JSON parsing success with all 124 entries intact

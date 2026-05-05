@@ -380,9 +380,9 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                 className="source-badge"
                 style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
                 onClick={() => document.querySelector('.detail-sources-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                aria-label="Sources"
+                aria-label="Sources: Multiple (See below)"
               >
-                Sources
+                Sources: Multiple (See below)
               </button>
             )
           })()}

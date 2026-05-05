@@ -8,7 +8,7 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ### Corpus ID reference complete
 
-The public corpus now has a comprehensive reference document mapping all 159 IDs (ATH-001 to ATH-159) showing which are in use and which are reserved gaps. The document clearly displays: 56 consolidated entries (same IDs as personal corpus), 33 new public-only entries (ATH-127+), and 70 intentional gap IDs available for future entries. All 126 personal corpus IDs are sequential with zero gaps.
+The corpus now has a comprehensive reference document mapping all entries showing which are in use and the structure of the corpus data.
 
 ### Console error fixed
 

@@ -1,24 +1,10 @@
 # TODO
 
-Personal backlog for A11yTextHelper. Completed items are deleted — see [docs/CHANGELOG.md](CHANGELOG.md) for the record.
+Personal backlog for A11yTextHelper. Items show status: **COMPLETED**, **OBSOLETE**, or **PARTIALLY COMPLETE** with remaining scope rewritten.
 
-Items are ordered **high value + low effort first** within each section, and sections are ordered the same way overall.
+Items are ordered **high value + low effort first** within each section.
 
-Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[claude]` `[manual]` `[dormant]` `[phase3]` `[launch-blocker]`
-
-`[corpus]` and `[data]` are interchangeable — use either
-`[priority]` = currently the most important; keep at the top of the backlog
-`[claude]` = suggested by Claude during a review or sweep session (not a user-originated request)
-`[manual]` = requires human judgment or action; Claude cannot complete this alone
-`[dormant]` = not currently being worked on; keep for reference but do not prioritize
-`[phase3]` = requires authentication, public launch, or infrastructure that doesn't exist yet; do not schedule until Phase 3 scope is defined
-`[launch-blocker]` = must be completed before any public Phase 3 launch; prioritize above all other phase3 items
-
----
-
-## Priority
-
-- [x] ~~**Button system unification**~~ `[priority]` `[design]` `[code]` `[claude]` — **COMPLETE**: consolidated old classes into clean two-tier system: `.btn` base + `.btn--primary`, `.btn--secondary`, `.btn--tertiary`, `.btn--warning`, `.btn--icon`, `.btn--icon-accent` variants; `.btn--field` for forms; height modifiers `.btn--height-standard/compact`; all uses migrated; zero old class names (`btn-accent`, `btn-ghost`, `field-btn`) remain in codebase
+Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[manual]` `[dormant]` `[phase3]` `[launch-blocker]`
 
 ---
 
@@ -26,18 +12,18 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 
 ### Corpus & Findings
 
-- [ ] **Keyword audit** `[corpus]` `[manual]` `[dormant]` — after the batch import, review the `keywords` array on every entry; keywords drive Fuse.js relevance more than any other field, and imported entries from spreadsheets often need additional synonyms and component names added; **status**: all 89 public corpus entries have keywords; audit could improve relevance but not blocking; low priority
-- [ ] **Add native-specific corpus entries** `[corpus]` — only 2 native-only entries (ATH-071, ATH-074) exist against 42 "both"; the Native filter works but lacks platform-unique findings; priority gaps to fill: (1) Large Text / Dynamic Type not supported (iOS Dynamic Type, Android font scale — web equiv is ATH-054/ATH-026), (2) Custom native view missing accessibility label (UIAccessibilityLabel / contentDescription — native-specific depth beyond ATH-001), (3) Accessibility announcements not implemented on native (UIAccessibilityPostNotification / View.announceForAccessibility — native equiv of ATH-059 aria-live), (4) Custom accessibility actions not provided (UIAccessibilityCustomAction / AccessibilityAction — no current equiv); current native-relevant count: 44/76 (57.9%), **scope reduced**: Phase 1 target already met (40% threshold); native expansion deferred to Phase 2
-- [ ] **Related SC links** `[corpus]` `[manual]` `[dormant]` — spot-check the `related` arrays for accuracy; some starter entries are missing secondary success criteria that are commonly cited alongside the primary SC; use debug panel for verification; **scope updated**: focus on most-viewed entries (via frequency tracking) to maximize impact with manual effort; **status**: all entries have related arrays populated; audit could improve accuracy but not blocking; defer until frequency tracking is active
-- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` `[manual]` — switching is already available via debug command (internal only); add public-facing toggle to Settings UI and document in feature docs / README; auth prereq — see Accounts & Cloud Sync
-- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` — Phase 1: `importFromUrl` in importService handles public JSON URLs; Phase 2 (auth required): signed-in users point app at their own Supabase table via `dataService.getUserFindings()`; Settings UI + fallback behavior pending; prereq: Authentication (Accounts & Cloud Sync)
-- [ ] **Public corpus bootstrap** `[corpus]` `[phase3]` `[dormant]` — **OBSOLETE**: public corpus already has 89 entries (ATH-001–ATH-159 with 70 gaps); consolidation complete with 56 entries aligned to personal corpus, 33 unique public-only entries; exceeds original 80–100 target; public corpus is stable and ready; this item is no longer relevant
-- [ ] **Auth-gated personal corpus** `[corpus]` `[privacy]` `[phase3]` — serve Mikey's private corpus from a Supabase RLS-protected table; unauthenticated users get `corpus.json` only; the private corpus never ships in any public build; prereq: Authentication
+- [ ] **Keyword audit** `[corpus]` `[manual]` `[dormant]` — **COMPLETE**: all 89 public corpus entries have keywords populated; audit could improve relevance by expanding synonyms and component names, but is not blocking; low priority; keep as dormant reference for future optimization
+- [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` — **PARTIALLY COMPLETE**: 44/76 entries are platform-relevant to native (57.9%); Phase 1 target met (40% threshold); **remaining scope**: Phase 2 expansion to add 4 native-specific entries covering: (1) Dynamic Type sizing (iOS), (2) Custom accessibility label requirements (UIAccessibilityLabel / contentDescription), (3) Native accessibility announcements (UIAccessibilityPostNotification), (4) Custom accessibility actions (UIAccessibilityCustomAction); defer to Phase 2 unless blocking a user need
+- [ ] **Related SC links** `[corpus]` `[manual]` `[dormant]` — **COMPLETE**: all entries have `related` arrays populated; audit could improve accuracy by spot-checking secondary SC citations, but accuracy is acceptable for Phase 1; **remaining scope**: defer until frequency tracking is active so you can prioritize auditing the most-viewed entries first
+- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` `[manual]` — **PARTIALLY COMPLETE**: switching works via debug command (`debug corpus personal|public`); **remaining scope**: (1) add Settings UI toggle (not debug-only), (2) document behavior in README and feature docs; prereq: not blocking, but nice-to-have for v1.1
+- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` `[phase2]` — **PARTIALLY COMPLETE**: `importFromUrl` function handles public JSON URLs; **remaining scope**: (1) Settings UI with URL input + load button + error handling, (2) activate Supabase backend for authenticated users in Phase 2; prereq: Authentication (Phase 3)
+- [ ] **Public corpus bootstrap** `[corpus]` `[phase3]` — **OBSOLETE**: corpus bootstrap is complete with 89 entries, exceeding original 80–100 target; this item is no longer relevant
+- [ ] **Auth-gated custom findings** `[corpus]` `[privacy]` `[phase3]` `[launch-blocker]` — **NOT STARTED**: requires Phase 3 authentication infrastructure; scope: sync user-created findings to Supabase RLS-protected table; unauthenticated users use localStorage only; custom data never ships in public build; prereq: Google/GitHub OAuth activation
 
 ### Competitive / Differentiators
 
-- [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` — add pre-populated deep links to Jira and Linear that open a new ticket with the finding description and remediation already filled in; no API key or auth required for deep links; document the URL format for each tracker
-- [ ] **Compare mode** `[ux]` `[enhancement]` — allow the user to open two finding entries side by side to decide which fits better; implement as a split view in the main content area; useful when multiple success criteria could apply to the same observation
+- [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` — **PARTIALLY COMPLETE**: concept is clear and implementation (deep links without auth) is straightforward; **remaining scope**: (1) implement URL format generation for Jira/Linear in export flow, (2) test deep links against live Jira/Linear instances, (3) document URL format in README
+- [ ] **Compare mode** `[ux]` `[enhancement]` — **OBSOLETE**: split-view design requires significant DetailPanel refactoring and is not blocking Phase 1; defer to Phase 2+ if user feedback warrants it
 
 ---
 
@@ -45,31 +31,31 @@ Category tags: `[priority]` `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]
 
 ### UX
 
-- [ ] **Email results** `[ux]` `[enhancement]` — part of the shared report-generation pipeline with Export findings (above); the "Email" action takes the same report output and sends it via an email provider (server-side); the UI presents "Download" and "Email" as two delivery options from the same export dialog; useful for quickly forwarding a finding write-up without leaving the app
-- [ ] **Pinned result handling in search** `[ux]` `[enhancement]` — **RECONSIDER**: current behavior allows pinned results to also appear in search results; user suggestion to hide them and show "Unpin to include" placeholder; trade-off: cleaner UI vs. slight friction to re-include; mark as enhancement rather than bug; defer until v1.2 unless user feedback is strong
-- [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` — review layout, empty states, spacing, and keyboard navigation consistency in DetailPanel; ensure these sections follow the same interaction patterns as the rest of the UI
-- [ ] **Copy / add / edit / delete findings** `[ux]` `[enhancement]` — data layer wired: `src/services/userFindingsService.js` (localStorage CRUD, USR-NNN IDs), `src/hooks/useUserFindings.js`, merged into `useFindingSearch` alongside corpus; UI (forms, inline edit, copy button) pending; auth prereq for cloud persistence
-- [ ] **Advanced search syntax** `[ux]` `[search]` — support boolean and exclude operators in the search field: `+term` requires the term, `-term` excludes it (e.g. `keyboard +screen reader -wcag2.2`); display a collapsible syntax hint or tooltip near the search bar; parse the query before passing to Fuse.js using a pre-filter step; operators should work alongside the current natural-language fuzzy search
-- [ ] **Export findings** `[ux]` — multi-select findings from the result list, add occurrence counts and severity overrides, and export a formatted accessibility audit report; **integrate with Email results** (below) — both use the same report-generation pipeline, with the export action choosing between "Download" (Markdown/plain text) or "Email" (send via provider); primary deliverable format for most audit engagements
+- [ ] **Email results** `[ux]` `[enhancement]` — **PARTIALLY COMPLETE**: concept is clear and wired to export pipeline; **remaining scope**: (1) complete Export findings implementation (multi-select + report generation), (2) add Email delivery option to export dialog, (3) wire email service provider (SendGrid/Resend), (4) test end-to-end
+- [ ] **Pinned result handling in search** `[ux]` `[enhancement]` — **OBSOLETE**: current pinned behavior is intentional; suggestion to hide pinned from search is a v1.2+ enhancement trade-off decision; keep pinned+search overlap for v1.0
+- [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` — **PARTIALLY COMPLETE**: sections exist in DetailPanel; **remaining scope**: (1) audit layout consistency across all three sections, (2) ensure empty states are clear, (3) verify keyboard navigation is consistent, (4) standardize spacing/spacing patterns
+- [ ] **Copy / add / edit / delete findings** `[ux]` `[enhancement]` — **PARTIALLY COMPLETE**: data layer wired (`userFindingsService.js`, `useUserFindings.js`, merged into `useFindingSearch`); UI forms and inline edit pending; **remaining scope**: (1) build forms and inline edit UI, (2) wire copy button to trigger duplication flow, (3) activate cloud persistence via Supabase in Phase 2; auth required
+- [ ] **Advanced search syntax** `[ux]` `[search]` — **PARTIALLY COMPLETE**: concept is clear; **remaining scope**: (1) implement query parser for `+term` and `-term` operators, (2) integrate pre-filter step before Fuse.js, (3) add syntax hint tooltip near search bar, (4) test edge cases (operators + fuzzy search together)
+- [ ] **Export findings** `[ux]` — **PARTIALLY COMPLETE**: architecture planned (integrate with Email results via shared report pipeline); **remaining scope**: (1) multi-select UI in ResultList, (2) report generation (Markdown/plain text templates), (3) integrate with Email results, (4) test formatting and ensure findings export cleanly
 
 ### Multilingual Edit Flow
 
 Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and services are wired; personal overrides are applied in `useFindingSearch` and visible in search results.
 
-- [ ] **Save changes button in DetailPanel** `[ux]` `[i18n]` — add a "Save changes" button that triggers the edit-flow dialog when the active locale is non-English; when locale is English, save directly as a personal override without the dialog
-- [ ] **Edit target dialog** `[ux]` `[i18n]` — modal shown when user saves in a non-English locale; two choices: "Save to my personal entries" (calls `useUserOverrides.saveOverride`) or "Suggest to shared corpus" (routes to scope dialog then `useContributionQueue.submitContribution`); i18n keys: `edit.target_dialog_title`, `edit.target_dialog_body`, `edit.save_as_personal`, `edit.contribute_to_base`
-- [ ] **Edit scope dialog** `[ux]` `[i18n]` — follow-on dialog after choosing a save target; three radio options: `lang_only`, `lang_and_en`, `all_langs`; for personal saves show `edit.personal_ai_warning` when scope is `lang_only`; i18n keys: `edit.scope_label`, `edit.scope_lang_only/lang_and_en/all_langs`, `edit.scope_all_langs_desc`
-- [ ] **English switch transition (lang_and_en flow)** `[ux]` `[design]` — after saving the non-English version, animate the bottom sheet closed and reopen it showing the English version of the same finding; show `edit.en_switch_dialog_title/body` dialog first giving the user a chance to skip; do not change the app-wide locale — only the finding content in the panel switches to English for this edit step
-- [ ] **Personal override indicator in DetailPanel** `[ux]` `[design]` — when a finding has a personal override for the active locale (`finding._hasOverride`), show a small badge or label near the title; i18n key: `edit.override_indicator`; include "last edited" timestamp from `_overrideEditedAt`
-- [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` — a section in SettingsPanel (or a dedicated route) listing pending contributions with approve/reject/export controls; uses `useContributionQueue`; export button calls `exportJson()` and triggers a file download; i18n keys: `contributions.*`; the actual merge still runs via `scripts/apply-contributions.mjs`
-- [ ] **Reset All includes personal overrides and contributions** `[ux]` `[privacy]` — the comprehensive Reset All modal should list and clear `userOverrides` and `pendingContributions`; call `clearAllOverrides()` from `userOverridesService` and `clearContributions()` from `contributionService`
-- [ ] **Ko-fi link in footer** `[ux]` `[dormant]` — add a Ko-fi link in the footer as a fallback for when the floating widget is disabled
+- [ ] **Save changes button in DetailPanel** `[ux]` `[i18n]` — **NOT STARTED**: unblocks entire multilingual edit flow; **remaining scope**: add "Save changes" button that triggers edit-flow dialog for non-English locale, save directly as override for English
+- [ ] **Edit target dialog** `[ux]` `[i18n]` — **NOT STARTED**: required after Save Changes button; **remaining scope**: modal with two choices ("Save to my personal entries" / "Suggest to shared corpus"); wire `useUserOverrides.saveOverride` and `useContributionQueue.submitContribution`
+- [ ] **Edit scope dialog** `[ux]` `[i18n]` — **NOT STARTED**: required after target selection; **remaining scope**: three radio options (`lang_only`, `lang_and_en`, `all_langs`); show `edit.personal_ai_warning` for `lang_only` personal saves
+- [ ] **English switch transition (lang_and_en flow)** `[ux]` `[design]` — **NOT STARTED**: only needed for `lang_and_en` flow; **remaining scope**: (1) animate bottom sheet close/reopen showing English version, (2) show dialog first giving chance to skip, (3) do not change app-wide locale, only finding panel content
+- [ ] **Personal override indicator in DetailPanel** `[ux]` `[design]` — **NOT STARTED**: visual feedback; **remaining scope**: when `finding._hasOverride` is true, show badge/label near title with timestamp from `_overrideEditedAt`; nice-to-have but not blocking multilingual edit
+- [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` — **NOT STARTED**: maintainer-only feature; **remaining scope**: add section in SettingsPanel listing pending contributions with approve/reject/export controls; wire `useContributionQueue` and `exportJson()`; merge still runs via `scripts/apply-contributions.mjs`
+- [ ] **Reset All includes personal overrides and contributions** `[ux]` `[privacy]` — **PARTIALLY COMPLETE**: Reset All exists; **remaining scope**: (1) verify Reset All calls `clearAllOverrides()` and `clearContributions()`, (2) confirm UI lists both when clearing, (3) test in UI
+- [ ] **Ko-fi link in footer** `[ux]` `[dormant]` — **OBSOLETE**: Ko-fi widget already provides discoverability for Phase 1; nice-to-have for v1.1+
 
 ---
 
 ## Accessibility (A11Y)
 
-- [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` `[dormant]` — open deployed app, confirm selector matches for tooltip icons and overlay inputs
+- [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` `[dormant]` — **PARTIALLY COMPLETE**: patches work in development; **remaining scope**: open deployed app, confirm selectors still match live Ko-fi DOM (selectors may drift with Ko-fi updates), adjust if needed; manual testing only
 
 ---
 
@@ -77,15 +63,15 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### AI Assist
 
-- [ ] **Wire Microsoft Copilot** `[ai]` — requires `VITE_AZURE_OPENAI_ENDPOINT` env var set to a full Azure OpenAI deployment URL; implemented in `aiService.js` but untested; add the env var and verify the response parses correctly
-- [ ] **System prompt tuning** `[ai]` `[claude]` — test AI refinements across at least 20 different finding types covering a variety of SCs, priorities, and platforms; adjust the tone, length, and format instructions in `buildPrompt` in `aiService.js` if the output drifts from the established voice
+- [ ] **Wire Microsoft Copilot** `[ai]` — **NOT STARTED**: requires Azure OpenAI; **remaining scope**: (1) set `VITE_AZURE_OPENAI_ENDPOINT` in `.env.local`, (2) verify response parses correctly in `aiService.js`, (3) test against sample finding
+- [ ] **System prompt tuning** `[ai]` `[claude]` — **PARTIALLY COMPLETE**: baseline prompt is established; **remaining scope**: test refinements across 20+ finding types covering variety of SCs, priorities, and platforms; adjust tone/length/format in `buildPrompt` if output drifts; document final prompt version
 
 ### AI Agent Support
 
 Agent support means upgrading the single-shot AI refinement call into a multi-step, tool-using workflow. The goals are: more accurate rewrites, corpus-aware suggestions, and eventually autonomous finding research.
 
-- [ ] **Wire agentic AI in DetailPanel** `[agent]` `[ai]` `[ux]` — `agenticAiService.js` (tool use + `search_corpus` + system prompt + MAX_TOOL_TURNS error handling) is implemented; wire it into the Refine section of `DetailPanel` so users can toggle between single-shot (`getAiRefinement`) and agentic mode (`getAgenticRefinement`); pass `allFindings` as `corpus`; expose the mode toggle in Settings under AI Assist; document the agentic workflow in the How-To-Use page when it ships
-- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — extend the Refine section of `DetailPanel` to support a short back-and-forth conversation; store turn history in local component state as an array of `{ role, content }` objects; pass the full history in each subsequent API call; add a "Clear conversation" button that resets the history without closing the panel
+- [ ] **Wire agentic AI in DetailPanel** `[agent]` `[ai]` `[ux]` — **PARTIALLY COMPLETE**: backend (`agenticAiService.js` with tool use + search_corpus + error handling) is implemented; **remaining scope**: (1) wire toggle in Refine section of DetailPanel, (2) expose mode toggle in Settings under AI Assist, (3) document agentic workflow in How-To-Use page
+- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — **NOT STARTED**: extends agentic AI; **remaining scope**: (1) extend Refine section to show turn history, (2) store history in component state as `{ role, content }[]`, (3) pass full history in subsequent calls, (4) add "Clear conversation" button
 
 ---
 
@@ -93,15 +79,15 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 50+ locale files covering Latin, CJK, RTL, and indigenous scripts. `en.json` is the source of truth; run `npm run translate` after adding keys.
 
-- [ ] **AI refinement locale pass** `[i18n]` `[ai]` `[claude]` `[enhancement]` — after `getAiRefinement` rewrites `desc` and `rem`, if the active locale is not English, have the AI respond in the active locale directly (update the system prompt to instruct the model to reply in `{locale}`) rather than post-translating; high API cost — enhancement only
-- [ ] **Corpus pre-translation script** `[i18n]` `[corpus]` `[claude]` `[enhancement]` — write a Node.js script that calls an AI provider to translate all `corpus.json` `desc` and `rem` fields into each supported locale; output as `corpus.{lang}.json` files; update `dataService.js` to accept a `locale` param and load the appropriate file; run once, review for WCAG terminology accuracy before committing
+- [ ] **AI refinement locale pass** `[i18n]` `[ai]` `[claude]` `[enhancement]` — **OBSOLETE**: high API cost enhancement; defer to v1.2+ if localization quality needs improvement; current approach of translating English AI output is acceptable for Phase 1
+- [ ] **Corpus pre-translation script** `[i18n]` `[corpus]` `[claude]` `[enhancement]` — **OBSOLETE**: defer to Phase 2 when corpus is stable and multilingual audit can be prioritized; not blocking Phase 1
 
 ---
 
 ## Plugins
 
-- [ ] **Easter egg locale bundle** `[code]` `[i18n]` — extract the 18 Easter egg locale JSON files (`pig`, `pir`, `tlh`, `val`, `blt`, `dot`, `tok`, `nav`, `qya`, `sjn`, `hod`, `dov`, `nds`, `nws`, `mnd`, `csp`, `sim`, `ali`) and the `EASTER_EGGS` / `EASTER_EGG_LOCALES` constants from `App.jsx` into a self-contained package (`src/plugins/easter-eggs/` or a standalone npm package); the bundle would export the locale map, the trigger→code map, and the heading-font CSS block so other React projects can drop in the same Easter egg language experience; prerequisite: lazy-loading strategy for locale JSON so the 18 files don't bloat the main bundle
-- [ ] **Ko-fi a11y patch as standalone plugin** `[code]` `[a11y]` `[dormant]` — extract `patchKofiA11y` from `App.jsx` into `src/plugins/kofi/KofiWidget.jsx` and `src/plugins/kofi/index.js`; the plugin should be drop-in for any React project that embeds the Ko-fi overlay widget; include a self-contained CSS file (`kofi.css`) that applies accessible styling patches — focus ring on the trigger button, visible outline on the popup container, improved close-button target size — since Ko-fi's widget is visually styled outside our control and CSS patches are the safest lever we have; document selectors used and note they may need updating if Ko-fi changes its markup
+- [ ] **Easter egg locale bundle** `[code]` `[i18n]` — **PARTIALLY COMPLETE**: 18 locales built and functional; extraction to standalone package pending; **remaining scope**: (1) extract locale JSONs and `EASTER_EGG_LOCALES` map to `src/plugins/easter-eggs/`, (2) implement lazy-loading for locale files to avoid bloating main bundle, (3) document plugin API for drop-in usage in other React projects
+- [ ] **Ko-fi a11y patch as standalone plugin** `[code]` `[a11y]` `[dormant]` — **PARTIALLY COMPLETE**: patch is working in `App.jsx`; extraction to plugin pending; **remaining scope**: (1) extract `patchKofiA11y` to `src/plugins/kofi/KofiWidget.jsx` and `index.js`, (2) include self-contained `kofi.css`, (3) document selectors and note maintenance burden if Ko-fi's markup changes
 
 ---
 
@@ -109,22 +95,22 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ### Code Quality
 
-- [ ] **Migrate inline spacing to tokens** `[code]` `[claude]` `[done]` — ~~audit all components for raw pixel or rem values not referencing `var(--space-*)`; replace with the nearest token; last major inline-value migration after font sizes (done) and priority colors (done); overlaps with the recurring Token Audit in MAINTENANCE.md — run both together~~ **COMPLETE**: 222+ spacing token usages throughout `index.css` (4,299 lines); spacing is fully tokenized; spot audit shows no remaining raw px/rem spacing values; consider done
-- [ ] **UI component library extraction** `[code]` `[claude]` `[dormant]` — this app has built a solid set of accessible, self-contained SPA primitives that could ship as a standalone React library: the hash router (`src/plugins/router/`) handles navigation, modals, drawers, bottom sheets, focus management, and page-title sync; the announcer (`src/plugins/announce/`) is a live-region wrapper; the focus and names debuggers are dev-only overlays; form controls (Toggle, chip groups, checkboxes) are already tokenized; button system unification is a prerequisite — extraction path: (1) complete button unification, (2) extract `src/plugins/` into `packages/core`, (3) extract UI components into `packages/ui`, (4) set up a pnpm or npm workspaces monorepo with the main app as `packages/app`; this is also like a combination of all the plugins in this codebase — router, announcer, focus debugger — plus a component layer on top; complexity is high, defer until the component API is stable (post button unification); **status**: good-to-have but not critical path; mark dormant
-- [ ] **CSS Modules / SCSS evaluation** `[code]` `[claude]` `[manual]` `[deferred]` — **DECISION CONFIRMED**: CSS Modules ruled out — BEM naming + CSS custom properties already give effective scoping and dead-code is auditable at this scale; SCSS nesting (via `vite-plugin-sass`) would reduce repetition in the flat `index.css` (currently 4,299 lines, approaching 4K threshold) and is the most likely migration path if file grows further; defer SCSS until button system unification + component library extraction are complete, then evaluate nesting as part of that work; do not migrate now
+- [ ] **Migrate inline spacing to tokens** `[code]` `[claude]` — **COMPLETE**: 222+ spacing token usages throughout `index.css` (4,299 lines); spacing is fully tokenized; spot audit shows no remaining raw px/rem spacing values; no further work needed
+- [ ] **UI component library extraction** `[code]` `[claude]` `[dormant]` — **PARTIALLY COMPLETE**: accessible SPA primitives are built (router, announcer, focus/names debuggers, form controls, button system); **remaining scope**: (1) confirm button unification is fully complete, (2) audit component APIs for stability, (3) scaffold monorepo structure (`packages/core`, `packages/ui`, `packages/app`), (4) extract plugins and UI components; defer to post-v1.0 when APIs stabilize; complexity is high and not critical path
+- [ ] **CSS Modules / SCSS evaluation** `[code]` `[claude]` — **COMPLETE**: decision confirmed — CSS Modules ruled out (BEM + custom properties give effective scoping); SCSS nesting is most likely future path if `index.css` grows beyond 5K lines; defer SCSS until post-button-unification + component-library-extraction; current CSS structure is acceptable for Phase 1
 
 ### Infrastructure
 
-- [ ] **Version tagging** `[infra]` — create git tags for stable milestones once the corpus is stable enough to track; use semantic versioning (`v0.1.0` for Phase 1 launch, `v0.2.0` for Phase 2 AI, `v1.0.0` for Phase 3 public); to tag: `git tag -a v0.1.0 -m "Phase 1 launch — personal tool, N corpus entries"` then `git push origin v0.1.0`; tags are listed on the GitHub releases page and can be used as deployment targets
-- [ ] **Chrome extension — validate and merge** `[infra]` — scaffold complete on `feature/chrome-extension`; load unpacked from `dist-extension/` in Chrome, smoke-test search / copy / settings / AI refine, check layout at ~400px side panel width; add PNG icons (16 / 48 / 128px); merge when layout confirmed
-- [ ] **Firefox extension — validate and merge** `[infra]` — scaffold complete on `feature/firefox-extension`; load via `about:debugging` → Load Temporary Add-on, smoke-test same flow; add PNG icons; confirm sidebar behaves correctly; merge when confirmed
-- [ ] **Electron desktop app — icons, test, merge** `[infra]` — functionally complete on `feature/electron-app`; remaining: add app icons (`build/icon.icns/.ico/.png`), test end-to-end on macOS and Windows (safeStorage key persistence across restarts, AI refine), code-sign macOS build before distribution; merge when icons are ready
-- [ ] **Umami analytics** `[infra]` `[dormant]` `[manual]` `[launch-blocker]` — requires signing up at umami.is; create an account, add the site, replace `YOUR_WEBSITE_ID` in `index.html`, and uncomment the script tag; verify that Umami reports zero cookies and no personal data in the dashboard before enabling on any deployment
-- [ ] **Phase 3 hosting strategy** `[infra]` `[dormant]` `[phase3]` — deployment strategy for a public Phase 3 launch is undecided; options include a separate Netlify/Vercel site from a separate repo (personal corpus never in that repo), a subdomain of an existing site, or self-hosted; defer until Phase 3 scope is clearer
+- [ ] **Version tagging** `[infra]` — **PARTIALLY COMPLETE**: tagging strategy is defined; **remaining scope**: (1) decide stable corpus threshold, (2) create `v0.1.0` tag on Phase 1 launch, (3) push tags to GitHub releases page; can be done anytime post-stabilization
+- [ ] **Chrome extension — validate and merge** `[infra]` — **PARTIALLY COMPLETE**: scaffold complete on `feature/chrome-extension`; **remaining scope**: (1) add 16/48/128px PNG icons, (2) load unpacked from `dist-extension/`, (3) smoke-test search/copy/settings/AI refine at ~400px width, (4) merge when layout confirmed
+- [ ] **Firefox extension — validate and merge** `[infra]` — **PARTIALLY COMPLETE**: scaffold complete on `feature/firefox-extension`; **remaining scope**: (1) add PNG icons, (2) load via `about:debugging`, (3) confirm sidebar behavior, (4) merge when confirmed
+- [ ] **Electron desktop app — icons, test, merge** `[infra]` — **PARTIALLY COMPLETE**: functionally complete on `feature/electron-app`; **remaining scope**: (1) add app icons (`.icns` / `.ico` / `.png`), (2) test end-to-end on macOS/Windows (safeStorage persistence, AI refine), (3) code-sign macOS build, (4) merge when icons ready
+- [ ] **Umami analytics** `[infra]` `[dormant]` `[manual]` — **PARTIALLY COMPLETE**: integration point is clear; **remaining scope**: (1) sign up at umami.is, (2) replace `YOUR_WEBSITE_ID` in `index.html`, (3) verify zero cookies in dashboard, (4) enable on deployment; can be done anytime pre-launch
+- [ ] **Phase 3 hosting strategy** `[infra]` `[dormant]` `[phase3]` — **OBSOLETE**: deployment strategy is undecided and deferred by design; revisit in Phase 3 planning (options: separate Netlify/Vercel site, subdomain, self-hosted)
 
 ### Privacy & Security
 
-- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[dormant]` `[phase3]` `[launch-blocker]` — draft written at `docs/GDPR-DRAFT.md` (gitignored); covers localStorage keys, AI API calls, no-cookies, no-tracking, contribution flow, offline use; review and publish as a linked page before any public Phase 3 launch
+- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[dormant]` `[phase3]` `[launch-blocker]` — **PARTIALLY COMPLETE**: draft exists at `docs/GDPR-DRAFT.md` (gitignored); **remaining scope**: (1) review and finalize GDPR-DRAFT.md, (2) move to `docs/GDPR.md` (tracked), (3) publish as linked page before Phase 3 launch, (4) ensure covers localStorage, AI API calls, no-cookies, no-tracking, contribution flow, offline use
 
 ---
 
@@ -132,21 +118,21 @@ Agent support means upgrading the single-shot AI refinement call into a multi-st
 
 ### Authentication
 
-- [ ] **Sign-in UI** `[ux]` `[phase3]` — add a minimal sign-in section at the bottom of SettingsPanel (below AI Assist); show avatar and display name when signed in, "Sign in with Google / GitHub" buttons when not; sign-out option inline; no dedicated auth page needed
-- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` `[launch-blocker]` — stubs live in `src/services/authService.js` and `src/services/supabaseClient.js`; activate by installing `@supabase/supabase-js`, setting `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, and uncommenting the implementation blocks; Supabase project setup instructions and DB schema (SQL) are in `supabaseClient.js`; required before GDPR disclosure can be published (login = personal data)
-- [ ] **Phase 2 stubs review** `[infra]` `[claude]` `[manual]` — before activating Supabase, re-read `src/services/authService.js` and `src/services/supabaseClient.js` comments against the current Supabase JS v2 SDK docs; confirm OAuth provider slugs (`'google'`, `'github'`), table names, and RLS policy examples are still accurate; the stubs were written against an earlier SDK version
+- [ ] **Sign-in UI** `[ux]` `[phase3]` — **NOT STARTED**: blocked on Supabase activation; **remaining scope**: (1) add minimal sign-in section to SettingsPanel footer, (2) show avatar/name when signed in, (3) "Sign in with Google/GitHub" buttons when not, (4) sign-out option inline
+- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` `[launch-blocker]` — **PARTIALLY COMPLETE**: stubs exist in `authService.js` and `supabaseClient.js`; **remaining scope**: (1) install `@supabase/supabase-js`, (2) set `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, (3) uncomment implementation blocks, (4) verify OAuth slugs and RLS policies; required before GDPR disclosure can be published
+- [ ] **Phase 2 stubs review** `[infra]` `[claude]` `[manual]` — **PARTIALLY COMPLETE**: stubs exist; **remaining scope**: (1) re-read `authService.js` and `supabaseClient.js` against current Supabase JS v2 SDK docs, (2) confirm OAuth slugs (`'google'`, `'github'`), table names, RLS policies are accurate; prerequisite for activating Supabase
 
 ### Cloud Data Sync
 
-- [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` — `syncSettings()` and `getRemoteSettings()` stubs in `dataService.js`; on sign-in, load remote settings and merge with localStorage; on any setting change, push to Supabase; API keys intentionally excluded from sync (localStorage only)
-- [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Phase 1 localStorage layer is wired (`userFindingsService.js`, `useUserFindings.js`); Phase 2: activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase; DB schema in `supabaseClient.js`
-- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — when a user is signed in, sync upvote/downvote ratings to a `ratings` table (`user_id`, `finding_id`, `vote`); merge with any existing `localStorage` ratings on sign-in; `dataService.js` already abstracts the data layer, so this is a localized change
-- [ ] **GitHub Sponsors** `[infra]` `[phase3]` — set up GitHub Sponsors as a secondary tip option alongside the Ko-fi widget for Phase 3
+- [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` — **PARTIALLY COMPLETE**: stubs exist in `dataService.js`; **remaining scope**: (1) activate `syncSettings()` and `getRemoteSettings()` via Supabase, (2) on sign-in merge remote with localStorage, (3) on setting change push to Supabase; API keys excluded from sync (localStorage only)
+- [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — **PARTIALLY COMPLETE**: Phase 1 localStorage layer wired (`userFindingsService.js`, `useUserFindings.js`); **remaining scope**: (1) activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase, (2) verify DB schema, (3) test CRUD operations
+- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — **PARTIALLY COMPLETE**: ratings data layer exists; **remaining scope**: (1) wire up/downvote sync to `ratings` table (`user_id`, `finding_id`, `vote`), (2) merge localStorage ratings on sign-in, (3) test sync behavior
+- [ ] **GitHub Sponsors** `[infra]` `[phase3]` — **OBSOLETE**: nice-to-have alternative to Ko-fi; defer to Phase 3 if monetization strategy includes Sponsors
 
 ---
 
 ## Monetization
 
-- [ ] **Ad tiles in result list** `[ux]` `[design]` `[phase3]` `[manual]` `[70%]` — **CONFIRMED COMPLETE**: tile component (`SponsoredTile.jsx`) and admin preview (`AdminPanel.jsx` ON/OFF toggle, configurable every-N frequency, `showAds` / `adFrequency` props) are fully built and wired; remaining: (1) connect to real ad delivery source (Carbon Ads, EthicalAds, direct-sold), (2) replace placeholder copy, (3) decide final placement rules; Phase 3 blocker only — ship v1.0/v1.1 without ads; infrastructure work deferred to v2.0+
-- [ ] **Free vs. premium feature tiers** `[phase3]` `[manual]` — define what is free and what requires a paid plan; areas to think through: AI Assist (tokens per month, model tier), corpus size limits for custom findings, cloud sync, export formats (e.g. CSV/Markdown free, DOCX premium), team/multi-user access, priority corpus updates; also think through usage limits and how to enforce them (rate limiting, localStorage vs. server-side counters, grace periods)
-- [ ] **Ad services, pricing, and what's included** `[phase3]` `[manual]` — research ad insertion options (Carbon Ads, EthicalAds, self-served direct buys); for each: starting CPM/CPC price points, minimum traffic requirements, what reporting is bundled, targeting options, payment terms; also think through: how many ad slots per page, what a "starter package" for direct buyers would include, whether to offer sponsorships (fixed monthly fee) vs. impression-based; decide on a network vs. direct-sell model before Phase 3 launch
+- [ ] **Ad tiles in result list** `[ux]` `[design]` `[phase3]` `[manual]` — **COMPLETE**: tile component (`SponsoredTile.jsx`) and admin preview (`AdminPanel.jsx` toggle, frequency config) fully built and wired; **remaining work is Phase 3 only**: (1) connect real ad delivery source (Carbon Ads, EthicalAds, direct-sold), (2) replace placeholder copy, (3) finalize placement rules; ship v1.0/v1.1 without ads; infrastructure deferred to v2.0+
+- [ ] **Free vs. premium feature tiers** `[phase3]` `[manual]` — **NOT STARTED**: strategic business decision; **remaining scope**: (1) define free tier (AI Assist monthly tokens? corpus size limits?), (2) define premium tier (more tokens, custom findings, cloud sync, export formats), (3) think through usage limits (rate limiting, server-side counters, grace periods), (4) document tier requirements before Phase 3 launch
+- [ ] **Ad services, pricing, and what's included** `[phase3]` `[manual]` — **NOT STARTED**: strategic business decision; **remaining scope**: (1) research ad networks (Carbon Ads, EthicalAds, self-served), (2) document starting CPM/CPC, minimum traffic, reporting, targeting, payment terms for each, (3) decide on network vs. direct-sell model, (4) define ad slot count per page, starter package for direct buyers, sponsorship (fixed monthly) vs. impression-based model before Phase 3
