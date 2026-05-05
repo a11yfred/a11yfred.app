@@ -85,6 +85,12 @@
     <!-- Color scheme for Firefox and other browsers — enables theme-color support -->
     <meta name="color-scheme" content="light dark" />
 
+    <!-- Set initial theme-color based on system preference before React loads -->
+    <script>
+      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', isDark ? '#1a1a1a' : '#5548c8');
+    </script>
+
     <!--
       Umami Analytics (privacy-first, no cookies, GDPR-compliant)
       1. Create a free account at https://umami.is or self-host
