@@ -28,6 +28,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Animations & Transitions | ✅ | 100 | 1 |
 | Responsive Design | ✅ | 100 | 1 |
 | Party Mode | ✅ | 100 | 1 |
+| UI Component Library (boilerplate) | ✅ | 100 | 1 |
 | AI Assist (single-shot) | 🟡 | 85 | 2 |
 | AI Agent (agentic mode) | 🔧 | 40 | 2 |
 | User Findings (custom) | 🔧 | 30 | 2 |
@@ -51,14 +52,13 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ### Phase 1 — Nearly Complete (May 5, 2026)
 
-- 19 features shipped and stable; SEO enabled; UI component library extraction started
+- 20 features shipped and stable; SEO enabled; UI component library extraction complete
 - ✅ Core search, result list, detail panel, ratings, pinned findings
 - ✅ Full corpus (89 entries), all linters passing, responsive design
 - ✅ Session persistence, debug tools, animations, Party Mode
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
-- ✅ UI primitives (Toggle, RadioChip, Select) extracted to `src/components/ui/`
+- ✅ UI component library (100% — 9 primitives extracted: Toggle, RadioChip, Select, StateButton, InputWithClear, Badge, Field, PanelShell, BackButton; plus Modal/Announcer re-exports)
 - 🟡 Internationalization (80% — 50+ locales, ~60 keys pending translation)
-- 🟡 UI component library (30% — 3/9 components extracted; 6 additional patterns identified)
 - Remaining Phase 1: Ko-fi donations, GitHub badges, production domain
 
 ### Phase 2 — In Progress

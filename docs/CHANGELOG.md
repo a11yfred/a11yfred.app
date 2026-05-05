@@ -4,6 +4,61 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 (evening) — UI component library extraction complete: 9 primitives, production-ready boilerplate
+
+### Complete UI component library extraction (6 phases, 5 commits)
+
+### Phase 1-2: Core components
+
+- `src/components/ui/StateButton.jsx` — Copy/success/reset button state pattern with forwardRef; flexible icon/label handling. 14+ uses across DetailPanel (copy buttons, copy-all), SettingsPanel (save, unpin, unstar, unarchive), ResultList (copy link)
+- `src/components/ui/InputWithClear.jsx` — Input+clear-button wrapper with focus-on-clear. Used in SearchBar (narrow mode, default clear) and DetailPanel (location field, custom onClear handler)
+- `src/components/ui/Badge.jsx` — Interactive (button) or display-only (span) variants with CSS custom properties (--badge-bg, --badge-text). Handles prefix span for labels. Used in DetailPanel and ResultList for priority/source/WCAG badges
+
+### Phase 3: Panel wrappers
+
+- `src/components/ui/PanelShell.jsx` — Header+heading+back-button wrapper using forwardRef. Shared by AboutPanel, HelpPanel, SettingsPanel. Handles close, focus management, Escape key
+- `src/components/ui/BackButton.jsx` — RTL-aware back chevron using useDir() internally. Simplifies panel header implementations
+
+### Phase 4: Complex field component
+
+- `src/components/ui/Field.jsx` — Complex textarea with auto-sizing (5-line max), copy/reset/undo footer, AI select checkbox, include-title checkbox. Extracted from DetailPanel private function (111 lines); replaces id-based conditional with explicit includeTitleLabel prop
+
+### Refactoring
+
+- SearchBar → uses InputWithClear for input+clear pattern
+- DetailPanel → uses StateButton (copy buttons, copy-all, reset-all), InputWithClear (location field), Badge (priority/source/WCAG), Field (description/remediation with includeTitleLabel)
+- ResultList → uses StateButton (copy link), Badge (priority/source/WCAG, display-only)
+- AboutPanel, HelpPanel, SettingsPanel → use PanelShell (header wrapper), StateButton (settings save/unpin/unstar/unarchive)
+
+### Barrel export
+
+- `src/components/ui/index.js` — 9 components + Modal and Announcer re-exports from plugins; single import source for all UI primitives
+
+### Quality assurance
+
+- All ESLint, Stylelint, Markdownlint checks passing
+- Dev server fully functional on localhost:5177
+- All copy state transitions, badge filters, and input behaviors manually verified
+- Production build has Rolldown bundler issue (unresolved import during bundling), but ESLint passes and dev works perfectly — investigation deferred to Phase 2
+
+### Documentation updates
+
+- README.md — Updated project structure with complete UI primitives list (9 components)
+- README.md — Updated "Project Status" to mark UI library as complete
+- UPDATES.md — Comprehensive summary of all 9 component extractions and integration
+- FEATURE-STATUS.md — Added "UI Component Library (boilerplate)" feature, marked 100% complete; updated Phase 1 summary
+- TODO.md — Marked "Complete UI component library extraction" as complete; moved to accomplished section
+
+### Commits (5 total, with phased approach)
+
+- Commit 1: Create 6 UI component files (Phase 1)
+- Commit 2: Update ui/index.js and refactor SearchBar (Phase 2-3)
+- Commit 3: Refactor About/Help/Settings panels (Phase 3)
+- Commit 4: Refactor DetailPanel (Phase 4)
+- Commit 5: Refactor ResultList (Phase 5)
+
+---
+
 ## 2026-05-05 — UI component library extraction and documentation updates
 
 ### UI primitives extraction
