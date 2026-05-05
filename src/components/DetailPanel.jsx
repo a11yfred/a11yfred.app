@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { getAgenticRefinement } from '../services/agenticAiService.js'
@@ -6,15 +6,7 @@ import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
-import { StateButton, InputWithClear, Badge, Field, ScLink, SourceLinks } from '../ui/index.js'
-
-function findingSlug(title) {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-}
+import { StateButton, InputWithClear, Badge, Field, ScLink, SourceLinks, RelatedIssues } from '../ui/index.js'
 
 function editDistance(a, b) {
   const m = a.length, n = b.length
@@ -661,53 +653,6 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       >
         <p>{t('detail.confirm_reset_body')}</p>
       </Modal>
-    </div>
-  )
-}
-
-function RelatedIssues({ finding, allFindings, onSelect }) {
-  const t = useT()
-
-  const related = useMemo(() => {
-    if (!allFindings?.length || !finding.related?.length) return []
-    return allFindings
-      .filter(d => d.id !== finding.id && finding.related.includes(d.scLabel))
-      .slice(0, 5)
-  }, [allFindings, finding])
-
-  if (!related.length || !onSelect) return null
-
-  const headingKey = related.length === 1 ? 'detail.related_issue_heading' : 'detail.related_heading'
-
-  return (
-    <div className="detail-related">
-      {related.length === 1 ? (
-        <p className="detail-related__heading detail-related__heading--single">
-          {t(headingKey)}{' '}
-          <a
-            href={`#/finding/${related[0].id}/${findingSlug(related[0].title)}`}
-            className="detail-related__btn"
-          >
-            {related[0].title}
-          </a>
-        </p>
-      ) : (
-        <>
-          <p className="detail-related__heading">{t(headingKey)}</p>
-          <ul className="detail-related__list">
-            {related.map(d => (
-              <li key={d.id}>
-                <a
-                  href={`#/finding/${d.id}/${findingSlug(d.title)}`}
-                  className="detail-related__btn"
-                >
-                  {d.title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
     </div>
   )
 }
