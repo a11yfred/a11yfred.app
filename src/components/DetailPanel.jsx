@@ -1,11 +1,12 @@
-import { useState, useRef, useEffect, useMemo, forwardRef } from 'react'
-import { Sparkles, RotateCcw, Copy, Check, ExternalLink, Loader2, AlertCircle, Edit } from 'lucide-react'
+import { useState, useRef, useEffect, useMemo } from 'react'
+import { Sparkles, Copy, Check, ExternalLink, Loader2, AlertCircle, RotateCcw } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { getAgenticRefinement } from '../services/agenticAiService.js'
 import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
+import { StateButton, InputWithClear, Badge, Field } from '../ui/index.js'
 
 function scToWaiUrl(scLabel) {
   const match = scLabel?.match(/^\d+\.\d+\.\d+\s+(.+?)\s+\(Level/)
@@ -336,58 +337,54 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           <h2 ref={titleRef} tabIndex={-1} className="detail-title">
             {finding.title}
           </h2>
-          <button
-            type="button"
+          <StateButton
+            active={copiedTitle}
+            icon={<Copy size={14} aria-hidden="true" />}
+            activeIcon={<Check size={14} aria-hidden="true" />}
+            label={t('detail.copy_title_aria')}
+            activeLabel={t('detail.copied_aria')}
+            className="detail-copy-btn"
             onClick={copyTitle}
-            aria-label={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
-            className={`detail-copy-btn${copiedTitle ? ' detail-copy-btn--success' : ''}`}
             title={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
-          >
-            {copiedTitle ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-          </button>
+          />
         </div>
         <div className="detail-badges">
-          <button
-            type="button"
-            className="priority-badge"
-            style={{ '--badge-bg': p.bg, '--badge-text': p.color }}
+          <Badge
+            variant="priority"
+            bg={p.bg}
+            color={p.color}
+            prefix={finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
             onClick={() => onBadgeClick?.({ type: 'priority', value: finding.priority })}
             aria-label={`${finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)} — ${t('results.badge_filter_aria')}`}
           >
-            {finding.priority !== 'Best Practice' && <span className="badge-prefix">{t('badge.severity_prefix')}</span>}
             {t(p.key)}
-          </button>
+          </Badge>
           {(() => {
             const sources = finding.sourceCredits?.filter(src => src !== 'ATH') || []
             if (sources.length === 0) return null
             if (sources.length === 1) {
               const src = sources[0]
               return (
-                <button
+                <Badge
                   key={src}
-                  type="button"
-                  className="source-badge"
-                  style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
+                  variant="source"
+                  prefix="Source:"
                   onClick={() => onBadgeClick?.({ type: 'source', value: src })}
                   aria-label={`Source: ${src} — ${t('results.badge_filter_aria')}`}
                 >
-                  <span className="badge-prefix">Source:</span>
                   {src}
-                </button>
+                </Badge>
               )
             }
-            // Multiple sources: show single "Sources" badge that scrolls to section
             return (
-              <button
+              <Badge
                 key="sources-badge"
-                type="button"
-                className="source-badge"
-                style={{ '--badge-bg': 'var(--source-bg)', '--badge-text': 'var(--source-text)' }}
+                variant="source"
                 onClick={() => document.querySelector('.detail-sources-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                 aria-label="Sources: Multiple (See below)"
               >
                 Sources: Multiple (See below)
-              </button>
+              </Badge>
             )
           })()}
           {finding.wcagVersion && finding.wcagLevel && (
@@ -413,15 +410,16 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                 <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
                 <ScLink label={finding.scLabel} />
               </span>
-              <button
-                type="button"
+              <StateButton
+                active={copiedPrimarySc}
+                icon={<Copy size={14} aria-hidden="true" />}
+                activeIcon={<Check size={14} aria-hidden="true" />}
+                label={t('detail.copy_sc_aria')}
+                activeLabel={t('detail.copied_aria')}
+                className="detail-sc-copy-btn"
                 onClick={copyPrimarySc}
-                aria-label={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
-                className={`detail-sc-copy-btn${copiedPrimarySc ? ' detail-sc-copy-btn--success' : ''}`}
                 title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
-              >
-                {copiedPrimarySc ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-              </button>
+              />
             </div>
           </li>
           {finding.related.length > 0 && (
@@ -436,15 +434,16 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                     </span>
                   ))}
                 </span>
-                <button
-                  type="button"
+                <StateButton
+                  active={copiedRelatedSc}
+                  icon={<Copy size={14} aria-hidden="true" />}
+                  activeIcon={<Check size={14} aria-hidden="true" />}
+                  label={t('detail.copy_sc_aria')}
+                  activeLabel={t('detail.copied_aria')}
+                  className="detail-sc-copy-btn"
                   onClick={copyRelatedSc}
-                  aria-label={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
-                  className={`detail-sc-copy-btn${copiedRelatedSc ? ' detail-sc-copy-btn--success' : ''}`}
                   title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
-                >
-                  {copiedRelatedSc ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-                </button>
+                />
               </div>
             </li>
           )}
@@ -456,26 +455,18 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           {t('detail.location_label')}
           {!location.trim() && <span className="detail-optional">{' '}{t('detail.location_optional')}</span>}
         </label>
-        <div className="detail-location-input-wrap">
-          <input
-            id="location-prefix"
-            type="text"
-            value={location}
-            onChange={e => setLocation(e.target.value)}
-            placeholder={t('detail.location_placeholder')}
-            className="detail-input"
-          />
-          {location && (
-            <button
-              onClick={() => setLocation('')}
-              aria-label={t('search.clear_aria')}
-              className="btn--primary detail-location-clear-btn"
-              type="button"
-            >
-              ↺
-            </button>
-          )}
-        </div>
+        <InputWithClear
+          id="location-prefix"
+          type="text"
+          value={location}
+          onChange={setLocation}
+          onClear={() => setLocation('')}
+          placeholder={t('detail.location_placeholder')}
+          clearAriaLabel={t('search.clear_aria')}
+          wrapClassName="detail-location-input-wrap"
+          inputClassName="detail-input"
+          clearButtonClassName="btn--primary detail-location-clear-btn"
+        />
       </div>
 
       <Field
@@ -500,6 +491,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         hasChanged={descText !== finding.desc}
         includeTitle={includeDescTitle}
         onIncludeTitleChange={setIncludeDescTitle}
+        includeTitleLabel={t('detail.include_desc_title_when_copied')}
       />
 
       <Field
@@ -524,6 +516,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         hasChanged={remText !== finding.rem}
         includeTitle={includeRemTitle}
         onIncludeTitleChange={setIncludeRemTitle}
+        includeTitleLabel={t('detail.include_rem_title_when_copied')}
       />
 
       <div className="detail-refine">
@@ -838,119 +831,6 @@ function SourceLinks({ links }) {
     </div>
   )
 }
-
-const Field = forwardRef(function Field({
-  id, label, value, onChange,
-  copied, onCopy,
-  reset, onReset,
-  undoable, onUndo,
-  selected, onSelectChange, selectLabel,
-  animating, wasUpdated,
-  isDesktop, aiEnabled,
-  hasChanged,
-  includeTitle, onIncludeTitleChange,
-}, copyBtnRef) {
-  const t = useT()
-  const taRef = useRef(null)
-
-  useEffect(() => {
-    const el = taRef.current
-    if (!el) return
-    const style = getComputedStyle(el)
-    const lineHeight = parseFloat(style.lineHeight)
-    const maxHeight = 5 * lineHeight + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
-    el.style.height = 'auto'
-    el.style.height = Math.min(el.scrollHeight, maxHeight) + 'px'
-  }, [value])
-
-  function handleResetOrUndo() {
-    if (undoable) onUndo()
-    else onReset()
-  }
-
-  const resetBtnLabel = reset
-    ? t('detail.reset_done_aria', { label })
-    : undoable
-      ? t('detail.undo_last_aria', { label })
-      : t('detail.reset_aria', { label })
-
-  const resetBtnText = reset
-    ? t('detail.reset_done_desktop')
-    : undoable
-      ? t('detail.undo_last_desktop')
-      : t('detail.reset_desktop')
-
-  return (
-    <div className="field">
-      <div className="field__header">
-        <div className="field__label-row">
-          {aiEnabled && (
-            <input
-              type="checkbox"
-              className="field-select-checkbox"
-              checked={selected}
-              onChange={e => onSelectChange(e.target.checked)}
-              aria-label={selectLabel}
-              disabled={animating}
-            />
-          )}
-          <label htmlFor={id} className="field__label">
-            {selected && <Edit size={14} aria-hidden="true" className="field__label-icon" />}
-            {label}
-            {wasUpdated && (
-              <span className="field__updated-badge">{t('detail.updated_label')}</span>
-            )}
-          </label>
-        </div>
-      </div>
-      <textarea
-        ref={taRef}
-        id={id}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        readOnly={animating}
-        className={`field__textarea${animating ? ' field__textarea--animating' : ''}`}
-      />
-      <div className="field__footer">
-        <div className="field__include-title">
-          <input
-            type="checkbox"
-            id={`${id}-include-title`}
-            checked={includeTitle}
-            onChange={e => onIncludeTitleChange(e.target.checked)}
-            disabled={animating}
-            className="field-include-title-checkbox"
-          />
-          <label htmlFor={`${id}-include-title`} className="field-include-title-label">
-            {includeTitle && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
-            {id === 'finding-desc' ? t('detail.include_desc_title_when_copied') : id === 'finding-rem' ? t('detail.include_rem_title_when_copied') : t('detail.include_title_when_copied')}
-          </label>
-        </div>
-        <div className="field__actions">
-          <button
-            onClick={handleResetOrUndo}
-            aria-label={resetBtnLabel}
-            className={`btn--primary btn--field${reset ? ' btn__field--success' : ''}`}
-            disabled={animating || (!undoable && !hasChanged)}
-          >
-            {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
-            {isDesktop && <span>{resetBtnText}</span>}
-          </button>
-          <button
-            ref={copyBtnRef}
-            onClick={onCopy}
-            aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
-            className={`btn--primary btn--field${copied ? ' btn__field--success' : ''}`}
-            disabled={animating}
-          >
-            {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-            {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
-          </button>
-        </div>
-      </div>
-    </div>
-  )
-})
 
 function ScLink({ label }) {
   const href = scToWaiUrl(label)
