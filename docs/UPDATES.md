@@ -4,6 +4,41 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 5, 2026 (UI Library + Documentation) — UI component extraction started, boilerplate prep, docs updated
+
+### UI Component Library Extraction (Phase 1 Boilerplate)
+
+Started extracting reusable UI components to `src/components/ui/` for use as a production-grade boilerplate.
+
+**Completed:**
+
+- Toggle, RadioChip, Select — extracted from SettingsPanel.jsx private functions
+- Barrel export at `src/components/ui/index.js`
+- SettingsPanel refactored to use extracted components; code reduced by ~65 lines
+- All linters passing (ESLint, Stylelint)
+
+**Identified for extraction (ready to implement):**
+
+- StateButton (14 uses) — copy/success/reset button state pattern across 3 files
+- InputWithClear (2 uses) — input+clear-button with focus-on-clear in SearchBar, DetailPanel
+- Badge (7 uses) — interactive/display badge variants with CSS var styling
+- Field (2 uses) — complex textarea+checkbox+copy/reset/undo footer component
+- PanelShell (3 uses) — header+title+back-button wrapper across About, Help, Settings panels
+- BackButton (3 uses) — RTL-aware back chevron with useDir() hook
+- Modal, Announcer — re-export from plugins for centralized UI import
+
+Total: 9 additional patterns mapped with exact usage metrics. This will complete the project's portable UI library.
+
+### Documentation Updates
+
+- README.md — Expanded project structure to include `src/components/ui/` and complete plugin documentation
+- TODO.md — Added "Complete UI component library extraction for boilerplate" task with detailed scope
+- CHANGELOG.md — Documented extraction work and comprehensive plan
+- FEATURE-STATUS.md — Added UI component library progress (30% of identified components extracted)
+- All 34 markdown files remain linting-clean
+
+---
+
 ## May 5, 2026 (Phase 1 Launch Readiness) — SEO enabled, Phase 1 essentials checklist, Phase 3 launch roadmap
 
 ### Phase 1 Launch Day Essentials Complete

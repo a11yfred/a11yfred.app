@@ -80,10 +80,17 @@ src/
     DetailPanel.jsx
     SettingsPanel.jsx
     AboutPanel.jsx
+    HelpPanel.jsx
+    OnboardingPanel.jsx
     Confetti.jsx
     PartySparkles.jsx
     PartyMusicPlayer.jsx
     KofiWidget.jsx        # Ko-fi donation widget + a11y patch (currently disabled)
+    ui/                   # Reusable UI primitives
+      Toggle.jsx          # Switch/checkbox component
+      RadioChip.jsx       # Segmented radio option
+      Select.jsx          # Native select with chevron icon
+      index.js            # Barrel export
   plugins/
     router/               # Hash-based SPA router + focus-management hooks (zero deps)
       Router.jsx          # <Router> provider and useRouter hook
@@ -95,9 +102,23 @@ src/
       useFocusOnMount.js
       useReturnFocus.js
       useFocusTrap.js
+      useAriaHide.js
       useMediaQuery.js
       usePageTitle.js
       usePaginationFocus.js
+      useDir.js
+      README.md           # Full documentation
+    announce/             # ARIA live regions for screen reader announcements
+      Announcer.jsx
+      announce.js
+      useAnnounce.js
+      README.md           # Full documentation
+    debug/                # Dev-only diagnostic tools (KB focus, names, deploy status)
+      FocusDebugger.jsx
+      NamesDebugger.jsx
+      DeployBanner.jsx
+      DebugHelp.jsx
+      README.md           # Full documentation
       index.js            # Barrel export
       README.md           # Focus management rules and plugin documentation
     announce/             # ARIA live region pub/sub (zero deps)

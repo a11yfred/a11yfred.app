@@ -25,6 +25,7 @@ Zero dependencies beyond React itself. Drop it into any project under `src/plugi
 | `useMediaQuery` | hook | Reactive `window.matchMedia` |
 | `usePageTitle` | hook | Sets `document.title` to `"AppName \| Page"` while mounted |
 | `usePaginationFocus` | hook | Re-focuses a heading when the page index changes inside a modal or sheet |
+| `useFocusCapture` | hook | Capture initial focus for return-focus on unmount (used internally by Modal/Drawer/BottomSheet) |
 
 ---
 

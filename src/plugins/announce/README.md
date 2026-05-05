@@ -4,6 +4,8 @@ A self-contained ARIA live region plugin for React SPAs. Lets any component or
 service push a status message that screen readers will announce — without prop
 drilling, context wiring, or extra DOM noise. Zero dependencies beyond React.
 
+Perfect for confirming user actions ("Copy: Copied", "Settings: Saved"), async results ("Search: 12 results"), background state changes (theme/language switches), and errors. Works from anywhere: components, hooks, services, event handlers.
+
 Drop it into any project under `src/plugins/announce/`.
 
 ---

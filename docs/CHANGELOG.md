@@ -4,6 +4,23 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 — UI component library extraction and documentation updates
+
+### UI primitives extraction
+
+- `src/components/ui/Toggle.jsx`, `RadioChip.jsx`, `Select.jsx`, `index.js` — Extracted three reusable form control primitives from SettingsPanel.jsx private functions; barrel export created
+- `src/components/SettingsPanel.jsx` — Removed `ChevronDown` from lucide imports; updated to import extracted components; replaced 3 duplicate select+chevron patterns with reusable `<Select>` component
+- README.md — Updated project structure to include `src/components/ui/` directory and expanded plugin documentation (Router, Announce, Debug)
+- Comprehensive UI component extraction plan — Identified 9 additional extractable patterns (StateButton, InputWithClear, Badge, Field, PanelShell, BackButton, Plus Modal re-export + Announcer re-export) mapped to exact file locations and usage counts; ready for implementation as reusable boilerplate
+
+### Documentation cleanup
+
+- README.md — Added `HelpPanel.jsx`, `OnboardingPanel.jsx`, and complete plugin structure to project overview
+- TODO.md — Added new task "Complete UI component library extraction for boilerplate" with detailed scope and usage metrics for all 9 components
+- All markdown files passing linting (no changes needed)
+
+---
+
 ## 2026-05-05 — Agentic AI integration, privacy documentation, and i18n preparation
 
 ### Agentic AI implementation (DetailPanel + Settings)

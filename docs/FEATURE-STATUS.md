@@ -51,12 +51,14 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ### Phase 1 — Nearly Complete (May 5, 2026)
 
-- 19 features shipped and stable; SEO enabled
+- 19 features shipped and stable; SEO enabled; UI component library extraction started
 - ✅ Core search, result list, detail panel, ratings, pinned findings
 - ✅ Full corpus (89 entries), all linters passing, responsive design
 - ✅ Session persistence, debug tools, animations, Party Mode
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
+- ✅ UI primitives (Toggle, RadioChip, Select) extracted to `src/components/ui/`
 - 🟡 Internationalization (80% — 50+ locales, ~60 keys pending translation)
+- 🟡 UI component library (30% — 3/9 components extracted; 6 additional patterns identified)
 - Remaining Phase 1: Ko-fi donations, GitHub badges, production domain
 
 ### Phase 2 — In Progress
