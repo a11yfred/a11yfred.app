@@ -112,10 +112,30 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Phase 1 localStorage layer wired (`userFindingsService.js`, `useUserFindings.js`). **Remaining**: (1) activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase, (2) verify DB schema, (3) test CRUD operations
 - [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — Ratings data layer exists. **Remaining**: (1) wire up/downvote sync to `ratings` table (`user_id`, `finding_id`, `vote`), (2) merge localStorage ratings on sign-in, (3) test sync behavior
 
-### Monetization
+### Search & Visibility
 
-- [ ] **Free vs. premium feature tiers** `[phase3]` `[manual]` — Strategic business decision. **Remaining**: (1) define free tier (AI Assist monthly tokens? corpus size limits?), (2) define premium tier (more tokens, custom findings, cloud sync, export formats), (3) think through usage limits (rate limiting, server-side counters, grace periods), (4) document tier requirements before Phase 3 launch
-- [ ] **Ad services, pricing, and what's included** `[phase3]` `[manual]` — Strategic business decision. **Remaining**: (1) research ad networks (Carbon Ads, EthicalAds, self-served), (2) document starting CPM/CPC, minimum traffic, reporting, targeting, payment terms for each, (3) decide on network vs. direct-sell model, (4) define ad slot count per page, starter package for direct buyers, sponsorship (fixed monthly) vs. impression-based model before Phase 3
+- [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` — Verify domain ownership and monitor search performance. **Remaining**: (1) create Google Search Console account, (2) verify ownership via DNS/HTML/file, (3) submit sitemap.xml, (4) monitor indexing status, (5) check for crawl errors, (6) track impressions/clicks/CTR for initial keywords
+- [ ] **SEO optimization for Phase 3** `[seo]` `[code]` — Enable SEO meta tags in index.html (currently commented out). **Remaining**: (1) uncomment meta description/OG/Twitter cards in index.html, (2) fill in canonical URL (yourdomain.com), (3) generate dynamic OG image, (4) verify all internal links use hash routing, (5) test with Rich Results tester, (6) confirm structured data (WebApplication JSON-LD) is valid
+- [ ] **Sitemap generation** `[infra]` `[seo]` — Single-page app sitemap needed. **Remaining**: (1) generate `public/sitemap.xml` (single entry for SPA root), (2) link in index.html head, (3) submit to Search Console, (4) set crawl budget/user-agent rules if needed
+- [ ] **robots.txt for Phase 3** `[seo]` `[code]` — Currently blocks all crawlers (dev mode). **Remaining**: (1) update `public/robots.txt` to allow crawlers on prod domain, (2) set crawl delay/rate-limit if needed, (3) reference sitemap.xml
+
+### Analytics & Monitoring
+
+- [ ] **Umami analytics setup** `[infra]` `[manual]` — Privacy-first, cookieless analytics. **Remaining**: (1) create free account at umami.is or self-host, (2) add site and get WEBSITE_ID, (3) replace `YOUR_WEBSITE_ID` and uncomment script in index.html, (4) verify zero cookies in dashboard, (5) enable on production deployment
+- [ ] **Error tracking / crash reporting** `[infra]` `[monitoring]` — Optional but recommended for early-stage visibility. **Remaining**: (1) evaluate Sentry (free tier covers 5k events/mo, good for startups), (2) add error boundary to App.jsx, (3) capture unhandled promise rejections, (4) configure release tracking, (5) notify on critical errors, (6) set up Slack/email alerts
+- [ ] **GitHub releases page** `[infra]` `[manual]` — Document milestones and version history. **Remaining**: (1) create GitHub release for v0.1.0 on Phase 3 launch, (2) add release notes, (3) attach build artifacts if distributing binaries, (4) enable auto-updates tracking (Electron desktop users can subscribe)
+
+### Monetization & Growth
+
+- [ ] **Monetization strategy** `[phase3]` `[manual]` — Strategic decision on revenue model. **Remaining**: (1) decide free vs. premium tiers (or ad-supported free), (2) define feature limits per tier, (3) plan token limits for AI Assist (rate limiting), (4) document pricing before launch
+- [ ] **Ad network integration** `[infra]` `[manual]` — If monetizing via ads. **Remaining**: (1) research networks: Carbon Ads (tech/indie focus, $2k+/mo minimum), EthicalAds (privacy-first, $500+/mo minimum), Splitrocket (affiliate), or direct sponsorships, (2) evaluate CPM/CPC/terms for each, (3) decide on placement (top banner, sidebar, result tiles wired), (4) implement ad rotation/fallback if network is down
+- [ ] **Social proof & community** `[growth]` `[manual]` — Build initial user base. **Remaining**: (1) submit to Product Hunt (timing before or after launch), (2) post to accessibility communities (Twitter/X, LinkedIn, Reddit r/accessibility, WebAIM forum), (3) reach out to a11y influencers (Adrian Roselli, Eric Bailey, etc. for early feedback), (4) create discussion forum or Discord for user feedback
+- [ ] **Feedback collection** `[growth]` `[ux]` — Understand initial user needs. **Remaining**: (1) add feedback widget (Canny, Typeform, or simple mailto link), (2) monitor GitHub Issues, (3) track feature requests, (4) establish feedback loop for Phase 3.1 improvements
+
+### Launch Readiness
+
+- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` — Final verification before going public. **Remaining**: (1) GDPR disclosure published and linked, (2) Privacy policy finalized, (3) Terms of service if monetizing, (4) all SEO meta tags filled in and verified, (5) Umami active and reporting, (6) error tracking active, (7) GitHub releases ready, (8) social channels prepared (Twitter account, LinkedIn post scheduled), (9) cold email list for outreach (a11y auditors, accessibility consultants), (10) domain DNS configured correctly, (11) CDN/caching optimized, (12) backup/monitoring in place for Netlify/Vercel
+- [ ] **Post-launch monitoring** `[infra]` `[manual]` — Week 1 oversight. **Remaining**: (1) daily check of error logs, (2) monitor Search Console for indexing progress, (3) track Umami sessions/pageviews/bounces, (4) respond to early feedback/bug reports within 24h, (5) publish weekly update/status post, (6) collect initial feature requests
 
 ---
 
