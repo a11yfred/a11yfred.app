@@ -1,23 +1,12 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { Sparkles, Copy, Check, ExternalLink, Loader2, AlertCircle, RotateCcw } from 'lucide-react'
+import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { getAgenticRefinement } from '../services/agenticAiService.js'
 import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
-import { StateButton, InputWithClear, Badge, Field } from '../ui/index.js'
-
-function scToWaiUrl(scLabel) {
-  const match = scLabel?.match(/^\d+\.\d+\.\d+\s+(.+?)\s+\(Level/)
-  if (!match) return null
-  const slug = match[1]
-    .toLowerCase()
-    .replace(/[,()]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-  return `https://www.w3.org/WAI/WCAG22/Understanding/${slug}.html`
-}
+import { StateButton, InputWithClear, Badge, Field, ScLink, SourceLinks } from '../ui/index.js'
 
 function findingSlug(title) {
   return title
@@ -723,123 +712,3 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
   )
 }
 
-function LinkTitle({ url, fallback }) {
-  const [title, setTitle] = useState(fallback)
-
-  const decodeHtml = (html) => {
-    const txt = document.createElement('textarea')
-    txt.innerHTML = html
-    return txt.value
-  }
-
-  useEffect(() => {
-    if (!url) return
-
-    // Skip fetching for WCAG Understanding pages - use the slug-generated title
-    if (url.includes('w3.org/WAI/WCAG')) return
-
-    // Try to fetch page title from meta tags
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 5000)
-
-    fetch(url, { signal: controller.signal })
-      .then(response => {
-        if (!response.ok) {
-          return null
-        }
-        return response.text()
-      })
-      .catch(() => {
-        // CORS errors or timeout - keep the initial title
-        return null
-      })
-      .then(html => {
-        clearTimeout(timeoutId)
-        if (!html) return
-        // Extract title from <title> tag
-        const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i)
-        if (titleMatch?.[1]) {
-          const rawTitle = decodeHtml(titleMatch[1]).trim()
-          // Clean up overly long titles by taking just the main part before separators
-          const cleanTitle = rawTitle.split(/\s*[|·—-]\s*/)[0].trim()
-          setTitle(cleanTitle || rawTitle)
-          return
-        }
-        // Extract from og:title as fallback
-        const ogMatch = html.match(/<meta\s+property=["']og:title["']\s+content=["']([^"']+)["']/i)
-        if (ogMatch?.[1]) {
-          setTitle(decodeHtml(ogMatch[1]).trim())
-        }
-      })
-
-    return () => {
-      clearTimeout(timeoutId)
-      controller.abort()
-    }
-  }, [url])
-
-  return title
-}
-
-function SourceLinks({ links }) {
-  const t = useT()
-  if (!links?.length) return null
-
-  const isExternalLink = (url) => {
-    try {
-      const linkUrl = new URL(url)
-      const currentHost = window.location.hostname
-      return linkUrl.protocol.startsWith('http') && linkUrl.hostname !== currentHost
-    } catch {
-      return false
-    }
-  }
-
-  return (
-    <div className="detail-sources-section">
-      {links.length === 1 ? (
-        <p className="detail-sources detail-sources--single">
-          <span className="detail-sources__heading">{t('detail.source_heading')}</span>
-          {links[0].url ? (
-            <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
-              <LinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
-            </a>
-          ) : (
-            <span>{links[0].text}</span>
-          )}
-        </p>
-      ) : (
-        <>
-          <p className="detail-sources">
-            <span className="detail-sources__heading">{t('detail.sources_heading')}</span>
-          </p>
-          <ul className="detail-sources__list">
-            {links.map(link => (
-              <li key={link.url || link.text}>
-                {link.url ? (
-                  <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
-                    <LinkTitle url={link.url} fallback={link.text} />{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
-                  </a>
-                ) : (
-                  <span>{link.text}</span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
-  )
-}
-
-function ScLink({ label }) {
-  const href = scToWaiUrl(label)
-  if (href) {
-    return (
-      <a href={href} target="_blank" rel="noreferrer" className="detail-sc-link">
-        {label}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
-      </a>
-    )
-  }
-  return <span>{label}</span>
-}

@@ -1,9 +1,9 @@
-import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, RotateCcw, Link, Check, Pin, PinOff, Filter, ChevronDown, ChevronUp } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ChevronDown, ChevronUp } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
-import { StateButton, Badge } from '../ui/index.js'
+import { StateButton, Badge, NoResults } from '../ui/index.js'
 import SponsoredTile from './SponsoredTile.jsx'
 
 function findingSlug(title) {
@@ -469,104 +469,4 @@ export default function ResultList({ results, selected, _onSelect, query, rating
   )
 }
 
-function NoResults({ query }) {
-  const t = useT()
-
-  useEffect(() => {
-    announce(t('results.no_results_announce', { query }))
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional: announce only on first appearance
-
-  return (
-    <section aria-label={t('results.no_results_aria')} className="no-results">
-      <svg
-        aria-hidden="true"
-        width="56"
-        height="56"
-        viewBox="0 0 56 56"
-        fill="none"
-        className="no-results__icon"
-      >
-        <circle cx="22" cy="22" r="14" stroke="var(--border)" strokeWidth="2.5"/>
-        <line x1="33" y1="33" x2="47" y2="47" stroke="var(--border)" strokeWidth="2.5" strokeLinecap="round"/>
-        <line x1="14" y1="19" x2="30" y2="19" stroke="var(--text-faint)" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 3"/>
-        <line x1="14" y1="23" x2="27" y2="23" stroke="var(--text-faint)" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 3"/>
-        <line x1="14" y1="27" x2="24" y2="27" stroke="var(--text-faint)" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="1 3"/>
-      </svg>
-
-      <p className="no-results__heading">
-        {t('results.no_results_heading', { query })}
-      </p>
-      <p className="no-results__body">
-        {t('results.no_results_body')}
-      </p>
-    </section>
-  )
-}
-
-const SKELETON_CARDS = 8
-
-export function ResultListSkeleton({ count = SKELETON_CARDS }) {
-  return (
-    <div className="result-list-section" aria-busy="true" aria-live="polite">
-      <div className="results-meta">
-        <p className="results-count">
-          <span className="skeleton-line skeleton-line--count" style={{ height: '1em' }} />
-        </p>
-      </div>
-      <ul className="result-list">
-        {Array.from({ length: count }, (_, i) => (
-          <li key={i} className="result-row" role="presentation">
-            <div className="skeleton-card">
-              <div className="skeleton-card__header">
-                <span className="skeleton-line skeleton-line--title" style={{ height: '1em' }} />
-                <span className="skeleton-line skeleton-line--sm" style={{ height: '1em' }} />
-              </div>
-              <span className="skeleton-line skeleton-line--md" style={{ height: '0.85em' }} />
-              <span className="skeleton-line skeleton-line--lg" style={{ height: '0.8em' }} />
-              <span className="skeleton-line" style={{ height: '0.8em', width: '70%' }} />
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-export function DataError({ onRetry }) {
-  const t = useT()
-  const headingRef = useRef(null)
-
-  useEffect(() => {
-    announce(t('error.announce'), { priority: 'assertive' })
-    headingRef.current?.focus()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- announce only on first appearance
-
-  return (
-    <section className="no-results">
-      <svg
-        aria-hidden="true"
-        width="56"
-        height="56"
-        viewBox="0 0 56 56"
-        fill="none"
-        className="no-results__icon"
-      >
-        <circle cx="28" cy="28" r="22" stroke="var(--border)" strokeWidth="2.5"/>
-        <line x1="28" y1="16" x2="28" y2="32" stroke="var(--text-faint)" strokeWidth="2.5" strokeLinecap="round"/>
-        <circle cx="28" cy="39" r="1.5" fill="var(--text-faint)"/>
-      </svg>
-      <p className="no-results__heading" ref={headingRef} tabIndex={-1}>{t('error.heading')}</p>
-      <p className="no-results__body">
-        {t('error.body')}{' '}
-        {onRetry && (
-          <button type="button" className="btn--tertiary error-retry-inline" onClick={onRetry}>
-            <RotateCcw size={12} aria-hidden="true" />
-            {t('error.retry')}
-          </button>
-        )}
-        {!onRetry && t('error.retry')}
-        .
-      </p>
-    </section>
-  )
-}
+export { ResultListSkeleton } from '../ui/index.js'
