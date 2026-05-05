@@ -17,6 +17,14 @@ function scToWaiUrl(scLabel) {
   return `https://www.w3.org/WAI/WCAG22/Understanding/${slug}.html`
 }
 
+function findingSlug(title) {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+}
+
 function editDistance(a, b) {
   const m = a.length, n = b.length
   const dp = Array.from({ length: m + 1 }, (_, i) => [i])
@@ -78,6 +86,10 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   useEffect(() => {
     if (focusTrigger > 0) titleRef.current?.focus()
   }, [focusTrigger])
+
+  useEffect(() => {
+    titleRef.current?.focus()
+  }, [finding.id])
 
   useEffect(() => {
     if (!debugPanelCmd) return
@@ -668,13 +680,12 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
       {related.length === 1 ? (
         <p className="detail-related__heading detail-related__heading--single">
           {t(headingKey)}{' '}
-          <button
-            type="button"
+          <a
+            href={`#/finding/${related[0].id}/${findingSlug(related[0].title)}`}
             className="detail-related__btn"
-            onClick={() => onSelect(related[0])}
           >
             {related[0].title}
-          </button>
+          </a>
         </p>
       ) : (
         <>
@@ -682,13 +693,12 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
           <ul className="detail-related__list">
             {related.map(d => (
               <li key={d.id}>
-                <button
-                  type="button"
+                <a
+                  href={`#/finding/${d.id}/${findingSlug(d.title)}`}
                   className="detail-related__btn"
-                  onClick={() => onSelect(d)}
                 >
                   {d.title}
-                </button>
+                </a>
               </li>
             ))}
           </ul>
@@ -699,22 +709,7 @@ function RelatedIssues({ finding, allFindings, onSelect }) {
 }
 
 function LinkTitle({ url, fallback }) {
-  const [title, setTitle] = useState(() => {
-    // Try to generate title from W3C/WAI URL pattern
-    if (url?.includes('w3.org/WAI/WCAG')) {
-      const match = url.match(/Understanding\/([a-z-]+)/)
-      if (match?.[1]) {
-        const slug = match[1]
-        // Convert slug to title: "name-role-value" -> "Name, Role, Value"
-        const titleText = slug
-          .split('-')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(', ')
-        return `Understanding ${titleText}`
-      }
-    }
-    return fallback
-  })
+  const [title, setTitle] = useState(fallback)
 
   const decodeHtml = (html) => {
     const txt = document.createElement('textarea')
@@ -724,6 +719,9 @@ function LinkTitle({ url, fallback }) {
 
   useEffect(() => {
     if (!url) return
+
+    // Skip fetching for WCAG Understanding pages - use the slug-generated title
+    if (url.includes('w3.org/WAI/WCAG')) return
 
     // Try to fetch page title from meta tags
     const controller = new AbortController()

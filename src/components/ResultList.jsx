@@ -5,6 +5,14 @@ import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 import SponsoredTile from './SponsoredTile.jsx'
 
+function findingSlug(title) {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+}
+
 export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin, onClearPins }) {
   const t = useT()
   if (!findings.length) return null
@@ -40,7 +48,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
   )
 }
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, showPrioritySort = false, showAds = false, adFrequency = 8, onClear }) {
+export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, showPrioritySort = false, showAds = false, adFrequency = 8, onClear }) {
   const t = useT()
   const itemRefs = useRef({})
   const skipBtnRefs = useRef({})
@@ -312,12 +320,11 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                     }
                   </button>
                 )}
-                <button
+                <a
                   ref={el => { itemRefs.current[finding.id] = el }}
+                  href={`#/finding/${finding.id}/${findingSlug(finding.title)}`}
                   aria-label={cardLabel}
-                  aria-disabled={archived ? 'true' : undefined}
-                  tabIndex={archived ? -1 : undefined}
-                  onClick={() => { if (!archived) onSelect(finding) }}
+                  onClick={archived ? e => e.preventDefault() : undefined}
                   onKeyDown={e => {
                     if (e.key === 'ArrowDown') { e.preventDefault(); itemRefs.current[results[index + 1]?.id]?.focus() }
                     if (e.key === 'ArrowUp')   { e.preventDefault(); itemRefs.current[results[index - 1]?.id]?.focus() }
@@ -358,7 +365,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <div className="result-item__sc">{finding.scLabel}</div>
 
                 <div className="result-item__desc">{finding.desc}</div>
-              </button>
+              </a>
 
               {showPrioritySort && (
                 <button

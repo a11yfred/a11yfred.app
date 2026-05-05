@@ -367,7 +367,12 @@ function AppContent({
       if (pinnedIds.has(f.id)) return false
       if (badgeFilter.type === 'priority') return f.priority === badgeFilter.value
       if (badgeFilter.type === 'source')   return f.sourceCredits?.includes(badgeFilter.value)
-      if (badgeFilter.type === 'wcag')     return f.wcagVersion === badgeFilter.value
+      if (badgeFilter.type === 'wcag') {
+        if (badgeFilter.value === 'N/A') {
+          return !f.wcagVersion || f.wcagVersion === ''
+        }
+        return f.wcagVersion === badgeFilter.value
+      }
       return false
     })
   }, [sortedFindings, badgeFilter, pinnedIds])

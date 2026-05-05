@@ -56,7 +56,7 @@
     ]
   },
   {
-    "id": "ATH-127",
+    "id": "ATH-002",
     "title": "Focus Not Managed",
     "sc": "2.4.3",
     "scLabel": "2.4.3 Focus Order (Level A)",
@@ -101,7 +101,7 @@
     ]
   },
   {
-    "id": "ATH-128",
+    "id": "ATH-003",
     "title": "Focus Indicator Missing or Not Visible",
     "sc": "2.4.7",
     "scLabel": "2.4.7 Focus Visible (Level AA)",
@@ -141,7 +141,7 @@
     ]
   },
   {
-    "id": "ATH-101",
+    "id": "ATH-005",
     "title": "Control Not Keyboard Accessible",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
@@ -188,7 +188,7 @@
     ]
   },
   {
-    "id": "ATH-129",
+    "id": "ATH-007",
     "title": "Text Contrast Too Low",
     "sc": "1.4.3",
     "scLabel": "1.4.3 Contrast (Minimum) (Level AA)",
@@ -401,7 +401,7 @@
     ]
   },
   {
-    "id": "ATH-130",
+    "id": "ATH-012",
     "title": "Skip Link Not Visible When Focused",
     "sc": "2.4.7",
     "scLabel": "2.4.7 Focus Visible (Level AA)",
@@ -443,7 +443,7 @@
     ]
   },
   {
-    "id": "ATH-131",
+    "id": "ATH-013",
     "title": "Incorrect Heading Structure",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -488,7 +488,7 @@
     ]
   },
   {
-    "id": "ATH-132",
+    "id": "ATH-014",
     "title": "No H1 on the Page",
     "sc": "N/A",
     "scLabel": "Best Practice",
@@ -528,7 +528,7 @@
     ]
   },
   {
-    "id": "ATH-133",
+    "id": "ATH-016",
     "title": "Asterisk for Required Fields Not Explained",
     "sc": "3.3.2",
     "scLabel": "3.3.2 Labels or Instructions (Level A)",
@@ -563,7 +563,7 @@
     ]
   },
   {
-    "id": "ATH-049",
+    "id": "ATH-017",
     "title": "Form Errors Not Linked to Their Fields",
     "sc": "3.3.1",
     "scLabel": "3.3.1 Error Identification (Level A)",
@@ -645,7 +645,7 @@
     ]
   },
   {
-    "id": "ATH-134",
+    "id": "ATH-019",
     "title": "ARIA Used Incorrectly",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
@@ -741,7 +741,7 @@
     ]
   },
   {
-    "id": "ATH-135",
+    "id": "ATH-022",
     "title": "Zoom or Pinch-to-Zoom Disabled",
     "sc": "1.4.4",
     "scLabel": "1.4.4 Resize Text (Level AA)",
@@ -776,7 +776,7 @@
     ]
   },
   {
-    "id": "ATH-136",
+    "id": "ATH-023",
     "title": "Text Input Missing a Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -822,7 +822,7 @@
     ]
   },
   {
-    "id": "ATH-137",
+    "id": "ATH-025",
     "title": "Hidden Content Still Readable by Screen Readers",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -890,7 +890,7 @@
     ]
   },
   {
-    "id": "ATH-138",
+    "id": "ATH-027",
     "title": "Accessible Name Does Not Match Visible Label",
     "sc": "2.5.3",
     "scLabel": "2.5.3 Label in Name (Level A)",
@@ -933,7 +933,7 @@
     ]
   },
   {
-    "id": "ATH-139",
+    "id": "ATH-028",
     "title": "ARIA Tabs Pattern",
     "sc": "N/A",
     "scLabel": "Best Practice",
@@ -969,7 +969,7 @@
     ]
   },
   {
-    "id": "ATH-140",
+    "id": "ATH-029",
     "title": "Non-interactive Element in Tab Order",
     "sc": "2.4.3",
     "scLabel": "2.4.3 Focus Order (Level A)",
@@ -1008,7 +1008,7 @@
     ]
   },
   {
-    "id": "ATH-141",
+    "id": "ATH-030",
     "title": "Repeated Links to the Same Destination",
     "sc": "2.4.4",
     "scLabel": "2.4.4 Link Purpose (In Context) (Level A)",
@@ -1116,7 +1116,7 @@
     ]
   },
   {
-    "id": "ATH-142",
+    "id": "ATH-033",
     "title": "Drag Action Has No Keyboard Alternative",
     "sc": "2.5.7",
     "scLabel": "2.5.7 Dragging Movements (Level AA)",
@@ -1188,7 +1188,7 @@
     ]
   },
   {
-    "id": "ATH-143",
+    "id": "ATH-035",
     "title": "Page Landmarks Missing or Incorrect",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -1227,7 +1227,7 @@
     ]
   },
   {
-    "id": "ATH-144",
+    "id": "ATH-037",
     "title": "Page Title Does Not Change Between Pages",
     "sc": "2.4.2",
     "scLabel": "2.4.2 Page Titled (Level A)",
@@ -1300,7 +1300,7 @@
     ]
   },
   {
-    "id": "ATH-145",
+    "id": "ATH-039",
     "title": "Chart or Graph Has No Text Alternative",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
@@ -1412,7 +1412,7 @@
     ]
   },
   {
-    "id": "ATH-146",
+    "id": "ATH-043",
     "title": "Tab Order Does Not Match Visual Order",
     "sc": "2.4.3",
     "scLabel": "2.4.3 Focus Order (Level A)",
@@ -1451,7 +1451,7 @@
     ]
   },
   {
-    "id": "ATH-147",
+    "id": "ATH-045",
     "title": "Informative Content Hidden from Screen Readers",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
@@ -1564,7 +1564,7 @@
     ]
   },
   {
-    "id": "ATH-148",
+    "id": "ATH-048",
     "title": "Changing an Input Causes Unexpected Change",
     "sc": "3.2.2",
     "scLabel": "3.2.2 On Input (Level A)",
@@ -1599,7 +1599,7 @@
     ]
   },
   {
-    "id": "ATH-149",
+    "id": "ATH-050",
     "title": "Content Announced Incorrectly by Screen Readers",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -1639,7 +1639,7 @@
     ]
   },
   {
-    "id": "ATH-150",
+    "id": "ATH-051",
     "title": "Figure or Illustration Has No Description",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
@@ -1720,7 +1720,7 @@
     ]
   },
   {
-    "id": "ATH-151",
+    "id": "ATH-053",
     "title": "Dropdown or Select Has No Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -1881,7 +1881,7 @@
     ]
   },
   {
-    "id": "ATH-152",
+    "id": "ATH-057",
     "title": "Form Group Has No Group Label",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -1959,7 +1959,7 @@
     ]
   },
   {
-    "id": "ATH-153",
+    "id": "ATH-059",
     "title": "Dynamic Updates Not Announced to Screen Readers",
     "sc": "4.1.3",
     "scLabel": "4.1.3 Status Messages (Level AA)",
@@ -2192,7 +2192,7 @@
     ]
   },
   {
-    "id": "ATH-065",
+    "id": "ATH-006",
     "title": "Flashing Content",
     "sc": "2.3.1",
     "scLabel": "2.3.1 Three Flashes or Below Threshold (Level A)",
@@ -2229,7 +2229,7 @@
     ]
   },
   {
-    "id": "ATH-066",
+    "id": "ATH-015",
     "title": "Content Does Not Reflow at 400% Zoom",
     "sc": "1.4.10",
     "scLabel": "1.4.10 Reflow (Level AA)",
@@ -2268,7 +2268,7 @@
     ]
   },
   {
-    "id": "ATH-067",
+    "id": "ATH-020",
     "title": "Touch or Click Target Too Small",
     "sc": "2.5.8",
     "scLabel": "2.5.8 Target Size (Minimum) (Level AA)",
@@ -2311,7 +2311,7 @@
     ]
   },
   {
-    "id": "ATH-068",
+    "id": "ATH-024",
     "title": "Screen Orientation Locked",
     "sc": "1.3.4",
     "scLabel": "1.3.4 Orientation (Level AA)",
@@ -2348,7 +2348,7 @@
     ]
   },
   {
-    "id": "ATH-154",
+    "id": "ATH-036",
     "title": "Autocomplete Attribute Missing on Personal Data Fields",
     "sc": "1.3.5",
     "scLabel": "1.3.5 Identify Input Purpose (Level AA)",
@@ -2389,7 +2389,7 @@
     ]
   },
   {
-    "id": "ATH-155",
+    "id": "ATH-042",
     "title": "iFrame Missing a Title",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
@@ -2431,7 +2431,7 @@
     ]
   },
   {
-    "id": "ATH-071",
+    "id": "ATH-044",
     "title": "Expanded or Collapsed State Not Communicated",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
@@ -2474,7 +2474,7 @@
     ]
   },
   {
-    "id": "ATH-072",
+    "id": "ATH-049",
     "title": "Device Motion Feature Has No Alternative",
     "sc": "2.5.4",
     "scLabel": "2.5.4 Motion Actuation (Level A)",
@@ -2512,7 +2512,7 @@
     ]
   },
   {
-    "id": "ATH-073",
+    "id": "ATH-064",
     "title": "Reading Order Disrupted by CSS Positioning",
     "sc": "1.3.2",
     "scLabel": "1.3.2 Meaningful Sequence (Level A)",
@@ -2551,7 +2551,7 @@
     ]
   },
   {
-    "id": "ATH-156",
+    "id": "ATH-065",
     "title": "No Confirmation Step for Irreversible Actions",
     "sc": "3.3.4",
     "scLabel": "3.3.4 Error Prevention (Legal, Financial, Data) (Level AA)",
@@ -2592,7 +2592,7 @@
     ]
   },
   {
-    "id": "ATH-075",
+    "id": "ATH-066",
     "title": "Focus Indicator Does Not Meet Minimum Area",
     "sc": "2.4.11",
     "scLabel": "2.4.11 Focus Appearance (Level AA)",
@@ -2633,7 +2633,7 @@
     ]
   },
   {
-    "id": "ATH-076",
+    "id": "ATH-067",
     "title": "Instructions Rely on Sensory Characteristics Only",
     "sc": "1.3.3",
     "scLabel": "1.3.3 Sensory Characteristics (Level A)",
@@ -2674,7 +2674,7 @@
     ]
   },
   {
-    "id": "ATH-077",
+    "id": "ATH-068",
     "title": "Navigation Changes Position Across Pages",
     "sc": "3.2.3",
     "scLabel": "3.2.3 Consistent Navigation (Level AA)",
@@ -2711,7 +2711,7 @@
     ]
   },
   {
-    "id": "ATH-080",
+    "id": "ATH-071",
     "title": "Native App Ignores Device Orientation",
     "sc": "1.3.4",
     "scLabel": "1.3.4 Orientation (Level AA)",
@@ -2747,7 +2747,7 @@
     ]
   },
   {
-    "id": "ATH-081",
+    "id": "ATH-072",
     "title": "No Dark Mode Support",
     "sc": "N/A",
     "scLabel": "Best Practice",
@@ -2783,7 +2783,7 @@
     ]
   },
   {
-    "id": "ATH-082",
+    "id": "ATH-073",
     "title": "Voice Control Users Cannot Operate Controls",
     "sc": "2.5.3",
     "scLabel": "2.5.3 Label in Name (Level A)",
@@ -2823,7 +2823,7 @@
     ]
   },
   {
-    "id": "ATH-157",
+    "id": "ATH-074",
     "title": "Mobile App Does Not Support External Keyboard",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
@@ -2871,7 +2871,7 @@
     ]
   },
   {
-    "id": "ATH-084",
+    "id": "ATH-075",
     "title": "Switch Control and Switch Access Not Supported",
     "sc": "2.1.1",
     "scLabel": "2.1.1 Keyboard (Level A)",
@@ -2915,7 +2915,7 @@
     ]
   },
   {
-    "id": "ATH-158",
+    "id": "ATH-069",
     "title": "Linked Document Is Not Accessible",
     "sc": "1.1.1",
     "scLabel": "1.1.1 Non-text Content (Level A)",
@@ -2964,7 +2964,7 @@
     ]
   },
   {
-    "id": "ATH-079",
+    "id": "ATH-070",
     "title": "Emoji or Special Characters Disrupt Screen Reader Output",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -3004,7 +3004,7 @@
     ]
   },
   {
-    "id": "ATH-085",
+    "id": "ATH-076",
     "title": "Visible Heading Not Marked as Heading",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -3045,7 +3045,7 @@
     ]
   },
   {
-    "id": "ATH-116",
+    "id": "ATH-077",
     "title": "Large Text / Dynamic Type Not Supported",
     "sc": "1.4.4",
     "scLabel": "1.4.4 Resize Text (Level AA)",
@@ -3087,7 +3087,7 @@
     ]
   },
   {
-    "id": "ATH-159",
+    "id": "ATH-078",
     "title": "Custom Accessibility Actions Not Provided",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
@@ -3132,7 +3132,7 @@
     ]
   },
   {
-    "id": "ATH-086",
+    "id": "ATH-079",
     "title": "Heading Does Not Describe the Section",
     "sc": "2.4.6",
     "scLabel": "2.4.6 Headings and Labels (Level AA)",
@@ -3177,7 +3177,7 @@
     ]
   },
   {
-    "id": "ATH-087",
+    "id": "ATH-080",
     "title": "Audio or Video Autoplays Without Controls",
     "sc": "1.4.2",
     "scLabel": "1.4.2 Audio Control (Level A)",
@@ -3222,7 +3222,7 @@
     ]
   },
   {
-    "id": "ATH-088",
+    "id": "ATH-081",
     "title": "Text Embedded in an Image",
     "sc": "1.4.5",
     "scLabel": "1.4.5 Images of Text (Level AA)",
@@ -3275,7 +3275,7 @@
     ]
   },
   {
-    "id": "ATH-089",
+    "id": "ATH-082",
     "title": "Placeholder Used as the Only Label",
     "sc": "3.3.2",
     "scLabel": "3.3.2 Labels or Instructions (Level A)",
@@ -3323,7 +3323,7 @@
     ]
   },
   {
-    "id": "ATH-090",
+    "id": "ATH-083",
     "title": "Single-Character Keyboard Shortcut Cannot Be Remapped",
     "sc": "2.1.4",
     "scLabel": "2.1.4 Character Key Shortcuts (Level A)",
@@ -3362,7 +3362,7 @@
     ]
   },
   {
-    "id": "ATH-091",
+    "id": "ATH-084",
     "title": "Authentication Requires Solving a Cognitive Test",
     "sc": "3.3.8",
     "scLabel": "3.3.8 Accessible Authentication (Minimum) (Level AA)",
@@ -3402,7 +3402,7 @@
     ]
   },
   {
-    "id": "ATH-092",
+    "id": "ATH-085",
     "title": "Positive Tabindex Disrupts Focus Order",
     "sc": "N/A",
     "scLabel": "Best Practice",
@@ -3444,7 +3444,7 @@
     ]
   },
   {
-    "id": "ATH-093",
+    "id": "ATH-086",
     "title": "ARIA Menu Roles Used on Navigation Links",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
@@ -3495,7 +3495,7 @@
     ]
   },
   {
-    "id": "ATH-094",
+    "id": "ATH-087",
     "title": "CSS display:contents Removes Element Semantics",
     "sc": "1.3.1",
     "scLabel": "1.3.1 Info and Relationships (Level A)",
@@ -3542,7 +3542,7 @@
     ]
   },
   {
-    "id": "ATH-095",
+    "id": "ATH-088",
     "title": "Interactive Element Nested Inside Another Interactive Element",
     "sc": "4.1.2",
     "scLabel": "4.1.2 Name, Role, Value (Level A)",
@@ -3596,7 +3596,7 @@
     ]
   },
   {
-    "id": "ATH-096",
+    "id": "ATH-089",
     "title": "Custom CSS Scrollbar Overrides User Accessibility Settings",
     "sc": "N/A",
     "scLabel": "Best Practice",

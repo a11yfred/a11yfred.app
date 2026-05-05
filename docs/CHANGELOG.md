@@ -4,6 +4,22 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 — Public corpus consolidation and ID alignment
+
+### Corpus consolidation
+
+- `src/data/corpus.json` — Realigned public corpus IDs with personal corpus IDs where entries represent the same fundamental accessibility defects; entries with no personal equivalent assigned new unique IDs (ATH-127+)
+- Public corpus now mirrors personal corpus as the source of truth; 56 entries consolidated to personal IDs, 33 entries with unique public-only IDs
+- Zero quality issues across all dimensions: no broken links, no root domain links, proper WCAG prefix formatting, clean source credits structure
+- Public corpus fully compatible with detail panel and admin interface after ID consolidation
+
+### Data quality
+
+- All 89 public corpus entries pass validation: proper links array structure, sourceCredits as arrays, WCAG Understanding pages with correct SC prefix, no missing core metadata
+- Backup of original public corpus retained as `corpus.json.backup`
+
+---
+
 ## 2026-05-02 — Onboarding panel, skip-to-next, priority sort, ad tile preview, and UX housekeeping
 
 ### Onboarding panel

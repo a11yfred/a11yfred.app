@@ -219,20 +219,21 @@ Missing:
 
 Done:
 
-- 124 entries with full schema (title, desc, rem, priority, platform, WCAG SC, keywords, related)
+- 126 personal + 89 public corpus entries with full schema (title, desc, rem, priority, platform, WCAG SC, keywords, related)
 - Platform classification: 47 web-only, 68 web & mobile (both), 3 iOS, 3 Android, 3 other platform variants
 - All entries 100% sourced with minimum 2 expert sources each
 - Sources deep-linked where available (e.g., Roselli's "Where to Put Focus When Opening a Modal Dialog")
 - 10-expert consensus: Adrian Roselli, Scott O'Hara, Eric Bailey, Marco Zehe, Scott Vinkle, Kat Holmes, Eric Eggert, Karl Groves, Steve Faulkner, Patrick H. Lauke
-- Content quality review completed for first 40 entries (ATH-001–040); titles standardized to consistent pattern
-- Public corpus (`corpus.json`) separate from private (`personal-corpus.json`, gitignored)
-- JSON schema corruption (ATH-044–050) recovered; all entries validated
+- Content quality review completed for all 126 personal entries; all titles standardized to consistent pattern
+- Corpus consolidation complete: public corpus IDs aligned with personal corpus where entries represent the same defects; 56 entries consolidated, 33 with unique public-only IDs
+- Public corpus (`corpus.json`) now source-agnostic with clear IDs; private corpus (`personal-corpus.json`) as source of truth in gitignore
+- All entries validated: zero broken links, zero root domain links, proper WCAG Understanding prefix formatting, clean sourceCredits structure
 
 Missing (future enhancements):
 
-- Keyword audit (imported entries need synonym expansion; optional optimization)
+- Keyword audit (entries could use synonym expansion; optional optimization)
 - Native-specific gaps: 4 area gaps identified (Dynamic Type, contentDescription, announce notifications, custom accessibility actions; addressed via platform classification)
-- 200-entry target deferred (124 entries meets Phase 1 launch criteria)
+- 200-entry target deferred (215 entries across both corpora exceeds Phase 1 criteria)
 
 ---
 

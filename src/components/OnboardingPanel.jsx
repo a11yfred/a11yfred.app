@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Search, Star, Pin, Copy, Sparkles, ChevronLeft, ChevronRight, X } from 'lucide-react'
-import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
+import { usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 
 const SLIDES = [

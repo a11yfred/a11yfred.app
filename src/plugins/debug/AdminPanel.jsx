@@ -5,6 +5,14 @@ import personalCorpus from '../../data/personal-corpus.json'
 
 const IS_DEV = import.meta.env.DEV
 
+function findingSlug(title) {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+}
+
 const WCAG_CRITERIA = [
   // 1.1 Text Alternatives
   { sc: '1.1.1', title: 'Non-text Content',                                          level: 'A',  version: '2.0' },
@@ -77,7 +85,7 @@ const WCAG_CRITERIA = [
   { sc: '4.1.3', title: 'Status Messages',                                           level: 'AA', version: '2.1' },
 ]
 
-const PRIORITY_ORDER = ['Critical', 'Serious', 'Moderate', 'Minor', 'Best Practice']
+const PRIORITY_ORDER = ['Critical', 'High', 'Medium', 'Low', 'Best Practice']
 
 const DEPLOY_OPTIONS = [
   { value: null,      label: 'Off' },
@@ -100,7 +108,8 @@ function computeStats(corpus) {
     byVersion[v] = (byVersion[v] || 0) + 1
     const p = entry.priority || 'Unknown'
     byPriority[p] = (byPriority[p] || 0) + 1
-    for (const src of entry.sourceCredits ?? []) {
+    const sources = entry.sourceCredits ?? entry.sources ?? []
+    for (const src of sources) {
       bySource[src] = (bySource[src] || 0) + 1
     }
   }
@@ -153,7 +162,7 @@ export default function AdminPanel({
     setTimeout(() => setCopied(null), 1200)
   }
 
-  const hasVersionData = dataset === 'public'
+  const hasVersionData = true
 
   return (
     <div className="admin-panel">
@@ -371,6 +380,25 @@ export default function AdminPanel({
                 </li>
               )
             })}
+          </ul>
+        </section>
+
+        {/* ── Entry Lookup ────────────────────────────────────── */}
+        <section className="admin-section">
+          <h2 className="admin-section__title">Entry Lookup</h2>
+          <ul className="admin-entry-list">
+            {corpus.map(entry => (
+              <li key={entry.id}>
+                <a
+                  href={`#/finding/${entry.id}/${findingSlug(entry.title)}`}
+                  className="admin-entry-link"
+                  title={entry.title}
+                >
+                  {entry.id}
+                </a>
+                <span className="admin-entry-title">{entry.title}</span>
+              </li>
+            ))}
           </ul>
         </section>
 

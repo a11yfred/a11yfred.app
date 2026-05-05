@@ -447,3 +447,59 @@
 .admin-sc-item:hover .admin-sc-copy {
   opacity: 1;
 }
+
+/* ── Entry lookup ────────────────────────────────────────────────────────── */
+
+.admin-entry-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.admin-entry-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.admin-entry-list li:hover {
+  background: var(--bg-subtle);
+}
+
+.admin-entry-link {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--accent);
+  font-family: monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  min-width: 4.5rem;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.admin-entry-link:hover {
+  color: var(--text);
+}
+
+.admin-entry-title {
+  flex: 1;
+  color: var(--text-muted);
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
