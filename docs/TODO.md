@@ -12,10 +12,11 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ### AI Assist & Agent
 
-- [ ] **Wire agentic AI in DetailPanel** `[agent]` `[ai]` `[ux]` — Backend (`agenticAiService.js` with tool use + search_corpus + error handling) is implemented. **Remaining**: (1) wire toggle in Refine section of DetailPanel, (2) expose mode toggle in Settings under AI Assist, (3) document agentic workflow in How-To-Use page
+- [x] **Wire agentic AI in DetailPanel** `[agent]` `[ai]` `[ux]` — Backend fully wired: (1) toggle added in Refine section of DetailPanel, (2) mode toggle exposed in Settings under AI Assist (Claude only), (3) agentic refinement uses searchCorpus tool via getAgenticRefinement; i18n keys and placeholders added for translation
+- [x] **Document AI provider privacy comparison in README** `[privacy]` `[ai]` — Comparison table added showing training data policies, retention, and privacy commitments for all 4 providers (Anthropic, OpenAI, Google, Microsoft)
 - [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — Extends agentic AI. **Remaining**: (1) extend Refine section to show turn history, (2) store history in component state as `{ role, content }[]`, (3) pass full history in subsequent calls, (4) add "Clear conversation" button
 - [ ] **System prompt tuning** `[ai]` `[claude]` — Baseline prompt established. **Remaining**: test refinements across 20+ finding types covering variety of SCs, priorities, and platforms; adjust tone/length/format in `buildPrompt` if output drifts; document final prompt version
-- [ ] **Wire Microsoft Copilot** `[ai]` — Requires Azure OpenAI. **Remaining**: (1) set `VITE_AZURE_OPENAI_ENDPOINT` in `.env.local`, (2) verify response parses correctly in `aiService.js`, (3) test against sample finding
+- [ ] **Wire Microsoft Copilot (Azure OpenAI) for agentic mode** `[ai]` `[agent]` — Note: Tool use (required for agentic mode) is Anthropic-specific. Currently only Claude supports agentic AI. Standard (non-agentic) AI assist is available for all 4 providers. **Decision required**: (1) Keep agentic mode Claude-only and extend non-agentic refinement to all providers, or (2) Implement provider-specific tool definitions for OpenAI/Google/Microsoft. Current: agentic mode available for Claude, standard AI assist functional for all providers.
 
 ### User Findings & Editing
 

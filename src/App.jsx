@@ -1120,6 +1120,7 @@ function AppContent({
             key={selected.id}
             finding={selected}
             aiEnabled={aiEnabled}
+            agenticMode={localStorage.getItem('agentic_mode') === 'true'}
             focusTrigger={panelFocusTrigger}
             allFindings={allFindings}
             onSelect={handleSelectFinding}

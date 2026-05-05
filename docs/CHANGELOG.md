@@ -4,6 +4,35 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 — Agentic AI integration, privacy documentation, and i18n preparation
+
+### Agentic AI implementation (DetailPanel + Settings)
+
+- `src/components/DetailPanel.jsx` — Added agentic mode toggle and state; wired `getAgenticRefinement` dispatch for Claude provider; added UI toggle in Refine section
+- `src/components/SettingsPanel.jsx` — Exposed agentic mode configuration toggle (Claude/Anthropic only); added state management and localStorage persistence; integrated into save/unsaved change tracking
+- `src/services/agenticAiService.js` — Backend already implemented; now fully integrated into UI workflow
+- `src/App.jsx` — Pass agentic mode state from localStorage to DetailPanel
+
+### Documentation and privacy
+
+- `README.md` — Added "AI Provider Privacy Comparison" table showing training data policies, data retention, privacy commitments for all 4 providers (Anthropic, OpenAI, Google, Microsoft); recommended Claude as default for sensitive work
+- `docs/i18n-edits.md` — Flagged 6 new i18n keys for translation (2 settings keys + 3 detail panel keys + 1 helper text)
+
+### i18n keys added to en.json
+
+- `settings.agentic_mode_label` — "Agentic Mode (Claude only)"
+- `settings.agentic_mode_desc` — "AI will search your corpus to match your style and technical depth when rewriting."
+- `detail.agentic_mode_label` — "Agentic Mode (uses corpus search)"
+- `detail.agentic_mode_help` — "AI searches the corpus to match your style and depth when rewriting"
+- `detail.agentic_mode_hint` — "AI will search the corpus to match your established style and technical depth"
+
+### TODO.md updates
+
+- Marked "Wire agentic AI in DetailPanel" as complete
+- Clarified that agentic mode is Claude-only (tool use is Anthropic-specific); noted architectural decision point for supporting tool use in other providers
+
+---
+
 ## 2026-05-05 — Documentation cleanup, linting complete, and project status consolidated
 
 ### Documentation reorganization

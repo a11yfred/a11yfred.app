@@ -321,5 +321,10 @@
   "badge.platform_web": "Web",
   "badge.platform_ios": "iOS",
   "badge.platform_android": "Android",
-  "badge.platform_both": "Web & Mobile"
+  "badge.platform_both": "Web & Mobile",
+  "settings.agentic_mode_label": "Agentic Mode (Claude only)",
+  "settings.agentic_mode_desc": "AI will search your corpus to match your style and technical depth when rewriting.",
+  "detail.agentic_mode_label": "Agentic Mode (uses corpus search)",
+  "detail.agentic_mode_help": "AI searches the corpus to match your style and depth when rewriting",
+  "detail.agentic_mode_hint": "AI will search the corpus to match your established style and technical depth"
 }

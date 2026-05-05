@@ -4,6 +4,27 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 5, 2026 (Phase 2) — Agentic AI wired in DetailPanel and Settings; AI provider privacy comparison published
+
+### Agentic AI integration complete
+
+Wired agentic AI mode into the DetailPanel and SettingsPanel. When enabled (Claude/Anthropic only), the AI uses a corpus search tool to ground refinements in similar findings from your personal corpus, helping the AI match your established style and technical depth. The mode toggle appears in DetailPanel's Refine section (visible only when Claude is active) and in Settings under AI Assist configuration.
+
+**What changed**:
+
+- Added agentic mode toggle to DetailPanel's Refine section; wired to use `getAgenticRefinement` when active
+- Exposed agentic mode configuration in SettingsPanel (disabled for non-Claude providers since tool use is Anthropic-specific)
+- Updated `handleRefine` logic to dispatch to `getAgenticRefinement` vs. `getAiRefinement` based on mode and provider
+- Added 6 i18n keys for UI strings and placeholders across en.json (flagged for translation on next run)
+- Updated TODO.md to clarify that agentic mode is Claude-only; noted architectural decision point for extending tool use to other providers
+
+**Documentation improvements**:
+
+- Added comprehensive AI provider privacy comparison table to README.md showing training data policies, data retention, and privacy commitments for all 4 supported providers (Anthropic/Claude, OpenAI/GPT-4o, Google/Gemini, Microsoft/Copilot)
+- Noted that Anthropic has the strongest privacy commitment (no training on API data) and is the recommended default for handling sensitive accessibility work
+
+---
+
 ## May 5, 2026 — Documentation cleanup and project status consolidation
 
 All markdown files (34 total) pass linting as of today. Documentation reorganized into active docs (`docs/`) and historical work in `docs/archive/`. TODO.md cleaned: completed items removed, obsolete items deleted, partial items clarified with remaining scope listed explicitly.

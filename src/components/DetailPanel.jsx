@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo, forwardRef } from 'react'
 import { Sparkles, RotateCcw, Copy, Check, ExternalLink, Loader2, AlertCircle, Edit } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
+import { getAgenticRefinement } from '../services/agenticAiService.js'
 import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -44,7 +45,7 @@ function isSignificantlyChanged(original, current, threshold = 0.7) {
   return editDistance(original, current) / original.length > threshold
 }
 
-export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function DetailPanel({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const { navigate } = useRouter()
@@ -54,6 +55,7 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   const [descText, setDescText] = useState(finding.desc)
   const [remText, setRemText] = useState(finding.rem)
   const [reviseNote, setReviseNote] = useState('')
+  const [useAgenticMode, setUseAgenticMode] = useState(agenticMode)
   const [noteSaved, setNoteSaved] = useState(false)
   const [copiedDesc, setCopiedDesc] = useState(false)
   const [copiedRem, setCopiedRem] = useState(false)
@@ -291,7 +293,9 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
       announce(t('detail.rewriting_text'), { priority: 'assertive' })
 
       try {
-        const result = await getAiRefinement({ finding, descText, remText, note: reviseNote })
+        const result = useAgenticMode && localStorage.getItem('ai_provider') === 'anthropic'
+          ? await getAgenticRefinement({ finding, descText, remText, note: reviseNote, corpus: allFindings })
+          : await getAiRefinement({ finding, descText, remText, note: reviseNote })
         const newDesc = reviseDesc && result.desc ? result.desc : null
         const newRem = reviseRem && result.rem ? result.rem : null
 
@@ -538,6 +542,24 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
                 {t('detail.refine_hint_no_ai_suffix')}
               </>}
         </p>
+        {aiEnabled && localStorage.getItem('ai_provider') === 'anthropic' && (
+          <div className="detail-agentic-mode-row">
+            <label htmlFor="agentic-toggle" className="detail-label detail-label--compact">
+              {t('detail.agentic_mode_label') || 'Agentic Mode'}
+            </label>
+            <input
+              id="agentic-toggle"
+              type="checkbox"
+              checked={useAgenticMode}
+              onChange={e => setUseAgenticMode(e.target.checked)}
+              className="detail-agentic-toggle"
+              title={t('detail.agentic_mode_help') || 'Use AI with corpus search to write more accurate descriptions'}
+            />
+            <p className="detail-agentic-mode-hint">
+              {t('detail.agentic_mode_hint') || 'AI searches the corpus to match your style and depth'}
+            </p>
+          </div>
+        )}
         <div className="detail-refine-row">
           <textarea
             id="revise-note"

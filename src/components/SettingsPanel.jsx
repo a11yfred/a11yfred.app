@@ -177,6 +177,12 @@ export default function SettingsPanel({
   const [savedLiveSearch, setSavedLiveSearch] = useState(liveSearch)
   const [savedShowVoting, setSavedShowVoting] = useState(showVoting)
   const [savedAiEnabled, setSavedAiEnabled] = useState(aiEnabled)
+  const [agenticMode, setAgenticMode] = useState(
+    () => localStorage.getItem('agentic_mode') === 'true'
+  )
+  const [savedAgenticMode, setSavedAgenticMode] = useState(
+    () => localStorage.getItem('agentic_mode') === 'true'
+  )
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
   const [unpinAllDone, setUnpinAllDone] = useState(false)
@@ -188,6 +194,7 @@ export default function SettingsPanel({
     liveSearch !== savedLiveSearch ||
     showVoting !== savedShowVoting ||
     aiEnabled !== savedAiEnabled ||
+    agenticMode !== savedAgenticMode ||
     (pendingLanguage !== '' && pendingLanguage !== savedLanguage)
   const didMountLang = useRef(false)
 
@@ -250,6 +257,8 @@ export default function SettingsPanel({
     setSavedLiveSearch(liveSearch)
     setSavedShowVoting(showVoting)
     setSavedAiEnabled(aiEnabled)
+    localStorage.setItem('agentic_mode', agenticMode.toString())
+    setSavedAgenticMode(agenticMode)
     if (pendingLanguage !== '') {
       setSavedLanguage(pendingLanguage)
       if (pendingLanguage !== language) onLanguageChange(pendingLanguage)
@@ -619,6 +628,18 @@ export default function SettingsPanel({
           )}
         </div>
       ))}
+
+      {aiEnabled && activeProvider === 'anthropic' && (
+        <div className="settings-toggle-row settings-toggle-row--sm">
+          <div>
+            <label htmlFor="toggle-agentic" className="settings-toggle-label">
+              {t('settings.agentic_mode_label') || 'Agentic Mode'}
+            </label>
+            <p className="settings-toggle-desc">{t('settings.agentic_mode_desc') || 'AI will search your corpus to match your style and technical depth when rewriting'}</p>
+          </div>
+          <Toggle id="toggle-agentic" checked={agenticMode} onChange={setAgenticMode} />
+        </div>
+      )}
 
       {/* ── Footer: privacy link above buttons on mobile; privacy left / buttons right on desktop ── */}
       <div className="settings-footer-row">

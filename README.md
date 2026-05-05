@@ -203,6 +203,19 @@ An agentic AI backend (`agenticAiService.js`) uses a corpus search tool (`search
 Currently implemented: **Anthropic (Claude)**
 Stubbed (ready to wire up): OpenAI, Google Gemini, Microsoft Copilot
 
+### AI Provider Privacy Comparison
+
+Choose the provider that aligns with your privacy and ethical priorities. All API calls originate from your browser; your accessibility work never passes through A11yTextHelper's infrastructure.
+
+| Provider | Training Data Policy | Data Retention | Strengths | Considerations |
+| -------- | -------------------- | --------------- | --------- | --------------- |
+| **Anthropic (Claude)** | Does not train on API inputs; published commitment against using API data for model training | 30 days for safety review; does not retain for training | Transparent privacy commitment; strong alignment with user privacy; documented safety practices | Default choice for privacy-conscious users |
+| **OpenAI (ChatGPT)** | Trains on API data by default unless you opt out in account settings | 30 days for abuse detection | Widespread adoption; GPT-4o has strong model capabilities | API data used in model training by default; requires opt-out for privacy |
+| **Google (Gemini)** | Collects usage data; policy less transparent than Anthropic | Varies by service tier | Free tier available; good model capabilities | Data collection practices less transparent; privacy policy less explicit |
+| **Microsoft (Azure OpenAI)** | Depends on your Azure configuration; enterprise-focused privacy options | Configurable | Enterprise security features; can be deployed on private infrastructure | Requires Azure account setup; privacy depends on your configuration |
+
+**Recommendation**: If you're handling accessibility audits with sensitive information, consider using **Anthropic (Claude)** — it has the clearest privacy commitment and does not train on your API requests. For other use cases, evaluate based on your local regulations and organizational requirements.
+
 ## Ratings & Discovery
 
 Every finding card has upvote/downvote and star buttons. Ratings are stored locally and influence result ranking over time — the app learns which findings are most useful for your workflow. Upvoted findings bubble to the top; archived findings drop to the bottom.

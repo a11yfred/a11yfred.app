@@ -132,3 +132,8 @@ Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
 - [ ] `settings.privacy_body_2` — old: "…voting data (votes, stars…" → new: "…priority data (priorities, stars…"
 - [ ] `settings.language_select_one` — old: "Select one" → new: "Choose Language"
 - [ ] `detail.source_heading` — added: "Source:"
+- [ ] `settings.agentic_mode_label` — added: "Agentic Mode (Claude only)"
+- [ ] `settings.agentic_mode_desc` — added: "AI will search your corpus to match your style and technical depth when rewriting."
+- [ ] `detail.agentic_mode_label` — added: "Agentic Mode (uses corpus search)"
+- [ ] `detail.agentic_mode_help` — added: "AI searches the corpus to match your style and depth when rewriting"
+- [ ] `detail.agentic_mode_hint` — added: "AI will search the corpus to match your established style and technical depth"
