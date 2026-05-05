@@ -30,6 +30,7 @@ import useContributionQueue from './hooks/useContributionQueue.js'
 import usePinnedFindings from './hooks/usePinnedFindings.js'
 import { PRIORITY_VARS } from './data/priorityStyles.js'
 import findingSlug from './utils/findingSlug.js'
+import { PROVIDER_LABELS } from './utils/constants.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 const AdminPanel = import.meta.env.DEV
@@ -82,13 +83,7 @@ function generatePartyPalette() {
   }
 }
 
-// Provider display names for the search hint
-const PROVIDER_NAMES = {
-  anthropic: 'Claude',
-  openai: 'GPT',
-  google: 'Gemini',
-  microsoft: 'Copilot',
-}
+const IGNORED_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLock', 'Escape'])
 
 export default function App() {
   return (
@@ -483,7 +478,6 @@ function AppContent({
 
   useEffect(() => {
     if (theme !== 'party') return
-    const IGNORED_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLock', 'Escape'])
     let count = 0
     function handleKeyDown(e) {
       if (e.target.id === 'finding-search' && !IGNORED_KEYS.has(e.key)) {
@@ -772,7 +766,7 @@ function AppContent({
 
   // Provider name for the search hint (read from localStorage; updates on next render after save)
   const providerName = aiEnabled
-    ? (PROVIDER_NAMES[localStorage.getItem('ai_provider')] || 'AI')
+    ? (PROVIDER_LABELS[localStorage.getItem('ai_provider')] || 'AI')
     : null
 
   const searchView = (

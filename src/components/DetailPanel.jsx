@@ -8,7 +8,7 @@ import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 import { StateButton, InputWithClear, Badge, Field, ScLink, SourceLinks, RelatedIssues } from '../ui/index.js'
 import { isSignificantlyChanged } from '../utils/textComparison.js'
-import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
+import { NOTIFICATION_TIMEOUT, PROVIDER_LABELS } from '../utils/constants.js'
 
 export default function DetailPanel({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
@@ -61,7 +61,6 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   useEffect(() => {
     if (!debugPanelCmd) return
     const provider = localStorage.getItem('ai_provider') || 'anthropic'
-    const PROVIDER_LABELS = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }
     const providerLabel = PROVIDER_LABELS[provider] || provider
     if (debugPanelCmd === 'debug wrong')   { setRevisionFailed(t('detail.revise_error_body')); onDebugPanelCmdHandled?.(); return } // eslint-disable-line react-hooks/set-state-in-effect
     if (debugPanelCmd === 'debug 401')     { setRevisionFailed(t('detail.revise_error_invalid_key', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
@@ -271,11 +270,11 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         setAnimating(true)
         startTypewriter(newDesc, newRem, t)
       } catch (e) {
-        console.error('AI refinement failed:', e)
+        if (import.meta.env.DEV) console.error('AI refinement failed:', e)
         setRefining(false)
         setAnimating(false)
         if (e instanceof AiApiError) {
-          const label = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }[e.provider] || e.provider || 'AI'
+          const label = PROVIDER_LABELS[e.provider] || e.provider || 'AI'
           setRevisionFailed(t(`detail.revise_error_${e.type}`, { provider: label, status: e.status }))
         } else {
           setRevisionFailed(t('detail.revise_error_body'))

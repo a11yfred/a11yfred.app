@@ -16,6 +16,13 @@ export const PRIORITY_ORDER = ['Critical', 'Major', 'Best Practice']
 export const VERSION_ORDER = ['Added', 'Updated', 'Fixed', 'Removed']
 export const LEVEL_ORDER = ['A', 'AA', 'AAA']
 
+export const PROVIDER_LABELS = {
+  anthropic: 'Claude',
+  openai: 'GPT',
+  google: 'Gemini',
+  microsoft: 'Copilot',
+}
+
 export const MAX_SEARCH_RESULTS = 8
 export const MAX_SEARCH_ALL = 12
 export const MAX_PINNED_DISPLAY = 5
