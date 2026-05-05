@@ -1,3 +1,5 @@
+import { getStorage } from './storage.js'
+
 export const PROVIDERS = [
   { id: 'anthropic', label: 'Anthropic (Claude)', placeholderKey: 'settings.api_placeholder_anthropic' },
   { id: 'openai',    label: 'OpenAI (GPT)',        placeholderKey: 'settings.api_placeholder_openai'    },
@@ -31,6 +33,6 @@ export const MODEL_DEFAULTS = {
 
 export function initModels() {
   return Object.fromEntries(
-    PROVIDERS.map(p => [p.id, localStorage.getItem(`ai_model_${p.id}`) || MODEL_DEFAULTS[p.id] || ''])
+    PROVIDERS.map(p => [p.id, getStorage(`ai_model_${p.id}`, MODEL_DEFAULTS[p.id] || '')])
   )
 }
