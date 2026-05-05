@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { RotateCcw } from 'lucide-react'
-import { useT } from '../../plugins/i18n/index.js'
+import { useT } from '../../i18n/index.jsx'
 import { announce } from '../../plugins/announce/index.js'
 
 export default function DataError({ onRetry }) {

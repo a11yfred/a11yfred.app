@@ -1,7 +1,7 @@
 import { ExternalLink } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
-import { PanelShell } from '../ui/index.js'
+import PanelShell from './ui/PanelShell.jsx'
 
 export default function AboutPanel({ onClose }) {
   const t = useT()

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useT } from '../../plugins/i18n/index.js'
+import { useT } from '../../i18n/index.jsx'
 import { announce } from '../../plugins/announce/index.js'
 
 export default function NoResults({ query }) {

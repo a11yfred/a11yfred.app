@@ -14,8 +14,9 @@ As of May 5, 2026:
 - **Phase 2 (AI + Sharing)**: Partial — Agentic AI wired (Claude/Anthropic), user overrides infrastructure complete, multilingual edit flow designed but UI deferred
 - **Phase 3 (Public Launch)**: Planning phase — Comprehensive roadmap drafted; requires auth (Supabase), GDPR review, analytics setup
 - **All tests and linters**: Passing (ESLint, Stylelint, Markdownlint; 34 markdown files validated)
-- **UI Component Library**: Complete — Toggle, RadioChip, Select, StateButton, InputWithClear, Badge, Field, BackButton, PanelShell extracted to `src/components/ui/` with barrel export; tested across SearchBar, DetailPanel, ResultList, About/Help/Settings panels
-- **Documentation**: Organized into active docs (`docs/`) and archive (`docs/archive/`); TODO cleaned up by phase
+- **UI Component Library**: Complete — Toggle, RadioChip, Select, StateButton, InputWithClear, Badge, Field, BackButton, PanelShell extracted to `src/components/ui/` with barrel export; tested across SearchBar, DetailPanel, ResultList, About/Help/Settings panels. Plus 7 additional helpers (ScLink, LinkTitle, SourceLinks, NoResults, DataError, ResultListSkeleton, RelatedIssues) = 16 production-tested components
+- **Code Quality**: Comprehensive refactoring complete — duplicate code eliminated (~90 lines), ~30 magic numbers replaced with named constants, utility hooks created (useToastState, storage), all imports verified as used
+- **Documentation**: Organized into active docs (`docs/`) and archive (`docs/archive/`); TODO cleaned up by phase; UPDATES/CHANGELOG maintained with detailed change records
 
 ---
 

@@ -4,6 +4,57 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 (night) — Comprehensive code review and refactoring: deduplication and constants consolidation
+
+### First-Pass Refactoring
+
+#### Commit: 76011a2 — Eliminate duplicate code and extract shared constants
+
+- Extract `findingSlug()` to `src/utils/findingSlug.js` (was defined 4 times: App.jsx, ResultList.jsx, RelatedIssues.jsx, AdminPanel.jsx)
+- Consolidate `DEFAULT_RATING` to `src/utils/constants.js` (was defined 3 times: useFindingSearch.js, ResultList.jsx lines 77 & 151)
+- Create `src/utils/constants.js` with centralized shared values: PRIORITY_ORDER, VERSION_ORDER, LEVEL_ORDER, sorting/filtering constants
+- Update 4 files to import shared utilities instead of defining locally
+- Remove ~50 lines of duplicate definitions
+
+#### Commit: 988c833 — Replace magic numbers with named constants throughout codebase
+
+- Add timing constants: NOTIFICATION_TIMEOUT (2000ms), CLIPBOARD_TIMEOUT, AI_REFINEMENT_TIMEOUT (5000ms), CYCLE_MS (2500ms)
+- Add result limit constants: MAX_SEARCH_RESULTS (8), MAX_SEARCH_ALL (12), MAX_PINNED_DISPLAY (5), MAX_RELATED_ISSUES (5), MAX_NARROW_RESULTS (8)
+- Add truncation constants: TITLE_TRUNCATE_LENGTH (36), DESC_PREVIEW_LENGTH (180)
+- Update DetailPanel (6 hardcoded 2000ms → NOTIFICATION_TIMEOUT), ResultList (character limits), useFindingSearch (result limits)
+- Remove duplicate DEFAULT_RATING from useFindingSearch; import from constants instead
+- ~30 magic numbers replaced with named constants
+
+#### Commit: 9714759 — Add utility hooks and standardized storage access
+
+- Create `src/hooks/useToastState.js` — Reusable "show and auto-hide" hook for notifications/copy feedback
+- Create `src/utils/storage.js` — Safe localStorage access with error handling (getStorage, setStorage, removeStorage)
+- Update aiModels.js to use standardized getStorage() instead of raw localStorage.getItem()
+- Both utilities prevent crashes on quota exceeded or blocked storage
+
+### Second-Pass Refactoring
+
+#### Commit: b288a86 — Second pass cleanup: constants consolidation and code deduplication
+
+- Extract `PROVIDER_LABELS` constant to `src/utils/constants.js` (was defined 3 times in DetailPanel, used inline in error handler)
+- Move `IGNORED_KEYS` Set to module-level constant in App.jsx (line 86)
+  - Previously: Created inline in useEffect every render
+  - Now: Created once at module scope, reused in party mode listener
+  - Performance improvement: Set initialization removed from render path
+- Remove redundant `PROVIDER_NAMES` constant from App.jsx (replaced by PROVIDER_LABELS)
+- Gate console.error in DetailPanel AI handler behind `import.meta.env.DEV`
+- Confirm all console statements already gated (agenticAiService.js, useFindingSearch.js)
+
+#### Refactoring Summary
+
+- Duplicate code: 4 function definitions + 4 constant definitions → 1 shared location
+- Inline Set creation: 1 location → module-level constant (performance improvement)
+- Magic numbers: ~30 replaced with named constants
+- New utilities: 3 (findingSlug, useToastState, storage)
+- Total lines of duplicate code eliminated: ~90
+
+---
+
 ## 2026-05-05 (evening) — UI component library extraction complete: 9 primitives, production-ready boilerplate
 
 ### Complete UI component library extraction (6 phases, 5 commits)

@@ -1,6 +1,6 @@
 import { useFocusOnMount, usePageTitle } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
-import { PanelShell } from '../ui/index.js'
+import PanelShell from './ui/PanelShell.jsx'
 
 export default function HelpPanel({ onClose, onStartTour }) {
   const t = useT()

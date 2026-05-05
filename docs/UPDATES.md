@@ -4,6 +4,65 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 5, 2026 (night) — Comprehensive code review and refactoring complete
+
+### First-Pass Refactoring (High Impact)
+
+Completed comprehensive code review and eliminated duplicate code across the codebase:
+
+**Code Deduplication:**
+
+- Consolidated `findingSlug()` from 4 definitions to 1 shared utility (`src/utils/findingSlug.js`)
+- Consolidated `DEFAULT_RATING` from 3 locations to `src/utils/constants.js`
+- Removed ~90 lines of duplicated function definitions
+- Established single source of truth for repeated patterns
+
+**Magic Numbers → Named Constants:**
+
+- Extracted ~30 hardcoded values to `src/utils/constants.js`
+- Added timing constants: NOTIFICATION_TIMEOUT, CLIPBOARD_TIMEOUT, AI_REFINEMENT_TIMEOUT, CYCLE_MS
+- Added limit constants: MAX_SEARCH_RESULTS, MAX_SEARCH_ALL, MAX_PINNED_DISPLAY, MAX_RELATED_ISSUES
+- Added truncation constants: TITLE_TRUNCATE_LENGTH, DESC_PREVIEW_LENGTH
+- Updated DetailPanel, ResultList, useFindingSearch to use constants instead of hardcoded values
+
+**Utility Extraction:**
+
+- Created `useToastState` hook for "show and auto-hide" notification pattern
+- Created `storage.js` utility with safe localStorage access (getStorage, setStorage, removeStorage)
+- Updated aiModels.js to use standardized storage utility
+
+**Boilerplate Library Completion:**
+
+- Extracted 7 additional UI components (ScLink, LinkTitle, SourceLinks, NoResults, DataError, ResultListSkeleton, RelatedIssues)
+- Extracted 2 utility modules (textComparison, aiModels)
+- Total boilerplate: 16 production-tested UI components + 5 utility modules
+
+### Second-Pass Refactoring (Additional Cleanup)
+
+Completed second-pass review focused on remaining improvements:
+
+**Constants Consolidation:**
+
+- Extracted `PROVIDER_LABELS` to `src/utils/constants.js` (was defined 3 times)
+- Moved `IGNORED_KEYS` to module-level constant in App.jsx (improved performance: Set created once instead of every render)
+- Removed redundant `PROVIDER_NAMES` constant
+
+**Code Quality:**
+
+- Gated console.error in DetailPanel behind `import.meta.env.DEV`
+- Verified all console.log/warn statements are dev-only
+- Confirmed no unused imports remain
+
+**Metrics:**
+
+- Duplicate code reduced: ~90 lines eliminated
+- Magic numbers replaced: ~30 values
+- Constants extracted: 20+ shared values
+- New utilities: 3 (useToastState, storage, findingSlug)
+- All linters passing, dev server fully functional
+
+---
+
 ## May 5, 2026 (evening) — UI component library extraction complete, production boilerplate ready
 
 ### Complete UI Component Library Extraction

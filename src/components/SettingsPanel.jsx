@@ -3,7 +3,11 @@ import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle } from 'lucide
 import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
-import { Toggle, RadioChip, Select, PanelShell, StateButton } from '../ui/index.js'
+import Toggle from './ui/Toggle.jsx'
+import RadioChip from './ui/RadioChip.jsx'
+import Select from './ui/Select.jsx'
+import PanelShell from './ui/PanelShell.jsx'
+import StateButton from './ui/StateButton.jsx'
 import { PROVIDERS, PROVIDER_MODELS, MODEL_DEFAULTS, initModels } from '../utils/aiModels.js'
 
 const LANGUAGES = [

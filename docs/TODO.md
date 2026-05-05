@@ -8,6 +8,21 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ---
 
+## Code Quality & Refactoring (May 5, 2026)
+
+**Completed in this session:**
+
+- [x] **Comprehensive code review and refactoring** `[code]` — First-pass and second-pass refactoring complete. Eliminated ~90 lines of duplicate code, replaced ~30 magic numbers with named constants, extracted utility hooks and functions. All linters passing, zero unused imports.
+
+**Identified for future work (lower priority):**
+
+- [ ] **Decompose App.jsx** `[code]` `[refactor]` — 1303 lines. Would benefit from extraction of theme manager, search manager, party mode handler into separate hooks
+- [ ] **Refactor SettingsPanel** `[code]` `[refactor]` — 734 lines with 16+ state variables. Would benefit from sub-component split: AiSettingsSection, SearchSettingsSection, LanguageSettingsSection, ResetDataSection
+- [ ] **Standardize locale/language naming** `[code]` `[i18n]` — Currently mixed usage of `locale` vs `language` parameter names across hooks. Standardize throughout codebase
+- [ ] **Add JSDoc to complex hooks** `[code]` — useFindingSearch.js and useContributionQueue.js would benefit from parameter and return type documentation
+
+---
+
 ## Phase 1 — Launch Day Essentials
 
 **Day 1 for Phase 1 public release** (ship with these):

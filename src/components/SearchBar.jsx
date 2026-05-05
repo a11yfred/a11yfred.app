@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { X } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
-import { InputWithClear } from '../ui/index.js'
+import InputWithClear from './ui/InputWithClear.jsx'
 
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.
