@@ -450,7 +450,6 @@ function AppContent({
       Object.entries(palette).forEach(([k, v]) =>
         document.documentElement.style.setProperty(k, v)
       )
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', palette['--accent'] || '#ff00ff')
       localStorage.setItem('theme', theme)
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       announce(
@@ -465,8 +464,6 @@ function AppContent({
         ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
         : theme
       document.documentElement.setAttribute('data-theme', resolved)
-      const themeColor = resolved === 'dark' ? '#1a1a1a' : '#5548c8'
-      document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor)
     }
     apply()
     localStorage.setItem('theme', theme)
