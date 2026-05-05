@@ -62,8 +62,8 @@ export default function DetailPanel({ finding, aiEnabled, focusTrigger = 0, allF
   // Field-specific undo stacks — each entry is the text before that AI revision
   const [descHistory, setDescHistory] = useState([])
   const [remHistory, setRemHistory] = useState([])
-  const [reviseDesc, setReviseDesc] = useState(true)
-  const [reviseRem, setReviseRem] = useState(true)
+  const [reviseDesc, setReviseDesc] = useState(false)
+  const [reviseRem, setReviseRem] = useState(false)
   const [copiedAll, setCopiedAll] = useState(false)
   const [resetAllDone, setResetAllDone] = useState(false)
   const [includeDescTitle, setIncludeDescTitle] = useState(false)
