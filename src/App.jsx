@@ -29,6 +29,7 @@ import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'
 import usePinnedFindings from './hooks/usePinnedFindings.js'
 import { PRIORITY_VARS } from './data/priorityStyles.js'
+import findingSlug from './utils/findingSlug.js'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 const AdminPanel = import.meta.env.DEV
@@ -79,10 +80,6 @@ function generatePartyPalette() {
     '--party-grad-x':    `${Math.floor(Math.random() * 80) + 10}%`,
     '--party-grad-y':    `${Math.floor(Math.random() * 80) + 10}%`,
   }
-}
-
-function findingSlug(title) {
-  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 }
 
 // Provider display names for the search hint

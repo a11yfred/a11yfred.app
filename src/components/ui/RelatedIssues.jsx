@@ -1,13 +1,6 @@
 import { useMemo } from 'react'
 import { useT } from '../../i18n/index.jsx'
-
-function findingSlug(title) {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-}
+import findingSlug from '../../utils/findingSlug.js'
 
 export default function RelatedIssues({ finding, allFindings, onSelect }) {
   const t = useT()

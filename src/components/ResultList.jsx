@@ -5,14 +5,8 @@ import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 import { StateButton, Badge, NoResults } from '../ui/index.js'
 import SponsoredTile from './SponsoredTile.jsx'
-
-function findingSlug(title) {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-}
+import findingSlug from '../utils/findingSlug.js'
+import { DEFAULT_RATING, CLIPBOARD_TIMEOUT } from '../utils/constants.js'
 
 export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin, onClearPins }) {
   const t = useT()
@@ -81,7 +75,6 @@ export default function ResultList({ results, selected, _onSelect, query, rating
     const currentIndex = displayResults.findIndex(r => itemRefs.current[r.id] === document.activeElement)
     if (currentIndex === -1) return
 
-    const DEFAULT_RATING = { score: 0, starred: false, archived: false }
     const currentFinding = displayResults[currentIndex]
     const rating = ratings[currentFinding.id] || DEFAULT_RATING
     const { starred, archived } = rating
@@ -155,8 +148,6 @@ export default function ResultList({ results, selected, _onSelect, query, rating
     return <NoResults query={narrowQuery} />
   }
 
-  const DEFAULT_RATING = { score: 0, starred: false, archived: false }
-
   return (
     <div className="result-list-section">
       {!hideCount && <div className="results-meta">
@@ -183,7 +174,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
               onClick={() => {
                 onCopyLink()
                 setLinkCopied(true)
-                setTimeout(() => setLinkCopied(false), 2000)
+                setTimeout(() => setLinkCopied(false), CLIPBOARD_TIMEOUT)
               }}
             />
           )}

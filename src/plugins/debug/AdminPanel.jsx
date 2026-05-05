@@ -2,16 +2,9 @@ import { useState, useMemo } from 'react'
 import './admin-panel.css'
 import publicCorpus from '../../data/corpus.json'
 import personalCorpus from '../../data/personal-corpus.json'
+import findingSlug from '../../utils/findingSlug.js'
 
 const IS_DEV = import.meta.env.DEV
-
-function findingSlug(title) {
-  return title
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-}
 
 const WCAG_CRITERIA = [
   // 1.1 Text Alternatives
