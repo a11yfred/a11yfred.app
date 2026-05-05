@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react'
 import Fuse from 'fuse.js'
 import { getFindings } from '../services/dataService.js'
 import { applyOverride } from '../services/userOverridesService.js'
+import { DEFAULT_RATING, MAX_SEARCH_ALL, MAX_SEARCH_RESULTS } from '../utils/constants.js'
 
 const FUSE_OPTIONS = {
   keys: [
@@ -18,8 +19,6 @@ const FUSE_OPTIONS = {
 
 const PRIORITY_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }
 const LOAD_TIMEOUT_MS = 8000
-
-const DEFAULT_RATING = { score: 0, starred: false, archived: false }
 
 const DEFAULT_WCAG_FILTER = { maxVersion: '2.2', maxLevel: 'AA' }
 const VERSION_ORDER = { '2.0': 0, '2.1': 1, '2.2': 2 }
@@ -153,7 +152,7 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
     // eslint-disable-next-line react-hooks/purity -- intentional: dev-only profiling, side-effect-free
     const t0 = performance.now()
     const searchTerm = baseQuery || query.trim()
-    const raw = fuse.search(searchTerm).slice(0, 12)
+    const raw = fuse.search(searchTerm).slice(0, MAX_SEARCH_ALL)
     // eslint-disable-next-line react-hooks/purity -- intentional: dev-only profiling, side-effect-free
     const elapsed = performance.now() - t0
     if (import.meta.env.DEV && elapsed > 20) {
@@ -190,7 +189,7 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
         const adjB = (b.score ?? 1) - (rb.score * 0.05)
         return adjA - adjB
       })
-      .slice(0, 8)
+      .slice(0, MAX_SEARCH_RESULTS)
       .map(r => r.item)
   }, [fuse, query, searchKey, ratings]) // eslint-disable-line react-hooks/exhaustive-deps
 

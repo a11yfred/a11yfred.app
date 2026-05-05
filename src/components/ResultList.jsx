@@ -6,7 +6,7 @@ import { PRIORITY_VARS } from '../data/priorityStyles.js'
 import { StateButton, Badge, NoResults } from '../ui/index.js'
 import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
-import { DEFAULT_RATING, CLIPBOARD_TIMEOUT } from '../utils/constants.js'
+import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
 
 export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin, onClearPins }) {
   const t = useT()
@@ -214,8 +214,8 @@ export default function ResultList({ results, selected, _onSelect, query, rating
           const rating = ratings[finding.id] || DEFAULT_RATING
           const { score, starred, archived } = rating
 
-          const truncDesc = finding.desc.length > 180
-            ? finding.desc.slice(0, 180).trimEnd() + '…'
+          const truncDesc = finding.desc.length > DESC_PREVIEW_LENGTH
+            ? finding.desc.slice(0, DESC_PREVIEW_LENGTH).trimEnd() + '…'
             : finding.desc
 
           const cardLabel = archived
@@ -224,8 +224,8 @@ export default function ResultList({ results, selected, _onSelect, query, rating
 
           // Truncate title used in vote-button labels only — full title used in announce() calls
           const shortTitle = (() => {
-            if (finding.title.length <= 36) return finding.title
-            const cut = finding.title.slice(0, 36)
+            if (finding.title.length <= TITLE_TRUNCATE_LENGTH) return finding.title
+            const cut = finding.title.slice(0, TITLE_TRUNCATE_LENGTH)
             const lastSpace = cut.lastIndexOf(' ')
             return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + '…'
           })()

@@ -8,6 +8,7 @@ import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 import { StateButton, InputWithClear, Badge, Field, ScLink, SourceLinks, RelatedIssues } from '../ui/index.js'
 import { isSignificantlyChanged } from '../utils/textComparison.js'
+import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 
 export default function DetailPanel({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
@@ -93,7 +94,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     navigator.clipboard.writeText(textToCopy).then(() => {
       setCopied(true)
       announce(t('detail.copied_announce', { label }))
-      setTimeout(() => setCopied(false), 2000)
+      setTimeout(() => setCopied(false), NOTIFICATION_TIMEOUT)
     })
   }
 
@@ -283,7 +284,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     } else {
       setNoteSaved(true)
       announce(t('detail.saved_note_aria'))
-      setTimeout(() => setNoteSaved(false), 2000)
+      setTimeout(() => setNoteSaved(false), NOTIFICATION_TIMEOUT)
     }
   }
 
