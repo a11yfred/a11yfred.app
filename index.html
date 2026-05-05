@@ -79,8 +79,11 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <!-- Browser chrome color on mobile (Chrome/Edge/Safari — Firefox ignores gracefully). Updated by App.jsx -->
+    <!-- Browser chrome color on mobile. Updated dynamically by App.jsx for light/dark/party themes -->
     <meta name="theme-color" content="#5548c8" />
+
+    <!-- Color scheme for Firefox and other browsers — enables theme-color support -->
+    <meta name="color-scheme" content="light dark" />
 
     <!--
       Umami Analytics (privacy-first, no cookies, GDPR-compliant)
