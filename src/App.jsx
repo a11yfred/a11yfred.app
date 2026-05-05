@@ -1031,7 +1031,7 @@ function AppContent({
       <PartyMusicPlayer active={theme === 'party'} />
       {theme === 'party' && <PartyBanner />}
 
-      <div className="app-background" inert={backgroundInert ? true : undefined} aria-hidden={backgroundInert ? true : undefined}>
+      <div className="app-background" inert={backgroundInert ? true : undefined}>
         <nav aria-label="Skip navigation">
           <a
             href="#/"

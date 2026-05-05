@@ -1,2 +1,11 @@
-docs/PRODUCT-PLAN.md
-docs/GDPR-DRAFT.md
+PRODUCT-PLAN.md
+GDPR-DRAFT.md
+docs/CONSOLIDATION_*.md
+docs/DATA_MODEL_*.md
+docs/SOURCE_AUDIT_*.md
+docs/VALIDATION_*.md
+docs/ROSELLI_UPDATES.md
+.claude/PRODUCT-PLAN.md
+.claude/GDPR-DRAFT.md
+docs/SOURCE_CITATION_FIXES.md
+docs/i18n-edits.md

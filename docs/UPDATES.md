@@ -4,6 +4,18 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 5, 2026 — ID consolidation documentation and console error fixes
+
+### Corpus ID reference complete
+
+The public corpus now has a comprehensive reference document mapping all 159 IDs (ATH-001 to ATH-159) showing which are in use and which are reserved gaps. The document clearly displays: 56 consolidated entries (same IDs as personal corpus), 33 new public-only entries (ATH-127+), and 70 intentional gap IDs available for future entries. All 126 personal corpus IDs are sequential with zero gaps.
+
+### Console error fixed
+
+Removed `aria-hidden` attribute from app background div that was conflicting with focused descendants. The `inert` attribute alone is sufficient to prevent focus and interaction with background content during modal/panel display, and avoids the console warning about hidden focused elements.
+
+---
+
 ## May 1, 2026 — Corpus completion, platform variant UI, and sourcing finalization
 
 ### Corpus now 100% sourced with 2+ expert references

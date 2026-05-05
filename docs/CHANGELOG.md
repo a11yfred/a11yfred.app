@@ -4,6 +4,18 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-05 — ID reference documentation and aria-hidden fix
+
+### Documentation
+
+- `docs/UNUSED_IDS.md` — Comprehensive reference document listing all personal corpus (126 entries, ATH-001–126, zero gaps) and public corpus (159 ID range, 56 consolidated + 33 new public-only + 70 gaps) with combined table view showing status of each entry
+
+### Bug fixes
+
+- `src/App.jsx` — Removed `aria-hidden` attribute from `.app-background` div; `inert` attribute alone is sufficient and eliminates console warning about aria-hidden on ancestor of focused element
+
+---
+
 ## 2026-05-05 — Public corpus consolidation and ID alignment
 
 ### Corpus consolidation
