@@ -115,8 +115,8 @@
       "trap",
       "voiceover"
     ],
-    "desc": "When a modal, dialog, or drawer opens, keyboard focus stays where it was. Screen reader and keyboard users cannot easily reach the new content.",
-    "rem": "Move focus to the first element inside the new content when it opens. Use tabindex=\"-1\" on a heading if the first focusable element comes later. Trap focus inside while it is open, and return focus to the trigger button when it closes.",
+    "desc": "When a modal, dialog, or drawer opens, keyboard focus stays where it was. Screen reader and keyboard-only users cannot easily reach the new content.",
+    "rem": "Move focus to the first element inside the new content when it opens. Use tabindex=\"-1\" on a heading if the first focusable element comes later. focus trap inside while it is open, and return focus to the trigger button when it closes.",
     "sources": [
       {
         "name": "ATH",
@@ -155,7 +155,7 @@
       "outline none",
       "visible focus"
     ],
-    "desc": "Keyboard users cannot see which element is focused. The default focus outline may be removed, or the custom focus style is too faint to see clearly.",
+    "desc": "keyboard-only users cannot see which element is focused. The default focus outline may be removed, or the custom focus style is too faint to see clearly.",
     "rem": "Make sure every keyboard-focusable element shows a clear focus outline. Do not set outline: none without providing a visible custom focus style. The focus indicator must have at least a 3:1 contrast ratio against nearby colors.",
     "sources": [
       {
@@ -202,7 +202,7 @@
       "tab",
       "tabindex"
     ],
-    "desc": "The control can only be used with a mouse. Keyboard users cannot focus or activate it. Custom elements built with div or span also lack a role, so screen readers do not know what the control is.",
+    "desc": "The control can only be used with a mouse. keyboard-only users cannot focus or activate it. Custom elements built with div or span also lack a role, so screen readers do not know what the control is.",
     "rem": "Use native HTML elements like button or a whenever possible — they are keyboard accessible and have built-in roles. If a custom element must be used, add tabindex=\"0\", an appropriate ARIA role, and keyboard event handlers for Enter and Space.",
     "sources": [
       {
@@ -352,7 +352,7 @@
       "voiceover",
       "wrong alt text"
     ],
-    "desc": "An image has no alt text, has alt text that describes visual appearance rather than purpose, or has alt text that repeats nearby visible text. Screen readers read alt text aloud — missing or inaccurate alt text gives users no useful information.",
+    "desc": "An image has no alt text, or alt text that is wrong. Alt text might describe visual appearance rather than purpose, or be marked as decorative when the image conveys meaning.",
     "rem": "Ask what the image is for, not what it looks like. Meaningful images need alt text that conveys purpose or action — a submit button showing a magnifying glass gets alt=\"Search\", not alt=\"magnifying glass icon\". Decorative images use alt=\"\" so screen readers skip them. Linked images describe the destination. Never use the filename as alt text.",
     "links": [
       {
@@ -457,7 +457,7 @@
       "skip to main",
       "tab"
     ],
-    "desc": "There is no skip link at the top of the page. Keyboard users must tab through all navigation links on every page before reaching the main content.",
+    "desc": "There is no skip link at the top of the page. keyboard-only users must tab through all navigation links on every page before reaching the main content.",
     "rem": "Add a \"Skip to main content\" link as the first focusable element on the page. Make it visible when focused, and have it move focus to the start of the main content area.",
     "sources": [
       {
@@ -508,7 +508,7 @@
       "sr only",
       "tab"
     ],
-    "desc": "A skip link exists but is hidden from sighted keyboard users. When a keyboard user tabs to it, nothing appears on screen.",
+    "desc": "A skip link exists but is hidden from sighted keyboard-only users. When a keyboard-only user tabs to it, nothing appears on screen.",
     "rem": "Make the skip link appear on screen when it receives keyboard focus. It can be hidden off-screen by default, but must become visible when focused.",
     "sources": [
       {
@@ -547,8 +547,8 @@
       "voiceover",
       "wrong level"
     ],
-    "desc": "Heading levels are used in a way that does not reflect the document structure — for example, an h3 appears before an h2 in the same section, or a sub-heading uses a higher level number than its parent. Screen reader users rely on the heading tree to understand page hierarchy; an incoherent or reversed structure misrepresents the information relationships on the page.",
-    "rem": "Assign heading levels based on document hierarchy, not visual styling. A section that is conceptually a sub-item should use a lower-numbered heading than its parent. Note: skipping heading levels (e.g. h1 then h3) is a best practice concern but not a WCAG failure; reversing hierarchy — using a higher-numbered heading for a conceptually more prominent section — does fail 1.3.1.",
+    "desc": "Heading levels are used in a way that does not match the document structure. For example, an h3 might appear before an h2 in the same section, or a subheading uses a higher level number than its parent. Screen reader users rely on the heading hierarchy to understand how information is organized. When heading structure is wrong, users cannot navigate the page correctly.",
+    "rem": "Assign heading levels based on document structure, not visual styling. If a section is conceptually a sub-item, it should use a lower-numbered heading than its parent. Important: skipping heading levels (for example, h1 then h3) is a best practice but not a WCAG failure. Reversing hierarchy (using a higher number for a more prominent section) does fail this criterion.",
     "links": [
       {
         "text": "TPGi: When do headings fail WCAG?",
@@ -670,7 +670,7 @@
       "validation",
       "voiceover"
     ],
-    "desc": "When a form shows an error message, screen readers do not announce it because the error message has no code-level link to the input field.",
+    "desc": "When a form shows an error message, screen readers do not announce it. The error message has no code-level link to the input field.",
     "rem": "Use aria-describedby to connect the error message to its input field. When errors appear, move keyboard focus to the first field with an error so all users know where to fix the problem.",
     "sources": [
       {
@@ -929,7 +929,7 @@
       "unlabeled input",
       "visible"
     ],
-    "desc": "A text input, textarea, or similar text-entry field has no visible label, or its label is not linked to the field in code. Placeholder text disappears when the user starts typing and is not a substitute for a proper label.",
+    "desc": "A text input, textarea, or similar field has no visible label. Its label is not linked to the field at the code level.",
     "rem": "Give every form field a visible label element that describes what to enter. Link the label to the input using matching for and id attributes. Avoid using placeholder text as the only label.",
     "sources": [
       {
@@ -1129,7 +1129,7 @@
       "tabindex",
       "tabindex on div"
     ],
-    "desc": "A non-interactive element (such as a div, paragraph, or progress bar) is in the tab order. Keyboard users tab to it but cannot do anything with it, which is confusing.",
+    "desc": "A non-interactive element (such as a div, paragraph, or progress bar) is in the tab order. keyboard-only users tab to it but cannot do anything with it, which is confusing.",
     "rem": "Remove the tabindex attribute from non-interactive elements. Only native interactive elements or elements that need programmatic focus (such as dialog headings) should receive focus.",
     "sources": [
       {
@@ -1167,7 +1167,7 @@
       "tab",
       "text link"
     ],
-    "desc": "A content block has multiple separate links or buttons that all go to the same place — for example, a card with a linked image, a linked title, and a \"Read more\" button. Keyboard users must tab through all of them, and screen reader users hear repeated announcements.",
+    "desc": "A content block has multiple separate links or buttons that all point to the same destination. For example, a card might have a linked image, a linked title, and a \"Read more\" button. keyboard-only users must tab through every link, and screen reader users hear the same destination announced multiple times.",
     "rem": "Combine them into a single link. Mark the image as decorative (alt=\"\") and use the text as the link label. Or wrap the entire card in one link element.",
     "sources": [
       {
@@ -1289,7 +1289,7 @@
       "swipe"
     ],
     "desc": "A feature requires the user to drag an element with a pointer. There is no keyboard-accessible way to perform the same action.",
-    "rem": "Provide keyboard-accessible controls (such as buttons) that perform the same action as dragging. Keyboard users should be able to complete every task without a mouse.",
+    "rem": "Provide keyboard-accessible controls (such as buttons) that perform the same action as dragging. keyboard-only users should be able to complete every task without a mouse.",
     "sources": [
       {
         "name": "ATH",
@@ -1379,7 +1379,7 @@
       "screen reader"
     ],
     "desc": "Page content is not organized inside HTML landmark elements. Screen reader users cannot jump between sections of the page — they must read everything from the start.",
-    "rem": "Wrap all page content in semantic HTML elements: header, nav, main, aside, and footer. Every page needs at least one main element. Use ARIA landmark roles only when the right HTML element is not available.",
+    "rem": "Wrap all page content in semantic HTML elements: header, nav, main, aside, and footer. Every page needs at least one main element. Use landmark roles only when the right HTML element is not available.",
     "sources": [
       {
         "name": "ATH",
@@ -1451,8 +1451,8 @@
       "tab trap",
       "trap"
     ],
-    "desc": "Keyboard focus gets stuck inside a component. Once a keyboard user tabs into it, there is no way out using only the keyboard.",
-    "rem": "Make sure keyboard users can always tab out of any component. If a modal or dialog traps focus intentionally, add an Escape key handler and a visible close button so users can leave.",
+    "desc": "Keyboard focus gets stuck inside a component. Once a keyboard-only user tabs into it, there is no way out using only the keyboard.",
+    "rem": "Make sure keyboard-only users can always tab out of any component. If a modal or dialog traps focus intentionally, add an Escape key handler and a visible close button so users can leave.",
     "sources": [
       {
         "name": "ATH",
@@ -1592,7 +1592,7 @@
       "screen reader",
       "tooltip"
     ],
-    "desc": "Extra content appears only when the user hovers with a mouse. Keyboard users and screen reader users cannot trigger or read this content.",
+    "desc": "Extra content appears only when the user hovers with a mouse. keyboard-only users and screen reader users cannot trigger or read this content.",
     "rem": "Make hover content also appear when the element receives keyboard focus. Users must be able to dismiss it without moving focus (for example, with Escape). The content should stay visible until the user moves focus away.",
     "sources": [
       {
@@ -1645,7 +1645,7 @@
       "voiceover",
       "wrong order"
     ],
-    "desc": "When tabbing through the page, focus jumps in an order that does not match what is shown on screen. This is confusing for keyboard users.",
+    "desc": "When tabbing through the page, focus jumps in an order that does not match what is shown on screen. This is confusing for keyboard-only users.",
     "rem": "Make the HTML source order match the visual layout. Avoid using positive tabindex values to control tab order — they create maintenance problems and usually make things worse.",
     "sources": [
       {
@@ -2722,7 +2722,7 @@
       "screen rotation",
       "wheelchair mount"
     ],
-    "desc": "The content is locked to a single screen orientation — portrait or landscape — and will not reflow when the device is rotated. Users who mount their device in a fixed position, such as on a wheelchair, cannot use the other orientation.",
+    "desc": "Content is locked to a single screen orientation (portrait or landscape). It will not reflow when the user rotates their device.",
     "rem": "Remove any code that forces a fixed screen orientation. Support both portrait and landscape using CSS media queries or flexible layouts. Only restrict orientation when a specific orientation is essential — such as a piano keyboard that only makes sense in landscape.",
     "sources": [
       {
@@ -2904,8 +2904,8 @@
       "shake to undo",
       "tilt"
     ],
-    "desc": "A feature is triggered by device motion — such as shaking to undo or tilting to scroll — and there is no other way to perform the same action. Users who cannot move their device, or whose device is mounted to a wheelchair, cannot access this feature.",
-    "rem": "Provide a UI control — such as a button or menu option — that performs the same action as the device motion gesture. Also allow users to disable the motion trigger entirely to prevent accidental activation.",
+    "desc": "A feature is triggered by device motion (such as shaking to undo or tilting to scroll) with no alternative way to perform the same action. Users who cannot move their device or whose device is mounted to a wheelchair cannot access this feature.",
+    "rem": "Provide a UI control (such as a button or menu option) that performs the same action as the device motion gesture. Also allow users to disable the motion trigger to prevent accidental activation.",
     "sources": [
       {
         "name": "ATH",
@@ -2952,7 +2952,7 @@
       "visual order mismatch",
       "voiceover"
     ],
-    "desc": "CSS properties like order, position: absolute, or float cause content to appear in a different sequence visually than it does in the DOM. Screen readers and other assistive technologies follow DOM order, so content may be read in a confusing or meaningless sequence.",
+    "desc": "CSS properties like order, position: absolute, or float cause content to appear in a different visual order. The reading order does not match how users see the page.",
     "rem": "Ensure the DOM order matches the intended reading order. If CSS repositioning is necessary, test with a screen reader to confirm the content sequence makes sense. Avoid relying on the CSS order property to define meaning — use it only for visual adjustments when the DOM order is already correct.",
     "sources": [
       {
@@ -3002,7 +3002,7 @@
       "undo",
       "voiceover"
     ],
-    "desc": "An action that cannot be easily undone — such as deleting data, completing a purchase, or submitting a legal or financial form — has no confirmation or review step. A user who activates it by accident has no way to recover.",
+    "desc": "An action cannot be easily undone (such as deleting data, completing a purchase, or submitting). There is no confirmation step to prevent accidental activation.",
     "rem": "Before completing any significant or irreversible action, give users a chance to review, confirm, or cancel. Options include a confirmation dialog, a review-and-edit summary screen, or a brief undo window after the action completes. Clearly label destructive actions so users understand the consequence before they commit.",
     "sources": [
       {
@@ -3139,7 +3139,7 @@
       "page nav",
       "screen reader"
     ],
-    "desc": "Navigation links appear in a different order or position on different pages of the same site or app. Users who rely on consistent placement — including screen reader users and keyboard users — must relearn the layout on each page.",
+    "desc": "Navigation links appear in a different order or position on different pages of the same site or app. Users who rely on consistent placement — including screen reader users and keyboard-only users — must relearn the layout on each page.",
     "rem": "Keep navigation menus in the same relative order and position on every page. If new items are added to navigation, insert them consistently so the rest of the order is preserved. Users may personalize their own navigation, but the default layout must remain the same across pages.",
     "sources": [
       {
@@ -4140,7 +4140,7 @@
       "talkback",
       "voiceover"
     ],
-    "desc": "A focusable, interactive element (such as a link or button) is nested inside another interactive element. HTML does not permit interactive content descendants inside buttons or links. Screen readers and keyboard users encounter unpredictable behavior — some AT reads both elements, others only one, and focus order becomes ambiguous.",
+    "desc": "A focusable, interactive element (such as a link or button) is nested inside another interactive element. HTML does not permit interactive content descendants inside buttons or links. Screen readers and keyboard-only users encounter unpredictable behavior — some AT reads both elements, others only one, and focus order becomes ambiguous.",
     "rem": "Separate the nested controls so they are siblings, not parent/child. A common pattern is a \"clickable card\" where the whole card and an inner link both navigate — use a single anchor on the card, or use CSS positioning to extend a single link's click area over the card without nesting. Never place a <button> or <a> inside another <button> or <a>.",
     "links": [
       {
