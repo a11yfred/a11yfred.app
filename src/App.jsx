@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, lazy } from 'react'
+import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
 import { Settings, X, Info, HelpCircle, ExternalLink, ChevronDown } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
@@ -808,7 +808,6 @@ function AppContent({
           pinnedIds={pinnedIds}
           onPin={togglePin}
           onClearPins={clearPins}
-          showVoting={showVoting}
         />
       )}
       {dataError
@@ -843,7 +842,6 @@ function AppContent({
                 onNarrowChange={setNarrowQuery}
                 liveSearch={liveSearch}
                 onNarrowSearch={() => {}}
-                showVoting={showVoting}
                 showAds={showAds}
                 adFrequency={adFrequency}
                 onClear={handleClearResults}
