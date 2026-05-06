@@ -918,6 +918,7 @@ function AppContent({
                     onStar={toggleStar}
                     onArchive={toggleArchive}
                     showVoting={showVoting}
+                    showPrioritySort={showVoting}
                     countRef={resultsCountRef}
                     pinnedIds={pinnedIds}
                     onPin={togglePin}
