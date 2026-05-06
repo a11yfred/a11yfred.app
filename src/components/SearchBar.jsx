@@ -18,7 +18,7 @@ const TYPEWRITER_PHRASES = [
 ]
 const CYCLE_MS = 2500
 
-export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showVoting, hasPins, narrowMode = false }) {
+export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false }) {
   const { navigate } = useRouter()
   const t = useT()
   const inputRef = useRef(null)
@@ -107,7 +107,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {' '}
           {t('search.hint_platform', { platform: platformLabel })}
           {aiEnabled && providerName ? ` ${t('search.hint_ai', { provider: providerName })}` : ''}
-          {showVoting ? ` ${t('search.hint_ranking')}` : ''}
+          {showRanking ? ` ${t('search.hint_ranking')}` : ''}
           {hasPins ? ` ${t('search.hint_pin')}` : ''}
           {' '}
           {t('search.hint_syntax')}
