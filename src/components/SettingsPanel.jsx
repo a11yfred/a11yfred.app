@@ -111,13 +111,10 @@ export default function SettingsPanel({
   const settingsPanelRef = useRef(null)
   const [errors, setErrors] = useState({})
 
-  const [keys, setKeys] = useState(() => {
-    const saved = {}
-    PROVIDERS.forEach(p => {
-      saved[p.id] = localStorage.getItem(`apikey_${p.id}`) || ''
-    })
-    return saved
-  })
+  const [keys, setKeys] = useState(() =>
+    // Electron: keys live in safeStorage, loaded async in the useEffect below
+    Object.fromEntries(PROVIDERS.map(p => [p.id, window.electronAPI ? '' : localStorage.getItem(`apikey_${p.id}`) || '']))
+  )
   const [activeProvider, setActiveProvider] = useState(
     () => localStorage.getItem('ai_provider') || 'anthropic'
   )
@@ -128,13 +125,9 @@ export default function SettingsPanel({
   const [pendingLanguage, setPendingLanguage] = useState('')
   const [savedLanguage, setSavedLanguage] = useState(language)
   const [changedLanguage, setChangedLanguage] = useState(false)
-  const [savedKeys, setSavedKeys] = useState(() => {
-    const saved = {}
-    PROVIDERS.forEach(p => {
-      saved[p.id] = localStorage.getItem(`apikey_${p.id}`) || ''
-    })
-    return saved
-  })
+  const [savedKeys, setSavedKeys] = useState(() =>
+    Object.fromEntries(PROVIDERS.map(p => [p.id, window.electronAPI ? '' : localStorage.getItem(`apikey_${p.id}`) || '']))
+  )
   const [savedProvider, setSavedProvider] = useState(
     () => localStorage.getItem('ai_provider') || 'anthropic'
   )
@@ -164,6 +157,17 @@ export default function SettingsPanel({
     agenticMode !== savedAgenticMode ||
     (pendingLanguage !== '' && pendingLanguage !== savedLanguage)
   const didMountLang = useRef(false)
+
+  // In Electron, load API keys from safeStorage after mount
+  useEffect(() => {
+    if (!window.electronAPI) return
+    Promise.all(PROVIDERS.map(async p => [p.id, (await window.electronAPI.keys.get(`apikey_${p.id}`)) || '']))
+      .then(entries => {
+        const loaded = Object.fromEntries(entries)
+        setKeys(loaded)
+        setSavedKeys(loaded)
+      })
+  }, [])
 
   // Sync when language prop changes externally (e.g. Reset All)
   useEffect(() => {
@@ -207,10 +211,12 @@ export default function SettingsPanel({
     setErrors({})
     onUnlock?.()
     PROVIDERS.forEach(p => {
-      if (keys[p.id]) {
-        localStorage.setItem(`apikey_${p.id}`, keys[p.id])
+      if (window.electronAPI) {
+        if (keys[p.id]) window.electronAPI.keys.set(`apikey_${p.id}`, keys[p.id])
+        else window.electronAPI.keys.delete(`apikey_${p.id}`)
       } else {
-        localStorage.removeItem(`apikey_${p.id}`)
+        if (keys[p.id]) localStorage.setItem(`apikey_${p.id}`, keys[p.id])
+        else localStorage.removeItem(`apikey_${p.id}`)
       }
     })
     localStorage.setItem('ai_provider', activeProvider)

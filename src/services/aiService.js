@@ -113,7 +113,9 @@ Remediation: [rewritten remediation]`
 
 export async function getAiRefinement({ finding, descText, remText, note }) {
   const provider = localStorage.getItem('ai_provider') || 'anthropic'
-  const key = localStorage.getItem(`apikey_${provider}`)
+  const key = window.electronAPI
+    ? await window.electronAPI.keys.get(`apikey_${provider}`)
+    : localStorage.getItem(`apikey_${provider}`)
 
   if (!key) {
     throw new Error(`No API key found for ${provider}. Add one in Settings.`)
