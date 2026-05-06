@@ -1423,7 +1423,7 @@ select:disabled {
 }
 
 .pinned-section__header--with-sort {
-  margin-inline-end: calc(28px + var(--space-2));
+  margin-inline-end: calc(44px + var(--space-2));
 }
 
 .pinned-unpin-all-btn {
