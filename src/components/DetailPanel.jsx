@@ -545,17 +545,26 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             }
           >
             {refining
-              ? <span className="detail-revising-text">
-                  <Loader2 size={12} strokeWidth={2} className="detail-revising-spinner" aria-hidden="true" />
-                  {' '}{t('detail.rewriting_text')}
-                </span>
-              : aiEnabled
-                ? <span className="detail-revise-label" aria-hidden="true">
-                    <Sparkles size={12} strokeWidth={2} className="detail-revise-icon" />
-                    {' '}Save & Revise Selected
+              ? <>
+                  <span className="btn-icon">
+                    <Loader2 size={12} strokeWidth={2} className="detail-revising-spinner" aria-hidden="true" />
                   </span>
+                  <span>{t('detail.rewriting_text')}</span>
+                </>
+              : aiEnabled
+                ? <>
+                    <span className="btn-icon">
+                      <Sparkles size={12} strokeWidth={2} className="detail-revise-icon" aria-hidden="true" />
+                    </span>
+                    <span>Save & Revise Selected</span>
+                  </>
                 : noteSaved
-                  ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.saved_note_text')}</>
+                  ? <>
+                      <span className="btn-icon">
+                        <Check size={14} aria-hidden="true" />
+                      </span>
+                      <span>{t('detail.saved_note_text')}</span>
+                    </>
                   : t('detail.save_note_text')}
           </button>
         </div>
