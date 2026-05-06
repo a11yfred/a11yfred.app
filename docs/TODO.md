@@ -17,6 +17,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 **Completed in recent session (May 6, 2026):**
 
 - [x] **Code cleanup and dead code removal** `[code]` ,  Removed unused _onSelect parameter, unused skipBtnRefs ref. Extracted 3 magic timeout values (80ms, 400ms, 5000ms) to named constants. All linters passing.
+- [x] **UI library decoupling and panel unification** `[code]` `[refactor]` ,  Removed app-specific logic from portable UI components (BackButton, DataError, NoResults, Field, InputWithClear, SourceLinks). Created unified Panel component wrapping PanelShell for HelpPanel, AboutPanel, SettingsPanel. Consolidated duplicate CSS. All imports of i18n/announce/router removed from ui/ folder. PR #20 merged to main.
 
 **Identified for future work (lower priority):**
 
