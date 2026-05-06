@@ -66,6 +66,15 @@ button {
   transition: background-color var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
 }
 
+.btn span {
+  display: inline;
+}
+
+.btn svg {
+  display: inline;
+  flex-shrink: 0;
+}
+
 /* ─── Focus ───────────────────────────────────────────────── */
 
 /* Keyboard focus ring — 3:1 min contrast against all surfaces.
