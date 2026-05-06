@@ -2,6 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
+import react from 'eslint-plugin-react'
 
 export default [
   js.configs.recommended,
@@ -9,6 +10,7 @@ export default [
   {
     files: ['**/*.{js,jsx}'],
     plugins: {
+      react,
       'react-hooks': reactHooks,
       'jsx-a11y': jsxA11y,
     },
@@ -22,6 +24,9 @@ export default [
       },
     },
     rules: {
+      // React
+      ...react.configs.recommended.rules,
+
       // Hooks
       ...reactHooks.configs.recommended.rules,
 
@@ -33,6 +38,11 @@ export default [
 
       // Allow _-prefixed parameters in stubs and intentionally unused args
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
   },
 
