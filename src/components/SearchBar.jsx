@@ -18,7 +18,7 @@ const TYPEWRITER_PHRASES = [
 ]
 const CYCLE_MS = 2500
 
-export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showVoting, hasPins, narrowMode = false, narrowQuery = '', onNarrowChange, onNarrowToggle, resultsCount = null }) {
+export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showVoting, hasPins, narrowMode = false }) {
   const { navigate } = useRouter()
   const t = useT()
   const inputRef = useRef(null)
@@ -32,12 +32,6 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
     return () => clearInterval(id)
   }, [prefersReducedMotion, query.length])
 
-  useEffect(() => {
-    if (narrowMode) {
-      inputRef.current?.focus()
-    }
-  }, [narrowMode])
-
   const handlePhraseClick = (phrase) => {
     onChange(phrase.text)
     inputRef.current?.focus()
@@ -48,24 +42,8 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
 
   const inputLabel = t('search.label')
   const clearAriaLabel = t('search.clear_aria')
-  const handleClear = () => {
-    if (narrowMode) {
-      onNarrowChange('')
-    } else {
-      onChange('')
-    }
-    inputRef.current?.focus()
-  }
-  const handleInput = (value) => {
-    if (narrowMode) {
-      onNarrowChange(value)
-    } else {
-      onChange(value)
-    }
-  }
   const handleKeyDownInner = (e) => {
     if (e.key === 'Enter') {
-      if (narrowMode) return
       onSearch()
     }
   }
@@ -111,7 +89,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           inputRef={inputRef}
           disabled={narrowMode}
         />
-        {!liveSearch && !narrowMode && (
+        {!liveSearch && (
           <button
             onClick={onSearch}
             disabled={query.length < 2}
