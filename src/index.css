@@ -134,8 +134,9 @@ select:focus-visible {
   min-width: var(--touch-target);
   min-height: var(--touch-target);
   padding: var(--space-1) var(--space-3);
-  background: var(--accent);
-  color: var(--accent-bg);
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent-text);
   border-radius: var(--radius);
   font-weight: 600;
   font-size: var(--fs-body);
@@ -145,11 +146,14 @@ select:focus-visible {
   justify-content: center;
   gap: var(--space-1);
   transform: translateY(calc(-100% - var(--space-4)));
-  transition: transform var(--duration-fast);
+  transition: transform var(--duration-fast), background var(--transition-btn), color var(--transition-btn), border-color var(--transition-btn);
 }
 
 .skip-link:focus-visible {
   transform: translateY(0);
+  background: var(--accent-text);
+  color: var(--accent-bg);
+  border-color: var(--accent-text);
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
 }
@@ -1423,6 +1427,9 @@ select:disabled {
 .result-card-wrap .skip-link:focus-visible {
   opacity: 1;
   pointer-events: auto;
+  background: var(--accent-text);
+  color: var(--accent-bg);
+  border-color: var(--accent-text);
 }
 
 /* Detail copy buttons — icon-only with state change */
