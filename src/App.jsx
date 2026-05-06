@@ -808,7 +808,6 @@ function AppContent({
           pinnedIds={pinnedIds}
           onPin={togglePin}
           onClearPins={clearPins}
-          showVoting={showVoting}
         />
       )}
       {dataError
@@ -843,7 +842,6 @@ function AppContent({
                 onNarrowChange={setNarrowQuery}
                 liveSearch={liveSearch}
                 onNarrowSearch={() => {}}
-                showVoting={showVoting}
                 showAds={showAds}
                 adFrequency={adFrequency}
                 onClear={handleClearResults}
