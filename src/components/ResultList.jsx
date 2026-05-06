@@ -49,10 +49,9 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRa
   )
 }
 
-export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
+export default function ResultList({ results, selected, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
   const t = useT()
   const itemRefs = useRef({})
-  const skipBtnRefs = useRef({})
   const focusNextRef = useRef(null)
   const countHeadingRef = useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
@@ -422,7 +421,6 @@ export default function ResultList({ results, selected, _onSelect, query, rating
 
               {showRankingSort && (
                 <button
-                  ref={el => { skipBtnRefs.current[finding.id] = el }}
                   type="button"
                   tabIndex={archived ? -1 : undefined}
                   onClick={handleSkipToNext}

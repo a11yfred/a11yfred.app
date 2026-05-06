@@ -11,6 +11,9 @@ export const CYCLE_MS = 2500
 export const SORT_DEBOUNCE_MS = 100
 export const SEARCH_DEBOUNCE_MS = 150
 export const AI_REFINEMENT_TIMEOUT = 5000
+export const RESULTS_COUNT_FOCUS_DELAY = 80
+export const VIEW_ALL_LOADING_DELAY = 400
+export const ANIMATION_COMPLETE_DELAY = 5000
 
 export const PRIORITY_ORDER = ['Critical', 'Major', 'Best Practice']
 export const VERSION_ORDER = ['Added', 'Updated', 'Fixed', 'Removed']
