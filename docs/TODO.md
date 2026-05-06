@@ -54,8 +54,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` ,  Add section in SettingsPanel for pending contributions with approve/reject/export.
 - [ ] **Reset All excludes personal overrides and contributions** `[ux]` `[privacy]` `[design]` ,  Separate overrides/contributions from Reset All, require explicit user action to clear.
 
-### Search & Results
-
 ### Export & Sharing
 
 - [ ] **Export findings** `[ux]` ,  Multi-select UI, report generation (Markdown/plain text), test formatting.
@@ -70,10 +68,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 ### Design & Polish
 
 - [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` ,  Audit layout consistency, empty states, keyboard nav, spacing.
-
----
-
-## Accessibility (A11Y)
 
 ---
 
