@@ -4,6 +4,33 @@ All notable changes to A11yTextHelper are documented here.
 
 ## [Unreleased]
 
+### UI Library Complete Decoupling and Panel Unification
+
+**UI Component Library Portability Refactor:**
+
+All 6 core UI components in `src/components/ui/` are now completely decoupled from app-specific dependencies:
+
+- **BackButton.jsx** — Replaced `useDir()` router hook with `dir` prop (default: 'ltr')
+- **DataError.jsx** — Removed `useT` import. Added props: `ariaLabel`, `heading`, `body`, `retryLabel`. Added `onMount` callback instead of internal announce.
+- **NoResults.jsx** — Removed `useT` import. Added props: `ariaLabel`, `heading`, `body`. Added `onMount` callback.
+- **Field.jsx** — Removed `useT` import. All button labels and ARIA strings now passed as props.
+- **InputWithClear.jsx** — Added `clearIcon` prop for injection (default: '↺'). Made `clearAriaLabel` required.
+- **SourceLinks.jsx** — Removed `useT` import. Added `singleHeading` and `multipleHeading` props.
+- **PanelShell.jsx** — Added `dir` prop for RTL support.
+
+**New Panel Component:**
+
+Created `src/components/ui/Panel.jsx` — unifies panel pattern across HelpPanel, AboutPanel, SettingsPanel, DetailPanel. Wraps PanelShell + `useFocusOnMount` + `usePageTitle` hooks. Props: `heading`, `onClose`, `closeAriaLabel`, `className`, `pageTitle`, `dir`, `children`.
+
+**CSS Consolidation:**
+
+- Merged `.help-header`, `.about-header`, `.settings-header` into `.panel-header`
+- Merged `.help-title`, `.about-title`, `.settings-title` into `.panel-title`
+- Removed ~40 lines of duplicate CSS
+- Added backward-compatible aliases
+
+**Result:** `src/components/ui/` is now a clean, reusable component library with zero app-specific imports. All business logic moved to parent components. Panel pattern unified across 4 panel components.
+
 ### ESL-Friendly and Plain Language Content Updates
 
 - **Simplified About panel text** to be more direct and accessible to non-native speakers

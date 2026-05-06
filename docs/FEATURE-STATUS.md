@@ -28,7 +28,8 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Animations & Transitions | ✅ | 100 | 1 |
 | Responsive Design | ✅ | 100 | 1 |
 | Party Mode | ✅ | 100 | 1 |
-| UI Component Library (consolidated) | ✅ | 100 | 1 |
+| UI Component Library (portable) | ✅ | 100 | 1 |
+| Panel Component Unification | ✅ | 100 | 1 |
 | AI Assist (single-shot) | 🟡 | 85 | 2 |
 | AI Agent (agentic mode) | 🔧 | 40 | 2 |
 | User Findings (custom) | 🔧 | 30 | 2 |
@@ -50,7 +51,11 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 1 ,  Complete
 
-Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with clean variant/active patterns. All hardcoded CSS values tokenized. All linters passing (ESLint 9.x with jsx-a11y compatibility, Stylelint, Markdownlint). UI component library extracted to `feature/ui-library` branch ,  clean, portable, zero dead code, ready for npm publishing. All unused code removed; zero unused imports across entire codebase. ESLint 9.x toolchain finalized with React 18 JSX transform support and outdated rules disabled. Ready for Phase 2 backend completion and Phase 3 public launch.
+Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with clean variant/active patterns. All hardcoded CSS values tokenized. All linters passing (ESLint 9.x with jsx-a11y compatibility, Stylelint, Markdownlint).
+
+**UI component library fully portable:** `src/components/ui/` folder contains 14 reusable primitives (Button, IconButton, Toggle, RadioChip, Select, InputWithClear, Badge, Field, PanelShell, BackButton, Panel, Modal, Announcer, ScLink) with zero app-specific dependencies. All strings and callbacks passed as props. Panel component unifies 4 panel patterns (Help, About, Settings, Detail). Extracted to `feature/ui-library` branch, clean and ready for npm publishing.
+
+All unused code removed; zero unused imports across entire codebase. ESLint 9.x toolchain finalized with React 18 JSX transform support and outdated rules disabled. Ready for Phase 2 backend completion and Phase 3 public launch.
 
 ---
 
