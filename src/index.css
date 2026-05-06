@@ -68,10 +68,10 @@ button {
 
 .btn span {
   display: inline;
+  white-space: nowrap;
 }
 
 .btn svg {
-  display: inline;
   flex-shrink: 0;
 }
 
@@ -2489,6 +2489,7 @@ input[type="radio"].settings-checkbox:checked {
   padding: 0 var(--space-4);
   font-size: var(--fs-body);
   border-radius: var(--radius);
+  white-space: nowrap;
 }
 
 .settings-footer-row {
