@@ -12,12 +12,12 @@ import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
 
-export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin, onClearPins }) {
+export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins }) {
   const t = useT()
   if (!findings.length) return null
   return (
     <div className="pinned-section pinned-results">
-      <div className={`pinned-section__header${showVoting ? ' pinned-section__header--with-sort' : ''}`}>
+      <div className={`pinned-section__header${showRanking ? ' pinned-section__header--with-sort' : ''}`}>
         <h2 className="pinned-section__heading">
           {t('results.pinned_heading')}
           <span className="pinned-section__count">{findings.length}</span>
@@ -38,18 +38,18 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRa
         onRankDown={onRankDown}
         onStar={onStar}
         onArchive={onArchive}
-        showVoting={showVoting}
+        showRanking={showRanking}
         pinnedIds={pinnedIds}
         onPin={onPin}
         hideCount
-        showPrioritySort={showVoting}
+        showRankingSort={showRanking}
         hasPinnedItems={false}
       />
     </div>
   )
 }
 
-export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showPrioritySort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
+export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
   const t = useT()
   const itemRefs = useRef({})
   const skipBtnRefs = useRef({})
@@ -185,7 +185,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             </Button>
           )}
         </div>
-        {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
+        {showRanking && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
         <div className="results-actions-row">
           {results.length > 0 && onNarrow && (
             <Button
@@ -384,7 +384,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                   </span>
                   <span className="result-item__badges">
                     <Badge
-                      variant="priority"
+                      variant="severity"
                       bg={archived ? undefined : p.bg}
                       color={archived ? undefined : p.color}
                       prefix={finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
@@ -420,7 +420,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                 <div className="result-item__desc">{finding.desc}</div>
               </a>
 
-              {showPrioritySort && (
+              {showRankingSort && (
                 <button
                   ref={el => { skipBtnRefs.current[finding.id] = el }}
                   type="button"
@@ -435,7 +435,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
               )}
               </div>
 
-              {showVoting && <div className="result-vote-col">
+              {showRanking && <div className="result-vote-col">
                 <IconButton
                   variant="tertiary"
                   label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}

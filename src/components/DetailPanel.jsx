@@ -320,7 +320,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         </div>
         <div className="detail-badges">
           <Badge
-            variant="priority"
+            variant="severity"
             bg={p.bg}
             color={p.color}
             prefix={finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}

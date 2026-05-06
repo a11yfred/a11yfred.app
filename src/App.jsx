@@ -779,7 +779,7 @@ function AppContent({
         platform={platform}
         aiEnabled={aiEnabled}
         providerName={providerName}
-        showVoting={showVoting}
+        showRanking={showVoting}
         hasPins={pinnedIds.size > 0}
         narrowMode={narrowMode}
         narrowQuery={narrowQuery}
@@ -803,7 +803,7 @@ function AppContent({
           onRankDown={rankDown}
           onStar={toggleStar}
           onArchive={toggleArchive}
-          showVoting={showVoting}
+          showRanking={showVoting}
           pinnedIds={pinnedIds}
           onPin={togglePin}
           onClearPins={clearPins}
@@ -826,7 +826,7 @@ function AppContent({
                 onRankDown={rankDown}
                 onStar={toggleStar}
                 onArchive={toggleArchive}
-                showVoting={showVoting}
+                showRanking={showVoting}
                 onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                 pinnedIds={pinnedIds}
                 onPin={togglePin}
@@ -881,7 +881,7 @@ function AppContent({
                     onRankDown={rankDown}
                     onStar={toggleStar}
                     onArchive={toggleArchive}
-                    showVoting={showVoting}
+                    showRanking={showVoting}
                     onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                     pinnedIds={pinnedIds}
                     onPin={togglePin}
@@ -916,8 +916,8 @@ function AppContent({
                     onRankDown={rankDown}
                     onStar={toggleStar}
                     onArchive={toggleArchive}
-                    showVoting={showVoting}
-                    showPrioritySort={showVoting}
+                    showRanking={showVoting}
+                    showRankingSort={showVoting}
                     countRef={resultsCountRef}
                     pinnedIds={pinnedIds}
                     onPin={togglePin}
