@@ -36,6 +36,7 @@ git push origin main
 When the library is mature:
 
 1. **Create separate repo:**
+
    ```bash
    mkdir a11y-ui-library && cd a11y-ui-library
    git init
@@ -44,12 +45,14 @@ When the library is mature:
    ```
 
 2. **Extract from subtree:**
+
    ```bash
    git subtree split --prefix=src/components/ui/ --branch=extracted-lib
    git push ../a11y-ui-library extracted-lib:main
    ```
 
 3. **Add to a11ytexthelper as npm package:**
+
    ```bash
    npm install ../a11y-ui-library
    ```
@@ -85,6 +88,7 @@ git diff main feature/ui-library -- src/components/ui/ src/plugins/ src/tokens.c
 - **feature/ui-library** — Reusable component library (can be extracted independently)
 
 Both should stay in sync for most changes. Divergences happen when:
+
 - Library gets improvements that should go to npm
 - App-specific code stays on main only
 - Tokens/styles are updated (synced to both)
