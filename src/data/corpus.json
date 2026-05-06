@@ -602,7 +602,7 @@
       "voiceover"
     ],
     "desc": "The page has no h1 heading. WCAG does not require an h1, but including one is strongly recommended — it names the page topic and is the most predictable entry point when screen reader users navigate by heading.",
-    "rem": "Add a single h1 to each page that names the main topic or page title. All other section headings should use h2–h6 in descending order below it. Multiple h1s on a single page should be avoided.",
+    "rem": "Add a single h1 to each page that names the main topic or page title. All other section headings should use h2 through h6 in descending order below it. Multiple h1s on a single page should be avoided.",
     "links": [
       {
         "text": "TPGi: When do headings fail WCAG?",
@@ -3601,7 +3601,7 @@
       "visual heading"
     ],
     "desc": "Text looks like a heading (large, bold, or visually distinct). However, it is not marked up as a heading in code. Screen reader users cannot navigate by heading or tell the text is important. Assistive technology cannot accurately describe the page structure.",
-    "rem": "Replace the styled element with the appropriate heading element (h1–h6). The heading level should reflect the document outline — not the visual size. Use CSS to control appearance separately from semantic level. Confirm the heading fits logically into the existing heading hierarchy on the page.",
+    "rem": "Replace the styled element with the appropriate heading element (h1 through h6). The heading level should reflect the document outline, not the visual size. Use CSS to control appearance separately from semantic level. Confirm the heading fits logically into the existing heading hierarchy on the page.",
     "sources": [
       {
         "name": "ATH",
