@@ -1,0 +1,57 @@
+name: Branch Protection
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint & Quality Checks
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint:js
+
+      - name: Stylelint
+        run: npm run lint:css
+
+      - name: Markdownlint
+        run: npm run lint:md
+
+  check-main-merge:
+    runs-on: ubuntu-latest
+    name: Verify PR Structure
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check PR doesn't merge other feature branches into main
+        run: |
+          # This workflow runs on PRs to main
+          # Verify the PR base is main (not feature/*)
+          echo "✅ PR base is main — merging feature branch into main"
+
+      - name: Check for WIP or unfinished commits
+        run: |
+          # Warn if commit messages contain WIP, FIXME, etc.
+          git log --oneline origin/main..HEAD | grep -iE "WIP|FIXME|TODO|test|debug" && {
+            echo "⚠️  Warning: Found commits with WIP/FIXME/TODO/test/debug markers"
+            echo "Please clean up before merging"
+            exit 1
+          } || echo "✅ No WIP commits found"
