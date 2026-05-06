@@ -1123,7 +1123,7 @@ input.results-narrow-input {
   padding: var(--space-3) var(--space-4);
   font-size: var(--fs-sub);
   line-height: 1.5;
-  background: var(--bg-subtle);
+  background: #fafafa;
   border: 1px solid var(--border-control);
   border-radius: var(--radius);
   color: var(--text);
@@ -1855,7 +1855,7 @@ input.search-input {
   padding: var(--space-3) var(--space-4);
   font-size: var(--fs-sub);
   line-height: 1.5;
-  background: var(--bg-subtle);
+  background: #fafafa;
   border: 1px solid var(--border-control);
   border-radius: var(--radius);
   color: var(--text);
@@ -1874,9 +1874,10 @@ input.search-input:focus {
 }
 
 input.search-input--disabled {
-  background-color: var(--bg-disabled, var(--bg-subtle));
-  opacity: 0.6;
+  background-color: #f0f0f0;
+  opacity: 1;
   cursor: not-allowed;
+  color: #999;
 }
 
 .search-clear-btn {
