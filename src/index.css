@@ -1279,6 +1279,12 @@ select:disabled {
   text-decoration: none;
 }
 
+@media (width >= 768px) {
+  .result-item {
+    min-height: 120px;
+  }
+}
+
 /* Archived row: dim everything except the restore button */
 .result-row--archived .result-card-wrap {
   cursor: not-allowed;
