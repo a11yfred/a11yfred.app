@@ -66,11 +66,6 @@ button {
   transition: background-color var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
 }
 
-.btn span {
-  display: inline;
-  white-space: nowrap;
-}
-
 .btn svg {
   flex-shrink: 0;
 }
@@ -2480,6 +2475,7 @@ input[type="radio"].settings-checkbox:checked {
 
 .settings-save-btn {
   display: inline-flex;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   gap: var(--space-3);
@@ -2489,7 +2485,6 @@ input[type="radio"].settings-checkbox:checked {
   padding: 0 var(--space-4);
   font-size: var(--fs-body);
   border-radius: var(--radius);
-  white-space: nowrap;
 }
 
 .settings-footer-row {
