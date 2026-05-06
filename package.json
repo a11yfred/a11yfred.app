@@ -15,8 +15,7 @@
     "build:extension": "vite build --config vite.extension.config.js",
     "build:extension:firefox": "vite build --config vite.firefox.config.js",
     "electron:dev": "NODE_ENV=development concurrently \"vite\" \"electron electron/main.js\"",
-    "electron:build": "vite build && electron-builder --config electron/electron-builder.json",
-    "build:extension": "vite build --config vite.extension.config.js"
+    "electron:build": "vite build && electron-builder --config electron/electron-builder.json"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
