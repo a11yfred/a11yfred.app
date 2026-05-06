@@ -52,13 +52,15 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ### Phase 1 — Complete (May 6, 2026)
 
-- 20 features shipped and stable; SEO enabled; UI component library consolidated
+- 20 features shipped and stable; SEO enabled; UI component library consolidated and portable
 - ✅ Core search, result list, detail panel, ratings, pinned findings
 - ✅ Full corpus (133 entries), all linters passing, responsive design
 - ✅ Session persistence, debug tools, animations, Party Mode
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
-- ✅ UI component library (100% — 2 base button components + 14 primitives consolidated: Toggle, RadioChip, Select, Button, IconButton, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer, Drawer, BottomSheet)
-- ✅ CSS tokenization — all outline offsets and widths use design tokens
+- ✅ UI component library (100% — 2 base button components + 14 primitives consolidated: Toggle, RadioChip, Select, Button, IconButton, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer, Drawer, BottomSheet). Cleaned for portability and ready for npm publishing via feature/ui-library branch
+- ✅ CSS tokenization — all outline offsets, widths, spacing, and motion values use design tokens
+- ✅ Button consolidation — 70+ usages collapsed from 5 component types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with variant/active patterns
+- ✅ Zero dead code — all unused code removed, all imports verified
 - 🟡 Internationalization (80% — 50+ locales, ~60 keys pending translation)
 - Remaining for public launch: Ko-fi donations, GitHub badges, production domain
 
@@ -81,7 +83,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 1 — Complete
 
-Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton). All hardcoded CSS values tokenized. All linters passing (ESLint, Stylelint, Markdownlint). Ready for Phase 2 backend completion and Phase 3 public launch.
+Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with clean variant/active patterns. All hardcoded CSS values tokenized. All linters passing (ESLint, Stylelint, Markdownlint). UI component library extracted to `feature/ui-library` branch — clean, portable, zero dead code, ready for npm publishing. All unused code removed; zero unused imports across entire codebase. Ready for Phase 2 backend completion and Phase 3 public launch.
 
 ---
 

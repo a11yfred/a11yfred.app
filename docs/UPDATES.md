@@ -4,6 +4,42 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 6, 2026 — UI library branch cleanup and main branch maintenance
+
+### UI Component Library Branch Cleanup
+
+The `feature/ui-library` branch is now a clean, portable, reusable component library ready for future npm publishing:
+
+- **Removed deprecated components** — StateButton.jsx and IconStateButton.jsx deleted (replaced by Button + activeIcon pattern)
+- **Removed debug plugin** — deleted `src/plugins/debug/` entirely (app-specific development tools)
+- **Removed app-specific exports** — cleaned `src/components/ui/index.js` to export only core components: Toggle, RadioChip, Select, Button, IconButton, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer
+- **Updated library documentation** — README now reflects 11 core components instead of 13
+- **All linting passes** — ESLint, Stylelint, Markdownlint zero errors on library branch
+- **Ready for sync** — library branch can be pushed to origin and synced bidirectionally with main via git merge pattern
+
+### Main Branch Status
+
+Main branch remains clean with a fully working application:
+
+- All 70+ button usages consolidated into Button and IconButton components
+- All CSS values tokenized where applicable (outline offsets, focus rings, spacing, motion)
+- All documentation current (README, FEATURE-STATUS.md, TODO.md, CHANGELOG.md, UPDATES.md, plugin READMEs)
+- All linters passing — zero errors
+- Zero unused imports, dead code removed in prior sessions
+- Full test coverage via axe-core, keyboard navigation, screen reader testing
+
+### Maintenance Completed
+
+Ran a comprehensive maintenance pass:
+
+- Reviewed all CSS for hardcoded values (most are intentional: resets, base values, layout anchors)
+- Confirmed no unused imports or dead code
+- Updated feature status: Phase 1 marked complete (May 6, 2026), Button consolidation logged
+- Verified plugin READMEs are current (announce, router, debug plugins all documented)
+- All 3 distribution branches (chrome-extension, firefox-extension, electron-app) remain on feature branches with latest main merged in
+
+---
+
 ## May 6, 2026 — Button component consolidation, icon states, and CSS tokenization
 
 ### Button component library consolidation
