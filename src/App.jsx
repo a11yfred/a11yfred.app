@@ -828,6 +828,7 @@ function AppContent({
                 onStar={toggleStar}
                 onArchive={toggleArchive}
                 showRanking={showVoting}
+                showRankingSort={showVoting}
                 onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                 pinnedIds={pinnedIds}
                 onPin={togglePin}
@@ -883,6 +884,7 @@ function AppContent({
                     onStar={toggleStar}
                     onArchive={toggleArchive}
                     showRanking={showVoting}
+                    showRankingSort={showVoting}
                     onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                     pinnedIds={pinnedIds}
                     onPin={togglePin}
