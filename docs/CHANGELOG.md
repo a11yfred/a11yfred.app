@@ -4,6 +4,17 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-06 (continued)
+
+### Button icon placement and markup standardization
+
+- Refactor StateButton to use `.btn-icon` container for icon centering
+- Change save button from `icon={null}` to `icon={<Save />}` for consistent state button pattern
+- Add `display: inline` to `.settings-save-btn` for proper icon/text alignment
+- Add SVG styling rules (flex-shrink, line-height, vertical-align) for cross-browser consistency
+- Restructure detail-revise-btn to use `.btn-icon` markup pattern
+- Separate button icons from text spans in all button types
+
 ## 2026-05-06
 
 ### CSS system refactor and token consolidation

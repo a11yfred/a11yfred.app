@@ -4,6 +4,32 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 6, 2026 — Button icon placement and markup standardization
+
+### Button styling and layout fixes
+
+**StateButton and icon container refactoring:**
+
+- Fixed button icon alignment issues caused by inconsistent markup patterns
+- StateButton now wraps icons in `.btn-icon` container for consistent flex layout
+- Added `.btn-icon { display: inline-flex, align-items: center, justify-content: center, width: 1.5em, height: 1.5em, flex-shrink: 0 }`
+- Added `.btn svg { flex-shrink: 0, line-height: 1, vertical-align: middle }` to prevent SVG sizing issues
+
+**Save button specific fixes:**
+
+- Changed save button from `icon={null}` to `icon={<Save />}` to match pattern of other state buttons (unpin, unstar, unarchive)
+- Added `display: inline` to `.settings-save-btn` for proper text alignment with icon
+- Removed `min-width` and `flex-wrap` workarounds
+- Icon transitions smoothly from save to check on state change
+
+**Detail revise button restructuring:**
+
+- Refactored detail-revise-btn to use `.btn-icon` markup pattern
+- Separated icons from text spans (icon in `.btn-icon` container, text in separate `<span>`)
+- Applies to all button states: refining (Loader icon), AI mode (Sparkles icon), success (Check icon)
+
+---
+
 ## May 6, 2026 — Full CSS and content refactor
 
 ### CSS system refactor and token consolidation
