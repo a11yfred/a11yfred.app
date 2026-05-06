@@ -48,39 +48,6 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Summary by Phase
-
-### Phase 1 ,  Complete (May 6, 2026)
-
-- 20 features shipped and stable; SEO enabled; UI component library consolidated and portable
-- ✅ Core search, result list, detail panel, ratings, pinned results
-- ✅ Full corpus (133 entries), all linters passing, responsive design
-- ✅ Session persistence, debug tools, animations, Party Mode
-- ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
-- ✅ UI component library (100% ,  2 base button components + 12 core primitives: Toggle, RadioChip, Select, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer, Drawer, BottomSheet; deprecated StateButton and IconStateButton removed). Cleaned for portability and ready for npm publishing via feature/ui-library branch
-- ✅ CSS tokenization ,  all outline offsets, widths, spacing, and motion values use design tokens
-- ✅ Button consolidation ,  70+ usages collapsed from 5 component types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with variant/active patterns
-- ✅ Zero dead code ,  all unused code removed, all imports verified
-- 🟡 Internationalization (80% ,  50+ locales, ~60 keys pending translation)
-- Remaining for public launch: Ko-fi donations, GitHub badges, production domain
-
-### Phase 2 ,  In Progress
-
-- 10 features in development, 4 features complete
-- ✅ Complete: Frequent findings, narrow results mode, how-to-use/onboarding, PWA/offline
-- 🟡 Partial: AI Assist (85%), Ko-fi integration (50%)
-- 🔧 Backend only: AI Agent (40%), user findings (30%), multilingual edit (40%), import (20%)
-- 🔲 Not started: Advanced search syntax (0%)
-
-### Phase 3 ,  Planned
-
-- 5 features stubbed or not started
-- 💤 Stubbed: Authentication (10%), Cloud Sync (5%), Analytics (20%)
-- ✅ Ad tiles infrastructure complete (live delivery Phase 3+)
-- 🟡 Extensions: Chrome (60%), Firefox (60%), Electron (80%)
-
----
-
 ## Phase 1 ,  Complete
 
 Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with clean variant/active patterns. All hardcoded CSS values tokenized. All linters passing (ESLint 9.x with jsx-a11y compatibility, Stylelint, Markdownlint). UI component library extracted to `feature/ui-library` branch ,  clean, portable, zero dead code, ready for npm publishing. All unused code removed; zero unused imports across entire codebase. ESLint 9.x toolchain finalized with React 18 JSX transform support and outdated rules disabled. Ready for Phase 2 backend completion and Phase 3 public launch.

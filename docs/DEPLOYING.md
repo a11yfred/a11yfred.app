@@ -55,29 +55,15 @@ Unpause in the Netlify dashboard. Next push will trigger a build.
 
 ---
 
-## Vercel
+## Other Targets
 
-**Config file:** `vercel.json`
+### Vercel
 
-Vercel works with private repos on the free Hobby plan.
+**Config file:** `vercel.json` | Auto-detects Vite, handles SPA fallback and security headers. Enable via [vercel.com](https://vercel.com); disable in dashboard under Project settings. Only one target should be active at a time.
 
-### To enable
+### GitHub Pages
 
-1. Go to [vercel.com](https://vercel.com) and import the repository.
-2. Vercel auto-detects Vite, no framework preset changes needed.
-3. The `vercel.json` in this repo handles the SPA fallback and security headers.
-4. Disable Netlify (see above) so both are not deploying on the same push.
-
-### To disable
-
-In the Vercel dashboard: **Project settings → Git → Disconnect** or pause deployments.
-There is no code-only way to skip Vercel builds (unlike Netlify's `ignore` command).
-
----
-
-## GitHub Pages
-
-**Config file:** `.github/workflows/deploy-pages.yml`
+**Config file:** `.github/workflows/deploy-pages.yml` | Configured but currently unused. Can be enabled if needed for static hosting.
 
 Currently set to **manual trigger only**, it will not run on push until you opt in.
 Requires the repository to be **public** (GitHub free plan restriction).
