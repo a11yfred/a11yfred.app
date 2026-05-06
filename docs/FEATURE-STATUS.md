@@ -6,46 +6,84 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Summary
+## Phase 1: Complete
 
-| Feature | Status | % | Phase |
-| --- | --- | --- | --- |
-| Chrome Extension | 🟡 | 60 | 2 |
-| Firefox Extension | 🟡 | 60 | 2 |
-| Electron Desktop | 🟡 | 80 | 2 |
-| Core Search | ✅ | 95 | 1 |
-| Result List | ✅ | 100 | 1 |
-| Detail Panel | ✅ | 95 | 1 |
-| Ratings (Rank / Star / Archive) | ✅ | 100 | 1 |
-| Pinned Results | ✅ | 100 | 1 |
-| Settings Panel | ✅ | 90 | 1 |
-| Session Persistence | ✅ | 100 | 1 |
-| Debug Tools | ✅ | 100 | 1 |
-| Internationalization | 🟡 | 80 | 1 |
-| Corpus / Finding Data | ✅ | 100 | 1 |
-| Corpus Quality Standards | ✅ | 100 | 1 |
-| Platform Variant Display | ✅ | 100 | 1 |
-| Animations & Transitions | ✅ | 100 | 1 |
-| Responsive Design | ✅ | 100 | 1 |
-| Party Mode | ✅ | 100 | 1 |
-| UI Component Library (portable) | ✅ | 100 | 1 |
-| Panel Component Unification | ✅ | 100 | 1 |
-| AI Assist (single-shot) | 🟡 | 85 | 2 |
-| AI Agent (agentic mode) | 🔧 | 40 | 2 |
-| User Findings (custom) | 🔧 | 30 | 2 |
-| Multilingual Edit Flow | 🔧 | 40 | 2 |
-| Export Findings | 🔧 | 10 | 2 |
-| Frequent Findings (implicit signal) | ✅ | 100 | 2 |
-| Narrow Results Mode | ✅ | 100 | 2 |
-| Advanced Search Syntax | 🔲 | 0 | 2 |
-| How To Use / Onboarding | ✅ | 100 | 2 |
-| Ko-fi Integration | 🟡 | 50 | 2 |
-| Import / Custom Data Source | 🔧 | 20 | 2 |
-| Authentication | 💤 | 10 | 3 |
-| Cloud Sync | 💤 | 5 | 3 |
-| PWA / Offline | ✅ | 100 | 2 |
-| Analytics (Umami) | 💤 | 20 | 3 |
-| Ad Tiles | ✅ | 100% (infra) | 3 |
+| Feature | Status | % |
+| --- | --- | --- |
+| Result List | ✅ | 100 |
+| Ratings (Rank / Star / Archive) | ✅ | 100 |
+| Pinned Results | ✅ | 100 |
+| Session Persistence | ✅ | 100 |
+| Debug Tools | ✅ | 100 |
+| Corpus / Finding Data | ✅ | 100 |
+| Corpus Quality Standards | ✅ | 100 |
+| Platform Variant Display | ✅ | 100 |
+| Animations & Transitions | ✅ | 100 |
+| Responsive Design | ✅ | 100 |
+| Party Mode | ✅ | 100 |
+| UI Component Library (portable) | ✅ | 100 |
+| Panel Component Unification | ✅ | 100 |
+| Core Search | ✅ | 95 |
+| Detail Panel | ✅ | 95 |
+| Settings Panel | ✅ | 90 |
+| Internationalization | 🟡 | 80 |
+
+## Phase 2: In Progress
+
+**Complete (8):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Frequent Findings (implicit signal) | ✅ | 100 |
+| Narrow Results Mode | ✅ | 100 |
+| How To Use / Onboarding | ✅ | 100 |
+| PWA / Offline | ✅ | 100 |
+
+**Partial (3):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| AI Assist (single-shot) | 🟡 | 85 |
+| Ko-fi Integration | 🟡 | 50 |
+| AI Agent (Match Existing Style) | 🔧 | 65 |
+
+**Backend Only (3):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Multilingual Edit Flow | 🔧 | 40 |
+| User Findings (custom) | 🔧 | 30 |
+| Import / Custom Data Source | 🔧 | 20 |
+
+**Not Started (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Advanced Search Syntax | 🔲 | 0 |
+
+**Distribution Targets:**
+
+| Target | Status | % |
+| --- | --- | --- |
+| Electron Desktop | 🟡 | 80 |
+| Chrome Extension | 🟡 | 60 |
+| Firefox Extension | 🟡 | 60 |
+
+## Phase 3: Planned
+
+**Complete (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Ad Tiles (infrastructure) | ✅ | 100 |
+
+**Stubbed (3):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Authentication | 💤 | 10 |
+| Analytics (Umami) | 💤 | 20 |
+| Cloud Sync | 💤 | 5 |
 
 ---
 
