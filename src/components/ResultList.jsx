@@ -231,8 +231,8 @@ export default function ResultList({ results, selected, _onSelect, query, rating
               placeholder={narrowResults ? t('search.narrow_placeholder', { count: results.length }) : 'Filter results…'}
               clearAriaLabel={t('search.clear_aria')}
               wrapClassName="results-narrow-input-wrap"
-              inputClassName="results-narrow-input"
-              clearButtonClassName="btn--primary results-narrow-clear-btn"
+              inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
+              clearButtonClassName="results-narrow-clear-btn"
             />
           </div>
         )}

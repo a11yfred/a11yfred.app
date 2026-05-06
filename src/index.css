@@ -1099,41 +1099,62 @@ select:disabled {
 }
 
 .results-narrow-input-section {
-  margin-top: var(--space-2);
+  margin-top: var(--space-3);
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: var(--space-2);
 }
 
 .results-narrow-label {
-  font-size: var(--fs-body);
+  font-size: var(--fs-sub);
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text);
+  margin-bottom: var(--space-1);
 }
 
 .results-narrow-input-wrap {
-  display: flex;
-  gap: var(--space-1);
-  align-items: center;
+  position: relative;
 }
 
-.results-narrow-input {
-  font-size: var(--fs-body);
-  padding: var(--space-1) var(--space-1-5);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  background-color: var(--bg-input);
-  color: var(--text-primary);
+input.results-narrow-input {
   width: 100%;
+  min-height: 3rem;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-sub);
+  line-height: 1.5;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius);
+  color: var(--text);
+  transition: border-color var(--duration-fast);
+  box-sizing: border-box;
+  margin-bottom: 0;
 }
 
-.results-narrow-input:focus-visible {
-  outline: 2px solid var(--focus-color);
-  outline-offset: 2px;
+input.results-narrow-input--has-value {
+  padding-right: 2.5rem;
+}
+
+input.results-narrow-input:focus {
+  border-color: var(--focus);
 }
 
 .results-narrow-clear-btn {
-  flex-shrink: 0;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
 }
 
 .results-vote-hint {
@@ -1847,6 +1868,12 @@ input.search-input--has-value {
 
 input.search-input:focus {
   border-color: var(--focus);
+}
+
+input.search-input--disabled {
+  background-color: var(--bg-disabled, var(--bg-subtle));
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .search-clear-btn {

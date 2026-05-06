@@ -46,13 +46,8 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
   const platformLabel = platform === 'web' ? t('settings.platform_web') : t('settings.platform_native')
   const currentPhrase = TYPEWRITER_PHRASES[phraseIdx]
 
-  const currentInput = narrowMode ? narrowQuery : query
-  const currentInputLength = currentInput.length
-  const inputLabel = narrowMode ? t('search.narrowing_results') : t('search.label')
-  const inputPlaceholder = narrowMode && resultsCount
-    ? t('search.narrow_placeholder', { count: resultsCount })
-    : (narrowMode ? 'Filter results…' : t('search.placeholder'))
-  const clearAriaLabel = narrowMode ? t('search.narrow_clear_aria') : t('search.clear_aria')
+  const inputLabel = t('search.label')
+  const clearAriaLabel = t('search.clear_aria')
   const handleClear = () => {
     if (narrowMode) {
       onNarrowChange('')
@@ -81,7 +76,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
         <label htmlFor="finding-search" className="search-label">
           {inputLabel}
         </label>
-        {currentInputLength === 0 && !narrowMode && !prefersReducedMotion && (
+        {query.length === 0 && !narrowMode && !prefersReducedMotion && (
           <span className="search-typewriter">
             {t('search.typewriter_try')}{' '}
             <button
@@ -98,35 +93,34 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           </span>
         )}
       </div>
-      {!narrowMode && (
-        <div className="search-row">
-          <InputWithClear
-            id="finding-search"
-            type="text"
-            value={query}
-            onChange={onChange}
-            onKeyDown={handleKeyDownInner}
-            onClear={() => onChange('')}
-            placeholder={t('search.placeholder')}
-            autoComplete="off"
-            spellCheck={false}
-            clearAriaLabel={clearAriaLabel}
-            wrapClassName="search-input-wrap"
-            inputClassName={`search-input${query.length ? ' search-input--has-value' : ''}`}
-            clearButtonClassName="btn--primary search-clear-btn"
-            inputRef={inputRef}
-          />
-          {!liveSearch && (
-            <button
-              onClick={onSearch}
-              disabled={query.length < 2}
-              className="btn--primary search-submit-btn"
-            >
-              {t('search.button')}
-            </button>
-          )}
-        </div>
-      )}
+      <div className="search-row">
+        <InputWithClear
+          id="finding-search"
+          type="text"
+          value={query}
+          onChange={onChange}
+          onKeyDown={handleKeyDownInner}
+          onClear={() => onChange('')}
+          placeholder={t('search.placeholder')}
+          autoComplete="off"
+          spellCheck={false}
+          clearAriaLabel={clearAriaLabel}
+          wrapClassName="search-input-wrap"
+          inputClassName={`search-input${query.length ? ' search-input--has-value' : ''}${narrowMode ? ' search-input--disabled' : ''}`}
+          clearButtonClassName="btn--primary search-clear-btn"
+          inputRef={inputRef}
+          disabled={narrowMode}
+        />
+        {!liveSearch && !narrowMode && (
+          <button
+            onClick={onSearch}
+            disabled={query.length < 2}
+            className="btn--primary search-submit-btn"
+          >
+            {t('search.button')}
+          </button>
+        )}
+      </div>
       {currentInputLength === 0 && !narrowMode && (
         <p className="search-hint">
           {liveSearch ? t('search.hint_live') : t('search.hint_submit')}
