@@ -2744,6 +2744,10 @@ input[type="radio"].settings-checkbox:checked {
   background: var(--accent);
 }
 
+[data-theme="dark"] .toggle__check {
+  background: var(--accent-text);
+}
+
 .toggle:hover:has(.toggle__input:checked) .toggle__check {
   background: var(--accent-text);
 }
@@ -2764,6 +2768,10 @@ input[type="radio"].settings-checkbox:checked {
   border-radius: 50%;
   border: var(--border-width-control) solid var(--border-control);
   background: transparent;
+}
+
+[data-theme="dark"] .toggle__ring {
+  border-color: var(--text-muted);
 }
 
 .toggle:hover:not(:has(.toggle__input:checked)) .toggle__ring {
