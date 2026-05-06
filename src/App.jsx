@@ -834,6 +834,7 @@ function AppContent({
                 narrowQuery={narrowQuery}
                 narrowResults={narrowedResults}
                 onNarrow={() => setNarrowMode(true)}
+                onNarrowChange={setNarrowQuery}
                 showPrioritySort={true}
                 showAds={showAds}
                 adFrequency={adFrequency}
@@ -882,6 +883,7 @@ function AppContent({
                     narrowQuery={narrowQuery}
                     narrowResults={narrowedResults}
                     onNarrow={() => setNarrowMode(true)}
+                    onNarrowChange={setNarrowQuery}
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}

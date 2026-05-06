@@ -98,43 +98,35 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           </span>
         )}
       </div>
-      <div className="search-row">
-        <InputWithClear
-          id="finding-search"
-          type="text"
-          value={currentInput}
-          onChange={handleInput}
-          onKeyDown={handleKeyDownInner}
-          onClear={handleClear}
-          placeholder={inputPlaceholder}
-          autoComplete="off"
-          spellCheck={false}
-          clearAriaLabel={narrowMode ? t('search.narrow_clear_and_reset_aria') : clearAriaLabel}
-          wrapClassName="search-input-wrap"
-          inputClassName={`search-input${currentInputLength ? ' search-input--has-value' : ''}`}
-          clearButtonClassName="btn--primary search-clear-btn"
-          inputRef={inputRef}
-        />
-        {!liveSearch && !narrowMode && (
-          <button
-            onClick={onSearch}
-            disabled={query.length < 2}
-            className="btn--primary search-submit-btn"
-          >
-            {t('search.button')}
-          </button>
-        )}
-        {narrowMode && onNarrowToggle && (
-          <button
-            onClick={onNarrowToggle}
-            aria-label={t('search.exit_narrow_aria')}
-            title={t('search.exit_narrow_aria')}
-            className="btn--icon search-exit-narrow-btn"
-          >
-            <X size={20} aria-hidden="true" />
-          </button>
-        )}
-      </div>
+      {!narrowMode && (
+        <div className="search-row">
+          <InputWithClear
+            id="finding-search"
+            type="text"
+            value={query}
+            onChange={onChange}
+            onKeyDown={handleKeyDownInner}
+            onClear={() => onChange('')}
+            placeholder={t('search.placeholder')}
+            autoComplete="off"
+            spellCheck={false}
+            clearAriaLabel={clearAriaLabel}
+            wrapClassName="search-input-wrap"
+            inputClassName={`search-input${query.length ? ' search-input--has-value' : ''}`}
+            clearButtonClassName="btn--primary search-clear-btn"
+            inputRef={inputRef}
+          />
+          {!liveSearch && (
+            <button
+              onClick={onSearch}
+              disabled={query.length < 2}
+              className="btn--primary search-submit-btn"
+            >
+              {t('search.button')}
+            </button>
+          )}
+        </div>
+      )}
       {currentInputLength === 0 && !narrowMode && (
         <p className="search-hint">
           {liveSearch ? t('search.hint_live') : t('search.hint_submit')}

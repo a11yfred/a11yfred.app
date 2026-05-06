@@ -1,10 +1,11 @@
-import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ChevronDown, ChevronUp } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ChevronDown, ChevronUp, X } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 import StateButton from './ui/StateButton.jsx'
 import Badge from './ui/Badge.jsx'
+import InputWithClear from './ui/InputWithClear.jsx'
 import NoResults from './ui/NoResults.jsx'
 import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
@@ -45,7 +46,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
   )
 }
 
-export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, showPrioritySort = false, showAds = false, adFrequency = 8, onClear }) {
+export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowChange, showPrioritySort = false, showAds = false, adFrequency = 8, onClear }) {
   const t = useT()
   const itemRefs = useRef({})
   const skipBtnRefs = useRef({})
@@ -183,15 +184,24 @@ export default function ResultList({ results, selected, _onSelect, query, rating
         </div>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
         <div className="results-actions-row">
-          {!narrowMode && results.length > 0 && onNarrow && (
+          {results.length > 0 && onNarrow && (
             <button
               type="button"
               className="btn--secondary results-narrow-btn"
-              title={t('results.narrow_title')}
+              title={narrowMode ? t('search.exit_narrow_aria') : t('results.narrow_title')}
               onClick={onNarrow}
             >
-              <Filter size={16} aria-hidden="true" />
-              <span>{t('results.narrow_results')}</span>
+              {narrowMode ? (
+                <>
+                  <X size={16} aria-hidden="true" />
+                  <span>{narrowResults ? `${narrowResults.length} Narrow Results` : 'Narrow Results'}</span>
+                </>
+              ) : (
+                <>
+                  <Filter size={16} aria-hidden="true" />
+                  <span>{t('results.narrow_results')}</span>
+                </>
+              )}
             </button>
           )}
           {query && results.length > 0 && onClear && (
@@ -206,6 +216,26 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             </button>
           )}
         </div>
+
+        {narrowMode && onNarrowChange && (
+          <div className="results-narrow-input-section">
+            <label htmlFor="narrow-filter" className="results-narrow-label">
+              {t('search.narrowing_results')}
+            </label>
+            <InputWithClear
+              id="narrow-filter"
+              type="text"
+              value={narrowQuery}
+              onChange={onNarrowChange}
+              onClear={() => onNarrowChange('')}
+              placeholder={narrowResults ? t('search.narrow_placeholder', { count: results.length }) : 'Filter results…'}
+              clearAriaLabel={t('search.clear_aria')}
+              wrapClassName="results-narrow-input-wrap"
+              inputClassName="results-narrow-input"
+              clearButtonClassName="btn--primary results-narrow-clear-btn"
+            />
+          </div>
+        )}
       </div>}
 
       <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>

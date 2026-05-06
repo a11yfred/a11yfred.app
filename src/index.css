@@ -1098,6 +1098,44 @@ select:disabled {
   margin-inline-start: auto;
 }
 
+.results-narrow-input-section {
+  margin-top: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.results-narrow-label {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.results-narrow-input-wrap {
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+}
+
+.results-narrow-input {
+  font-size: var(--fs-body);
+  padding: var(--space-1) var(--space-1-5);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  width: 100%;
+}
+
+.results-narrow-input:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+.results-narrow-clear-btn {
+  flex-shrink: 0;
+}
+
 .results-vote-hint {
   font-size: var(--fs-body);
   color: var(--text-muted);
