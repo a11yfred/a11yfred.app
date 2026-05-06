@@ -6,7 +6,9 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Phase 1: Complete
+## Phase 1: Complete (17/17 features)
+
+**Status:** All Phase 1 features shipped and stable. 107-entry public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All linters passing. UI component library fully portable with 14 primitives, zero app-specific dependencies.
 
 | Feature | Status | % |
 | --- | --- | --- |
@@ -39,13 +41,24 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | How To Use / Onboarding | ✅ | 100 |
 | PWA / Offline | ✅ | 100 |
 
-**Partial (3):**
+**Partial (2):**
 
 | Feature | Status | % |
 | --- | --- | --- |
 | AI Assist (single-shot) | 🟡 | 85 |
-| Ko-fi Integration | 🟡 | 50 |
 | AI Agent (Match Existing Style) | 🔧 | 65 |
+
+**Deferred (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Ko-fi Integration | 💤 | 50 |
+
+**Complete (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Advanced Search Syntax | ✅ | 100 |
 
 **Backend Only (3):**
 
@@ -54,12 +67,6 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Multilingual Edit Flow | 🔧 | 40 |
 | User Findings (custom) | 🔧 | 30 |
 | Import / Custom Data Source | 🔧 | 20 |
-
-**Not Started (1):**
-
-| Feature | Status | % |
-| --- | --- | --- |
-| Advanced Search Syntax | 🔲 | 0 |
 
 **Distribution Targets:**
 
@@ -87,17 +94,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Phase 1 ,  Complete
-
-Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with clean variant/active patterns. All hardcoded CSS values tokenized. All linters passing (ESLint 9.x with jsx-a11y compatibility, Stylelint, Markdownlint).
-
-**UI component library fully portable:** `src/components/ui/` folder contains 14 reusable primitives (Button, IconButton, Toggle, RadioChip, Select, InputWithClear, Badge, Field, PanelShell, BackButton, Panel, Modal, Announcer, ScLink) with zero app-specific dependencies. All strings and callbacks passed as props. Panel component unifies 4 panel patterns (Help, About, Settings, Detail). Extracted to `feature/ui-library` branch, clean and ready for npm publishing.
-
-All unused code removed; zero unused imports across entire codebase. ESLint 9.x toolchain finalized with React 18 JSX transform support and outdated rules disabled. Ready for Phase 2 backend completion and Phase 3 public launch.
-
----
-
-## Phase 1 Feature Details ,  Shipped
+## Phase 1 Feature Details
 
 ### Core Search ,  95%
 
@@ -109,7 +106,7 @@ Done:
 
 Missing:
 
-- Advanced query syntax (boolean `+term/-term` operators; see TODO)
+- (None; advanced query syntax with boolean `+term/-term` operators is complete)
 
 ---
 
@@ -275,8 +272,8 @@ Missing:
 
 Done:
 
-- 89 public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
-- Platform classification: 47 web-only, 68 web & mobile (both), 3 iOS, 3 Android, 3 other platform variants
+- 107 public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
+- Platform classification across web-only, web & mobile, iOS, Android, and other variants
 - All entries 100% sourced with minimum 2 expert sources each
 - Sources deep-linked where available (e.g., Roselli's "Where to Put Focus When Opening a Modal Dialog")
 - 10-expert consensus: Adrian Roselli, Scott O'Hara, Eric Bailey, Marco Zehe, Scott Vinkle, Kat Holmes, Eric Eggert, Karl Groves, Steve Faulkner, Patrick H. Lauke
