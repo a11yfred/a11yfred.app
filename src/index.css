@@ -2146,7 +2146,7 @@ input.search-input--disabled {
 
 /* ─── Settings panel ──────────────────────────────────────── */
 
-.settings-header {
+.panel-header {
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -2154,16 +2154,49 @@ input.search-input--disabled {
 }
 
 @media (width < 768px) {
-  .settings-header {
+  .panel-header {
     gap: var(--space-1);
   }
 
-  .settings-header .btn--icon {
+  .panel-header .btn--icon {
     margin-inline-start: calc(var(--space-2) * -1);
   }
 }
 
-.settings-title {
+.panel-title {
+  font-size: var(--fs-h1);
+  line-height: 1em;
+  font-weight: 700;
+  color: var(--text);
+  outline: none;
+}
+
+.settings-header,
+.about-header,
+.help-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+@media (width < 768px) {
+  .settings-header,
+  .about-header,
+  .help-header {
+    gap: var(--space-1);
+  }
+
+  .settings-header .btn--icon,
+  .about-header .btn--icon,
+  .help-header .btn--icon {
+    margin-inline-start: calc(var(--space-2) * -1);
+  }
+}
+
+.settings-title,
+.about-title,
+.help-title {
   font-size: var(--fs-h1);
   line-height: 1em;
   font-weight: 700;
@@ -3574,31 +3607,6 @@ input[type="radio"].settings-checkbox:checked {
   flex-direction: column;
 }
 
-.about-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-6);
-}
-
-@media (width < 768px) {
-  .about-header {
-    gap: var(--space-1);
-  }
-
-  .about-header .btn--icon {
-    margin-inline-start: calc(var(--space-2) * -1);
-  }
-}
-
-.about-title {
-  font-size: var(--fs-h1);
-  line-height: 1em;
-  font-weight: 700;
-  color: var(--text);
-  outline: none;
-}
-
 .about-section {
   display: flex;
   flex-direction: column;
@@ -3743,31 +3751,6 @@ input[type="radio"].settings-checkbox:checked {
 .help-panel {
   display: flex;
   flex-direction: column;
-}
-
-.help-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-6);
-}
-
-@media (width < 768px) {
-  .help-header {
-    gap: var(--space-1);
-  }
-
-  .help-header .btn--icon {
-    margin-inline-start: calc(var(--space-2) * -1);
-  }
-}
-
-.help-title {
-  font-size: var(--fs-h1);
-  line-height: 1em;
-  font-weight: 700;
-  color: var(--text);
-  outline: none;
 }
 
 .help-section {

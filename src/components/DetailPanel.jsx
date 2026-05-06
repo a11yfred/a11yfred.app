@@ -580,7 +580,11 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       </div>
 
       <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} />
-      <SourceLinks links={finding.links} />
+      <SourceLinks
+        links={finding.links}
+        singleHeading={t('detail.source_heading')}
+        multipleHeading={t('detail.sources_heading')}
+      />
 
       <div className="detail-actions-end">
         <button

@@ -1,9 +1,11 @@
 import { ExternalLink } from 'lucide-react'
-import { useT } from '../../i18n/index.jsx'
 import LinkTitle from './LinkTitle.jsx'
 
-export default function SourceLinks({ links }) {
-  const t = useT()
+export default function SourceLinks({
+  links,
+  singleHeading = 'Source',
+  multipleHeading = 'Sources'
+}) {
   if (!links?.length) return null
 
   const isExternalLink = (url) => {
@@ -20,7 +22,7 @@ export default function SourceLinks({ links }) {
     <div className="detail-sources-section">
       {links.length === 1 ? (
         <p className="detail-sources detail-sources--single">
-          <span className="detail-sources__heading">{t('detail.source_heading')}</span>
+          <span className="detail-sources__heading">{singleHeading}</span>
           {links[0].url ? (
             <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
               <LinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
@@ -32,7 +34,7 @@ export default function SourceLinks({ links }) {
       ) : (
         <>
           <p className="detail-sources">
-            <span className="detail-sources__heading">{t('detail.sources_heading')}</span>
+            <span className="detail-sources__heading">{multipleHeading}</span>
           </p>
           <ul className="detail-sources__list">
             {links.map(link => (

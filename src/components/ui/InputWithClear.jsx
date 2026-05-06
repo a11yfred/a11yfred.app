@@ -6,10 +6,11 @@ export default function InputWithClear({
   value,
   onChange,
   onClear,
-  clearAriaLabel = 'Clear',
+  clearAriaLabel,
   wrapClassName = '',
   inputClassName = '',
   clearButtonClassName = '',
+  clearIcon = '↺',
   inputRef: externalRef,
   ...rest
 }) {
@@ -43,7 +44,7 @@ export default function InputWithClear({
           aria-label={clearAriaLabel}
           className={clearButtonClassName}
         >
-          ↺
+          {clearIcon}
         </button>
       )}
     </div>

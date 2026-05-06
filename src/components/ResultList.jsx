@@ -146,11 +146,23 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
   }, [handleKeyDown])
 
   if (results.length === 0) {
-    return <NoResults query={query} />
+    return <NoResults
+      query={query}
+      ariaLabel={t('results.no_results_aria')}
+      heading={t('results.no_results_heading', { query })}
+      body={t('results.no_results_body')}
+      onMount={() => announce(t('results.no_results_announce', { query }))}
+    />
   }
 
   if (narrowMode && narrowResults && narrowResults.length === 0) {
-    return <NoResults query={narrowQuery} />
+    return <NoResults
+      query={narrowQuery}
+      ariaLabel={t('results.no_results_aria')}
+      heading={t('results.no_results_heading', { query: narrowQuery })}
+      body={t('results.no_results_body')}
+      onMount={() => announce(t('results.no_results_announce', { query: narrowQuery }))}
+    />
   }
 
   return (
