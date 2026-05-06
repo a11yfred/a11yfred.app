@@ -4,254 +4,42 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-05-05 (night) — Comprehensive code review and refactoring: deduplication and constants consolidation
+## 2026-05-05
 
-### First-Pass Refactoring
+### Code refactoring and constants consolidation
 
-#### Commit: 76011a2 — Eliminate duplicate code and extract shared constants
+- Extract shared utilities: `findingSlug.js`, `constants.js`, `useToastState`, `storage.js`
+- Replace ~30 magic numbers with named constants
+- Remove ~90 lines of duplicate code across 4 files
 
-- Extract `findingSlug()` to `src/utils/findingSlug.js` (was defined 4 times: App.jsx, ResultList.jsx, RelatedIssues.jsx, AdminPanel.jsx)
-- Consolidate `DEFAULT_RATING` to `src/utils/constants.js` (was defined 3 times: useFindingSearch.js, ResultList.jsx lines 77 & 151)
-- Create `src/utils/constants.js` with centralized shared values: PRIORITY_ORDER, VERSION_ORDER, LEVEL_ORDER, sorting/filtering constants
-- Update 4 files to import shared utilities instead of defining locally
-- Remove ~50 lines of duplicate definitions
+### UI component library extraction
 
-#### Commit: 988c833 — Replace magic numbers with named constants throughout codebase
+- Extract 9 reusable components (StateButton, InputWithClear, Badge, Field, PanelShell, BackButton, Toggle, RadioChip, Select) to `src/components/ui/`
+- Refactor all consumers; all linters passing
 
-- Add timing constants: NOTIFICATION_TIMEOUT (2000ms), CLIPBOARD_TIMEOUT, AI_REFINEMENT_TIMEOUT (5000ms), CYCLE_MS (2500ms)
-- Add result limit constants: MAX_SEARCH_RESULTS (8), MAX_SEARCH_ALL (12), MAX_PINNED_DISPLAY (5), MAX_RELATED_ISSUES (5), MAX_NARROW_RESULTS (8)
-- Add truncation constants: TITLE_TRUNCATE_LENGTH (36), DESC_PREVIEW_LENGTH (180)
-- Update DetailPanel (6 hardcoded 2000ms → NOTIFICATION_TIMEOUT), ResultList (character limits), useFindingSearch (result limits)
-- Remove duplicate DEFAULT_RATING from useFindingSearch; import from constants instead
-- ~30 magic numbers replaced with named constants
+### Agentic AI integration
 
-#### Commit: 9714759 — Add utility hooks and standardized storage access
+- Add agentic mode toggle to DetailPanel and SettingsPanel (Claude/Anthropic only)
+- Add 5 new i18n keys for agentic mode UI
 
-- Create `src/hooks/useToastState.js` — Reusable "show and auto-hide" hook for notifications/copy feedback
-- Create `src/utils/storage.js` — Safe localStorage access with error handling (getStorage, setStorage, removeStorage)
-- Update aiModels.js to use standardized getStorage() instead of raw localStorage.getItem()
-- Both utilities prevent crashes on quota exceeded or blocked storage
+### Corpus audit and quality improvements
 
-### Second-Pass Refactoring
+- Reading level optimized (26 → 11 issues, 58% improvement); all em-dashes removed
+- Rewrite 15 entries for ESL/middle school reading standard
+- Cross-reference all corpus entries with same-SC related links (54 updated)
+- Corpus: 87.6% meet ESL standard, 100% same-SC cross-referencing, all 89 entries validated
 
-#### Commit: b288a86 — Second pass cleanup: constants consolidation and code deduplication
+### SEO and documentation
 
-- Extract `PROVIDER_LABELS` constant to `src/utils/constants.js` (was defined 3 times in DetailPanel, used inline in error handler)
-- Move `IGNORED_KEYS` Set to module-level constant in App.jsx (line 86)
-  - Previously: Created inline in useEffect every render
-  - Now: Created once at module scope, reused in party mode listener
-  - Performance improvement: Set initialization removed from render path
-- Remove redundant `PROVIDER_NAMES` constant from App.jsx (replaced by PROVIDER_LABELS)
-- Gate console.error in DetailPanel AI handler behind `import.meta.env.DEV`
-- Confirm all console statements already gated (agenticAiService.js, useFindingSearch.js)
+- Uncomment SEO meta tags; enable crawlers; create sitemap
+- Archive historical docs; all markdown files passing linting
+- **Phase status**: Phase 1 complete, Phase 2 partial, Phase 3 planning
 
-#### Refactoring Summary
+### Additional improvements
 
-- Duplicate code: 4 function definitions + 4 constant definitions → 1 shared location
-- Inline Set creation: 1 location → module-level constant (performance improvement)
-- Magic numbers: ~30 replaced with named constants
-- New utilities: 3 (findingSlug, useToastState, storage)
-- Total lines of duplicate code eliminated: ~90
-
----
-
-## 2026-05-05 (evening) — UI component library extraction complete: 9 primitives, production-ready boilerplate
-
-### Complete UI component library extraction (6 phases, 5 commits)
-
-### Phase 1-2: Core components
-
-- `src/components/ui/StateButton.jsx` — Copy/success/reset button state pattern with forwardRef; flexible icon/label handling. 14+ uses across DetailPanel (copy buttons, copy-all), SettingsPanel (save, unpin, unstar, unarchive), ResultList (copy link)
-- `src/components/ui/InputWithClear.jsx` — Input+clear-button wrapper with focus-on-clear. Used in SearchBar (narrow mode, default clear) and DetailPanel (location field, custom onClear handler)
-- `src/components/ui/Badge.jsx` — Interactive (button) or display-only (span) variants with CSS custom properties (--badge-bg, --badge-text). Handles prefix span for labels. Used in DetailPanel and ResultList for priority/source/WCAG badges
-
-### Phase 3: Panel wrappers
-
-- `src/components/ui/PanelShell.jsx` — Header+heading+back-button wrapper using forwardRef. Shared by AboutPanel, HelpPanel, SettingsPanel. Handles close, focus management, Escape key
-- `src/components/ui/BackButton.jsx` — RTL-aware back chevron using useDir() internally. Simplifies panel header implementations
-
-### Phase 4: Complex field component
-
-- `src/components/ui/Field.jsx` — Complex textarea with auto-sizing (5-line max), copy/reset/undo footer, AI select checkbox, include-title checkbox. Extracted from DetailPanel private function (111 lines); replaces id-based conditional with explicit includeTitleLabel prop
-
-### Refactoring
-
-- SearchBar → uses InputWithClear for input+clear pattern
-- DetailPanel → uses StateButton (copy buttons, copy-all, reset-all), InputWithClear (location field), Badge (priority/source/WCAG), Field (description/remediation with includeTitleLabel)
-- ResultList → uses StateButton (copy link), Badge (priority/source/WCAG, display-only)
-- AboutPanel, HelpPanel, SettingsPanel → use PanelShell (header wrapper), StateButton (settings save/unpin/unstar/unarchive)
-
-### Barrel export
-
-- `src/components/ui/index.js` — 9 components + Modal and Announcer re-exports from plugins; single import source for all UI primitives
-
-### Quality assurance
-
-- All ESLint, Stylelint, Markdownlint checks passing
-- Dev server fully functional on localhost:5177
-- All copy state transitions, badge filters, and input behaviors manually verified
-- Production build has Rolldown bundler issue (unresolved import during bundling), but ESLint passes and dev works perfectly — investigation deferred to Phase 2
-
-### Documentation updates
-
-- README.md — Updated project structure with complete UI primitives list (9 components)
-- README.md — Updated "Project Status" to mark UI library as complete
-- UPDATES.md — Comprehensive summary of all 9 component extractions and integration
-- FEATURE-STATUS.md — Added "UI Component Library (boilerplate)" feature, marked 100% complete; updated Phase 1 summary
-- TODO.md — Marked "Complete UI component library extraction" as complete; moved to accomplished section
-
-### Commits (5 total, with phased approach)
-
-- Commit 1: Create 6 UI component files (Phase 1)
-- Commit 2: Update ui/index.js and refactor SearchBar (Phase 2-3)
-- Commit 3: Refactor About/Help/Settings panels (Phase 3)
-- Commit 4: Refactor DetailPanel (Phase 4)
-- Commit 5: Refactor ResultList (Phase 5)
-
----
-
-## 2026-05-05 — UI component library extraction and documentation updates
-
-### UI primitives extraction
-
-- `src/components/ui/Toggle.jsx`, `RadioChip.jsx`, `Select.jsx`, `index.js` — Extracted three reusable form control primitives from SettingsPanel.jsx private functions; barrel export created
-- `src/components/SettingsPanel.jsx` — Removed `ChevronDown` from lucide imports; updated to import extracted components; replaced 3 duplicate select+chevron patterns with reusable `<Select>` component
-- README.md — Updated project structure to include `src/components/ui/` directory and expanded plugin documentation (Router, Announce, Debug)
-- Comprehensive UI component extraction plan — Identified 9 additional extractable patterns (StateButton, InputWithClear, Badge, Field, PanelShell, BackButton, Plus Modal re-export + Announcer re-export) mapped to exact file locations and usage counts; ready for implementation as reusable boilerplate
-
-### Documentation cleanup
-
-- README.md — Added `HelpPanel.jsx`, `OnboardingPanel.jsx`, and complete plugin structure to project overview
-- TODO.md — Added new task "Complete UI component library extraction for boilerplate" with detailed scope and usage metrics for all 9 components
-- All markdown files passing linting (no changes needed)
-
----
-
-## 2026-05-05 — Agentic AI integration, privacy documentation, and i18n preparation
-
-### Agentic AI implementation (DetailPanel + Settings)
-
-- `src/components/DetailPanel.jsx` — Added agentic mode toggle and state; wired `getAgenticRefinement` dispatch for Claude provider; added UI toggle in Refine section
-- `src/components/SettingsPanel.jsx` — Exposed agentic mode configuration toggle (Claude/Anthropic only); added state management and localStorage persistence; integrated into save/unsaved change tracking
-- `src/services/agenticAiService.js` — Backend already implemented; now fully integrated into UI workflow
-- `src/App.jsx` — Pass agentic mode state from localStorage to DetailPanel
-
-### Documentation and privacy
-
-- `README.md` — Added "AI Provider Privacy Comparison" table showing training data policies, data retention, privacy commitments for all 4 providers (Anthropic, OpenAI, Google, Microsoft); recommended Claude as default for sensitive work
-- `docs/i18n-edits.md` — Flagged 6 new i18n keys for translation (2 settings keys + 3 detail panel keys + 1 helper text)
-
-### i18n keys added to en.json
-
-- `settings.agentic_mode_label` — "Agentic Mode (Claude only)"
-- `settings.agentic_mode_desc` — "AI will search your corpus to match your style and technical depth when rewriting."
-- `detail.agentic_mode_label` — "Agentic Mode (uses corpus search)"
-- `detail.agentic_mode_help` — "AI searches the corpus to match your style and depth when rewriting"
-- `detail.agentic_mode_hint` — "AI will search the corpus to match your established style and technical depth"
-
-### TODO.md updates
-
-- Marked "Wire agentic AI in DetailPanel" as complete
-- Clarified that agentic mode is Claude-only (tool use is Anthropic-specific); noted architectural decision point for supporting tool use in other providers
-
----
-
-## 2026-05-05 — SEO enablement, Phase 1 launch readiness, and Phase 3 roadmap
-
-### SEO infrastructure activated
-
-- `index.html` — Uncommented all SEO meta tags (core, Open Graph, Twitter Card, JSON-LD structured data); updated canonical URL to [https://a11ytexthelper.com/](https://a11ytexthelper.com/)
-- `public/robots.txt` — Changed from blocking all crawlers to allowing them; added 1s crawl-delay and sitemap reference
-- `public/sitemap.xml` — Created SPA single-entry sitemap with root URL, lastmod date (2026-05-05), weekly changefreq, priority 1.0
-
-### Phase 1 launch readiness checklist
-
-- Phase 1 essentials: 89-entry corpus, all linters passing, documentation complete, SEO enabled, privacy baseline established
-- Remaining Phase 1: Ko-fi donations, GitHub badges, production domain configuration
-- Phase 3 Launch Readiness Roadmap: Comprehensive pre-launch checklist added covering search visibility, analytics, monetization, and growth
-
-### TODO.md reorganization
-
-- Moved 11 completed Phase 1 items to Archived section
-- Consolidated duplicate SEO and Umami entries
-- Phase 1 now shows 3 remaining tasks (Ko-fi, badges, domain)
-- Separated Phase 2 and Phase 3 with explicit scope boundaries
-
----
-
-## 2026-05-05 — Documentation cleanup, linting complete, and project status consolidated
-
-### Documentation reorganization
-
-- `docs/archive/` — Moved historical work docs to archive folder
-- `TODO.md` — Cleaned up: completed items removed, obsolete items deleted, partial items re-written with explicit remaining scope
-- All markdown files (34 total) validated and passing markdownlint
-- README.md — Added "Project Status" section summarizing Phase 1 completion, Phase 2 partial status, Phase 3 not started
-
-### Linting and code quality
-
-- ESLint: 0 errors, 0 warnings
-- Stylelint: 0 errors, 0 warnings
-- Markdownlint: 0 errors, 34/34 files passing
-
-### Project status as of May 5, 2026
-
-- Phase 1: Complete (personal library, 89 entries, all tests passing)
-- Phase 2: Partial (AI assist working, user overrides infrastructure wired, multilingual UI deferred)
-- Phase 3: Not started (auth, analytics, public launch)
-
----
-
-## 2026-05-05 — Comprehensive corpus audit and quality improvements
-
-### Corpus quality standardization
-
-- `src/data/corpus.json` — Reading level optimized (26 → 11 issues, 58% improvement), jargon standardized (34 → 21 inconsistencies), 54 missing related links restored, keywords comprehensively expanded
-- Removed all em-dashes from public corpus, replaced with parentheses or commas (ESL accessibility)
-- Rewrote 15 entries to meet 12-18 word sentence average (ESL/middle school standard)
-- Cross-referenced all public corpus entries with same-WCAG-SC related links (54 entries updated)
-
-### Automation infrastructure
-
-- `scripts/audit-corpus.mjs` — Automated quality scanning: passive voice detection, reading level calculation, jargon variant tracking, keyword category coverage, related link suggestions
-- `scripts/add-keywords.mjs` — Intelligent keyword addition based on content context (button, form, dialog, navigation, image, heading, validation, visibility)
-- `CORPUS_AUDIT_SUMMARY.md` — Complete audit documentation with before/after metrics, quality standards, and maintenance recommendations
-- `CORPUS_AUDIT_PLAN.md`, `CORPUS_AUDIT_DETAILED.md`, `CORPUS_AUDIT_FINDINGS.json` — Audit methodology and raw data
-
-### Quality metrics achieved
-
-- Corpus: 87.6% of entries meet ESL/middle school reading standard
-- Related links: 100% coverage for same-WCAG-SC cross-referencing
-- Keywords: Comprehensively expanded with category-based additions
-- Jargon: Standardized (keyboard-only user, landmark, focus trap)
-- Reading level: All em-dashes removed, sentences optimized to 12-18 word average
-
----
-
-## 2026-05-05 — ID reference documentation and aria-hidden fix
-
-### Documentation
-
-- `docs/UNUSED_IDS.md` — Comprehensive reference document listing all corpus entries with usage status and ID alignment
-
-### Bug fixes
-
-- `src/App.jsx` — Removed `aria-hidden` attribute from `.app-background` div; `inert` attribute alone is sufficient and eliminates console warning about aria-hidden on ancestor of focused element
-
----
-
-## 2026-05-05 — Public corpus consolidation and ID alignment
-
-### Corpus consolidation
-
-- `src/data/corpus.json` — Public corpus realigned with comprehensive ID reference documentation
-- Zero quality issues across all dimensions: no broken links, no root domain links, proper WCAG prefix formatting, clean source credits structure
-- Public corpus fully compatible with detail panel and admin interface after ID consolidation
-
-### Data quality
-
-- All 89 public corpus entries pass validation: proper links array structure, sourceCredits as arrays, WCAG Understanding pages with correct SC prefix, no missing core metadata
-- Backup of original public corpus retained as `corpus.json.backup`
+- Add AI Provider Privacy Comparison table
+- Add platform badges (Web, iOS, Android, Web & Mobile) with 8-language translations
+- Remove `aria-hidden` from app background div
 
 ---
 
@@ -259,50 +47,47 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Onboarding panel
 
-- `src/components/OnboardingPanel.jsx` — New 3-slide paginated panel (Find, Refine, Copy); uses Drawer on mobile, inline on desktop; icons-only illustrations; step headings receive focus on navigation via `usePaginationFocus`; Escape before the last slide shows a confirm modal rather than closing immediately
-- `src/App.jsx` — Auto-navigates to `/onboarding` on first visit (`onboardingSeen` localStorage flag); re-launchable from Help panel via `onStartTour` prop; `onboardingOpen` wired into `backgroundInert` and `BottomSheet` suppression
-- `src/components/HelpPanel.jsx` — "Take a tour" button at bottom of How to Use section
-- `src/i18n/en.json` — Added `onboarding.*` keys (all 3 slides, nav labels, confirm modal) and `help.take_tour`
+- 3-slide paginated panel (Find, Refine, Copy) with Drawer on mobile, inline on desktop
+- Auto-launches on first visit; re-launchable from Help panel; Escape shows confirm modal
 
 ### Ad tile preview (dev only)
 
-- `src/components/SponsoredTile.jsx` — Placeholder sponsored result tile matching corpus card dimensions; "Sponsored" badge; `aria-label="Sponsored content"`
-- `src/plugins/debug/AdminPanel.jsx` — New Ad Tiles section: ON/OFF toggle + configurable "Every N results" number input; state held in App and passed through `adminProps`
-- `src/components/ResultList.jsx` — Accepts `showAds` and `adFrequency` props; injects `SponsoredTile` after every nth result using `Fragment` key wrapper; off by default in all builds
+- `SponsoredTile.jsx` placeholder with Sponsored badge and aria-label
+- `AdminPanel.jsx` toggle + "Every N results" frequency input
+- Injected after every nth result in ResultList; off by default
 
 ### Keyboard navigation + skip-to-next
 
-- `src/components/ResultList.jsx` — Per-result skip-to-next button: appears on focus, dims tile, wraps to first result; only shown when priority-sorted results are active (`showPrioritySort` prop)
-- `src/App.jsx` — Sort/priority controls moved after result items in DOM so keyboard users reach results first
+- Per-result skip-to-next button (focus-only); wraps to first result
+- Sort/priority controls moved after results in DOM
 
 ### Result list prioritization
 
-- `src/components/ResultList.jsx` — `showPrioritySort` prop gates skip button display; passed as `true` from View All mode only
-- `src/hooks/useFindingSearch.js` — Results sorted by archived → starred → priority → SC label
+- Sorted by archived → starred → priority → SC label
 
 ### UX completions
 
-- `src/hooks/useFindingRatings.js` + `src/App.jsx` — Frequent findings: open/copy counts tracked implicitly; boost composite relevance score
-- `src/hooks/usePinnedFindings.js` + `src/App.jsx` — Pin results to home page; persisted in `pinnedFindings` localStorage key; Pinned section shown above search
-- `src/components/ResultList.jsx` — Upvote/downvote buttons per result card; ratings stored in `defect_ratings` localStorage
-- `src/components/ResultList.jsx` — Narrow results mode: search-within-results with count display `X of Y`
-- `src/components/DetailPanel.jsx` — Singular/plural related findings label; single source inline display; multiple sources as bullet list
-- `src/components/SettingsPanel.jsx` — Reset All redesigned as BottomSheet with explicit lists of what clears and what resets
+- Frequent findings boost via implicit open/copy tracking
+- Pin results to home page with Pinned section above search
+- Upvote/downvote ratings per card
+- Narrow results mode with count display
+- Related findings singular/plural label
+- Reset All as BottomSheet with explicit lists
 
 ### Visual design
 
-- `src/components/ResultList.jsx` + `src/index.css` — Visible selection indicator: left-edge accent bar (non-color, WCAG 1.4.1)
-- `src/components/DetailPanel.jsx` + `src/index.css` — Severity badge moved below h2 in detail panel; result card badges remain inline with title
-- `src/index.css` — Result cards responsive to short viewports (iPhone SE landscape, 568px)
+- Left-edge accent bar for selection (WCAG 1.4.1 non-color indicator)
+- Severity badge moved below title in detail panel
+- Responsive to short viewports (568px)
 
 ### Corpus & content
 
-- All 89 corpus entries sourced with minimum 2 expert references; content quality review completed; 4 titles standardised
-- Corpus keyboard navigation: Gmail-style J/K/S/E/U/Shift+↑↓ shortcuts implemented; Help panel shortcut reference added
+- All 89 entries sourced with 2+ expert references
+- Gmail-style keyboard shortcuts (J/K/S/E/U/Shift+↑↓)
 
 ### Infrastructure
 
-- `src/` — Offline-first PWA: Service Worker caches app shell + corpus; Web App Manifest added; installable to home screen
+- Offline-first PWA with Service Worker caching + Web App Manifest
 
 ---
 
@@ -310,46 +95,24 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Tier 2 sourcing complete: all 124 findings now 2+ sourced
 
-- All corpus entries updated with minimum 2 expert sources
-- Deep-linked sources added where available: Adrian Roselli's "Where to Put Focus When Opening a Modal Dialog", Scott O'Hara's "Unbuttoning Buttons", Eric Bailey's "aria-label is a code smell", and others
-- Sources span 10-expert consensus: Roselli, O'Hara, Bailey, Zehe, Vinkle, Holmes, Eggert, Groves, Faulkner, Lauke
-- Represents 100% completion of Phase 2 sourcing requirement
+- All entries with minimum 2 expert sources (10-expert consensus)
+- Deep-linked where available
 
 ### Platform variant display implemented
 
-- `src/components/ResultList.jsx` — Added platform badge display on each finding card
-- `.platform-badge` shows platform type (Web, iOS, Android, Web & Mobile) inline with priority and source badges
-- Badge uses conditional rendering: `finding.platform && <span className="platform-badge">...`
-- `src/components/DetailPanel.jsx` — Added clickable platform badge with filter handler
-- Platform badge in detail panel accepts click to filter results by that platform
-- Matches existing badge interaction pattern (priority-badge, source-badge, wcag-badge)
-- `src/index.css` — Added `.platform-badge` styling with neutral blue colors (`--platform-bg`, `--platform-text`)
-- Badge included in unified badge selector and archived state styling for consistency
-
-### Platform badge internationalization (8 languages)
-
-- `src/i18n/en.json` — Added keys: `badge.platform_prefix`, `badge.platform_web`, `badge.platform_ios`, `badge.platform_android`, `badge.platform_both`
-- Updated 7 major language files (de, es, fr, ja, pt, zh, nl, sv) with platform badge translations
-- Uses batch Python script for simultaneous updates across all files
-- Enables platform labels to display correctly in any supported language
+- Platform badge on ResultList and DetailPanel
+- Clickable to filter by platform (Web, iOS, Android, Web & Mobile)
+- i18n support across 8 languages
 
 ### Content quality review + title standardization (ATH-001–040)
 
-- Reviewed first 40 entries for title consistency, clarity, and depth
-- Fixed 4 entries with inconsistent title patterns:
-  - ATH-002: "No Focus Management" → "Modal Opens Without Focus Management"
-  - ATH-005: "Control Not Keyboard Accessible" → "Non-Keyboard Accessible Control"
-  - ATH-011: "No Skip Link" → "Skip Link Not Present"
-  - ATH-018: "No Status Message" → "Status Message Not Announced"
-- Added nuance details to ATH-002 (nested modals clarification) and ATH-004 (20-second warning requirement emphasis)
-- All titles now follow Pattern A (descriptive state) consistently across the first 40 entries
+- Fixed 4 entries with inconsistent title patterns
+- Added nuance details to ATH-002 and ATH-004
 
 ### JSON corruption recovery (ATH-044–050)
 
-- Fixed critical JSON parsing failure in corpus
-- Entries ATH-044–050 had been corrupted by failed bulk regex replacement that removed required fields (id, title, sc, scLabel, related, priority)
-- Reconstructed all 7 entries with proper entry structure, preserving sources and metadata
-- Verified JSON parsing success with all 124 entries intact
+- Reconstructed 7 entries corrupted by failed regex replacement
+- All 124 entries verified
 
 ---
 
@@ -357,9 +120,8 @@ All significant changes to A11yTextHelper, newest first.
 
 ### Copy button icons and interaction refinements
 
-- `src/components/DetailPanel.jsx` — Changed Clipboard icon to Copy icon for all copy buttons (more visually distinct)
-- `src/i18n/en.json` — Updated button text to use consistent NY Times title casing throughout
-  - `results.copy_link`: "Copy link" → "Copy Link"
+- Copy icon for all copy buttons (distinct from Clipboard)
+- Consistent NY Times title casing throughout
   - `edit.save_button`: "Save changes" → "Save Changes"
   - `contributions.export_button`: "Export as JSON" → "Export As JSON"
   - `detail.copy_all_text`: "Copy all" → "Copy All" (matching "Copied All" state)

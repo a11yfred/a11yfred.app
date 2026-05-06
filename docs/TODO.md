@@ -16,10 +16,10 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 **Identified for future work (lower priority):**
 
-- [ ] **Decompose App.jsx** `[code]` `[refactor]` — 1303 lines. Would benefit from extraction of theme manager, search manager, party mode handler into separate hooks
-- [ ] **Refactor SettingsPanel** `[code]` `[refactor]` — 734 lines with 16+ state variables. Would benefit from sub-component split: AiSettingsSection, SearchSettingsSection, LanguageSettingsSection, ResetDataSection
-- [ ] **Standardize locale/language naming** `[code]` `[i18n]` — Currently mixed usage of `locale` vs `language` parameter names across hooks. Standardize throughout codebase
-- [ ] **Add JSDoc to complex hooks** `[code]` — useFindingSearch.js and useContributionQueue.js would benefit from parameter and return type documentation
+- [ ] **Decompose App.jsx** `[code]` `[refactor]` — 1303 lines. Extract theme manager, search manager, party mode into hooks.
+- [ ] **Refactor SettingsPanel** `[code]` `[refactor]` — 734 lines, 16+ state variables. Split into AiSettingsSection, SearchSettingsSection, LanguageSettingsSection, ResetDataSection.
+- [ ] **Standardize locale/language naming** `[code]` `[i18n]` — Mixed usage across hooks; standardize throughout.
+- [ ] **Add JSDoc to complex hooks** `[code]` — useFindingSearch.js and useContributionQueue.js need parameter/return type docs.
 
 ---
 
@@ -27,9 +27,9 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 **Day 1 for Phase 1 public release** (ship with these):
 
-- [ ] **Ko-fi donations live** `[infra]` `[manual]` — Widget added to footer. **Remaining**: (1) create Ko-fi account if not done, (2) add Ko-fi username to footer link, (3) test widget loads and accepts donations
-- [ ] **GitHub README badges** `[docs]` `[manual]` — Add build status, license, version. **Remaining**: (1) add GitHub actions badge once CI is set up, (2) add license badge, (3) add Netlify deploy badge once live
-- [ ] **Production domain configured** `[infra]` `[manual]` — Current: a11ytexthelper.com placeholder. **Remaining**: (1) confirm final domain, (2) configure DNS records, (3) enable HTTPS/SSL on hosting provider, (4) update canonical URL if domain differs from a11ytexthelper.com
+- [ ] **Ko-fi donations live** `[infra]` `[manual]` — Create account, add username to footer, test widget.
+- [ ] **GitHub README badges** `[docs]` `[manual]` — Add build status, license, version, Netlify deploy badges.
+- [ ] **Production domain configured** `[infra]` `[manual]` — Confirm domain, configure DNS, enable HTTPS, update canonical URL.
 
 ---
 
@@ -40,25 +40,25 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 - [x] **Wire agentic AI in DetailPanel** `[agent]` `[ai]` `[ux]` — Backend fully wired: (1) toggle added in Refine section of DetailPanel, (2) mode toggle exposed in Settings under AI Assist (Claude only), (3) agentic refinement uses searchCorpus tool via getAgenticRefinement; i18n keys and placeholders added for translation
 - [x] **Document AI provider privacy comparison in README** `[privacy]` `[ai]` — Comparison table added showing training data policies, retention, and privacy commitments for all 4 providers (Anthropic, OpenAI, Google, Microsoft)
 - [x] **Complete UI component library extraction for boilerplate** `[code]` `[enhancement]` — All 9 primitives extracted and tested: StateButton, InputWithClear, Badge, Field, PanelShell, BackButton (+ Toggle, RadioChip, Select from Phase 1), plus Modal/Announcer re-exports. Integrated across SearchBar, DetailPanel, ResultList, About/Help/Settings panels. All linters passing, dev server fully functional.
-- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — Extends agentic AI with conversation history. **Remaining**: (1) add state to DetailPanel: `refinementHistory = [{ role, content }]`, (2) pass full history to `getAgenticRefinement` in subsequent turns, (3) display turn history in Refine section (latest first, user message + assistant response), (4) add "Clear conversation" button to reset history, (5) test that corpus search happens on each turn for context
-- [ ] **System prompt tuning** `[ai]` `[claude]` `[phase2]` — Baseline prompt established in `agenticAiService.js`. **Remaining**: (1) test agentic refinements across 20+ corpus entries covering variety of SCs, priorities, platforms, (2) check tone/length/format consistency, (3) if output drifts from established pattern, adjust `buildPrompt()` system message, (4) document final prompt in code comments, (5) iterate based on user feedback during beta
+- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` — Add `refinementHistory` state, pass full history to `getAgenticRefinement`, display turn history, add "Clear conversation" button, test corpus search per turn.
+- [ ] **System prompt tuning** `[ai]` `[claude]` `[phase2]` — Test across 20+ corpus entries, verify tone/length/format, adjust `buildPrompt()`, document final prompt, iterate on feedback.
 
 ### User Findings & Editing
 
-- [ ] **Copy / add / edit / delete findings** `[ux]` `[phase2]` — Data layer wired locally (`userFindingsService.js`, `useUserFindings.js`, merged into `useFindingSearch`); localStorage backend currently active. **Remaining Phase 1**: UI forms (add/edit/delete). **Remaining Phase 2**: (1) activate Supabase backend (swap `userFindingsService.js` functions to call `user_findings` table), (2) wire cloud sync on sign-in, (3) persist new/edited findings to Supabase
-- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` `[manual]` — Switching works via debug command (`debug corpus personal|public`). **Remaining**: (1) add Settings UI toggle (not debug-only), (2) document behavior in README and feature docs
+- [ ] **Copy / add / edit / delete findings** `[ux]` `[phase2]` — Data layer wired locally. Phase 1: UI forms. Phase 2: Supabase backend, cloud sync.
+- [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` `[manual]` — Works via debug command. Add Settings UI toggle, document behavior.
 
 ### Multilingual Edit Flow
 
 Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and services are wired; personal overrides are applied in `useFindingSearch` and visible in search results.
 
-- [ ] **Save changes button in DetailPanel** `[ux]` `[i18n]` `[phase2]` — Unblocks entire multilingual edit flow. **Remaining**: (1) add "Save changes" button in detail panel footer (only when description or remediation has been edited), (2) on click, check current locale: if English, save directly via `useUserOverrides.saveOverride()`, if non-English trigger edit-scope dialog, (3) button disabled state tracks if content differs from original, (4) test with empty/whitespace edits
-- [ ] **Edit target dialog** `[ux]` `[i18n]` — Required after Save Changes button. **Remaining**: modal with two choices ("Save to my personal entries" / "Suggest to shared corpus"); wire `useUserOverrides.saveOverride` and `useContributionQueue.submitContribution`
-- [ ] **Edit scope dialog** `[ux]` `[i18n]` `[phase2]` — Required after target selection. **Remaining**: (1) three radio options (`lang_only`, `lang_and_en`, `all_langs`); (2) show `edit.personal_ai_warning` for `lang_only` personal saves, (3) wire to store selected scope in component state, (4) pass to edit target dialog next step
-- [ ] **English switch transition (lang_and_en flow)** `[ux]` `[design]` — Only needed for `lang_and_en` flow. **Remaining**: (1) animate bottom sheet close/reopen showing English version, (2) show dialog first giving chance to skip, (3) do not change app-wide locale, only finding panel content
-- [ ] **Personal override indicator in DetailPanel** `[ux]` `[design]` — Visual feedback when editing. **Remaining**: when `finding._hasOverride` is true, show badge/label near title with timestamp from `_overrideEditedAt`; nice-to-have but not blocking multilingual edit
-- [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` — Maintainer-only feature. **Remaining**: add section in SettingsPanel listing pending contributions with approve/reject/export controls; wire `useContributionQueue` and `exportJson()`; merge still runs via `scripts/apply-contributions.mjs`
-- [ ] **Reset All excludes personal overrides and contributions** `[ux]` `[privacy]` `[design]` — Reset All currently calls `localStorage.clear()`. **Remaining**: (1) separate overrides/contributions from general Reset All, (2) require separate explicit user action to clear them (different confirmation, or manual collection cleanup), (3) update Reset All dialog to NOT list overrides/contributions in clear list, (4) update documentation warning about data loss scope
+- [ ] **Save changes button in DetailPanel** `[ux]` `[i18n]` `[phase2]` — Add button (shows when edited), check locale, save via `useUserOverrides` or trigger edit-scope dialog.
+- [ ] **Edit target dialog** `[ux]` `[i18n]` — Modal: "Personal entries" vs. "Shared corpus"; wire hooks.
+- [ ] **Edit scope dialog** `[ux]` `[i18n]` `[phase2]` — Three options: `lang_only`, `lang_and_en`, `all_langs`; show warning for personal saves.
+- [ ] **English switch transition (lang_and_en flow)** `[ux]` `[design]` — Animate bottom sheet, show skip dialog, preserve app locale.
+- [ ] **Personal override indicator in DetailPanel** `[ux]` `[design]` — Show badge near title with timestamp when `_hasOverride` is true.
+- [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` — Add section in SettingsPanel for pending contributions with approve/reject/export.
+- [ ] **Reset All excludes personal overrides and contributions** `[ux]` `[privacy]` `[design]` — Separate overrides/contributions from Reset All, require explicit user action to clear.
 
 ### Search & Results
 
@@ -66,24 +66,24 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Export & Sharing
 
-- [ ] **Export findings** `[ux]` — Architecture planned (integrate with Email results via shared report pipeline). **Remaining**: (1) multi-select UI in ResultList, (2) report generation (Markdown/plain text templates), (3) integrate with Email results, (4) test formatting and ensure findings export cleanly
-- [ ] **Email results** `[ux]` `[enhancement]` — Concept clear and wired to export pipeline. **Remaining**: (1) complete Export findings implementation (multi-select + report generation), (2) add Email delivery option to export dialog, (3) wire email service provider (SendGrid/Resend), (4) test end-to-end
-- [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` — Concept is clear and deep-link generation without auth is straightforward. **Remaining**: (1) implement URL format generation for Jira/Linear in export flow, (2) test deep links against live Jira/Linear instances, (3) document URL format in README
+- [ ] **Export findings** `[ux]` — Multi-select UI, report generation (Markdown/plain text), test formatting.
+- [ ] **Email results** `[ux]` `[enhancement]` — Complete Export, add Email delivery option, wire SendGrid/Resend, test end-to-end.
+- [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` — Implement Jira/Linear URL generation, test deep links, document format.
 
 ### Data & Content
 
-- [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` — 44/76 entries are platform-relevant to native (57.9%); Phase 1 target met. **Remaining**: Phase 2 expansion to add 4 native-specific entries: (1) Dynamic Type sizing (iOS), (2) Custom accessibility label requirements (UIAccessibilityLabel / contentDescription), (3) Native accessibility announcements (UIAccessibilityPostNotification), (4) Custom accessibility actions (UIAccessibilityCustomAction)
-- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` `[phase2]` — `importFromUrl` function handles public JSON URLs. **Remaining**: (1) Settings UI with URL input + load button + error handling, (2) activate Supabase backend for authenticated users in Phase 2
+- [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` — Add 4 entries: Dynamic Type sizing, accessibility labels, announcements, custom actions.
+- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` `[phase2]` — Settings UI for URL input/load, activate Supabase backend.
 
 ### Design & Polish
 
-- [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` — Sections exist in DetailPanel. **Remaining**: (1) audit layout consistency across all three sections, (2) ensure empty states are clear, (3) verify keyboard navigation is consistent, (4) standardize spacing patterns
+- [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` — Audit layout consistency, empty states, keyboard nav, spacing.
 
 ---
 
 ## Accessibility (A11Y)
 
-- [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` — Patches work in development. **Remaining**: open deployed app, confirm selectors still match live Ko-fi DOM (selectors may drift with Ko-fi updates), adjust if needed; manual testing only
+- [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` — Confirm selectors match live Ko-fi DOM (selectors may drift), adjust if needed.
 
 ---
 
@@ -110,15 +110,15 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Infrastructure
 
-- [ ] **Version tagging** `[infra]` — Tagging strategy is defined. **Remaining**: (1) decide stable corpus threshold, (2) create `v0.1.0` tag on Phase 1 launch, (3) push tags to GitHub releases page
-- [ ] **Chrome extension — validate and merge** `[infra]` — Scaffold complete on `feature/chrome-extension`. **Remaining**: (1) add 16/48/128px PNG icons, (2) load unpacked from `dist-extension/`, (3) smoke-test search/copy/settings/AI refine at ~400px width, (4) merge when layout confirmed
-- [ ] **Firefox extension — validate and merge** `[infra]` — Scaffold complete on `feature/firefox-extension`. **Remaining**: (1) add PNG icons, (2) load via `about:debugging`, (3) confirm sidebar behavior, (4) merge when confirmed
-- [ ] **Electron desktop app — icons, test, merge** `[infra]` — Functionally complete on `feature/electron-app`. **Remaining**: (1) add app icons (`.icns` / `.ico` / `.png`), (2) test end-to-end on macOS/Windows (safeStorage persistence, AI refine), (3) code-sign macOS build, (4) merge when icons ready
-- [ ] **Umami analytics activation** `[infra]` `[manual]` — Integration point in `index.html` (cookieless, GDPR-compliant). **Remaining**: (1) create free account at umami.is or self-host, (2) add your site and get WEBSITE_ID, (3) replace `YOUR_WEBSITE_ID` and uncomment script tag in index.html, (4) verify zero cookies in Umami dashboard, (5) enable on deployment (Phase 3 public launch)
+- [ ] **Version tagging** `[infra]` — Decide corpus threshold, create `v0.1.0` tag, push to GitHub releases.
+- [ ] **Chrome extension — validate and merge** `[infra]` — Add PNG icons, load unpacked, smoke-test at ~400px, merge.
+- [ ] **Firefox extension — validate and merge** `[infra]` — Add PNG icons, load via about:debugging, confirm sidebar, merge.
+- [ ] **Electron desktop app — icons, test, merge** `[infra]` — Add icons, test on macOS/Windows, code-sign macOS, merge.
+- [ ] **Umami analytics activation** `[infra]` `[manual]` — Create account, add site, replace WEBSITE_ID, verify zero cookies, enable at launch.
 
 ### Privacy & Security
 
-- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[phase3]` `[launch-blocker]` — Draft exists at `docs/GDPR-DRAFT.md` (gitignored). **Remaining**: (1) review and finalize GDPR-DRAFT.md, (2) move to `docs/GDPR.md` (tracked), (3) publish as linked page before Phase 3 launch, (4) ensure covers localStorage, AI API calls, no-cookies, no-tracking, contribution flow, offline use
+- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[phase3]` `[launch-blocker]` — Finalize GDPR-DRAFT.md, move to GDPR.md, publish before launch, cover localStorage/API/tracking/contributions.
 
 ---
 
@@ -126,41 +126,41 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### AI Assist & Agent
 
-- [ ] **Extend agentic AI to remaining providers** `[ai]` `[agent]` `[enhancement]` — Agentic mode is Claude-only by design (tool use is provider-specific). **Decision**: Keep agentic mode exclusive to Claude. Standard AI assist works for all 4 providers (OpenAI/Google/Microsoft) without corpus search. If user feedback indicates strong demand for provider parity, implement OpenAI/Google/Microsoft tool use with provider-specific schemas (Phase 3 enhancement). **Current state**: Agentic mode complete for Claude; standard AI assist sufficient for other providers.
+- [ ] **Extend agentic AI to remaining providers** `[ai]` `[agent]` `[enhancement]` — Keep Claude-only (tool use provider-specific). Standard AI Assist works for all 4 providers without corpus search.
 
 ### Authentication
 
-- [ ] **Sign-in UI** `[ux]` `[phase3]` — Blocked on Supabase activation. **Remaining**: (1) add minimal sign-in section to SettingsPanel footer, (2) show avatar/name when signed in, (3) "Sign in with Google/GitHub" buttons when not, (4) sign-out option inline
-- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` `[launch-blocker]` — Stubs exist in `authService.js` and `supabaseClient.js`. **Remaining**: (1) install `@supabase/supabase-js`, (2) set `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`, (3) uncomment implementation blocks, (4) verify OAuth slugs and RLS policies. Required before GDPR disclosure can be published
-- [x] **Phase 2 stubs review** `[infra]` `[claude]` `[manual]` — Stubs verified against Supabase JS v2 SDK docs (May 5, 2026): ✅ `signInWithOAuth({ provider, options })` signature correct; ✅ OAuth provider slugs `'google'` and `'github'` valid; ✅ Table schema (user_findings, user_settings) matches Supabase RLS pattern; ✅ RLS policies use standard `auth.uid()` comparison (current in JS v2); ✅ `getUser()` and `onAuthStateChange()` signatures match current SDK. All stubs are accurate and ready for implementation.
+- [ ] **Sign-in UI** `[ux]` `[phase3]` — Add SettingsPanel footer section with avatar/name + Google/GitHub buttons + sign-out.
+- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` `[launch-blocker]` — Install Supabase JS, set env vars, uncomment, verify OAuth slugs and RLS policies.
+- [x] **Phase 2 stubs review** `[infra]` `[claude]` `[manual]` — All stubs verified against Supabase JS v2 SDK docs (May 5).
 
 ### Cloud Data Sync
 
-- [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` — Stubs exist in `dataService.js`. **Remaining**: (1) activate `syncSettings()` and `getRemoteSettings()` via Supabase, (2) on sign-in merge remote with localStorage, (3) on setting change push to Supabase; API keys excluded from sync (localStorage only)
-- [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Phase 1 localStorage layer wired (`userFindingsService.js`, `useUserFindings.js`). **Remaining**: (1) activate `getUserFindings()`, `saveUserFinding()`, `deleteUserFinding()` stubs in `dataService.js` via Supabase, (2) verify DB schema, (3) test CRUD operations
-- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — Ratings data layer exists. **Remaining**: (1) wire up/downvote sync to `ratings` table (`user_id`, `finding_id`, `vote`), (2) merge localStorage ratings on sign-in, (3) test sync behavior
+- [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` — Activate `syncSettings()` and `getRemoteSettings()`, merge on sign-in, push on change.
+- [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Activate CRUD stubs via Supabase, verify schema.
+- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — Wire up/downvote sync, merge on sign-in.
 
 ### Search & Visibility
 
-- [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` — Verify domain ownership and monitor search performance. **Remaining**: (1) create Google Search Console account, (2) verify ownership via DNS/HTML/file, (3) submit sitemap.xml, (4) monitor indexing status, (5) check for crawl errors, (6) track impressions/clicks/CTR for initial keywords
-- [ ] **Update canonical URL to production domain** `[seo]` `[code]` — SEO meta tags already active in index.html (Phase 1). **Remaining**: (1) confirm final production domain, (2) update canonical URL and all OG/Twitter URLs to final domain, (3) verify rich results with Rich Results tester, (4) test hash routing for all internal links
+- [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` — Verify domain, submit sitemap, monitor indexing.
+- [ ] **Update canonical URL to production domain** `[seo]` `[code]` — Confirm domain, update canonical/OG/Twitter URLs.
 
 ### Analytics & Monitoring
 
-- [ ] **Error tracking / crash reporting** `[infra]` `[monitoring]` — Optional but recommended for early-stage visibility. **Remaining**: (1) evaluate Sentry (free tier covers 5k events/mo, good for startups), (2) add error boundary to App.jsx, (3) capture unhandled promise rejections, (4) configure release tracking, (5) notify on critical errors, (6) set up Slack/email alerts
-- [ ] **GitHub releases page** `[infra]` `[manual]` — Document milestones and version history. **Remaining**: (1) create GitHub release for v0.1.0 on Phase 3 launch, (2) add release notes, (3) attach build artifacts if distributing binaries, (4) enable auto-updates tracking (Electron desktop users can subscribe)
+- [ ] **Error tracking / crash reporting** `[infra]` `[monitoring]` — Evaluate Sentry, add error boundary, capture unhandled rejections.
+- [ ] **GitHub releases page** `[infra]` `[manual]` — Create v0.1.0 release, add notes, attach artifacts.
 
 ### Monetization & Growth
 
-- [ ] **Monetization strategy** `[phase3]` `[manual]` — Strategic decision on revenue model. **Remaining**: (1) decide free vs. premium tiers (or ad-supported free), (2) define feature limits per tier, (3) plan token limits for AI Assist (rate limiting), (4) document pricing before launch
-- [ ] **Ad network integration** `[infra]` `[manual]` — If monetizing via ads. **Remaining**: (1) research networks: Carbon Ads (tech/indie focus, $2k+/mo minimum), EthicalAds (privacy-first, $500+/mo minimum), Splitrocket (affiliate), or direct sponsorships, (2) evaluate CPM/CPC/terms for each, (3) decide on placement (top banner, sidebar, result tiles wired), (4) implement ad rotation/fallback if network is down
-- [ ] **Social proof & community** `[growth]` `[manual]` — Build initial user base. **Remaining**: (1) submit to Product Hunt (timing before or after launch), (2) post to accessibility communities (Twitter/X, LinkedIn, Reddit r/accessibility, WebAIM forum), (3) reach out to a11y influencers (Adrian Roselli, Eric Bailey, etc. for early feedback), (4) create discussion forum or Discord for user feedback
-- [ ] **Feedback collection** `[growth]` `[ux]` — Understand initial user needs. **Remaining**: (1) add feedback widget (Canny, Typeform, or simple mailto link), (2) monitor GitHub Issues, (3) track feature requests, (4) establish feedback loop for Phase 3.1 improvements
+- [ ] **Monetization strategy** `[phase3]` `[manual]` — Decide free/premium/ad-supported, define limits, rate limiting for AI.
+- [ ] **Ad network integration** `[infra]` `[manual]` — Research Carbon/EthicalAds/Splitrocket, evaluate CPM/CPC/placement.
+- [ ] **Social proof & community** `[growth]` `[manual]` — Submit to Product Hunt, post to a11y communities, reach out to influencers.
+- [ ] **Feedback collection** `[growth]` `[ux]` — Add feedback widget, monitor GitHub Issues, establish feedback loop.
 
 ### Launch Readiness
 
-- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` — Final verification before going public. **Remaining**: (1) GDPR disclosure published and linked, (2) Privacy policy finalized, (3) Terms of service if monetizing, (4) all SEO meta tags filled in and verified, (5) Umami active and reporting, (6) error tracking active, (7) GitHub releases ready, (8) social channels prepared (Twitter account, LinkedIn post scheduled), (9) cold email list for outreach (a11y auditors, accessibility consultants), (10) domain DNS configured correctly, (11) CDN/caching optimized, (12) backup/monitoring in place for Netlify/Vercel
-- [ ] **Post-launch monitoring** `[infra]` `[manual]` — Week 1 oversight. **Remaining**: (1) daily check of error logs, (2) monitor Search Console for indexing progress, (3) track Umami sessions/pageviews/bounces, (4) respond to early feedback/bug reports within 24h, (5) publish weekly update/status post, (6) collect initial feature requests
+- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` — GDPR/privacy/terms, SEO tags, Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
+- [ ] **Post-launch monitoring** `[infra]` `[manual]` — Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
 
 ---
 

@@ -4,9 +4,9 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## May 5, 2026 (night) — Comprehensive code review and refactoring complete
+## May 5, 2026 — Code refactoring, UI component library, corpus audit, documentation, and project consolidation
 
-### First-Pass Refactoring (High Impact)
+### Comprehensive code review and refactoring complete
 
 Completed comprehensive code review and eliminated duplicate code across the codebase:
 
@@ -15,7 +15,8 @@ Completed comprehensive code review and eliminated duplicate code across the cod
 - Consolidated `findingSlug()` from 4 definitions to 1 shared utility (`src/utils/findingSlug.js`)
 - Consolidated `DEFAULT_RATING` from 3 locations to `src/utils/constants.js`
 - Removed ~90 lines of duplicated function definitions
-- Established single source of truth for repeated patterns
+- Extracted `PROVIDER_LABELS` to `src/utils/constants.js` (was defined 3 times)
+- Moved `IGNORED_KEYS` to module-level constant in App.jsx (improved performance: Set created once instead of every render)
 
 **Magic Numbers → Named Constants:**
 
@@ -23,7 +24,6 @@ Completed comprehensive code review and eliminated duplicate code across the cod
 - Added timing constants: NOTIFICATION_TIMEOUT, CLIPBOARD_TIMEOUT, AI_REFINEMENT_TIMEOUT, CYCLE_MS
 - Added limit constants: MAX_SEARCH_RESULTS, MAX_SEARCH_ALL, MAX_PINNED_DISPLAY, MAX_RELATED_ISSUES
 - Added truncation constants: TITLE_TRUNCATE_LENGTH, DESC_PREVIEW_LENGTH
-- Updated DetailPanel, ResultList, useFindingSearch to use constants instead of hardcoded values
 
 **Utility Extraction:**
 
@@ -31,134 +31,102 @@ Completed comprehensive code review and eliminated duplicate code across the cod
 - Created `storage.js` utility with safe localStorage access (getStorage, setStorage, removeStorage)
 - Updated aiModels.js to use standardized storage utility
 
-**Boilerplate Library Completion:**
-
-- Extracted 7 additional UI components (ScLink, LinkTitle, SourceLinks, NoResults, DataError, ResultListSkeleton, RelatedIssues)
-- Extracted 2 utility modules (textComparison, aiModels)
-- Total boilerplate: 16 production-tested UI components + 5 utility modules
-
-### Second-Pass Refactoring (Additional Cleanup)
-
-Completed second-pass review focused on remaining improvements:
-
-**Constants Consolidation:**
-
-- Extracted `PROVIDER_LABELS` to `src/utils/constants.js` (was defined 3 times)
-- Moved `IGNORED_KEYS` to module-level constant in App.jsx (improved performance: Set created once instead of every render)
-- Removed redundant `PROVIDER_NAMES` constant
-
 **Code Quality:**
 
 - Gated console.error in DetailPanel behind `import.meta.env.DEV`
 - Verified all console.log/warn statements are dev-only
 - Confirmed no unused imports remain
-
-**Metrics:**
-
-- Duplicate code reduced: ~90 lines eliminated
-- Magic numbers replaced: ~30 values
-- Constants extracted: 20+ shared values
-- New utilities: 3 (useToastState, storage, findingSlug)
-- All linters passing, dev server fully functional
-
----
-
-## May 5, 2026 (evening) — UI component library extraction complete, production boilerplate ready
+- Metrics: Duplicate code reduced ~90 lines, magic numbers replaced ~30 values, constants extracted 20+
 
 ### Complete UI Component Library Extraction
 
-Completed all 9 reusable UI component primitives, extracted to `src/components/ui/` with comprehensive barrel export. The collection is ready to use as a production-grade boilerplate for future projects.
+Extracted all 9 reusable UI component primitives to `src/components/ui/` with comprehensive barrel export:
 
-**Completed Phase 1 (Baseline Primitives):**
+**Phase 1 (Baseline Primitives):**
 
-- Toggle.jsx — Switch/checkbox component with label (SettingsPanel)
-- RadioChip.jsx — Segmented radio option group (SettingsPanel, SearchBar)
-- Select.jsx — Native select with chevron icon (SettingsPanel)
+- Toggle.jsx, RadioChip.jsx, Select.jsx
 
-**Completed Phase 2-5 (Advanced Patterns):**
+**Phase 2-5 (Advanced Patterns):**
 
-- StateButton.jsx — Copy/success/reset button state pattern (forwardRef for ref forwarding). Used in DetailPanel (copy buttons), SettingsPanel (save/unpin/unstar/unarchive), ResultList (copy link). Flexible icon and label handling across 14+ use cases.
-- InputWithClear.jsx — Input+clear-button wrapper with focus-on-clear. Used in SearchBar (narrow mode, default clear logic) and DetailPanel (location field, custom onClear handler).
-- Badge.jsx — Interactive (button) or display-only (span) badge variants with CSS custom properties for color. Used across DetailPanel and ResultList for priority/source/WCAG badges.
-- Field.jsx — Complex textarea field with auto-sizing (5-line max height), copy/reset/undo footer, AI select checkbox, include-title checkbox. Extracted from DetailPanel private function; uses includeTitleLabel prop instead of id-based conditional.
-- PanelShell.jsx — Header+heading+back-button wrapper using forwardRef. Shared by AboutPanel, HelpPanel, SettingsPanel. Handles close, focus management, and keyboard Escape handling.
-- BackButton.jsx — RTL-aware back chevron using useDir() hook internally. Simplifies panel header implementations.
+- StateButton.jsx (copy/success/reset button pattern, 14 uses)
+- InputWithClear.jsx (input+clear-button with focus-on-clear, 2 uses)
+- Badge.jsx (interactive/display badge variants, 7 uses)
+- Field.jsx (complex textarea with auto-sizing, copy/reset/undo, 2 uses)
+- PanelShell.jsx (header+title+back-button wrapper, 3 uses)
+- BackButton.jsx (RTL-aware back chevron, 3 uses)
 
-**Completed Integration:**
+**Integration:**
 
-- Updated all importing components (SearchBar, DetailPanel, ResultList, AboutPanel, HelpPanel, SettingsPanel)
-- All 6 phases of extraction committed with clear, phased commit messages
-- All linters passing (ESLint, Stylelint, Markdownlint)
-- Dev server runs without errors; app fully functional on localhost:5177
-
-**Boilerplate artifacts created:**
-
-- 9 complete, tested UI components in `src/components/ui/`
-- Centralized barrel export at `src/components/ui/index.js`
+- All importing components refactored (SearchBar, DetailPanel, ResultList, AboutPanel, HelpPanel, SettingsPanel)
+- 9 components in `src/components/ui/`, centralized barrel export at `src/components/ui/index.js`
 - Modal and Announcer re-exported from plugins for unified UI import
-- Ready to extract to monorepo or standalone npm package in future Phase 1.1
-
-**Known issue:** Production build with Vite/Rolldown has an unresolved import error specific to the bundler (ESLint passes, dev server works perfectly). This does not affect development or code correctness; investigation deferred to Phase 2 if production builds are needed.
-
----
-
-## May 5, 2026 (UI Library + Documentation) — UI component extraction started, boilerplate prep, docs updated
-
-### UI Component Library Extraction (Phase 1 Boilerplate)
-
-Started extracting reusable UI components to `src/components/ui/` for use as a production-grade boilerplate.
-
-**Completed:**
-
-- Toggle, RadioChip, Select — extracted from SettingsPanel.jsx private functions
-- Barrel export at `src/components/ui/index.js`
-- SettingsPanel refactored to use extracted components; code reduced by ~65 lines
-- All linters passing (ESLint, Stylelint)
-
-**Identified for extraction (ready to implement):**
-
-- StateButton (14 uses) — copy/success/reset button state pattern across 3 files
-- InputWithClear (2 uses) — input+clear-button with focus-on-clear in SearchBar, DetailPanel
-- Badge (7 uses) — interactive/display badge variants with CSS var styling
-- Field (2 uses) — complex textarea+checkbox+copy/reset/undo footer component
-- PanelShell (3 uses) — header+title+back-button wrapper across About, Help, Settings panels
-- BackButton (3 uses) — RTL-aware back chevron with useDir() hook
-- Modal, Announcer — re-export from plugins for centralized UI import
-
-Total: 9 additional patterns mapped with exact usage metrics. This will complete the project's portable UI library.
-
-### Documentation Updates
-
-- README.md — Expanded project structure to include `src/components/ui/` and complete plugin documentation
-- TODO.md — Added "Complete UI component library extraction for boilerplate" task with detailed scope
-- CHANGELOG.md — Documented extraction work and comprehensive plan
-- FEATURE-STATUS.md — Added UI component library progress (30% of identified components extracted)
-- All 34 markdown files remain linting-clean
-
----
-
-## May 5, 2026 (Phase 1 Launch Readiness) — SEO enabled, Phase 1 essentials checklist, Phase 3 launch roadmap
-
-### Phase 1 Launch Day Essentials Complete
-
-Identified and completed all critical items for Phase 1 public release:
-
-**Already done:**
-
-- 89-entry public corpus with full WCAG mapping, sourcing, keywords
 - All linters passing (ESLint, Stylelint, Markdownlint)
-- Privacy & security baseline (no cookies, localStorage inventory)
+- Total boilerplate: 16 production-tested UI components + 5 utility modules
+
+**Known issue:** Production build with Vite/Rolldown has unresolved import error (ESLint passes, dev server works).
+
+### Comprehensive corpus audit and quality improvements
+
+Completed corpus audit focused on plain-language, ESL/middle-school reading standards with consistent jargon:
+
+**Corpus improvements** (87.6% now meet ESL standard):
+
+- Reading level: 26 issues → 11 issues (58% improvement) — broke long sentences, removed em-dashes
+- Jargon standardization: 34 inconsistencies → 21 (38% improvement)
+- Related links: 54 missing → 0 missing (100% complete)
+- Keywords: Comprehensive category-based expansion
+- No em-dashes: 100% compliant
+
+**Automation infrastructure:**
+
+- `scripts/audit-corpus.mjs` — Automated quality scanning
+- `scripts/add-keywords.mjs` — Intelligent keyword categorization
+- `CORPUS_AUDIT_SUMMARY.md` — Complete audit documentation
+
+### Corpus ID reference and console error fixes
+
+- Corpus ID reference document complete (mapping all entries)
+- Removed `aria-hidden` attribute from app background div (was conflicting with focused descendants)
+
+### Agentic AI integration and privacy documentation
+
+**Agentic AI complete:**
+
+- Added agentic mode toggle to DetailPanel's Refine section
+- Wired to use `getAgenticRefinement` for Claude/Anthropic only
+- Exposed agentic mode configuration in SettingsPanel
+- Added 6 i18n keys for UI strings
+
+**AI provider privacy comparison:**
+
+- Added comprehensive AI provider privacy table to README.md (training data, retention, commitments)
+- Noted Anthropic has strongest privacy commitment (no training on API data)
+
+### Documentation and project consolidation
+
+**Documentation updates:**
+
+- README.md — Expanded for UI components, plugins
+- CHANGELOG.md — Documented extraction and improvements
+- FEATURE-STATUS.md — Added UI component library progress (30% of identified components)
+- TODO.md — Added extraction scope, clarified AI agentic mode as Claude-only
+- All 34 markdown files pass linting
+
+**Project status consolidation:**
+
+- Phase 1 complete with 89-entry corpus and full test coverage
+- Phase 2 (AI assist, user overrides, multilingual editing) mostly built on backend
+- Phase 3 (auth, cloud sync, public launch) not started
+- All distribution targets (Chrome extension, Firefox extension, Electron) scaffolded on feature branches (60-80% completion)
+
+### Phase 1 Launch Readiness and Phase 3 Roadmap
+
+**Phase 1 Launch essentials:**
+
+- SEO infrastructure enabled (robots.txt, sitemap.xml, meta tags, canonical URLs, JSON-LD)
+- Privacy & security baseline complete
 - Offline-first support (Service Worker + PWA)
 - Accessibility verified (axe-core, WCAG 2.2 AA)
-- Full documentation (README, CONTRIBUTING, SECURITY, DEPLOYING)
-
-**Just wired (SEO & visibility):**
-
-- robots.txt — Now allows crawlers, 1s crawl-delay, references sitemap
-- sitemap.xml — Created at `public/sitemap.xml` (SPA single-entry format)
-- SEO meta tags — Uncommented in index.html (core, OG, Twitter Card, JSON-LD)
-- Canonical URL — Set to a11ytexthelper.com (production placeholder)
-- Structured data — JSON-LD WebApplication schema for rich results
 
 **Remaining for Phase 1 public release:**
 
@@ -166,91 +134,18 @@ Identified and completed all critical items for Phase 1 public release:
 - GitHub badges (once CI/hosting configured)
 - Production domain configuration (DNS + HTTPS)
 
-### Phase 3 Launch Readiness Roadmap Added
-
-Comprehensive checklist for day-one success covering:
+**Phase 3 Launch Readiness Roadmap:**
 
 - Search & visibility (Search Console, domain updates)
-- Analytics (Umami analytics activation, error tracking, GitHub releases)
+- Analytics (Umami, error tracking, GitHub releases)
 - Monetization & growth (tiers, ad networks, social proof, community)
-- Pre/post-launch checklists
 
-### TODO.md Reorganization
+**TODO.md improvements:**
 
 - Moved 11 completed Phase 1 items to Archived section
-- Consolidated duplicate SEO/Umami entries
-- Phase 1 now shows only 3 remaining tasks (Ko-fi, badges, domain)
-- Phase 2 & 3 clearly separated with explicit remaining scope
-
----
-
-## May 5, 2026 (Phase 2) — Agentic AI wired in DetailPanel and Settings; AI provider privacy comparison published
-
-### Agentic AI integration complete
-
-Wired agentic AI mode into the DetailPanel and SettingsPanel. When enabled (Claude/Anthropic only), the AI uses a corpus search tool to ground refinements in similar findings from your personal corpus, helping the AI match your established style and technical depth. The mode toggle appears in DetailPanel's Refine section (visible only when Claude is active) and in Settings under AI Assist configuration.
-
-**What changed**:
-
-- Added agentic mode toggle to DetailPanel's Refine section; wired to use `getAgenticRefinement` when active
-- Exposed agentic mode configuration in SettingsPanel (disabled for non-Claude providers since tool use is Anthropic-specific)
-- Updated `handleRefine` logic to dispatch to `getAgenticRefinement` vs. `getAiRefinement` based on mode and provider
-- Added 6 i18n keys for UI strings and placeholders across en.json (flagged for translation on next run)
-- Updated TODO.md to clarify that agentic mode is Claude-only; noted architectural decision point for extending tool use to other providers
-
-**Documentation improvements**:
-
-- Added comprehensive AI provider privacy comparison table to README.md showing training data policies, data retention, and privacy commitments for all 4 supported providers (Anthropic/Claude, OpenAI/GPT-4o, Google/Gemini, Microsoft/Copilot)
-- Noted that Anthropic has the strongest privacy commitment (no training on API data) and is the recommended default for handling sensitive accessibility work
-
----
-
-## May 5, 2026 — Documentation cleanup and project status consolidation
-
-All markdown files (34 total) pass linting as of today. Documentation reorganized into active docs (`docs/`) and historical work in `docs/archive/`. TODO.md cleaned: completed items removed, obsolete items deleted, partial items clarified with remaining scope listed explicitly.
-
-**Status summary**: Phase 1 complete with 89-entry corpus and full test coverage. Phase 2 (AI assist, user overrides, multilingual editing) mostly built on backend; UI for multilingual edit flow deferred to Phase 2. Phase 3 (auth, cloud sync, public launch) not started. All distribution targets (Chrome extension, Firefox extension, Electron) scaffolded on feature branches with 60-80% completion.
-
----
-
-## May 5, 2026 (evening) — Comprehensive corpus audit and quality improvements
-
-### Corpus quality standardization and accessibility improvements
-
-Completed a comprehensive audit of the corpus focused on ensuring entries meet plain-language, ESL/middle school reading standards with consistent jargon and complete cross-referencing.
-
-**Corpus improvements** (87.6% now meet ESL standard):
-
-- Reading level: 26 issues → 11 issues (58% improvement)
-  - Broke long sentences into shorter 12-18 word constructions
-  - Removed all em-dashes, replaced with parentheses or commas
-  - 15 entries rewritten for clarity and accessibility
-- Jargon standardization: 34 inconsistencies → 21 (38% improvement)
-  - "keyboard user" → "keyboard-only user" (24 entries)
-  - "ARIA landmark" → "landmark" (3 entries)
-  - "trap focus" → "focus trap" (1 entry)
-- Related links: 54 missing → 0 missing (100% complete)
-  - Added same-WCAG-SC cross-references for all corpus entries
-- Keywords: Comprehensive category-based expansion across all entries
-- No em-dashes: 100% compliant
-
-**Automation infrastructure**:
-
-- `scripts/audit-corpus.mjs` — Automated quality scanning (passive voice, reading level, jargon consistency, keywords, related links)
-- `scripts/add-keywords.mjs` — Intelligent keyword categorization
-- `CORPUS_AUDIT_SUMMARY.md` — Complete audit documentation with before/after metrics
-
----
-
-## May 5, 2026 — ID consolidation documentation and console error fixes
-
-### Corpus ID reference complete
-
-The corpus now has a comprehensive reference document mapping all entries showing which are in use and the structure of the corpus data.
-
-### Console error fixed
-
-Removed `aria-hidden` attribute from app background div that was conflicting with focused descendants. The `inert` attribute alone is sufficient to prevent focus and interaction with background content during modal/panel display, and avoids the console warning about hidden focused elements.
+- Consolidated duplicate entries (SEO, Umami)
+- Phase 1 now shows only 3 remaining tasks
+- Phase 2 & 3 clearly separated with explicit scope
 
 ---
 

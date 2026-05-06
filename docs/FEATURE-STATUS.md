@@ -247,17 +247,14 @@ Done:
 
 Done:
 
-- 50+ locale files (Latin, CJK, RTL, indigenous, constructed, Easter egg)
-- All UI strings in `en.json` (source of truth); placeholders propagate automatically
-- Priority labels translated; RTL layout (Arabic, Uyghur)
-- `translate` script detects and fills missing keys with `[TODO: translate]` prefix
-- i18n-edits.md tracks pending translation runs
+- 50+ locale files with full RTL support (Arabic, Uyghur)
+- `en.json` source of truth; placeholders auto-propagate
+- ~60 keys still pending translation, tracked in i18n-edits.md
 
 Missing:
 
-- ~60 keys across non-English files still have `[TODO: translate]` placeholder; translate run needed
-- Corpus pre-translation (`corpus.{lang}.json` files; no API key available)
-- AI refinement in active locale (instructs model to reply in `{locale}`) — high cost, enhancement only
+- Corpus pre-translation (`corpus.{lang}.json` files)
+- AI refinement in active locale
 
 ---
 
@@ -286,16 +283,14 @@ Files: `src/services/aiService.js`
 
 Done:
 
-- Anthropic / OpenAI / Google / Microsoft (Azure) provider configs
-- Per-provider model selector in Settings (persisted to localStorage)
-- Refine note → rewrites desc + rem in established auditor voice
-- `AiApiError` typed errors (invalid_key, rate_limit, service_error, network_error, api_error)
-- localhost API key bypass for development
+- 4 provider configs (Anthropic, OpenAI, Google, Azure) with model selector in Settings
+- Refine note rewrites finding desc + rem in auditor voice
+- Typed errors + localhost API key bypass
 
 Missing:
 
-- Microsoft/Azure endpoint untested (requires `VITE_AZURE_OPENAI_ENDPOINT`)
-- System prompt tuning (needs 20+ finding test pass)
+- Azure endpoint untested
+- System prompt tuning (20+ finding test pass needed)
 
 ---
 
@@ -305,113 +300,91 @@ Files: `src/services/agenticAiService.js`, `src/services/searchCorpusTool.js`, `
 
 Done:
 
-- `agenticAiService.js` — multi-turn tool-use loop (Anthropic only)
-- `searchCorpusTool.js` — `SEARCH_CORPUS_TOOL_SCHEMA` + Fuse.js `searchCorpus()` handler
-- System prompt: always call `search_corpus` first, preserve auditor voice, exact output format
-- `MAX_TOOL_TURNS = 5` guard; dev logging for each turn
-- `DetailPanel.jsx` — Agentic mode toggle wired in Refine section; visible only when Claude is active; dispatches to `getAgenticRefinement` when enabled
-- `SettingsPanel.jsx` — Agentic mode configuration exposed; toggle disabled for non-Claude providers; state persisted to localStorage
-- `App.jsx` — Passes agentic mode state from localStorage to DetailPanel
-- 5 i18n keys added for UI strings (settings label/description, detail label/help/hint)
+- Multi-turn tool-use loop with 5-turn guard (Anthropic only)
+- Search corpus tool with Fuse.js handler
+- Agentic toggle in Refine section (Claude only)
+- i18n support in settings and detail panel
 
 Missing:
 
-- Multi-turn conversation UI (turn history, Clear conversation button)
-- `corpus` (allFindings array) not yet passed through from App to DetailPanel to the service
+- Multi-turn conversation UI (history, clear button)
+- Corpus array passed to service
 
 ---
 
 ### User Findings (Custom Findings) — 30%
 
-Files: `src/services/userFindingsService.js`, `src/hooks/useUserFindings.js`
-
 Done:
 
-- `userFindingsService.js` — localStorage CRUD with `USR-NNN` IDs
-- `useUserFindings.js` — reactive hook (`addFinding`, `editFinding`, `deleteFinding`, `copyFinding`)
-- `useFindingSearch` merges user findings with corpus transparently
+- localStorage CRUD with `USR-NNN` IDs
+- reactive hook for add/edit/delete
+- merged transparently in search
 
 Missing:
 
-- Add / edit / delete UI — no form, no inline edit
-- Copy finding button in DetailPanel
-- Personal vs. public corpus toggle (visible in UI; currently debug-only)
+- Add/edit/delete UI
+- Personal vs. public corpus toggle
 
 ---
 
 ### Multilingual Edit Flow — 40%
 
-Files: `src/services/userOverridesService.js`, `src/services/contributionService.js`, `src/hooks/useUserOverrides.js`, `src/hooks/useContributionQueue.js`, `scripts/apply-contributions.mjs`
-
 Done:
 
-- `userOverridesService.js` — localStorage CRUD for locale overrides per finding
-- `contributionService.js` — contribution queue with status lifecycle constants
-- `useUserOverrides` + `useContributionQueue` hooks wired in App.jsx
-- `useFindingSearch` applies overrides; sets `_hasOverride`, `_overrideLocale`, `_overrideEditedAt`
-- `apply-contributions.mjs` — maintainer approval script patches corpus.json and translation files per scope
-- 46 i18n keys in `en.json` for all dialogs (pending translation in locale files)
+- localStorage CRUD for locale overrides
+- contribution queue with status tracking
+- `apply-contributions.mjs` maintainer script for approval workflow
+- 46 i18n keys in dialogs
 
 Missing:
 
-- Save changes button in DetailPanel
+- Save button in DetailPanel
 - Edit target dialog (Personal vs. Contribute)
 - Edit scope dialog (lang_only / lang_and_en / all_langs)
-- English switch transition animation
-- Personal override indicator badge in DetailPanel
-- Contributions review panel in SettingsPanel (maintainer)
-- Reset All does not yet call `clearAllOverrides()` or `clearContributions()`
+- Personal override indicator badge
+- Contributions review panel in settings
 
 ---
 
 ### Export Findings — 10%
 
-Files: `src/utils/exportFinding.js`
-
 Done:
 
-- `exportFinding(finding, format)` — Blob download in text / markdown / csv formats
+- Blob download in text / markdown / csv formats
 
 Missing:
 
 - Multi-select UI in result list
 - Format picker (Download vs. Email)
-- Email delivery (server-side, Phase 2+)
-- Occurrence counts and severity overrides in the export
+- Email delivery
 
 ---
 
 ### Import / Custom Data Source — 20%
 
-Files: `src/services/importService.js`
-
 Done:
 
-- `importFromUrl(url)` — fetches and validates a public JSON corpus URL
+- `importFromUrl(url)` for public JSON corpus
 
 Missing:
 
-- Settings UI (URL input, load button, error handling)
-- Supabase-backed custom findings sync (Phase 3, prereq: auth)
+- Settings UI (URL input, load button)
+- Supabase-backed sync (Phase 3)
 
 ---
 
 ### Ko-fi Integration — 50%
 
-Files: `src/components/KofiWidget.jsx`
-
 Done:
 
-- Widget code extracted to `KofiWidget.jsx`
-- A11y patches (aria-label on trigger, role/aria-modal on popup, Escape handler, label injection, contrast override)
-- `LETTER_TO_KOFI.md` documenting all 6 patched issues
-- Selectors extracted to standalone plugin structure for reusability
+- `KofiWidget.jsx` with a11y patches (aria-label, role/aria-modal, Escape handler)
+- `LETTER_TO_KOFI.md` documenting 6 accessibility issues
 
 Missing:
 
-- Widget currently disabled pending console error resolution
-- Selector re-verification against live Ko-fi DOM (selectors may drift with Ko-fi updates)
-- Ko-fi link fallback in footer (nice-to-have when widget is off)
+- Widget disabled pending console error resolution
+- Selector re-verification vs. live Ko-fi DOM
+- Ko-fi link fallback in footer
 
 ---
 
@@ -419,21 +392,11 @@ Missing:
 
 ### Platform Variant Display — 100%
 
-Files: `src/components/ResultList.jsx`, `src/components/DetailPanel.jsx`, `src/index.css`, `src/i18n/*.json`
-
 Done:
 
-- Platform badge displays on every result card showing platform type (Web, iOS, Android, Web & Mobile)
-- Badge placed inline with priority and source badges in result-item__badges section
-- Clickable platform badge in detail panel with filter handler
-- Platform filter integrates with existing badge-click filter logic
-- Platform badge styling with neutral blue colors (`--platform-bg`, `--platform-text`)
-- i18n support across 8 major language files (en, de, es, fr, ja, pt, zh, nl, sv)
-- Platform badge included in archived state and unified badge styling
-
-Missing:
-
-- None — feature complete and tested
+- Platform badges on result cards and detail panel with filter integration
+- Styling and i18n support across 8+ locales
+- Complete and tested
 
 ---
 
@@ -441,25 +404,14 @@ Missing:
 
 ### Narrow Results Mode — 100%
 
-Files: `src/App.jsx`, `src/components/SearchBar.jsx`, `src/components/ResultList.jsx`
-
 Done:
 
-- "Narrow" button appears next to results count when search results are showing
-- Search input label, placeholder, and clear button change context-sensitively
-- Results filtered via secondary Fuse.js search on title, desc, keywords, sources
-- Count display shows "{narrowed} of {total} Results" in narrow mode
-- Clear button becomes "Clear and reset" — clears narrow filter and returns to base search
-- Live-search setting governs filter updates (real-time vs. on-submit)
-- Responsive: works on mobile and desktop, narrow mode accessible via keyboard
-- **UI refinements (2026-04-30 evening)**:
-  - **Filter icon** next to narrow button for visual clarity
-  - **Button repositioned below search input**, left-aligned (distinct from search submit controls)
-  - **Focus restoration** — clicking Narrow button returns focus to search input automatically
-  - **Label changed** from "Narrow results" to "Narrowing results" when in narrow mode
-  - **Removed badge pill** — cleaner visual; state is now communicated through label and button placement
-  - **Exit button redesigned** from text to **X icon** (matches reset icon style for consistency)
-- All i18n keys added and updated in `en.json`; placeholders propagate automatically
+- Secondary Fuse.js search on title/desc/keywords/sources
+- Context-sensitive labels and "Clear and reset" button
+- Filter icon, repositioned below search input
+- Keyboard accessible, responsive design
+- X icon exit button, focus restoration
+- i18n support with placeholder propagation
 
 ---
 
@@ -469,10 +421,9 @@ Done:
 
 Done:
 
-- Open/copy counts tracked implicitly via `recentFindings` array in localStorage
-- Frequent findings boost composite relevance score (wired through sort logic)
-- Privacy disclosure updated to include frequency tracking
-- Data persisted in `recentFindings` and finding access patterns
+- Open/copy counts tracked via `recentFindings` array
+- Boosts relevance score in sort logic
+- Privacy disclosure updated
 
 ---
 
@@ -480,7 +431,7 @@ Done:
 
 Support `+term` (require) and `-term` (exclude) operators, e.g. `keyboard -wcag2.2`.
 
-Needs: query parser pre-step before Fuse.js, syntax hint near search bar, i18n keys.
+Needs: query parser, syntax hint, i18n keys.
 
 ---
 
@@ -488,14 +439,11 @@ Needs: query parser pre-step before Fuse.js, syntax hint near search bar, i18n k
 
 Done:
 
-- Onboarding panel (`OnboardingPanel.jsx`) — 3-slide paginated workflow (Find, Refine, Copy)
-- Auto-launches on first visit via `onboardingSeen` localStorage flag
+- 3-slide paginated workflow (Find, Refine, Copy)
+- Auto-launches on first visit; re-launchable from Help
 - Drawer on mobile, inline on desktop
-- Step headings receive focus on navigation via `usePaginationFocus`
-- Escape before last slide shows confirm modal (prevents accidental close)
-- Re-launchable from Help panel via "Take a tour" button
-- Help panel (`HelpPanel.jsx`) — keyboard shortcuts, search tips, locale instructions
-- Help panel includes corpus sourcing details and finding schema documentation
+- Help panel with keyboard shortcuts, search tips, locales
+- Escape confirmation modal before final slide
 
 ---
 
@@ -503,33 +451,28 @@ Done:
 
 ### Authentication — 10%
 
-Files: `src/services/authService.js`, `src/services/supabaseClient.js`
-
 Done:
 
-- Full stubs with activation comments, OAuth provider slugs, DB schema SQL, `.env` instructions
+- Stubs with OAuth provider slugs, DB schema SQL, `.env` instructions
 
 Missing:
 
-- `@supabase/supabase-js` install + `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` env vars
-- Sign-in UI in SettingsPanel (Google / GitHub buttons, avatar, sign-out)
-- Supabase stubs need accuracy review against current JS v2 SDK docs before activation
+- Supabase installation + env vars
+- Sign-in UI in SettingsPanel
+- Accuracy review vs. JS v2 SDK docs
 
 ---
 
 ### Cloud Sync — 5%
 
-Files: `src/services/dataService.js` (stubs only)
-
 Done:
 
-- `getUserFindings`, `saveUserFinding`, `deleteUserFinding`, `syncSettings`, `getRemoteSettings` stubs
+- CRUD stubs for findings and settings
 
 Missing:
 
 - Activation (prereq: auth)
-- Ratings sync to `ratings` table
-- Settings sync on sign-in + on every change
+- Sync on sign-in and every change
 
 ---
 
@@ -537,12 +480,10 @@ Missing:
 
 Done:
 
-- Service Worker caches app shell + corpus JSON for offline access
-- Web App Manifest configured for install prompt
-- Offline-first architecture enabled
-- Installable to home screen on mobile and desktop
-
-Note: Electron build (in `electron/`) also gives offline as a side effect of bundling — no additional SW setup needed for that path.
+- Service Worker caches app shell + corpus JSON
+- Web App Manifest configured for install
+- Installable to home screen (mobile & desktop)
+- Electron build provides offline as side effect
 
 ---
 
@@ -550,14 +491,12 @@ Note: Electron build (in `electron/`) also gives offline as a side effect of bun
 
 Done:
 
-- Script placeholder in `index.html` (currently disabled)
-- Integration point established with `YOUR_WEBSITE_ID` placeholder
+- Script placeholder in `index.html` (disabled)
 
-Missing (Phase 3):
+Missing:
 
-- Umami account + website ID setup
-- Verify zero-cookie, zero-personal-data in dashboard before enabling
-- Uncomment and activate only when verified (`[launch-blocker]` for Phase 3 public launch)
+- Umami account + website ID
+- Zero-cookie verification before enabling
 
 ---
 
@@ -565,18 +504,14 @@ Missing (Phase 3):
 
 Done:
 
-- `SponsoredTile.jsx` — placeholder tile matching corpus card dimensions
-- Sponsored badge with `aria-label="Sponsored content"`
-- `AdminPanel.jsx` — ON/OFF toggle + configurable "Every N results" frequency input
-- `ResultList.jsx` — injects tiles after every nth result via Fragment wrapper
-- Admin state wired through App props (`showAds` / `adFrequency`)
+- `SponsoredTile.jsx` with admin toggle
+- Sponsored badge with aria-label
+- Injection after every nth result
 
-Missing (Phase 3 only):
+Missing:
 
-- Real ad delivery source integration (Carbon Ads, EthicalAds, direct-sold)
-- Replace placeholder copy with actual ad copy
-- Finalize placement rules and frequency defaults
-- Phase 3 blocker: ship v1.0/v1.1 without ads; infrastructure work deferred to v2.0+
+- Real ad delivery source integration
+- Phase 3 deferred to v2.0+
 
 ---
 
@@ -588,19 +523,15 @@ Branch: `feature/chrome-extension`
 
 Done:
 
-- Manifest V3 with `side_panel` and `sidePanel` permission
-- Minimal service worker wires action icon to open the side panel
-- Vite extension build config (`base: './'`, relative asset paths, `dist-extension/` output)
-- `build:extension` npm script
-- Hash-based router and `localStorage` work unchanged in side panel context
-- Build verified clean
+- Manifest V3 with `side_panel` permission
+- Vite build config, `build:extension` script
+- Hash-based router works in side panel context
 
 Missing:
 
-- PNG icons at 16 / 48 / 128px (Chrome shows generic icon without them)
-- Smoke test: load unpacked, verify search / copy / settings / AI in Chrome
-- Side panel layout check at ~400px width
-- Merge to `main`
+- PNG icons (16 / 48 / 128px)
+- Smoke test; layout check at ~400px
+- Merge to main
 
 ---
 
@@ -610,18 +541,16 @@ Branch: `feature/firefox-extension`
 
 Done:
 
-- Manifest V3 with `sidebar_action` and `browser_specific_settings.gecko` ID
-- No background script needed — Firefox opens sidebar automatically
-- Vite Firefox build config (`dist-extension-firefox/` output)
-- `build:extension:firefox` npm script
-- Build verified clean
+- Manifest V3 with `sidebar_action`
+- No background script needed
+- Vite build config, `build:extension:firefox` script
 
 Missing:
 
-- PNG icons at 16 / 48 / 96px
-- Smoke test via `about:debugging` → Load Temporary Add-on
+- PNG icons (16 / 48 / 96px)
+- Smoke test via about:debugging
 - AMO account + extension ID registration
-- Merge to `main`
+- Merge to main
 
 ---
 
@@ -631,19 +560,17 @@ Branch: `feature/electron-app`
 
 Done:
 
-- `electron`, `electron-builder`, `concurrently` installed as devDependencies
-- `electron/main.js` — `keys:set` / `keys:get` / `keys:delete` IPC handlers complete with `safeStorage` encryption and `fs` persistence to `app.getPath('userData')`
-- `electron/preload.js` — context bridge fully wired (`window.electronAPI.keys`, `theme`, `version`)
-- `src/services/aiService.js` and `agenticAiService.js` — API key reads guarded with `window.electronAPI` check
-- `src/components/SettingsPanel.jsx` — key init and save routed through `electronAPI.keys` in Electron context
-- Dev and production build scripts in place
+- IPC handlers with `safeStorage` encryption
+- Context bridge for API keys, theme, version
+- API key reads guarded with window.electronAPI check
+- Dev and production build scripts
 
 Missing:
 
-- App icons (`build/icon.icns`, `build/icon.ico`, `build/icon.png`) — required by `electron-builder`
+- App icons (icns, ico, png)
 - End-to-end test on macOS and Windows
-- macOS code signing (required for distribution outside the App Store)
-- Merge to `main`
+- macOS code signing
+- Merge to main
 
 ---
 
