@@ -111,7 +111,7 @@ The custom i18n system (`src/i18n/`) is live with 50+ locale files and `useT()` 
   ```
 
 - [ ] **Announce string audit** ,  verify that all `announce()` call strings are pulled from `t()` and that every locale file has the corresponding key translated (not just English fallback)
-- [ ] **Corpus translation coverage** ,  defect descriptions and remediation steps in `corpus.json` should have locale-specific overlays; run `npm run translate` whenever entries are added or edited; WCAG SC names and codes (`1.1.1`, `aria-label`, etc.) should remain in English in all locales
+- [ ] **Corpus translation coverage** ,  defect descriptions and suggested fixes in `corpus.json` should have locale-specific overlays; run `npm run translate` whenever entries are added or edited; WCAG SC names and codes (`1.1.1`, `aria-label`, etc.) should remain in English in all locales
 - [ ] **Technical term review** ,  after any machine translation batch, flag corpus entries using WCAG-specific terms (accessible name, focus trap, landmark, live region, ARIA role) for human review; machine translation of these terms is unreliable
 - [ ] **Capitalization conventions** ,  English variants use NYT title case; Romance/Germanic use sentence case; caseless scripts (CJK, Arabic, Uyghur, Tamil, Devanagari) receive no capitalization changes; apply this when adding keys or updating existing ones
 - [ ] **`lang` attribute** ,  `<html lang>` updates correctly when user switches language; verify with screen reader after any changes to `App.jsx` language effect
