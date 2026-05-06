@@ -18,11 +18,11 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Complete — 133-entry corpus, all linters passing, UI library complete (2 base button components + 12 primitives), agentic AI wired, full component consolidation done.
+**Phase 1 (Personal Library)**: Complete — 133-entry corpus, all linters passing (ESLint 9.x + jsx-a11y), UI library complete (2 base button components + 12 primitives), agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
 
-**Phase 2 (AI + Sharing)**: Partial — Agentic AI working, user overrides done, multilingual editing UI deferred.
+**Phase 2 (AI + Sharing)**: In Progress — Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working.
 
-**Phase 3 (Public Launch)**: Planning — Auth/analytics infrastructure stubbed.
+**Phase 3 (Public Launch)**: Planning — Auth/analytics infrastructure stubbed, ad tiles ready for Phase 3+ delivery.
 
 ---
 

@@ -4,6 +4,24 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-06 (continued 3) — ESLint 9.x compatibility and dependency fixes
+
+### ESLint and jsx-a11y toolchain upgrade
+
+- Downgrade @eslint/js to 9.x for compatibility with ESLint 9.x environment
+- Add eslint-plugin-react to resolve JSX import detection (modern JSX transform doesn't require React import)
+- Disable outdated React rules: `react/react-in-jsx-scope`, `react/jsx-uses-react` (no longer needed with new JSX runtime)
+- Remove duplicate props from App.jsx (Suspense was duplicated)
+- Re-add necessary Suspense import to fix lazy component loading
+
+### Compatibility verification
+
+- All ESLint passes with no warnings
+- jsx-a11y plugin working correctly with React 18 JSX transform
+- No false positives on accessibility rules
+
+---
+
 ## 2026-05-06 (continued 2)
 
 ### Button component consolidation and active state fixes
