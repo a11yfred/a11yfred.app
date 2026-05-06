@@ -2707,7 +2707,7 @@ input[type="radio"].settings-checkbox:checked {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--bg);
   outline: var(--border-width-control) solid var(--border-control);
   outline-offset: 0;
   position: absolute;
@@ -2741,7 +2741,7 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .toggle:hover:has(.toggle__input:checked) .toggle__check {
-  background: var(--accent-bg);
+  background: var(--accent-text);
 }
 
 .toggle:hover:not(:has(.toggle__input:checked)) .toggle__track {
