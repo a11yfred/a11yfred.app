@@ -66,6 +66,15 @@ button {
   transition: background-color var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
 }
 
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
+}
+
 .btn svg {
   flex-shrink: 0;
   line-height: 1;
