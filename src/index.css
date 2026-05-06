@@ -2493,7 +2493,7 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .settings-save-btn {
-  display: inline-flex;
+  display: inline;
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
