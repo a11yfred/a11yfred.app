@@ -2,138 +2,138 @@
 
 Track every `en.json` key addition or value change here. Batch these up and run the full translate workflow when ready. Mark entries resolved after the translate run completes.
 
-Format: `- [ ] \`key\` — old: "…" → new: "…"` (use `added` for new keys)
+Format: `- [ ] \`key\` ,  old: "…" → new: "…"` (use `added` for new keys)
 
 ---
 
 ## Corpus entry changes (need retranslation of desc/title fields)
 
-- [ ] `ATH-109` — added: 2.5.2 "Activation Fires on Pointer Down Instead of Pointer Up"
-- [ ] `ATH-110` — added: 3.3.7 "Form Requires Re-entry of Previously Provided Information"
-- [ ] `ATH-111` — added: 3.2.6 "Help Mechanism Absent or Repositioned Across Pages"
-- [ ] `ATH-009` desc/rem — tightened to emphasize purpose vs. visual description; source changed to Deque
-- [ ] `ATH-016` rem — old: "…programmatically using the required…" → new: "…add the required or aria-required attribute…so screen readers announce it as required"
-- [ ] `ATH-017` desc — old: "…not programmatically linked to the input field" → new: "…no code-level link to the input field"
-- [ ] `ATH-023` desc — old: "…not programmatically linked to the field…" → new: "…not linked to the field in code…"
-- [ ] `ATH-085` rem — old: "…make an element programmatically focusable…" → new: "…make an element focusable by script…"
-- [ ] `ATH-013` desc/rem/keywords — repurposed from "skipped levels" to "reversed heading hierarchy" (real 1.3.1 failure per TPGi); source TPGi
-- [ ] `ATH-014` — demoted to Best Practice (sc N/A, scLabel "Best Practice", wcagVersion/Level cleared); desc/rem updated; source TPGi
-- [ ] `ATH-021` keywords — bulked up (colorblind, error state, link underline, chart, graph, etc.); rem expanded with specific non-color indicator guidance
-- [ ] `ATH-023` title — old: "Form Field Missing a Label" → new: "Text Input Missing a Label"
-- [ ] `ATH-023` desc — old: "A form field has no visible label…" → new: "A text input, textarea, or similar text-entry field has no visible label…" (scoped to text inputs)
-- [ ] `ATH-053` desc — old: "A dropdown menu or select element has no label. Screen reader users do not know what choice they are making." → new: added concrete screen reader example (combo box announcement context)
-- [ ] `ATH-079` — added: 2.4.6 "Heading Does Not Describe the Section" (TPGi)
-- [ ] `ATH-080` — added: 1.4.2 "Audio or Video Autoplays Without Controls" (Deque)
-- [ ] `ATH-081` — added: 1.4.5 "Text Embedded in an Image" (Deque)
-- [ ] `ATH-082` — added: 3.3.2 "Placeholder Used as the Only Label"
-- [ ] `ATH-083` — added: 2.1.4 "Single-Character Keyboard Shortcut Cannot Be Remapped" (WCAG 2.1)
-- [ ] `ATH-084` — added: 3.3.8 "Authentication Requires Solving a Cognitive Test" (WCAG 2.2)
-- [ ] `ATH-085` — added: Best Practice "Positive Tabindex Disrupts Focus Order" (Deque)
-- [ ] `ATH-086` — added: 4.1.2 "ARIA Menu Roles Used on Navigation Links" (Adrian Roselli)
-- [ ] `ATH-087` — added: 1.3.1 "CSS display:contents Removes Element Semantics" (Eric Bailey)
-- [ ] `ATH-088` — added: 4.1.2 "Interactive Element Nested Inside Another Interactive Element" (Adrian Roselli)
-- [ ] `ATH-089` — added: Best Practice "Custom CSS Scrollbar Overrides User Accessibility Settings" (Eric Bailey)
-- [ ] `ATH-027` rem — expanded with aria-label substring rule (Eric Bailey) and voice control activation guidance
-- [ ] `ATH-055` keywords — added: click here, read more, here, more, learn more, link text outside anchor (Eric Bailey / Heydon Pickering)
-- [ ] `ATH-081` rem/keywords — added canvas-specific instance (Heydon Pickering)
-- [ ] `ATH-097` — added: 3.2.4 "Inconsistent Identification" (ATH)
-- [ ] `ATH-098` — added: 4.1.2 "Link Used as Button" (ATH)
-- [ ] `ATH-099` — added: 4.1.2 "Accessible Name Contains Role or State" (ATH)
-- [ ] `ATH-100` — added: 4.1.2 "Disabled Control Exposed to Assistive Technology" (ATH)
-- [ ] `ATH-101` — added: 2.1.1 "Scrollable Region Not Keyboard Accessible" (ATH)
-- [ ] `ATH-102` — added: 1.1.1 "Decorative Content Exposed to Assistive Technology" (ATH)
-- [ ] `ATH-103` — added: Best Practice "All-Caps Text" (ATH)
-- [ ] `ATH-104` — added: 2.4.2 "SPA Route Change Not Announced" (ATH)
-- [ ] `ATH-105` — added: 2.1.1 "Unfamiliar or Non-Standard Keyboard Control" (ATH)
-- [ ] `ATH-106` — added: 3.3.1 "Error Only Visible When Field Is Focused" (ATH)
-- [ ] `ATH-107` — added: 1.3.1 "Non-Link Style" (ATH)
+- [ ] `ATH-109` ,  added: 2.5.2 "Activation Fires on Pointer Down Instead of Pointer Up"
+- [ ] `ATH-110` ,  added: 3.3.7 "Form Requires Re-entry of Previously Provided Information"
+- [ ] `ATH-111` ,  added: 3.2.6 "Help Mechanism Absent or Repositioned Across Pages"
+- [ ] `ATH-009` desc/rem ,  tightened to emphasize purpose vs. visual description; source changed to Deque
+- [ ] `ATH-016` rem ,  old: "…programmatically using the required…" → new: "…add the required or aria-required attribute…so screen readers announce it as required"
+- [ ] `ATH-017` desc ,  old: "…not programmatically linked to the input field" → new: "…no code-level link to the input field"
+- [ ] `ATH-023` desc ,  old: "…not programmatically linked to the field…" → new: "…not linked to the field in code…"
+- [ ] `ATH-085` rem ,  old: "…make an element programmatically focusable…" → new: "…make an element focusable by script…"
+- [ ] `ATH-013` desc/rem/keywords ,  repurposed from "skipped levels" to "reversed heading hierarchy" (real 1.3.1 failure per TPGi); source TPGi
+- [ ] `ATH-014` ,  demoted to Best Practice (sc N/A, scLabel "Best Practice", wcagVersion/Level cleared); desc/rem updated; source TPGi
+- [ ] `ATH-021` keywords ,  bulked up (colorblind, error state, link underline, chart, graph, etc.); rem expanded with specific non-color indicator guidance
+- [ ] `ATH-023` title ,  old: "Form Field Missing a Label" → new: "Text Input Missing a Label"
+- [ ] `ATH-023` desc ,  old: "A form field has no visible label…" → new: "A text input, textarea, or similar text-entry field has no visible label…" (scoped to text inputs)
+- [ ] `ATH-053` desc ,  old: "A dropdown menu or select element has no label. Screen reader users do not know what choice they are making." → new: added concrete screen reader example (combo box announcement context)
+- [ ] `ATH-079` ,  added: 2.4.6 "Heading Does Not Describe the Section" (TPGi)
+- [ ] `ATH-080` ,  added: 1.4.2 "Audio or Video Autoplays Without Controls" (Deque)
+- [ ] `ATH-081` ,  added: 1.4.5 "Text Embedded in an Image" (Deque)
+- [ ] `ATH-082` ,  added: 3.3.2 "Placeholder Used as the Only Label"
+- [ ] `ATH-083` ,  added: 2.1.4 "Single-Character Keyboard Shortcut Cannot Be Remapped" (WCAG 2.1)
+- [ ] `ATH-084` ,  added: 3.3.8 "Authentication Requires Solving a Cognitive Test" (WCAG 2.2)
+- [ ] `ATH-085` ,  added: Best Practice "Positive Tabindex Disrupts Focus Order" (Deque)
+- [ ] `ATH-086` ,  added: 4.1.2 "ARIA Menu Roles Used on Navigation Links" (Adrian Roselli)
+- [ ] `ATH-087` ,  added: 1.3.1 "CSS display:contents Removes Element Semantics" (Eric Bailey)
+- [ ] `ATH-088` ,  added: 4.1.2 "Interactive Element Nested Inside Another Interactive Element" (Adrian Roselli)
+- [ ] `ATH-089` ,  added: Best Practice "Custom CSS Scrollbar Overrides User Accessibility Settings" (Eric Bailey)
+- [ ] `ATH-027` rem ,  expanded with aria-label substring rule (Eric Bailey) and voice control activation guidance
+- [ ] `ATH-055` keywords ,  added: click here, read more, here, more, learn more, link text outside anchor (Eric Bailey / Heydon Pickering)
+- [ ] `ATH-081` rem/keywords ,  added canvas-specific instance (Heydon Pickering)
+- [ ] `ATH-097` ,  added: 3.2.4 "Inconsistent Identification" (ATH)
+- [ ] `ATH-098` ,  added: 4.1.2 "Link Used as Button" (ATH)
+- [ ] `ATH-099` ,  added: 4.1.2 "Accessible Name Contains Role or State" (ATH)
+- [ ] `ATH-100` ,  added: 4.1.2 "Disabled Control Exposed to Assistive Technology" (ATH)
+- [ ] `ATH-101` ,  added: 2.1.1 "Scrollable Region Not Keyboard Accessible" (ATH)
+- [ ] `ATH-102` ,  added: 1.1.1 "Decorative Content Exposed to Assistive Technology" (ATH)
+- [ ] `ATH-103` ,  added: Best Practice "All-Caps Text" (ATH)
+- [ ] `ATH-104` ,  added: 2.4.2 "SPA Route Change Not Announced" (ATH)
+- [ ] `ATH-105` ,  added: 2.1.1 "Unfamiliar or Non-Standard Keyboard Control" (ATH)
+- [ ] `ATH-106` ,  added: 3.3.1 "Error Only Visible When Field Is Focused" (ATH)
+- [ ] `ATH-107` ,  added: 1.3.1 "Non-Link Style" (ATH)
 
 ---
 
-- [ ] `detail.copy_all_text` — added: "Copy all"
-- [ ] `detail.copy_all_copied_text` — added: "Copied all"
-- [ ] `detail.copy_all_aria` — added: "Copy description and remediation to clipboard"
-- [ ] `detail.copy_all_announce` — old: "Description and remediation copied" → new: "Finding Details / Description and Possible Remediation Steps copied"
-- [ ] `detail.reset_all_fields_text` — added: "Reset all"
-- [ ] `detail.reset_all_fields_aria` — added: "Reset description and remediation to original values"
-- [ ] `detail.reset_all_fields_announce` — old: "Description and remediation reset to original" → new: "Finding Details / Description and Possible Remediation Steps reset"
-- [ ] `detail.edit_lang_warning` — added: "Edits are session-only — switching language or finding will reset them."
-- [ ] `detail.back_aria` — added: "Back to previous finding"
-- [ ] `search.typewriter_try` — added: "Try: "
-- [ ] `search.typewriter_ext_kb` — added: "ext kb"
-- [ ] `search.typewriter_ext_kb_full` — added: "external keyboard"
-- [ ] `settings.wcag_filter_label` — added: "WCAG Filter"
-- [ ] `settings.wcag_filter_desc` — added: "Filter findings by the WCAG version and conformance level you are auditing to. Each version includes all findings from earlier versions."
-- [ ] `settings.wcag_filter_legend` — old: "WCAG version" → new: "WCAG Version"
-- [ ] `settings.wcag_filter_20` — added: "WCAG 2.0"
-- [ ] `settings.wcag_filter_21` — added: "WCAG 2.1"
-- [ ] `settings.wcag_filter_22` — added: "WCAG 2.2"
-- [ ] `settings.wcag_level_legend` — old: "Conformance level" → new: "Conformance Level"
-- [ ] `settings.wcag_level_a` — added: "Level A"
-- [ ] `settings.wcag_level_aa` — added: "Level AA"
-- [ ] `about.sources_heading` — added: "Sources"
-- [ ] `about.sources_body` — added: "The public corpus is compiled from…"
-- [ ] `about.sources_wcag` — added: "WCAG 2.2 Understanding docs (W3C/WAI)"
-- [ ] `about.sources_axe` — added: "axe-core rule descriptions (Deque)"
-- [ ] `about.sources_webaim` — added: "WebAIM articles and tutorials"
-- [ ] `about.sources_deque` — added: "Deque University course content"
-- [ ] `edit.save_button` — added: "Save changes"
-- [ ] `edit.discard_button` — added: "Discard"
-- [ ] `edit.override_indicator` — added: "Personally edited"
-- [ ] `edit.target_dialog_title` — added: "Save this edit?"
-- [ ] `edit.target_dialog_body` — added: "You're editing a finding while viewing it in {locale}."
-- [ ] `edit.save_as_personal` — added: "Save to my personal entries"
-- [ ] `edit.save_as_personal_desc` — added: "Stored locally on this device and private to you…"
-- [ ] `edit.contribute_to_base` — added: "Suggest to the shared corpus"
-- [ ] `edit.contribute_desc` — added: "Your edit will be queued for the maintainer to review…"
-- [ ] `edit.scope_label` — added: "Apply this change to:"
-- [ ] `edit.scope_lang_only` — added: "This language only ({locale})"
-- [ ] `edit.scope_lang_and_en` — added: "This language + English"
-- [ ] `edit.scope_all_langs` — added: "All languages (update English source)"
-- [ ] `edit.scope_all_langs_desc` — added: "Other languages will be re-translated…"
-- [ ] `edit.personal_ai_warning` — added: "Only {locale} will be saved. Other languages will show AI-translated text…"
-- [ ] `edit.en_switch_dialog_title` — added: "Now editing English"
-- [ ] `edit.en_switch_dialog_body` — added: "Your {locale} version is saved…"
-- [ ] `edit.en_switch_confirm` — added: "Edit English version"
-- [ ] `edit.en_switch_skip` — added: "Skip"
-- [ ] `edit.personal_saved` — added: "Saved to your personal entries."
-- [ ] `edit.contribution_queued` — added: "Edit queued for review."
-- [ ] `contributions.panel_title` — added: "Pending contributions"
-- [ ] `contributions.empty` — added: "No pending contributions."
-- [ ] `contributions.export_button` — added: "Export as JSON"
-- [ ] `contributions.approve` — added: "Approve"
-- [ ] `contributions.reject` — added: "Reject"
-- [ ] `contributions.count` — added: "{count} pending"
-- [ ] `badge.severity_prefix` — added: "Severity: "
-- [ ] `badge.source_prefix` — added: "Source: "
-- [ ] `badge.wcag_prefix` — added: "WCAG "
-- [ ] `badge.level_prefix` — added: "Level "
-- [ ] `common.skip_to_main` — added: "Skip to main content"
-- [ ] `settings.model_label` — added: "Model"
-- [ ] `results.loading_announce` — old: "Loading {count} Results" → new: "Loading results"
-- [ ] `detail.save_rewrite_text` — old: "Save & Rewrite" → new: "Save & Revise Selected"
-- [ ] `settings.language_desc` — old: "Defaults to your browser's language." → new: "Use the dropdown and Change button below to select a new one. The change won't be saved until you press the Save button at the bottom."
-- [ ] `settings.privacy_body_2` — old: "This app stores the following in your browser's localStorage: …sort priority setting, …voting data" → new: "…your browser: …active AI provider, …voting data, a list of recently viewed finding IDs (localStorage), any findings you create or copy (localStorage), and the ID of the last finding you had open (sessionStorage — cleared when the tab closes)."
-- [ ] `results.copy_link` — added: "Copy link"
-- [ ] `results.copy_link_aria` — added: "Copy link to these search results"
-- [ ] `results.copied_link` — added: "Copied!"
-- [ ] `results.back_to_top` — added: "Back to Top"
-- [ ] `results.unpin_all` — added: "Unpin All"
-- [ ] `results.count_badge` — added: "{count} Results — All results for \"{filter}\""
-- [ ] `settings.reset_all` — old: "Reset All" → new: "Reset Settings & Clear Data"
-- [ ] `settings.confirm_reset_all_heading` — old: "Reset All?" → new: "Reset Settings & Clear Data?"
-- [ ] `settings.pinned_results_label` — added: "Pinned Results"
-- [ ] `settings.pinned_results_desc` — added: "Items you've pinned appear above all search results."
-- [ ] `settings.pinned_results_empty` — added: "Nothing pinned."
-- [ ] `settings.unpin_all` — added: "Unpin All"
-- [ ] `settings.unpin_all_done` — added: "All Unpinned"
-- [ ] `about.feature_pinning_label` — added: "Pinned Results"
-- [ ] `about.feature_pinning_body` — added: "Pin any finding to keep it at the top across all searches and views. Use the priority arrows to rank others, star to float a finding to the very top, or archive to remove it from view."
-- [ ] `settings.privacy_body_2` — old: "…voting data (votes, stars…" → new: "…priority data (priorities, stars…"
-- [ ] `settings.language_select_one` — old: "Select one" → new: "Choose Language"
-- [ ] `detail.source_heading` — added: "Source:"
-- [ ] `settings.agentic_mode_label` — added: "Agentic Mode (Claude only)"
-- [ ] `settings.agentic_mode_desc` — added: "AI will search your corpus to match your style and technical depth when rewriting."
-- [ ] `detail.agentic_mode_label` — added: "Agentic Mode (uses corpus search)"
-- [ ] `detail.agentic_mode_help` — added: "AI searches the corpus to match your style and depth when rewriting"
-- [ ] `detail.agentic_mode_hint` — added: "AI will search the corpus to match your established style and technical depth"
+- [ ] `detail.copy_all_text` ,  added: "Copy all"
+- [ ] `detail.copy_all_copied_text` ,  added: "Copied all"
+- [ ] `detail.copy_all_aria` ,  added: "Copy description and suggested fix to clipboard"
+- [ ] `detail.copy_all_announce` ,  old: "Description and suggested fix copied" → new: "Finding Details / Description and Possible Suggested Fix Steps copied"
+- [ ] `detail.reset_all_fields_text` ,  added: "Reset all"
+- [ ] `detail.reset_all_fields_aria` ,  added: "Reset description and suggested fix to original values"
+- [ ] `detail.reset_all_fields_announce` ,  old: "Description and suggested fix reset to original" → new: "Finding Details / Description and Possible Suggested Fix Steps reset"
+- [ ] `detail.edit_lang_warning` ,  added: "Edits are session-only ,  switching language or finding will reset them."
+- [ ] `detail.back_aria` ,  added: "Back to previous finding"
+- [ ] `search.typewriter_try` ,  added: "Try: "
+- [ ] `search.typewriter_ext_kb` ,  added: "ext kb"
+- [ ] `search.typewriter_ext_kb_full` ,  added: "external keyboard"
+- [ ] `settings.wcag_filter_label` ,  added: "WCAG Filter"
+- [ ] `settings.wcag_filter_desc` ,  added: "Filter findings by the WCAG version and conformance level you are auditing to. Each version includes all findings from earlier versions."
+- [ ] `settings.wcag_filter_legend` ,  old: "WCAG version" → new: "WCAG Version"
+- [ ] `settings.wcag_filter_20` ,  added: "WCAG 2.0"
+- [ ] `settings.wcag_filter_21` ,  added: "WCAG 2.1"
+- [ ] `settings.wcag_filter_22` ,  added: "WCAG 2.2"
+- [ ] `settings.wcag_level_legend` ,  old: "Conformance level" → new: "Conformance Level"
+- [ ] `settings.wcag_level_a` ,  added: "Level A"
+- [ ] `settings.wcag_level_aa` ,  added: "Level AA"
+- [ ] `about.sources_heading` ,  added: "Sources"
+- [ ] `about.sources_body` ,  added: "The public corpus is compiled from…"
+- [ ] `about.sources_wcag` ,  added: "WCAG 2.2 Understanding docs (W3C/WAI)"
+- [ ] `about.sources_axe` ,  added: "axe-core rule descriptions (Deque)"
+- [ ] `about.sources_webaim` ,  added: "WebAIM articles and tutorials"
+- [ ] `about.sources_deque` ,  added: "Deque University course content"
+- [ ] `edit.save_button` ,  added: "Save changes"
+- [ ] `edit.discard_button` ,  added: "Discard"
+- [ ] `edit.override_indicator` ,  added: "Personally edited"
+- [ ] `edit.target_dialog_title` ,  added: "Save this edit?"
+- [ ] `edit.target_dialog_body` ,  added: "You're editing a finding while viewing it in {locale}."
+- [ ] `edit.save_as_personal` ,  added: "Save to my personal entries"
+- [ ] `edit.save_as_personal_desc` ,  added: "Stored locally on this device and private to you…"
+- [ ] `edit.contribute_to_base` ,  added: "Suggest to the shared corpus"
+- [ ] `edit.contribute_desc` ,  added: "Your edit will be queued for the maintainer to review…"
+- [ ] `edit.scope_label` ,  added: "Apply this change to:"
+- [ ] `edit.scope_lang_only` ,  added: "This language only ({locale})"
+- [ ] `edit.scope_lang_and_en` ,  added: "This language + English"
+- [ ] `edit.scope_all_langs` ,  added: "All languages (update English source)"
+- [ ] `edit.scope_all_langs_desc` ,  added: "Other languages will be re-translated…"
+- [ ] `edit.personal_ai_warning` ,  added: "Only {locale} will be saved. Other languages will show AI-translated text…"
+- [ ] `edit.en_switch_dialog_title` ,  added: "Now editing English"
+- [ ] `edit.en_switch_dialog_body` ,  added: "Your {locale} version is saved…"
+- [ ] `edit.en_switch_confirm` ,  added: "Edit English version"
+- [ ] `edit.en_switch_skip` ,  added: "Skip"
+- [ ] `edit.personal_saved` ,  added: "Saved to your personal entries."
+- [ ] `edit.contribution_queued` ,  added: "Edit queued for review."
+- [ ] `contributions.panel_title` ,  added: "Pending contributions"
+- [ ] `contributions.empty` ,  added: "No pending contributions."
+- [ ] `contributions.export_button` ,  added: "Export as JSON"
+- [ ] `contributions.approve` ,  added: "Approve"
+- [ ] `contributions.reject` ,  added: "Reject"
+- [ ] `contributions.count` ,  added: "{count} pending"
+- [ ] `badge.severity_prefix` ,  added: "Severity: "
+- [ ] `badge.source_prefix` ,  added: "Source: "
+- [ ] `badge.wcag_prefix` ,  added: "WCAG "
+- [ ] `badge.level_prefix` ,  added: "Level "
+- [ ] `common.skip_to_main` ,  added: "Skip to main content"
+- [ ] `settings.model_label` ,  added: "Model"
+- [ ] `results.loading_announce` ,  old: "Loading {count} Results" → new: "Loading results"
+- [ ] `detail.save_rewrite_text` ,  old: "Save & Rewrite" → new: "Save & Revise Selected"
+- [ ] `settings.language_desc` ,  old: "Defaults to your browser's language." → new: "Use the dropdown and Change button below to select a new one. The change will not be saved until you press the Save button at the bottom."
+- [ ] `settings.privacy_body_2` ,  old: "This app stores the following in your browser's localStorage: …sort priority setting, …voting data" → new: "…your browser: …active AI provider, …voting data, a list of recently viewed finding IDs (localStorage), any findings you create or copy (localStorage), and the ID of the last finding you had open (sessionStorage ,  cleared when the tab closes)."
+- [ ] `results.copy_link` ,  added: "Copy link"
+- [ ] `results.copy_link_aria` ,  added: "Copy link to these search results"
+- [ ] `results.copied_link` ,  added: "Copied!"
+- [ ] `results.back_to_top` ,  added: "Back to Top"
+- [ ] `results.unpin_all` ,  added: "Unpin All"
+- [ ] `results.count_badge` ,  added: "{count} Results ,  All results for \"{filter}\""
+- [ ] `settings.reset_all` ,  old: "Reset All" → new: "Reset Settings & Clear Data"
+- [ ] `settings.confirm_reset_all_heading` ,  old: "Reset All?" → new: "Reset Settings & Clear Data?"
+- [ ] `settings.pinned_results_label` ,  added: "Pinned Results"
+- [ ] `settings.pinned_results_desc` ,  added: "Items you have pinned appear above all search results."
+- [ ] `settings.pinned_results_empty` ,  added: "Nothing pinned."
+- [ ] `settings.unpin_all` ,  added: "Unpin All"
+- [ ] `settings.unpin_all_done` ,  added: "All Unpinned"
+- [ ] `about.feature_pinning_label` ,  added: "Pinned Results"
+- [ ] `about.feature_pinning_body` ,  added: "Pin any finding to keep it at the top across all searches and views. Use the priority arrows to rank others, star to float a finding to the very top, or archive to remove it from view."
+- [ ] `settings.privacy_body_2` ,  old: "…voting data (votes, stars…" → new: "…priority data (priorities, stars…"
+- [ ] `settings.language_select_one` ,  old: "Select one" → new: "Choose Language"
+- [ ] `detail.source_heading` ,  added: "Source:"
+- [ ] `settings.agentic_mode_label` ,  added: "Agentic Mode (Claude only)"
+- [ ] `settings.agentic_mode_desc` ,  added: "AI will search your corpus to match your style and technical depth when rewriting."
+- [ ] `detail.agentic_mode_label` ,  added: "Agentic Mode (uses corpus search)"
+- [ ] `detail.agentic_mode_help` ,  added: "AI searches the corpus to match your style and depth when rewriting"
+- [ ] `detail.agentic_mode_hint` ,  added: "AI will search the corpus to match your established style and technical depth"

@@ -1,6 +1,6 @@
 # Feature Status
 
-Living tracker of every feature in A11yTextHelper — what's shipped, what's half-done, and what hasn't started.
+Living tracker of every feature in A11yTextHelper, what is shipped, what is half-done, and what has not started.
 
 Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed · 🔲 Not started
 
@@ -10,9 +10,9 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 | Feature | Status | % | Phase |
 | --- | --- | --- | --- |
-| Chrome Extension | 🟡 | 60 | — |
-| Firefox Extension | 🟡 | 60 | — |
-| Electron Desktop | 🟡 | 80 | — |
+| Chrome Extension | 🟡 | 60 | 2 |
+| Firefox Extension | 🟡 | 60 | 2 |
+| Electron Desktop | 🟡 | 80 | 2 |
 | Core Search | ✅ | 95 | 1 |
 | Result List | ✅ | 100 | 1 |
 | Detail Panel | ✅ | 95 | 1 |
@@ -50,21 +50,21 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Summary by Phase
 
-### Phase 1 — Complete (May 6, 2026)
+### Phase 1 ,  Complete (May 6, 2026)
 
 - 20 features shipped and stable; SEO enabled; UI component library consolidated and portable
 - ✅ Core search, result list, detail panel, ratings, pinned findings
 - ✅ Full corpus (133 entries), all linters passing, responsive design
 - ✅ Session persistence, debug tools, animations, Party Mode
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
-- ✅ UI component library (100% — 2 base button components + 12 core primitives: Toggle, RadioChip, Select, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer, Drawer, BottomSheet; deprecated StateButton and IconStateButton removed). Cleaned for portability and ready for npm publishing via feature/ui-library branch
-- ✅ CSS tokenization — all outline offsets, widths, spacing, and motion values use design tokens
-- ✅ Button consolidation — 70+ usages collapsed from 5 component types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with variant/active patterns
-- ✅ Zero dead code — all unused code removed, all imports verified
-- 🟡 Internationalization (80% — 50+ locales, ~60 keys pending translation)
+- ✅ UI component library (100% ,  2 base button components + 12 core primitives: Toggle, RadioChip, Select, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer, Drawer, BottomSheet; deprecated StateButton and IconStateButton removed). Cleaned for portability and ready for npm publishing via feature/ui-library branch
+- ✅ CSS tokenization ,  all outline offsets, widths, spacing, and motion values use design tokens
+- ✅ Button consolidation ,  70+ usages collapsed from 5 component types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with variant/active patterns
+- ✅ Zero dead code ,  all unused code removed, all imports verified
+- 🟡 Internationalization (80% ,  50+ locales, ~60 keys pending translation)
 - Remaining for public launch: Ko-fi donations, GitHub badges, production domain
 
-### Phase 2 — In Progress
+### Phase 2 ,  In Progress
 
 - 10 features in development, 4 features complete
 - ✅ Complete: Frequent findings, narrow results mode, how-to-use/onboarding, PWA/offline
@@ -72,7 +72,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 - 🔧 Backend only: AI Agent (40%), user findings (30%), multilingual edit (40%), import (20%)
 - 🔲 Not started: Advanced search syntax (0%)
 
-### Phase 3 — Planned
+### Phase 3 ,  Planned
 
 - 5 features stubbed or not started
 - 💤 Stubbed: Authentication (10%), Cloud Sync (5%), Analytics (20%)
@@ -81,15 +81,15 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Phase 1 — Complete
+## Phase 1 ,  Complete
 
-Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with clean variant/active patterns. All hardcoded CSS values tokenized. All linters passing (ESLint, Stylelint, Markdownlint). UI component library extracted to `feature/ui-library` branch — clean, portable, zero dead code, ready for npm publishing. All unused code removed; zero unused imports across entire codebase. Ready for Phase 2 backend completion and Phase 3 public launch.
+Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with clean variant/active patterns. All hardcoded CSS values tokenized. All linters passing (ESLint, Stylelint, Markdownlint). UI component library extracted to `feature/ui-library` branch ,  clean, portable, zero dead code, ready for npm publishing. All unused code removed; zero unused imports across entire codebase. Ready for Phase 2 backend completion and Phase 3 public launch.
 
 ---
 
-## Phase 1 Feature Details — Shipped
+## Phase 1 Feature Details ,  Shipped
 
-### Core Search — 95%
+### Core Search ,  95%
 
 Done:
 
@@ -103,19 +103,19 @@ Missing:
 
 ---
 
-### Result List — 100%
+### Result List ,  100%
 
 Done:
 
 - Cards with priority/source/WCAG badges (full text on desktop, short on mobile)
 - Platform badge display showing Web/iOS/Android/Both
-- Upvote / downvote / star / archive buttons per card
+- Rank Up / Rank Down / Star / archive buttons per card
 - Score display, archived visual state
-- Card fold on select — non-selected cards collapse to title-only (CSS `:has()`)
-- Skip link (WCAG 2.4.1) — slides in on focus
+- Card fold on select ,  non-selected cards collapse to title-only (CSS `:has()`)
+- Skip link (WCAG 2.4.1) ,  slides in on focus
 - No-results empty state with SVG illustration
-- Badge click filter — click any priority/source/WCAG badge to filter by it
-- Shareable search URLs — `?q=` param synced via `history.replaceState`
+- Badge click filter ,  click any priority/source/WCAG badge to filter by it
+- Shareable search URLs ,  `?q=` param synced via `history.replaceState`
 - Copy link button in results header copies `?q=` URL to clipboard
 - Pinned findings section above main results with clear pins option
 - Narrow results mode with count display (`X of Y`)
@@ -124,7 +124,7 @@ Done:
 
 ---
 
-### Detail Panel — 95%
+### Detail Panel ,  95%
 
 Done:
 
@@ -133,11 +133,11 @@ Done:
 - Related findings navigation with back button history
 - Reset confirmation modal when >70% of text changed
 - Edit distance guard; `aria-busy` + spinner on AI refine
-- `exportFinding.js` utility (text / markdown / csv) — data layer only
-- **Copy button next to title** — copy just the finding name
-- **Copy buttons for SCs** — copy primary success criterion and related criteria separately
-- Location prefix field with **dynamic "(optional)" label** — disappears when field has value
-- **Clear button for location prefix** — × positioned inside field (matches search clear button UX)
+- `exportFinding.js` utility (text / markdown / csv) ,  data layer only
+- **Copy button next to title** ,  copy just the finding name
+- **Copy buttons for SCs** ,  copy primary success criterion and related criteria separately
+- Location prefix field with **dynamic "(optional)" label** ,  disappears when field has value
+- **Clear button for location prefix** ,  × positioned inside field (matches search clear button UX)
 - Reset button renamed to **"Reset content"**
 - All copy buttons show Check icon for 2 seconds on success, with accessibility announcements
 - Platform badge display with clickable filter integration
@@ -147,7 +147,7 @@ Done:
 
 Missing:
 
-- Export UI — multi-select from result list, format picker, Download/Email delivery options
+- Export UI ,  multi-select from result list, format picker, Download/Email delivery options
 - Save changes button (triggers multilingual edit flow; Phase 2)
 - Personal override indicator badge (`_hasOverride` flag exists, badge missing; Phase 2)
 - Edit scope and target dialogs (Phase 2)
@@ -155,12 +155,12 @@ Missing:
 
 ---
 
-### Ratings (Upvote / Star / Archive) — 100%
+### Ratings (Upvote / Star / Archive) ,  100%
 
 Done:
 
-- `useFindingRatings.js` — localStorage-backed per-finding `{ score, starred, archived }`
-- Upvote / downvote / star / archive in result list UI
+- `useFindingRatings.js` ,  localStorage-backed per-finding `{ score, starred, archived }`
+- Rank Up / Rank Down / Star / archive in result list UI
 - Archive moves item to bottom of sorted list instantly
 - Star disables when archived; focus moves to adjacent card on archive
 - Ratings influence sort order (starred > archived suppressed)
@@ -173,7 +173,7 @@ Missing:
 
 ---
 
-### Settings Panel — 90%
+### Settings Panel ,  90%
 
 Done:
 
@@ -185,7 +185,7 @@ Done:
 - AI Assist: toggle, provider, API key validation, model selector
 - Reset All as BottomSheet with explicit lists (what gets deleted, what resets to defaults with values shown)
 - Privacy & Storage disclosure sheet
-- Upvote/downvote ratings restore on reload
+- Rank Up/Rank Down ratings restore on reload
 - Pinned findings display with clear option
 
 Missing:
@@ -195,7 +195,7 @@ Missing:
 
 ---
 
-### Session Persistence — 100%
+### Session Persistence ,  100%
 
 Done:
 
@@ -204,26 +204,26 @@ Done:
 
 ---
 
-### Debug Tools — 100%
+### Debug Tools ,  100%
 
 Done:
 
-- `FocusDebugger` — visible focus ring overlay
-- `NamesDebugger` — cursor tooltip showing accessible name + source
-- `AiDebugToast` — AI on/off indicator
-- `DeployBanner` — deployment status badge
-- `DebugHelp` — full command reference panel
-- `DebugLauncher` — FAB + spotlight command input
+- `FocusDebugger` ,  visible focus ring overlay
+- `NamesDebugger` ,  cursor tooltip showing accessible name + source
+- `AiDebugToast` ,  AI on/off indicator
+- `DeployBanner` ,  deployment status badge
+- `DebugHelp` ,  full command reference panel
+- `DebugLauncher` ,  FAB + spotlight command input
 - Unified command dispatcher: `debug all/names/deploy/ai assist/skeleton on|off`, party/language off commands
 
 ---
 
-### Pinned Findings — 100%
+### Pinned Findings ,  100%
 
 Done:
 
 - Pin button on every result tile (absolutely positioned inside card)
-- `usePinnedFindings.js` — localStorage-backed `Set` of pinned IDs
+- `usePinnedFindings.js` ,  localStorage-backed `Set` of pinned IDs
 - Pinned section above main results, visible across home / search / badge filter / view-all
 - Persists until unpinned or Reset All; Clear Pins button in Settings (shown only when pins exist)
 - Pin hint shown in search bar hint text when pins are active
@@ -231,7 +231,7 @@ Done:
 
 ---
 
-### Party Mode — 100%
+### Party Mode ,  100%
 
 Done:
 
@@ -244,9 +244,9 @@ Done:
 
 ---
 
-## Phase 2 — In Progress
+## Phase 2 ,  In Progress
 
-### Internationalization — 80%
+### Internationalization ,  80%
 
 Done:
 
@@ -261,7 +261,7 @@ Missing:
 
 ---
 
-### Corpus / Finding Data — 100%
+### Corpus / Finding Data ,  100%
 
 Done:
 
@@ -280,7 +280,7 @@ Missing (future enhancements):
 
 ---
 
-### AI Assist (Single-Shot) — 85%
+### AI Assist (Single-Shot) ,  85%
 
 Files: `src/services/aiService.js`
 
@@ -297,7 +297,7 @@ Missing:
 
 ---
 
-### AI Agent (Agentic Mode) — 65%
+### AI Agent (Agentic Mode) ,  65%
 
 Files: `src/services/agenticAiService.js`, `src/services/searchCorpusTool.js`, `src/components/DetailPanel.jsx`, `src/components/SettingsPanel.jsx`
 
@@ -315,7 +315,7 @@ Missing:
 
 ---
 
-### User Findings (Custom Findings) — 30%
+### User Findings (Custom Findings) ,  30%
 
 Done:
 
@@ -330,7 +330,7 @@ Missing:
 
 ---
 
-### Multilingual Edit Flow — 40%
+### Multilingual Edit Flow ,  40%
 
 Done:
 
@@ -349,7 +349,7 @@ Missing:
 
 ---
 
-### Export Findings — 10%
+### Export Findings ,  10%
 
 Done:
 
@@ -363,7 +363,7 @@ Missing:
 
 ---
 
-### Import / Custom Data Source — 20%
+### Import / Custom Data Source ,  20%
 
 Done:
 
@@ -376,7 +376,7 @@ Missing:
 
 ---
 
-### Ko-fi Integration — 50%
+### Ko-fi Integration ,  50%
 
 Done:
 
@@ -391,9 +391,9 @@ Missing:
 
 ---
 
-## Phase 2 — Complete / Partial
+## Phase 2 ,  Complete / Partial
 
-### Platform Variant Display — 100%
+### Platform Variant Display ,  100%
 
 Done:
 
@@ -403,9 +403,9 @@ Done:
 
 ---
 
-## Phase 2 — Partial/Complete
+## Phase 2 ,  Partial/Complete
 
-### Narrow Results Mode — 100%
+### Narrow Results Mode ,  100%
 
 Done:
 
@@ -418,9 +418,9 @@ Done:
 
 ---
 
-## Phase 2 — Not Started
+## Phase 2 ,  Not Started
 
-### Frequent Findings (Implicit Signal) — 100%
+### Frequent Findings (Implicit Signal) ,  100%
 
 Done:
 
@@ -430,7 +430,7 @@ Done:
 
 ---
 
-### Advanced Search Syntax — 0%
+### Advanced Search Syntax ,  0%
 
 Support `+term` (require) and `-term` (exclude) operators, e.g. `keyboard -wcag2.2`.
 
@@ -438,7 +438,7 @@ Needs: query parser, syntax hint, i18n keys.
 
 ---
 
-### How To Use / Onboarding — 100%
+### How To Use / Onboarding ,  100%
 
 Done:
 
@@ -450,9 +450,9 @@ Done:
 
 ---
 
-## Phase 3 — Stubbed / Not Started
+## Phase 3 ,  Stubbed / Not Started
 
-### Authentication — 10%
+### Authentication ,  10%
 
 Done:
 
@@ -466,7 +466,7 @@ Missing:
 
 ---
 
-### Cloud Sync — 5%
+### Cloud Sync ,  5%
 
 Done:
 
@@ -479,7 +479,7 @@ Missing:
 
 ---
 
-### PWA / Offline — 100%
+### PWA / Offline ,  100%
 
 Done:
 
@@ -490,7 +490,7 @@ Done:
 
 ---
 
-### Analytics (Umami) — 20%
+### Analytics (Umami) ,  20%
 
 Done:
 
@@ -503,7 +503,7 @@ Missing:
 
 ---
 
-### Ad Tiles — 100% (Infrastructure) / 0% (Live Delivery)
+### Ad Tiles ,  100% (Infrastructure) / 0% (Live Delivery)
 
 Done:
 
@@ -520,7 +520,7 @@ Missing:
 
 ## Distribution Targets
 
-### Chrome Extension — 60%
+### Chrome Extension ,  60%
 
 Branch: `feature/chrome-extension`
 
@@ -538,7 +538,7 @@ Missing:
 
 ---
 
-### Firefox Extension — 60%
+### Firefox Extension ,  60%
 
 Branch: `feature/firefox-extension`
 
@@ -557,7 +557,7 @@ Missing:
 
 ---
 
-### Electron Desktop — 80%
+### Electron Desktop ,  80%
 
 Branch: `feature/electron-app`
 
@@ -581,6 +581,6 @@ Missing:
 
 Items tagged `[launch-blocker]` in TODO.md:
 
-1. **Umami analytics** — account + ID + zero-cookie verification
-2. **GDPR disclosure** — `docs/GDPR-DRAFT.md` exists; needs legal review + publish
-3. **Google / GitHub OAuth** — Supabase stubs must be activated + tested
+1. **Umami analytics** ,  account + ID + zero-cookie verification
+2. **GDPR disclosure** ,  `docs/GDPR-DRAFT.md` exists; needs legal review + publish
+3. **Google / GitHub OAuth** ,  Supabase stubs must be activated + tested

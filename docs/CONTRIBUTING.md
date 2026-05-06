@@ -1,6 +1,6 @@
 # Contributing
 
-Contributions welcome — especially finding entries, keyword improvements, and bug fixes.
+Contributions welcome ,  especially finding entries, keyword improvements, and bug fixes.
 
 ## Setup
 
@@ -17,8 +17,8 @@ Findings go in `src/data/corpus.json`. See the **Finding schema** section in the
 
 A few things that matter most:
 
-- **Keywords** drive search relevance — include element name, component type, issue type, and terms an auditor would naturally search.
-- **Descriptions and remediation** should be plain language, short sentences, no unexplained jargon. Write for a developer who has never done accessibility work.
+- **Keywords** drive search relevance ,  include element name, component type, issue type, and terms an auditor would naturally search.
+- **Descriptions and suggested fixes** should be plain language, short sentences, no unexplained jargon. Write for a developer who has never done accessibility work.
 - **Sources** must be public (WCAG Understanding docs, WebAIM, Deque, axe-core). Private audit data will not be accepted.
 - **IDs** increment from the highest existing `ATH-` number.
 
