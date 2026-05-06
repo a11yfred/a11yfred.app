@@ -14,10 +14,17 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 - [x] **Comprehensive code review and refactoring** `[code]` ,  First-pass and second-pass refactoring complete. Eliminated ~90 lines of duplicate code, replaced ~30 magic numbers with named constants, extracted utility hooks and functions. All linters passing, zero unused imports.
 
+**Completed in recent session (May 6, 2026):**
+
+- [x] **Code cleanup and dead code removal** `[code]` ,  Removed unused _onSelect parameter, unused skipBtnRefs ref. Extracted 3 magic timeout values (80ms, 400ms, 5000ms) to named constants. All linters passing.
+
 **Identified for future work (lower priority):**
 
+- [ ] **Break large components into single-responsibility pieces** `[code]` `[refactor]` ,  High-effort refactoring: DetailPanel (659 lines, 25+ useState) → extract copy/undo logic to useDetailPanelClipboard hook, AI refinement to useDetailPanelRefine hook; ResultList (515 lines) → extract keyboard nav to useResultListKeyboard hook, narrow mode to sub-component; SettingsPanel (786 lines, 16+ state variables) → split into AiSettingsSection, SearchSettingsSection, LanguageSettingsSection, ResetDataSection.
+- [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  App.jsx AppContent receives 20+ state/setter pairs. Consolidate into context objects (settings context, search context, UI state context) or custom hooks to reduce surface area. Reduces prop count from 30+ to 2-3 per component.
+- [ ] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Modal/drawer state pattern repeated 4+ times (settingsOpen, aboutOpen, etc.); keyboard shortcut handling repeated (App.jsx, ResultList.jsx); localStorage try/catch pattern repeated 3+ times. Create useModalState, useKeyboardShortcuts, useLocalStorage custom hooks.
+- [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Codebase is currently untyped JavaScript. Add JSDoc comments to complex functions and hooks (useFindingSearch.js, useContributionQueue.js, App.jsx), or migrate to TypeScript for full type checking. Improves IDE autocomplete and catches type errors at dev time.
 - [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1303 lines. Extract theme manager, search manager, party mode into hooks.
-- [ ] **Refactor SettingsPanel** `[code]` `[refactor]` ,  734 lines, 16+ state variables. Split into AiSettingsSection, SearchSettingsSection, LanguageSettingsSection, ResetDataSection.
 - [ ] **Standardize locale/language naming** `[code]` `[i18n]` ,  Mixed usage across hooks; standardize throughout.
 - [ ] **Add JSDoc to complex hooks** `[code]` ,  useFindingSearch.js and useContributionQueue.js need parameter/return type docs.
 
