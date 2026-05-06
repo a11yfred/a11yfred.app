@@ -67,8 +67,16 @@ button {
 }
 
 .btn-icon {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
   flex-shrink: 0;
+}
+
+button > .btn-icon {
+  display: inline;
 }
 
 .btn svg {
