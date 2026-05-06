@@ -26,8 +26,6 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 **Day 1 for Phase 1 public release** (ship with these):
 
-- [ ] **Ko-fi donations live** `[infra]` `[manual]` ,  Create account, add username to footer, test widget.
-- [ ] **GitHub README badges** `[docs]` `[manual]` ,  Add build status, license, version, Netlify deploy badges.
 - [ ] **Production domain configured** `[infra]` `[manual]` ,  Confirm domain, configure DNS, enable HTTPS, update canonical URL.
 
 ---
@@ -77,8 +75,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ## Accessibility (A11Y)
 
-- [ ] **Verify Ko-fi patch selectors against live DOM** `[a11y]` ,  Confirm selectors match live Ko-fi DOM (selectors may drift), adjust if needed.
-
 ---
 
 ## Internationalization (i18n)
@@ -90,7 +86,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 ## Plugins
 
 - [ ] **Easter egg locale bundle** `[code]` `[i18n]` ,  18 locales built and functional; extraction to standalone package pending. **Remaining**: (1) extract locale JSONs and `EASTER_EGG_LOCALES` map to `src/plugins/easter-eggs/`, (2) implement lazy-loading for locale files to avoid bloating main bundle, (3) document plugin API for drop-in usage in other React projects
-- [ ] **Ko-fi a11y patch as standalone plugin** `[code]` `[a11y]` ,  Patch is working in `App.jsx`; extraction to plugin pending. **Remaining**: (1) extract `patchKofiA11y` to `src/plugins/kofi/KofiWidget.jsx` and `index.js`, (2) include self-contained `kofi.css`, (3) document selectors and note maintenance burden if Ko-fi's markup changes
 
 ---
 
@@ -181,4 +176,5 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ Document AI provider privacy comparison in README
 - ✅ Advanced search syntax (query parser for +term and -term operators)
 - ✅ Phase 2 stubs review (verified against Supabase JS v2 SDK docs)
-- 💤 Deferred: SCSS migration, corpus pre-translation, Compare mode, Ko-fi pre-widget phase, GitHub Sponsors
+- ✅ GitHub README badges (License, Version, Node.js)
+- 💤 Deferred: SCSS migration, corpus pre-translation, Compare mode, Ko-fi donations, Ko-fi a11y patch, GitHub Sponsors
