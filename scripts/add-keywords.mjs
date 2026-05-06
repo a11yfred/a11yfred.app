@@ -25,8 +25,8 @@ const categoryKeywords = {
 function addMissingKeywords(entry) {
   const titleLower = (entry.title || '').toLowerCase();
   const descLower = (entry.desc || '').toLowerCase();
-  const remLower = (entry.rem || '').toLowerCase();
-  const combinedLower = titleLower + ' ' + descLower + ' ' + remLower;
+  const fixLower = (entry.fix || '').toLowerCase();
+  const combinedLower = titleLower + ' ' + descLower + ' ' + fixLower;
 
   const currentKeywords = entry.keywords || [];
   const currentKeywordsLower = currentKeywords.map(k => k.toLowerCase());

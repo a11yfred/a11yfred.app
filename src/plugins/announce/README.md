@@ -37,8 +37,8 @@ Prefix messages with context: `"Context: Action"` (e.g., "Settings: Saved", "Sea
 
 ## Priority levels
 
-- `'polite'` — waits for natural pause (default, for confirmations/results)
-- `'assertive'` — interrupts immediately (for errors/alerts only)
+- `'polite'`: waits for natural pause (default, for confirmations and results)
+- `'assertive'`: interrupts immediately (for errors and alerts only)
 
 ## When to use
 
@@ -49,7 +49,7 @@ Use `announce()` for:
 - Background changes: theme/language switches
 - Errors: validation failures, network errors (use assertive)
 
-**Don't announce:** focus-managed changes (modals, page transitions) — screen readers announce focus targets automatically.
+**Don't announce:** focus-managed changes (modals, page transitions). Screen readers announce focus targets automatically.
 
 ## Hook style
 

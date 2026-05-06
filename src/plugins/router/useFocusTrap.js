@@ -11,7 +11,7 @@ const FOCUSABLE_SELECTORS = [
 
 /**
  * Restricts Tab / Shift+Tab to elements within `ref.current` while `active`.
- * Use on modals, bottom sheets, and off-canvas panels — any layer that should
+ * Use on modals, bottom sheets, and off-canvas panels, any layer that should
  * hold focus until explicitly dismissed.
  *
  * @param {React.RefObject} ref      - container element to trap focus within

@@ -5,7 +5,7 @@ import { useRouter } from './Router.jsx'
  * Sets document.title to "AppName | pageTitle" while the calling component
  * is mounted, then resets to "AppName" on unmount.
  *
- * The app name comes from the `appName` prop on <Router> — set it once
+ * The app name comes from the `appName` prop on <Router>, set it once
  * there and every page automatically uses the same base title.
  *
  * Usage:

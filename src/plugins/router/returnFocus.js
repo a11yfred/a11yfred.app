@@ -1,10 +1,10 @@
 /**
- * returnFocus(el) — programmatic focus that always shows the visible focus ring.
+ * returnFocus(el), programmatic focus that always shows the visible focus ring.
  *
  * Plain .focus() only triggers :focus-visible when the browser's keyboard-modality
  * flag is set (i.e. the user was last navigating by keyboard). When a dialog or
  * panel was opened with a mouse click and then dismissed, .focus() moves focus
- * back to the trigger silently — no ring, no visual cue of where you landed.
+ * back to the trigger silently, no ring, no visual cue of where you landed.
  *
  * This utility adds `data-focus-return` before calling .focus() so the CSS rule
  *   [data-focus-return]:focus { outline: … }

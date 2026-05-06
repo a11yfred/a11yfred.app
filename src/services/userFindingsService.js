@@ -6,7 +6,7 @@
  *
  * Phase 2 (Supabase): swap the body of each function to call the Supabase
  * `user_findings` table. The hook (useUserFindings.js) and all callers remain
- * unchanged — only this file needs updating.
+ * unchanged, only this file needs updating.
  */
 
 const STORAGE_KEY = 'userFindings'
@@ -73,7 +73,7 @@ export function createUserFinding(fields = {}) {
     priority:  'Medium',
     platform:  'both',
     desc:      '',
-    rem:       '',
+    fix:       '',
     related:   [],
     keywords:  [],
     source:    'user',
@@ -95,10 +95,10 @@ export function copyUserFinding(sourceFinding) {
     title:      `${sourceFinding.title} (copy)`,
     sc:         sourceFinding.sc        ?? '',
     scLabel:    sourceFinding.scLabel   ?? '',
-    priority:   sourceFinding.priority  ?? 'Medium',
+    severity:   sourceFinding.severity  ?? 'Medium',
     platform:   sourceFinding.platform  ?? 'both',
     desc:       sourceFinding.desc      ?? '',
-    rem:        sourceFinding.rem       ?? '',
+    fix:        sourceFinding.fix       ?? '',
     related:    [...(sourceFinding.related   || [])],
     keywords:   [...(sourceFinding.keywords  || [])],
     copiedFrom: sourceFinding.id,

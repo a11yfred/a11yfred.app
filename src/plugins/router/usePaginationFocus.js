@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * Moves focus to `ref.current` whenever `page` changes — but NOT on initial
+ * Moves focus to `ref.current` whenever `page` changes, but NOT on initial
  * mount, and NOT if the element's innerHTML is the same as the previous page.
  * Use inside paginated modals and bottom sheets so keyboard and screen
  * reader users land at the top of the new page content rather than wherever

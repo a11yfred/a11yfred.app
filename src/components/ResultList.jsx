@@ -2,7 +2,7 @@ import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
-import { PRIORITY_VARS } from '../data/priorityStyles.js'
+import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
 import IconButton from './ui/IconButton.jsx'
 import Badge from './ui/Badge.jsx'
@@ -12,7 +12,7 @@ import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
 
-export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin, onClearPins }) {
+export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showVoting = true, pinnedIds = new Set(), onPin, onClearPins }) {
   const t = useT()
   if (!findings.length) return null
   return (
@@ -34,8 +34,8 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
         onSelect={onSelect}
         query=""
         ratings={ratings}
-        onUpvote={onUpvote}
-        onDownvote={onDownvote}
+        onRankUp={onRankUp}
+        onRankDown={onRankDown}
         onStar={onStar}
         onArchive={onArchive}
         showVoting={showVoting}
@@ -49,7 +49,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
   )
 }
 
-export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showPrioritySort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
+export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showPrioritySort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
   const t = useT()
   const itemRefs = useRef({})
   const skipBtnRefs = useRef({})
@@ -128,17 +128,17 @@ export default function ResultList({ results, selected, _onSelect, query, rating
       default:
         if (e.shiftKey && (e.key === 'ArrowUp' || e.key === '↑')) {
           e.preventDefault()
-          onUpvote?.(currentFinding.id)
+          onRankUp?.(currentFinding.id)
           const newRating = ratings[currentFinding.id] || DEFAULT_RATING
-          announce(t('announce.upvoted', { title: currentFinding.title, score: newRating.score + 1 }))
+          announce(t('announce.ranked_up', { title: currentFinding.title, score: newRating.score + 1 }))
         } else if (e.shiftKey && (e.key === 'ArrowDown' || e.key === '↓')) {
           e.preventDefault()
-          onDownvote?.(currentFinding.id)
+          onRankDown?.(currentFinding.id)
           const newRating = ratings[currentFinding.id] || DEFAULT_RATING
-          announce(t('announce.downvoted', { title: currentFinding.title, score: newRating.score - 1 }))
+          announce(t('announce.ranked_down', { title: currentFinding.title, score: newRating.score - 1 }))
         }
     }
-  }, [displayResults, ratings, onStar, onArchive, onUpvote, onDownvote, t])
+  }, [displayResults, ratings, onStar, onArchive, onRankUp, onRankDown, t])
 
   useEffect(() => {
     const listEl = listRef.current
@@ -262,7 +262,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
         {displayResults.map((finding, index) => {
           const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
           const isSelected = selected?.id === finding.id
-          const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
+          const p = SEVERITY_VARS[finding.severity] || SEVERITY_VARS['Best Practice']
           const rating = ratings[finding.id] || DEFAULT_RATING
           const { score, starred, archived } = rating
 
@@ -274,7 +274,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             ? t('results.archived_label', { title: finding.title })
             : `${finding.title}, ${t(p.key)}, ${finding.scLabel}, ${truncDesc}`
 
-          // Truncate title used in vote-button labels only — full title used in announce() calls
+          // Truncate title used in vote-button labels only, full title used in announce() calls
           const shortTitle = (() => {
             if (finding.title.length <= TITLE_TRUNCATE_LENGTH) return finding.title
             const cut = finding.title.slice(0, TITLE_TRUNCATE_LENGTH)
@@ -289,8 +289,8 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             void e.currentTarget.offsetWidth // Trigger reflow
             e.currentTarget.classList.add('animating')
             setTimeout(() => e.currentTarget.classList.remove('animating'), 400)
-            onUpvote?.(finding.id)
-            announce(t('announce.upvoted', { title: finding.title, score: score + 1 }))
+            onRankUp?.(finding.id)
+            announce(t('announce.ranked_up', { title: finding.title, score: score + 1 }))
           }
 
           function handleDownvote(e) {
@@ -300,8 +300,8 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             void e.currentTarget.offsetWidth // Trigger reflow
             e.currentTarget.classList.add('animating')
             setTimeout(() => e.currentTarget.classList.remove('animating'), 400)
-            onDownvote?.(finding.id)
-            announce(t('announce.downvoted', { title: finding.title, score: score - 1 }))
+            onRankDown?.(finding.id)
+            announce(t('announce.ranked_down', { title: finding.title, score: score - 1 }))
           }
 
           function handleStar(e) {
@@ -387,7 +387,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                       variant="priority"
                       bg={archived ? undefined : p.bg}
                       color={archived ? undefined : p.color}
-                      prefix={finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
+                      prefix={finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
                     >
                       {t(p.key)}
                     </Badge>
@@ -448,8 +448,8 @@ export default function ResultList({ results, selected, _onSelect, query, rating
 
                 <IconButton
                   variant="tertiary"
-                  label={t('results.upvote', { title: shortTitle })}
-                  title={t('results.upvote', { title: shortTitle })}
+                  label={t('results.rank_up', { title: shortTitle })}
+                  title={t('results.rank_up', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleUpvote}
                   icon={<ThumbsUp size={14} aria-hidden="true" />}
@@ -466,8 +466,8 @@ export default function ResultList({ results, selected, _onSelect, query, rating
 
                 <IconButton
                   variant="tertiary"
-                  label={t('results.downvote', { title: shortTitle })}
-                  title={t('results.downvote', { title: shortTitle })}
+                  label={t('results.rank_down', { title: shortTitle })}
+                  title={t('results.rank_down', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleDownvote}
                   icon={<ThumbsDown size={14} aria-hidden="true" />}

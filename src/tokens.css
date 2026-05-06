@@ -34,15 +34,15 @@
      ≥ 3:1 against both --bg and --bg-subtle surfaces. */
   --focus:           #5548c8;  /* 6.4:1 against #fff */
 
-  /* Color — priority badges (light mode) */
-  --priority-critical-text: #a32d2d;
-  --priority-critical-bg:   #fcebeb;
-  --priority-high-text:     #854f0b;
-  --priority-high-bg:       #faeeda;
-  --priority-medium-text:   #185fa5;
-  --priority-medium-bg:     #e6f1fb;
-  --priority-low-text:      #3b6d11;
-  --priority-low-bg:        #eaf3de;
+  /* Color — severity badges (light mode) */
+  --severity-critical-text: #a32d2d;
+  --severity-critical-bg:   #fcebeb;
+  --severity-high-text:     #854f0b;
+  --severity-high-bg:       #faeeda;
+  --severity-medium-text:   #185fa5;
+  --severity-medium-bg:     #e6f1fb;
+  --severity-low-text:      #3b6d11;
+  --severity-low-bg:        #eaf3de;
 
   /* Color — source badge (light mode) */
   --source-text: #3730a3;  /* indigo ~8.7:1 on --source-bg */
@@ -83,9 +83,6 @@
   --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
-
-  /* Clearance — special spacing for third-party overlays */
-  --clearance-kofi: 5rem;  /* Mobile bottom clearance for Ko-fi floating button */
 
   /* Borders */
   --radius-sm:   4px;
@@ -178,17 +175,17 @@
   /* #686868 = 3.6:1 on #111, 3.1:1 on #1a1a1a */
   --border-control: #686868;
 
-  /* Priority badge colors — dark mode
+  /* Severity badge colors — dark mode
      Badge bg is rendered on a #111 card. Badge text must be ≥ 4.5:1
      against badge bg; badge bg must be ≥ 3:1 against card bg (#111). */
-  --priority-critical-text: #f28b82;  /* ~7:1 on #3b1515 */
-  --priority-critical-bg:   #3b1515;
-  --priority-high-text:     #f0a050;  /* ~7:1 on #3d2010 */
-  --priority-high-bg:       #3d2010;
-  --priority-medium-text:   #7eb4e8;  /* ~7:1 on #0e2440 */
-  --priority-medium-bg:     #0e2440;
-  --priority-low-text:      #5dca8a;  /* ~7:1 on #0d2d18 */
-  --priority-low-bg:        #0d2d18;
+  --severity-critical-text: #f28b82;  /* ~7:1 on #3b1515 */
+  --severity-critical-bg:   #3b1515;
+  --severity-high-text:     #f0a050;  /* ~7:1 on #3d2010 */
+  --severity-high-bg:       #3d2010;
+  --severity-medium-text:   #7eb4e8;  /* ~7:1 on #0e2440 */
+  --severity-medium-bg:     #0e2440;
+  --severity-low-text:      #5dca8a;  /* ~7:1 on #0d2d18 */
+  --severity-low-bg:        #0d2d18;
 
   /* Color — source badge (dark mode) */
   --source-text: #a5b4fc;  /* ~8.3:1 on --source-bg */

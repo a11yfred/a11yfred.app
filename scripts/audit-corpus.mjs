@@ -62,8 +62,8 @@ function getSentenceLength(text) {
 function findMissingKeywords(entry, commonKeywords) {
   const titleText = (entry.title || '').toLowerCase();
   const descText = (entry.desc || '').toLowerCase();
-  const remText = (entry.rem || '').toLowerCase();
-  const combinedText = titleText + ' ' + descText + ' ' + remText;
+  const fixText = (entry.fix || '').toLowerCase();
+  const combinedText = titleText + ' ' + descText + ' ' + fixText;
 
   const missing = [];
   Object.entries(commonKeywords).forEach(([category, variants]) => {
@@ -77,7 +77,7 @@ function findMissingKeywords(entry, commonKeywords) {
 }
 
 function checkJargonConsistency(entry) {
-  const text = (entry.desc + ' ' + entry.rem).toLowerCase();
+  const text = (entry.desc + ' ' + entry.fix).toLowerCase();
   const issues = [];
 
   Object.entries(JARGON_VARIANTS).forEach(([primary, variants]) => {
@@ -130,16 +130,16 @@ function auditCorpus(corpus, name) {
 
   corpus.forEach(entry => {
     // 1. Check for passive voice
-    const passiveMatches = checkPassiveVoice(entry.desc + ' ' + entry.rem);
+    const passiveMatches = checkPassiveVoice(entry.desc + ' ' + entry.fix);
     if (passiveMatches.length > 0) {
       potentialPassive.push({ id: entry.id, examples: passiveMatches.slice(0, 2) });
     }
 
     // 2. Check reading level
     const descLevel = checkReadingLevel(entry.desc, isPublic);
-    const remLevel = checkReadingLevel(entry.rem, isPublic);
+    const fixLevel = checkReadingLevel(entry.fix, isPublic);
     if (descLevel) readingLevelIssues.push({ id: entry.id, issue: descLevel });
-    if (remLevel) readingLevelIssues.push({ id: entry.id, issue: remLevel });
+    if (fixLevel) readingLevelIssues.push({ id: entry.id, issue: fixLevel });
 
     // 3. Check jargon consistency
     const jargonProbs = checkJargonConsistency(entry);

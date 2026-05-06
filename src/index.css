@@ -329,13 +329,6 @@ select:focus-visible {
   text-align: center;
 }
 
-/* Extra bottom clearance on mobile so the Ko-fi floating button doesn't overlap */
-@media (width < 768px) {
-  .page-footer {
-    padding-bottom: var(--clearance-kofi);
-  }
-}
-
 .footer-credit {
   font-size: var(--fs-body);
   color: var(--text-faint);
@@ -400,8 +393,6 @@ select:focus-visible {
   border-right: 1px solid var(--border);
   overflow-y: auto;
   padding: var(--space-6) var(--space-5);
-  /* Extra bottom clearance on mobile so the Ko-fi floating button doesn't overlap */
-  padding-bottom: var(--clearance-kofi);
   transform: translateX(-100%);
   transition: transform var(--duration-base) var(--ease-in-out);
   will-change: transform;

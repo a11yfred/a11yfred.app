@@ -16,12 +16,12 @@ import { returnFocus } from './returnFocus.js'
  * - Dismisses on Escape (capture phase, before underlying panels) or action buttons
  *
  * Props:
- *   open      boolean                              — whether the modal is visible
- *   onClose   fn                                   — called on Escape or default OK button
- *   heading     string                               — aria-label for the dialog and visible heading text
- *   headingIcon ReactNode                           — optional icon rendered before heading text (visual only)
- *   actions     [{ label, onClick, className }]     — footer buttons; defaults to a single OK button
- *   children    node                                — rendered inside the modal body
+ *   open      boolean                             , whether the modal is visible
+ *   onClose   fn                                  , called on Escape or default OK button
+ *   heading     string                              , aria-label for the dialog and visible heading text
+ *   headingIcon ReactNode                          , optional icon rendered before heading text (visual only)
+ *   actions     [{ label, onClick, className }]    , footer buttons; defaults to a single OK button
+ *   children    node                               , rendered inside the modal body
  */
 export default function Modal({ open, onClose, heading = 'Information', headingIcon, actions, children, returnFocusRef }) {
   const autoTriggerRef = useRef(null)
@@ -48,7 +48,7 @@ export default function Modal({ open, onClose, heading = 'Information', headingI
     }
   }, [open, returnFocusRef])
 
-  // Escape — capture phase so this fires before Drawer / BottomSheet Escape handlers
+  // Escape, capture phase so this fires before Drawer / BottomSheet Escape handlers
   useEffect(() => {
     if (!open) return
     const handler = (e) => {

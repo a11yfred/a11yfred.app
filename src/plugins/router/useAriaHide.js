@@ -16,7 +16,7 @@ const FOCUSABLE = [
  * overlay panel is open, then restores them on close.
  *
  * Before hiding, focus is moved into the panel so that no focused element
- * ends up inside an aria-hidden ancestor — which is an invalid state per
+ * ends up inside an aria-hidden ancestor, which is an invalid state per
  * WAI-ARIA and generates a browser console warning.
  *
  * Stacking: if a body child is already aria-hidden by another overlay, the

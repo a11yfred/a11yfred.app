@@ -17,7 +17,7 @@ function makeDistortionCurve(k = 350) {
 }
 
 function guitar(ctx, dest, hz, t, dur) {
-  // Mix root + 5th before distortion — avoids harsh intermodulation from separate shapers
+  // Mix root + 5th before distortion, avoids harsh intermodulation from separate shapers
   const mixer = ctx.createGain()
   mixer.gain.value = 1
 
@@ -33,7 +33,7 @@ function guitar(ctx, dest, hz, t, dur) {
     osc.stop(t + dur + 0.02)
   }
 
-  // Very light waveshaper + lowpass — sawtooth already has harmonics
+  // Very light waveshaper + lowpass, sawtooth already has harmonics
   const dist = ctx.createWaveShaper()
   dist.curve = makeDistortionCurve(30)
   dist.oversample = '2x'
@@ -132,7 +132,7 @@ function hihat(ctx, dest, t) {
   src.stop(t + 0.035)
 }
 
-// Song 2 (Blur) — simplified: E | E | C | D at 132 BPM
+// Song 2 (Blur), simplified: E | E | C | D at 132 BPM
 const PROG = [82.41, 82.41, 65.41, 73.42]
 
 function scheduleLoop(ctx, dest, startTime, beat) {

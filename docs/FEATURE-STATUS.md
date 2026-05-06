@@ -16,8 +16,8 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Core Search | ✅ | 95 | 1 |
 | Result List | ✅ | 100 | 1 |
 | Detail Panel | ✅ | 95 | 1 |
-| Ratings (Upvote / Star / Archive) | ✅ | 100 | 1 |
-| Pinned Findings | ✅ | 100 | 1 |
+| Ratings (Rank / Star / Archive) | ✅ | 100 | 1 |
+| Pinned Results | ✅ | 100 | 1 |
 | Settings Panel | ✅ | 90 | 1 |
 | Session Persistence | ✅ | 100 | 1 |
 | Debug Tools | ✅ | 100 | 1 |
@@ -53,7 +53,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 ### Phase 1 — Complete (May 6, 2026)
 
 - 20 features shipped and stable; SEO enabled; UI component library consolidated and portable
-- ✅ Core search, result list, detail panel, ratings, pinned findings
+- ✅ Core search, result list, detail panel, ratings, pinned results
 - ✅ Full corpus (133 entries), all linters passing, responsive design
 - ✅ Session persistence, debug tools, animations, Party Mode
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
@@ -107,19 +107,19 @@ Missing:
 
 Done:
 
-- Cards with priority/source/WCAG badges (full text on desktop, short on mobile)
+- Cards with severity/source/WCAG badges (full text on desktop, short on mobile)
 - Platform badge display showing Web/iOS/Android/Both
-- Upvote / downvote / star / archive buttons per card
+- Rank up / rank down / star / archive buttons per card
 - Score display, archived visual state
 - Card fold on select — non-selected cards collapse to title-only (CSS `:has()`)
 - Skip link (WCAG 2.4.1) — slides in on focus
 - No-results empty state with SVG illustration
-- Badge click filter — click any priority/source/WCAG badge to filter by it
+- Badge click filter — click any severity/source/WCAG badge to filter by it
 - Shareable search URLs — `?q=` param synced via `history.replaceState`
 - Copy link button in results header copies `?q=` URL to clipboard
-- Pinned findings section above main results with clear pins option
+- Pinned results section above main results with clear pins option
 - Narrow results mode with count display (`X of Y`)
-- Skip-to-next button on each result card (priority sort mode only)
+- Skip-to-next button on each result card (ranking sort mode only)
 - Sponsored tile preview with admin toggle (dev only)
 
 ---
@@ -128,8 +128,8 @@ Done:
 
 Done:
 
-- Full finding display: title, priority badge, WCAG SC links, source, related findings
-- Copy / Reset desc + rem (individual and "Copy all / Reset all")
+- Full finding display: title, severity badge, WCAG SC links, source, related findings
+- Copy / Reset desc + fix (individual and "Copy all / Reset all")
 - Related findings navigation with back button history
 - Reset confirmation modal when >70% of text changed
 - Edit distance guard; `aria-busy` + spinner on AI refine
@@ -155,12 +155,12 @@ Missing:
 
 ---
 
-### Ratings (Upvote / Star / Archive) — 100%
+### Ratings (Rank / Star / Archive) — 100%
 
 Done:
 
 - `useFindingRatings.js` — localStorage-backed per-finding `{ score, starred, archived }`
-- Upvote / downvote / star / archive in result list UI
+- Rank up / rank down / star / archive in result list UI
 - Archive moves item to bottom of sorted list instantly
 - Star disables when archived; focus moves to adjacent card on archive
 - Ratings influence sort order (starred > archived suppressed)
@@ -185,7 +185,7 @@ Done:
 - AI Assist: toggle, provider, API key validation, model selector
 - Reset All as BottomSheet with explicit lists (what gets deleted, what resets to defaults with values shown)
 - Privacy & Storage disclosure sheet
-- Upvote/downvote ratings restore on reload
+- Rank up/rank down ratings restore on reload
 - Pinned findings display with clear option
 
 Missing:
@@ -218,7 +218,7 @@ Done:
 
 ---
 
-### Pinned Findings — 100%
+### Pinned Results — 100%
 
 Done:
 
@@ -265,7 +265,7 @@ Missing:
 
 Done:
 
-- 89 public corpus entries with full schema (title, desc, rem, priority, platform, WCAG SC, keywords, related)
+- 89 public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
 - Platform classification: 47 web-only, 68 web & mobile (both), 3 iOS, 3 Android, 3 other platform variants
 - All entries 100% sourced with minimum 2 expert sources each
 - Sources deep-linked where available (e.g., Roselli's "Where to Put Focus When Opening a Modal Dialog")
@@ -297,7 +297,7 @@ Missing:
 
 ---
 
-### AI Agent (Agentic Mode) — 65%
+### AI Agent (Match Existing Style / Agentic AI) — 65%
 
 Files: `src/services/agenticAiService.js`, `src/services/searchCorpusTool.js`, `src/components/DetailPanel.jsx`, `src/components/SettingsPanel.jsx`
 
@@ -305,7 +305,7 @@ Done:
 
 - Multi-turn tool-use loop with 5-turn guard (Anthropic only)
 - Search corpus tool with Fuse.js handler
-- Agentic toggle in Refine section (Claude only)
+- Match Existing Style (Agentic AI) toggle in Refine section (Claude only)
 - i18n support in settings and detail panel
 
 Missing:

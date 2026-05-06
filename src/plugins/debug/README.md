@@ -62,7 +62,7 @@ Type these in the search bar (live search on) or submit them (live search off). 
 
 ## Deployment Commands
 
-These commands control the `DeployBanner` — useful for checking banner appearance during local development.
+These commands control the `DeployBanner`. Use them to check banner appearance during local development.
 
 | Command | Banner text |
 | ------- | ----------- |
@@ -78,7 +78,7 @@ These commands control the `DeployBanner` — useful for checking banner appeara
 
 Anything project-specific is wired up in the application layer and passed to `DebugHelp` via the `customCommands` prop. These are not part of the plugin itself.
 
-**Example — A11yTextHelper:**
+### Example: A11yTextHelper
 
 | Command | Where | Effect |
 | ------- | ----- | ------ |

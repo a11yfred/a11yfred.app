@@ -4,7 +4,7 @@ const IS_DEV = import.meta.env.DEV
 
 /**
  * Dev-only toast indicating whether an AI assist feature was toggled on or off.
- * Project-specific addon — wire up via useAiDebugToast() in your App.
+ * Project-specific addon, wire up via useAiDebugToast() in your App.
  *
  * Props:
  *   state   'on' | 'off' | null
@@ -21,8 +21,8 @@ export function AiDebugToast({ state, fading }) {
 
 /**
  * Returns { toast, fading, fire } for controlling the AI debug toast.
- *   fire('on')  — show "AI Assist ON ✓"
- *   fire('off') — show "AI Assist OFF ✗"
+ *   fire('on') , show "AI Assist ON ✓"
+ *   fire('off'), show "AI Assist OFF ✗"
  */
 export function useAiDebugToast() {
   const [toast, setToast] = useState(null)

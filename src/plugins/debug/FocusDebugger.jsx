@@ -39,7 +39,7 @@ function flashElement(el) {
  * Also briefly flashes the focused element with a teal overlay.
  *
  * Props:
- *   enabled  boolean  — defaults to true; set false to suppress (e.g. "debug all off")
+ *   enabled  boolean , defaults to true; set false to suppress (e.g. "debug all off")
  */
 export function FocusDebugger({ enabled = true }) {
   const [toast, setToast] = useState(null)

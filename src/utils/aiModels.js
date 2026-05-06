@@ -9,17 +9,17 @@ export const PROVIDERS = [
 
 export const PROVIDER_MODELS = {
   anthropic: [
-    { id: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5 — fast, low cost' },
-    { id: 'claude-sonnet-4-6',         label: 'Claude Sonnet 4.6 — balanced (default)' },
-    { id: 'claude-opus-4-7',           label: 'Claude Opus 4.7 — most capable' },
+    { id: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5, fast, low cost' },
+    { id: 'claude-sonnet-4-6',         label: 'Claude Sonnet 4.6, balanced (default)' },
+    { id: 'claude-opus-4-7',           label: 'Claude Opus 4.7, most capable' },
   ],
   openai: [
-    { id: 'gpt-4o-mini', label: 'GPT-4o Mini — fast, low cost' },
-    { id: 'gpt-4o',      label: 'GPT-4o — balanced (default)' },
+    { id: 'gpt-4o-mini', label: 'GPT-4o Mini, fast, low cost' },
+    { id: 'gpt-4o',      label: 'GPT-4o, balanced (default)' },
   ],
   google: [
-    { id: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash — fast (default)' },
-    { id: 'gemini-1.5-pro',   label: 'Gemini 1.5 Pro — most capable' },
+    { id: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash, fast (default)' },
+    { id: 'gemini-1.5-pro',   label: 'Gemini 1.5 Pro, most capable' },
   ],
   microsoft: [],
 }

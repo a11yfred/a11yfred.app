@@ -1,5 +1,5 @@
 /**
- * supabaseClient.js — Phase 2 stub
+ * supabaseClient.js, Phase 2 stub
  *
  * To activate:
  *   npm install @supabase/supabase-js
@@ -41,7 +41,7 @@
  *   create policy "Users can manage their own findings"
  *     on user_findings for all using (auth.uid() = user_id);
  *
- *   -- Synced app settings (avoids storing sensitive keys — API keys stay in localStorage only)
+ *   -- Synced app settings (avoids storing sensitive keys, API keys stay in localStorage only)
  *   create table user_settings (
  *     user_id   uuid primary key references auth.users,
  *     theme     text,

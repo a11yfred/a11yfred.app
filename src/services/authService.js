@@ -1,7 +1,7 @@
 /**
- * authService.js — Phase 2 stub
+ * authService.js, Phase 2 stub
  *
- * Auth is optional — the app is fully functional without signing in.
+ * Auth is optional, the app is fully functional without signing in.
  * Signing in enables settings sync and personal finding storage across devices.
  *
  * To activate: wire the stub functions to Supabase Auth calls.
@@ -64,15 +64,15 @@
 //   }
 
 export async function signInWithGoogle() {
-  throw new Error('Auth not yet implemented — see authService.js Phase 2 comments')
+  throw new Error('Auth not yet implemented, see authService.js Phase 2 comments')
 }
 
 export async function signInWithGithub() {
-  throw new Error('Auth not yet implemented — see authService.js Phase 2 comments')
+  throw new Error('Auth not yet implemented, see authService.js Phase 2 comments')
 }
 
 export async function signOut() {
-  throw new Error('Auth not yet implemented — see authService.js Phase 2 comments')
+  throw new Error('Auth not yet implemented, see authService.js Phase 2 comments')
 }
 
 export async function getUser() {

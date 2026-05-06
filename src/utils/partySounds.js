@@ -123,7 +123,7 @@ function fartNoise() {
   for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1
   const src = ctx.createBufferSource()
   src.buffer = buf
-  // Resonant lowpass sweeps down — classic descending toot
+  // Resonant lowpass sweeps down, classic descending toot
   const lp = ctx.createBiquadFilter()
   lp.type = 'lowpass'
   lp.frequency.setValueAtTime(320, t)
@@ -265,6 +265,6 @@ export function playPartySound() {
   try {
     SOUNDS[Math.floor(Math.random() * SOUNDS.length)]()
   } catch {
-    // AudioContext unavailable or blocked — fail silently
+    // AudioContext unavailable or blocked, fail silently
   }
 }
