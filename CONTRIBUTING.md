@@ -56,7 +56,27 @@ git merge main  # Bring in latest main changes
 git push origin feature/your-feature
 ```
 
-For the UI library, there's special sync logic — see `UI-LIBRARY-SYNC.md`.
+**Special rule for `feature/ui-library`:**
+
+The ui-library branch is a **clean, portable library** focused on reusable components and plugins. It should only receive updates that affect the core library itself:
+
+**Include (cherry-pick from main):**
+
+- Core UI components (Button, IconButton, Toggle, Badge, etc.)
+- Design tokens (tokens.css)
+- Plugins (announce, router, debug)
+- Component library documentation (src/components/ui/README.md)
+
+**Exclude (don't merge/cherry-pick):**
+
+- Application components (DetailPanel, SettingsPanel, SearchBar, etc.)
+- App-specific logic and services
+- App-specific documentation (main README, docs/*, CHANGELOG)
+- Build configuration for the web app
+
+Use `git cherry-pick <commit-hash>` to pull only specific core component or plugin improvements into ui-library. Do **not** use `git merge main` on this branch — it will pull in app-specific changes that belong only on main.
+
+For the full sync workflow, see `UI-LIBRARY-SYNC.md`.
 
 ## Pre-Push Hook
 
