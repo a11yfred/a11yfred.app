@@ -807,6 +807,7 @@ function AppContent({
           pinnedIds={pinnedIds}
           onPin={togglePin}
           onClearPins={clearPins}
+          showVoting={showVoting}
         />
       )}
       {dataError
@@ -834,8 +835,14 @@ function AppContent({
                 narrowQuery={narrowQuery}
                 narrowResults={narrowedResults}
                 onNarrow={() => setNarrowMode(true)}
+                onNarrowExit={() => {
+                  setNarrowMode(false)
+                  setNarrowQuery('')
+                }}
                 onNarrowChange={setNarrowQuery}
-                showPrioritySort={true}
+                liveSearch={liveSearch}
+                onNarrowSearch={() => {}}
+                showVoting={showVoting}
                 showAds={showAds}
                 adFrequency={adFrequency}
                 onClear={handleClearResults}
@@ -883,7 +890,13 @@ function AppContent({
                     narrowQuery={narrowQuery}
                     narrowResults={narrowedResults}
                     onNarrow={() => setNarrowMode(true)}
+                    onNarrowExit={() => {
+                      setNarrowMode(false)
+                      setNarrowQuery('')
+                    }}
                     onNarrowChange={setNarrowQuery}
+                    liveSearch={liveSearch}
+                    onNarrowSearch={() => {}}
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}

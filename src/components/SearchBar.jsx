@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from 'react'
-import { X } from 'lucide-react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'

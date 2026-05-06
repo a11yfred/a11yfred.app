@@ -4,6 +4,35 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 6, 2026 — Search and results UI refinement, CSS consolidation
+
+### Search and narrow results UI polish
+
+**Layout improvements:**
+
+- Moved spacing from search-row (margin-bottom) to results-meta (margin-top), bringing hint text closer to input
+- Added margin-top to result-list for better visual separation
+- Search hint now has slightly increased margin-top for better breathing room
+- Disabled search input visual feedback enhanced with opacity reduction (0.6) and border colors
+
+**Results-actions-row consolidation:**
+
+- Changed justify-content from space-between to flex-start, positioning buttons adjacent to each other
+- Clear Results button now displays next to Narrow Results button in results-actions-row
+- Removed margin-inline-end rule that was causing conditional spacing issues
+
+**CSS deduplication:**
+
+- Consolidated `.search-input` and `.results-narrow-input` selectors (identical styling)
+- Consolidated `.search-clear-btn` and `.results-narrow-clear-btn` selectors
+- Consolidated `.search-submit-btn` and `.results-narrow-submit-btn` selectors where applicable
+- Clear button vertical centering improved with transform-based centering (top: 50%; transform: translateY(-50%))
+
+**Clear Results button behavior:**
+
+- Shows only when results exist (not on empty state)
+- Distinct from search input clear button (which clears the query)
+
 ## May 5, 2026 — Code refactoring, UI component library, corpus audit, documentation, and project consolidation
 
 ### Comprehensive code review and refactoring complete

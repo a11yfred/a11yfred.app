@@ -1,15 +1,6 @@
-# debug (`src/plugins/debug/`)
+# debug plugin
 
-Dev-only diagnostic tools for keyboard focus, accessible names, announcements, and deployment status. All components render nothing in production — they guard themselves with `IS_DEV` checks (hostname is `localhost` or `127.0.0.1`).
-
-Useful for:
-
-- Verifying keyboard focus moves correctly (blue toast shows focused element)
-- Checking accessible names without opening DevTools (hover tooltip)
-- Visualizing live region announcements (green/red toast for polite/assertive)
-- Testing deployment target banner visibility
-
-Zero production dependencies. Copy the folder into any React/Vite project and mount `<FocusDebugger />` at the app root.
+Dev-only diagnostic tools: keyboard focus tracking, accessible names, live announcements, deployment banners. Renders nothing in production (localhost-only via `IS_DEV` checks).
 
 ---
 

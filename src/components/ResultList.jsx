@@ -16,7 +16,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
   if (!findings.length) return null
   return (
     <div className="pinned-section">
-      <div className="pinned-section__header">
+      <div className={`pinned-section__header${showVoting ? ' pinned-section__header--with-sort' : ''}`}>
         <h2 className="pinned-section__heading">
           {t('results.pinned_heading')}
           <span className="pinned-section__count">{findings.length}</span>
@@ -41,12 +41,13 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
         pinnedIds={pinnedIds}
         onPin={onPin}
         hideCount
+        showPrioritySort={showVoting}
       />
     </div>
   )
 }
 
-export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowChange, showPrioritySort = false, showAds = false, adFrequency = 8, onClear }) {
+export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showPrioritySort = false, showAds = false, adFrequency = 8, onClear }) {
   const t = useT()
   const itemRefs = useRef({})
   const skipBtnRefs = useRef({})
@@ -189,7 +190,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
               type="button"
               className="btn--secondary results-narrow-btn"
               title={narrowMode ? t('search.exit_narrow_aria') : t('results.narrow_title')}
-              onClick={onNarrow}
+              onClick={narrowMode ? onNarrowExit : onNarrow}
             >
               {narrowMode ? (
                 <>
@@ -204,7 +205,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
               )}
             </button>
           )}
-          {query && results.length > 0 && onClear && (
+          {results.length > 0 && onClear && (
             <button
               type="button"
               className="btn--tertiary results-clear-btn"
@@ -222,18 +223,34 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             <label htmlFor="narrow-filter" className="results-narrow-label">
               {t('search.narrowing_results')}
             </label>
-            <InputWithClear
-              id="narrow-filter"
-              type="text"
-              value={narrowQuery}
-              onChange={onNarrowChange}
-              onClear={() => onNarrowChange('')}
-              placeholder={narrowResults ? t('search.narrow_placeholder', { count: results.length }) : 'Filter results…'}
-              clearAriaLabel={t('search.clear_aria')}
-              wrapClassName="results-narrow-input-wrap"
-              inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
-              clearButtonClassName="results-narrow-clear-btn"
-            />
+            <div className="results-narrow-row">
+              <InputWithClear
+                id="narrow-filter"
+                type="text"
+                value={narrowQuery}
+                onChange={onNarrowChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !liveSearch && onNarrowSearch) {
+                    onNarrowSearch()
+                  }
+                }}
+                onClear={() => onNarrowChange('')}
+                placeholder={narrowResults ? t('search.narrow_placeholder', { count: results.length }) : 'Filter results…'}
+                clearAriaLabel={t('search.clear_aria')}
+                wrapClassName="results-narrow-input-wrap"
+                inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
+                clearButtonClassName="results-narrow-clear-btn"
+              />
+              {!liveSearch && (
+                <button
+                  onClick={onNarrowSearch}
+                  disabled={narrowQuery.length < 2}
+                  className="btn--primary results-narrow-submit-btn"
+                >
+                  {t('search.button')}
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>}

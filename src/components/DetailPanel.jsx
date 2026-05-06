@@ -324,7 +324,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             color={p.color}
             prefix={finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
             onClick={() => onBadgeClick?.({ type: 'priority', value: finding.priority })}
-            aria-label={`${finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)} — ${t('results.badge_filter_aria')}`}
+            aria-label={`${finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria')}`}
           >
             {t(p.key)}
           </Badge>
@@ -339,7 +339,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                   variant="source"
                   prefix="Source:"
                   onClick={() => onBadgeClick?.({ type: 'source', value: src })}
-                  aria-label={`Source: ${src} — ${t('results.badge_filter_aria')}`}
+                  aria-label={`Source: ${src}, ${t('results.badge_filter_aria')}`}
                 >
                   {src}
                 </Badge>
@@ -362,7 +362,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
               className="wcag-badge"
               style={{ '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }}
               onClick={() => onBadgeClick?.({ type: 'wcag', value: finding.wcagVersion })}
-              aria-label={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel} — ${t('results.badge_filter_aria')}`}
+              aria-label={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel}, ${t('results.badge_filter_aria')}`}
             >
               <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
               {finding.wcagVersion},{' '}
