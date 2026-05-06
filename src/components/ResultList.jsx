@@ -239,7 +239,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                 clearAriaLabel={t('search.clear_aria')}
                 wrapClassName="results-narrow-input-wrap"
                 inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
-                clearButtonClassName="results-narrow-clear-btn"
+                clearButtonClassName="btn--primary results-narrow-clear-btn"
               />
               {!liveSearch && (
                 <button

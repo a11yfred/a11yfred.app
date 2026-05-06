@@ -52,6 +52,10 @@
   --wcag-text: #155e75;  /* cyan-800 ~6.8:1 on --wcag-bg */
   --wcag-bg:   #ecfeff;
 
+  /* Color — platform badge (light mode) */
+  --platform-text: #3c4558;  /* slate-700 ~7.8:1 on --platform-bg */
+  --platform-bg:   #e8eef5;
+
   /* Typography — families */
   --font: 'Inter', system-ui, -apple-system, sans-serif;
   --mono: 'SF Mono', 'Fira Mono', 'Fira Code', 'Consolas', monospace;
@@ -102,6 +106,8 @@
   --btn-height-compact: 44px;
   /* --btn-height-standard: used for primary actions, footer buttons, dialogs */
   --btn-height-standard: 44px;
+  /* --input-height: used for search and text inputs */
+  --input-height: 4rem;
 
   /* Overlay */
   --overlay-bg: rgb(0 0 0 / 0.45);
@@ -163,6 +169,10 @@
   /* Color — WCAG badge (dark mode) */
   --wcag-text: #67e8f9;  /* ~12.9:1 on --wcag-bg */
   --wcag-bg:   #0a2733;
+
+  /* Color — platform badge (dark mode) */
+  --platform-text: #cbd5e1;  /* slate-300 ~8.2:1 on --platform-bg */
+  --platform-bg:   #1e293b;
 }
 
 /* Party Mode — color tokens injected dynamically by generatePartyPalette()

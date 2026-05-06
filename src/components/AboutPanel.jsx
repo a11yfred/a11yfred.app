@@ -57,7 +57,7 @@ export default function AboutPanel({ onClose }) {
       <section className="about-section">
         <h3 className="about-section-heading">{t('about.features_heading')}</h3>
         <ul className="about-features">
-          {['a11y', 'languages', 'pinning'].map(key => (
+          {['a11y', 'languages', 'party', 'pinning'].map(key => (
             <li key={key} className="about-feature">
               <span className="about-feature-label">{t(`about.feature_${key}_label`)}</span>
               <span className="about-feature-body">{t(`about.feature_${key}_body`)}</span>
@@ -66,12 +66,12 @@ export default function AboutPanel({ onClose }) {
           <li className="about-feature">
             <span className="about-feature-label">{t('about.feature_ai_label')}</span>
             <span className="about-feature-body">
-              {t('about.feature_ai_body')}{' '}Set it up in{' '}
+              {t('about.feature_ai_body')}{' '}
               <button
                 type="button"
                 className="about-inline-link"
                 onClick={() => navigate('/settings')}
-              >{t('search.hint_settings_link')}</button>.
+              >{t('about.feature_ai_setup_link')}</button>.
             </span>
           </li>
         </ul>
@@ -101,7 +101,6 @@ export default function AboutPanel({ onClose }) {
         <ul className="about-coming">
           <li>{t('about.coming_auth')}</li>
           <li>{t('about.coming_custom')}</li>
-          <li>{t('about.coming_ai')}</li>
         </ul>
       </section>
     </PanelShell>

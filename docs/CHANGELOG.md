@@ -4,6 +4,27 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-06
+
+### CSS system refactor and token consolidation
+
+- Fix broken `--fs-sm` token reference; replace with `--fs-small`
+- Add `--platform-bg` and `--platform-text` tokens with dark mode overrides
+- Replace 25+ hardcoded values with design tokens (colors, spacing, radii, transitions)
+- Merge duplicate `.detail-copy-btn` and `.detail-sc-copy-btn` selectors
+- Merge duplicate `.search-submit-btn` and `.results-narrow-submit-btn` selectors
+
+### Content audit and accuracy fixes
+
+- Fix "export findings" → "copy findings" in tour description
+- Fix "sorted by severity" → "sorted by relevance and priority" in onboarding
+- Remove shipped "Additional AI providers" from Coming Soon
+- Fix hard-coded English in About panel; add `about.feature_ai_setup_link` token
+- Remove orphaned i18n keys: `onboarding.skip`, `onboarding.nav_aria`, `onboarding.dot_aria`
+- Remove orphaned reset keys: `confirm_reset_all_item_overrides`, `_contributions`
+- Add Party Mode to About panel features list
+- Update README: Phase 1 complete, corpus 107→133 entries, remove broken ARCHITECTURE.md reference
+
 ## 2026-05-05
 
 ### Code refactoring and constants consolidation

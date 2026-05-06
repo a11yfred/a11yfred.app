@@ -18,7 +18,7 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Nearly complete — 107-entry corpus, all linters passing, UI library complete (16 components), agentic AI wired. Remaining: Ko-fi, GitHub badges, production domain.
+**Phase 1 (Personal Library)**: Complete — 133-entry corpus, all linters passing, UI library complete (16 components), agentic AI wired.
 
 **Phase 2 (AI + Sharing)**: Partial — Agentic AI working, user overrides done, multilingual editing UI deferred.
 
@@ -28,11 +28,9 @@ npm run build      # production build
 
 ## Project Structure
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full directory tree and detailed descriptions of all modules.
-
 Key directories:
 
-- `src/data/` — 107-entry public corpus + personal corpus (gitignored)
+- `src/data/` — 133-entry public corpus + personal corpus (gitignored)
 - `src/services/` — Data layer, AI integration, localStorage utilities
 - `src/hooks/` — Search, ratings, pinning, user findings, overrides
 - `src/components/` — UI components; `ui/` subfolder has 16 reusable primitives

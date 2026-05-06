@@ -4,7 +4,51 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## May 6, 2026 — Search and results UI refinement, CSS consolidation
+## May 6, 2026 — Full CSS and content refactor
+
+### CSS system refactor and token consolidation
+
+**Token additions and cleanup:**
+
+- Fixed `--fs-sm` broken token reference (was silently falling back to browser default); replaced with correct `--fs-small`
+- Added `--platform-bg` and `--platform-text` tokens to tokens.css with light and dark mode overrides
+- Replaced 25+ hardcoded color, spacing, radius, and transition values with design tokens throughout index.css
+- Updated 10+ instances of `gap` and `margin-bottom` to use token equivalents (`--space-1`, `--space-2`, `--space-4`)
+- Replaced hardcoded `border-radius: 999px` with `var(--radius-full)`
+- Replaced raw `1rem` `margin-bottom` with `var(--space-4)` (3 locations)
+- Replaced party-player and vote button hardcoded durations with `--duration-fast` and `--ease-out` tokens
+
+**CSS deduplication:**
+
+- Merged `.detail-copy-btn` and `.detail-sc-copy-btn` into single rule (identical styling)
+- Merged `.search-submit-btn` and `.results-narrow-submit-btn` into single rule (identical styling)
+- Removed ~40 lines of duplicate button styles
+
+### Content audit and accuracy fixes
+
+**User-facing text fixes:**
+
+- Fixed "export findings" → "copy findings" in help tour description (onboarding has no export feature)
+- Fixed "sorted by severity" → "sorted by relevance and priority" in onboarding slide 1 (actual sort behavior)
+- Removed "Additional AI providers" from Coming Soon (already shipped: OpenAI, Google, Azure all available)
+- Fixed hard-coded English "Set it up in" in About panel AI feature (now uses `about.feature_ai_setup_link` token)
+
+**Internationalization cleanup:**
+
+- Removed orphaned i18n keys: `onboarding.skip`, `onboarding.nav_aria`, `onboarding.dot_aria` (never rendered)
+- Removed orphaned reset confirmation keys: `confirm_reset_all_item_overrides`, `confirm_reset_all_item_contributions` (feature not yet implemented)
+
+**Feature completeness:**
+
+- Added Party Mode to About panel notable features list (was in settings but not in About features)
+
+**Documentation:**
+
+- Updated README Phase 1 status from "Nearly complete" to "Complete"
+- Updated corpus count: 107 → 133 entries
+- Removed broken ARCHITECTURE.md reference from README
+
+## May 6, 2026 (earlier) — Search and results UI refinement, CSS consolidation
 
 ### Search and narrow results UI polish
 
