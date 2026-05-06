@@ -79,6 +79,10 @@ button > .btn-icon {
   display: inline;
 }
 
+.settings-save-btn .btn-icon {
+  display: inline;
+}
+
 .btn svg {
   flex-shrink: 0;
   line-height: 1;
