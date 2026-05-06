@@ -62,8 +62,8 @@ export default function HelpPanel({ onClose, onStartTour }) {
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">S</code> {t('help.shortcut_s')}</li>
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">E</code> {t('help.shortcut_e')}</li>
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">U</code> {t('help.shortcut_u')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↑</code> {t('help.shortcut_upvote')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↓</code> {t('help.shortcut_downvote')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↑</code> {t('help.shortcut_rank_up')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↓</code> {t('help.shortcut_rank_down')}</li>
         </ul>
       </section>
     </PanelShell>

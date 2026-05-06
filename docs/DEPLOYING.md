@@ -8,25 +8,50 @@ Three deployment targets are configured. Only one should be active at a time.
 
 **Config file:** `netlify.toml`
 
-Netlify auto-deploys on every push to `main` when the site is connected in the dashboard.
+**Deployment strategy:** Auto-deploy on all branches (previews) + tag-based releases (production).
 
-### To disable
+### Setup
 
-Add `ignore = "exit 0"` under `[build]` in `netlify.toml`:
+1. Connect your GitHub repository to Netlify via the dashboard
+2. `netlify.toml` is already configured for all contexts
+3. Configure Netlify dashboard:
+   - Site settings → **Build & Deploy → Deploy contexts**
+   - `main` branch: **Not production**
+   - `deploy-preview`: Enabled (auto on branches/PRs)
+   - `branch-deploy`: Enabled (auto on any branch)
 
-```toml
-[build]
-  ignore = "exit 0"
-  publish = "dist"
-  command = "npm run build"
+### Deployment workflow
+
+```bash
+# Development — preview deploy on branch push
+git checkout -b feature/new-search
+git commit -am "Add fuzzy search"
+git push origin feature/new-search
+# → Netlify builds automatically to https://deploy-preview-1--a11ytexthelper.netlify.app
+
+# Test the preview, then merge
+git checkout main
+git merge feature/new-search
+git push origin main
+# → Branch deploy (preview of main)
+
+# Release day — tag and push to production
+git tag v0.1.0
+git push origin v0.1.0
+# → Netlify builds and deploys to https://a11ytexthelper.com (or your domain)
 ```
 
-This triggers one final build, then skips all future pushes.
-Alternative: **Netlify dashboard → Site settings → Danger zone → Pause site publishing** (no build triggered).
+**Rate limit:** ~20-30 builds/month (2-3 per feature + 1 per release) vs. 300/month limit. Safe.
+
+### To disable auto-deploy
+
+If you need to pause Netlify temporarily:
+
+- **Netlify dashboard → Site settings → Danger zone → Pause site publishing**
 
 ### To re-enable
 
-Remove the `ignore` line (or unpause in the dashboard).
+Unpause in the Netlify dashboard. Next push will trigger a build.
 
 ---
 

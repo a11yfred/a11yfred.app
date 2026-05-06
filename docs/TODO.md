@@ -138,7 +138,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 - [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` — Activate `syncSettings()` and `getRemoteSettings()`, merge on sign-in, push on change.
 - [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` — Activate CRUD stubs via Supabase, verify schema.
-- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — Wire up/downvote sync, merge on sign-in.
+- [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` — Wire rank up/rank down sync, merge on sign-in.
 
 ### Search & Visibility
 

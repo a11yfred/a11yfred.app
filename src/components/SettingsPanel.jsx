@@ -185,7 +185,7 @@ export default function SettingsPanel({
     el.focus({ preventScroll: true })
   }, [errors])
 
-  // Escape key — Drawer also listens on mobile; harmless double-fire
+  // Escape key, Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
     const handler = (e) => {
       if (e.key !== 'Escape') return
@@ -201,7 +201,7 @@ export default function SettingsPanel({
   const handleSave = () => {
     if (aiEnabled && !keys[activeProvider].trim() && !isLocalhost) {
       setErrors({ apiKey: true })
-      onToggleAi() // revert toggle — no key means AI can't work
+      onToggleAi() // revert toggle, no key means AI can't work
       return
     }
     if (!hasUnsaved) {
@@ -427,17 +427,17 @@ export default function SettingsPanel({
         </div>
       </div>
 
-      {/* Result voting */}
+      {/* Result ranking */}
       <div className="settings-toggle-row">
         <div>
           <h3 className="settings-toggle-label">
-            <label htmlFor="toggle-voting">{t('settings.voting_label')}</label>
+            <label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>
           </h3>
           <p className="settings-toggle-desc">
-            {showVoting ? t('settings.voting_on') : t('settings.voting_off')}
+            {showVoting ? t('settings.ranking_on') : t('settings.ranking_off')}
           </p>
         </div>
-        <Toggle id="toggle-voting" checked={showVoting} onChange={onToggleVoting} />
+        <Toggle id="toggle-ranking" checked={showVoting} onChange={onToggleVoting} />
       </div>
 
       {/* Pinned Results */}
@@ -573,7 +573,7 @@ export default function SettingsPanel({
       {PROVIDERS.filter(p => p.id === activeProvider).map(p => (
         <div key={p.id} className="settings-key-group">
           <label htmlFor={`apikey-${p.id}`} className="settings-field-label">
-            {t('settings.api_key_label_prefix')} — {p.label}
+            {t('settings.api_key_label_prefix')}, {p.label}
             {aiEnabled && <span className="settings-field-required"> {t('settings.api_key_required')}</span>}
           </label>
           <textarea
@@ -602,9 +602,9 @@ export default function SettingsPanel({
         <div className="settings-toggle-row settings-toggle-row--sm">
           <div>
             <label htmlFor="toggle-agentic" className="settings-toggle-label">
-              {t('settings.agentic_mode_label') || 'Agentic Mode'}
+              {t('settings.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}
             </label>
-            <p className="settings-toggle-desc">{t('settings.agentic_mode_desc') || 'AI will search your corpus to match your style and technical depth when rewriting'}</p>
+            <p className="settings-toggle-desc">{t('settings.agentic_mode_desc') || 'AI will search past examples to match your style and technical depth when rewriting'}</p>
           </div>
           <Toggle id="toggle-agentic" checked={agenticMode} onChange={setAgenticMode} />
         </div>

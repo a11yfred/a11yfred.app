@@ -90,7 +90,7 @@ const DEPLOY_OPTIONS = [
 function computeStats(corpus) {
   const bySC = {}
   const byVersion = {}
-  const byPriority = {}
+  const bySeverity = {}
   const bySource = {}
 
   for (const entry of corpus) {
@@ -99,8 +99,8 @@ function computeStats(corpus) {
     }
     const v = entry.wcagVersion ?? 'N/A'
     byVersion[v] = (byVersion[v] || 0) + 1
-    const p = entry.priority || 'Unknown'
-    byPriority[p] = (byPriority[p] || 0) + 1
+    const s = entry.severity || 'Unknown'
+    bySeverity[s] = (bySeverity[s] || 0) + 1
     // sourceCredits is string[] (author names); sources is object[] ({ name, url })
     const sources = entry.sourceCredits ?? []
     for (const src of sources) {
@@ -108,7 +108,7 @@ function computeStats(corpus) {
     }
   }
 
-  return { total: corpus.length, bySC, byVersion, byPriority, bySource }
+  return { total: corpus.length, bySC, byVersion, bySeverity, bySource }
 }
 
 function copyText(text) {
@@ -287,7 +287,7 @@ export default function AdminPanel({
                     <button className="admin-stat-link" onClick={() => { onFilter({ type: 'priority', value: p }) }}>
                       {p}
                     </button>
-                    <span className="admin-count-badge">{stats.byPriority[p] ?? 0}</span>
+                    <span className="admin-count-badge">{stats.bySeverity[p] ?? 0}</span>
                   </li>
                 ))}
               </ul>
@@ -316,7 +316,7 @@ export default function AdminPanel({
         {/* ── WCAG SC Coverage ────────────────────────────────── */}
         <section className="admin-section">
           <h2 className="admin-section__title">
-            WCAG 2.2 SC Coverage — A &amp; AA
+            WCAG 2.2 SC Coverage, A &amp; AA
           </h2>
 
           <div className="admin-sc-filters">

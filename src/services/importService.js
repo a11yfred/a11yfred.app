@@ -20,7 +20,7 @@
 import { loadUserFindings } from './userFindingsService.js'
 
 // ---------------------------------------------------------------------------
-// Column name aliases — matched case-insensitively with spaces/underscores/
+// Column name aliases, matched case-insensitively with spaces/underscores/
 // hyphens stripped. First match wins.
 // ---------------------------------------------------------------------------
 
@@ -29,16 +29,16 @@ const FIELD_ALIASES = {
   title:    ['title', 'name', 'finding', 'issue', 'issuename', 'findingname', 'summary', 'subject'],
   sc:       ['sc', 'wcagsc', 'successcriterion', 'successcriteria', 'criterion', 'wcagnumber'],
   scLabel:  ['sclabel', 'criterionlabel', 'wcaglabel', 'wcag', 'successcriterionlabel', 'wcagcriterion'],
-  priority: ['priority', 'severity', 'impact', 'level', 'risk', 'criticality'],
+  severity: ['severity', 'priority', 'impact', 'level', 'risk', 'criticality'],
   platform: ['platform', 'device', 'environment', 'target'],
   desc:     ['desc', 'description', 'observation', 'issuedescription', 'details', 'body', 'problemstatement'],
-  rem:      ['rem', 'remediation', 'recommendation', 'fix', 'solution', 'howtofix', 'suggestion', 'corrective'],
+  fix:      ['fix', 'rem', 'remediation', 'recommendation', 'solution', 'howtofix', 'suggestion', 'corrective'],
   keywords: ['keywords', 'tags', 'searchterms', 'labels'],
   related:  ['related', 'relatedsc', 'relatedcriteria', 'alsofails', 'additionalsc'],
   source:   ['source', 'origin', 'credit', 'datasource'],
 }
 
-const PRIORITY_MAP = {
+const SEVERITY_MAP = {
   critical: 'Critical', blocker: 'Critical', p0: 'Critical', showstopper: 'Critical',
   high: 'High', major: 'High', p1: 'High', serious: 'High',
   medium: 'Medium', moderate: 'Medium', p2: 'Medium', significant: 'Medium', normal: 'Medium',
@@ -74,10 +74,10 @@ function pickField(row, field) {
   return null
 }
 
-function normalizePriority(raw) {
+function normalizeSeverity(raw) {
   if (!raw) return 'Medium'
   const key = normalizeKey(raw)
-  return PRIORITY_MAP[key] || 'Medium'
+  return SEVERITY_MAP[key] || 'Medium'
 }
 
 function normalizePlatform(raw) {
@@ -92,7 +92,7 @@ function splitList(raw) {
   return String(raw).split(/[,;|]/).map(s => s.trim()).filter(Boolean)
 }
 
-// Stateful ID generator — call make() for each new finding in a batch
+// Stateful ID generator, call make() for each new finding in a batch
 function makeIdGenerator(existingFindings) {
   const nums = existingFindings
     .map(f => { const m = f.id?.match(/^USR-(\d+)$/); return m ? parseInt(m[1], 10) : 0 })
@@ -110,7 +110,7 @@ function normalizeRow(row, genId, defaultSource) {
   if (!title) return { ok: false, reason: 'Missing required field: title' }
 
   const rawId = pickField(row, 'id')
-  // Reject ATH-* IDs — those belong to the public corpus namespace
+  // Reject ATH-* IDs, those belong to the public corpus namespace
   const id = (rawId && !rawId.match(/^ATH-/i)) ? rawId : genId()
 
   const now = new Date().toISOString()
@@ -121,13 +121,13 @@ function normalizeRow(row, genId, defaultSource) {
       title,
       sc:        pickField(row, 'sc')        || '',
       scLabel:   pickField(row, 'scLabel')   || '',
-      priority:  normalizePriority(pickField(row, 'priority')),
+      severity:  normalizeSeverity(pickField(row, 'severity')),
       platform:  normalizePlatform(pickField(row, 'platform')),
       source:    pickField(row, 'source')    || defaultSource,
       keywords:  splitList(pickField(row, 'keywords')),
       related:   splitList(pickField(row, 'related')),
       desc:      pickField(row, 'desc')      || '',
-      rem:       pickField(row, 'rem')       || '',
+      fix:       pickField(row, 'fix')       || '',
       createdAt: now,
       updatedAt: now,
     },
@@ -233,7 +233,7 @@ export async function importFromUrl(url, options = {}) {
   try {
     res = await fetch(url)
   } catch {
-    throw new Error('Network error — could not reach the URL')
+    throw new Error('Network error, could not reach the URL')
   }
   if (!res.ok) throw new Error(`Failed to fetch URL: ${res.status} ${res.statusText}`)
 

@@ -29,7 +29,7 @@ import useUserFindings from './hooks/useUserFindings.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'
 import usePinnedFindings from './hooks/usePinnedFindings.js'
-import { PRIORITY_VARS } from './data/priorityStyles.js'
+import { SEVERITY_VARS } from './data/severityStyles.js'
 import findingSlug from './utils/findingSlug.js'
 import { PROVIDER_LABELS } from './utils/constants.js'
 
@@ -44,10 +44,10 @@ const PARTY_KEYS = [
   '--bg', '--bg-subtle', '--border', '--border-control',
   '--text', '--text-muted', '--text-faint', '--text-disabled',
   '--accent', '--accent-bg', '--accent-text', '--focus', '--success', '--overlay-bg',
-  '--priority-critical-text', '--priority-critical-bg',
-  '--priority-high-text', '--priority-high-bg',
-  '--priority-medium-text', '--priority-medium-bg',
-  '--priority-low-text', '--priority-low-bg',
+  '--severity-critical-text', '--severity-critical-bg',
+  '--severity-high-text', '--severity-high-bg',
+  '--severity-medium-text', '--severity-medium-bg',
+  '--severity-low-text', '--severity-low-bg',
   '--party-grad-x', '--party-grad-y',
 ]
 
@@ -70,15 +70,15 @@ function generatePartyPalette() {
     '--focus':           `hsl(${tri},  85%, 38%)`,
     '--success':         'hsl(140, 60%, 30%)',
     '--overlay-bg':      `hsla(${h}, 40%, 15%, 0.55)`,
-    // Priority badge colors stay fixed so they remain accessible
-    '--priority-critical-text': '#a32d2d',
-    '--priority-critical-bg':   '#fcebeb',
-    '--priority-high-text':     '#854f0b',
-    '--priority-high-bg':       '#faeeda',
-    '--priority-medium-text':   '#185fa5',
-    '--priority-medium-bg':     '#e6f1fb',
-    '--priority-low-text':      '#3b6d11',
-    '--priority-low-bg':        '#eaf3de',
+    // Severity badge colors stay fixed so they remain accessible
+    '--severity-critical-text': '#a32d2d',
+    '--severity-critical-bg':   '#fcebeb',
+    '--severity-high-text':     '#854f0b',
+    '--severity-high-bg':       '#faeeda',
+    '--severity-medium-text':   '#185fa5',
+    '--severity-medium-bg':     '#e6f1fb',
+    '--severity-low-text':      '#3b6d11',
+    '--severity-low-bg':        '#eaf3de',
     '--party-grad-x':    `${Math.floor(Math.random() * 80) + 10}%`,
     '--party-grad-y':    `${Math.floor(Math.random() * 80) + 10}%`,
   }
@@ -90,7 +90,6 @@ export default function App() {
   return (
     <Router appName="A11yTextHelper">
       <AppShell />
-      {/* <KofiWidget /> — disabled: third-party script causing console errors */}
     </Router>
   )
 }
@@ -103,7 +102,7 @@ function AppShell() {
     const saved = localStorage.getItem('language')
     if (saved) return saved
     const lang = navigator.language || 'en'
-    // Supported locale values — try exact match, then language prefix, then 'en'
+    // Supported locale values, try exact match, then language prefix, then 'en'
     const supported = [
       'af','ar-PS','eu','yue','ceb','cbk','zh','cr','crh','nl',
       'en-AU','en-GB','en-IN','en-ZA','en','eo','tl','fr','fr-CA',
@@ -318,7 +317,7 @@ function AppContent({
   const [findingHistory, setFindingHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
-  const { ratings, upvote, downvote, toggleStar, toggleArchive } = useFindingRatings()
+  const { ratings, rankUp, rankDown, toggleStar, toggleArchive } = useFindingRatings()
   const { pinnedIds, togglePin, clearPins } = usePinnedFindings()
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
@@ -346,8 +345,8 @@ function AppContent({
 
   const badgeFilterLabel = useMemo(() => {
     if (!badgeFilter) return null
-    if (badgeFilter.type === 'priority') {
-      const p = PRIORITY_VARS[badgeFilter.value]
+    if (badgeFilter.type === 'severity') {
+      const p = SEVERITY_VARS[badgeFilter.value]
       return p ? t(p.key) : badgeFilter.value
     }
     if (badgeFilter.type === 'wcag') return `WCAG ${badgeFilter.value}`
@@ -358,7 +357,7 @@ function AppContent({
     if (!badgeFilter) return []
     return sortedFindings.filter(f => {
       if (pinnedIds.has(f.id)) return false
-      if (badgeFilter.type === 'priority') return f.priority === badgeFilter.value
+      if (badgeFilter.type === 'severity') return f.severity === badgeFilter.value
       if (badgeFilter.type === 'source')   return f.sourceCredits?.includes(badgeFilter.value)
       if (badgeFilter.type === 'wcag') {
         if (badgeFilter.value === 'N/A') {
@@ -405,7 +404,7 @@ function AppContent({
   }
 
   // Announce result count after a non-live-search submission only.
-  // Live search skips this — announcing on every keystroke would be unbearable.
+  // Live search skips this, announcing on every keystroke would be unbearable.
   const lastAnnouncedQuery = useRef(null)
   useEffect(() => {
     if (liveSearch || submittedQuery.length < 2) return
@@ -430,7 +429,7 @@ function AppContent({
 
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
-  // to the settings drawer — exclude the panel from triggering it separately.
+  // to the settings drawer, exclude the panel from triggering it separately.
   const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!isDesktop && onboardingOpen) || (!!selected && !settingsOpen && !aboutOpen && !adminOpen)
 
   useEffect(() => {
@@ -578,7 +577,7 @@ function AppContent({
 
   const runCommand = (q) => {
     const lq = q.trim().toLowerCase()
-    // Easter egg offs — any "X off" where X is a known egg command
+    // Easter egg offs, any "X off" where X is a known egg command
     const eggOffBase = lq.endsWith(' off') ? lq.slice(0, -4) : null
     if (eggOffBase !== null && eggOffBase in EASTER_EGGS) { setLanguage('en'); setQuery(submittedQuery); return true }
     if (lq === 'party mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
@@ -596,7 +595,7 @@ function AppContent({
     if (lq === 'debug fab' || lq === 'debug fab on')  { setFabEnabled(true);  setQuery(''); return true }
     if (lq === 'debug fab off')                       { setFabEnabled(false); setQuery(''); return true }
     if (lq === 'debug admin')                         { navigate('/admin');   setQuery(''); return true }
-    // Detail Panel debug triggers — routed via prop; require a finding to be selected
+    // Detail Panel debug triggers, routed via prop; require a finding to be selected
     if (['debug ok', 'debug wrong', 'debug 401', 'debug 429', 'debug 503', 'debug network'].includes(lq)) {
       setDebugPanelCmd(lq); setQuery(submittedQuery); return true
     }
@@ -626,7 +625,7 @@ function AppContent({
     if (liveSearch) {
       const egg = EASTER_EGGS[q.trim().toLowerCase()]
       if (egg) { activateEasterEgg(egg); return }
-      // debug commands always require ENTER — never fire on each keystroke
+      // debug commands always require ENTER, never fire on each keystroke
       if (!q.trim().toLowerCase().startsWith('debug') && runCommand(q)) return
       syncSearchUrl(q)
     }
@@ -670,7 +669,7 @@ function AppContent({
     returnToPanelRef.current = !!selected // eslint-disable-line react-hooks/immutability
     if (viewAll && !selected) returnViewAllRef.current = true
     navigate('/settings')
-    // Do NOT clear selected here — keepMounted preserves the panel state
+    // Do NOT clear selected here, keepMounted preserves the panel state
   }
 
   const settingsLanguage = EASTER_EGG_LOCALES.has(language) ? 'en' : language
@@ -800,8 +799,8 @@ function AppContent({
           selected={selected}
           onSelect={handleSelectFinding}
           ratings={ratings}
-          onUpvote={upvote}
-          onDownvote={downvote}
+          onRankUp={rankUp}
+          onRankDown={rankDown}
           onStar={toggleStar}
           onArchive={toggleArchive}
           showVoting={showVoting}
@@ -823,8 +822,8 @@ function AppContent({
                 onSelect={handleSelectFinding}
                 query=""
                 ratings={ratings}
-                onUpvote={upvote}
-                onDownvote={downvote}
+                onRankUp={rankUp}
+                onRankDown={rankDown}
                 onStar={toggleStar}
                 onArchive={toggleArchive}
                 showVoting={showVoting}
@@ -878,8 +877,8 @@ function AppContent({
                     onSelect={handleSelectFinding}
                     query={activeQuery}
                     ratings={ratings}
-                    onUpvote={upvote}
-                    onDownvote={downvote}
+                    onRankUp={rankUp}
+                    onRankDown={rankDown}
                     onStar={toggleStar}
                     onArchive={toggleArchive}
                     showVoting={showVoting}
@@ -913,8 +912,8 @@ function AppContent({
                     onSelect={handleSelectFinding}
                     query=""
                     ratings={ratings}
-                    onUpvote={upvote}
-                    onDownvote={downvote}
+                    onRankUp={rankUp}
+                    onRankDown={rankDown}
                     onStar={toggleStar}
                     onArchive={toggleArchive}
                     showVoting={showVoting}
@@ -985,7 +984,7 @@ function AppContent({
           onCommand={runCommand}
           customSections={[
             {
-              heading: 'Custom — A11yTextHelper',
+              heading: 'Custom, A11yTextHelper',
               rows: [
                 { cmd: 'debug skeleton',  desc: 'Skeleton loading state' },
                 { cmd: 'debug ai assist', desc: 'AI Assist on' },
@@ -1011,7 +1010,7 @@ function AppContent({
           onClose={() => setDebugHelpOpen(false)}
           customCommands={[
             {
-              heading: 'Custom — A11yTextHelper',
+              heading: 'Custom, A11yTextHelper',
               note: <>Append <code>off</code> to disable (e.g. <code>debug ai assist off</code>).</>,
               rows: [
                 { cmd: 'debug skeleton',   desc: 'Skeleton loading state' },
@@ -1290,6 +1289,26 @@ function Footer() {
             {credit.slice(nameIdx + 12)}
           </>
         ) : credit}
+        {' · '}
+        <a
+          href="https://github.com/sponsors/mikeyil"
+          target="_blank"
+          rel="noreferrer"
+          className="footer-link"
+          title={t('footer.sponsor_title') || 'Support on GitHub Sponsors'}
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            width="1em"
+            height="1em"
+            fill="currentColor"
+            className="inline-icon"
+          >
+            <path d="M17.5 1.5a3.5 3.5 0 0 1 3.355 5.007l-4.862 7.293a2 2 0 0 1-3.286 0l-4.862-7.293A3.5 3.5 0 0 1 12 1.5a3.5 3.5 0 0 1 5.5 0Z" />
+          </svg>
+          {t('footer.sponsor')}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
+        </a>
         {' · '}
         <a
           href="https://www.linkedin.com/in/mikeyil"

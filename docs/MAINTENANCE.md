@@ -29,7 +29,7 @@ Run history lives in [docs/MAINT-LOG.md](MAINT-LOG.md). Add a row there after ev
 - [ ] **No console errors** — production build in DevTools; zero errors, zero unexpected warnings
 - [ ] **Search accuracy** — test 10 representative queries; expected defects appear in top 3 results
 - [ ] **Platform filter** — Web excludes `native`-only entries; Native excludes `web`-only; `both` appears in both
-- [ ] **Copy behavior** — description and remediation copy correctly; location prefix included when set; `announce()` fires
+- [ ] **Copy behavior** — description and suggested fix copy correctly; location prefix included when set; `announce()` fires
 - [ ] **Reset behavior** — restores original corpus text; `announce()` fires
 - [ ] **AI refinement** — valid key rewrites text; invalid key fails gracefully
 - [ ] **Persistence** — theme, typeahead, and platform all restore correctly after reload
@@ -39,9 +39,9 @@ Run history lives in [docs/MAINT-LOG.md](MAINT-LOG.md). Add a row there after ev
 - [ ] **API key handling** — keys in `localStorage` only; never logged; never in any fetch body except the provider's own endpoint
 - [ ] **`rel` audit** — all `target="_blank"` links have `rel="noreferrer"`
 - [ ] **No `innerHTML`** — search codebase; all DOM content goes through React JSX
-- [ ] **`localStorage` inventory** — keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `wcagFilter`, `recentFindings`, `userFindings`, `userOverrides`, `pendingContributions`, `pinnedFindings`, plus one `apikey_<provider>` per configured AI provider; `sessionStorage` key: `lastSelectedId`; verify count in SettingsPanel privacy disclosure matches reality
+- [ ] **`localStorage` inventory** — keys: `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `wcagFilter`, `recentFindings`, `userFindings`, `userOverrides`, `pendingContributions`, `pinnedResults`, plus one `apikey_<provider>` per configured AI provider; `sessionStorage` key: `lastSelectedId`; verify count in SettingsPanel privacy disclosure matches reality
 - [ ] **Privacy disclosure** — SettingsPanel disclosure accurately lists all stored keys; update `settings.privacy_body_2` in `en.json` (and propagate to all locale files) whenever storage changes
-- [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; Ko-fi overlay widget is currently disabled; re-enable only when console errors are resolved and selector patches are verified against live DOM
+- [ ] **No analytics** — no third-party tracking scripts or pixels; Umami placeholder remains commented out; GitHub Sponsors link active in footer
 - [ ] **Dependency audit** — run `npm audit`; resolve high/critical before release
 - [ ] **Outdated packages** — run `npm outdated`; apply non-breaking minor/patch updates; read changelogs for anything touching a11y, security, or CSP before upgrading
 - [ ] **Dead dependencies** — check `package.json` against actual `import` usage in `src/`; remove any package that is no longer imported anywhere; verify the removal does not break the build

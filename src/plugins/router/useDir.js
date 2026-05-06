@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 
 /**
- * Returns the current document writing direction — 'ltr' or 'rtl'.
+ * Returns the current document writing direction, 'ltr' or 'rtl'.
  * Reactively updates whenever document.documentElement.dir changes,
  * so components re-render automatically when the user switches to/from
  * a right-to-left language.

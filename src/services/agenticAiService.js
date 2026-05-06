@@ -2,14 +2,14 @@
  * agenticAiService.js
  *
  * Agentic AI refinement using Anthropic tool use.
- * Only supports the Anthropic provider — tool use requires the messages API
+ * Only supports the Anthropic provider, tool use requires the messages API
  * with tool definitions, which is Anthropic-specific in this codebase.
  *
  * Workflow per call:
  *   1. Send user refinement request with the search_corpus tool available
  *   2. If the model calls search_corpus, run it locally via Fuse.js and return results
  *   3. Repeat up to MAX_TOOL_TURNS times
- *   4. Extract the final Description / Remediation output
+ *   4. Extract the final Description / Suggested Fix output
  *
  * Error handling:
  *   - AiApiError is thrown for all API-level failures
@@ -27,14 +27,14 @@ export const AGENTIC_SYSTEM_PROMPT = `You are an expert accessibility auditor's 
 Before rewriting, always call search_corpus at least once to find similar findings that demonstrate the expected tone, technical depth, and format.
 
 Rules:
-- Call search_corpus before producing your final output — context from similar findings improves accuracy
-- Preserve the auditor's direct, professional style — no preamble, no hedging, no emojis
+- Call search_corpus before producing your final output, context from similar findings improves accuracy
+- Preserve the auditor's direct, professional style, no preamble, no hedging, no emojis
 - Keep technical accuracy: reference specific WCAG SCs, HTML attributes, and ARIA patterns where appropriate
-- Match the existing finding's level of technical detail — do not expand or compress significantly
+- Match the existing finding's level of technical detail, do not expand or compress significantly
 - Do not add phrases like "I've rewritten..." or "Here is the updated..."
 - Format your final output as exactly two lines with no extra text before or after:
   Description: [rewritten description]
-  Remediation: [rewritten remediation]`
+  Suggested Fix: [rewritten suggested fix]`
 
 async function callAnthropicMessages({ key, model, messages }) {
   let res
@@ -74,10 +74,10 @@ async function callAnthropicMessages({ key, model, messages }) {
 /**
  * Run an agentic refinement using Anthropic tool use.
  *
- * @param {{ finding, descText, remText, note, corpus: object[] }} params
- * @returns {Promise<{ desc: string|null, rem: string|null }>}
+ * @param {{ finding, descText, fixText, note, corpus: object[] }} params
+ * @returns {Promise<{ desc: string|null, fix: string|null }>}
  */
-export async function getAgenticRefinement({ finding, descText, remText, note, corpus }) {
+export async function getAgenticRefinement({ finding, descText, fixText, note, corpus }) {
   const key = window.electronAPI
     ? await window.electronAPI.keys.get('apikey_anthropic')
     : localStorage.getItem('apikey_anthropic')
@@ -91,18 +91,18 @@ export async function getAgenticRefinement({ finding, descText, remText, note, c
 
 Title: ${finding.title}
 WCAG SC: ${finding.scLabel}
-Priority: ${finding.priority}
+Severity: ${finding.severity}
 Platform: ${finding.platform}
 
 Current description:
 ${descText}
 
-Current remediation:
-${remText}
+Current suggested fix:
+${fixText}
 
 Auditor's note: "${note}"
 
-Search the corpus for related findings, then rewrite the description and remediation to reflect the refinement.`
+Search the corpus for related findings, then rewrite the description and suggested fix to reflect the refinement.`
 
   const messages = [{ role: 'user', content: userPrompt }]
   let toolTurns = 0
@@ -111,7 +111,7 @@ Search the corpus for related findings, then rewrite the description and remedia
     const data = await callAnthropicMessages({ key, model, messages })
 
     if (import.meta.env.DEV) {
-      console.log(`[agenticAI] turn ${toolTurns + 1} — stop_reason: ${data.stop_reason}`)
+      console.log(`[agenticAI] turn ${toolTurns + 1}, stop_reason: ${data.stop_reason}`)
     }
 
     messages.push({ role: 'assistant', content: data.content })
@@ -120,17 +120,17 @@ Search the corpus for related findings, then rewrite the description and remedia
       const textBlock = data.content.find(b => b.type === 'text')
       const text = textBlock?.text || ''
       const descMatch = text.match(/^Description:\s*(.+)/m)
-      const remMatch  = text.match(/^Remediation:\s*(.+)/ms)
+      const fixMatch  = text.match(/^Suggested Fix:\s*(.+)/ms)
       return {
         desc: descMatch?.[1]?.trim() || null,
-        rem:  remMatch?.[1]?.trim()  || null,
+        fix:  fixMatch?.[1]?.trim()  || null,
       }
     }
 
     if (data.stop_reason === 'tool_use') {
       if (toolTurns >= MAX_TOOL_TURNS) {
         if (import.meta.env.DEV) {
-          console.warn('[agenticAI] MAX_TOOL_TURNS reached — aborting')
+          console.warn('[agenticAI] MAX_TOOL_TURNS reached, aborting')
         }
         throw new AiApiError('api_error', { provider: 'anthropic' })
       }

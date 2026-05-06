@@ -2,7 +2,7 @@
  * searchCorpusTool.js
  *
  * Anthropic tool-use schema and handler for the `search_corpus` tool.
- * Runs a Fuse.js search over a provided corpus array — no React hooks,
+ * Runs a Fuse.js search over a provided corpus array, no React hooks,
  * safe to call from a plain async function in agenticAiService.js.
  */
 
@@ -32,7 +32,7 @@ const FUSE_OPTIONS = {
     { name: 'title',    weight: 0.32 },
     { name: 'keywords', weight: 0.30 },
     { name: 'desc',     weight: 0.07 },
-    { name: 'rem',      weight: 0.03 },
+    { name: 'fix',      weight: 0.03 },
   ],
   threshold: 0.4,
   minMatchCharLength: 2,
@@ -42,9 +42,9 @@ const FUSE_OPTIONS = {
  * Run a Fuse.js search over the provided corpus and return simplified result objects.
  *
  * @param {string} query
- * @param {object[]} corpus — full corpus array
+ * @param {object[]} corpus, full corpus array
  * @param {number} [limit=3]
- * @returns {{ id, title, scLabel, priority, desc, rem }[]}
+ * @returns {{ id, title, scLabel, priority, desc, fix }[]}
  */
 export function searchCorpus(query, corpus, limit = 3) {
   if (!query?.trim() || !Array.isArray(corpus) || corpus.length === 0) return []
@@ -56,8 +56,8 @@ export function searchCorpus(query, corpus, limit = 3) {
       id:       r.item.id,
       title:    r.item.title,
       scLabel:  r.item.scLabel,
-      priority: r.item.priority,
+      severity: r.item.severity,
       desc:     r.item.desc,
-      rem:      r.item.rem,
+      fix:      r.item.fix,
     }))
 }

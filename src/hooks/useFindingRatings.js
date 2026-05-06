@@ -21,8 +21,8 @@ export default function useFindingRatings() {
   return {
     ratings,
     getRating:     (id) => ratings[id] || DEFAULT_RATING,
-    upvote:        (id) => update(id, r => ({ ...r, score: r.score + 1 })),
-    downvote:      (id) => update(id, r => ({ ...r, score: r.score - 1 })),
+    rankUp:        (id) => update(id, r => ({ ...r, score: r.score + 1 })),
+    rankDown:      (id) => update(id, r => ({ ...r, score: r.score - 1 })),
     toggleStar:    (id) => update(id, r => ({ ...r, starred: !r.starred })),
     toggleArchive: (id) => update(id, r => ({ ...r, archived: !r.archived })),
   }

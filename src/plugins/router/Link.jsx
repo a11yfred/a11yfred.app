@@ -6,8 +6,8 @@ import { useRouter } from './Router.jsx'
  * all work without special handling.
  *
  * Props:
- *   to        string  — route path, e.g. '/settings'
- *   ...rest          — forwarded to the underlying <a>
+ *   to        string , route path, e.g. '/settings'
+ *   ...rest         , forwarded to the underlying <a>
  */
 export default function Link({ to, children, ...rest }) {
   const { navigate } = useRouter()

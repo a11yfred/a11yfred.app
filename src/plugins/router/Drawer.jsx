@@ -16,12 +16,12 @@ import { returnFocus } from './returnFocus.js'
  *   .drawer-panel      .drawer-panel.is-open
  *
  * Props:
- *   open         boolean           — whether the panel is visible
- *   onClose      fn                — called on Escape or backdrop click
- *   label        string            — aria-label for the dialog (default: 'Menu')
- *   focusOnClose React.RefObject   — if provided, receives focus on close instead
+ *   open         boolean          , whether the panel is visible
+ *   onClose      fn               , called on Escape or backdrop click
+ *   label        string           , aria-label for the dialog (default: 'Menu')
+ *   focusOnClose React.RefObject  , if provided, receives focus on close instead
  *                                    of the triggering element (e.g. a page heading)
- *   children     node              — rendered inside the panel only when open
+ *   children     node             , rendered inside the panel only when open
  */
 export default function Drawer({ open, onClose, label = 'Menu', children, focusOnClose }) {
   const triggerRef = useRef(null)
@@ -52,7 +52,7 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
 
   return (
     <>
-      {/* Backdrop — click to dismiss */}
+      {/* Backdrop, click to dismiss */}
       <div
         className={`overlay-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}
@@ -69,7 +69,7 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
         tabIndex={-1}
         inert={!open || undefined}
       >
-        {/* Only mount children while open — useFocusOnMount fires on each open */}
+        {/* Only mount children while open, useFocusOnMount fires on each open */}
         {open && children}
       </div>
     </>

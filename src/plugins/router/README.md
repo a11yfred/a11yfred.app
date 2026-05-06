@@ -28,26 +28,26 @@ Routes are hash fragments: `example.com/#/settings`. Browser back button works n
 
 ## Components
 
-- **`Router`** — Context provider, wrap your app
-- **`Drawer`** — Slide-in panel from left; focus management built in
-- **`BottomSheet`** — Slide-up sheet from bottom; focus management built in
-- **`Modal`** — Centered dialog; stacks above overlays (z-index 301)
+- **`Router`**: Context provider, wrap your app
+- **`Drawer`**: Slide-in panel from left, focus management built in
+- **`BottomSheet`**: Slide-up sheet from bottom, focus management built in
+- **`Modal`**: Centered dialog, stacks above overlays (z-index 301)
 
 ## Hooks
 
 **Focus management:**
 
-- `useFocusOnMount(ref?)` — Move focus to element when it mounts (for page/panel headings, modal open)
-- `useReturnFocus()` — Restore focus to triggering element on unmount
-- `useFocusTrap(containerRef, active)` — Restrict Tab to container (overlays use this)
-- `usePaginationFocus(headingRef, pageIndex)` — Re-focus heading on page change within modal/sheet
+- `useFocusOnMount(ref?)`: Move focus to element when it mounts (for page/panel headings, modal open)
+- `useReturnFocus()`: Restore focus to triggering element on unmount
+- `useFocusTrap(containerRef, active)`: Restrict Tab to container (overlays use this)
+- `usePaginationFocus(headingRef, pageIndex)`: Re-focus heading on page change within modal/sheet
 
 **Layout:**
 
-- `useAriaHide(panelRef, active)` — Hide background from screen readers while overlay is open
-- `useDir()` — Returns reactive `document.documentElement.dir` value
-- `useMediaQuery(query)` — Reactive `window.matchMedia`
-- `usePageTitle(title)` — Sets `document.title` to `"AppName | title"`
+- `useAriaHide(panelRef, active)`: Hide background from screen readers while overlay is open
+- `useDir()`: Returns reactive `document.documentElement.dir` value
+- `useMediaQuery(query)`: Reactive `window.matchMedia`
+- `usePageTitle(title)`: Sets `document.title` to `"AppName | title"`
 
 ## Focus rules (WCAG 2.4.3)
 

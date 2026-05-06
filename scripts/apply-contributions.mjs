@@ -105,11 +105,11 @@ for (let i = 0; i < contributions.length; i++) {
       corpus[corpusEntry.idx].desc = fields.desc
       corpusModified = true
     }
-    if (fields.rem !== undefined && fields.rem !== null) {
-      corpus[corpusEntry.idx].rem = fields.rem
+    if (fields.fix !== undefined && fields.fix !== null) {
+      corpus[corpusEntry.idx].fix = fields.fix
       corpusModified = true
     }
-    const changed = Object.entries(fields).filter(([k]) => k === 'desc' || k === 'rem').map(([k]) => k)
+    const changed = Object.entries(fields).filter(([k]) => k === 'desc' || k === 'fix').map(([k]) => k)
     if (changed.length) {
       console.log(`  [EN]   ${findingId} (${scope}) — updated: ${changed.join(', ')}`)
     }
@@ -138,13 +138,13 @@ for (let i = 0; i < contributions.length; i++) {
     if (localeFields.desc !== undefined && localeFields.desc !== null) {
       updated.desc = localeFields.desc
     }
-    if (localeFields.rem !== undefined && localeFields.rem !== null) {
-      updated.rem = localeFields.rem
+    if (localeFields.fix !== undefined && localeFields.fix !== null) {
+      updated.fix = localeFields.fix
     }
 
     translationPatches[locale][findingId] = updated
 
-    const changed = Object.entries(localeFields).filter(([k]) => k === 'desc' || k === 'rem').map(([k]) => k)
+    const changed = Object.entries(localeFields).filter(([k]) => k === 'desc' || k === 'fix').map(([k]) => k)
     if (changed.length) {
       console.log(`  [${locale.toUpperCase()}] ${findingId} (${scope}) — updated: ${changed.join(', ')}`)
     }

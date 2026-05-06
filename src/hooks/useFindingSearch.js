@@ -7,17 +7,17 @@ import { DEFAULT_RATING, MAX_SEARCH_ALL, MAX_SEARCH_RESULTS } from '../utils/con
 const FUSE_OPTIONS = {
   keys: [
     { name: 'title',     weight: 0.28 },  // translated title
-    { name: '_title_en', weight: 0.24 },  // English title — cross-language search
+    { name: '_title_en', weight: 0.24 },  // English title, cross-language search
     { name: 'keywords',  weight: 0.20 },  // always English
     { name: 'desc',      weight: 0.18 },  // problem description
-    { name: 'rem',       weight: 0.10 },  // remediation guidance
+    { name: 'fix',       weight: 0.10 },  // suggested fix guidance
   ],
   threshold: 0.4,
   minMatchCharLength: 2,
   includeScore: true,
 }
 
-const PRIORITY_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }
+const SEVERITY_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }
 const LOAD_TIMEOUT_MS = 8000
 
 const DEFAULT_WCAG_FILTER = { maxVersion: '2.2', maxLevel: 'AA' }
@@ -136,9 +136,9 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
       const rb = ratings[b.id] || DEFAULT_RATING
       if (ra.archived !== rb.archived) return ra.archived ? 1 : -1
       if (ra.starred !== rb.starred) return ra.starred ? -1 : 1
-      const pa = PRIORITY_ORDER[a.priority] ?? 99
-      const pb = PRIORITY_ORDER[b.priority] ?? 99
-      if (pa !== pb) return pa - pb
+      const sa = SEVERITY_ORDER[a.severity] ?? 99
+      const sb = SEVERITY_ORDER[b.severity] ?? 99
+      if (sa !== sb) return sa - sb
       return (a.scLabel ?? '').localeCompare(b.scLabel ?? '')
     })
   , [versionFiltered, ratings])
@@ -163,7 +163,7 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
     const filtered = raw.filter(r => {
       const item = r.item
       const searchableText = [
-        item.title, item.desc, item.rem, (item.keywords || []).join(' ')
+        item.title, item.desc, item.fix, (item.keywords || []).join(' ')
       ].join(' ').toLowerCase()
 
       // Check required terms (all must be present)

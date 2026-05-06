@@ -107,7 +107,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {' '}
           {t('search.hint_platform', { platform: platformLabel })}
           {aiEnabled && providerName ? ` ${t('search.hint_ai', { provider: providerName })}` : ''}
-          {showVoting ? ` ${t('search.hint_voting')}` : ''}
+          {showVoting ? ` ${t('search.hint_ranking')}` : ''}
           {hasPins ? ` ${t('search.hint_pin')}` : ''}
           {' '}
           {t('search.hint_syntax')}

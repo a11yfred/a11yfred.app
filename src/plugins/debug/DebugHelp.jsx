@@ -41,7 +41,7 @@ export function DebugHelp({ open, onClose, customCommands = [] }) {
             <table className="debug-help-table">
               <tbody>
                 <tr><td><code>debug deploy off</code></td><td>Off (no banner)</td></tr>
-                <tr><td><code>debug deploy on</code></td><td>Netlify — active target</td></tr>
+                <tr><td><code>debug deploy on</code></td><td>Netlify, active target</td></tr>
                 <tr><td><code>debug deploy netlify</code></td><td>Netlify banner</td></tr>
                 <tr><td><code>debug deploy pages</code></td><td>GitHub Pages</td></tr>
                 <tr><td><code>debug deploy vercel</code></td><td>Vercel</td></tr>
