@@ -4,6 +4,7 @@ import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
 import StateButton from './ui/StateButton.jsx'
+import IconButton from './ui/IconButton.jsx'
 import Badge from './ui/Badge.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
 import NoResults from './ui/NoResults.jsx'
@@ -350,19 +351,17 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             >
               <div className="result-card-wrap">
                 {onPin && (
-                  <button
-                    type="button"
-                    className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
-                    aria-label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                  <IconButton
+                    label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                     title={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                     disabled={archived}
                     onClick={handlePin}
-                  >
-                    {pinned
+                    icon={pinned
                       ? <PinOff size={12} aria-hidden="true" fill="currentColor" />
                       : <Pin size={12} aria-hidden="true" fill="none" />
                     }
-                  </button>
+                    className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                  />
                 )}
                 <a
                   ref={el => { itemRefs.current[finding.id] = el }}
@@ -434,25 +433,23 @@ export default function ResultList({ results, selected, _onSelect, query, rating
               </div>
 
               {showVoting && <div className="result-vote-col">
-                <button
-                  className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
-                  aria-label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
+                <IconButton
+                  label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                   title={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleStar}
-                >
-                  <Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />
-                </button>
+                  icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
+                  className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
+                />
 
-                <button
-                  className="result-vote-btn result-vote-btn--up"
-                  aria-label={t('results.upvote', { title: shortTitle })}
+                <IconButton
+                  label={t('results.upvote', { title: shortTitle })}
                   title={t('results.upvote', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleUpvote}
-                >
-                  <ThumbsUp size={14} aria-hidden="true" />
-                </button>
+                  icon={<ThumbsUp size={14} aria-hidden="true" />}
+                  className="result-vote-btn result-vote-btn--up"
+                />
 
                 <span
                   className="result-vote-score"
@@ -462,27 +459,25 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                   {score}
                 </span>
 
-                <button
-                  className="result-vote-btn result-vote-btn--down"
-                  aria-label={t('results.downvote', { title: shortTitle })}
+                <IconButton
+                  label={t('results.downvote', { title: shortTitle })}
                   title={t('results.downvote', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleDownvote}
-                >
-                  <ThumbsDown size={14} aria-hidden="true" />
-                </button>
+                  icon={<ThumbsDown size={14} aria-hidden="true" />}
+                  className="result-vote-btn result-vote-btn--down"
+                />
 
-                <button
-                  className={`result-vote-btn result-vote-btn--archive${archived ? ' result-vote-btn--active' : ''}`}
-                  aria-label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
+                <IconButton
+                  label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                   title={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                   onClick={handleArchive}
-                >
-                  {archived
+                  icon={archived
                     ? <ArchiveRestore size={13} aria-hidden="true" />
                     : <Archive size={13} aria-hidden="true" />
                   }
-                </button>
+                  className={`result-vote-btn result-vote-btn--archive${archived ? ' result-vote-btn--active' : ''}`}
+                />
               </div>}
             </li>
             {showAdAfter && <SponsoredTile />}
