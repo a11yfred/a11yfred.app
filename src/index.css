@@ -1882,7 +1882,7 @@ input.search-input:focus {
 }
 
 input.search-input--disabled {
-  background-color: #1a1a1a;
+  background-color: #f5f5f5;
   opacity: 1;
   cursor: not-allowed;
   color: #999;
