@@ -38,6 +38,10 @@ export default [
 
       // Allow _-prefixed parameters in stubs and intentionally unused args
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      // Modern React (17+) doesn't require React import for JSX
+      'react/react-in-jsx-scope': 'off',
+      // Disable prop-types validation (using TypeScript-style approach instead)
+      'react/prop-types': 'off',
     },
     settings: {
       react: {
