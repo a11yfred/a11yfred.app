@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, useMemo, lazy } from 'react'
 import { Settings, X, Info, HelpCircle, ExternalLink, ChevronDown } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
