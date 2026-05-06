@@ -85,6 +85,7 @@ Test 10 representative queries (e.g., "focus", "aria", "keyboard", "form", "colo
 ### Persistence
 
 After reload, verify these restore from `localStorage`:
+
 - Theme (Light/Auto/Dark/Party)
 - Language selection
 - Platform filter (Web/Native/Both)
@@ -110,11 +111,13 @@ Search codebase for `innerHTML`. All DOM manipulation goes through React JSX.
 ### `localStorage` Inventory
 
 Current keys:
+
 - `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `wcagFilter`
 - `recentFindings`, `userFindings`, `userOverrides`, `pendingContributions`, `pinnedResults`
 - `apikey_<provider>` (one per configured provider: anthropic, openai, google, azure)
 
 `sessionStorage`:
+
 - `lastSelectedId`
 
 Verify the count in SettingsPanel privacy disclosure matches reality.
@@ -172,6 +175,7 @@ Navigate directly to `/#/settings` in a new tab. Page must load (not return 404)
 ### Security Headers
 
 On the active deployment, verify response headers include:
+
 - `Content-Security-Policy`
 - `X-Frame-Options`
 - `X-Content-Type-Options`
@@ -181,6 +185,7 @@ On the active deployment, verify response headers include:
 ### `robots.txt` Validation
 
 Verify `robots.txt` content matches current phase:
+
 - Dev: `Disallow: /`
 - Phase 3 public: `Allow: /`
 
@@ -191,9 +196,11 @@ Ensure only one platform is deploying on each push. If switching targets, verify
 ### Electron Wiring Check
 
 If Electron build is activated:
+
 - Verify `SettingsPanel` writes API keys to `window.electronAPI.keys` (via `safeStorage`), not `localStorage`
 
 If Electron is not yet active:
+
 - Confirm scaffold in `electron/` is intact (`main.js`, `preload.js`, `electron-builder.json`)
 
 ---
@@ -220,6 +227,7 @@ Tab through the entire interface. Every interaction (search, selection, copy, re
 ### Screen Reader Test
 
 Test with NVDA + Firefox and VoiceOver + Safari. Verify:
+
 - Result list announcements fire when search fires
 - BottomSheet heading receives focus on select
 - Copy and reset announcements fire via `announce()`
@@ -230,6 +238,7 @@ Test with NVDA + Firefox and VoiceOver + Safari. Verify:
 ### Dark Mode Test
 
 Toggle dark theme. Inspect all states:
+
 - Empty state
 - Results list
 - Selected finding detail
@@ -349,6 +358,7 @@ Plugins (`src/plugins/router/`, `src/plugins/announce/`, `src/plugins/debug/`) a
 ### Import Isolation
 
 Verify no plugin file imports from app-level code:
+
 - `../../App`
 - `../../hooks`
 - `../../services`
@@ -384,6 +394,7 @@ Completed items: mark with strikethrough (`~~text~~`) and move to bottom of sect
 ### README Accuracy
 
 Review README.md entirely:
+
 - Feature descriptions match current implementation
 - Project structure lists actual files with accurate descriptions
 - Phase table reflects current state of each phase

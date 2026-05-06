@@ -43,7 +43,7 @@ The script detects keys still holding English fallback values and translates the
 
 Log the change in `docs/i18n-edits.md`:
 
-```
+```markdown
 | en.json key | Old value | New value | Action |
 | new_key_here | — | Your English text here | added |
 ```
@@ -157,7 +157,7 @@ git commit -m "i18n: translate remaining English placeholder values"
 
 After all three steps, update `docs/i18n-edits.md` to mark resolved entries:
 
-```
+```markdown
 | en.json key | Old value | New value | Status |
 | new_key_here | — | Your English text here | ✅ resolved |
 ```
@@ -177,6 +177,7 @@ Instead:
 3. Do one translate run when English content has stabilized
 
 Do not prompt for a translate run unless:
+
 - There is a clear content freeze
 - The user explicitly asks
 
