@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from 'react'
-import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
 import Button from './ui/Button.jsx'
@@ -19,7 +18,6 @@ const TYPEWRITER_PHRASES = [
 const CYCLE_MS = 2500
 
 export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false }) {
-  const { navigate } = useRouter()
   const t = useT()
   const inputRef = useRef(null)
   const [phraseIdx, setPhraseIdx] = useState(0)
