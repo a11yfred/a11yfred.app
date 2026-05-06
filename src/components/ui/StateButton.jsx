@@ -15,8 +15,8 @@ const StateButton = forwardRef(function StateButton({
   children,
   ...rest
 }, ref) {
-  const displayIcon = active ? activeIcon : icon
-  const hasIcon = displayIcon || activeIcon
+  const hasIcon = icon || activeIcon
+  const displayIcon = active ? activeIcon : icon || activeIcon
 
   return (
     <button
