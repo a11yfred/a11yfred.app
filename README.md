@@ -18,7 +18,7 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Complete — 133-entry corpus, all linters passing, UI library complete (16 components), agentic AI wired.
+**Phase 1 (Personal Library)**: Complete — 133-entry corpus, all linters passing, UI library complete (2 base button components + 14 primitives), agentic AI wired, full component consolidation done.
 
 **Phase 2 (AI + Sharing)**: Partial — Agentic AI working, user overrides done, multilingual editing UI deferred.
 

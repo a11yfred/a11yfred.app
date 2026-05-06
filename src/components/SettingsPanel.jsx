@@ -7,7 +7,7 @@ import Toggle from './ui/Toggle.jsx'
 import RadioChip from './ui/RadioChip.jsx'
 import Select from './ui/Select.jsx'
 import PanelShell from './ui/PanelShell.jsx'
-import StateButton from './ui/StateButton.jsx'
+import Button from './ui/Button.jsx'
 import { PROVIDERS, PROVIDER_MODELS, MODEL_DEFAULTS, initModels } from '../utils/aiModels.js'
 
 const LANGUAGES = [
@@ -305,9 +305,11 @@ export default function SettingsPanel({
               </option>
             ))}
           </Select>
-          <button
-            type="button"
-            className={`btn--primary settings-language-change-btn${changedLanguage ? ' btn__field--success' : ''}`}
+          <Button
+            variant="primary"
+            active={changedLanguage}
+            activeIcon={<Check size={14} aria-hidden="true" />}
+            className="settings-language-change-btn"
             disabled={!pendingLanguage}
             onClick={() => {
               if (pendingLanguage === 'rhg') { setRhgPending(true) }
@@ -320,10 +322,10 @@ export default function SettingsPanel({
             }}
           >
             {changedLanguage
-              ? <><Check size={14} aria-hidden="true" />{' '}{t('settings.language_changed')}</>
+              ? t('settings.language_changed')
               : t('settings.language_change')
             }
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -446,23 +448,23 @@ export default function SettingsPanel({
             {hasPins ? t('settings.pinned_results_desc') : t('settings.pinned_results_empty')}
           </p>
         </div>
-        <StateButton
+        <Button
           active={unpinAllDone}
           icon={<PinOff size={14} aria-hidden="true" />}
           activeIcon={<Check size={14} aria-hidden="true" />}
           label={t('settings.unpin_all')}
           activeLabel={t('settings.unpin_all_done')}
-          showLabel
-          labelText={t('settings.unpin_all')}
-          activeLabelText={t('settings.unpin_all_done')}
-          className="btn--primary settings-unpin-all-btn"
+          variant="primary"
+          className="settings-unpin-all-btn"
           disabled={!hasPins}
           onClick={() => {
             onClearPins?.()
             setUnpinAllDone(true)
             setTimeout(() => setUnpinAllDone(false), 1500)
           }}
-        />
+        >
+          {unpinAllDone ? t('settings.unpin_all_done') : t('settings.unpin_all')}
+        </Button>
       </div>
 
       {/* Starred Results */}
@@ -473,23 +475,23 @@ export default function SettingsPanel({
             {hasStarred ? t('settings.starred_results_desc') : t('settings.starred_results_empty')}
           </p>
         </div>
-        <StateButton
+        <Button
           active={unstarAllDone}
           icon={<Star size={14} aria-hidden="true" />}
           activeIcon={<Check size={14} aria-hidden="true" />}
           label={t('settings.unstar_all')}
           activeLabel={t('settings.unstar_all_done')}
-          showLabel
-          labelText={t('settings.unstar_all')}
-          activeLabelText={t('settings.unstar_all_done')}
-          className="btn--primary settings-unstar-all-btn"
+          variant="primary"
+          className="settings-unstar-all-btn"
           disabled={!hasStarred}
           onClick={() => {
             onClearStarred?.()
             setUnstarAllDone(true)
             setTimeout(() => setUnstarAllDone(false), 1500)
           }}
-        />
+        >
+          {unstarAllDone ? t('settings.unstar_all_done') : t('settings.unstar_all')}
+        </Button>
       </div>
 
       {/* Archived Results */}
@@ -500,23 +502,23 @@ export default function SettingsPanel({
             {hasArchived ? t('settings.archived_results_desc') : t('settings.archived_results_empty')}
           </p>
         </div>
-        <StateButton
+        <Button
           active={unarchiveAllDone}
           icon={<ArchiveRestore size={14} aria-hidden="true" />}
           activeIcon={<Check size={14} aria-hidden="true" />}
           label={t('settings.unarchive_all')}
           activeLabel={t('settings.unarchive_all_done')}
-          showLabel
-          labelText={t('settings.unarchive_all')}
-          activeLabelText={t('settings.unarchive_all_done')}
-          className="btn--primary settings-unarchive-all-btn"
+          variant="primary"
+          className="settings-unarchive-all-btn"
           disabled={!hasArchived}
           onClick={() => {
             onClearArchived?.()
             setUnarchiveAllDone(true)
             setTimeout(() => setUnarchiveAllDone(false), 1500)
           }}
-        />
+        >
+          {unarchiveAllDone ? t('settings.unarchive_all_done') : t('settings.unarchive_all')}
+        </Button>
       </div>
 
       {/* ── AI Assist ───────────────────────────────── */}
@@ -610,37 +612,37 @@ export default function SettingsPanel({
 
       {/* ── Footer: privacy link above buttons on mobile; privacy left / buttons right on desktop ── */}
       <div className="settings-footer-row">
-        <button
-          type="button"
+        <Button
           ref={privacyButtonRef}
-          onClick={() => navigate('/settings/privacy')}
+          variant="tertiary"
+          icon={<Info size={14} aria-hidden="true" />}
           className="settings-privacy-btn"
+          onClick={() => navigate('/settings/privacy')}
         >
-          <Info size={14} aria-hidden="true" style={{ flexShrink: 0 }} />
           {t('settings.privacy_button')}
-        </button>
+        </Button>
         <div className="settings-footer-actions">
-          <button
-            type="button"
+          <Button
             ref={resetButtonRef}
+            variant="warning"
+            className="settings-reset-btn"
             onClick={() => setResetConfirmOpen(true)}
-            className="btn--warning settings-reset-btn"
           >
             {t('settings.reset_all')}
-          </button>
-          <StateButton
+          </Button>
+          <Button
             ref={saveButtonRef}
             active={saved}
             icon={<Save size={14} aria-hidden="true" />}
             activeIcon={<Check size={14} strokeWidth={2.5} aria-hidden="true" />}
             label={t('settings.save')}
             activeLabel={t('settings.saved')}
-            showLabel
-            labelText={t('settings.save')}
-            activeLabelText={t('settings.saved')}
-            className="btn--primary settings-save-btn"
+            variant="primary"
+            className="settings-save-btn"
             onClick={handleSave}
-          />
+          >
+            {saved ? t('settings.saved') : t('settings.save')}
+          </Button>
         </div>
       </div>
 
@@ -741,7 +743,8 @@ export default function SettingsPanel({
           </div>
 
           <div className="settings-reset-actions">
-            <button
+            <Button
+              variant="primary"
               onClick={() => {
                 setResetConfirmOpen(false)
                 setSavedKeys(Object.fromEntries(PROVIDERS.map(p => [p.id, ''])))
@@ -756,16 +759,15 @@ export default function SettingsPanel({
                 resetButtonRef.current?.setAttribute('disabled', '')
                 saveButtonRef.current?.focus()
               }}
-              className="btn--primary btn--height-standard"
             >
               {t('settings.confirm_reset_all_yes')}
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="secondary"
               onClick={() => { setResetConfirmOpen(false); announce(t('settings.preserved_announce')) }}
-              className="btn--secondary btn--height-standard"
             >
               {t('settings.confirm_reset_all_no')}
-            </button>
+            </Button>
           </div>
         </div>
       </BottomSheet>

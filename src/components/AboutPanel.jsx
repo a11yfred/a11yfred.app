@@ -1,12 +1,11 @@
 import { ExternalLink } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, useRouter } from '../plugins/router/index.js'
+import { useFocusOnMount, usePageTitle } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 import PanelShell from './ui/PanelShell.jsx'
 
 export default function AboutPanel({ onClose }) {
   const t = useT()
   const headingRef = useFocusOnMount()
-  const { navigate } = useRouter()
   usePageTitle(t('about.sheet_label'))
 
   return (
@@ -44,11 +43,7 @@ export default function AboutPanel({ onClose }) {
             { id: 'ATH-019', slug: 'aria-used-incorrectly',                               label: 'ARIA Used Incorrectly' },
           ].map(({ id, slug, label }) => (
             <li key={id}>
-              <button
-                type="button"
-                className="about-inline-link"
-                onClick={() => navigate(`/finding/${id}/${slug}`)}
-              >{label}</button>
+              <a href={`#/finding/${id}/${slug}`} className="about-inline-link">{label}</a>
             </li>
           ))}
         </ul>
@@ -67,11 +62,7 @@ export default function AboutPanel({ onClose }) {
             <span className="about-feature-label">{t('about.feature_ai_label')}</span>
             <span className="about-feature-body">
               {t('about.feature_ai_body')}{' '}
-              <button
-                type="button"
-                className="about-inline-link"
-                onClick={() => navigate('/settings')}
-              >{t('about.feature_ai_setup_link')}</button>.
+              <a href="#/settings" className="about-inline-link">{t('about.feature_ai_setup_link')}</a>.
             </span>
           </li>
         </ul>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Search, Star, Pin, Copy, Sparkles, ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
+import Button from './ui/Button.jsx'
 
 const SLIDES = [
   {
@@ -107,9 +108,9 @@ export default function OnboardingPanel({ onClose }) {
       </div>
 
       <nav aria-label={t('onboarding.step_of', { step: step + 1, total })} className="onboarding-nav">
-        <button
-          type="button"
-          className="btn--secondary onboarding-nav-btn btn--height-standard"
+        <Button
+          variant="secondary"
+          className="onboarding-nav-btn"
           onClick={() => setStep(s => s - 1)}
           aria-label={t('onboarding.prev_aria')}
           disabled={isFirst}
@@ -118,7 +119,7 @@ export default function OnboardingPanel({ onClose }) {
         >
           <BackChevron size={16} aria-hidden="true" />
           {t('onboarding.back')}
-        </button>
+        </Button>
 
         <ol className="onboarding-dots" aria-hidden="true">
           {SLIDES.map((_, i) => (
@@ -126,25 +127,25 @@ export default function OnboardingPanel({ onClose }) {
           ))}
         </ol>
 
-        <button
-          type="button"
-          className="btn--primary onboarding-nav-btn onboarding-nav-btn--next btn--height-standard"
+        <Button
+          variant="primary"
+          className="onboarding-nav-btn onboarding-nav-btn--next"
           onClick={() => isLast ? commitClose() : setStep(s => s + 1)}
           aria-label={isLast ? t('onboarding.done_aria') : t('onboarding.next_aria')}
         >
           {isLast ? t('onboarding.done') : t('onboarding.next')}
           {!isLast && <FwdChevron size={16} aria-hidden="true" />}
-        </button>
+        </Button>
       </nav>
 
       <div className="onboarding-footer">
-        <button
-          type="button"
-          className="btn--tertiary onboarding-skip-btn"
+        <Button
+          variant="tertiary"
+          className="onboarding-skip-btn"
           onClick={handleRequestClose}
         >
           {t('onboarding.skip_tour')}
-        </button>
+        </Button>
       </div>
 
       <Modal

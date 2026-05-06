@@ -847,6 +847,7 @@ function AppContent({
                 showAds={showAds}
                 adFrequency={adFrequency}
                 onClear={handleClearResults}
+                hasPinnedItems={pinnedIds.size > 0}
               />
             )
             : activeQuery.length >= 2
@@ -901,6 +902,7 @@ function AppContent({
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
+                    hasPinnedItems={pinnedIds.size > 0}
                   />
                 </>
               )
@@ -926,6 +928,7 @@ function AppContent({
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
+                    hasPinnedItems={pinnedIds.size > 0}
                   />
                 )
               : (

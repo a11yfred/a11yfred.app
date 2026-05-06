@@ -2,11 +2,12 @@ import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { getAgenticRefinement } from '../services/agenticAiService.js'
-import { useMediaQuery, useRouter, Modal } from '../plugins/router/index.js'
+import { useMediaQuery, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
-import StateButton from './ui/StateButton.jsx'
+import Button from './ui/Button.jsx'
+
 import InputWithClear from './ui/InputWithClear.jsx'
 import Badge from './ui/Badge.jsx'
 import Field from './ui/Field.jsx'
@@ -19,7 +20,6 @@ import { NOTIFICATION_TIMEOUT, PROVIDER_LABELS } from '../utils/constants.js'
 export default function DetailPanel({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
-  const { navigate } = useRouter()
   const t = useT()
 
   const [location, setLocation] = useState('')
@@ -306,7 +306,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           <h2 ref={titleRef} tabIndex={-1} className="detail-title">
             {finding.title}
           </h2>
-          <StateButton
+          <Button
+            variant="tertiary"
             active={copiedTitle}
             icon={<Copy size={14} aria-hidden="true" />}
             activeIcon={<Check size={14} aria-hidden="true" />}
@@ -379,7 +380,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                 <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
                 <ScLink label={finding.scLabel} />
               </span>
-              <StateButton
+              <Button
+                variant="tertiary"
                 active={copiedPrimarySc}
                 icon={<Copy size={14} aria-hidden="true" />}
                 activeIcon={<Check size={14} aria-hidden="true" />}
@@ -403,7 +405,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                     </span>
                   ))}
                 </span>
-                <StateButton
+                <Button
+                  variant="tertiary"
                   active={copiedRelatedSc}
                   icon={<Copy size={14} aria-hidden="true" />}
                   activeIcon={<Check size={14} aria-hidden="true" />}
@@ -493,14 +496,14 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         <p className="detail-refine-hint">
           {aiEnabled
             ? <>{t('detail.refine_hint_ai')}{' '}
-                <button type="button" className="detail-settings-link" onClick={() => navigate('/settings')}>
+                <a href="/settings" className="detail-settings-link">
                   {t('detail.refine_hint_ai_settings')}
-                </button>.
+                </a>.
               </>
             : <>{t('detail.refine_hint_no_ai')}{' '}
-                <button type="button" className="detail-settings-link" onClick={() => navigate('/settings')}>
+                <a href="/settings" className="detail-settings-link">
                   {t('detail.refine_hint_no_ai_settings')}
-                </button>{' '}
+                </a>{' '}
                 {t('detail.refine_hint_no_ai_suffix')}
               </>}
         </p>

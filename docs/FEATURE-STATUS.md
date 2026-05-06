@@ -28,7 +28,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Animations & Transitions | ✅ | 100 | 1 |
 | Responsive Design | ✅ | 100 | 1 |
 | Party Mode | ✅ | 100 | 1 |
-| UI Component Library (boilerplate) | ✅ | 100 | 1 |
+| UI Component Library (consolidated) | ✅ | 100 | 1 |
 | AI Assist (single-shot) | 🟡 | 85 | 2 |
 | AI Agent (agentic mode) | 🔧 | 40 | 2 |
 | User Findings (custom) | 🔧 | 30 | 2 |
@@ -50,16 +50,17 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Summary by Phase
 
-### Phase 1 — Nearly Complete (May 5, 2026)
+### Phase 1 — Complete (May 6, 2026)
 
-- 20 features shipped and stable; SEO enabled; UI component library extraction complete
+- 20 features shipped and stable; SEO enabled; UI component library consolidated
 - ✅ Core search, result list, detail panel, ratings, pinned findings
-- ✅ Full corpus (89 entries), all linters passing, responsive design
+- ✅ Full corpus (133 entries), all linters passing, responsive design
 - ✅ Session persistence, debug tools, animations, Party Mode
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
-- ✅ UI component library (100% — 9 primitives extracted: Toggle, RadioChip, Select, StateButton, InputWithClear, Badge, Field, PanelShell, BackButton; plus Modal/Announcer re-exports)
+- ✅ UI component library (100% — 2 base button components + 14 primitives consolidated: Toggle, RadioChip, Select, Button, IconButton, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer, Drawer, BottomSheet)
+- ✅ CSS tokenization — all outline offsets and widths use design tokens
 - 🟡 Internationalization (80% — 50+ locales, ~60 keys pending translation)
-- Remaining Phase 1: Ko-fi donations, GitHub badges, production domain
+- Remaining for public launch: Ko-fi donations, GitHub badges, production domain
 
 ### Phase 2 — In Progress
 
@@ -80,7 +81,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 1 — Complete
 
-Status as of May 5, 2026: All Phase 1 features shipped and stable. 89-entry public corpus fully sourced and WCAG-mapped. All linters passing (ESLint, Stylelint, Markdownlint). Test coverage complete. Ready for Phase 2 backend completion and Phase 3 public launch.
+Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton). All hardcoded CSS values tokenized. All linters passing (ESLint, Stylelint, Markdownlint). Ready for Phase 2 backend completion and Phase 3 public launch.
 
 ---
 

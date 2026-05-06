@@ -3,7 +3,7 @@ import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { PRIORITY_VARS } from '../data/priorityStyles.js'
-import StateButton from './ui/StateButton.jsx'
+import Button from './ui/Button.jsx'
 import IconButton from './ui/IconButton.jsx'
 import Badge from './ui/Badge.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
@@ -16,16 +16,16 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
   const t = useT()
   if (!findings.length) return null
   return (
-    <div className="pinned-section">
+    <div className="pinned-section pinned-results">
       <div className={`pinned-section__header${showVoting ? ' pinned-section__header--with-sort' : ''}`}>
         <h2 className="pinned-section__heading">
           {t('results.pinned_heading')}
           <span className="pinned-section__count">{findings.length}</span>
         </h2>
         {onClearPins && (
-          <button type="button" className="btn--tertiary pinned-unpin-all-btn" onClick={onClearPins}>
+          <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={onClearPins}>
             {t('results.unpin_all')}
-          </button>
+          </Button>
         )}
       </div>
       <ResultList
@@ -43,12 +43,13 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onUp
         onPin={onPin}
         hideCount
         showPrioritySort={showVoting}
+        hasPinnedItems={false}
       />
     </div>
   )
 }
 
-export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showPrioritySort = false, showAds = false, adFrequency = 8, onClear }) {
+export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onUpvote, onDownvote, onStar, onArchive, showVoting = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showPrioritySort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
   const t = useT()
   const itemRefs = useRef({})
   const skipBtnRefs = useRef({})
@@ -165,31 +166,31 @@ export default function ResultList({ results, selected, _onSelect, query, rating
             {displayCount}
           </h2>
           {onCopyLink && (
-            <StateButton
+            <Button
               active={linkCopied}
               icon={<Link size={14} aria-hidden="true" />}
               activeIcon={<Check size={14} aria-hidden="true" />}
               label={t('results.copy_link_aria')}
               activeLabel={t('results.copied_link')}
-              className="btn--secondary results-copy-link-btn"
-              showLabel
-              labelText={t('results.copy_link')}
-              activeLabelText={t('results.copied_link')}
+              variant="secondary"
+              className="results-copy-link-btn"
               title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
               onClick={() => {
                 onCopyLink()
                 setLinkCopied(true)
                 setTimeout(() => setLinkCopied(false), CLIPBOARD_TIMEOUT)
               }}
-            />
+            >
+              {linkCopied ? t('results.copied_link') : t('results.copy_link')}
+            </Button>
           )}
         </div>
         {showVoting && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
         <div className="results-actions-row">
           {results.length > 0 && onNarrow && (
-            <button
-              type="button"
-              className="btn--secondary results-narrow-btn"
+            <Button
+              variant="secondary"
+              className="results-narrow-btn"
               title={narrowMode ? t('search.exit_narrow_aria') : t('results.narrow_title')}
               onClick={narrowMode ? onNarrowExit : onNarrow}
             >
@@ -204,18 +205,18 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                   <span>{t('results.narrow_results')}</span>
                 </>
               )}
-            </button>
+            </Button>
           )}
           {results.length > 0 && onClear && (
-            <button
-              type="button"
-              className="btn--tertiary results-clear-btn"
+            <Button
+              variant="tertiary"
+              className="results-clear-btn"
               aria-label={t('results.clear_results')}
               title={t('results.clear_results')}
               onClick={onClear}
             >
               {t('results.clear_results')}
-            </button>
+            </Button>
           )}
         </div>
 
@@ -243,20 +244,21 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                 clearButtonClassName="btn--primary results-narrow-clear-btn"
               />
               {!liveSearch && (
-                <button
+                <Button
                   onClick={onNarrowSearch}
                   disabled={narrowQuery.length < 2}
-                  className="btn--primary results-narrow-submit-btn"
+                  variant="primary"
+                  className="results-narrow-submit-btn btn--input-height"
                 >
                   {t('search.button')}
-                </button>
+                </Button>
               )}
             </div>
           </div>
         )}
       </div>}
 
-      <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}`} aria-label={t('results.aria_label')}>
+      <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>
         {displayResults.map((finding, index) => {
           const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
           const isSelected = selected?.id === finding.id
@@ -352,6 +354,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
               <div className="result-card-wrap">
                 {onPin && (
                   <IconButton
+                    variant="tertiary"
                     label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                     title={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                     disabled={archived}
@@ -434,6 +437,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
 
               {showVoting && <div className="result-vote-col">
                 <IconButton
+                  variant="tertiary"
                   label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                   title={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                   disabled={archived}
@@ -443,6 +447,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                 />
 
                 <IconButton
+                  variant="tertiary"
                   label={t('results.upvote', { title: shortTitle })}
                   title={t('results.upvote', { title: shortTitle })}
                   disabled={archived}
@@ -460,6 +465,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                 </span>
 
                 <IconButton
+                  variant="tertiary"
                   label={t('results.downvote', { title: shortTitle })}
                   title={t('results.downvote', { title: shortTitle })}
                   disabled={archived}
@@ -469,6 +475,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
                 />
 
                 <IconButton
+                  variant="tertiary"
                   label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                   title={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                   onClick={handleArchive}
@@ -487,9 +494,9 @@ export default function ResultList({ results, selected, _onSelect, query, rating
       </ul>
       {results.length > 50 && (
         <div className="view-all-section">
-          <button
-            type="button"
-            className="btn--secondary back-to-top-btn"
+          <Button
+            variant="secondary"
+            className="back-to-top-btn"
             onClick={() => {
               window.scrollTo({ top: 0, behavior: 'smooth' })
               countHeadingRef.current?.focus()
@@ -497,7 +504,7 @@ export default function ResultList({ results, selected, _onSelect, query, rating
           >
             <ChevronUp size={16} aria-hidden="true" />
             {t('results.back_to_top')}
-          </button>
+          </Button>
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import { useFocusOnMount, usePageTitle } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 import PanelShell from './ui/PanelShell.jsx'
+import Button from './ui/Button.jsx'
 
 export default function HelpPanel({ onClose, onStartTour }) {
   const t = useT()
@@ -24,13 +25,13 @@ export default function HelpPanel({ onClose, onStartTour }) {
           <h3 className="help-section-heading">{t('help.walkthrough_heading')}</h3>
           <div className="help-tour-section">
             <p className="help-tour-description">{t('help.take_tour_description')}</p>
-            <button
-              type="button"
-              className="btn--primary help-tour-btn btn--height-standard help-tour-btn--with-margin"
+            <Button
+              variant="primary"
+              className="help-tour-btn help-tour-btn--with-margin"
               onClick={() => { onClose(); onStartTour() }}
             >
               {t('help.take_tour')}
-            </button>
+            </Button>
           </div>
         </section>
       )}

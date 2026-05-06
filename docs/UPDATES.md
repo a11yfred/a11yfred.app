@@ -4,6 +4,44 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 6, 2026 — Button component consolidation, icon states, and CSS tokenization
+
+### Button component library consolidation
+
+Consolidated ~70 button instances across the codebase into two reusable base components:
+
+- **Button** (text-based) — handles primary, secondary, tertiary, and warning variants with optional decorative icons, state transitions via `active` + `activeIcon`, full-width, disabled, and error modifiers
+- **IconButton** (icon-only) — already existed; refined with variant support (accent, tertiary) and active state styling
+
+Removed StateButton, IconStateButton, and context-specific button styling patterns. All buttons now use consistent sizing (44px minimum touch target), spacing, and state transitions across the app.
+
+### Icon button active state fixes
+
+Fixed issue where icon buttons with `.btn__field--success` active state were becoming invisible. Added proper styling for active icon states:
+
+- Accent variant: shows success color without disappearing
+- Tertiary variant: shows success color with transparent background
+- Removed color-swap behavior from `:active` pseudo-class; now uses `var(--border)` background
+
+### CSS tokenization pass
+
+Replaced 30+ hardcoded dimension and color values with design tokens:
+
+- `outline-offset: 2px` → `var(--focus-outline-offset)` (21 instances)
+- `outline: 2px solid var(--focus)` → `outline: var(--focus-outline-width) solid var(--focus)` (11 instances)
+- `max-width: 720px` → `var(--modal-max-width)` (2 instances)
+- `border-radius: 11px` (toggle) → `var(--toggle-radius)`
+
+All hardcoded outline values now use tokens, enabling consistent focus ring styling across the entire app.
+
+### Markup and navigation improvements
+
+- Converted about-inline-link buttons to proper anchor tags with hash-based hrefs (`#/finding/...`, `#/settings`)
+- Removed `useRouter` dependency from AboutPanel where nav was button-based
+- Fixed help-tour-description font size (removed `var(--fs-small)`, now uses default body text)
+
+---
+
 ## May 6, 2026 — Button icon placement and markup standardization
 
 ### Button styling and layout fixes

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { useRouter } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
+import Button from './ui/Button.jsx'
 
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.
@@ -90,13 +91,14 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           disabled={narrowMode}
         />
         {!liveSearch && (
-          <button
+          <Button
             onClick={onSearch}
             disabled={query.length < 2}
-            className="btn--primary search-submit-btn"
+            variant="primary"
+            className="search-submit-btn btn--input-height"
           >
             {t('search.button')}
-          </button>
+          </Button>
         )}
       </div>
       {currentInputLength === 0 && !narrowMode && (

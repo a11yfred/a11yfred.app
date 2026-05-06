@@ -109,6 +109,34 @@
   /* --input-height: used for search and text inputs */
   --input-height: 4rem;
 
+  /* Focus and outline — used by keyboard focus ring */
+  --focus-outline-width: 2px;
+  --focus-outline-offset: 2px;
+
+  /* Text adjustments — line-height, underlines, etc. */
+  --text-underline-offset: 4px;
+
+  /* Modal and panel sizing */
+  --modal-max-width: 720px;
+  --modal-max-height-mobile: 92dvh;
+  --panel-width-mobile: min(360px, calc(100vw - var(--space-8)));
+
+  /* Scrollable content — for flex shrinking below content size */
+  --scroll-min-height: 0;
+
+  /* Icon sizing */
+  --icon-size-small: 1rem;
+  --icon-size-medium: 1.5em;
+  --icon-size-large: 24px;
+
+  /* Toggle control sizing */
+  --toggle-width: 40px;
+  --toggle-height: 22px;
+  --toggle-radius: 11px;
+  --toggle-thumb-size: 16px;
+  --toggle-thumb-offset: 3px;
+  --toggle-thumb-transition-offset: 21px;
+
   /* Overlay */
   --overlay-bg: rgb(0 0 0 / 0.45);
 

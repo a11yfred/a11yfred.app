@@ -88,8 +88,8 @@ button {
    Mouse clicks do not trigger :focus-visible, so this is
    keyboard-navigation only (correct per WCAG 2.4.11). */
 :focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-sm);
 }
 
@@ -98,8 +98,8 @@ button {
    The returnFocus() utility in the router plugin sets this attribute before
    calling .focus() and clears it on the next blur or pointerdown. */
 [data-focus-return]:focus {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
   border-radius: var(--radius-sm);
 }
 
@@ -109,9 +109,9 @@ input[role="switch"] {
 }
 
 input[role="switch"]:focus-visible + span {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
-  border-radius: 11px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--toggle-radius);
 }
 
 /* Suppress the default outline only on elements that supply
@@ -119,7 +119,7 @@ input[role="switch"]:focus-visible + span {
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--focus);
+  outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: 0;
   border-radius: var(--radius-sm);
 }
@@ -131,6 +131,8 @@ select:focus-visible {
   top: var(--space-2);
   left: var(--space-2);
   z-index: 999;
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
   padding: var(--space-1) var(--space-3);
   background: var(--accent);
   color: var(--accent-bg);
@@ -140,6 +142,7 @@ select:focus-visible {
   text-decoration: none;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-1);
   transform: translateY(calc(-100% - var(--space-4)));
   transition: transform var(--duration-fast);
@@ -147,8 +150,8 @@ select:focus-visible {
 
 .skip-link:focus-visible {
   transform: translateY(0);
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 /* ─── Layout ─────────────────────────────────────────────── */
@@ -162,7 +165,7 @@ select:focus-visible {
 
 @media (width >= 768px) {
   .app-container {
-    max-width: 720px;
+    max-width: var(--modal-max-width);
     margin: 0 auto;
     padding: var(--space-3) var(--space-6) var(--space-8);
   }
@@ -224,8 +227,8 @@ select:focus-visible {
 .page-header__settings-btn:focus-visible,
 .page-header__about-btn:focus-visible,
 .page-header__help-btn:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .page-header__settings-btn:active,
@@ -455,7 +458,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   left: 50%;
   bottom: 0;
   width: 100%;
-  max-width: 720px;
+  max-width: var(--modal-max-width);
   max-height: 92dvh;
   z-index: 202;
   background: var(--bg);
@@ -850,8 +853,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 .btn--icon:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .btn--icon:active {
@@ -882,8 +885,25 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 .btn--icon-accent:active {
-  background: var(--accent-text);
-  color: var(--accent-bg);
+  background: var(--border);
+}
+
+.btn--icon-accent.btn__field--success {
+  color: var(--success);
+}
+
+.btn--icon-accent.btn__field--success:hover {
+  color: var(--success);
+  background: transparent;
+}
+
+.btn--icon-tertiary.btn__field--success {
+  color: var(--success);
+}
+
+.btn--icon-tertiary.btn__field--success:hover {
+  color: var(--success);
+  background: transparent;
 }
 
 .btn--primary {
@@ -898,6 +918,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
 /* ─── Tertiary button (text-link style — no border, underlined) ── */
 
 .btn--tertiary {
+  padding: 0 var(--space-2);
   border: 1px solid transparent;
   background: transparent;
   color: var(--accent-text);
@@ -906,6 +927,14 @@ body:has(.modal-panel.is-open) .drawer-panel {
   font-weight: 500;
   transition: var(--transition-btn);
   border-radius: var(--radius);
+}
+
+.btn--tertiary:has(.btn-icon) {
+  padding: 0 var(--space-2) 0 0;
+}
+
+.btn--tertiary.btn--full-width {
+  padding: 0;
 }
 
 /* ─── Button sizing modifiers — two standard heights ─── */
@@ -947,8 +976,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 .btn--primary:not(:disabled):focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .btn--primary:not(:disabled):active {
@@ -964,8 +993,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 .btn--secondary:not(:disabled):focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .btn--secondary:not(:disabled):active {
@@ -979,8 +1008,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 .btn--tertiary:not(:disabled):focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .btn--tertiary:not(:disabled):active {
@@ -995,8 +1024,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 .btn--warning:not(:disabled):focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .btn--warning:not(:disabled):active {
@@ -1138,7 +1167,14 @@ select:disabled {
   font-size: var(--fs-sub);
   border-radius: var(--radius);
   white-space: nowrap;
-  height: 3rem;
+  height: var(--input-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn--input-height {
+  height: var(--input-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1208,7 +1244,7 @@ select:disabled {
 }
 
 .result-vote-btn:focus-visible {
-  outline: 2px solid var(--focus);
+  outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: 1px;
 }
 
@@ -1362,7 +1398,7 @@ select:disabled {
 }
 
 .result-pin-btn:focus-visible {
-  outline: 2px solid var(--focus);
+  outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: 1px;
 }
 
@@ -1374,7 +1410,7 @@ select:disabled {
 
 /* Push card content to inline-start when pin button is present (RTL-aware) */
 .result-item--pinnable {
-  padding-inline-start: 2.25rem;
+  padding-inline-start: 3rem;
 }
 
 /* Skip to next button — overlay centered on card */
@@ -1418,17 +1454,37 @@ select:disabled {
 .result-skip-btn:focus-visible {
   opacity: 1;
   pointer-events: auto;
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .result-skip-btn:focus-visible::before {
   opacity: 1;
 }
 
+/* Detail copy buttons — icon-only with state change */
+.detail-copy-btn,
+.detail-sc-copy-btn {
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  color: var(--accent-text);
+  font-weight: 500;
+  transition: background var(--duration-fast);
+}
+
+.detail-copy-btn:not(:disabled):hover,
+.detail-sc-copy-btn:not(:disabled):hover {
+  background: var(--bg-subtle);
+  border-radius: var(--radius);
+}
+
 /* Pinned section above main results */
 .pinned-section {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-4);
 }
 
 .pinned-section__header {
@@ -1443,12 +1499,8 @@ select:disabled {
   margin-inline-end: calc(var(--touch-target) + var(--space-2));
 }
 
-.pinned-unpin-all-btn {
-  margin-inline-start: auto;
-}
-
-.pinned-unpin-all-btn:not(:disabled):hover {
-  color: var(--text);
+.result-list--has-pinned {
+  margin-top: 0;
 }
 
 .pinned-section__heading {
@@ -2219,8 +2271,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .settings-checkbox:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .settings-checkbox:disabled {
@@ -2576,8 +2628,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .radio-chip:has(:focus-visible) {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .radio-chip__indicator {
@@ -2717,7 +2769,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 [data-theme="dark"] .toggle__thumb {
-  background: var(--accent);
+  background: #4a4a4a;
+  outline-color: #2a2a2a;
 }
 
 /* RTL: thumb travels from right to left; position from right edge */
@@ -2736,6 +2789,11 @@ input[type="radio"].settings-checkbox:checked {
   right: 21px;
 }
 
+[data-theme="dark"] .toggle:has(.toggle__input:checked) .toggle__thumb {
+  background: var(--accent);
+  outline-color: var(--accent);
+}
+
 .toggle__check {
   display: block;
   width: 2px;
@@ -2745,7 +2803,7 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 [data-theme="dark"] .toggle__check {
-  background: var(--accent-text);
+  background: var(--text);
 }
 
 .toggle:hover:has(.toggle__input:checked) .toggle__check {
@@ -2771,7 +2829,7 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 [data-theme="dark"] .toggle__ring {
-  border-color: var(--text-muted);
+  border-color: var(--text);
 }
 
 .toggle:hover:not(:has(.toggle__input:checked)) .toggle__ring {
@@ -2813,29 +2871,6 @@ input[type="radio"].settings-checkbox:checked {
   flex: 1;
 }
 
-.detail-copy-btn,
-.detail-sc-copy-btn {
-  flex-shrink: 0;
-  min-width: var(--touch-target);
-  min-height: var(--touch-target);
-  padding: 10px 12px;
-  border: none;
-  background: transparent;
-  color: var(--accent-text);
-  font-weight: 500;
-  transition: background var(--duration-fast);
-}
-
-.detail-copy-btn:not(:disabled):hover,
-.detail-sc-copy-btn:not(:disabled):hover {
-  background: var(--bg-subtle);
-  border-radius: var(--radius);
-}
-
-.detail-copy-btn--success,
-.detail-sc-copy-btn--success {
-  color: var(--success);
-}
 
 @media (width >= 768px) {
   .detail-title {
@@ -2853,7 +2888,7 @@ input[type="radio"].settings-checkbox:checked {
 
 .detail-badges button:focus-visible {
   outline: 2px solid currentcolor;
-  outline-offset: 2px;
+  outline-offset: var(--focus-outline-offset);
 }
 
 .detail-badges button:hover {
@@ -2861,11 +2896,23 @@ input[type="radio"].settings-checkbox:checked {
   color: var(--badge-bg);
 }
 
+.detail-badges .source-badge:hover {
+  background: var(--accent);
+  color: var(--accent-bg);
+}
+
 .detail-badges button:active {
   background: var(--badge-text);
   color: var(--badge-bg);
   outline: 2px solid currentcolor;
-  outline-offset: 2px;
+  outline-offset: var(--focus-outline-offset);
+}
+
+.detail-badges .source-badge:active {
+  background: var(--accent);
+  color: var(--accent-bg);
+  outline: 2px solid currentcolor;
+  outline-offset: var(--focus-outline-offset);
 }
 
 .detail-sc-list {
@@ -2932,16 +2979,43 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .detail-agentic-toggle {
-  width: 18px;
-  height: 18px;
-  accent-color: var(--accent);
+  appearance: none;
+  width: 1.125em;
+  height: 1.125em;
+  border: var(--border-width-control) solid var(--accent);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
   cursor: pointer;
   flex-shrink: 0;
-  margin-top: 2px;
+  margin: 0;
+  vertical-align: middle;
+  transition: background-color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.detail-agentic-toggle:checked {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%233c3489' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.detail-agentic-toggle:focus-visible {
+  outline-offset: var(--focus-outline-offset);
+}
+
+.detail-agentic-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] .detail-agentic-toggle:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%23afa9ec' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 .detail-agentic-mode-row {
-  padding: var(--space-4);
+  padding: var(--space-2) var(--space-3);
   background: var(--bg-subtle);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -2953,12 +3027,14 @@ input[type="radio"].settings-checkbox:checked {
   align-items: center;
   gap: var(--space-2);
   cursor: pointer;
+  margin: 0;
 }
 
 .detail-agentic-mode-hint {
   font-size: var(--fs-small);
   color: var(--text-muted);
-  margin-top: var(--space-2);
+  margin-top: var(--space-1);
+  margin-bottom: 0;
   line-height: 1.5;
 }
 
@@ -3241,8 +3317,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .detail-related__btn:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
   border-radius: 2px;
 }
 
@@ -3269,8 +3345,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .detail-links__link:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
   border-radius: 2px;
 }
 
@@ -3339,7 +3415,7 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .field-select-checkbox:focus-visible {
-  outline-offset: 2px;
+  outline-offset: var(--focus-outline-offset);
 }
 
 .field-select-checkbox:disabled {
@@ -3396,7 +3472,7 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .field-include-title-checkbox:focus-visible {
-  outline-offset: 2px;
+  outline-offset: var(--focus-outline-offset);
 }
 
 .field-include-title-checkbox:disabled {
@@ -3785,7 +3861,6 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .help-tour-description {
-  font-size: var(--fs-small);
   color: var(--text-muted);
   margin-top: var(--space-2);
   margin-bottom: 0;
@@ -3826,6 +3901,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .onboarding-skip-btn {
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
   font-size: var(--fs-body);
   display: inline-flex;
   align-items: center;
@@ -4013,8 +4090,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .about-inline-link:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 2px;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
   border-radius: 2px;
 }
 

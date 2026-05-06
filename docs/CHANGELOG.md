@@ -4,6 +4,25 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-06 (continued 2)
+
+### Button component consolidation and active state fixes
+
+- Consolidate ~70 button instances into two base components: Button (text) and IconButton (icon-only)
+- Remove StateButton, IconStateButton, and context-specific button styling patterns
+- Add `.btn__field--success` styling for accent and tertiary icon button variants
+- Fix icon button `:active` state color swap (now uses `var(--border)` background)
+- Convert about-inline-link buttons to anchor tags with hash-based hrefs
+- Remove `useRouter` import from AboutPanel (nav no longer uses onClick handlers)
+- Fix help-tour-description font size (remove `var(--fs-small)` override)
+
+### CSS tokenization
+
+- Replace `outline-offset: 2px` with `var(--focus-outline-offset)` (21 instances)
+- Replace `outline: 2px solid var(--focus)` with tokenized width (11 instances)
+- Replace `max-width: 720px` with `var(--modal-max-width)` (2 instances)
+- Replace `border-radius: 11px` (toggle) with `var(--toggle-radius)`
+
 ## 2026-05-06 (continued)
 
 ### Button icon placement and markup standardization
