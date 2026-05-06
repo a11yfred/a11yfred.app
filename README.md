@@ -22,11 +22,11 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Complete — 133-entry corpus, all linters passing (ESLint 9.x + jsx-a11y), UI library complete (2 base button components + 12 primitives), agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
+**Phase 1 (Personal Library)**: Complete ,  133-entry corpus, all linters passing (ESLint 9.x + jsx-a11y), UI library complete (2 base button components + 12 primitives), agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
 
-**Phase 2 (AI + Sharing)**: In Progress — Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working.
+**Phase 2 (AI + Sharing)**: In Progress ,  Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working.
 
-**Phase 3 (Public Launch)**: Planning — Auth/analytics infrastructure stubbed, ad tiles ready for Phase 3+ delivery.
+**Phase 3 (Public Launch)**: Planning ,  Auth/analytics infrastructure stubbed, ad tiles ready for Phase 3+ delivery.
 
 ---
 
@@ -34,12 +34,12 @@ npm run build      # production build
 
 Key directories:
 
-- `src/data/` — 133-entry public corpus + personal corpus (gitignored)
-- `src/services/` — Data layer, AI integration, localStorage utilities
-- `src/hooks/` — Search, ratings, pinning, user findings, overrides
-- `src/components/` — UI components; `ui/` subfolder has 14 reusable primitives (consolidated Button, IconButton, + 12 others)
-- `src/plugins/` — Router, Announcer, Debug tools (each with README)
-- `docs/` — Deployment, architecture, contributing
+- `src/data/` ,  133-entry public corpus + personal corpus (gitignored)
+- `src/services/` ,  Data layer, AI integration, localStorage utilities
+- `src/hooks/` ,  Search, ratings, pinning, user findings, overrides
+- `src/components/` ,  UI components; `ui/` subfolder has 14 reusable primitives (consolidated Button, IconButton, + 12 others)
+- `src/plugins/` ,  Router, Announcer, Debug tools (each with README)
+- `docs/` ,  Deployment, architecture, contributing
 
 ---
 
