@@ -68,6 +68,8 @@ button {
 
 .btn svg {
   flex-shrink: 0;
+  line-height: 1;
+  vertical-align: middle;
 }
 
 /* ─── Focus ───────────────────────────────────────────────── */
