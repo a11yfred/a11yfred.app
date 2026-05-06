@@ -1,23 +1,17 @@
-import { useFocusOnMount, usePageTitle } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
-import PanelShell from './ui/PanelShell.jsx'
+import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
 
 export default function HelpPanel({ onClose, onStartTour }) {
   const t = useT()
-  const headingRef = useFocusOnMount()
-
-  usePageTitle(t('help.sheet_label'))
 
   return (
-    <PanelShell
-      panelClassName="help-panel"
-      headerClassName="help-header"
-      titleClassName="help-title"
+    <Panel
+      className="help-panel"
       heading={t('help.sheet_label')}
-      headingRef={headingRef}
       onClose={onClose}
       closeAriaLabel={t('settings.back')}
+      pageTitle={t('help.sheet_label')}
     >
 
       {onStartTour && (
@@ -66,6 +60,6 @@ export default function HelpPanel({ onClose, onStartTour }) {
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↓</code> {t('help.shortcut_rank_down')}</li>
         </ul>
       </section>
-    </PanelShell>
+    </Panel>
   )
 }

@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save } from 'lucide-react'
-import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useRouter } from '../plugins/router/index.js'
+import { Modal, BottomSheet, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import Toggle from './ui/Toggle.jsx'
 import RadioChip from './ui/RadioChip.jsx'
 import Select from './ui/Select.jsx'
-import PanelShell from './ui/PanelShell.jsx'
+import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
 import { PROVIDERS, PROVIDER_MODELS, MODEL_DEFAULTS, initModels } from '../utils/aiModels.js'
 
@@ -99,12 +99,10 @@ export default function SettingsPanel({
   hasArchived,
   onClearArchived,
 }) {
-  const headingRef = useFocusOnMount()
   const saveButtonRef = useRef(null)
   const privacyButtonRef = useRef(null)
   const resetButtonRef = useRef(null)
   const t = useT()
-  usePageTitle(t('settings.heading'))
   const { navigate, route } = useRouter()
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -244,15 +242,13 @@ export default function SettingsPanel({
   const guardedClose = () => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } }
 
   return (
-    <PanelShell
+    <Panel
       ref={settingsPanelRef}
-      panelClassName="settings-panel"
-      headerClassName="settings-header"
-      titleClassName="settings-title"
+      className="settings-panel"
       heading={t('settings.heading')}
-      headingRef={headingRef}
       onClose={guardedClose}
       closeAriaLabel={t('settings.back')}
+      pageTitle={t('settings.heading')}
     >
 
       {/* ── Appearance ──────────────────────────────── */}
@@ -780,7 +776,7 @@ export default function SettingsPanel({
       >
         <p>{t('settings.no_changes_body')}</p>
       </Modal>
-    </PanelShell>
+    </Panel>
   )
 }
 

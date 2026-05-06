@@ -811,7 +811,14 @@ function AppContent({
         />
       )}
       {dataError
-        ? <DataError onRetry={retryData} />
+        ? <DataError
+            onRetry={retryData}
+            ariaLabel={t('error.announce')}
+            heading={t('error.heading')}
+            body={t('error.body')}
+            retryLabel={t('error.retry')}
+            onMount={() => announce(t('error.announce'), { priority: 'assertive' })}
+          />
         : dataLoading || viewAllLoading
           ? <ResultListSkeleton count={activeQuery === 'debug skeleton' ? sortedFindings.length : undefined} />
           : viewAll

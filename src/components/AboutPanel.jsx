@@ -1,22 +1,17 @@
 import { ExternalLink } from 'lucide-react'
-import { useFocusOnMount, usePageTitle } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
-import PanelShell from './ui/PanelShell.jsx'
+import Panel from './ui/Panel.jsx'
 
 export default function AboutPanel({ onClose }) {
   const t = useT()
-  const headingRef = useFocusOnMount()
-  usePageTitle(t('about.sheet_label'))
 
   return (
-    <PanelShell
-      panelClassName="about-panel"
-      headerClassName="about-header"
-      titleClassName="about-title"
+    <Panel
+      className="about-panel"
       heading={t('about.sheet_label')}
-      headingRef={headingRef}
       onClose={onClose}
       closeAriaLabel={t('settings.back')}
+      pageTitle={t('about.sheet_label')}
     >
 
       <section className="about-section">
@@ -94,6 +89,6 @@ export default function AboutPanel({ onClose }) {
           <li>{t('about.coming_custom')}</li>
         </ul>
       </section>
-    </PanelShell>
+    </Panel>
   )
 }

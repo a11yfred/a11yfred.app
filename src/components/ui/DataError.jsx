@@ -1,19 +1,23 @@
 import { useEffect, useRef } from 'react'
 import { RotateCcw } from 'lucide-react'
-import { useT } from '../../i18n/index.jsx'
-import { announce } from '../../plugins/announce/index.js'
 
-export default function DataError({ onRetry }) {
-  const t = useT()
+export default function DataError({
+  onRetry,
+  ariaLabel = 'Error loading data',
+  heading = 'Unable to load data',
+  body = 'An error occurred while loading data.',
+  retryLabel = 'Try again',
+  onMount
+}) {
   const headingRef = useRef(null)
 
   useEffect(() => {
-    announce(t('error.announce'), { priority: 'assertive' })
+    onMount?.()
     headingRef.current?.focus()
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- announce only on first appearance
+  }, [onMount])
 
   return (
-    <section className="no-results">
+    <section className="no-results" aria-label={ariaLabel}>
       <svg
         aria-hidden="true"
         width="56"
@@ -26,16 +30,16 @@ export default function DataError({ onRetry }) {
         <line x1="28" y1="16" x2="28" y2="32" stroke="var(--text-faint)" strokeWidth="2.5" strokeLinecap="round"/>
         <circle cx="28" cy="39" r="1.5" fill="var(--text-faint)"/>
       </svg>
-      <p className="no-results__heading" ref={headingRef} tabIndex={-1}>{t('error.heading')}</p>
+      <p className="no-results__heading" ref={headingRef} tabIndex={-1}>{heading}</p>
       <p className="no-results__body">
-        {t('error.body')}{' '}
+        {body}{' '}
         {onRetry && (
           <button type="button" className="btn--tertiary error-retry-inline" onClick={onRetry}>
             <RotateCcw size={12} aria-hidden="true" />
-            {t('error.retry')}
+            {retryLabel}
           </button>
         )}
-        {!onRetry && t('error.retry')}
+        {!onRetry && retryLabel}
         .
       </p>
     </section>

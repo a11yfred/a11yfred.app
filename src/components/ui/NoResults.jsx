@@ -1,16 +1,18 @@
 import { useEffect } from 'react'
-import { useT } from '../../i18n/index.jsx'
-import { announce } from '../../plugins/announce/index.js'
 
-export default function NoResults({ query }) {
-  const t = useT()
-
+export default function NoResults({
+  _query,
+  ariaLabel = 'No results found',
+  heading = 'No results found',
+  body = 'Try adjusting your search terms.',
+  onMount
+}) {
   useEffect(() => {
-    announce(t('results.no_results_announce', { query }))
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- intentional: announce only on first appearance
+    onMount?.()
+  }, [onMount])
 
   return (
-    <section aria-label={t('results.no_results_aria')} className="no-results">
+    <section aria-label={ariaLabel} className="no-results">
       <svg
         aria-hidden="true"
         width="56"
@@ -27,10 +29,10 @@ export default function NoResults({ query }) {
       </svg>
 
       <p className="no-results__heading">
-        {t('results.no_results_heading', { query })}
+        {heading}
       </p>
       <p className="no-results__body">
-        {t('results.no_results_body')}
+        {body}
       </p>
     </section>
   )
