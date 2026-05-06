@@ -77,7 +77,7 @@ function getAccessibleName(el) {
  * Dev-only. Renders nothing in production.
  *
  * Props:
- *   enabled  boolean  — set false to hide (e.g. after "debug names off")
+ *   enabled  boolean , set false to hide (e.g. after "debug names off")
  */
 export function NamesDebugger({ enabled = true }) {
   const [tooltip, setTooltip] = useState(null)

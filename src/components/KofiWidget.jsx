@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 /**
  * Ko-fi floating donation widget with accessibility patches.
  *
- * Currently disabled — re-enable by importing and rendering <KofiWidget />
+ * Currently disabled, re-enable by importing and rendering <KofiWidget />
  * in App.jsx inside the <Router> wrapper.
  *
  * The widget is a third-party script that injects its own DOM. This

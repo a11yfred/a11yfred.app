@@ -22,7 +22,7 @@ export default function SponsoredTile() {
           <div className="result-item__sc">Ethical Ads</div>
 
           <div className="result-item__desc">
-            Receive ads from companies in the accessibility and developer communities. Your privacy is respected — no tracking, no profiles, no algorithms.
+            Receive ads from companies in the accessibility and developer communities. Your privacy is respected, no tracking, no profiles, no algorithms.
           </div>
         </div>
       </div>

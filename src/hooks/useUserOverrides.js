@@ -15,12 +15,12 @@ import {
  * overrides change without re-fetching corpus data.
  *
  * Returns:
- *   overrides            — { [findingId]: { [locale]: { desc, rem, editedAt } } }
- *   saveOverride         — (findingId, locale, { desc, rem }) → void
- *   deleteOverride       — (findingId, locale) → void
- *   deleteAllForFinding  — (findingId) → void
- *   clearAllOverrides    — () → void
- *   hasOverride          — (findingId, locale) → boolean
+ *   overrides           , { [findingId]: { [locale]: { desc, fix, editedAt } } }
+ *   saveOverride        , (findingId, locale, { desc, fix }) → void
+ *   deleteOverride      , (findingId, locale) → void
+ *   deleteAllForFinding , (findingId) → void
+ *   clearAllOverrides   , () → void
+ *   hasOverride         , (findingId, locale) → boolean
  */
 export default function useUserOverrides() {
   const [overrides, setOverrides] = useState(() => loadAllOverrides())

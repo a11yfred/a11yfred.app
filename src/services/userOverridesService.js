@@ -2,12 +2,12 @@
  * userOverridesService.js
  *
  * Phase 1: localStorage-backed personal locale overrides for corpus findings.
- * When a user edits a finding's desc/rem while in a non-English locale and
+ * When a user edits a finding's desc/fix while in a non-English locale and
  * chooses "Save to personal", the override is stored here and applied at
  * runtime on top of the corpus + translation overlay.
  *
  * Schema:
- *   { [findingId]: { [locale]: { desc, rem, editedAt } } }
+ *   { [findingId]: { [locale]: { desc, fix, editedAt } } }
  *
  * Phase 2 (Supabase): swap load/persist to a user_overrides table keyed by
  * (user_id, finding_id, locale). The hook (useUserOverrides.js) and all
@@ -41,7 +41,7 @@ export function saveOverride(findingId, locale, fields) {
   if (!all[findingId]) all[findingId] = {}
   const entry = {
     desc:     fields.desc ?? null,
-    rem:      fields.rem  ?? null,
+    fix:      fields.fix  ?? null,
     editedAt: new Date().toISOString(),
   }
   all[findingId][locale] = entry
@@ -69,7 +69,7 @@ export function clearAllOverrides() {
 }
 
 /**
- * Pure function — applies a personal override to a finding for the given locale.
+ * Pure function, applies a personal override to a finding for the given locale.
  * Takes the overrides map from useUserOverrides (avoids re-reading localStorage
  * on every call from a useMemo). Returns original finding unchanged if no
  * override exists.
@@ -83,7 +83,7 @@ export function applyOverride(finding, locale, overrides = {}) {
   return {
     ...finding,
     desc: override.desc ?? finding.desc,
-    rem:  override.rem  ?? finding.rem,
+    fix:  override.fix  ?? finding.fix,
     _hasOverride:    true,
     _overrideLocale: locale,
     _overrideEditedAt: override.editedAt,

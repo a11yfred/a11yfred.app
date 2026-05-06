@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 
-// Axe a11y runtime checks — dev only, never included in the production bundle
+// Axe a11y runtime checks, dev only, never included in the production bundle
 if (import.meta.env.DEV) {
   Promise.all([import('@axe-core/react'), import('react-dom')]).then(
     ([{ default: axe }, { default: ReactDOMCompat }]) => {

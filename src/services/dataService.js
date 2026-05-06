@@ -13,10 +13,10 @@
 
 import corpusData from '../data/personal-corpus.json'
 
-// Raw overlay data cache — avoids re-fetching the same JSON module
+// Raw overlay data cache, avoids re-fetching the same JSON module
 const overlayCache = {}
 
-// Fully-merged results cache — avoids re-mapping corpusData on every locale switch
+// Fully-merged results cache, avoids re-mapping corpusData on every locale switch
 const mergedCache = {}
 
 // Closest-match fallbacks for locales that share a translation overlay.
@@ -39,7 +39,7 @@ async function loadOverlay(locale) {
 }
 
 export async function getFindings(locale = 'en') {
-  // All English variants use the corpus directly — no overlay needed
+  // All English variants use the corpus directly, no overlay needed
   if (!locale || locale.startsWith('en')) return corpusData
 
   // Return cached merged result if already computed for this locale
@@ -60,7 +60,7 @@ export async function getFindings(locale = 'en') {
       ...entry,
       title:     t.title || entry.title,
       desc:      t.desc  || entry.desc,
-      rem:       t.rem   || entry.rem,
+      fix:       t.fix   || entry.fix,
       _title_en: entry.title,   // preserved for cross-language Fuse search
     }
   })
@@ -70,7 +70,7 @@ export async function getFindings(locale = 'en') {
 }
 
 /**
- * Phase 2 stub — returns the signed-in user's custom finding entries.
+ * Phase 2 stub, returns the signed-in user's custom finding entries.
  *
  * Custom entries use the same schema as corpus.json but with IDs like "USR-001".
  * They are stored in the Supabase `user_findings` table with RLS so only the
@@ -85,7 +85,7 @@ export async function getFindings(locale = 'en') {
  *   if (error) throw error
  *   return data
  *
- * Usage — combine with getFindings() for a merged search set:
+ * Usage, combine with getFindings() for a merged search set:
  *   const [public, custom] = await Promise.all([getFindings(locale), getUserFindings(userId)])
  *   const all = [...public, ...custom]
  */
@@ -94,7 +94,7 @@ export async function getUserFindings(_userId) {
 }
 
 /**
- * Phase 2 stub — saves or updates a user's custom finding entry.
+ * Phase 2 stub, saves or updates a user's custom finding entry.
  *
  * To activate:
  *   const { error } = await supabase
@@ -103,11 +103,11 @@ export async function getUserFindings(_userId) {
  *   if (error) throw error
  */
 export async function saveUserFinding(_userId, _finding) {
-  throw new Error('User findings not yet implemented — see dataService.js Phase 2 comments')
+  throw new Error('User findings not yet implemented, see dataService.js Phase 2 comments')
 }
 
 /**
- * Phase 2 stub — deletes a user's custom finding entry.
+ * Phase 2 stub, deletes a user's custom finding entry.
  *
  * To activate:
  *   const { error } = await supabase
@@ -118,11 +118,11 @@ export async function saveUserFinding(_userId, _finding) {
  *   if (error) throw error
  */
 export async function deleteUserFinding(_userId, _findingId) {
-  throw new Error('User findings not yet implemented — see dataService.js Phase 2 comments')
+  throw new Error('User findings not yet implemented, see dataService.js Phase 2 comments')
 }
 
 /**
- * Phase 2 stub — syncs non-sensitive settings to Supabase for cross-device restore.
+ * Phase 2 stub, syncs non-sensitive settings to Supabase for cross-device restore.
  * API keys are intentionally excluded and remain localStorage-only.
  *
  * To activate:
@@ -136,7 +136,7 @@ export async function syncSettings(_userId, _settings) {
 }
 
 /**
- * Phase 2 stub — retrieves synced settings for a signed-in user.
+ * Phase 2 stub, retrieves synced settings for a signed-in user.
  * Returns null if not found (falls back to localStorage values in App.jsx).
  *
  * To activate:

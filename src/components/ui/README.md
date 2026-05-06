@@ -6,25 +6,25 @@ Portable, accessible React component and utility library. Built for accessibilit
 
 ### Interactive Controls (Base)
 
-- **Button** — Text button with decorative icons, state transitions, variants (primary, secondary, tertiary, warning)
-- **IconButton** — Icon-only button with variants (accent, tertiary)
-- **Toggle** — Binary on/off switch with accessible labels
-- **RadioChip** — Radio button styled as a selectable chip
-- **Select** — Native-enhanced dropdown with keyboard support
+- **Button**: Text button with decorative icons, state transitions, variants (primary, secondary, tertiary, warning)
+- **IconButton**: Icon-only button with variants (accent, tertiary)
+- **Toggle**: Binary on/off switch with accessible labels
+- **RadioChip**: Radio button styled as a selectable chip
+- **Select**: Native-enhanced dropdown with keyboard support
 
 ### Input & Feedback
 
-- **InputWithClear** — Text input with built-in clear button and focus management
-- **Badge** — Interactive and display badge variants with semantic colors
-- **Field** — Complex textarea with auto-sizing, copy, reset, and undo
+- **InputWithClear**: Text input with built-in clear button and focus management
+- **Badge**: Interactive and display badge variants with semantic colors
+- **Field**: Complex textarea with auto-sizing, copy, reset, and undo
 
 ### Containers & Layouts
 
-- **PanelShell** — Header + title + content wrapper for drawer/sheet panels
-- **BackButton** — RTL-aware back chevron button
-- **Modal** — Dialog with focus trapping and Escape handling
-- **Drawer** — Slide-in panel from left (mobile) or full page (desktop)
-- **BottomSheet** — Slide-up panel from bottom with focus management
+- **PanelShell**: Header + title + content wrapper for drawer/sheet panels
+- **BackButton**: RTL-aware back chevron button
+- **Modal**: Dialog with focus trapping and Escape handling
+- **Drawer**: Slide-in panel from left (mobile) or full page (desktop)
+- **BottomSheet**: Slide-up panel from bottom with focus management
 
 ## Utilities & Plugins
 
@@ -81,13 +81,13 @@ Features:
 
 All components reference design tokens from `src/tokens.css`:
 
-- **Colors** — Text, backgrounds, borders, semantic (success/error), focus, badges
-- **Typography** — Font families, sizes (4 scale steps), line-height
-- **Spacing** — Consistent scale (0.25rem to 2rem)
-- **Sizing** — Touch targets (44px), button heights, input heights, icon sizes
-- **Focus & Outlines** — Outline width (2px), offset (2px)
-- **Borders & Radius** — Border widths, radius scale (4px to 9999px)
-- **Motion** — Durations (150ms, 250ms, 350ms), easing functions
+- **Colors**: Text, backgrounds, borders, semantic (success/error), focus, badges
+- **Typography**: Font families, sizes (4 scale steps), line-height
+- **Spacing**: Consistent scale (0.25rem to 2rem)
+- **Sizing**: Touch targets (44px), button heights, input heights, icon sizes
+- **Focus & Outlines**: Outline width (2px), offset (2px)
+- **Borders & Radius**: Border widths, radius scale (4px to 9999px)
+- **Motion**: Durations (150ms, 250ms, 350ms), easing functions
 
 ## Usage
 
@@ -231,12 +231,12 @@ src/
 
 ## Design Philosophy
 
-- **Minimal and Opinionated** — Each component does one thing well
-- **Accessible by Default** — WCAG 2.2 AA compliant, keyboard support built-in
-- **Token-Driven** — All values use design tokens; change tokens, not component code
-- **Touch-Safe** — 44px minimum touch targets (WCAG 2.5.5)
-- **Motion-Respectful** — All animations respect `prefers-reduced-motion`
-- **Portable** — No external dependencies beyond React; designed for npm packaging
+- **Minimal and Opinionated**: Each component does one thing well
+- **Accessible by Default**: WCAG 2.2 AA compliant, keyboard support built-in
+- **Token-Driven**: All values use design tokens; change tokens, not component code
+- **Touch-Safe**: 44px minimum touch targets (WCAG 2.5.5)
+- **Motion-Respectful**: All animations respect `prefers-reduced-motion`
+- **Portable**: No external dependencies beyond React; designed for npm packaging
 
 ## Development
 

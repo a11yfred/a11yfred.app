@@ -92,7 +92,7 @@ const PROVIDER_CONFIGS = {
   },
 }
 
-function buildPrompt({ finding, descText, remText, note }) {
+function buildPrompt({ finding, descText, fixText, note }) {
   return `You are helping an accessibility auditor write finding descriptions in their established voice and methodology.
 
 The auditor has this existing finding:
@@ -100,18 +100,18 @@ The auditor has this existing finding:
 Title: ${finding.title}
 WCAG SC: ${finding.scLabel}
 Current description: ${descText}
-Current remediation: ${remText}
+Current suggested fix: ${fixText}
 
 The auditor wants to refine it with this note: "${note}"
 
-Rewrite the description and remediation to reflect the refinement. Keep the same professional, direct tone and level of technical detail. Do not add preamble or explanation.
+Rewrite the description and suggested fix to reflect the refinement. Keep the same professional, direct tone and level of technical detail. Do not add preamble or explanation.
 
 Respond with exactly two lines:
 Description: [rewritten description]
-Remediation: [rewritten remediation]`
+Suggested Fix: [rewritten suggested fix]`
 }
 
-export async function getAiRefinement({ finding, descText, remText, note }) {
+export async function getAiRefinement({ finding, descText, fixText, note }) {
   const provider = localStorage.getItem('ai_provider') || 'anthropic'
   const key = window.electronAPI
     ? await window.electronAPI.keys.get(`apikey_${provider}`)
@@ -122,7 +122,7 @@ export async function getAiRefinement({ finding, descText, remText, note }) {
   }
 
   const config = PROVIDER_CONFIGS[provider]
-  const prompt = buildPrompt({ finding, descText, remText, note })
+  const prompt = buildPrompt({ finding, descText, fixText, note })
 
   // Build URL (some providers need the key in the URL)
   let url
@@ -161,10 +161,10 @@ export async function getAiRefinement({ finding, descText, remText, note }) {
   const text = await config.parseResponse(res)
 
   const descMatch = text.match(/^Description:\s*(.+)/m)
-  const remMatch = text.match(/^Remediation:\s*(.+)/ms)
+  const fixMatch = text.match(/^Suggested Fix:\s*(.+)/ms)
 
   return {
     desc: descMatch?.[1]?.trim() || null,
-    rem: remMatch?.[1]?.trim() || null,
+    fix: fixMatch?.[1]?.trim() || null,
   }
 }

@@ -39,13 +39,13 @@ const STANDARD_SECTIONS = [
 ]
 
 /**
- * Floating debug launcher — pill FAB that opens a clickable command menu.
+ * Floating debug launcher, pill FAB that opens a clickable command menu.
  *
  * Props:
- *   enabled         boolean                    — override ENABLED constant
- *   position        string                     — override POSITION constant
- *   onCommand       fn(cmd) → boolean          — called when a command button is clicked
- *   customSections  [{ heading, rows: [{cmd, desc}] }]  — project-specific command groups
+ *   enabled         boolean                   , override ENABLED constant
+ *   position        string                    , override POSITION constant
+ *   onCommand       fn(cmd) → boolean         , called when a command button is clicked
+ *   customSections  [{ heading, rows: [{cmd, desc}] }] , project-specific command groups
  */
 export function DebugLauncher({ enabled = ENABLED, position = POSITION, onCommand, customSections = [] }) {
   const [open, setOpen] = useState(false)

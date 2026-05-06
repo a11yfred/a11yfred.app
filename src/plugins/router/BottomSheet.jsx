@@ -17,15 +17,15 @@ import { useDir } from './useDir.js'
  * - Dismisses on Escape or backdrop click
  *
  * Props:
- *   open            boolean          — whether the sheet is visible
- *   onClose         fn               — called on Escape, backdrop click, or close button
- *   label           string           — aria-label for the dialog
- *   keepMounted     boolean          — keep children mounted while closed (preserves state)
- *   returnFocusRef  React.RefObject  — if provided, focus this element on close instead of
+ *   open            boolean         , whether the sheet is visible
+ *   onClose         fn              , called on Escape, backdrop click, or close button
+ *   label           string          , aria-label for the dialog
+ *   keepMounted     boolean         , keep children mounted while closed (preserves state)
+ *   returnFocusRef  React.RefObject , if provided, focus this element on close instead of
  *                                      auto-captured trigger; use when child effects move focus
  *                                      before this component's useEffect fires (child effects
  *                                      fire before parent effects in React)
- *   children        node             — rendered inside the sheet
+ *   children        node            , rendered inside the sheet
  */
 export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, onBack, backLabel = 'Back', hideCloseBottom = false, closeIcon: CloseIcon = X, backLtrIcon: BackLtrIcon = ChevronLeft, backRtlIcon: BackRtlIcon = ChevronRight, children }) {
   const triggerRef = useRef(null)
@@ -66,7 +66,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
     return () => document.removeEventListener('keydown', handler)
   }, [open, onClose])
 
-  // Scroll lock — prevent background from scrolling when sheet is open
+  // Scroll lock, prevent background from scrolling when sheet is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
@@ -114,7 +114,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
 
   return createPortal(
     <>
-      {/* Backdrop — click to dismiss */}
+      {/* Backdrop, click to dismiss */}
       <div
         className={`sheet-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}

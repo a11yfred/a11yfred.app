@@ -5,7 +5,7 @@ import { getAgenticRefinement } from '../services/agenticAiService.js'
 import { useMediaQuery, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
-import { PRIORITY_VARS } from '../data/priorityStyles.js'
+import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
 
 import InputWithClear from './ui/InputWithClear.jsx'
@@ -24,35 +24,35 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(finding.desc)
-  const [remText, setRemText] = useState(finding.rem)
+  const [fixText, setFixText] = useState(finding.fix)
   const [reviseNote, setReviseNote] = useState('')
   const [useAgenticMode, setUseAgenticMode] = useState(agenticMode)
   const [noteSaved, setNoteSaved] = useState(false)
   const [copiedDesc, setCopiedDesc] = useState(false)
-  const [copiedRem, setCopiedRem] = useState(false)
+  const [copiedFix, setCopiedFix] = useState(false)
   const [copiedTitle, setCopiedTitle] = useState(false)
   const [copiedPrimarySc, setCopiedPrimarySc] = useState(false)
   const [copiedRelatedSc, setCopiedRelatedSc] = useState(false)
   const [resetDesc, setResetDesc] = useState(false)
-  const [resetRem, setResetRem] = useState(false)
+  const [resetFix, setResetFix] = useState(false)
   const [refining, setRefining] = useState(false)
   const [animating, setAnimating] = useState(false)
   const [confirmReset, setConfirmReset] = useState(null)
   const [nothingToCopy, setNothingToCopy] = useState(false)
   const [revisionFailed, setRevisionFailed] = useState(null)
-  // Field-specific undo stacks — each entry is the text before that AI revision
+  // Field-specific undo stacks, each entry is the text before that AI revision
   const [descHistory, setDescHistory] = useState([])
-  const [remHistory, setRemHistory] = useState([])
+  const [fixHistory, setFixHistory] = useState([])
   const [reviseDesc, setReviseDesc] = useState(false)
-  const [reviseRem, setReviseRem] = useState(false)
+  const [reviseFix, setReviseFix] = useState(false)
   const [copiedAll, setCopiedAll] = useState(false)
   const [resetAllDone, setResetAllDone] = useState(false)
   const [includeDescTitle, setIncludeDescTitle] = useState(false)
-  const [includeRemTitle, setIncludeRemTitle] = useState(false)
+  const [includeFixTitle, setIncludeFixTitle] = useState(false)
   const typeTimerRef = useRef(null)
   const refineButtonRef = useRef(null)
   const descCopyBtnRef = useRef(null)
-  const remCopyBtnRef = useRef(null)
+  const fixCopyBtnRef = useRef(null)
 
   useEffect(() => () => clearTimeout(typeTimerRef.current), [])
 
@@ -78,12 +78,12 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       announce(t('detail.rewriting_text'), { priority: 'assertive' })
       setTimeout(() => {
         const fakeDesc = reviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
-        const fakeRem = reviseRem ? '[Debug] Revised remediation: verify the fix was applied, then remove this placeholder before sharing the report.' : null
+        const fakeFix = reviseFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
         if (fakeDesc) setDescHistory(h => [...h, descText])
-        if (fakeRem) setRemHistory(h => [...h, remText])
+        if (fakeFix) setFixHistory(h => [...h, fixText])
         setRefining(false)
         setAnimating(true)
-        startTypewriter(fakeDesc, fakeRem, t)
+        startTypewriter(fakeDesc, fakeFix, t)
       }, 1200)
       onDebugPanelCmdHandled?.()
     }
@@ -122,8 +122,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
   const handleCopyAll = () => {
     const descValue = location.trim() ? displayDesc : descText
-    if (!descValue?.trim() && !remText?.trim()) { setNothingToCopy(true); return }
-    const text = `Description:\n${descValue}\n\nRemediation:\n${remText}`
+    if (!descValue?.trim() && !fixText?.trim()) { setNothingToCopy(true); return }
+    const text = `Description:\n${descValue}\n\nSuggested Fix:\n${fixText}`
     navigator.clipboard.writeText(text).then(() => {
       setCopiedAll(true)
       announce(t('detail.copy_all_announce'))
@@ -133,19 +133,19 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
   const handleResetAllFields = () => {
     const descChanged = isSignificantlyChanged(finding.desc, descText)
-    const remChanged = isSignificantlyChanged(finding.rem, remText)
+    const fixChanged = isSignificantlyChanged(finding.fix, fixText)
     const doReset = () => {
       setDescText(finding.desc)
-      setRemText(finding.rem)
+      setFixText(finding.fix)
       setDescHistory([])
-      setRemHistory([])
+      setFixHistory([])
       announce(t('detail.reset_all_content_announce'))
       setResetAllDone(true)
       setTimeout(() => {
         setResetAllDone(false)
       }, 2000)
     }
-    if (descChanged || remChanged) {
+    if (descChanged || fixChanged) {
       setConfirmReset({ doReset })
     } else {
       doReset()
@@ -160,11 +160,11 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     announce(t('detail.undo_last_announce'))
   }
 
-  const handleUndoRem = () => {
-    const prev = remHistory[remHistory.length - 1]
+  const handleUndoFix = () => {
+    const prev = fixHistory[fixHistory.length - 1]
     if (!prev) return
-    setRemText(prev)
-    setRemHistory(h => h.slice(0, -1))
+    setFixText(prev)
+    setFixHistory(h => h.slice(0, -1))
     announce(t('detail.undo_last_announce'))
   }
 
@@ -181,31 +181,31 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     copy(finding.related.join(', '), setCopiedRelatedSc, t('detail.sc_label'))
   }
 
-  function startTypewriter(newDesc, newRem, tFunc) {
+  function startTypewriter(newDesc, newFix, tFunc) {
     clearTimeout(typeTimerRef.current)
-    const total = (newDesc?.length ?? 0) + (newRem?.length ?? 0)
+    const total = (newDesc?.length ?? 0) + (newFix?.length ?? 0)
     if (!total) { setAnimating(false); return }
 
     const charsPerTick = Math.max(2, Math.ceil(total / 40))
     if (newDesc) setDescText('')
-    if (newRem) setRemText('')
+    if (newFix) setFixText('')
 
     let descIdx = 0
-    let remIdx = 0
+    let fixIdx = 0
 
     function tick() {
       if (newDesc && descIdx < newDesc.length) {
         descIdx = Math.min(descIdx + charsPerTick, newDesc.length)
         setDescText(newDesc.slice(0, descIdx))
-      } else if (newRem && remIdx < newRem.length) {
-        remIdx = Math.min(remIdx + charsPerTick, newRem.length)
-        setRemText(newRem.slice(0, remIdx))
+      } else if (newFix && fixIdx < newFix.length) {
+        fixIdx = Math.min(fixIdx + charsPerTick, newFix.length)
+        setFixText(newFix.slice(0, fixIdx))
       }
 
       const descDone = !newDesc || descIdx >= newDesc.length
-      const remDone = !newRem || remIdx >= newRem.length
+      const fixDone = !newFix || fixIdx >= newFix.length
 
-      if (descDone && remDone) {
+      if (descDone && fixDone) {
         setAnimating(false)
         announce(tFunc('detail.ai_updated_announce'))
       } else {
@@ -235,12 +235,12 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         announce(t('detail.rewriting_text'), { priority: 'assertive' })
         setTimeout(() => {
           const newDesc = reviseDesc ? `${descText}\n\n[Revision note: ${reviseNote}]` : null
-          const newRem = reviseRem ? `${remText}\n\n[Revision note: ${reviseNote}]` : null
+          const newFix = reviseFix ? `${fixText}\n\n[Revision note: ${reviseNote}]` : null
           if (newDesc) setDescHistory(h => [...h, descText])
-          if (newRem) setRemHistory(h => [...h, remText])
+          if (newFix) setFixHistory(h => [...h, fixText])
           setRefining(false)
           setAnimating(true)
-          startTypewriter(newDesc, newRem, t)
+          startTypewriter(newDesc, newFix, t)
         }, 2000)
         return
       }
@@ -249,12 +249,12 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         announce(t('detail.rewriting_text'), { priority: 'assertive' })
         setTimeout(() => {
           const fakeDesc = reviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
-          const fakeRem = reviseRem ? '[Debug] Revised remediation: verify the fix was applied, then remove this placeholder before sharing the report.' : null
+          const fakeFix = reviseFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
           if (fakeDesc) setDescHistory(h => [...h, descText])
-          if (fakeRem) setRemHistory(h => [...h, remText])
+          if (fakeFix) setFixHistory(h => [...h, fixText])
           setRefining(false)
           setAnimating(true)
-          startTypewriter(fakeDesc, fakeRem, t)
+          startTypewriter(fakeDesc, fakeFix, t)
         }, 1200)
         return
       }
@@ -264,17 +264,17 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
       try {
         const result = useAgenticMode && localStorage.getItem('ai_provider') === 'anthropic'
-          ? await getAgenticRefinement({ finding, descText, remText, note: reviseNote, corpus: allFindings })
-          : await getAiRefinement({ finding, descText, remText, note: reviseNote })
+          ? await getAgenticRefinement({ finding, descText, fixText, note: reviseNote, corpus: allFindings })
+          : await getAiRefinement({ finding, descText, fixText, note: reviseNote })
         const newDesc = reviseDesc && result.desc ? result.desc : null
-        const newRem = reviseRem && result.rem ? result.rem : null
+        const newFix = reviseFix && result.fix ? result.fix : null
 
         if (newDesc) setDescHistory(h => [...h, descText])
-        if (newRem) setRemHistory(h => [...h, remText])
+        if (newFix) setFixHistory(h => [...h, fixText])
 
         setRefining(false)
         setAnimating(true)
-        startTypewriter(newDesc, newRem, t)
+        startTypewriter(newDesc, newFix, t)
       } catch (e) {
         if (import.meta.env.DEV) console.error('AI refinement failed:', e)
         setRefining(false)
@@ -293,10 +293,10 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     }
   }
 
-  const canRevise = reviseDesc || reviseRem
-  const p = PRIORITY_VARS[finding.priority] || PRIORITY_VARS['Best Practice']
+  const canRevise = reviseDesc || reviseFix
+  const p = SEVERITY_VARS[finding.severity] || SEVERITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
-  const remLabel = t('detail.rem_label')
+  const fixLabel = t('detail.fix_label')
   const refineLabel = t(aiEnabled ? 'detail.refine_label_ai' : 'detail.refine_label_no_ai')
 
   return (
@@ -323,9 +323,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             variant="priority"
             bg={p.bg}
             color={p.color}
-            prefix={finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
-            onClick={() => onBadgeClick?.({ type: 'priority', value: finding.priority })}
-            aria-label={`${finding.priority !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria')}`}
+            prefix={finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
+            onClick={() => onBadgeClick?.({ type: 'severity', value: finding.severity })}
+            aria-label={`${finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria')}`}
           >
             {t(p.key)}
           </Badge>
@@ -467,28 +467,28 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       />
 
       <Field
-        ref={remCopyBtnRef}
-        id="finding-rem"
-        label={remLabel}
-        value={remText}
-        onChange={setRemText}
-        copied={copiedRem}
-        onCopy={() => copy(remText, setCopiedRem, remLabel, t('detail.rem_prefix'), includeRemTitle)}
-        reset={resetRem}
-        onReset={() => handleReset(finding.rem, remText, setRemText, setResetRem, remLabel, remCopyBtnRef)}
-        undoable={remHistory.length > 1}
-        onUndo={handleUndoRem}
-        selected={reviseRem}
-        onSelectChange={setReviseRem}
-        selectLabel={t('detail.revise_rem_checkbox')}
+        ref={fixCopyBtnRef}
+        id="finding-fix"
+        label={fixLabel}
+        value={fixText}
+        onChange={setFixText}
+        copied={copiedFix}
+        onCopy={() => copy(fixText, setCopiedFix, fixLabel, t('detail.fix_prefix'), includeFixTitle)}
+        reset={resetFix}
+        onReset={() => handleReset(finding.fix, fixText, setFixText, setResetFix, fixLabel, fixCopyBtnRef)}
+        undoable={fixHistory.length > 1}
+        onUndo={handleUndoFix}
+        selected={reviseFix}
+        onSelectChange={setReviseFix}
+        selectLabel={t('detail.revise_fix_checkbox')}
         animating={animating}
-        wasUpdated={remHistory.length > 0}
+        wasUpdated={fixHistory.length > 0}
         isDesktop={isDesktop}
         aiEnabled={aiEnabled}
-        hasChanged={remText !== finding.rem}
-        includeTitle={includeRemTitle}
-        onIncludeTitleChange={setIncludeRemTitle}
-        includeTitleLabel={t('detail.include_rem_title_when_copied')}
+        hasChanged={fixText !== finding.fix}
+        includeTitle={includeFixTitle}
+        onIncludeTitleChange={setIncludeFixTitle}
+        includeTitleLabel={t('detail.include_fix_title_when_copied')}
       />
 
       <div className="detail-refine">
@@ -518,7 +518,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                 className="detail-agentic-toggle"
                 title={t('detail.agentic_mode_help') || 'Use AI with corpus search to write more accurate descriptions'}
               />
-              <span className="detail-agentic-mode-label">{t('detail.agentic_mode_label') || 'Agentic Mode'}</span>
+              <span className="detail-agentic-mode-label">{t('detail.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}</span>
             </label>
             <p className="detail-agentic-mode-hint">
               {t('detail.agentic_mode_hint') || 'AI searches the corpus to match your style and depth'}
@@ -571,7 +571,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                   : t('detail.save_note_text')}
           </button>
         </div>
-        {(descText !== finding.desc || remText !== finding.rem) && (
+        {(descText !== finding.desc || fixText !== finding.fix) && (
           <p className="detail-edit-warning" role="status">
             <AlertCircle size={16} aria-hidden="true" className="detail-edit-warning-icon" />
             {t('detail.edit_lang_warning')}
@@ -588,7 +588,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           className={`btn--secondary detail-action-btn btn--height-standard${resetAllDone ? ' btn__field--success' : ''}`}
           onClick={handleResetAllFields}
           aria-label={t('detail.reset_all_fields_aria')}
-          disabled={descText === finding.desc && remText === finding.rem}
+          disabled={descText === finding.desc && fixText === finding.fix}
         >
           {resetAllDone
             ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.reset_all_done_desktop')}</>

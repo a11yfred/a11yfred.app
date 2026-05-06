@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
  * element will receive programmatic focus the moment it mounts.
  *
  * tabIndex={-1} makes the element focusable without adding it to the
- * sequential tab order — the standard pattern for focus management
+ * sequential tab order, the standard pattern for focus management
  * on page/panel transitions (WCAG 2.4.3).
  *
  * Usage:

@@ -4,7 +4,7 @@
  * Triggers a browser download of the finding in the requested format.
  * Formats: 'text' (default) | 'markdown' | 'csv'
  *
- * No UI required — call from any button or action that has a Finding object.
+ * No UI required, call from any button or action that has a Finding object.
  */
 export function exportFinding(finding, format = 'text') {
   let content, filename, mimeType
@@ -13,16 +13,16 @@ export function exportFinding(finding, format = 'text') {
 
     case 'csv': {
       const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`
-      const header = ['id', 'title', 'sc', 'scLabel', 'priority', 'platform', 'desc', 'rem'].join(',')
+      const header = ['id', 'title', 'sc', 'scLabel', 'severity', 'platform', 'desc', 'fix'].join(',')
       const row = [
         finding.id,
         finding.title,
         finding.sc,
         finding.scLabel,
-        finding.priority,
+        finding.severity,
         finding.platform,
         finding.desc,
-        finding.rem,
+        finding.fix,
       ].map(esc).join(',')
       content  = `${header}\n${row}`
       filename = `${finding.id}.csv`
@@ -38,16 +38,16 @@ export function exportFinding(finding, format = 'text') {
         `# ${finding.title}`,
         '',
         `**SC:** ${finding.scLabel}  `,
-        `**Priority:** ${finding.priority}  `,
+        `**Severity:** ${finding.severity}  `,
         `**Platform:** ${finding.platform}${related}`,
         '',
         '## Description',
         '',
         finding.desc,
         '',
-        '## Remediation',
+        '## Suggested Fix',
         '',
-        finding.rem,
+        finding.fix,
       ].join('\n')
       filename = `${finding.id}.md`
       mimeType = 'text/markdown;charset=utf-8;'
@@ -62,14 +62,14 @@ export function exportFinding(finding, format = 'text') {
         bar,
         '',
         `SC: ${finding.scLabel}`,
-        `Priority: ${finding.priority}`,
+        `Severity: ${finding.severity}`,
         `Platform: ${finding.platform}`,
         '',
         'Description:',
         finding.desc,
         '',
-        'Remediation:',
-        finding.rem,
+        'Suggested Fix:',
+        finding.fix,
       ].join('\n')
       filename = `${finding.id}.txt`
       mimeType = 'text/plain;charset=utf-8;'

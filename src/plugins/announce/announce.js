@@ -22,7 +22,7 @@ export function announce(message, { priority = 'polite' } = {}) {
   _listeners.forEach(fn => fn(message, priority))
 }
 
-/** @internal — used only by Announcer.jsx */
+/** @internal, used only by Announcer.jsx */
 export function _subscribe(fn) {
   _listeners.add(fn)
   return () => _listeners.delete(fn)

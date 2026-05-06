@@ -20,15 +20,15 @@ export { EDIT_TARGET, EDIT_SCOPE, CONTRIBUTION_STATUS } from '../services/contri
  *   - A future maintainer review panel (list, approve, reject, export)
  *
  * Returns:
- *   contributions        — full list (all statuses)
- *   pendingContributions — filtered to status: "pending"
- *   pendingCount         — number
- *   submitContribution   — (findingId, locale, scope, localeFields, enFields?) → contribution
- *   approveContribution  — (id) → contribution | null
- *   rejectContribution   — (id) → contribution | null
- *   deleteContribution   — (id) → void
- *   clearContributions   — () → void
- *   exportJson           — () → string  (JSON string, ready to copy or download)
+ *   contributions       , full list (all statuses)
+ *   pendingContributions, filtered to status: "pending"
+ *   pendingCount        , number
+ *   submitContribution  , (findingId, locale, scope, localeFields, enFields?) → contribution
+ *   approveContribution , (id) → contribution | null
+ *   rejectContribution  , (id) → contribution | null
+ *   deleteContribution  , (id) → void
+ *   clearContributions  , () → void
+ *   exportJson          , () → string  (JSON string, ready to copy or download)
  */
 export default function useContributionQueue() {
   const [contributions, setContributions] = useState(() => loadContributions())
