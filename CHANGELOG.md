@@ -81,46 +81,56 @@ Standardized language across the entire application. "Remediation" was technical
 More descriptive naming that clarifies the AI feature's purpose while remaining accessible.
 
 **Changed in [src/i18n/en.json](src/i18n/en.json):**
+
 - `settings.ai_agentic_label` value changed from "Agentic Mode" to "Match Existing Style (Agentic AI)"
 - `settings.ai_agentic_desc` value updated to describe matching existing writing style
 
 **Changed in [src/components/DetailPanel.jsx](src/components/DetailPanel.jsx):**
+
 - Fallback text updated to "Match Existing Style (Agentic AI)"
 
 **Changed in [src/components/SettingsPanel.jsx](src/components/SettingsPanel.jsx):**
+
 - Lines 605-607: Fallback text and description updated to "Match Existing Style (Agentic AI)"
 
 ##### "Prioritize" → "Rank Results"
+
 More specific and action-oriented language that better describes what users do with the priority controls.
 
 **Changed in [src/i18n/en.json](src/i18n/en.json):**
+
 - All onboarding and help text changed from "prioritize results" to "rank results"
 - `help.step_2_label` changed from "Prioritize" to "Rank Results"
 - `onboarding.slide_2_heading` changed from "Prioritize" to "Rank Results"
 - All related announcer text updated accordingly
 
 ##### "Sort Priority" → "Ranking Controls"
+
 More descriptive name for the sorting/ranking feature in settings.
 
 **Changed in [src/i18n/en.json](src/i18n/en.json):**
+
 - `settings.sort_priority_label` changed from "Sort Priority" to "Ranking Controls"
 
 #### Terminology Consistency Notes
 
 **Results vs. Findings (Confirmed Intentional Distinction):**
+
 - **"Results"** used in search/list context: "Rank Results," "Narrow Results," "Pinned Results," "Starred Results"
 - **"Findings"** used for individual items: "open a finding," "select the finding," "pick a finding," "match existing finding"
-- This distinction is semantic and correct — both terms are retained as intended
+- This distinction is semantic and correct, both terms are retained as intended
 
 #### Documentation Updates
 
 **[docs/DEPLOYING.md](docs/DEPLOYING.md):**
+
 - Updated Netlify deployment strategy from "tag-based releases only" to "auto-deploy on all branches (previews) + tag-based releases (production)"
 - Added detailed branch preview workflow explanation
 - Added tag-based release workflow explanation
 - Fixed markdown linting issue (MD032: added blank lines around list items in "To disable auto-deploy" section)
 
 **[README.md](README.md):**
+
 - Added three project badges: License (MIT), Version (0.1.0), Node.js (>=18)
 
 ### Technical Notes
