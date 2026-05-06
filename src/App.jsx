@@ -6,6 +6,7 @@ import DetailPanel from './components/DetailPanel.jsx'
 import AboutPanel from './components/AboutPanel.jsx'
 import HelpPanel from './components/HelpPanel.jsx'
 import OnboardingPanel from './components/OnboardingPanel.jsx'
+import IconButton from './components/ui/IconButton.jsx'
 import Confetti from './components/Confetti.jsx'
 import PartySparkles from './components/PartySparkles.jsx'
 import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
@@ -1173,40 +1174,40 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
 
       <div className="page-header__actions">
         {compact && !onboardingOpen ? (
-          <button
+          <IconButton
             onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : helpOpen ? onCloseHelp : onCloseOnboarding}
-            aria-label={t('common.close')}
+            label={t('common.close')}
             title={t('common.close')}
-            className="btn--icon btn--icon-accent page-header__close-btn"
-          >
-            <X size={20} strokeWidth={2.5} aria-hidden="true" />
-          </button>
+            icon={<X size={20} strokeWidth={2.5} aria-hidden="true" />}
+            variant="accent"
+            className="page-header__close-btn"
+          />
         ) : !onboardingOpen && (
           <>
-            <button
+            <IconButton
               onClick={onOpenHelp}
-              aria-label={t('help.open_help')}
+              label={t('help.open_help')}
               title={t('help.open_help')}
-              className="btn--icon btn--icon-accent page-header__help-btn"
-            >
-              <HelpCircle size={20} strokeWidth={2} aria-hidden="true" />
-            </button>
-            <button
+              icon={<HelpCircle size={20} strokeWidth={2} aria-hidden="true" />}
+              variant="accent"
+              className="page-header__help-btn"
+            />
+            <IconButton
               onClick={onOpenAbout}
-              aria-label={t('header.open_about')}
+              label={t('header.open_about')}
               title={t('header.open_about')}
-              className="btn--icon btn--icon-accent page-header__about-btn"
-            >
-              <Info size={20} strokeWidth={2} aria-hidden="true" />
-            </button>
-            <button
+              icon={<Info size={20} strokeWidth={2} aria-hidden="true" />}
+              variant="accent"
+              className="page-header__about-btn"
+            />
+            <IconButton
               onClick={onOpenSettings}
-              aria-label={t('header.open_settings')}
+              label={t('header.open_settings')}
               title={t('header.open_settings')}
-              className="btn--icon btn--icon-accent page-header__settings-btn"
-            >
-              <Settings size={20} strokeWidth={2} aria-hidden="true" />
-            </button>
+              icon={<Settings size={20} strokeWidth={2} aria-hidden="true" />}
+              variant="accent"
+              className="page-header__settings-btn"
+            />
           </>
         )}
       </div>
