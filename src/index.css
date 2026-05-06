@@ -1127,9 +1127,10 @@ input.results-narrow-input {
   border: 1px solid var(--border-control);
   border-radius: var(--radius);
   color: var(--text);
-  transition: border-color var(--duration-fast);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
   box-sizing: border-box;
   margin-bottom: var(--space-3);
+  box-shadow: 0 0 0 1px #fff;
 }
 
 input.results-narrow-input--has-value {
@@ -1858,9 +1859,10 @@ input.search-input {
   border: 1px solid var(--border-control);
   border-radius: var(--radius);
   color: var(--text);
-  transition: border-color var(--duration-fast);
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
   box-sizing: border-box;
   margin-bottom: 0;
+  box-shadow: 0 0 0 1px #fff;
 }
 
 input.search-input--has-value {
