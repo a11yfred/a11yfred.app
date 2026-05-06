@@ -2497,6 +2497,15 @@ input[type="radio"].settings-checkbox:checked {
   border-radius: var(--radius);
 }
 
+.settings-save-btn .btn-icon svg {
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+}
+
+.settings-save-btn.btn__field--success .btn-icon svg {
+  opacity: 1;
+}
+
 .settings-footer-row {
   display: flex;
   flex-direction: column;
