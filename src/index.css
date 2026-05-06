@@ -1290,7 +1290,7 @@ select:disabled {
 
 @media (width >= 768px) {
   .result-item {
-    min-height: 160px;
+    min-height: 200px;
   }
 }
 
