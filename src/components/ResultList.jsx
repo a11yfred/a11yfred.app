@@ -49,10 +49,9 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRa
   )
 }
 
-export default function ResultList({ results, selected, _onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
+export default function ResultList({ results, selected, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
   const t = useT()
   const itemRefs = useRef({})
-  const skipBtnRefs = useRef({})
   const focusNextRef = useRef(null)
   const countHeadingRef = useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
@@ -421,17 +420,24 @@ export default function ResultList({ results, selected, _onSelect, query, rating
               </a>
 
               {showRankingSort && (
-                <button
-                  ref={el => { skipBtnRefs.current[finding.id] = el }}
-                  type="button"
-                  tabIndex={archived ? -1 : undefined}
-                  onClick={handleSkipToNext}
+                <a
+                  href="#/"
+                  tabIndex={archived ? -1 : 0}
+                  onClick={(e) => { e.preventDefault(); handleSkipToNext() }}
+                  onFocus={(e) => {
+                    const row = e.currentTarget.closest('li.result-row')
+                    if (row) row.classList.add('result-row--skip-focused')
+                  }}
+                  onBlur={(e) => {
+                    const row = e.currentTarget.closest('li.result-row')
+                    if (row) row.classList.remove('result-row--skip-focused')
+                  }}
                   aria-label={t('results.skip_to_next')}
-                  className="result-skip-btn"
+                  className="skip-link"
                 >
                   {t('results.skip_to_next')}
                   <ChevronDown size={14} aria-hidden="true" />
-                </button>
+                </a>
               )}
               </div>
 

@@ -14,10 +14,17 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 - [x] **Comprehensive code review and refactoring** `[code]` ,  First-pass and second-pass refactoring complete. Eliminated ~90 lines of duplicate code, replaced ~30 magic numbers with named constants, extracted utility hooks and functions. All linters passing, zero unused imports.
 
+**Completed in recent session (May 6, 2026):**
+
+- [x] **Code cleanup and dead code removal** `[code]` ,  Removed unused _onSelect parameter, unused skipBtnRefs ref. Extracted 3 magic timeout values (80ms, 400ms, 5000ms) to named constants. All linters passing.
+
 **Identified for future work (lower priority):**
 
+- [ ] **Break large components into single-responsibility pieces** `[code]` `[refactor]` ,  High-effort refactoring: DetailPanel (659 lines, 25+ useState) → extract copy/undo logic to useDetailPanelClipboard hook, AI refinement to useDetailPanelRefine hook; ResultList (515 lines) → extract keyboard nav to useResultListKeyboard hook, narrow mode to sub-component; SettingsPanel (786 lines, 16+ state variables) → split into AiSettingsSection, SearchSettingsSection, LanguageSettingsSection, ResetDataSection.
+- [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  App.jsx AppContent receives 20+ state/setter pairs. Consolidate into context objects (settings context, search context, UI state context) or custom hooks to reduce surface area. Reduces prop count from 30+ to 2-3 per component.
+- [ ] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Modal/drawer state pattern repeated 4+ times (settingsOpen, aboutOpen, etc.); keyboard shortcut handling repeated (App.jsx, ResultList.jsx); localStorage try/catch pattern repeated 3+ times. Create useModalState, useKeyboardShortcuts, useLocalStorage custom hooks.
+- [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Codebase is currently untyped JavaScript. Add JSDoc comments to complex functions and hooks (useFindingSearch.js, useContributionQueue.js, App.jsx), or migrate to TypeScript for full type checking. Improves IDE autocomplete and catches type errors at dev time.
 - [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1303 lines. Extract theme manager, search manager, party mode into hooks.
-- [ ] **Refactor SettingsPanel** `[code]` `[refactor]` ,  734 lines, 16+ state variables. Split into AiSettingsSection, SearchSettingsSection, LanguageSettingsSection, ResetDataSection.
 - [ ] **Standardize locale/language naming** `[code]` `[i18n]` ,  Mixed usage across hooks; standardize throughout.
 - [ ] **Add JSDoc to complex hooks** `[code]` ,  useFindingSearch.js and useContributionQueue.js need parameter/return type docs.
 
@@ -164,38 +171,21 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ---
 
-## Archived
+## Resolved
 
-Completed or obsolete items have been cleaned from the active list. See CHANGELOG.md and UPDATES.md for documentation.
+All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and UPDATES.md for technical details.
 
-**Completed (Phase 1 Day-One Essentials):**
-
-- 89-entry public corpus ,  Fully sourced, WCAG-mapped, keywords complete (May 5)
-- All linters passing ,  ESLint, Stylelint, Markdownlint clean (May 5)
-- Privacy & security baseline ,  No cookies, no third-party tracking, localStorage inventory documented (May 5)
-- Offline-first support ,  Service Worker caching, PWA manifest, full search works offline (Phase 1)
-- Accessibility verified ,  axe-core integration, WCAG 2.2 AA baseline, keyboard + screen reader tested (Phase 1)
-- Documentation complete ,  README, CONTRIBUTING, SECURITY, DEPLOYING, CHANGELOG, UPDATES (May 5)
-- robots.txt configured ,  Allows crawlers with 1s crawl-delay, references sitemap.xml (May 5)
-- Sitemap.xml generated ,  Single-page app sitemap (one root URL entry) at public/sitemap.xml (May 5)
-- SEO meta tags uncommented ,  Core meta, OG, Twitter card, JSON-LD structured data all active (May 5)
-- Agentic AI wired ,  DetailPanel toggle, SettingsPanel config, full corpus-search integration (May 5)
-- AI provider privacy comparison ,  README table with training data policies for all 4 providers (May 5)
-
-**Completed (Phase 1 Pre-Launch):**
-
-- Keyword audit ,  89 public corpus entries fully populated
-- Related SC links ,  all entries have `related` arrays, 54 entries with same-WCAG-SC cross-references documented in May 5 updates
-- Migrate inline spacing to tokens ,  222+ usages tokenized, fully documented
-- CSS Modules / SCSS evaluation ,  decision confirmed (CSS Modules ruled out, SCSS deferred)
-- Ad tiles in result list ,  `SponsoredTile.jsx` and `AdminPanel.jsx` fully built and wired (documented May 2)
-
-**Obsolete (documented in CHANGELOG/UPDATES):**
-
-- Public corpus bootstrap ,  exceeded target with 89 entries (May 5)
-- Compare mode ,  split-view design deferred to Phase 2+ if user feedback warrants (documented in comprehensive updates)
-- AI refinement locale pass ,  high API cost, deferred to v1.2+
-- Corpus pre-translation script ,  deferred to Phase 2 when corpus is stable
-- Ko-fi link in footer ,  discoverability achieved via widget
-- Phase 3 hosting strategy ,  deferred by design until Phase 3 planning
-- GitHub Sponsors ,  nice-to-have alternative to Ko-fi, deferred to Phase 3
+- ✅ Phase 1 complete (May 6)
+- ✅ 133-entry public corpus fully sourced and WCAG-mapped
+- ✅ All linters passing (ESLint 9.x, Stylelint, Markdownlint)
+- ✅ Offline-first support (Service Worker, PWA manifest)
+- ✅ Accessibility baseline (axe-core, WCAG 2.2 AA, keyboard + screen reader tested)
+- ✅ Documentation (README, CONTRIBUTING, SECURITY, DEPLOYING, CHANGELOG, UPDATES)
+- ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
+- ✅ Agentic AI wired (DetailPanel toggle, SettingsPanel config, corpus search)
+- ✅ AI provider privacy comparison table (README)
+- ✅ Button consolidation (70+ instances → 2 base components)
+- ✅ CSS tokenization (all outline/spacing/motion values to tokens)
+- ✅ UI component library extracted and portable
+- ✅ Zero dead code and unused imports
+- 💤 Deferred: SCSS migration, corpus pre-translation, Compare mode, Ko-fi pre-widget phase, GitHub Sponsors

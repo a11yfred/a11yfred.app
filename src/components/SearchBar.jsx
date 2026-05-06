@@ -113,9 +113,9 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {t('search.hint_syntax')}
           {' '}
           {t('search.hint_change_in')}{' '}
-          <button onClick={() => navigate('/settings')} className="search-hint-link">
+          <a href="#/settings" className="search-hint-link">
             {t('search.hint_settings_link')}
-          </button>.
+          </a>.
         </p>
       )}
     </search>

@@ -12,6 +12,7 @@ import PartySparkles from './components/PartySparkles.jsx'
 import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
 import useFindingSearch from './hooks/useFindingSearch.js'
 import useFindingRatings from './hooks/useFindingRatings.js'
+import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY } from './utils/constants.js'
 import {
   Router,
   useRouter,
@@ -210,12 +211,12 @@ function AppContent({
     if (colonIdx < 0) return null
     const type = badge.slice(0, colonIdx)
     const value = badge.slice(colonIdx + 1)
-    if (!['priority', 'source', 'wcag'].includes(type) || !value) return null
+    if (!['severity', 'source', 'wcag'].includes(type) || !value) return null
     return { type, value }
   })
   const resultsCountRef = useRef(null)
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
-  const [devAllEnabled, setDevAllEnabled] = useState(true)
+  const [devAllEnabled, setDevAllEnabled] = useState(false)
   const [namesEnabled, setNamesEnabled] = useState(false)
   const [fabEnabled, setFabEnabled] = useState(true)
   const [adFrequency, setAdFrequency] = useState(8)
@@ -400,7 +401,7 @@ function AppContent({
     syncBadgeUrl(filter)
     setSelected(null)
     navigate('/')
-    setTimeout(() => resultsCountRef.current?.focus(), 80)
+    setTimeout(() => resultsCountRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
   }
 
   // Announce result count after a non-live-search submission only.
@@ -423,7 +424,7 @@ function AppContent({
 
   useEffect(() => {
     if (!viewAllLoading) return
-    const id = setTimeout(() => setViewAllLoading(false), 400)
+    const id = setTimeout(() => setViewAllLoading(false), VIEW_ALL_LOADING_DELAY)
     return () => clearTimeout(id)
   }, [viewAllLoading])
 
@@ -827,6 +828,7 @@ function AppContent({
                 onStar={toggleStar}
                 onArchive={toggleArchive}
                 showRanking={showVoting}
+                showRankingSort={showVoting}
                 onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                 pinnedIds={pinnedIds}
                 onPin={togglePin}
@@ -882,6 +884,7 @@ function AppContent({
                     onStar={toggleStar}
                     onArchive={toggleArchive}
                     showRanking={showVoting}
+                    showRankingSort={showVoting}
                     onCopyLink={() => { syncSearchUrl(query); navigator.clipboard.writeText(window.location.href) }}
                     pinnedIds={pinnedIds}
                     onPin={togglePin}
@@ -1236,14 +1239,14 @@ function PartyBanner() {
   const timerRef = useRef(null)
 
   useEffect(() => {
-    timerRef.current = setTimeout(() => setAnimating(false), 5000)
+    timerRef.current = setTimeout(() => setAnimating(false), ANIMATION_COMPLETE_DELAY)
     return () => clearTimeout(timerRef.current)
   }, [])
 
   function handleMouseEnter() {
     clearTimeout(timerRef.current)
     setAnimating(true)
-    timerRef.current = setTimeout(() => setAnimating(false), 5000)
+    timerRef.current = setTimeout(() => setAnimating(false), ANIMATION_COMPLETE_DELAY)
   }
 
   return (
