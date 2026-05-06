@@ -1000,8 +1000,9 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 .btn--tertiary:not(:disabled):focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus);
-  outline-offset: var(--focus-outline-offset);
+  outline: 1px solid var(--focus);
+  outline-offset: 0;
+  text-decoration: none;
 }
 
 .btn--tertiary:not(:disabled):active {
@@ -1024,6 +1025,40 @@ body:has(.modal-panel.is-open) .drawer-panel {
   background: var(--error);
   color: var(--bg);
   border-color: var(--error);
+  opacity: 0.8;
+}
+
+.btn-link {
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: var(--fs-body);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  transition: var(--transition-btn);
+  cursor: pointer;
+}
+
+.btn-link:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.btn-link:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.btn-link:active:not(:disabled) {
   opacity: 0.8;
 }
 
@@ -1326,7 +1361,7 @@ select:disabled {
   border: 1px solid var(--border);
   background: var(--bg);
   cursor: pointer;
-  transition: border-color var(--duration-fast);
+  transition: opacity var(--duration-fast), border-color var(--duration-fast);
   animation: result-item-in var(--duration-base) var(--ease-out) both;
   animation-delay: calc(min(var(--result-i, 0), 5) * 50ms);
   color: inherit;
@@ -1347,6 +1382,10 @@ select:disabled {
 .result-row--archived .result-item {
   pointer-events: none;
   filter: grayscale(1);
+}
+
+.result-row--skip-focused :is(.result-item, .result-pin-btn, .result-vote-col) {
+  filter: opacity(0.5);
 }
 
 .result-item:hover:not(.result-item--selected) {
@@ -1424,6 +1463,16 @@ select:disabled {
 .result-card-wrap .skip-link:focus-visible {
   opacity: 1;
   pointer-events: auto;
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.result-row--skip-focused .result-card-wrap .skip-link {
+  opacity: 1;
+}
+
+.result-card-wrap:has(.skip-link:focus-visible) .result-item {
+  opacity: 0.5;
 }
 
 /* Detail copy buttons — icon-only with state change */
@@ -1600,7 +1649,7 @@ select:disabled {
   flex-shrink: 0;
 }
 
-.priority-badge,
+.severity-badge,
 .source-badge,
 .wcag-badge,
 .platform-badge {
@@ -1612,7 +1661,7 @@ select:disabled {
   flex-shrink: 0;
 }
 
-.priority-badge {
+.severity-badge {
   background: var(--badge-bg);
   color: var(--badge-text);
 }
@@ -1636,7 +1685,7 @@ select:disabled {
   color: var(--platform-text);
 }
 
-.result-row--archived .priority-badge,
+.result-row--archived .severity-badge,
 .result-row--archived .source-badge,
 .result-row--archived .wcag-badge,
 .result-row--archived .platform-badge {
@@ -1986,6 +2035,10 @@ input.search-input--disabled {
   max-width: 55%;
 }
 
+.search-typewriter:focus-within {
+  overflow: visible;
+}
+
 @keyframes typewriter-fade {
   0%   { transform: translateY(4px); }
   15%  { transform: translateY(0); }
@@ -2014,7 +2067,13 @@ input.search-input--disabled {
 }
 
 .search-typewriter__phrase:hover {
-  color: var(--accent);
+  color: white;
+}
+
+.search-typewriter__phrase:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: 2px;
+  text-decoration: none;
 }
 
 /* ─── Search narrow mode ──────────────────────────────────── */
@@ -3312,6 +3371,7 @@ input[type="radio"].settings-checkbox:checked {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
   border-radius: 2px;
+  text-decoration: none;
 }
 
 /* ─── Field ───────────────────────────────────────────────── */
@@ -4022,7 +4082,7 @@ input[type="radio"].settings-checkbox:checked {
     font-size: 18pt;
   }
 
-  .priority-badge {
+  .severity-badge {
     border: 1px solid #000;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -4057,6 +4117,7 @@ input[type="radio"].settings-checkbox:checked {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
   border-radius: 2px;
+  text-decoration: none;
 }
 
 /* ─── Na'vi locale: Papyrus headings ─────────────────────── */

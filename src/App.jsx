@@ -211,12 +211,12 @@ function AppContent({
     if (colonIdx < 0) return null
     const type = badge.slice(0, colonIdx)
     const value = badge.slice(colonIdx + 1)
-    if (!['priority', 'source', 'wcag'].includes(type) || !value) return null
+    if (!['severity', 'source', 'wcag'].includes(type) || !value) return null
     return { type, value }
   })
   const resultsCountRef = useRef(null)
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
-  const [devAllEnabled, setDevAllEnabled] = useState(true)
+  const [devAllEnabled, setDevAllEnabled] = useState(false)
   const [namesEnabled, setNamesEnabled] = useState(false)
   const [fabEnabled, setFabEnabled] = useState(true)
   const [adFrequency, setAdFrequency] = useState(8)

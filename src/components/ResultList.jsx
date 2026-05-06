@@ -422,8 +422,16 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
               {showRankingSort && (
                 <a
                   href="#/"
-                  tabIndex={archived ? -1 : undefined}
+                  tabIndex={archived ? -1 : 0}
                   onClick={(e) => { e.preventDefault(); handleSkipToNext() }}
+                  onFocus={(e) => {
+                    const row = e.currentTarget.closest('li.result-row')
+                    if (row) row.classList.add('result-row--skip-focused')
+                  }}
+                  onBlur={(e) => {
+                    const row = e.currentTarget.closest('li.result-row')
+                    if (row) row.classList.remove('result-row--skip-focused')
+                  }}
                   aria-label={t('results.skip_to_next')}
                   className="skip-link"
                 >
