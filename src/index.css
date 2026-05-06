@@ -67,11 +67,7 @@ button {
 }
 
 .btn-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5em;
-  height: 1.5em;
+  display: inline;
   flex-shrink: 0;
 }
 
