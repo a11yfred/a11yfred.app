@@ -1107,7 +1107,6 @@ select:disabled {
 
 .results-narrow-label {
   font-size: var(--fs-sub);
-  font-weight: 600;
   color: var(--text);
   margin-bottom: var(--space-1);
 }
@@ -1128,7 +1127,7 @@ input.results-narrow-input {
   color: var(--text);
   transition: border-color var(--duration-fast);
   box-sizing: border-box;
-  margin-bottom: 0;
+  margin-bottom: var(--space-3);
 }
 
 input.results-narrow-input--has-value {
