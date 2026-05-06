@@ -539,7 +539,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             className={`btn--primary detail-revise-btn btn--height-standard${noteSaved ? ' btn__field--success' : ''}`}
             aria-label={
               refining ? t('detail.rewriting_aria')
-              : aiEnabled && canRevise ? t('detail.rewrite_aria')
+              : aiEnabled ? t('detail.rewrite_aria')
               : noteSaved ? t('detail.saved_note_aria')
               : t('detail.save_note_aria')
             }
@@ -549,7 +549,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                   <Loader2 size={12} strokeWidth={2} className="detail-revising-spinner" aria-hidden="true" />
                   {' '}{t('detail.rewriting_text')}
                 </span>
-              : aiEnabled && canRevise
+              : aiEnabled
                 ? <span className="detail-revise-label" aria-hidden="true">
                     <Sparkles size={12} strokeWidth={2} className="detail-revise-icon" />
                     {' '}Save & Revise Selected

@@ -190,7 +190,7 @@
   "detail.desc_label": "Description",
   "detail.rem_label": "Suggested Remediation",
   "detail.refine_label": "Refinement Notes / Details",
-  "detail.refine_hint_ai": "Describe what to change and AI will rewrite and incorporate your updates or details. Change your AI model or turn this off in",
+  "detail.refine_hint_ai": "Check which fields to revise above, describe what to change, and AI will rewrite and incorporate your updates. Change your AI model or turn this off in",
   "detail.refine_hint_ai_settings": "Settings",
   "detail.refine_hint_no_ai": "Use this space to keep note of whatever you would like. Add some project-specific details about the specific issue you're seeing. Enable AI Assist in",
   "detail.refine_hint_no_ai_settings": "Settings",
