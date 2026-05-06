@@ -8,16 +8,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ---
 
-## Code Quality & Refactoring (May 5, 2026)
-
-**Completed in this session:**
-
-- [x] **Comprehensive code review and refactoring** `[code]` ,  First-pass and second-pass refactoring complete. Eliminated ~90 lines of duplicate code, replaced ~30 magic numbers with named constants, extracted utility hooks and functions. All linters passing, zero unused imports.
-
-**Completed in recent session (May 6, 2026):**
-
-- [x] **Code cleanup and dead code removal** `[code]` ,  Removed unused _onSelect parameter, unused skipBtnRefs ref. Extracted 3 magic timeout values (80ms, 400ms, 5000ms) to named constants. All linters passing.
-- [x] **UI library decoupling and panel unification** `[code]` `[refactor]` ,  Removed app-specific logic from portable UI components (BackButton, DataError, NoResults, Field, InputWithClear, SourceLinks). Created unified Panel component wrapping PanelShell for HelpPanel, AboutPanel, SettingsPanel. Consolidated duplicate CSS. All imports of i18n/announce/router removed from ui/ folder. PR #20 merged to main.
+## Code Quality & Refactoring
 
 **Identified for future work (lower priority):**
 
@@ -45,9 +36,6 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ### AI Assist & Agent
 
-- [x] **Wire agentic AI in DetailPanel** `[agent]` `[ai]` `[ux]` ,  Backend fully wired: (1) toggle added in Refine section of DetailPanel, (2) mode toggle exposed in Settings under AI Assist (Claude only), (3) agentic refinement uses searchCorpus tool via getAgenticRefinement; i18n keys and placeholders added for translation
-- [x] **Document AI provider privacy comparison in README** `[privacy]` `[ai]` ,  Comparison table added showing training data policies, retention, and privacy commitments for all 4 providers (Anthropic, OpenAI, Google, Microsoft)
-- [x] **Complete UI component library extraction for boilerplate** `[code]` `[enhancement]` ,  All 9 primitives extracted and tested: StateButton, InputWithClear, Badge, Field, PanelShell, BackButton (+ Toggle, RadioChip, Select from Phase 1), plus Modal/Announcer re-exports. Integrated across SearchBar, DetailPanel, ResultList, About/Help/Settings panels. All linters passing, dev server fully functional.
 - [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` ,  Add `refinementHistory` state, pass full history to `getAgenticRefinement`, display turn history, add "Clear conversation" button, test corpus search per turn.
 - [ ] **System prompt tuning** `[ai]` `[claude]` `[phase2]` ,  Test across 20+ corpus entries, verify tone/length/format, adjust `buildPrompt()`, document final prompt, iterate on feedback.
 
@@ -69,8 +57,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Reset All excludes personal overrides and contributions** `[ux]` `[privacy]` `[design]` ,  Separate overrides/contributions from Reset All, require explicit user action to clear.
 
 ### Search & Results
-
-- [x] **Advanced search syntax** `[ux]` `[search]` ,  Query parser implemented for `+term` (required) and `-term` (excluded) operators; filters applied post-Fuse.js; syntax hint displayed in SearchBar hint text with working example
 
 ### Export & Sharing
 
@@ -112,8 +98,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Code Quality
 
-- [x] **Extract inline UI primitives to `src/components/ui/`** `[code]` ,  Toggle, RadioChip, and Select extracted from SettingsPanel.jsx private functions into `src/components/ui/`. Barrel export at `src/components/ui/index.js`. SettingsPanel updated to import from `../ui/`.
-- [x] **Complete UI component library extraction for boilerplate** `[code]` `[enhancement]` ,  All 6 additional components extracted and integrated: (1) StateButton (copy/success/reset pattern) ,  14+ uses across DetailPanel/SettingsPanel/ResultList, (2) InputWithClear (input+clear-button pattern) ,  SearchBar/DetailPanel, (3) Badge (clickable/display variants) ,  DetailPanel/ResultList, (4) Field (complex textarea) ,  DetailPanel, (5) PanelShell (panel header wrapper) ,  About/Help/Settings, (6) BackButton (RTL-aware chevron) ,  all panels. Modal and Announcer re-exported in ui/index.js. All linters passing, app fully functional on dev server.
 - [ ] **UI component library extraction (npm publishing)** `[code]` `[enhancement]` `[deferred]` ,  Accessible SPA primitives fully built and in production (router, announcer, focus/names debuggers, BottomSheet, Drawer, Modal, form controls, button system). **Rationale for deferral**: (1) extraction requires monorepo setup and package management complexity, (2) component APIs are stable but not yet battle-tested in multiple projects, (3) publishing adds maintenance burden for minimal v1.0 gain. **Recommendation**: Defer to v1.1 or later (post-launch). If extraction becomes important, (1) confirm button unification complete, (2) audit component APIs for cross-project reusability, (3) scaffold monorepo structure, (4) publish to npm
 
 ### Infrastructure
@@ -140,7 +124,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 - [ ] **Sign-in UI** `[ux]` `[phase3]` ,  Add SettingsPanel footer section with avatar/name + Google/GitHub buttons + sign-out.
 - [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` `[launch-blocker]` ,  Install Supabase JS, set env vars, uncomment, verify OAuth slugs and RLS policies.
-- [x] **Phase 2 stubs review** `[infra]` `[claude]` `[manual]` ,  All stubs verified against Supabase JS v2 SDK docs (May 5).
 
 ### Cloud Data Sync
 
@@ -189,4 +172,13 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ CSS tokenization (all outline/spacing/motion values to tokens)
 - ✅ UI component library extracted and portable
 - ✅ Zero dead code and unused imports
+- ✅ Comprehensive code review and refactoring (May 5)
+- ✅ Code cleanup and dead code removal (May 6)
+- ✅ UI library decoupling and panel unification (May 6)
+- ✅ Extract inline UI primitives to src/components/ui/ (Toggle, RadioChip, Select)
+- ✅ Complete UI component library extraction for boilerplate (StateButton, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer)
+- ✅ Wire agentic AI in DetailPanel (agent toggle, settings config, corpus search)
+- ✅ Document AI provider privacy comparison in README
+- ✅ Advanced search syntax (query parser for +term and -term operators)
+- ✅ Phase 2 stubs review (verified against Supabase JS v2 SDK docs)
 - 💤 Deferred: SCSS migration, corpus pre-translation, Compare mode, Ko-fi pre-widget phase, GitHub Sponsors
