@@ -57,7 +57,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 - ✅ Full corpus (133 entries), all linters passing, responsive design
 - ✅ Session persistence, debug tools, animations, Party Mode
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
-- ✅ UI component library (100% — 2 base button components + 14 primitives consolidated: Toggle, RadioChip, Select, Button, IconButton, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer, Drawer, BottomSheet). Cleaned for portability and ready for npm publishing via feature/ui-library branch
+- ✅ UI component library (100% — 2 base button components + 12 core primitives: Toggle, RadioChip, Select, InputWithClear, Badge, Field, PanelShell, BackButton, Modal, Announcer, Drawer, BottomSheet; deprecated StateButton and IconStateButton removed). Cleaned for portability and ready for npm publishing via feature/ui-library branch
 - ✅ CSS tokenization — all outline offsets, widths, spacing, and motion values use design tokens
 - ✅ Button consolidation — 70+ usages collapsed from 5 component types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with variant/active patterns
 - ✅ Zero dead code — all unused code removed, all imports verified

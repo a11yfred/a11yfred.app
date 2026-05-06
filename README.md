@@ -18,7 +18,7 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Complete — 133-entry corpus, all linters passing, UI library complete (2 base button components + 14 primitives), agentic AI wired, full component consolidation done.
+**Phase 1 (Personal Library)**: Complete — 133-entry corpus, all linters passing, UI library complete (2 base button components + 12 primitives), agentic AI wired, full component consolidation done.
 
 **Phase 2 (AI + Sharing)**: Partial — Agentic AI working, user overrides done, multilingual editing UI deferred.
 
@@ -33,7 +33,7 @@ Key directories:
 - `src/data/` — 133-entry public corpus + personal corpus (gitignored)
 - `src/services/` — Data layer, AI integration, localStorage utilities
 - `src/hooks/` — Search, ratings, pinning, user findings, overrides
-- `src/components/` — UI components; `ui/` subfolder has 16 reusable primitives
+- `src/components/` — UI components; `ui/` subfolder has 14 reusable primitives (consolidated Button, IconButton, + 12 others)
 - `src/plugins/` — Router, Announcer, Debug tools (each with README)
 - `docs/` — Deployment, architecture, contributing
 
