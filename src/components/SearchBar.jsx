@@ -42,6 +42,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
 
   const inputLabel = t('search.label')
   const clearAriaLabel = t('search.clear_aria')
+  const currentInputLength = query.length
   const handleKeyDownInner = (e) => {
     if (e.key === 'Enter') {
       onSearch()
