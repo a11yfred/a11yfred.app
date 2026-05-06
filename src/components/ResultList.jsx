@@ -420,16 +420,16 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
               </a>
 
               {showRankingSort && (
-                <button
-                  type="button"
+                <a
+                  href="#/"
                   tabIndex={archived ? -1 : undefined}
-                  onClick={handleSkipToNext}
+                  onClick={(e) => { e.preventDefault(); handleSkipToNext() }}
                   aria-label={t('results.skip_to_next')}
-                  className="result-skip-btn"
+                  className="skip-link"
                 >
                   {t('results.skip_to_next')}
                   <ChevronDown size={14} aria-hidden="true" />
-                </button>
+                </a>
               )}
               </div>
 

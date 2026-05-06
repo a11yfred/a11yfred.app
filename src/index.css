@@ -1405,52 +1405,12 @@ select:disabled {
 }
 
 /* Skip to next button — overlay centered on card */
-.result-skip-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  opacity: 0;
-  pointer-events: none;
-  border-radius: var(--radius);
-  transition: opacity var(--duration-fast);
-  padding: var(--space-2) var(--space-3);
-  gap: var(--space-1);
-  font-weight: 600;
-  font-size: var(--fs-small);
-  background: var(--accent);
-  color: var(--accent-bg);
-  min-width: var(--touch-target);
-  min-height: var(--touch-target);
-}
-
-.result-skip-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgb(0 0 0 / 0.3);
-  border-radius: var(--radius);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity var(--duration-fast);
-  pointer-events: none;
-}
-
-.result-skip-btn:focus-visible {
-  opacity: 1;
-  pointer-events: auto;
-  outline: var(--focus-outline-width) solid var(--focus);
-  outline-offset: var(--focus-outline-offset);
-}
-
-.result-skip-btn:focus-visible::before {
-  opacity: 1;
+/* Skip link variant within result items */
+.result-list .skip-link {
+  position: static;
+  display: inline-flex;
+  transform: none;
+  margin-top: var(--space-2);
 }
 
 /* Detail copy buttons — icon-only with state change */
