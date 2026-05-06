@@ -2716,6 +2716,10 @@ input[type="radio"].settings-checkbox:checked {
   transition: left var(--duration-fast), outline-color var(--duration-fast);
 }
 
+[data-theme="dark"] .toggle__thumb {
+  background: var(--accent);
+}
+
 /* RTL: thumb travels from right to left; position from right edge */
 [dir="rtl"] .toggle__thumb {
   left: auto;
