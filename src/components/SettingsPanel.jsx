@@ -201,7 +201,7 @@ export default function SettingsPanel({
   const handleSave = () => {
     if (aiEnabled && !keys[activeProvider].trim() && !isLocalhost) {
       setErrors({ apiKey: true })
-      onToggleAi() // revert toggle, no key means AI can't work
+      onToggleAi() // revert toggle, no key means AI cannot work
       return
     }
     if (!hasUnsaved) {
