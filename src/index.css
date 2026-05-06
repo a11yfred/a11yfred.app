@@ -1169,6 +1169,7 @@ select:disabled {
   position: relative;
   flex: 1;
   min-width: 0;
+  padding-right: var(--touch-target);
 }
 
 /* Vote controls column */
