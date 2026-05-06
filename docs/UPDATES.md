@@ -4,6 +4,32 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 6, 2026 — Final cleanup and consolidation complete
+
+### Removed deprecated button components
+
+Cleaned up unused deprecated components from main branch:
+
+- **StateButton.jsx** — removed (no usages; replaced by Button with active/activeIcon pattern)
+- **IconStateButton.jsx** — removed (no usages; replaced by IconButton with activeIcon pattern)
+
+All 70+ button instances across the codebase now use only the two base components: Button and IconButton. Component library is leaner, with 14 core primitives instead of 16.
+
+### Documentation updates
+
+- **README.md** — Updated component count (16 → 14), clarified Button + IconButton consolidation
+- **FEATURE-STATUS.md** — Updated Phase 1 summary to reflect deprecated component removal and exact primitives list
+- **CONTRIBUTING.md** — Added ui-library branch sync policy (cherry-pick only, no full main merges)
+
+### Maintenance completed
+
+- All linters passing (ESLint, Stylelint, Markdownlint)
+- Zero unused code, zero dead CSS, zero unused imports
+- All three extension branches (Chrome, Firefox, Electron) synced with latest main
+- Feature/ui-library branch remains isolated and clean for future npm publishing
+
+---
+
 ## May 6, 2026 — UI library branch cleanup and main branch maintenance
 
 ### UI Component Library Branch Cleanup
