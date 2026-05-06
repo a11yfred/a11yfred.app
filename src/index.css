@@ -75,10 +75,6 @@ button {
   flex-shrink: 0;
 }
 
-.settings-save-btn .btn-icon {
-  display: contents;
-}
-
 .btn svg {
   flex-shrink: 0;
   line-height: 1;
@@ -2490,7 +2486,6 @@ input[type="radio"].settings-checkbox:checked {
 
 .settings-save-btn {
   display: inline-flex;
-  flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
@@ -2499,15 +2494,6 @@ input[type="radio"].settings-checkbox:checked {
   padding: 0 var(--space-3);
   font-size: var(--fs-body);
   border-radius: var(--radius);
-}
-
-.settings-save-btn .btn-icon svg {
-  opacity: 0;
-  transition: opacity var(--duration-fast);
-}
-
-.settings-save-btn.btn__field--success .btn-icon svg {
-  opacity: 1;
 }
 
 .settings-footer-row {

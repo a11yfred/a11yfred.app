@@ -15,9 +15,6 @@ const StateButton = forwardRef(function StateButton({
   children,
   ...rest
 }, ref) {
-  const hasIcon = icon || activeIcon
-  const displayIcon = active ? activeIcon : icon || activeIcon
-
   return (
     <button
       ref={ref}
@@ -28,11 +25,9 @@ const StateButton = forwardRef(function StateButton({
       className={`${className}${active ? ' btn__field--success' : ''}`}
       {...rest}
     >
-      {hasIcon && (
-        <span className="btn-icon">
-          {displayIcon}
-        </span>
-      )}
+      <span className="btn-icon">
+        {active ? activeIcon : icon}
+      </span>
       {showLabel && <span>{active ? activeLabelText : labelText}</span>}
       {children}
     </button>

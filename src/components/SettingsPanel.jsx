@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle } from 'lucide-react'
+import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save } from 'lucide-react'
 import { useFocusOnMount, usePageTitle, Modal, BottomSheet, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -631,7 +631,7 @@ export default function SettingsPanel({
           <StateButton
             ref={saveButtonRef}
             active={saved}
-            icon={null}
+            icon={<Save size={14} aria-hidden="true" />}
             activeIcon={<Check size={14} strokeWidth={2.5} aria-hidden="true" />}
             label={t('settings.save')}
             activeLabel={t('settings.saved')}
