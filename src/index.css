@@ -2474,6 +2474,7 @@ input[type="radio"].settings-checkbox:checked {
   align-items: center;
   justify-content: center;
   flex: 1;
+  min-width: 120px;
   height: var(--btn-height-standard);
   padding: 0 var(--space-4);
   font-size: var(--fs-body);
@@ -2901,6 +2902,37 @@ input[type="radio"].settings-checkbox:checked {
 .detail-optional {
   color: var(--text-faint);
   font-weight: 400;
+}
+
+.detail-agentic-toggle {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.detail-agentic-mode-row {
+  padding: var(--space-4);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: var(--space-4);
+}
+
+.detail-agentic-mode-row label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.detail-agentic-mode-hint {
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  margin-top: var(--space-2);
+  line-height: 1.5;
 }
 
 .detail-location-input-wrap {

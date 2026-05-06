@@ -506,17 +506,17 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         </p>
         {aiEnabled && localStorage.getItem('ai_provider') === 'anthropic' && (
           <div className="detail-agentic-mode-row">
-            <label htmlFor="agentic-toggle" className="detail-label detail-label--compact">
-              {t('detail.agentic_mode_label') || 'Agentic Mode'}
+            <label>
+              <input
+                id="agentic-toggle"
+                type="checkbox"
+                checked={useAgenticMode}
+                onChange={e => setUseAgenticMode(e.target.checked)}
+                className="detail-agentic-toggle"
+                title={t('detail.agentic_mode_help') || 'Use AI with corpus search to write more accurate descriptions'}
+              />
+              <span className="detail-agentic-mode-label">{t('detail.agentic_mode_label') || 'Agentic Mode'}</span>
             </label>
-            <input
-              id="agentic-toggle"
-              type="checkbox"
-              checked={useAgenticMode}
-              onChange={e => setUseAgenticMode(e.target.checked)}
-              className="detail-agentic-toggle"
-              title={t('detail.agentic_mode_help') || 'Use AI with corpus search to write more accurate descriptions'}
-            />
             <p className="detail-agentic-mode-hint">
               {t('detail.agentic_mode_hint') || 'AI searches the corpus to match your style and depth'}
             </p>
