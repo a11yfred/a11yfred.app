@@ -578,8 +578,8 @@
     "title": "No H1 on the Page",
     "sc": "N/A",
     "scLabel": "Best Practice",
-    "wcagVersion": "",
-    "wcagLevel": "",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.6 Headings and Labels (Level AA)"
     ],
@@ -1118,8 +1118,8 @@
     "title": "Incorrect ARIA Tabs Implementation",
     "sc": "N/A",
     "scLabel": "Best Practice",
-    "wcagVersion": "",
-    "wcagLevel": "",
+    "wcagVersion": "2.1",
+    "wcagLevel": "A",
     "related": [
       "4.1.2 Name, Role, Value (Level A)"
     ],
@@ -4125,8 +4125,8 @@
     "title": "Positive Tabindex Disrupts Focus Order",
     "sc": "N/A",
     "scLabel": "Best Practice",
-    "wcagVersion": "",
-    "wcagLevel": "",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.3 Focus Order (Level A)"
     ],
@@ -4328,8 +4328,8 @@
     "title": "Custom Scrollbar Overrides User Settings",
     "sc": "N/A",
     "scLabel": "Best Practice",
-    "wcagVersion": "",
-    "wcagLevel": "",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [
       "1.4.11 Non-text Contrast (Level AA)"
     ],
