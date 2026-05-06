@@ -6,11 +6,11 @@ import { DEFAULT_RATING, MAX_SEARCH_ALL, MAX_SEARCH_RESULTS } from '../utils/con
 
 const FUSE_OPTIONS = {
   keys: [
-    { name: 'title',     weight: 0.32 },  // translated title
-    { name: '_title_en', weight: 0.28 },  // English title — cross-language search
-    { name: 'keywords',  weight: 0.30 },  // always English
-    { name: 'desc',      weight: 0.07 },
-    { name: 'rem',       weight: 0.03 },
+    { name: 'title',     weight: 0.28 },  // translated title
+    { name: '_title_en', weight: 0.24 },  // English title — cross-language search
+    { name: 'keywords',  weight: 0.20 },  // always English
+    { name: 'desc',      weight: 0.18 },  // problem description
+    { name: 'rem',       weight: 0.10 },  // remediation guidance
   ],
   threshold: 0.4,
   minMatchCharLength: 2,
