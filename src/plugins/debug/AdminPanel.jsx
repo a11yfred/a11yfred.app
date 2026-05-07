@@ -93,7 +93,11 @@ function computeStats(corpus) {
   const bySeverity = {}
   const bySource = {}
 
-  for (const entry of corpus) {
+  // Handle both array and object formats
+  const entries = Array.isArray(corpus) ? corpus : Object.values(corpus)
+  const total = entries.length
+
+  for (const entry of entries) {
     if (entry.sc && entry.sc !== 'N/A') {
       bySC[entry.sc] = (bySC[entry.sc] || 0) + 1
     }
@@ -108,7 +112,7 @@ function computeStats(corpus) {
     }
   }
 
-  return { total: corpus.length, bySC, byVersion, bySeverity, bySource }
+  return { total, bySC, byVersion, bySeverity, bySource }
 }
 
 function copyText(text) {

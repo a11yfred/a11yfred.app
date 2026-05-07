@@ -5,6 +5,7 @@ dist-extension/
 dist-extension-firefox/
 release/
 src/data/personal-corpus.json
+src/data/personal-corpus-backup-*.json
 .vscode/
 
 # Archived work documentation

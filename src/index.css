@@ -2132,6 +2132,24 @@ input.search-input--disabled {
   text-align: center;
 }
 
+.view-all-dont-ask-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  font-size: var(--fs-body);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.view-all-dont-ask-checkbox {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
+
 .back-to-top-btn {
   display: flex;
   align-items: center;
@@ -3361,6 +3379,7 @@ input[type="radio"].settings-checkbox:checked {
 .detail-related__btn {
   padding: 0;
   font-size: var(--fs-body);
+  font-weight: normal;
   color: var(--accent-text);
   text-align: left;
   text-decoration: underline;

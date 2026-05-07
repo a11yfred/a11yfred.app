@@ -13,6 +13,7 @@ import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
 import useFindingSearch from './hooks/useFindingSearch.js'
 import useFindingRatings from './hooks/useFindingRatings.js'
 import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY } from './utils/constants.js'
+import { getStorage, setStorage, removeStorage } from './utils/storage.js'
 import {
   Router,
   useRouter,
@@ -203,6 +204,7 @@ function AppContent({
   const helpTriggerRef = useRef(null)
   const onboardingTriggerRef = useRef(null)
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
+  const [viewAllDontAsk, setViewAllDontAsk] = useState(false)
   const viewAllTriggerRef = useRef(null)
   const [badgeFilter, setBadgeFilter] = useState(() => {
     const badge = new URLSearchParams(window.location.search).get('badge')
@@ -943,7 +945,17 @@ function AppContent({
                   <button
                     type="button"
                     className="btn--secondary view-all-btn"
-                    onClick={() => { viewAllTriggerRef.current = document.activeElement; setViewAllConfirmOpen(true) }}
+                    onClick={() => {
+                      viewAllTriggerRef.current = document.activeElement
+                      if (getStorage('viewAllSkipConfirm') === '1') {
+                        announce(t('results.loading_announce'))
+                        setViewAllLoading(true)
+                        navigate('/results/all')
+                      } else {
+                        setViewAllDontAsk(false)
+                        setViewAllConfirmOpen(true)
+                      }
+                    }}
                   >
                     {t('search.view_all')}
                   </button>
@@ -959,6 +971,7 @@ function AppContent({
           {
             label: t('search.view_all_confirm_yes'),
             onClick: () => {
+              if (viewAllDontAsk) setStorage('viewAllSkipConfirm', '1')
               announce(t('results.loading_announce'))
               setViewAllLoading(true)
               navigate('/results/all')
@@ -974,6 +987,15 @@ function AppContent({
         ]}
       >
         <p>{t('search.view_all_confirm_body', { count: allFindings.length })}</p>
+        <label className="view-all-dont-ask-label">
+          <input
+            type="checkbox"
+            className="view-all-dont-ask-checkbox"
+            checked={viewAllDontAsk}
+            onChange={e => setViewAllDontAsk(e.target.checked)}
+          />
+          {t('search.view_all_confirm_dont_ask')}
+        </label>
       </Modal>
     </>
   )
