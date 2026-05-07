@@ -114,11 +114,13 @@ Current keys:
 
 - `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `wcagFilter`
 - `recentFindings`, `userFindings`, `userOverrides`, `pendingContributions`, `pinnedResults`
+- `coSelectionPairs` — co-selection behavioral signal pairs `{ "id1|id2": count }`
 - `apikey_<provider>` (one per configured provider: anthropic, openai, google, azure)
 
 `sessionStorage`:
 
 - `lastSelectedId`
+- `sessionCopiedIds` — IDs copied in the current session (cleared on tab close)
 
 Verify the count in SettingsPanel privacy disclosure matches reality.
 

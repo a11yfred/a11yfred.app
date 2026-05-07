@@ -17,7 +17,7 @@ import RelatedIssues from './ui/RelatedIssues.jsx'
 import { isSignificantlyChanged } from '../utils/textComparison.js'
 import { NOTIFICATION_TIMEOUT, PROVIDER_LABELS } from '../utils/constants.js'
 
-export default function DetailPanel({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function DetailPanel({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
@@ -100,6 +100,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       setCopied(true)
       announce(t('detail.copied_announce', { label }))
       setTimeout(() => setCopied(false), NOTIFICATION_TIMEOUT)
+      onCopyEvent?.(finding.id)
     })
   }
 
@@ -128,6 +129,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       setCopiedAll(true)
       announce(t('detail.copy_all_announce'))
       setTimeout(() => setCopiedAll(false), 2000)
+      onCopyEvent?.(finding.id)
     })
   }
 
@@ -579,7 +581,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         )}
       </div>
 
-      <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} />
+      <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
       <SourceLinks
         links={finding.links}
         singleHeading={t('detail.source_heading')}
