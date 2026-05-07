@@ -139,3 +139,6 @@ Format: `- [ ] \`key\` ,  old: "…" → new: "…"` (use `added` for new keys)
 - [ ] `detail.ai_agentic_hint` ,  updated: "AI will search the corpus to match your established style and technical depth"
 - [ ] `detail.save_note_text` ,  old: "Save" → new: "Save Edits and Notes"
 - [ ] `detail.saved_note_text` ,  old: "Saved" → new: "Edits and/or Notes Saved"
+- [ ] `detail.related_heading` ,  old: "Similar or related issues:" → new: "Similar or related:"
+- [ ] `detail.related_issue_heading` ,  old: "Similar or related issue:" → new: "Similar or related:"
+- [ ] `detail.sources_heading` ,  old: "Sources:" → new: "References:"
