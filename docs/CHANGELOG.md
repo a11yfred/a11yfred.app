@@ -4,6 +4,24 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-07 (continued) — Corpus WCAG terminology alignment
+
+### WCAG canonical terminology pass (personal-corpus.json, 146 entries)
+
+- "programmatically associated" → "programmatically determined" in ATH-021, ATH-082, ATH-086, ATH-097 (WCAG normative term for 1.3.1 and 4.1.2)
+- "programmatically exposed" → "programmatically determined" in titles of ATH-016, ATH-091, ATH-095
+- "context change" → "change of context" in ATH-075, ATH-076, ATH-077, ATH-126 (WCAG defined term for 3.2.2)
+- "focus ring" → "focus indicator" in ATH-003, ATH-004 (WCAG 2.4.7 term; ATH-137 UIKit usage preserved)
+- "validation error/s" → "input error/s" in ATH-081 title, ATH-082 desc, ATH-083 desc (WCAG 3.3.1 term)
+- "alt text description" → "text alternative" in ATH-002 (WCAG 1.1.1 term)
+- "purely decorative" → "pure decoration" in ATH-124 (WCAG defined term)
+- ATH-081 title rewritten: "Validation Errors Interrupt Input via Assertive Announcement" → "Input Errors Announced Too Aggressively via Live Region"
+- Add ATH-148: 3.2.3 Consistent Navigation (gap entry)
+- Merge ATH-045 into ATH-044: checkbox keyboard pattern folded into generic custom control entry; Sara Soueidan added to sourceCredits and links
+- SC 4.1.1 Parsing formally excluded from corpus (deprecated in WCAG 2.2 HTML5 contexts)
+
+---
+
 ## 2026-05-07 — Corpus voice and style audit (personal-corpus.json)
 
 ### Voice and style pass on personal-corpus.json (146 entries)
