@@ -4,6 +4,20 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-07 (continued 3) — Native app gap entries (Apple/Google guidelines)
+
+### New native entries (personal-corpus.json)
+
+- ATH-149: 4.1.3 "Dynamic Content Change Not Announced (Native App)" — UIAccessibility.post / accessibilityLiveRegion / LiveRegionMode.Polite
+- ATH-150: 3.3.1 "Form Error Not Announced After Validation (Native App)" — UIAccessibilityPostNotification / TextInputLayout.setError / accessibilityLiveRegion
+- ATH-151: 2.4.3 "Focus Not Restored After Modal Dismissal (Native App)" — layoutChanged notification / @AccessibilityFocusState / requestFocus / FocusRequester
+- ATH-152: 4.1.2 "Adjustable Control Missing Increment and Decrement Actions (Native App)" — accessibilityTraits.adjustable / accessibilityIncrement / accessibilityDecrement / CustomAccessibilityAction
+- ATH-153: 4.1.2 "WebView Content Not Exposed to Screen Readers (Native App)" — WKWebView / Android WebView / screenChanged notification / isAccessibilityElement
+- All sourced primarily from Apple developer documentation and Google Android accessibility guidelines
+- Native entry count: 6 → 11; total corpus: 146 → 151
+
+---
+
 ## 2026-05-07 (continued 2) — Platform field audit and expansion
 
 ### Platform field corrections (personal-corpus.json)
