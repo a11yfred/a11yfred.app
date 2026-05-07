@@ -4,6 +4,21 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-07 (continued 4) — Full corpus review and content fixes
+
+### Automated audit (151 entries, all checks passing)
+
+- ATH-052 title: "Skip Link Present but Not Visible to Keyboard Users" → "Skip Link Not Visible on Focus"
+- ATH-086 title: "Form Label Does Not Describe Purpose or Expected Input" → "Form Label Too Vague to Describe Input Purpose"
+- ATH-088 title: "Error Message Does Not Help User Correct the Input" → "Error Message Does Not Describe How to Correct"
+- ATH-134 title: "Modal Does Not Hide Background Content from Screen Readers" → "Modal Does Not Hide Background from Screen Readers"
+- ATH-149 desc: restructured to defect-first (was condition-first)
+- ATH-150 fix: replaced generic error string example with concrete "Email address is required"
+- ATH-152 desc: "labelled" → "labeled" (US English consistency)
+- ATH-153 fix: "Ensure the HTML content..." → "Audit the HTML content..." (action verb)
+
+---
+
 ## 2026-05-07 (continued 3) — Native app gap entries (Apple/Google guidelines)
 
 ### New native entries (personal-corpus.json)
