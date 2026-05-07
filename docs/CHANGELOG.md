@@ -4,6 +4,25 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-07 — Corpus voice and style audit (personal-corpus.json)
+
+### Voice and style pass on personal-corpus.json (146 entries)
+
+- Convert all mid-sentence ": such as / : for example / : like" patterns to parentheticals across 14 entries (ATH-013, ATH-020, ATH-033, ATH-034, ATH-096, ATH-105, ATH-108, ATH-113, ATH-114, ATH-115, ATH-116, ATH-120, ATH-123, ATH-131)
+- Replace all "users who rely on screen readers" with "screen reader users" (global)
+- Replace all "cannot build a/an [accurate/reliable] mental model" with specific, observable failure language
+- Convert mid-sentence colons before "including" clauses to parentheticals (ATH-034)
+- ATH-108 fix: tighten two-dimensional scrolling exemption to "fundamentally requires" + "where that scrolling is essential"
+- ATH-034 fix: add required error handling guidance (aria-invalid + associated error message)
+- Remove ATH-018 (unlabeled tooltip trigger, fully covered by ATH-097); corpus is now 146 entries
+- Demote ATH-026, ATH-033, ATH-077 from specific SC to Best Practice; move implicated SC to related field
+- Fix SC 1.2.2 label: "Captions (Level A)" to "Captions (Prerecorded) (Level A)" in ATH-010, ATH-104, ATH-140
+- Reorder sourceCredits in ATH-133 through ATH-139 (Apple/Google moved after Deque/Appt/MDN, before individual experts)
+- ATH-129 fix restructured: single-field input as primary recommendation, ARIA fallback secondary
+- All automated checks passing: id-not-first 0, self-references 0, bare Deque 0, Interactive Control titles 0
+
+---
+
 ## 2026-05-06 (continued 3) — ESLint 9.x compatibility and dependency fixes
 
 ### ESLint and jsx-a11y toolchain upgrade
