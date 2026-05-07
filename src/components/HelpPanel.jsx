@@ -38,7 +38,7 @@ export default function HelpPanel({ onClose, onStartTour }) {
               <span className="help-step-label">
                 {t(`help.step_${n}_label`)}
                 {(n === 2 || n === 4) && (
-                  <span className="help-step-optional">{' '}{t('help.step_optional')}</span>
+                  <span className="help-step-optional">{' '}{t('common.optional')}</span>
                 )}
               </span>
               <span className="help-step-body">{t(`help.step_${n}_body`)}</span>

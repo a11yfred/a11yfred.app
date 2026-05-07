@@ -1079,7 +1079,7 @@ function AppContent({
       {theme === 'party' && <PartyBanner />}
 
       <div className="app-background" inert={backgroundInert ? true : undefined}>
-        <nav aria-label="Skip navigation">
+        <nav aria-label={t('common.skip_nav')}>
           <a
             href="#/"
             className="skip-link"

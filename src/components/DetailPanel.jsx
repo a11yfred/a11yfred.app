@@ -340,9 +340,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                 <Badge
                   key={src}
                   variant="source"
-                  prefix="Source:"
+                  prefix={t('detail.sources_badge_single_prefix')}
                   onClick={() => onBadgeClick?.({ type: 'source', value: src })}
-                  aria-label={`Source: ${src}, ${t('results.badge_filter_aria')}`}
+                  aria-label={`${t('detail.sources_badge_single_prefix')} ${src}, ${t('results.badge_filter_aria')}`}
                 >
                   {src}
                 </Badge>
@@ -353,9 +353,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                 key="sources-badge"
                 variant="source"
                 onClick={() => document.querySelector('.detail-sources-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                aria-label="Sources: Multiple (See below)"
+                aria-label={t('detail.sources_badge_multiple_aria')}
               >
-                Sources: Multiple (See below)
+                {t('detail.sources_badge_multiple')}
               </Badge>
             )
           })()}
@@ -427,7 +427,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       <div className="detail-field-row">
         <label htmlFor="location-prefix" className="detail-label">
           {t('detail.location_label')}
-          {!location.trim() && <span className="detail-optional">{' '}{t('detail.location_optional')}</span>}
+          {!location.trim() && <span className="detail-optional">{' '}{t('common.optional')}</span>}
         </label>
         <InputWithClear
           id="location-prefix"
@@ -499,12 +499,12 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           {aiEnabled
             ? <>{t('detail.refine_hint_ai')}{' '}
                 <a href="/settings" className="detail-settings-link">
-                  {t('detail.refine_hint_ai_settings')}
+                  {t('common.settings')}
                 </a>.
               </>
             : <>{t('detail.refine_hint_no_ai')}{' '}
                 <a href="/settings" className="detail-settings-link">
-                  {t('detail.refine_hint_no_ai_settings')}
+                  {t('common.settings')}
                 </a>{' '}
                 {t('detail.refine_hint_no_ai_suffix')}
               </>}
@@ -561,7 +561,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                     <span className="btn-icon">
                       <Sparkles size={12} strokeWidth={2} className="detail-revise-icon" aria-hidden="true" />
                     </span>
-                    <span>Save & Revise Selected</span>
+                    <span>{t('detail.save_rewrite_text')}</span>
                   </>
                 : noteSaved
                   ? <>

@@ -31,14 +31,14 @@ export default function AboutPanel({ onClose }) {
         <p className="about-body">{t('about.examples_intro')}</p>
         <ul className="about-coming">
           {[
-            { id: 'ATH-001', slug: 'unlabeled-button-or-link',                            label: 'Unlabeled Button or Link' },
-            { id: 'ATH-010', slug: 'control-label-describes-appearance-not-purpose',       label: 'Control Label Describes Appearance, Not Purpose' },
-            { id: 'ATH-013', slug: 'incorrect-heading-structure',                          label: 'Incorrect Heading Structure' },
-            { id: 'ATH-014', slug: 'no-h1-on-the-page',                                   label: 'No H1 on the Page' },
-            { id: 'ATH-019', slug: 'aria-used-incorrectly',                               label: 'ARIA Used Incorrectly' },
-          ].map(({ id, slug, label }) => (
+            { id: 'ATH-001', slug: 'unlabeled-button-or-link',                       labelKey: 'about.examples_ath001_label' },
+            { id: 'ATH-010', slug: 'control-label-describes-appearance-not-purpose',  labelKey: 'about.examples_ath010_label' },
+            { id: 'ATH-013', slug: 'incorrect-heading-structure',                     labelKey: 'about.examples_ath013_label' },
+            { id: 'ATH-014', slug: 'no-h1-on-the-page',                              labelKey: 'about.examples_ath014_label' },
+            { id: 'ATH-019', slug: 'aria-used-incorrectly',                          labelKey: 'about.examples_ath019_label' },
+          ].map(({ id, slug, labelKey }) => (
             <li key={id}>
-              <a href={`#/finding/${id}/${slug}`} className="about-inline-link">{label}</a>
+              <a href={`#/finding/${id}/${slug}`} className="about-inline-link">{t(labelKey)}</a>
             </li>
           ))}
         </ul>
@@ -57,7 +57,8 @@ export default function AboutPanel({ onClose }) {
             <span className="about-feature-label">{t('about.feature_ai_label')}</span>
             <span className="about-feature-body">
               {t('about.feature_ai_body')}{' '}
-              <a href="#/settings" className="about-inline-link">{t('about.feature_ai_setup_link')}</a>.
+              <a href="#/settings" className="about-inline-link">{t('common.settings')}</a>.{' '}
+              {t('about.feature_agentic_body')}
             </span>
           </li>
         </ul>
@@ -72,7 +73,7 @@ export default function AboutPanel({ onClose }) {
         <p className="about-body">{t('settings.privacy_body_translations')}</p>
       </section>
 
-      <section className="about-section">
+      <section className="about-section about-section--last">
         <h3 className="about-section-heading">{t('about.sources_heading')}</h3>
         <p className="about-body">{t('about.sources_body')}</p>
         <ul className="about-sources-list">
@@ -82,13 +83,6 @@ export default function AboutPanel({ onClose }) {
         </ul>
       </section>
 
-      <section className="about-section about-section--last">
-        <h3 className="about-section-heading">{t('about.coming_heading')}</h3>
-        <ul className="about-coming">
-          <li>{t('about.coming_auth')}</li>
-          <li>{t('about.coming_custom')}</li>
-        </ul>
-      </section>
     </Panel>
   )
 }
