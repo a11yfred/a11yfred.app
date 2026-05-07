@@ -4,6 +4,16 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
+## 2026-05-07 (continued 2) — Platform field audit and expansion
+
+### Platform field corrections (personal-corpus.json)
+
+- ATH-071 `web` → `both`: expanded fix with Native iOS (44x44pt, UIEdgeInsets) and Android (48x48dp, TouchDelegate) guidance
+- ATH-072 `web` → `both`: expanded fix with Native iOS (hitTest override) and Android (non-overlapping view bounds) guidance
+- All other platform assignments confirmed correct: 6 native, 7 both, 133 web
+
+---
+
 ## 2026-05-07 (continued) — Corpus WCAG terminology alignment
 
 ### WCAG canonical terminology pass (personal-corpus.json, 146 entries)
