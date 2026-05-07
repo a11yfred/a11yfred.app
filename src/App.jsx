@@ -398,7 +398,12 @@ function AppContent({
 
   const handleBadgeClick = (filter) => {
     setBadgeFilter(filter)
-    setQuery('')
+    const label = filter.type === 'severity'
+      ? (SEVERITY_VARS[filter.value] ? t(SEVERITY_VARS[filter.value].key) : filter.value)
+      : filter.type === 'wcag'
+        ? `WCAG ${filter.value}`
+        : filter.value
+    setQuery(label)
     setSubmittedQuery('')
     syncBadgeUrl(filter)
     setSelected(null)
