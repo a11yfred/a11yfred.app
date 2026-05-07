@@ -1,5 +1,5 @@
-{
-  "0": {
+[
+  {
     "id": "ATH-001",
     "title": "Unlabeled Button or Link",
     "sc": "4.1.2",
@@ -68,7 +68,7 @@
       "Adrian Roselli"
     ]
   },
-  "1": {
+  {
     "id": "ATH-127",
     "title": "Focus Not Managed",
     "sc": "2.4.3",
@@ -122,7 +122,7 @@
       "WCAG"
     ]
   },
-  "2": {
+  {
     "id": "ATH-128",
     "title": "Focus Indicator Missing or Not Visible",
     "sc": "2.4.7",
@@ -172,7 +172,7 @@
       "WCAG"
     ]
   },
-  "3": {
+  {
     "id": "ATH-101",
     "title": "Control Not Keyboard Accessible",
     "sc": "2.1.1",
@@ -227,7 +227,7 @@
       "WCAG"
     ]
   },
-  "4": {
+  {
     "id": "ATH-129",
     "title": "Text Contrast Too Low",
     "sc": "1.4.3",
@@ -275,7 +275,7 @@
       "WCAG"
     ]
   },
-  "5": {
+  {
     "id": "ATH-008",
     "title": "Non-text Contrast Too Low",
     "sc": "1.4.11",
@@ -323,7 +323,7 @@
       "WCAG"
     ]
   },
-  "6": {
+  {
     "id": "ATH-009",
     "title": "Alt Text Missing, Wrong, or Unnecessary",
     "sc": "1.1.1",
@@ -373,7 +373,7 @@
       "Eric Bailey"
     ]
   },
-  "7": {
+  {
     "id": "ATH-010",
     "title": "Control Label Describes Appearance, Not Purpose",
     "sc": "4.1.2",
@@ -431,7 +431,7 @@
       "Scott O'Hara"
     ]
   },
-  "8": {
+  {
     "id": "ATH-011",
     "title": "No Skip Link",
     "sc": "2.4.1",
@@ -475,7 +475,7 @@
       "WCAG"
     ]
   },
-  "9": {
+  {
     "id": "ATH-130",
     "title": "Skip Link Not Visible When Focused",
     "sc": "2.4.7",
@@ -526,7 +526,7 @@
       "WCAG"
     ]
   },
-  "10": {
+  {
     "id": "ATH-131",
     "title": "Incorrect Heading Structure",
     "sc": "1.3.1",
@@ -573,13 +573,13 @@
       "WCAG"
     ]
   },
-  "11": {
+  {
     "id": "ATH-132",
     "title": "No H1 on the Page",
     "sc": "N/A",
     "scLabel": "Best Practice",
-    "wcagVersion": "",
-    "wcagLevel": "",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.6 Headings and Labels (Level AA)"
     ],
@@ -616,7 +616,7 @@
       "WCAG"
     ]
   },
-  "12": {
+  {
     "id": "ATH-133",
     "title": "Asterisk for Required Fields Not Explained",
     "sc": "3.3.2",
@@ -659,7 +659,7 @@
       "WCAG"
     ]
   },
-  "13": {
+  {
     "id": "ATH-049",
     "title": "Form Errors Not Linked to Fields",
     "sc": "3.3.1",
@@ -713,7 +713,7 @@
       "Adrian Roselli"
     ]
   },
-  "14": {
+  {
     "id": "ATH-018",
     "title": "Status Message Not Announced",
     "sc": "4.1.3",
@@ -766,7 +766,7 @@
       "Adrian Roselli"
     ]
   },
-  "15": {
+  {
     "id": "ATH-134",
     "title": "ARIA Used Incorrectly",
     "sc": "4.1.2",
@@ -820,7 +820,7 @@
       "WCAG"
     ]
   },
-  "16": {
+  {
     "id": "ATH-021",
     "title": "Color as Only Visual Indicator",
     "sc": "1.4.1",
@@ -873,7 +873,7 @@
       "Alistair Campbell"
     ]
   },
-  "17": {
+  {
     "id": "ATH-135",
     "title": "Zoom or Pinch-to-Zoom Disabled",
     "sc": "1.4.4",
@@ -916,7 +916,7 @@
       "WCAG"
     ]
   },
-  "18": {
+  {
     "id": "ATH-136",
     "title": "Text Input Missing a Label",
     "sc": "1.3.1",
@@ -969,7 +969,7 @@
       "WCAG"
     ]
   },
-  "19": {
+  {
     "id": "ATH-137",
     "title": "Hidden Content Readable by Screen Readers",
     "sc": "1.3.1",
@@ -1014,7 +1014,7 @@
       "WCAG"
     ]
   },
-  "20": {
+  {
     "id": "ATH-026",
     "title": "Text Spacing Too Tight",
     "sc": "1.4.12",
@@ -1061,7 +1061,7 @@
       "Adrian Roselli"
     ]
   },
-  "21": {
+  {
     "id": "ATH-138",
     "title": "Accessible Name Does Not Match Label",
     "sc": "2.5.3",
@@ -1113,13 +1113,13 @@
       "WCAG"
     ]
   },
-  "22": {
+  {
     "id": "ATH-139",
     "title": "Incorrect ARIA Tabs Implementation",
     "sc": "N/A",
     "scLabel": "Best Practice",
-    "wcagVersion": "",
-    "wcagLevel": "",
+    "wcagVersion": "2.1",
+    "wcagLevel": "A",
     "related": [
       "4.1.2 Name, Role, Value (Level A)"
     ],
@@ -1156,7 +1156,7 @@
       "WCAG"
     ]
   },
-  "23": {
+  {
     "id": "ATH-140",
     "title": "Non-interactive Element in Tab Order",
     "sc": "2.4.3",
@@ -1205,7 +1205,7 @@
       "WCAG"
     ]
   },
-  "24": {
+  {
     "id": "ATH-141",
     "title": "Repeated Links to the Same Destination",
     "sc": "2.4.4",
@@ -1250,7 +1250,7 @@
       "WCAG"
     ]
   },
-  "25": {
+  {
     "id": "ATH-031",
     "title": "Language Change Not Marked in HTML",
     "sc": "3.1.2",
@@ -1298,7 +1298,7 @@
       "WebAIM"
     ]
   },
-  "26": {
+  {
     "id": "ATH-032",
     "title": "Page Language Not Set",
     "sc": "3.1.1",
@@ -1340,7 +1340,7 @@
       "WebAIM"
     ]
   },
-  "27": {
+  {
     "id": "ATH-142",
     "title": "Drag Action Has No Keyboard Alternative",
     "sc": "2.5.7",
@@ -1382,7 +1382,7 @@
       "WCAG"
     ]
   },
-  "28": {
+  {
     "id": "ATH-034",
     "title": "Endless Animation Loop",
     "sc": "2.2.2",
@@ -1432,7 +1432,7 @@
       "Scott Vinkle"
     ]
   },
-  "29": {
+  {
     "id": "ATH-143",
     "title": "Page Landmarks Missing or Incorrect",
     "sc": "1.3.1",
@@ -1480,7 +1480,7 @@
       "WCAG"
     ]
   },
-  "30": {
+  {
     "id": "ATH-144",
     "title": "Page Title Does Not Change",
     "sc": "2.4.2",
@@ -1521,7 +1521,7 @@
       "WCAG"
     ]
   },
-  "31": {
+  {
     "id": "ATH-038",
     "title": "Keyboard Trap",
     "sc": "2.1.2",
@@ -1576,7 +1576,7 @@
       "Adrian Roselli"
     ]
   },
-  "32": {
+  {
     "id": "ATH-145",
     "title": "Chart Missing Text Alternative",
     "sc": "1.1.1",
@@ -1624,7 +1624,7 @@
       "WCAG"
     ]
   },
-  "33": {
+  {
     "id": "ATH-040",
     "title": "Tabular Data Without Table Markup",
     "sc": "1.3.1",
@@ -1674,7 +1674,7 @@
       "Adrian Roselli"
     ]
   },
-  "34": {
+  {
     "id": "ATH-041",
     "title": "Hover Content Not Keyboard Accessible",
     "sc": "1.4.13",
@@ -1726,7 +1726,7 @@
       "Adrian Roselli"
     ]
   },
-  "35": {
+  {
     "id": "ATH-146",
     "title": "Tab Order Mismatches Visual Order",
     "sc": "2.4.3",
@@ -1774,7 +1774,7 @@
       "WCAG"
     ]
   },
-  "36": {
+  {
     "id": "ATH-147",
     "title": "Informative Content Hidden from Screen Readers",
     "sc": "1.1.1",
@@ -1822,7 +1822,7 @@
       "WCAG"
     ]
   },
-  "37": {
+  {
     "id": "ATH-046",
     "title": "No Warning Before Link Opens New Window",
     "sc": "3.2.2",
@@ -1865,7 +1865,7 @@
       "WCAG"
     ]
   },
-  "38": {
+  {
     "id": "ATH-047",
     "title": "Receiving Focus Causes Unexpected Change",
     "sc": "3.2.1",
@@ -1910,7 +1910,7 @@
       "WCAG"
     ]
   },
-  "39": {
+  {
     "id": "ATH-148",
     "title": "Changing an Input Causes Unexpected Change",
     "sc": "3.2.2",
@@ -1952,7 +1952,7 @@
       "WCAG"
     ]
   },
-  "40": {
+  {
     "id": "ATH-149",
     "title": "Content Announced Incorrectly by Screen Readers",
     "sc": "1.3.1",
@@ -2000,7 +2000,7 @@
       "WCAG"
     ]
   },
-  "41": {
+  {
     "id": "ATH-150",
     "title": "Figure or Illustration Has No Description",
     "sc": "1.1.1",
@@ -2051,7 +2051,7 @@
       "WCAG"
     ]
   },
-  "42": {
+  {
     "id": "ATH-052",
     "title": "Form Field Has Conflicting Labels",
     "sc": "1.3.1",
@@ -2103,7 +2103,7 @@
       "Adrian Roselli"
     ]
   },
-  "43": {
+  {
     "id": "ATH-151",
     "title": "Dropdown or Select Has No Label",
     "sc": "1.3.1",
@@ -2155,7 +2155,7 @@
       "WCAG"
     ]
   },
-  "44": {
+  {
     "id": "ATH-054",
     "title": "Layout Breaks When Text Is Enlarged",
     "sc": "1.4.4",
@@ -2200,7 +2200,7 @@
       "WCAG"
     ]
   },
-  "45": {
+  {
     "id": "ATH-055",
     "title": "Vague or Generic Link Text",
     "sc": "2.4.4",
@@ -2256,7 +2256,7 @@
       "Adrian Roselli"
     ]
   },
-  "46": {
+  {
     "id": "ATH-056",
     "title": "Media Has No Transcript or Captions",
     "sc": "1.2.1",
@@ -2309,7 +2309,7 @@
       "Deque"
     ]
   },
-  "47": {
+  {
     "id": "ATH-152",
     "title": "Form Group Has No Group Label",
     "sc": "1.3.1",
@@ -2356,7 +2356,7 @@
       "WCAG"
     ]
   },
-  "48": {
+  {
     "id": "ATH-058",
     "title": "List Content Not Using List Markup",
     "sc": "1.3.1",
@@ -2402,7 +2402,7 @@
       "WCAG"
     ]
   },
-  "49": {
+  {
     "id": "ATH-153",
     "title": "Dynamic Updates Not Announced",
     "sc": "4.1.3",
@@ -2449,7 +2449,7 @@
       "WCAG"
     ]
   },
-  "50": {
+  {
     "id": "ATH-060",
     "title": "Multi-Pointer Gesture Without Alternative",
     "sc": "2.5.1",
@@ -2494,7 +2494,7 @@
       "WCAG"
     ]
   },
-  "51": {
+  {
     "id": "ATH-061",
     "title": "Vague Error Message",
     "sc": "3.3.3",
@@ -2545,7 +2545,7 @@
       "Adrian Roselli"
     ]
   },
-  "52": {
+  {
     "id": "ATH-062",
     "title": "Video Has No Closed Captions",
     "sc": "1.2.2",
@@ -2594,7 +2594,7 @@
       "Deque"
     ]
   },
-  "53": {
+  {
     "id": "ATH-063",
     "title": "Video Has No Audio Description",
     "sc": "1.2.5",
@@ -2646,7 +2646,7 @@
       "Deque"
     ]
   },
-  "54": {
+  {
     "id": "ATH-004",
     "title": "Session Timeout Without Warning",
     "sc": "2.2.1",
@@ -2687,7 +2687,7 @@
       "WCAG"
     ]
   },
-  "55": {
+  {
     "id": "ATH-065",
     "title": "Uncontrolled Flashing Content",
     "sc": "2.3.1",
@@ -2737,7 +2737,7 @@
       "Deque"
     ]
   },
-  "56": {
+  {
     "id": "ATH-066",
     "title": "Content Does Not Reflow at High Zoom",
     "sc": "1.4.10",
@@ -2790,7 +2790,7 @@
       "Eric Bailey"
     ]
   },
-  "57": {
+  {
     "id": "ATH-067",
     "title": "Touch Target Too Small",
     "sc": "2.5.8",
@@ -2845,7 +2845,7 @@
       "Deque"
     ]
   },
-  "58": {
+  {
     "id": "ATH-068",
     "title": "Screen Orientation Locked",
     "sc": "1.3.4",
@@ -2890,7 +2890,7 @@
       "WCAG"
     ]
   },
-  "59": {
+  {
     "id": "ATH-154",
     "title": "Autocomplete Attribute Missing on Personal Data Fields",
     "sc": "1.3.5",
@@ -2939,7 +2939,7 @@
       "WCAG"
     ]
   },
-  "60": {
+  {
     "id": "ATH-155",
     "title": "Iframe Missing a Title",
     "sc": "4.1.2",
@@ -2990,7 +2990,7 @@
       "WCAG"
     ]
   },
-  "61": {
+  {
     "id": "ATH-071",
     "title": "Expanded or Collapsed State Not Communicated",
     "sc": "4.1.2",
@@ -3041,7 +3041,7 @@
       "WCAG"
     ]
   },
-  "62": {
+  {
     "id": "ATH-072",
     "title": "Device Motion Feature Has No Alternative",
     "sc": "2.5.4",
@@ -3085,7 +3085,7 @@
       "WCAG"
     ]
   },
-  "63": {
+  {
     "id": "ATH-073",
     "title": "Reading Order Disrupted by CSS Positioning",
     "sc": "1.3.2",
@@ -3133,7 +3133,7 @@
       "WCAG"
     ]
   },
-  "64": {
+  {
     "id": "ATH-156",
     "title": "No Confirmation Step for Irreversible Actions",
     "sc": "3.3.4",
@@ -3182,7 +3182,7 @@
       "WCAG"
     ]
   },
-  "65": {
+  {
     "id": "ATH-075",
     "title": "Focus Indicator Below Minimum Area",
     "sc": "2.4.11",
@@ -3232,7 +3232,7 @@
       "WCAG"
     ]
   },
-  "66": {
+  {
     "id": "ATH-076",
     "title": "Instructions Rely on Sensory Characteristics Only",
     "sc": "1.3.3",
@@ -3282,7 +3282,7 @@
       "WCAG"
     ]
   },
-  "67": {
+  {
     "id": "ATH-077",
     "title": "Navigation Changes Position Across Pages",
     "sc": "3.2.3",
@@ -3327,7 +3327,7 @@
       "WCAG"
     ]
   },
-  "68": {
+  {
     "id": "ATH-080",
     "title": "Native App Ignores Device Orientation",
     "sc": "1.3.4",
@@ -3371,7 +3371,7 @@
       "WCAG"
     ]
   },
-  "69": {
+  {
     "id": "ATH-081",
     "title": "No Dark Mode Support",
     "sc": "N/A",
@@ -3415,7 +3415,7 @@
       "WCAG"
     ]
   },
-  "70": {
+  {
     "id": "ATH-082",
     "title": "Voice Control Cannot Operate Controls",
     "sc": "2.5.3",
@@ -3463,7 +3463,7 @@
       "WCAG"
     ]
   },
-  "71": {
+  {
     "id": "ATH-157",
     "title": "No External Keyboard Support",
     "sc": "2.1.1",
@@ -3511,7 +3511,7 @@
       "WCAG"
     ]
   },
-  "72": {
+  {
     "id": "ATH-084",
     "title": "Switch Access Not Supported",
     "sc": "2.1.1",
@@ -3568,7 +3568,7 @@
       "Adrian Roselli"
     ]
   },
-  "73": {
+  {
     "id": "ATH-158",
     "title": "Linked Document Is Not Accessible",
     "sc": "1.1.1",
@@ -3615,7 +3615,7 @@
       "WCAG"
     ]
   },
-  "74": {
+  {
     "id": "ATH-079",
     "title": "Emoji and Special Characters Disrupt Announcement",
     "sc": "1.3.1",
@@ -3666,7 +3666,7 @@
       "WCAG"
     ]
   },
-  "75": {
+  {
     "id": "ATH-085",
     "title": "Visible Heading Not Marked as Heading",
     "sc": "1.3.1",
@@ -3717,7 +3717,7 @@
       "WCAG"
     ]
   },
-  "76": {
+  {
     "id": "ATH-116",
     "title": "Dynamic Type Scaling Not Supported",
     "sc": "1.4.4",
@@ -3767,7 +3767,7 @@
       "WCAG"
     ]
   },
-  "77": {
+  {
     "id": "ATH-159",
     "title": "Custom Accessibility Actions Not Provided",
     "sc": "4.1.2",
@@ -3819,7 +3819,7 @@
       "WCAG"
     ]
   },
-  "78": {
+  {
     "id": "ATH-086",
     "title": "Heading Does Not Describe the Section",
     "sc": "2.4.6",
@@ -3866,7 +3866,7 @@
       "WCAG"
     ]
   },
-  "79": {
+  {
     "id": "ATH-087",
     "title": "Audio or Video Autoplays Without Controls",
     "sc": "1.4.2",
@@ -3914,7 +3914,7 @@
       "WCAG"
     ]
   },
-  "80": {
+  {
     "id": "ATH-088",
     "title": "Text Embedded in an Image",
     "sc": "1.4.5",
@@ -3969,7 +3969,7 @@
       "WCAG"
     ]
   },
-  "81": {
+  {
     "id": "ATH-089",
     "title": "Placeholder Used as the Only Label",
     "sc": "3.3.2",
@@ -4019,7 +4019,7 @@
       "WCAG"
     ]
   },
-  "82": {
+  {
     "id": "ATH-090",
     "title": "Single-Char Shortcut Cannot Be Remapped",
     "sc": "2.1.4",
@@ -4072,7 +4072,7 @@
       "WebAIM"
     ]
   },
-  "83": {
+  {
     "id": "ATH-091",
     "title": "Authentication Requires Solving a Cognitive Test",
     "sc": "3.3.8",
@@ -4120,13 +4120,13 @@
       "WCAG"
     ]
   },
-  "84": {
+  {
     "id": "ATH-092",
     "title": "Positive Tabindex Disrupts Focus Order",
     "sc": "N/A",
     "scLabel": "Best Practice",
-    "wcagVersion": "",
-    "wcagLevel": "",
+    "wcagVersion": "2.0",
+    "wcagLevel": "A",
     "related": [
       "2.4.3 Focus Order (Level A)"
     ],
@@ -4166,7 +4166,7 @@
       "Adrian Roselli"
     ]
   },
-  "85": {
+  {
     "id": "ATH-093",
     "title": "ARIA Menu Roles on Navigation Links",
     "sc": "4.1.2",
@@ -4219,7 +4219,7 @@
       "WCAG"
     ]
   },
-  "86": {
+  {
     "id": "ATH-094",
     "title": "CSS display Property Removes Semantics",
     "sc": "1.3.1",
@@ -4268,7 +4268,7 @@
       "WCAG"
     ]
   },
-  "87": {
+  {
     "id": "ATH-095",
     "title": "Interactive Element Nested in Another",
     "sc": "4.1.2",
@@ -4323,13 +4323,13 @@
       "WCAG"
     ]
   },
-  "88": {
+  {
     "id": "ATH-096",
     "title": "Custom Scrollbar Overrides User Settings",
     "sc": "N/A",
     "scLabel": "Best Practice",
-    "wcagVersion": "",
-    "wcagLevel": "",
+    "wcagVersion": "2.1",
+    "wcagLevel": "AA",
     "related": [
       "1.4.11 Non-text Contrast (Level AA)"
     ],
@@ -4371,7 +4371,7 @@
       "WCAG"
     ]
   },
-  "89": {
+  {
     "id": "ATH-002",
     "sc": "2.4.3",
     "fix": "Move focus to the first focusable control inside the modal, or to the dialog container using `tabindex=\"-1\"`. Trap focus within the modal. When it closes, return focus to the trigger element. Use `aria-modal=\"true\"` to announce modal context.",
@@ -4426,7 +4426,7 @@
     ],
     "sources": []
   },
-  "90": {
+  {
     "id": "ATH-003",
     "sc": "2.4.7",
     "fix": "Use `:focus-visible` for keyboard-only focus. Ensure focus indicators contrast at least 3:1 against adjacent colors. Implement with outline, box-shadow, or border. Verify contrast with a color checker. Do not suppress default browser focus without providing a visible custom alternative.",
@@ -4468,7 +4468,7 @@
     ],
     "sources": []
   },
-  "91": {
+  {
     "id": "ATH-005",
     "sc": "2.1.1",
     "fix": "Use native interactive elements (`<button>`, `<a>`, `<input>`). If not possible, add ARIA role, `tabindex=\"0\"`, keyboard handlers (Enter/Space for buttons, Enter for links, arrow keys for menus), visible text or aria-label for accessible name, and focus indicator. Consult WAI-ARIA APG for the specific pattern.",
@@ -4519,7 +4519,7 @@
     ],
     "sources": []
   },
-  "92": {
+  {
     "id": "ATH-006",
     "sc": "4.1.2",
     "fix": "Prefer native interactive elements (`<button>`, `<a>`, etc.). If not viable, add ARIA role, `tabindex=\"0\"`, keyboard handlers (keydown/keyup for Enter/Space on buttons, Enter on links, arrow keys on menus), visible accessible name, and focus indicator.",
@@ -4569,7 +4569,7 @@
     ],
     "sources": []
   },
-  "93": {
+  {
     "id": "ATH-007",
     "sc": "1.4.3",
     "fix": "Update colors to meet required ratios. Use a contrast checker (WebAIM, DevTools) to verify. For text on images or textured backgrounds, ensure consistent contrast. For perceived brightness issues (red/blue text), verify with manual visual assessment.",
@@ -4605,7 +4605,7 @@
     ],
     "sources": []
   },
-  "94": {
+  {
     "id": "ATH-016",
     "sc": "3.3.2",
     "fix": "Define asterisk meaning in visible text at the form start (e.g., '* Indicates a required field'). Use `required` attribute on inputs or `aria-required=\"true\"` on custom controls.",
@@ -4650,7 +4650,7 @@
     ],
     "sources": []
   },
-  "95": {
+  {
     "id": "ATH-017",
     "sc": "3.3.1",
     "fix": "Use `aria-describedby` to link error text to the input. Write clear error messages (e.g., 'Email must contain an @ symbol'). Move focus to the first errored field on validation failure.",
@@ -4701,7 +4701,7 @@
     ],
     "sources": []
   },
-  "96": {
+  {
     "id": "ATH-022",
     "sc": "1.4.4",
     "fix": "Remove `user-scalable=\"no\"` from the viewport meta tag. Set `maximum-scale` to at least `2`. Allow full browser zoom.",
@@ -4743,7 +4743,7 @@
     ],
     "sources": []
   },
-  "97": {
+  {
     "id": "ATH-025",
     "sc": "1.3.1",
     "fix": "Use `display: none`, `visibility: hidden`, or the `hidden` attribute to hide content from users and AT. Use `aria-hidden=\"true\"` only for decorative content that remains visually visible. Never use it on interactive elements. Ensure collapsible sections properly remove hidden content from the accessibility tree.",
@@ -4790,7 +4790,7 @@
     ],
     "sources": []
   },
-  "98": {
+  {
     "id": "ATH-033",
     "sc": "2.5.7",
     "fix": "Provide a single-pointer or keyboard-accessible alternative to any drag interaction. Examples: sliders accept typed values or +/- buttons; reorderable lists use up/down arrow buttons; map panning use directional buttons. Test that the alternative achieves the same functionality.",
@@ -4837,7 +4837,7 @@
     ],
     "sources": []
   },
-  "99": {
+  {
     "id": "ATH-039",
     "sc": "1.1.1",
     "fix": "Provide text alternatives: brief alt text (chart type, key finding), longer description (data, trends, insights), and data table. Ensure 4.5:1 contrast on text; don't rely on color alone. Make interactive elements keyboard accessible with clear focus indicators.",
@@ -4879,7 +4879,7 @@
     ],
     "sources": []
   },
-  "100": {
+  {
     "id": "ATH-042",
     "sc": "3.3.2",
     "fix": "Add visible `<label for=\"id\">` paired with `<input id=\"id\">`. If visible label is not possible, use aria-label (not placeholder). Test that clicking the label focuses the input.",
@@ -4924,7 +4924,7 @@
     ],
     "sources": []
   },
-  "101": {
+  {
     "id": "ATH-053",
     "sc": "1.3.1",
     "fix": "Provide a visible `<label>` with matching `for` and `id` attributes. If not possible, use `aria-label` or `aria-labelledby`.",
@@ -4972,7 +4972,7 @@
     ],
     "sources": []
   },
-  "102": {
+  {
     "id": "ATH-064",
     "sc": "2.2.1",
     "fix": "Warn users at least 20 seconds before a time limit expires and provide an accessible mechanism to extend or disable it. Use auto-save where possible to preserve partial progress.",
@@ -5009,7 +5009,7 @@
     ],
     "sources": []
   },
-  "103": {
+  {
     "id": "ATH-083",
     "sc": "2.1.1",
     "fix": "Test the full app with an external keyboard connected to the device. All interactive controls must be reachable by Tab and activatable by Enter or Space. Focus must be visible and follow a logical order throughout.",
@@ -5047,7 +5047,7 @@
     ],
     "sources": []
   },
-  "104": {
+  {
     "id": "ATH-117",
     "sc": "2.1.1",
     "fix": "Provide non-gesture alternatives for every gesture-based action: add visible delete/edit buttons, offer long-press menus, implement accessibility actions (iOS `AccessibilityAction`, Android custom actions). Never delete or confirm important actions through gesture alone. Test with Switch Control (iOS) and Voice Access (Android).",
@@ -5084,7 +5084,7 @@
     ],
     "sources": []
   },
-  "105": {
+  {
     "id": "ATH-120",
     "sc": "2.4.3",
     "fix": "On iOS, use `AccessibilityElement` and set `AccessibilitySortPriority` to enforce focus order. On Android, use `importantForAccessibility` and verify nesting structure respects logical order. Test navigation with actual VoiceOver/TalkBack through realistic user workflows (e.g., entering a form, navigating a list). Ensure heading, section, and control order matches visual top-to-bottom, left-to-right flow.",
@@ -5121,7 +5121,7 @@
     ],
     "sources": []
   },
-  "106": {
+  {
     "id": "ATH-124",
     "sc": "2.1.1",
     "fix": "Use `enableEdgeToEdgeLayout()` and test all swipe gestures against system back navigation. Avoid swipe-based shortcuts; provide button alternatives. If a gesture is necessary, use `SystemGestureExclusion` carefully and document the behavior. Always ensure a clear non-gesture way to navigate (buttons, menus). Test on Android 10+ devices with gesture navigation enabled.",
@@ -5161,4 +5161,4 @@
     ],
     "sources": []
   }
-}
+]

@@ -4,7 +4,41 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## May 6, 2026 — Final cleanup and consolidation complete
+## May 6, 2026 — UI library fully decoupled, portable, and panel unification complete
+
+### Complete removal of app-specific logic from portable UI components
+
+All 6 core UI components in `src/components/ui/` are now completely decoupled from application business logic. All internal dependencies on i18n, routing, and app announcements have been removed.
+
+**Components refactored:**
+
+- **BackButton** — replaced `useDir()` hook import with `dir` prop (default: 'ltr'). Now fully portable without router dependency.
+- **DataError** — removed `useT` and `announce` imports. All visible strings (`ariaLabel`, `heading`, `body`, `retryLabel`) now passed as props. Added optional `onMount` callback instead of internal announce call.
+- **NoResults** — removed `useT` and `announce` imports. All strings (`ariaLabel`, `heading`, `body`) passed as props. Added optional `onMount` callback.
+- **Field** — removed `useT` import. All button labels and ARIA strings now passed as props. Kept structural props (`aiEnabled`, `isDesktop`, `includeTitle`) as parent concerns.
+- **InputWithClear** — added `clearIcon` prop for icon injection (default: '↺'). Removed English default for `clearAriaLabel` (now required).
+- **SourceLinks** — removed `useT` import. Added `singleHeading` and `multipleHeading` props. Kept `LinkTitle` import (UI concern, not app logic).
+- **PanelShell** — added `dir` prop for RTL support.
+
+**New unified Panel component:**
+
+Created `src/components/ui/Panel.jsx` — a thin wrapper around PanelShell that internalizes focus management (`useFocusOnMount`) and page title hooks (`usePageTitle`). Props: `heading`, `onClose`, `closeAriaLabel`, `className`, `pageTitle` (defaults to `heading`), `dir`, `children`.
+
+**Updated consumers:**
+
+- **HelpPanel, AboutPanel, SettingsPanel** — swapped PanelShell + manual hooks for Panel component.
+- **DetailPanel** — updated SourceLinks call to pass heading strings as props.
+- **App.jsx & ResultList.jsx** — updated DataError and NoResults calls to pass all string props and `onMount` callbacks.
+
+**CSS consolidation:**
+
+Consolidated 3 duplicate header/title rule sets in `src/index.css`:
+
+- `.help-header`, `.about-header`, `.settings-header` → merged into `.panel-header`
+- `.help-title`, `.about-title`, `.settings-title` → merged into `.panel-title`
+- Added backward-compatible CSS aliases to maintain any external references
+
+**Result:** `src/components/ui/` folder is now a clean, reusable component library with zero app-specific dependencies. All components accept their strings and callbacks as props, making them portable across any project. Extracted to `feature/ui-library` branch ready for npm publishing.
 
 ### Removed deprecated button components
 

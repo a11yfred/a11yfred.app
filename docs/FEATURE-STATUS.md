@@ -6,55 +6,95 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Summary
+## Phase 1: Complete (17/17 features)
 
-| Feature | Status | % | Phase |
-| --- | --- | --- | --- |
-| Chrome Extension | 🟡 | 60 | 2 |
-| Firefox Extension | 🟡 | 60 | 2 |
-| Electron Desktop | 🟡 | 80 | 2 |
-| Core Search | ✅ | 95 | 1 |
-| Result List | ✅ | 100 | 1 |
-| Detail Panel | ✅ | 95 | 1 |
-| Ratings (Rank / Star / Archive) | ✅ | 100 | 1 |
-| Pinned Results | ✅ | 100 | 1 |
-| Settings Panel | ✅ | 90 | 1 |
-| Session Persistence | ✅ | 100 | 1 |
-| Debug Tools | ✅ | 100 | 1 |
-| Internationalization | 🟡 | 80 | 1 |
-| Corpus / Finding Data | ✅ | 100 | 1 |
-| Corpus Quality Standards | ✅ | 100 | 1 |
-| Platform Variant Display | ✅ | 100 | 1 |
-| Animations & Transitions | ✅ | 100 | 1 |
-| Responsive Design | ✅ | 100 | 1 |
-| Party Mode | ✅ | 100 | 1 |
-| UI Component Library (consolidated) | ✅ | 100 | 1 |
-| AI Assist (single-shot) | 🟡 | 85 | 2 |
-| AI Agent (agentic mode) | 🔧 | 40 | 2 |
-| User Findings (custom) | 🔧 | 30 | 2 |
-| Multilingual Edit Flow | 🔧 | 40 | 2 |
-| Export Findings | 🔧 | 10 | 2 |
-| Frequent Findings (implicit signal) | ✅ | 100 | 2 |
-| Narrow Results Mode | ✅ | 100 | 2 |
-| Advanced Search Syntax | 🔲 | 0 | 2 |
-| How To Use / Onboarding | ✅ | 100 | 2 |
-| Ko-fi Integration | 🟡 | 50 | 2 |
-| Import / Custom Data Source | 🔧 | 20 | 2 |
-| Authentication | 💤 | 10 | 3 |
-| Cloud Sync | 💤 | 5 | 3 |
-| PWA / Offline | ✅ | 100 | 2 |
-| Analytics (Umami) | 💤 | 20 | 3 |
-| Ad Tiles | ✅ | 100% (infra) | 3 |
+**Status:** All Phase 1 features shipped and stable. 107-entry public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All linters passing. UI component library fully portable with 14 primitives, zero app-specific dependencies.
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Result List | ✅ | 100 |
+| Ratings (Rank / Star / Archive) | ✅ | 100 |
+| Pinned Results | ✅ | 100 |
+| Session Persistence | ✅ | 100 |
+| Debug Tools | ✅ | 100 |
+| Corpus / Finding Data | ✅ | 100 |
+| Corpus Quality Standards | ✅ | 100 |
+| Platform Variant Display | ✅ | 100 |
+| Animations & Transitions | ✅ | 100 |
+| Responsive Design | ✅ | 100 |
+| Party Mode | ✅ | 100 |
+| UI Component Library (portable) | ✅ | 100 |
+| Panel Component Unification | ✅ | 100 |
+| Core Search | ✅ | 95 |
+| Detail Panel | ✅ | 95 |
+| Settings Panel | ✅ | 90 |
+| Internationalization | 🟡 | 80 |
+
+## Phase 2: In Progress
+
+**Complete (8):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Frequent Findings (implicit signal) | ✅ | 100 |
+| Narrow Results Mode | ✅ | 100 |
+| How To Use / Onboarding | ✅ | 100 |
+| PWA / Offline | ✅ | 100 |
+
+**Partial (2):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| AI Assist (single-shot) | 🟡 | 85 |
+| AI Agent (Match Existing Style) | 🔧 | 65 |
+
+**Deferred (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Ko-fi Integration | 💤 | 50 |
+
+**Complete (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Advanced Search Syntax | ✅ | 100 |
+
+**Backend Only (3):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Multilingual Edit Flow | 🔧 | 40 |
+| User Findings (custom) | 🔧 | 30 |
+| Import / Custom Data Source | 🔧 | 20 |
+
+**Distribution Targets:**
+
+| Target | Status | % |
+| --- | --- | --- |
+| Electron Desktop | 🟡 | 80 |
+| Chrome Extension | 🟡 | 60 |
+| Firefox Extension | 🟡 | 60 |
+
+## Phase 3: Planned
+
+**Complete (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Ad Tiles (infrastructure) | ✅ | 100 |
+
+**Stubbed (3):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Authentication | 💤 | 10 |
+| Analytics (Umami) | 💤 | 20 |
+| Cloud Sync | 💤 | 5 |
 
 ---
 
-## Phase 1 ,  Complete
-
-Status as of May 6, 2026: All Phase 1 features shipped and stable. 133-entry public corpus fully sourced and WCAG-mapped. Button components consolidated from 5 types (Button, StateButton, IconButton, IconStateButton, BackButton) into 2 base types (Button, IconButton) with clean variant/active patterns. All hardcoded CSS values tokenized. All linters passing (ESLint 9.x with jsx-a11y compatibility, Stylelint, Markdownlint). UI component library extracted to `feature/ui-library` branch ,  clean, portable, zero dead code, ready for npm publishing. All unused code removed; zero unused imports across entire codebase. ESLint 9.x toolchain finalized with React 18 JSX transform support and outdated rules disabled. Ready for Phase 2 backend completion and Phase 3 public launch.
-
----
-
-## Phase 1 Feature Details ,  Shipped
+## Phase 1 Feature Details
 
 ### Core Search ,  95%
 
@@ -66,7 +106,7 @@ Done:
 
 Missing:
 
-- Advanced query syntax (boolean `+term/-term` operators; see TODO)
+- (None; advanced query syntax with boolean `+term/-term` operators is complete)
 
 ---
 
@@ -232,8 +272,8 @@ Missing:
 
 Done:
 
-- 89 public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
-- Platform classification: 47 web-only, 68 web & mobile (both), 3 iOS, 3 Android, 3 other platform variants
+- 107 public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
+- Platform classification across web-only, web & mobile, iOS, Android, and other variants
 - All entries 100% sourced with minimum 2 expert sources each
 - Sources deep-linked where available (e.g., Roselli's "Where to Put Focus When Opening a Modal Dialog")
 - 10-expert consensus: Adrian Roselli, Scott O'Hara, Eric Bailey, Marco Zehe, Scott Vinkle, Kat Holmes, Eric Eggert, Karl Groves, Steve Faulkner, Patrick H. Lauke
