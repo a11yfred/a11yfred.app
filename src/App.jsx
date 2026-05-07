@@ -31,6 +31,7 @@ import useUserFindings from './hooks/useUserFindings.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'
 import usePinnedFindings from './hooks/usePinnedFindings.js'
+import { useCoSelection } from './hooks/useCoSelection.js'
 import { SEVERITY_VARS } from './data/severityStyles.js'
 import findingSlug from './utils/findingSlug.js'
 import { PROVIDER_LABELS } from './utils/constants.js'
@@ -322,6 +323,7 @@ function AppContent({
 
   const { ratings, rankUp, rankDown, toggleStar, toggleArchive } = useFindingRatings()
   const { pinnedIds, togglePin, clearPins } = usePinnedFindings()
+  const { recordCopy, getPairsFor } = useCoSelection()
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
   const userOverridesHook = useUserOverrides()
@@ -1172,6 +1174,8 @@ function AppContent({
             onSelectRelated={handleSelectRelated}
             onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
             onBadgeClick={handleBadgeClick}
+            onCopyEvent={recordCopy}
+            getPairsFor={getPairsFor}
             locale={language}
             userOverridesHook={userOverridesHook}
             contributionQueueHook={contributionQueueHook}

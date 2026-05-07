@@ -66,6 +66,11 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` ,  Add 4 entries: Dynamic Type sizing, accessibility labels, announcements, custom actions.
 - [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` `[phase2]` ,  Settings UI for URL input/load, activate Supabase backend.
 
+### Related Entry Ranking
+
+- [ ] **Implement tiered related-entry ranking** `[ux]` `[corpus]` `[phase2]` ,  Surface related entries using 7-tier order: (1) same SC, (2) AAA/enhanced counterpart, (3) entries where current SC appears in their related array, (4) shared related SC overlap, (5) keyword similarity, (6) discoverability (same platform/severity/section), (7) Best Practice entries last. See memory: related_sc_ranking.md.
+- [ ] **User co-selection behavioral signal** `[ux]` `[data]` `[phase2]` ,  Track when a user copies one entry then navigates to and copies another in the same session. Persist co-selection pairs as `{ a, b, count }` in `localStorage` key `coSelectionPairs`. Weak signal: view-then-view (sessionStorage only). Strong signal: copy-then-copy (persisted). Use pair counts to boost ranking of frequently co-used entries above keyword tier. Wire copy events in `DetailPanel.jsx` and selection events in `App.jsx`.
+
 ### Design & Polish
 
 - [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` ,  Audit layout consistency, empty states, keyboard nav, spacing.
