@@ -4,9 +4,278 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-05-07 (continued 4) — Full corpus review and content fixes
+## 2026-05-07
 
-### Automated audit (151 entries, all checks passing)
+### Structural merges (personal-corpus.json, 153 → 147 entries)
+
+#### Merge 1 of 4 — ATH-037 absorbed into ATH-040 (SC 1.4.3)
+
+**Retired:** ATH-037 "Insufficient Text Contrast on Inline Link"
+
+**Reason:** ATH-037 was a specialization of ATH-040 covering the same SC (1.4.3) with the additional requirement that inline links also need a non-color differentiator. Same primary SC, same fix approach, same severity (Critical). The inline-link scenario is better expressed as a named case inside the general contrast entry than as a standalone entry.
+
+**What was preserved from ATH-037:**
+
+- ATH-037 desc material (inline link dual requirement: 4.5:1 contrast + non-color indicator) added as a third sentence to ATH-040 desc
+- ATH-037 fix material (non-color differentiator for links; 3:1 color difference to surrounding body text) added as a dedicated paragraph in ATH-040 fix
+- ATH-037 keywords absorbed: `link contrast`, `inline link`, `link differentiation`, `underline`, `color only`
+- ATH-037 related entry `1.4.1 Use of Color (Level A)` absorbed into ATH-040 related
+- `compound failure` keyword added to ATH-040 (the inline link scenario fails both 1.4.3 and 1.4.1 simultaneously)
+
+**ATH-040 before:**
+
+> desc: "Text does not meet the minimum contrast ratio of 4.5:1 against its background (3:1 for large text). Users with low vision or color blindness cannot read text rendered at insufficient contrast."
+>
+> fix: "Adjust foreground or background colors... Verify all text states... Disabled text is exempt. Verify both light and dark mode variants if applicable."
+
+**ATH-040 after:**
+
+> desc: adds — "Inline links are a common failure point: link text must meet 4.5:1 against its background and must also be distinguishable from surrounding body text by a non-color indicator (underline, border, or icon), because color difference alone does not satisfy SC 1.4.1."
+>
+> fix: adds — "For inline links, add a non-color differentiator (underline, border-bottom, or icon) in addition to meeting the 4.5:1 contrast threshold. If relying on color difference between the link and surrounding body text, that color difference must also meet at least 3:1 (SC 1.4.1)."
+
+---
+
+#### Merge 2 of 4 — ATH-080 absorbed into ATH-079 (SC 3.2.4)
+
+**Retired:** ATH-080 "Inconsistent Identification of Same Component"
+
+**Reason:** ATH-079 (same function, different control type across pages) and ATH-080 (same component, different accessible name across pages) are both SC 3.2.4 with identical fixes. The distinction is a difference in framing rather than a difference in failure or remedy. Auditors report one finding per page for this SC. Combining them removes ambiguity about which entry to use.
+
+**What was preserved from ATH-080:**
+
+- ATH-080 desc material ("same component uses different accessible names, visual labels, or iconography") merged into ATH-079 desc as a second sentence expanding the scope
+- ATH-080 fix material ("design token", "shared component", "audit every instance", "label consistency") absorbed into ATH-079 fix
+- ATH-080 keywords absorbed: `inconsistent identification`, `naming convention`, `design token`, `shared component`, `label consistency`, `accessible name`
+- ATH-080 related entry `4.1.2 Name, Role, Value (Level A)` absorbed into ATH-079 related
+
+**ATH-079 title change:** "Inconsistent Controls for Same Functionality" → "Inconsistent Identification of Controls Across Pages"
+
+**ATH-079 desc before:**
+
+> "A UI component that serves the same function appears with different accessible names, roles, or visual labels across pages. Screen reader users who search by label or navigate by element type encounter the same component under different names..."
+
+**ATH-079 desc after:**
+
+> Adds second sentence: "Users who learn a control's identity in one location cannot recognize it in another, breaking consistency across the experience."
+
+---
+
+#### Merge 3 of 4 — ATH-055 absorbed into ATH-054 (SC 2.1.2)
+
+**Retired:** ATH-055 "Partial Keyboard Trap"
+
+**Reason:** Both entries cover SC 2.1.2 No Keyboard Trap. ATH-054 was a complete trap (no exit at all). ATH-055 was a partial trap (exit exists but is unreliable: reopens immediately, Escape bound to component not document). The fix for both is substantively identical. Merged into ATH-054 with severity-range language to preserve the Critical/High distinction.
+
+**What was preserved from ATH-055:**
+
+- ATH-055 desc material ("partial trap", "component reopens immediately", "Escape fires on component not document") merged into ATH-054 desc as description of the partial-trap failure mode
+- ATH-055 fix material ("bind Escape to document not component", "permanent dismissal") absorbed into ATH-054 fix
+- ATH-055 keywords absorbed: `partial keyboard trap`, `widget`, `arrow keys`, `stuck focus`, `dropdown`, `focus cycle`
+- Severity-range language added: "When no exit path exists, the failure is Critical; when an exit path exists but is unreliable, the failure is High."
+
+**ATH-054 desc before:**
+
+> "Keyboard focus enters a component... and has no way out. The Escape key does not dismiss the component, no visible close control exists or is keyboard accessible, and no other exit mechanism is available. Keyboard-only users cannot leave the component without refreshing the page."
+
+**ATH-054 desc after:**
+
+> "...In a complete trap, the Escape key does not dismiss the component, no keyboard-accessible close control exists, and no exit path is available without a page refresh. In a partial trap, the component can sometimes be dismissed but reopens immediately, the Escape key fires on the component instead of the document, or the exit path is undocumented. When no exit path exists, the failure is Critical; when an exit path exists but is unreliable, the failure is High."
+
+---
+
+#### Merge 4 of 4 — ATH-101, ATH-102, ATH-103 absorbed into ATH-100 (SC 2.4.6)
+
+**Retired:** ATH-101 "Text Styled as Heading Not in Heading Markup", ATH-102 "No Heading Structure on Page", ATH-103 "Missing or Non-Descriptive Headings"
+
+**Reason:** All four entries cover SC 2.4.6 Headings and Labels. Auditors do not report four separate findings for heading problems on a single page — they report one structural heading finding with multiple observations. The four failure modes (skipped levels, styled-not-marked, absent headings, vague headings) are clearly distinct and all belong in a single comprehensive entry that covers the full space of heading failures.
+
+**What was preserved from ATH-101:**
+
+- Desc: "text that visually functions as a section heading uses styling but is not marked with a heading element" → named as failure mode (2)
+- Fix: "do not use `<p>`, `<span>`, `<div>`, or `<strong>` as substitutes for heading elements"
+- Keywords: `heading markup`, `styled text as heading`, `visually heading`, `unmarked heading`, `bold paragraph`, `CSS heading`
+- Links: Roselli "Irrational Headings"
+
+**What was preserved from ATH-102:**
+
+- Desc: "no heading elements at all; screen reader users must read the entire page linearly" → named as failure mode (3)
+- Fix: "every page needs at least one heading"
+- Keywords: `no headings`, `missing heading structure`, `no h1`
+- Related: `2.4.1 Bypass Blocks (Level A)`
+
+**What was preserved from ATH-103:**
+
+- Desc: "heading text is vague or generic (e.g., 'Section' or 'Details')" → named as failure mode (4)
+- Fix: "Rewrite vague headings to accurately describe the content below. Heading text should be concise, unique within the page, and meaningful without surrounding context."
+- Keywords: `missing heading`, `non-descriptive heading`, `vague heading`, `heading text`, `section heading`, `untitled section`
+- Links: Roselli "Irrational Headings" (already in ATH-101, one copy in merged entry)
+
+**ATH-100 title change:** "Heading Levels Out of Order" → "Heading Structure Missing, Incorrect, or Non-Descriptive"
+
+---
+
+### Data fix — ATH-148 and ATH-149–153 sc field cleanup
+
+- ATH-148: `sc` field contained `"3.2.3 Consistent Navigation"` (text embedded alongside the number) → corrected to bare `"3.2.3"`; `"3.2.3"` also removed from keywords (redundant now that sc is properly set)
+- ATH-149–153: `sc` fields contained full SC names (`"4.1.3 Status Messages"`, `"3.3.1 Error Identification"`, etc.) → corrected to bare SC numbers (`"4.1.3"`, `"3.3.1"`, `"2.4.3"`, `"4.1.2"`, `"4.1.2"`)
+
+---
+
+### Compound SC additions (5 entries)
+
+These entries already described dual-SC failures in their desc and fix. The `compound failure` keyword was added and related arrays confirmed to contain the secondary SC.
+
+| Entry | Primary SC | Secondary SC | Reason |
+| --- | --- | --- | --- |
+| ATH-040 | 1.4.3 | 1.4.1 | Inline link scenario fails both contrast minimum (1.4.3) and color-only differentiation from body text (1.4.1) simultaneously |
+| ATH-048 | 1.4.11 | 2.4.11 | Desc and fix explicitly address both non-text contrast failure (1.4.11) and focus indicator contrast failure (2.4.11) on the same control |
+| ATH-067 | 2.4.7 | 1.4.11 | Desc says input lacks visible boundary (1.4.11 failure) AND visible focus indicator (2.4.7); fix references both contrast thresholds |
+| ATH-049 | 2.1.1 | 2.4.7 | Desc explicitly notes the hidden control also fails focus visibility; related already contains 2.4.7 and 1.4.11 |
+| ATH-038 | 1.4.1 | 1.3.3 | Color-only state communication (1.4.1) commonly co-occurs with instructions that rely on sensory characteristics like shape+color (1.3.3); `1.3.3 Sensory Characteristics` added to related |
+
+---
+
+### Keyword quality pass (personal-corpus.json, all 153 entries)
+
+Cross-corpus frequency analysis identified 10 terms appearing in 10+ entries and internal duplication patterns in 20+ entries. Changes applied across all entries:
+
+- Removed failure-technique and WCAG success criterion codes from keywords (F44, F54, F80, H42, G183, etc.) — these belong in links, not search metadata
+- Removed bare AT names (screen reader, NVDA, JAWS, VoiceOver, TalkBack) from web entries where the failure is not AT-specific; retained on native entries and entries specifically about AT announcement behavior
+- Consolidated substring duplicates (e.g., "chart" + "bar chart" + "pie chart" → keep compounds; "heading" + "heading levels" + "heading structure" → keep compounds only)
+- Removed fix-detail terms that are implementation tokens rather than failure signals (e.g., "keydown", "onchange", "aria-owns", "axios", "pushState" where not the primary failure concept)
+- Removed SC numbers used as bare keywords where the SC is already the entry's primary sc field
+- Removed vague/generic terms that produce false positives: "native", "iOS", "Android" on entries already scoped by platform field; "keyboard", "screen reader", "validation", "cognitive" where more specific terms already present
+- ATH-120: removed exact duplicate "duplicate id" keyword
+- ATH-044: trimmed from 25 to 15 keywords
+- ATH-002: trimmed from 25 to 14 keywords
+- ATH-004: trimmed from 22 to 12 keywords
+- ATH-123: trimmed from 22 to 12 keywords
+- ATH-134: trimmed from 20 to 12 keywords
+
+Result: average 9.7 keywords per entry (was ~12+), min 6, max 15, zero exact duplicates, all automated checks passing.
+
+---
+
+### New native Best Practice entries ATH-154 and ATH-155
+
+- ATH-154: Best Practice "Dark Mode Not Supported (Native App)" — iOS semantic colors / SwiftUI adaptive colors / asset catalog Light+Dark variants; Android values-night / MaterialTheme.colorScheme / AppCompatDelegate. Sources: Apple, Google
+- ATH-155: Best Practice "UI Does Not Support System Magnification (Native App)" — iOS Accessibility Zoom / Display Zoom / Auto Layout constraints; Android display size / densityDpi / fontScale config changes. Sources: Apple, Google
+- Native entry count: 11 → 13; total corpus: 151 → 153
+
+---
+
+### Content expansion — ATH-106 Android 16 orientation details
+
+- ATH-106 fix: added Android 16 (API 36) behavior — orientation locking via `android:screenOrientation` and `Activity.setRequestedOrientation()` is ignored on large screens (≥600dp) including tablets and unfolded foldables; WCAG 1.3.4 compliance is automatic on those form factors for apps targeting API 36+; temporary opt-out via `android.window.PROPERTY_COMPAT_ALLOW_RESTRICTED_RESIZABILITY` removed in Android 17
+- ATH-106 links: added Android 16 behavior changes doc (developer.android.com)
+- ATH-106 keywords: added `android 16`, `API 36`, `large screen`, `foldable`, `resizability`
+
+---
+
+### Corpus review: colon cleanup, phrasing fixes, and content fixes
+
+- ATH-106 desc: `...the user cannot see: including wheelchair users with mounted devices, cannot access content locked to the opposite orientation` → parenthetical `(including wheelchair users with mounted devices) cannot access...` (colon pattern missed in previous pass)
+- ATH-153 desc: `configured in a way that suppresses accessibility` → `configured to suppress accessibility` (tighter phrasing)
+- ATH-085 links: added Understanding 3.1.5, Understanding 3.3.2, and WebAIM Fonts (entry previously had no links)
+- ATH-017 desc: `...the user cannot see: including items inside collapsed or hidden regions` → parenthetical `(items inside collapsed or hidden regions and off-screen panels)`
+- ATH-038 desc: `Users who cannot perceive color differences: including those with color blindness, users on monochrome displays, and users in high-contrast mode, cannot access...` → `Users who cannot perceive color differences (including those with color blindness, users on monochrome displays, and users in high-contrast mode) cannot access...`
+- ATH-081 desc: `for all validation messages: including low-priority inline feedback` → comma: `for all validation messages, including low-priority inline feedback`
+- ATH-142 desc: `Users who cannot perceive color differences: including those with color blindness or low vision, cannot identify...` → parenthetical `(including those with color blindness or low vision) cannot identify...`
+- ATH-068 fix: `Add a visible text label to every interactive control` → `Add a visible text label to every icon-only control` (scoped to match the entry's actual subject)
+- ATH-106 fix: `unless the content is essential in one orientation, e.g., a piano keyboard` → `such as a piano keyboard` (exception clause, not an example list; avoids two e.g. instances in one sentence)
+
+---
+
+### Desc trimming pass (personal-corpus.json, 7 entries)
+
+ATH-053 was reviewed and retained as-is: the final sentence is deliberate severity-range language and must not be removed.
+
+#### ATH-003
+
+Before:
+
+> UI components (buttons, inputs, checkboxes, radio buttons, toggle controls, icons) and graphical objects do not meet the 3:1 minimum contrast ratio against adjacent background colors in one or more states. This includes default, hover, and focused states. Users with low vision cannot distinguish the boundaries, states, or active areas of interactive controls. Failures on primary interactive controls such as form inputs and action buttons are more severe than failures on secondary decorative graphical objects.
+
+After (sentences 1–2 merged; state list folded into sentence 1):
+
+> UI components, e.g., buttons, inputs, checkboxes, radio buttons, toggle controls, and icons, and graphical objects do not meet the 3:1 minimum contrast ratio against adjacent background colors across all states including default, hover, and focused. Users with low vision cannot distinguish the boundaries, states, or active areas of interactive controls. Failures on primary interactive controls such as form inputs and action buttons are more severe than failures on secondary decorative graphical objects.
+
+---
+
+#### ATH-013
+
+Before:
+
+> An interactive control has an accessible name that does not match its actual function or context. The name may reuse a common convention with a different meaning, e.g., labeling a base-page action "Close" when that word conventionally signals dismissal of a modal or overlay. The name may also describe an appearance rather than a purpose. When the accessible name does not reflect the action, users relying on assistive technology cannot predict the outcome of activating the control.
+
+After (sentences 2–3 merged into a compound clause):
+
+> An interactive control has an accessible name that does not match its actual function or context. The name may reuse a common convention with a different meaning, e.g., labeling a base-page action "Close" when that word conventionally signals dismissal of a modal or overlay, or may describe an appearance rather than a purpose. When the accessible name does not reflect the action, users relying on assistive technology cannot predict the outcome of activating the control.
+
+---
+
+#### ATH-044
+
+Before:
+
+> Interactive controls cannot be reached or operated using a keyboard alone. A control may not be in the tab order, may not respond to expected keystrokes (Enter, Space, arrow keys), may rely exclusively on mouse or pointer event handlers, or may be a custom widget that does not follow the ARIA keyboard interaction pattern for its role. This includes custom checkboxes built without native input elements or without Space-key toggle handling. Keyboard-only users and screen reader users cannot use these controls.
+
+After (sentences 2–3 merged; custom-checkbox clause folded into sentence 2 as parenthetical):
+
+> Interactive controls cannot be reached or operated using a keyboard alone. A control may not be in the tab order, may not respond to expected keystrokes (Enter, Space, arrow keys), may rely exclusively on mouse or pointer event handlers, or may be a custom widget, including custom checkboxes without Space-key toggle handling, that does not follow the ARIA keyboard interaction pattern for its role. Keyboard-only users and screen reader users cannot use these controls.
+
+---
+
+#### ATH-069
+
+Before:
+
+> An interactive control's programmatic accessible name does not match or contain the visible label text shown on screen. The visible label and the accessible name diverge, so the spoken phrase a user says to activate the control does not correspond to any accessible name the browser can resolve. Voice Control and Dragon NaturallySpeaking users cannot activate the control by speaking its visible label. Screen reader users hear a name that does not reflect what is shown visually.
+
+After (sentences 3–4 merged):
+
+> An interactive control's programmatic accessible name does not match or contain the visible label text shown on screen. The visible label and the accessible name diverge, so the spoken phrase a user says to activate the control does not correspond to any accessible name the browser can resolve. Voice Control and Dragon NaturallySpeaking users cannot activate the control by speaking its visible label, and screen reader users hear a name that does not match what is shown visually.
+
+---
+
+#### ATH-086
+
+Before:
+
+> Form fields have labels that are present and programmatically determined, but too vague, abbreviated, or generic to communicate what the field expects. Labels like "Name", "Input", or "Field 1" do not indicate whether a full name, first name only, or a specific format is required. Format requirements, length constraints, and input patterns are either absent or placed only in placeholder text that disappears on entry. Users with cognitive disabilities cannot determine what to enter without trial and error.
+
+After (sentences 2–3 merged):
+
+> Form fields have labels that are present and programmatically determined, but too vague, abbreviated, or generic to communicate what the field expects. Labels like "Name", "Input", or "Field 1" do not indicate whether a full name, first name only, or a specific format is required, and format requirements, length constraints, or input patterns are either absent or placed only in placeholder text that disappears on entry. Users with cognitive disabilities cannot determine what to enter without trial and error.
+
+---
+
+#### ATH-134
+
+Before:
+
+> When a modal dialog or overlay is presented, background content remains accessible to assistive technology. On web, screen readers using browse (reading) mode can navigate outside the dialog and interact with elements that should be inert. On native platforms, VoiceOver and TalkBack can swipe past the modal into background views. In both contexts, users can activate blocked controls or encounter content out of context when assistive technology does not respect the modal boundary.
+
+After (sentences 2–3 merged; platform-specific detail replaced with unified statement):
+
+> When a modal dialog or overlay is presented, background content remains accessible to assistive technology. Screen readers in browse mode and native assistive technologies can navigate outside the dialog and interact with background elements that should be inert. In both contexts, users can activate blocked controls or encounter content out of context when assistive technology does not respect the modal boundary.
+
+---
+
+#### ATH-135
+
+Before:
+
+> A custom-built native UI control, a toggle, stepper, rating control, or interactive card, has no accessibility role set. VoiceOver announces the element without a role, or announces it with an incorrect default role. TalkBack announces it as a generic unlabeled element. Users cannot determine the control's type or how to interact with it.
+
+After (sentences 2–3 merged):
+
+> A custom-built native UI control, a toggle, stepper, rating control, or interactive card, has no accessibility role set. VoiceOver announces the element without a role or with an incorrect default role, and TalkBack announces it as a generic unlabeled element. Users cannot determine the control's type or how to interact with it.
+
+---
+
+### Full corpus review and content fixes (automated audit, 151 entries)
 
 - ATH-052 title: "Skip Link Present but Not Visible to Keyboard Users" → "Skip Link Not Visible on Focus"
 - ATH-086 title: "Form Label Does Not Describe Purpose or Expected Input" → "Form Label Too Vague to Describe Input Purpose"
@@ -19,9 +288,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-05-07 (continued 3) — Native app gap entries (Apple/Google guidelines)
-
-### New native entries (personal-corpus.json)
+### New native entries ATH-149–153 (personal-corpus.json)
 
 - ATH-149: 4.1.3 "Dynamic Content Change Not Announced (Native App)" — UIAccessibility.post / accessibilityLiveRegion / LiveRegionMode.Polite
 - ATH-150: 3.3.1 "Form Error Not Announced After Validation (Native App)" — UIAccessibilityPostNotification / TextInputLayout.setError / accessibilityLiveRegion
@@ -33,17 +300,13 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-05-07 (continued 2) — Platform field audit and expansion
-
-### Platform field corrections (personal-corpus.json)
+### Platform field audit and expansion
 
 - ATH-071 `web` → `both`: expanded fix with Native iOS (44x44pt, UIEdgeInsets) and Android (48x48dp, TouchDelegate) guidance
 - ATH-072 `web` → `both`: expanded fix with Native iOS (hitTest override) and Android (non-overlapping view bounds) guidance
 - All other platform assignments confirmed correct: 6 native, 7 both, 133 web
 
 ---
-
-## 2026-05-07 (continued) — Corpus WCAG terminology alignment
 
 ### WCAG canonical terminology pass (personal-corpus.json, 146 entries)
 
@@ -60,8 +323,6 @@ All significant changes to A11yTextHelper, newest first.
 - SC 4.1.1 Parsing formally excluded from corpus (deprecated in WCAG 2.2 HTML5 contexts)
 
 ---
-
-## 2026-05-07 — Corpus voice and style audit (personal-corpus.json)
 
 ### Voice and style pass on personal-corpus.json (146 entries)
 
@@ -80,9 +341,9 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-05-06 (continued 3) — ESLint 9.x compatibility and dependency fixes
+## 2026-05-06
 
-### ESLint and jsx-a11y toolchain upgrade
+### ESLint 9.x compatibility and dependency fixes
 
 - Downgrade @eslint/js to 9.x for compatibility with ESLint 9.x environment
 - Add eslint-plugin-react to resolve JSX import detection (modern JSX transform doesn't require React import)
@@ -97,8 +358,6 @@ All significant changes to A11yTextHelper, newest first.
 - No false positives on accessibility rules
 
 ---
-
-## 2026-05-06 (continued 2)
 
 ### Button component consolidation and active state fixes
 
@@ -117,7 +376,7 @@ All significant changes to A11yTextHelper, newest first.
 - Replace `max-width: 720px` with `var(--modal-max-width)` (2 instances)
 - Replace `border-radius: 11px` (toggle) with `var(--toggle-radius)`
 
-## 2026-05-06 (continued)
+---
 
 ### Button icon placement and markup standardization
 
@@ -128,7 +387,7 @@ All significant changes to A11yTextHelper, newest first.
 - Restructure detail-revise-btn to use `.btn-icon` markup pattern
 - Separate button icons from text spans in all button types
 
-## 2026-05-06
+---
 
 ### CSS system refactor and token consolidation
 
@@ -148,6 +407,8 @@ All significant changes to A11yTextHelper, newest first.
 - Remove orphaned reset keys: `confirm_reset_all_item_overrides`, `_contributions`
 - Add Party Mode to About panel features list
 - Update README: Phase 1 complete, corpus 107→133 entries, remove broken ARCHITECTURE.md reference
+
+---
 
 ## 2026-05-05
 
@@ -261,7 +522,7 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-04-30 — Button styling, spacing, alignment, and label consistency
+## 2026-04-30
 
 ### Copy button icons and interaction refinements
 
@@ -289,8 +550,6 @@ All significant changes to A11yTextHelper, newest first.
 - Copy buttons styled with transparent background and corner-radius hover states for subtle interaction feedback
 
 ---
-
-## 2026-04-30 — Finding detail UI refinements + narrow mode icon updates
 
 ### Copy buttons for finding details
 
@@ -322,8 +581,6 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-04-30 — Narrow results mode + Reset All redesign
-
 ### Narrow results mode
 
 - `src/App.jsx` — Added `narrowMode` and `narrowQuery` state in AppShell; passed through AppContent tree
@@ -354,8 +611,6 @@ All significant changes to A11yTextHelper, newest first.
 - Added `.settings-reset-sheet`, `.settings-reset-warning`, `.settings-reset-section`, `.settings-reset-list`, `.settings-reset-actions` CSS classes
 
 ---
-
-## 2026-04-30 — UI refinements and feature completions
 
 ### Related findings display
 
@@ -389,24 +644,26 @@ All significant changes to A11yTextHelper, newest first.
 
 ---
 
-## 2026-04-29 — Multi-platform distribution scaffolds
+## 2026-04-29
+
+### Multi-platform distribution scaffolds
 
 Three feature branches scaffolded for non-web distribution. No existing source files on `main` were modified; all changes are additive and branch-isolated.
 
-### Chrome extension (`feature/chrome-extension`)
+#### Chrome extension (`feature/chrome-extension`)
 
 - `extension-static/manifest.json` — Manifest V3; `side_panel` target, `sidePanel` permission
 - `extension-static/background.js` — minimal service worker; calls `chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })`
 - `vite.extension.config.js` — `base: './'`, `publicDir: 'extension-static'`, `outDir: 'dist-extension'`
 - `package.json` — `build:extension` script added
 
-### Firefox extension (`feature/firefox-extension`)
+#### Firefox extension (`feature/firefox-extension`)
 
 - `extension-firefox-static/manifest.json` — Manifest V3; `sidebar_action` + `browser_specific_settings.gecko` ID; no background script (Firefox opens sidebar automatically)
 - `vite.firefox.config.js` — `publicDir: 'extension-firefox-static'`, `outDir: 'dist-extension-firefox'`
 - `package.json` — `build:extension:firefox` script added
 
-### Electron desktop (`feature/electron-app`)
+#### Electron desktop (`feature/electron-app`)
 
 - `electron/main.js` — `keys:set` / `keys:get` / `keys:delete` IPC stubs completed: `safeStorage.encryptString` / `decryptString` with `fs.writeFileSync` / `readFileSync` to `app.getPath('userData')`; `require('fs')` added
 - `src/services/aiService.js` — `getAiRefinement`: API key read guarded with `window.electronAPI ? await window.electronAPI.keys.get(...) : localStorage.getItem(...)`
@@ -416,9 +673,9 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-29 — Sources schema upgrade, corpus re-pass ATH-001–005, sources.json registry
+### Sources schema upgrade, corpus re-pass ATH-001–005, sources.json registry
 
-### Sources field schema
+#### Sources field schema
 
 - `src/data/corpus.json`, `src/data/personal-corpus.json` — `sources` field migrated from `string[]` to `{ name: string, url: string | null }[]`; all existing entries converted via migration script
 - `src/data/sources.json` — new fallback registry mapping author/org names to homepage URLs
@@ -428,7 +685,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - `src/plugins/debug/AdminPanel.jsx` — stats accumulation updated to use `src.name`
 - `README.md` — schema block and field description updated to reflect `sources` object array
 
-### Corpus re-pass (ATH-001–005)
+#### Corpus re-pass (ATH-001–005)
 
 - ATH-001–004: deep source URLs added (WCAG Understanding docs, APG dialog-modal pattern)
 - ATH-003: desc rewritten to explain compound failure (1.4.11 + 2.4.7); Critical priority confirmed and justified
@@ -437,7 +694,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-28 — Archived item polish, URL sync, pinning UI, settings renames, axe pin-button fix
+## 2026-04-28
 
 ### Archived item appearance
 
@@ -479,8 +736,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-28 — Axe contrast fixes, debug commands from search bar, toggle hover, skip link nav landmark
-
 ### axe color-contrast fixes (round 2)
 
 - `src/plugins/debug/debug.css` — `.focus-toast` background changed from `rgb(20 100 200 / 0.9)` (semi-transparent; blended against white page to ~4.4:1 — white text at `opacity: 0.75` and red/green indicators at `opacity: 0.9` all failed) to solid `#0e2040` (dark navy); all three flagged elements now pass at their existing opacity values (~9:1 label, ~5.5:1 red indicator, ~8.8:1 green indicator)
@@ -508,8 +763,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - `src/index.css` — three `:hover:not(:has(.toggle__input:checked))` rules add track background/border, thumb outline, and ring border changes to unchecked toggles, matching the existing on-toggle hover behavior
 
 ---
-
-## 2026-04-28 — Badge click filter, shareable search URLs, Easter egg fonts, toggle revert, skip link fix, debug help polish
 
 ### Badge click filter
 
@@ -552,7 +805,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 - `index.css` — `.settings-panel, .about-panel` on `width >= 768px` get `padding-top: calc(var(--space-8) + var(--space-6))` to align headings with the compact header layout; `.page-header` gets `z-index: 1` to stay above panels
 
-## 2026-04-28 — Skip link, toggle power button, card fold, model selector, agentic AI backend, Fuse profiling, platform audit
+---
 
 ### Skip link (WCAG 2.4.1)
 
@@ -601,8 +854,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-28 — Badge desktop labels, WCAG filter layout, settings a11y, debugger fix
-
 ### Badges — desktop labels (≥ 768px)
 
 - `ResultList.jsx`, `DetailPanel.jsx` — priority badge shows "Severity: {value}", source badge shows "Source: {value}", WCAG badge shows "WCAG {version}, Level {level}" on desktop; mobile shows short form with comma: "{version}, {level}"
@@ -630,7 +881,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-27 — Related issue back navigation, Copy/Reset layout
+## 2026-04-27
 
 ### BottomSheet — back button for related issue navigation
 
@@ -647,8 +898,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - Mobile (<768px) — both `.detail-action-btn` get `flex: 1; justify-content: center` for a 50/50 layout
 
 ---
-
-## 2026-04-27 — Multilingual edit backend, badge redesign, debug improvements, UX polish
 
 ### Multilingual edit flow — backend complete
 
@@ -695,7 +944,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - Umami tagged `[manual]` (requires account signup)
 - Phase 3 hosting entry rewritten as undecided-strategy note
 
-## 2026-04-27 — Session restore, recent findings, export utility, user findings data layer
+---
 
 ### Session persistence
 
@@ -718,7 +967,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - `docs/SECURITY.md`: added rows for `recentFindings` (localStorage), `userFindings` (localStorage), `lastSelectedId` (sessionStorage)
 - `src/i18n/en.json` `settings.privacy_body_2`: updated to describe all new storage keys including sessionStorage distinction
 
-## 2026-04-27 — Focus management, debug plugin, command system, NamesDebugger, docs overhaul
+---
 
 ### Data
 
@@ -787,7 +1036,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-26 — Dependency upgrades, dead-weight removal, config and security sweep
+## 2026-04-26
 
 ### Dependencies
 
@@ -827,8 +1076,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-26 — Corpus edits, About panel polish, i18n fixes, UI polish
-
 ### Corpus
 
 - Renamed ATH-002: "Focus Not Moved When New Content Opens" → "Focus Not Managed"
@@ -867,8 +1114,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-26 — Deep linking, UI polish, debug tooling
-
 ### Router plugin
 
 - Added `matchRoute(pattern, route)` pure function and `useRouteMatch(pattern)` hook; both exported from `src/plugins/router/index.js`
@@ -891,8 +1136,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-26 — Public corpus expansion (ATH-004 through ATH-070, 16 new entries)
-
 ### corpus.json
 
 - Added 16 new defect entries filling gap IDs (ATH-004, 006, 015, 020, 024, 036, 042, 044, 049) and extending the sequence (ATH-064 through ATH-070)
@@ -903,7 +1146,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-25 — About panel as drawer, settings footer fix, section dividers, MAINTENANCE.md
+## 2026-04-25
 
 ### About panel redesign
 
@@ -935,9 +1178,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-25 — Phase 2 stubs, About panel, Settings reset, i18n parity, perf
-
-### About panel
+### About panel (bottom sheet)
 
 - `AboutPanel.jsx` — new bottom sheet component; covers what the app is, 4-step how-to, notable features, and a "Coming Soon" section for auth and custom defects
 - Info button (`<Info size={20}>`) added to header, left of the gear; wrapped both header action buttons in `.page-header__actions` flex container
@@ -972,8 +1213,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - `argsIgnorePattern: '^_'` added to `no-unused-vars` rule in `eslint.config.js`; allows `_callback`, `_userId` etc. in stub functions without lint errors
 
 ---
-
-## 2026-04-25 — 50+ locales, priority i18n, RTL, 404 page, a11y fixes, lint sweep
 
 ### Internationalization — 50+ locales
 
@@ -1029,8 +1268,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-25 — Internationalization: 10-language UI support, I18nProvider, privacy button layout
-
 ### I18n system (`src/i18n/index.jsx`, `src/i18n/en.json`, …)
 
 - Zero-dependency custom i18n: React Context + flat-key JSON + `{placeholder}` interpolation; no react-i18next or i18next needed
@@ -1076,8 +1313,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-25 — Party mode enhancements: sounds, sparkles, music, visual polish
-
 ### Party mode sound effects (`src/utils/partySounds.js`, `src/App.jsx`)
 
 - New `partySounds.js` utility synthesizes six sounds via the Web Audio API (zero external dependencies): goose honk, cat hiss, cat meow, fart noise, descending ahooga car horn, wolf whistle; snare drum added as a seventh
@@ -1105,8 +1340,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - **Magic wand cursor**: SVG resized 32×32 → 64×64; all path coordinates doubled; hotspot adjusted `10 2` → `20 4`
 
 ---
-
-## 2026-04-25 — Party mode, copy guard, search polish, LinkedIn footer
 
 ### Party Mode theme (`src/components/SettingsPanel.jsx`, `src/App.jsx`, `src/tokens.css`, `src/index.css`, `src/components/Confetti.jsx`)
 
@@ -1141,8 +1374,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - `docs/TODO.md` — "About / data sources page" item added to UX section; describes what to include when an About page is created (corpus compilation method, sources, credit)
 
 ---
-
-## 2026-04-25 — Settings navigation, UX polish, i18n groundwork, corpus expansion
 
 ### Settings ↔ defect panel navigation (`src/App.jsx`, `src/plugins/router/BottomSheet.jsx`)
 
@@ -1234,8 +1465,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-25 — Public corpus, DetailPanel refactor, Ko-fi a11y expansion
-
 ### Public corpus (`src/data/corpus.json`)
 
 - 41-entry simplified corpus rewritten at middle school / ESL reading level; replaces the one-item placeholder
@@ -1272,8 +1501,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - **Contrast override** — a `<style id="kofi-a11y-styles">` tag is injected that forces `color: #1a1a1a` on text within the Ko-fi floating chat wrapper and overlay, ensuring minimum 4.5:1 contrast; the tag is removed on component unmount
 
 ---
-
-## 2026-04-25 — BottomSheet, Drawer rename, full CSS migration, Ko-fi widget
 
 ### BottomSheet component (`src/plugins/router/BottomSheet.jsx`)
 
@@ -1346,7 +1573,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-24 — GitHub link, docs folder, disabled control styling, h1 focus fix
+## 2026-04-24
 
 ### Footer
 
@@ -1371,8 +1598,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-24 — Maintenance run: bug fixes and full checklist pass
-
 ### Bug fixes
 
 - `src/App.jsx` — `typeahead` was never persisted to `localStorage`; initialized with hardcoded `true`; now reads `localStorage.getItem('typeahead') !== 'false'` on mount and a `useEffect` writes the value on every change
@@ -1393,8 +1618,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - Docs: all files verified current
 
 ---
-
-## 2026-04-24 — Sweeps: accessibility, security, privacy, performance, SEO, code cleanup, docs overhaul
 
 ### Accessibility (WCAG 2.2)
 
@@ -1453,7 +1676,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-23 — Router plugin, focus management, corpus rename, font migration
+## 2026-04-23
 
 ### Router plugin (`src/plugins/router/`)
 
@@ -1494,9 +1717,9 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ---
 
-## 2026-04-23 — Branding, settings overhaul, accessibility pass, and UX polish
+### Branding, settings overhaul, accessibility pass, and UX polish
 
-### Settings overhaul
+#### Settings overhaul
 
 - `src/components/SettingsPanel.jsx` — three `<h3>` section headers added: **Search**, **Appearance**, **AI Assist**; each visually separated with a top border
 - `src/components/SettingsPanel.jsx` — theme moved from footer button to Appearance section; `ThemeChip` component renders Light / Auto / Dark radio inputs styled as pill chips; `<fieldset>`+`<legend class="sr-only">` for screen reader grouping
@@ -1504,44 +1727,42 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - `src/App.jsx` — theme state now supports `'auto'` (default); `useEffect` resolves to light/dark via `prefers-color-scheme` and adds a media query listener so the UI updates instantly if the OS theme changes while Auto is active
 - `src/App.jsx` — footer theme toggle removed; `Footer` component no longer receives theme props
 
-### Search input
+#### Search input
 
 - `src/components/SearchBar.jsx` — outer `<div>` replaced with `<search aria-label="Defect search">` (HTML5 search landmark)
 - `src/components/SearchBar.jsx` — "Describe the defect" extracted from placeholder to a visible `<label htmlFor="defect-search">`; placeholder is now only the e.g. example text
 - `src/components/SearchBar.jsx` — input `min-height: 3rem`, `padding: var(--space-3) var(--space-4)`, `font-size: var(--fs-md)` (14pt); text is vertically centered by default `<input>` behavior
 - `src/components/SearchBar.jsx` — `outline: none` removed; border-color change on focus retained as a supplementary cue
 
-### Accessibility
+#### Accessibility
 
 - `src/index.css` — global `:focus-visible` rule added: `2px solid var(--focus)`, `outline-offset: 2px`; applies to all interactive elements including inputs, textareas, and buttons
 - `src/index.css` — `.sr-only` utility class added (clip-path, 1×1px, overflow hidden) for visually hidden accessible text
 - `src/tokens.css` — `--focus: #5548c8` (light, 6.4:1 vs white) and `--focus: #a09ce8` (dark, 4.6:1 vs #111) tokens added
 - `src/components/DetailPanel.jsx` — `outline: 'none'` removed from all input/textarea inline styles
 
-### Contrast corrections
+#### Contrast corrections
 
 - `src/tokens.css` — `--text-faint` corrected from `#999999` (2.76:1, failing) to `#767676` (4.54:1, passing) in light mode
 - `src/tokens.css` — `--text-faint` corrected from `#555555` (2.01:1, failing) to `#909090` (5.0:1, passing) in dark mode; hierarchy is preserved: --text-muted (#999) has higher contrast than --text-faint (#909) against the dark bg
 
-### Typography and font size
+#### Typography and font size
 
 - `src/index.css` — `html { font-size: 14pt }` sets the rem base; browser font-size preferences are respected (WCAG 1.4.4)
 - `src/tokens.css` — all `--fs-*` tokens converted from `px` to `rem` (e.g. `--fs-md: 1rem` = 14pt); `body { font-size: var(--fs-md) }` unchanged
 
-### Nothing Found empty state
+#### Nothing Found empty state
 
 - `src/components/ResultList.jsx` — `NoResults` component added; renders an SVG magnifying glass with dashed scan lines, a "No results for …" heading, and a search-tip paragraph; shown when `results.length === 0`
 - `src/App.jsx` — `query={activeQuery}` prop passed to `ResultList` for the empty-state label
 
-### Linting fixes (CSS)
+#### Linting fixes (CSS)
 
 - `src/index.css` — `rgba(…)` → `rgb(… / alpha)` (stylelint `color-function-alias-notation`)
 - `src/index.css` — `(min-width: 768px)` → `(width >= 768px)` (stylelint `media-feature-range-notation`)
 - `src/index.css` — deprecated `clip: rect(…)` removed from `.sr-only`; `clip-path: inset(50%)` is sufficient
 
 ---
-
-## 2026-04-23 — Header redesign, footer, font, and contribution setup
 
 ### Header and footer
 
@@ -1565,8 +1786,6 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - `CONTRIBUTING.md` *(new)* — fork/clone/run instructions, defect entry schema, PR process, scope note on private corpus
 
 ---
-
-## 2026-04-23 — CSS architecture: tokens, typography, and mobile-first layout
 
 ### Design tokens
 
@@ -1603,4 +1822,3 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - Location prefix field in DetailPanel — prepends site/page scope to defect description before copy
 - Copy button with 2-second "Copied" feedback on description and remediation fields
 - AI refinement: describe the change, Claude rewrites description and remediation in place
-- `README.md` with setup, defect schema, and architecture docs
