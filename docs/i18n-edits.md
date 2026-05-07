@@ -137,3 +137,5 @@ Format: `- [ ] \`key\` ,  old: "…" → new: "…"` (use `added` for new keys)
 - [ ] `detail.ai_agentic_label` ,  changed from: "Agentic Mode" → new: "Match Existing Style (Agentic AI)"
 - [ ] `detail.ai_agentic_help` ,  updated: "AI searches the corpus to match your style and depth when rewriting"
 - [ ] `detail.ai_agentic_hint` ,  updated: "AI will search the corpus to match your established style and technical depth"
+- [ ] `detail.save_note_text` ,  old: "Save" → new: "Save Edits and Notes"
+- [ ] `detail.saved_note_text` ,  old: "Saved" → new: "Edits and/or Notes Saved"
