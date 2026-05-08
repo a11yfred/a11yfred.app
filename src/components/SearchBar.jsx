@@ -104,6 +104,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {liveSearch ? t('search.hint_live') : t('search.hint_submit')}
           {' '}
           {t('search.hint_platform', { platform: platformLabel })}
+          {platform === 'native' ? ` ${t('search.hint_platform_native_caveat')}` : ''}
           {aiEnabled && providerName ? ` ${t('search.hint_ai', { provider: providerName })}` : ''}
           {showRanking ? ` ${t('search.hint_ranking')}` : ''}
           {hasPins ? ` ${t('search.hint_pin')}` : ''}
@@ -112,7 +113,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {' '}
           {t('search.hint_change_in')}{' '}
           <a href="#/settings" className="search-hint-link">
-            {t('search.hint_settings_link')}
+            {t('common.settings')}
           </a>.
         </p>
       )}

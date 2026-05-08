@@ -1,8 +1,52 @@
-# Changelog
+﻿# Changelog
 
-All notable changes to A11yTextHelper are documented here.
+All notable changes to A11yHelper are documented here.
 
 ## [Unreleased]
+
+### Personal Corpus: Full Normalization Pass (169 Entries)
+
+Completed a comprehensive quality pass on all 169 personal corpus entries across titles, descriptions, and suggested fixes. All automated checks pass.
+
+**Title qualifier normalization (7 entries):**
+
+Standardized vocabulary across same-SC clusters. Canonical forms established:
+
+- "Missing" (not "Lacks", "Has No", "Exposes No")
+- "Not Programmatically Determined" for state/value failures (SC 4.1.2)
+- "Not Programmatically Associated" for label relationship failures
+- "Not Exposed" for AT-visibility failures
+
+Entries updated: ATH-021, ATH-035, ATH-087, ATH-090, ATH-091, ATH-094, ATH-128.
+
+**Desc normalization (5 passes, ~40 entries):**
+
+- Defect-first order: system as subject throughout ("The state is not communicated..." not "Screen reader users cannot...")
+- Removed speculative language ("may", "might", "could") -- concrete failure statement only
+- Removed requirement statements from `desc` (belongs in `fix`)
+- WCAG terminology: "focus order" (SC 2.4.3) not "tab order"; "focus indicator" not "focus ring"; SC citations formatted as "SC X.X.X" not "WCAG X.X.X"
+- Platform framing: AT names (VoiceOver, TalkBack, Switch Control, Voice Control) imply their platform; removed redundant "on iOS"/"on Android" alongside AT names
+- They/them pronouns for third-person gender-neutral references throughout
+- "on-screen" hyphenated consistently
+- "When" conditional openers normalized; over-length entries trimmed
+
+**Fix normalization (4 passes, ~35 entries):**
+
+- Replaced all standalone "Ensure X." sentence openers with direct imperatives
+- Replaced hedging "should" with direct imperatives ("X should Y" → "X must Y" or restructured)
+- "tab order" → "focus order" in non-tabindex contexts
+- "focus ring" → "focus indicator" throughout
+- "the user" in population references → "users" or restructured; retained only in scenario-specific conditionals (when the user, after the user, if the user)
+- Removed all "note that" constructions; converted to direct statements
+- SC citations normalized to "SC X.X.X" form
+
+**SC cross-reference keyword injection (9 entries):**
+
+SC numbers cited in `desc` or `fix` (other than the entry's own primary SC) are now added as keywords. This enables cross-referencing in search. Entries updated: ATH-004, ATH-011, ATH-033, ATH-040, ATH-043, ATH-067, ATH-160, ATH-161, ATH-162.
+
+**Corpus guide page (planned):**
+
+A `/corpus-guide` route is planned for Phase 2. It will document entry structure, title conventions, desc/fix writing rules, severity model, platform field, qualifier vocabulary, and a contributing guide template.
 
 ### UI Library Complete Decoupling and Panel Unification
 

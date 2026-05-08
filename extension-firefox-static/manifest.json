@@ -1,17 +1,17 @@
 {
   "manifest_version": 3,
-  "name": "A11yTextHelper",
-  "short_name": "A11yText",
+  "name": "A11yHelper",
+  "short_name": "A11yHelper",
   "version": "0.1.0",
   "description": "Accessibility audit writing assistant — search WCAG findings and copy polished defect descriptions.",
   "browser_specific_settings": {
     "gecko": {
-      "id": "a11ytexthelper@mikeyilagan.com",
+      "id": "A11yHelper@mikeyilagan.com",
       "strict_min_version": "109.0"
     }
   },
   "sidebar_action": {
     "default_panel": "index.html",
-    "default_title": "A11yTextHelper"
+    "default_title": "A11yHelper"
   }
 }

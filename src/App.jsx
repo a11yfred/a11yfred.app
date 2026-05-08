@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
+﻿import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
 import { Settings, X, Info, HelpCircle, ExternalLink, ChevronDown } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
@@ -91,7 +91,7 @@ const IGNORED_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLoc
 
 export default function App() {
   return (
-    <Router appName="A11yTextHelper">
+    <Router appName="A11yHelper">
       <AppShell />
     </Router>
   )
@@ -1023,7 +1023,7 @@ function AppContent({
           onCommand={runCommand}
           customSections={[
             {
-              heading: 'Custom, A11yTextHelper',
+              heading: 'Custom, A11yHelper',
               rows: [
                 { cmd: 'debug skeleton',  desc: 'Skeleton loading state' },
                 { cmd: 'debug ai assist', desc: 'AI Assist on' },
@@ -1049,7 +1049,7 @@ function AppContent({
           onClose={() => setDebugHelpOpen(false)}
           customCommands={[
             {
-              heading: 'Custom, A11yTextHelper',
+              heading: 'Custom, A11yHelper',
               note: <>Append <code>off</code> to disable (e.g. <code>debug ai assist off</code>).</>,
               rows: [
                 { cmd: 'debug skeleton',   desc: 'Skeleton loading state' },
@@ -1079,7 +1079,7 @@ function AppContent({
       {theme === 'party' && <PartyBanner />}
 
       <div className="app-background" inert={backgroundInert ? true : undefined}>
-        <nav aria-label="Skip navigation">
+        <nav aria-label={t('common.skip_nav')}>
           <a
             href="#/"
             className="skip-link"
@@ -1195,7 +1195,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
       {!compact && (
         <a
-          href="https://github.com/mikeyil/a11ytexthelper"
+          href="https://github.com/mikeyil/A11yHelper"
           target="_blank"
           rel="noreferrer"
           className="header-github-link"

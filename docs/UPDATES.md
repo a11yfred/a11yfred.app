@@ -1,10 +1,36 @@
-# Updates
+﻿# Updates
 
 Plain-language record of what changed and why. For technical details see `CHANGELOG.md`.
 
 ---
 
-## May 6, 2026 — UI library fully decoupled, portable, and panel unification complete
+## May 8, 2026
+
+### App renamed from A11yTextHelper to A11yHelper
+
+The app is now called **A11yHelper** with the domain **a11yhelper.app**. The previous name was a mouthful that leaned too hard into describing the tool mechanically. A11yHelper is cleaner, more brandable, and easier to say out loud.
+
+All references updated across 89 files: `package.json`, `index.html`, `App.jsx`, all 64 locale JSON files, all docs, extension manifests, Electron builder config, and plugin/script files.
+
+---
+
+## May 7, 2026
+
+### Personal corpus: full normalization pass (169 entries)
+
+All 169 personal corpus entries have been through a structured quality pass covering titles, descriptions, and suggested fixes.
+
+**Titles:** Standardized qualifier vocabulary across same-SC clusters. "Missing" is the canonical form (not "Lacks", "Has No", or "Exposes No"). State and value failures use "Not Programmatically Determined"; label relationship failures use "Not Programmatically Associated". Seven entries updated.
+
+**Descriptions:** Each entry now opens with the system as the subject -- what the code does wrong, not what the user experiences. Speculative language ("may", "might", "could") has been removed throughout in favor of concrete failure statements. AT names (VoiceOver, TalkBack, Switch Control, Voice Control) already imply their platform, so "on iOS" / "on Android" alongside an AT name has been removed. They/them pronouns are used for third-person gender-neutral references. WCAG terminology is consistent: "focus order" not "tab order", "focus indicator" not "focus ring", SC citations as "SC X.X.X" not "WCAG X.X.X".
+
+**Suggested fixes:** All "Ensure X." standalone openers have been rewritten as direct imperatives. Hedging "should" has been removed in favor of direct instructions. "The user" in population-level references has been replaced with "users" or restructured; it remains only in scenario-specific conditionals (when the user clicks, after the user submits, etc.). "Note that" constructions have been removed.
+
+**Keywords:** SC numbers cited in descriptions or fixes are now added as keywords on those entries, enabling cross-referencing in search. Nine entries received new SC keyword additions.
+
+---
+
+## May 6, 2026
 
 ### Complete removal of app-specific logic from portable UI components
 
@@ -40,32 +66,6 @@ Consolidated 3 duplicate header/title rule sets in `src/index.css`:
 
 **Result:** `src/components/ui/` folder is now a clean, reusable component library with zero app-specific dependencies. All components accept their strings and callbacks as props, making them portable across any project. Extracted to `feature/ui-library` branch ready for npm publishing.
 
-### Removed deprecated button components
-
-Cleaned up unused deprecated components from main branch:
-
-- **StateButton.jsx** — removed (no usages; replaced by Button with active/activeIcon pattern)
-- **IconStateButton.jsx** — removed (no usages; replaced by IconButton with activeIcon pattern)
-
-All 70+ button instances across the codebase now use only the two base components: Button and IconButton. Component library is leaner, with 14 core primitives instead of 16.
-
-### Documentation updates
-
-- **README.md** — Updated component count (16 → 14), clarified Button + IconButton consolidation
-- **FEATURE-STATUS.md** — Updated Phase 1 summary to reflect deprecated component removal and exact primitives list
-- **CONTRIBUTING.md** — Added ui-library branch sync policy (cherry-pick only, no full main merges)
-
-### Maintenance completed
-
-- All linters passing (ESLint, Stylelint, Markdownlint)
-- Zero unused code, zero dead CSS, zero unused imports
-- All three extension branches (Chrome, Firefox, Electron) synced with latest main
-- Feature/ui-library branch remains isolated and clean for future npm publishing
-
----
-
-## May 6, 2026 — UI library branch cleanup and main branch maintenance
-
 ### UI Component Library Branch Cleanup
 
 The `feature/ui-library` branch is now a clean, portable, reusable component library ready for future npm publishing:
@@ -77,30 +77,14 @@ The `feature/ui-library` branch is now a clean, portable, reusable component lib
 - **All linting passes** — ESLint, Stylelint, Markdownlint zero errors on library branch
 - **Ready for sync** — library branch can be pushed to origin and synced bidirectionally with main via git merge pattern
 
-### Main Branch Status
+### Removed deprecated button components
 
-Main branch remains clean with a fully working application:
+Cleaned up unused deprecated components from main branch:
 
-- All 70+ button usages consolidated into Button and IconButton components
-- All CSS values tokenized where applicable (outline offsets, focus rings, spacing, motion)
-- All documentation current (README, FEATURE-STATUS.md, TODO.md, CHANGELOG.md, UPDATES.md, plugin READMEs)
-- All linters passing — zero errors
-- Zero unused imports, dead code removed in prior sessions
-- Full test coverage via axe-core, keyboard navigation, screen reader testing
+- **StateButton.jsx** — removed (no usages; replaced by Button with active/activeIcon pattern)
+- **IconStateButton.jsx** — removed (no usages; replaced by IconButton with activeIcon pattern)
 
-### Maintenance Completed
-
-Ran a comprehensive maintenance pass:
-
-- Reviewed all CSS for hardcoded values (most are intentional: resets, base values, layout anchors)
-- Confirmed no unused imports or dead code
-- Updated feature status: Phase 1 marked complete (May 6, 2026), Button consolidation logged
-- Verified plugin READMEs are current (announce, router, debug plugins all documented)
-- All 3 distribution branches (chrome-extension, firefox-extension, electron-app) remain on feature branches with latest main merged in
-
----
-
-## May 6, 2026 — Button component consolidation, icon states, and CSS tokenization
+All 70+ button instances across the codebase now use only the two base components: Button and IconButton. Component library is leaner, with 14 core primitives instead of 16.
 
 ### Button component library consolidation
 
@@ -136,10 +120,6 @@ All hardcoded outline values now use tokens, enabling consistent focus ring styl
 - Removed `useRouter` dependency from AboutPanel where nav was button-based
 - Fixed help-tour-description font size (removed `var(--fs-small)`, now uses default body text)
 
----
-
-## May 6, 2026 — Button icon placement and markup standardization
-
 ### Button styling and layout fixes
 
 **StateButton and icon container refactoring:**
@@ -161,10 +141,6 @@ All hardcoded outline values now use tokens, enabling consistent focus ring styl
 - Refactored detail-revise-btn to use `.btn-icon` markup pattern
 - Separated icons from text spans (icon in `.btn-icon` container, text in separate `<span>`)
 - Applies to all button states: refining (Loader icon), AI mode (Sparkles icon), success (Check icon)
-
----
-
-## May 6, 2026 — Full CSS and content refactor
 
 ### CSS system refactor and token consolidation
 
@@ -208,8 +184,6 @@ All hardcoded outline values now use tokens, enabling consistent focus ring styl
 - Updated corpus count: 107 → 133 entries
 - Removed broken ARCHITECTURE.md reference from README
 
-## May 6, 2026 (earlier) — Search and results UI refinement, CSS consolidation
-
 ### Search and narrow results UI polish
 
 **Layout improvements:**
@@ -236,6 +210,30 @@ All hardcoded outline values now use tokens, enabling consistent focus ring styl
 
 - Shows only when results exist (not on empty state)
 - Distinct from search input clear button (which clears the query)
+
+### Main branch status and maintenance
+
+Main branch remains clean with a fully working application:
+
+- All 70+ button usages consolidated into Button and IconButton components
+- All CSS values tokenized where applicable (outline offsets, focus rings, spacing, motion)
+- All documentation current (README, FEATURE-STATUS.md, TODO.md, CHANGELOG.md, UPDATES.md, plugin READMEs)
+- All linters passing — zero errors
+- Zero unused imports, dead code removed in prior sessions
+- Full test coverage via axe-core, keyboard navigation, screen reader testing
+- Reviewed all CSS for hardcoded values (most are intentional: resets, base values, layout anchors)
+- Confirmed no unused imports or dead code
+- Updated feature status: Phase 1 marked complete (May 6, 2026), Button consolidation logged
+- Verified plugin READMEs are current (announce, router, debug plugins all documented)
+- All 3 distribution branches (chrome-extension, firefox-extension, electron-app) remain on feature branches with latest main merged in
+
+### Documentation updates
+
+- **README.md** — Updated component count (16 → 14), clarified Button + IconButton consolidation
+- **FEATURE-STATUS.md** — Updated Phase 1 summary to reflect deprecated component removal and exact primitives list
+- **CONTRIBUTING.md** — Added ui-library branch sync policy (cherry-pick only, no full main merges)
+
+---
 
 ## May 5, 2026 — Code refactoring, UI component library, corpus audit, documentation, and project consolidation
 
@@ -406,7 +404,7 @@ Added platform badge translation keys across 8 major language files (en, de, es,
 
 ---
 
-## April 30, 2026 (late evening) — Button styling and interaction refinements
+## April 30, 2026
 
 ### Better visual feedback and consistency
 
@@ -419,10 +417,6 @@ Location prefix field now has proper spacing between the label and "(optional)" 
 ### Consistent button labeling
 
 Reset buttons within description and remediation fields show "Reset", while the bottom "Reset All Content" button shows that full label before clicking and "All Content Reset" after — clearer communication of scope. Copy All button now consistently uses title casing ("Copy All" / "Copied All"). All button text throughout the app has been updated to use NY Times title casing for consistency.
-
----
-
-## April 30, 2026 (evening) — Finding details UI refinements
 
 ### Copy buttons throughout the finding detail panel
 
@@ -453,10 +447,6 @@ The narrow mode button now has a visual design that better matches the rest of t
 
 All of these changes make the interface more self-documenting: copy buttons appear where content is, the clear button placement is consistent, and state changes are communicated through labels and visual placement rather than relying on modal dialogs.
 
----
-
-## April 30, 2026 (late afternoon) — Narrow results mode
-
 ### Filter within search results
 
 New "Narrow" button appears next to the results count when you have search results showing. Click it to enter narrow mode — the search input label and placeholder change to reflect you're now filtering *within* the current results rather than doing a new search. The narrow filter uses the same Fuse.js fuzzy search logic on title, description, keywords, and source names.
@@ -469,10 +459,6 @@ In narrow mode:
 - The narrow filter respects the live-search setting — updates in real-time if live search is on, otherwise updates on Enter
 
 This gives you a two-step refinement workflow: (1) broad search to get a candidate set, (2) narrow to find the specific match within that set. Much faster than retyping a more specific query.
-
----
-
-## April 30, 2026 (afternoon) — Improved Reset All dialog
 
 ### Reset All is now a BottomSheet with explicit lists
 
@@ -498,10 +484,6 @@ The Reset All confirmation changed from a Modal to a BottomSheet to accommodate 
 
 This replaces the vague "clear all saved settings" copy with explicit, itemized lists so users understand the full scope before confirming. Red warning box at the top reminds users the action cannot be undone.
 
----
-
-## April 30, 2026 — UI refinements, result card display fixes
-
 ### Related findings now display compactly
 
 When a finding has only one related issue, it displays on a single line with the singular label "Similar or related issue:" instead of "issues:". Multiple related findings still stack as a bulleted list. This follows the same UX pattern already established for source links, reducing visual clutter for findings with only one related criterion.
@@ -524,7 +506,7 @@ Service Worker now caches the app shell and corpus JSON, enabling full offline s
 
 Three distribution targets are now in active development on feature branches. The same React app powers all of them — no source rewrites needed.
 
-**Chrome extension** (`feature/chrome-extension`) — runs as a Chrome side panel, which opens beside whatever page you're auditing. That's the natural fit for an audit tool: you search A11yTextHelper on the left, review the page on the right, copy and paste. Build with `npm run build:extension`, then load the `dist-extension/` folder as an unpacked extension in Chrome.
+**Chrome extension** (`feature/chrome-extension`) — runs as a Chrome side panel, which opens beside whatever page you're auditing. That's the natural fit for an audit tool: you search A11yHelper on the left, review the page on the right, copy and paste. Build with `npm run build:extension`, then load the `dist-extension/` folder as an unpacked extension in Chrome.
 
 **Firefox extension** (`feature/firefox-extension`) — same idea, using Firefox's sidebar instead. No background script needed; Firefox opens the sidebar automatically when you click the extension icon. Build with `npm run build:extension:firefox`, load temporarily via `about:debugging`.
 
@@ -532,7 +514,7 @@ Three distribution targets are now in active development on feature branches. Th
 
 ---
 
-## April 28, 2026 — Archived items, URL sync, settings updates
+## April 28, 2026
 
 ### Archived items look cleaner
 
@@ -550,10 +532,6 @@ The Reset button is now labeled **Reset Settings & Clear Data** with a red style
 
 When the result list has more than 50 items, a **Back to Top** button appears at the bottom. Clicking it scrolls to the top and moves focus to the result count heading.
 
----
-
-## April 28, 2026 — Debug commands from search bar, toggle hover, contrast fixes
-
 ### Debug commands work from the search bar
 
 All `debug` commands (`debug ok`, `debug wrong`, `debug 401`, etc.) now work when typed into the main search field. Previously they only worked from the Revision Notes field inside a finding panel. With live search on, debug commands still require pressing Enter — they won't fire on every keystroke.
@@ -561,10 +539,6 @@ All `debug` commands (`debug ok`, `debug wrong`, `debug 401`, etc.) now work whe
 ### Unchecked toggle hover state
 
 Settings toggles that are currently off now show a subtle hover state (darker border and outline) that matches the existing hover effect on checked toggles.
-
----
-
-## April 28, 2026 — Badge filters, shareable links, Easter egg fonts, debug polish
 
 ### Filter by badge
 
@@ -586,8 +560,6 @@ The settings toggles are back to a plain circular thumb. The power-button icon e
 
 `debug all`, `debug names`, and `debug ai assist` now work without typing `on` — the bare command enables the tool. Append `off` to disable. The debug help panel (`debug help`) has been reformatted to match.
 
-## April 28, 2026 — Badge labels on desktop, WCAG filter layout, accessibility fixes
-
 ### Badge labels on wider screens
 
 On desktop, the severity, source, and WCAG badges now include a text label: **Severity: Critical**, **Source: ATH**, **WCAG 2.1, Level AA**. On mobile the short form remains — **Critical**, **ATH**, **2.1, AA** — to keep the card compact. Translations are queued for the next i18n pass.
@@ -602,7 +574,7 @@ The dev-mode accessible name tooltip (debug → Names) now only fires on interac
 
 ---
 
-## April 27, 2026 — Related issue back navigation, Copy/Reset button layout
+## April 27, 2026
 
 ### Navigate back through related findings
 
@@ -611,10 +583,6 @@ When you tap a related issue link inside a finding panel, a back button now appe
 ### Copy all and Reset all moved to the bottom
 
 The "Copy all" and "Reset all" buttons have moved to the bottom of the finding panel, right above the Close button. On narrow screens both buttons sit side by side at full width, making them easy to tap after reviewing a finding.
-
----
-
-## April 27, 2026 — Multilingual edit backend, badge redesign, debug improvements
 
 ### Edit in any language
 
@@ -632,8 +600,6 @@ The debug help panel now closes when you click the overlay behind it. The `debug
 
 A privacy disclosure document covering all data practices (localStorage keys, AI API calls, no tracking) has been drafted and saved locally. It'll be published as a page before any public launch.
 
-## April 27, 2026 — Session restore, recent history, export, user findings data layer
-
 ### Remember where you were
 
 Refreshing the page now reopens whatever finding you had selected. The selected finding's ID is saved to sessionStorage when you open it and cleared when the tab closes, so it only persists for the current browsing session — not forever. The app also starts building a "recently viewed" list in the background (the last 10 findings you opened), ready for when a Recent section is added to the UI.
@@ -649,8 +615,6 @@ The foundation for copy, add, edit, and delete is wired. A new `userFindingsServ
 ### Privacy disclosure updated
 
 The privacy text in Settings now lists all storage keys the app uses, including the new sessionStorage entry and the user findings storage.
-
-## April 27, 2026 — Focus fixes, debug plugin, NamesDebugger, Easter egg improvements, docs overhaul
 
 ### Focus management tightened
 
@@ -673,7 +637,7 @@ Type `debug help` in the search bar to see all available commands in a floating 
 
 ### Debug Launcher (opt-in FAB)
 
-The debug plugin now includes a floating action button that can be enabled for any project. When active it sits in the corner like an accessibility overlay button and opens a spotlight-style command input — useful for projects that don't have a search bar or command field to type debug commands into. A11yTextHelper leaves it off by default since commands go in the search bar, but it's one prop change to enable.
+The debug plugin now includes a floating action button that can be enabled for any project. When active it sits in the corner like an accessibility overlay button and opens a spotlight-style command input — useful for projects that don't have a search bar or command field to type debug commands into. A11yHelper leaves it off by default since commands go in the search bar, but it's one prop change to enable.
 
 ### Easter egg improvements
 
@@ -695,7 +659,7 @@ TODO items are now sorted by value and effort — high value, low effort at the 
 
 ---
 
-## April 26, 2026 — Dependency updates, build improvements, and full maintenance sweep
+## April 26, 2026
 
 ### Updated all dependencies
 
@@ -721,10 +685,6 @@ The README was completely rewritten to match the current state of the project: a
 
 Ran a thorough pass covering accessibility, security, SEO, performance, privacy, and auth wiring. Everything was in good shape — no issues found beyond the dependency upgrades documented above. The sweep confirmed: axe-core reports no violations, keyboard navigation works end-to-end, all external connections are covered by the Content Security Policy, the privacy disclosure in Settings accurately lists every stored key, and the Supabase/OAuth stubs are present but not active.
 
----
-
-## April 26, 2026 — New finding, corpus renames, About panel polish, and i18n fixes
-
 ### New finding: Visible Heading Not Marked as Heading
 
 Added ATH-076 to the corpus. This covers the common pattern of text that looks like a heading (large, bold, visually distinct) but is not marked up with an `h1`–`h6` element. Screen reader users miss it entirely when navigating by heading.
@@ -742,10 +702,6 @@ The "What Is This?" section has been rewritten with clearer, more direct languag
 
 Corrected a bug where all 40+ non-English locale files had the wrong text for steps 3 ("Pick") and 5 ("Copy") in the How to Use section — they were showing the "Customize" and "Vote" content instead. All locale files now have full key coverage with no missing entries.
 
----
-
-## April 26, 2026 — Deep linking, UI polish, and dev tooling
-
 ### Shareable links for defects and panels
 
 Settings, About, and individual defect entries now have their own URLs. Opening `/#/about` loads the About panel directly. Opening `/#/defect/ATH-023` opens that specific defect. The browser back button works throughout. The page title bar updates to include the defect name when a defect is open.
@@ -761,10 +717,6 @@ The button label and padding were both fixed — text no longer clips at the edg
 ### Dev debug tooling
 
 When running locally, every accessibility announcement now shows as a large toast at the bottom of the screen (white on black pill, red for urgent/assertive). This makes it easy to verify screen reader announcements while building without needing a screen reader open. The README now documents all debug commands and Easter egg search triggers.
-
----
-
-## April 26, 2026 — Public corpus expanded with 16 new defect entries
 
 ### 16 new accessibility defects added to the corpus
 
@@ -793,7 +745,7 @@ These entries were written based on established WCAG guidance and common audit f
 
 ---
 
-## April 25, 2026 — About panel improvements and settings footer fix
+## April 25, 2026
 
 ### The About panel is now a proper drawer
 
@@ -802,10 +754,6 @@ The About panel now slides in the same way as Settings — from the left on mobi
 ### Reset All is fixed
 
 The Reset All button in Settings is now properly styled and always sits right next to the Save button.
-
----
-
-## April 25, 2026 — About panel, Reset All, performance fixes
 
 ### There is now an About page
 
@@ -818,10 +766,6 @@ A "Reset All" button has been added to the Settings footer, next to the Save but
 ### Under-the-hood: performance and Phase 2 groundwork
 
 Translation overlays for non-English locales are now cached after first load so switching back to a previously used language is instant. The app also has groundwork for Phase 2 features laid out: Supabase database schema, Google and GitHub sign-in stubs, and a data layer that's ready for user-owned custom defect entries.
-
----
-
-## April 25, 2026 — The app now speaks 10 languages
 
 ### Interface translated into 10 languages
 
@@ -845,49 +789,17 @@ The "Privacy & storage information" button has been moved to the bottom of Setti
 
 The privacy modal now has a third paragraph noting that AI-generated translations may contain errors and confirming that none of your personal data is ever sent out for translation.
 
----
-
-## April 25, 2026 — Party mode goes wild: sounds, sparkles, music, and more
-
-### Sounds when you click things
+### Party Mode goes wild: sounds, sparkles, music, and more
 
 In party mode, clicking buttons, toggles, and dropdowns now plays a random sound — a goose honk, cat hiss, cat meow, fart noise, descending ahooga car horn, wolf whistle, or snare drum. The fart has a 1.5× higher chance of appearing. Each fart is slightly different in length.
 
-### Squeaky shoes while you type
-
 Typing in the search field in party mode plays a squeaky shoe sound every third keystroke. The pitch is randomized slightly each time so it doesn't feel robotic.
-
-### Click sparkles
 
 Clicking anywhere in party mode shoots a burst of 14 colorful stars and circles from your cursor. They fly outward, fall, and fade. Skipped entirely if you have Reduce Motion turned on in your OS.
 
-### Floating music player
-
 A small round play button appears randomly on the page. Click it to play a synthesized loop approximating the guitar-and-drums riff from Blur's "Song 2" — it loops continuously until you click pause. The button wanders to a new random position whenever you navigate to a different part of the app.
 
-### Party banner settles down
-
-The bouncing "~*~ PARTY MODE ENABLED ~*~" banner now stops after 5 seconds. Hover over it to restart the bounce for another 5 seconds.
-
-### Stars instead of circles on chips
-
-The small dot inside each selection chip is now a ☆ or ★ star in party mode instead of a circle.
-
-### Bigger magic wand cursor
-
-The custom magic wand cursor is now twice the size (64×64 instead of 32×32).
-
-### Gradient background fixed
-
-The party mode background was tiling visually in some cases. It now uses a fixed radial gradient covering the full viewport, centered at a random position each time — no tiling.
-
-### Screen reader announcement improved
-
-The party mode activation announcement is already sent as an assertive alert, which interrupts any current speech. The text now stays in the DOM long enough for longer messages to finish reading before being cleared.
-
----
-
-## April 25, 2026 — Party mode, copy guard, search and button fixes, LinkedIn
+The bouncing "~*~ PARTY MODE ENABLED ~*~" banner now stops after 5 seconds. Hover over it to restart the bounce for another 5 seconds. The small dot inside each selection chip is now a ☆ or ★ star in party mode instead of a circle. The custom magic wand cursor is now twice the size (64×64 instead of 32×32). The party mode background was tiling visually in some cases — it now uses a fixed radial gradient covering the full viewport, centered at a random position each time. The party mode activation announcement now stays in the DOM long enough for longer messages to finish reading before being cleared.
 
 ### Party Mode — a fourth theme option in Settings
 
@@ -920,10 +832,6 @@ The Rewrite button that appears next to the refinement note field was not always
 ### Footer: LinkedIn
 
 The Bluesky link in the footer has been replaced with a link to LinkedIn (linkedin.com/in/mikeyil).
-
----
-
-## April 25, 2026 — Panel improvements, settings navigation, translations groundwork, more defects
 
 ### Defect panel close button is fixed
 
@@ -969,10 +877,6 @@ Small wording update to better reflect that the tool is open source and accepts 
 
 The public defect library grew from 41 to 54 entries. New topics include: missing audio descriptions, missing closed captions, vague link text, figures without descriptions, conflicting form labels, unlabeled dropdowns, layout breaking at larger text sizes, form groups without labels, lists not using list markup, live regions not announcing updates, multi-touch gestures without alternatives, and vague error messages.
 
----
-
-## April 25, 2026 — Simplified public defect library, cleaner detail panel, Ko-fi fixes
-
 ### Simplified public defect library
 
 A fresh set of 41 defect entries replaces the placeholder in the public data file. These are written at a plain reading level — shorter sentences, common words, no assumed knowledge of WCAG jargon. The goal is for any developer or QA engineer to read a description and immediately understand the problem and the fix, even if they've never done accessibility work before.
@@ -1001,10 +905,6 @@ Three more fixes were added on top of the existing Ko-fi accessibility patches:
 - Tooltip trigger icons inside the widget are now keyboard-focusable. Tabbing to them and pressing Enter or Space activates the tooltip, the same as hovering would.
 - Inputs inside the Ko-fi panel that used only placeholder text as labels now have a real visible label injected above them.
 - Text inside the Ko-fi widget now has a forced minimum contrast override applied so it's readable regardless of whatever color scheme Ko-fi happens to use.
-
----
-
-## April 25, 2026 — Defect detail as a bottom sheet, Ko-fi widget, naming cleanup
 
 ### Defect detail now slides up from the bottom
 
@@ -1036,11 +936,11 @@ The router plugin README has been fully rewritten to cover the Drawer and Bottom
 
 ---
 
-## April 24, 2026 — Footer link, docs folder, and settings fixes
+## April 24, 2026
 
 ### GitHub link in the footer now works
 
-The "Fork on GitHub" link at the bottom of the page now points to the actual repo at github.com/mikeyil/a11ytexthelper. It was a placeholder before.
+The "Fork on GitHub" link at the bottom of the page now points to the actual repo at github.com/mikeyil/A11yHelper. It was a placeholder before.
 
 ### Docs moved to their own folder
 
@@ -1053,10 +953,6 @@ The provider selector and API key input in Settings both dim out when AI assist 
 ### Page title no longer shows a focus outline
 
 Keyboard focus still moves to the page title internally (for screen reader users navigating to and from Settings), but the visible blue focus ring is no longer drawn around it. It was appearing as an artifact of the focus management and looked unintentional.
-
----
-
-## April 24, 2026 — Accessibility, security, privacy, performance, SEO, and docs overhaul
 
 ### Screen readers now hear copy and reset confirmations
 
@@ -1106,7 +1002,7 @@ The settings used to open in a modal. That modal was replaced with the current s
 
 ---
 
-## April 23, 2026 — Settings as its own page, keyboard focus rules, corpus rename
+## April 23, 2026
 
 ### Settings is now a real page (and a slide-in panel on mobile)
 
@@ -1135,10 +1031,6 @@ The number of internal font size options was cut from seven down to four: **smal
 
 A placeholder file called `corpus.json` has been created for a future public corpus — one that anyone can use. The public deployment ships only the generic version.
 
----
-
-## April 23, 2026 — Settings redesign, branding, and accessibility pass
-
 ### Settings panel — now organized into sections
 
 Settings used to be a flat list. It now has three labeled sections — **Search**, **Appearance**, and **AI Assist** — so it's easier to find what you're looking for, especially as more options get added.
@@ -1165,10 +1057,6 @@ The input itself is now taller — about two lines high — and uses a slightly 
 
 When a search returns no results, you now see a proper empty state: a magnifying glass illustration and a short tip suggesting different search terms, rather than a single line of plain text.
 
----
-
-## April 23, 2026 — Visual redesign and open source prep
-
 ### New look
 
 The title and tagline are now centered at the top of the page and larger — it reads like a tool you made rather than a nav label. The platform toggle (Web / Native) moved below the title where it makes more logical sense. The settings gear stays in the top-right corner.
@@ -1183,9 +1071,7 @@ The app now uses Noto Sans as its primary font — a Google open-source typeface
 
 The project now has an MIT license and a contributing guide. When the GitHub repo goes public, contributors will have everything they need to fork the project and add defect entries.
 
----
-
-## April 23, 2026 — Design system foundation
+### Design system foundation
 
 The app's colors, font sizes, spacing, and border radii are now all defined as named tokens in one file (`tokens.css`). This means future visual changes happen in one place instead of scattered across components. A separate typography file documents the type scale.
 
@@ -1195,6 +1081,6 @@ The layout is now properly mobile-first — it works well on a phone and expands
 
 ## April 23, 2026 — Initial build
 
-First working version of A11yTextHelper. Type a description of a defect, get matching entries from the corpus, pick one, optionally add a location prefix ("Global:", "Cart:", etc.), and copy the text straight into your audit spreadsheet.
+First working version of A11yHelper. Type a description of a defect, get matching entries from the corpus, pick one, optionally add a location prefix ("Global:", "Cart:", etc.), and copy the text straight into your audit spreadsheet.
 
 AI assist is off by default. Turn it on in Settings, add your API key for the provider of your choice, and the Refine field will rewrite the description and remediation based on your note.

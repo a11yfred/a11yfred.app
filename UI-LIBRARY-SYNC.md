@@ -1,4 +1,4 @@
-# UI Library Branch Sync Guide
+﻿# UI Library Branch Sync Guide
 
 The `feature/ui-library` branch contains a portable, reusable component library that can be synced bidirectionally with this project using git subtree.
 
@@ -13,7 +13,7 @@ The library lives in `src/components/ui/` and `src/plugins/` (Announce, Router, 
 
 ## Syncing Workflow
 
-### From main → feature/ui-library (Bring in A11yTextHelper updates)
+### From main → feature/ui-library (Bring in A11yHelper updates)
 
 ```bash
 git checkout feature/ui-library
@@ -51,7 +51,7 @@ When the library is mature:
    git push ../a11y-ui-library extracted-lib:main
    ```
 
-3. **Add to a11ytexthelper as npm package:**
+3. **Add to A11yHelper as npm package:**
 
    ```bash
    npm install ../a11y-ui-library
@@ -84,7 +84,7 @@ git diff main feature/ui-library -- src/components/ui/ src/plugins/ src/tokens.c
 
 ## Branch Protection
 
-- **main** — Production code for A11yTextHelper app
+- **main** — Production code for A11yHelper app
 - **feature/ui-library** — Reusable component library (can be extracted independently)
 
 Both should stay in sync for most changes. Divergences happen when:

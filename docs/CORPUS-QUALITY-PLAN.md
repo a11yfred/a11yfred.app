@@ -141,16 +141,88 @@ Do not write: "Severity ranges from X to Y depending on..."
 
 ---
 
+## desc Field
+
+- **Defect-first:** System as subject. What the system does wrong, not what the user experiences.
+  - Wrong: "Screen reader users cannot determine the state of..."
+  - Right: "The expanded or collapsed state is not communicated to assistive technology."
+- **1-3 sentences** for single-platform entries. Multi-platform entries may be longer.
+- **No code in desc** unless the code token IS the defect subject (the specific tag, attribute, or
+  value that is wrong). Mechanism explanation belongs in `fix`.
+- **WCAG terminology:**
+  - "focus order" (SC 2.4.3), not "tab order"
+  - "focus indicator", not "focus ring"
+  - Cite SCs inline as "SC X.X.X", not "WCAG X.X.X"
+- **Platform framing:**
+  - AT names (VoiceOver, TalkBack, Switch Control, Switch Access, Voice Control, Voice Access) imply
+    their platform. Do not add "on iOS" or "on Android" alongside an AT name.
+  - For multi-platform entries, describe the cross-platform behavior first, then platform-specific
+    behavior if needed.
+- **No speculative language.** Avoid "may", "might", "could", "can cause". State the concrete
+  failure. Avoid "Screen reader users build expectations..." or "users may find it difficult..."
+- **No requirement statements** ("must", "is required to", "developers need to"). The `desc` states
+  what is wrong; the `fix` states what to do.
+- **Pronouns:** Use "they/them" for third-person gender-neutral references. Prefer "users" (plural)
+  over "the user" (singular) when referring to the general population.
+- Hyphenate "on-screen" consistently.
+- "When" conditional openers are acceptable only when the condition scopes the defect precisely.
+
+---
+
+## fix Field
+
+- **Start with an action verb.** "Add", "Move", "Set", "Provide", "Make", "Give", "Verify",
+  "Confirm", "Remove", "Replace", "Use", "Wrap", "Bind", "Separate", "Close".
+- **No "Ensure" as a standalone sentence opener.** "Ensure X" → rewrite as a direct imperative.
+  - Wrong: "Ensure the modal receives focus on open."
+  - Right: "Move focus to the first focusable element inside the modal on open."
+- **Mid-fix conditionals are acceptable:** "If the component must remain open, ensure the user can
+  still reach footer content." The rule only targets standalone "Ensure X." sentences.
+- **No "should" as a hedge.** "X should Y" → "X must Y" or restructure as an imperative.
+  Technical uses are acceptable: "should not be", "should remain", "should use".
+- **"focus order" not "tab order"** in contexts not specifically about `tabindex` values.
+- **"focus indicator" not "focus ring".**
+- **"the user" only in scenario-specific context** (when the user, after the user, if the user).
+  Do not use "the user" to refer to the general population of users -- use "users" or restructure.
+- **No "note that".** Convert to a direct statement.
+- **SC citations:** "SC X.X.X" not "WCAG X.X.X" when citing inline.
+- Platform sections in fix use "iOS:" and "Android:" as section headers for implementation steps.
+
+---
+
+## SC Cross-Reference Keywords
+
+When an SC number is cited in `desc` or `fix` (other than the entry's own primary SC), add that SC
+number as a keyword. This enables cross-referencing in search results.
+
+Validate with:
+
+```bash
+node -e "
+const d = JSON.parse(require('fs').readFileSync('src/data/personal-corpus.json','utf8'));
+const pat = /\bSC (\d+\.\d+\.\d+)\b/g;
+d.forEach(e => {
+  const text = [e.desc||'',e.fix||''].join(' ');
+  const mentioned = new Set(); let m; pat.lastIndex=0;
+  while((m=pat.exec(text))!==null){if(m[1]!==e.sc)mentioned.add(m[1]);}
+  const missing=[...mentioned].filter(s=>!(e.keywords||[]).includes(s));
+  if(missing.length)console.log(e.id,'missing:',missing.join(', '));
+});
+"
+```
+
+---
+
 ## Voice and Tone
 
 - No em-dashes anywhere. Use commas, periods, parentheses, or colons.
 - No speculative language about screen reader users: avoid "Screen reader users build
   expectations..." or "may find it difficult..." State the concrete failure instead.
-- No imperative-direct patterns in `fix` that anthropomorphize the defect.
 - Avoid mid-sentence colons where a parenthetical works better.
   Wrong: "A component: such as a grid, must..."
   Right: "A component (such as a grid) must..."
-- "Interactive control" is redundant. Write "control" or name the element type specifically.
+- "Interactive control" is not allowed in titles. "interactive control/controls" is acceptable in
+  `desc` and `fix` body text.
 - Article before code: use "an `aria-live`", not "a `aria-live`".
 
 ---
@@ -173,6 +245,13 @@ When advising about `aria-label` vs. visible `<label>`:
 - Noun phrase, 4-8 words.
 - Append `(Native App)` when the entry is native-only.
 - Avoid "Interactive Control" as a phrase; use "Control" or the specific element type.
+- "Contrast Ratio" and "Alt Text" are acceptable in titles.
+- Qualifier vocabulary -- use these canonical forms:
+  - "Missing" not "Lacks", "Has No", or "Exposes No"
+  - "Not Programmatically Determined" for state and value failures (SC 4.1.2)
+  - "Not Programmatically Associated" for label relationship failures (SC 1.3.1, 3.3.2)
+  - "Not Exposed" for AT-visibility failures
+- Within a same-SC cluster, align qualifier vocabulary across all entries.
 
 ---
 

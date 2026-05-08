@@ -1,8 +1,8 @@
-# Security Policy
+﻿# Security Policy
 
 ## Supported Versions
 
-A11yTextHelper is a client-side web application currently in pre-release (Phase 1). Only the latest commit on the `main` branch is actively maintained.
+A11yHelper is a client-side web application currently in pre-release (Phase 1). Only the latest commit on the `main` branch is actively maintained.
 
 | Version | Supported |
 | ------- | --------- |

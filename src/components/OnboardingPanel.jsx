@@ -154,7 +154,7 @@ export default function OnboardingPanel({ onClose }) {
         heading={t('onboarding.confirm_heading')}
         actions={[
           {
-            label: t('onboarding.confirm_exit'),
+            label: t('common.close'),
             onClick: () => { setConfirmOpen(false); commitClose() },
             className: 'btn--primary modal-ok-btn',
           },

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from '../plugins/router/index.js'
 import { startSong2 } from '../utils/partySongs.js'
+import { useT } from '../i18n/index.jsx'
 
 function rndPos() {
   return {
@@ -10,6 +11,7 @@ function rndPos() {
 }
 
 export default function PartyMusicPlayer({ active }) {
+  const t = useT()
   const [playing, setPlaying] = useState(false)
   const [pos, setPos] = useState(() => rndPos())
   const { route } = useRouter()
@@ -52,7 +54,7 @@ export default function PartyMusicPlayer({ active }) {
       className="party-player"
       style={{ top: pos.top, left: pos.left }}
       onClick={handleClick}
-      aria-label={playing ? 'Stop party music' : 'Play party music'}
+      aria-label={playing ? t('party.stop') : t('party.play')}
       aria-pressed={playing}
     >
       {playing ? (

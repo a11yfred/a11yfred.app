@@ -1,6 +1,6 @@
-# About This Build
+﻿# About This Build
 
-A11yTextHelper started as a clipboard tool. Type an accessibility defect ID, copy the description and remediation, paste it into a bug report. That's the whole pitch. But somewhere along the way it became a peculiar little project.
+A11yHelper started as a clipboard tool. Type an accessibility defect ID, copy the description and remediation, paste it into a bug report. That's the whole pitch. But somewhere along the way it became a peculiar little project.
 
 ---
 

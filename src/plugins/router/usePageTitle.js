@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import { useRouter } from './Router.jsx'
 
 /**
@@ -10,7 +10,7 @@ import { useRouter } from './Router.jsx'
  *
  * Usage:
  *   function SettingsPanel() {
- *     usePageTitle('Settings')   // → "A11yTextHelper | Settings"
+ *     usePageTitle('Settings')   // → "A11yHelper | Settings"
  *   }
  *
  * Home / index pages that should show only the app name need no call —

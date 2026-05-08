@@ -292,7 +292,7 @@ export default function SettingsPanel({
             value={pendingLanguage}
             onChange={e => setPendingLanguage(e.target.value)}
             wrapClass="settings-select-wrap--language"
-            aria-label={t('settings.language_aria')}
+            aria-label={t('settings.language_label')}
           >
             <option value="">{t('settings.language_select_one')}</option>
             {LANGUAGES.map(lang => (
@@ -337,7 +337,7 @@ export default function SettingsPanel({
           {platform === 'web' ? t('settings.platform_web_desc') : t('settings.platform_native_desc')}
         </p>
         <fieldset className="settings-fieldset">
-          <legend className="sr-only">{t('settings.platform_legend')}</legend>
+          <legend className="sr-only">{t('settings.platform_label')}</legend>
           <div className="radio-chip-group">
             {[
               { value: 'web',    labelKey: 'settings.platform_web'    },
@@ -666,14 +666,14 @@ export default function SettingsPanel({
       <Modal
         open={rhgPending}
         onClose={() => setRhgPending(false)}
-        heading="Rohingya (Ruáingga)"
+        heading={t('settings.language_rhg_heading')}
         actions={[
-          { label: 'Use anyway', onClick: () => { onLanguageChange(pendingLanguage); setRhgPending(false) }, className: 'btn--primary' },
-          { label: 'Cancel',     onClick: () => setRhgPending(false),                              className: 'btn--tertiary'  },
+          { label: t('settings.language_rhg_use_anyway'), onClick: () => { onLanguageChange(pendingLanguage); setRhgPending(false) }, className: 'btn--primary' },
+          { label: t('common.cancel'),                    onClick: () => setRhgPending(false),                                       className: 'btn--tertiary' },
         ]}
       >
-        <p>This translation was AI-generated and has not been reviewed by native Rohingya speakers.</p>
-        <p>The Rohingya people have endured genocide and forced displacement. Please use this translation with care, and consider contributing corrections if you are able.</p>
+        <p>{t('settings.language_rhg_body_1')}</p>
+        <p>{t('settings.language_rhg_body_2')}</p>
       </Modal>
 
       <Modal
@@ -728,13 +728,21 @@ export default function SettingsPanel({
           </div>
 
           <div className="settings-reset-section">
-            <h3>{t('settings.confirm_reset_all_will_keep')}</h3>
+            <h3>{t('settings.confirm_reset_all_will_reset')}</h3>
             <ul className="settings-reset-list">
               <li>{t('settings.confirm_reset_all_keep_item_theme')}</li>
               <li>{t('settings.confirm_reset_all_keep_item_language')}</li>
               <li>{t('settings.confirm_reset_all_keep_item_platform')}</li>
               <li>{t('settings.confirm_reset_all_keep_item_ai_enabled')}</li>
               <li>{t('settings.confirm_reset_all_keep_item_live_search')}</li>
+            </ul>
+          </div>
+
+          <div className="settings-reset-section">
+            <h3>{t('settings.confirm_reset_all_will_keep')}</h3>
+            <ul className="settings-reset-list">
+              <li>{t('settings.confirm_reset_all_keep_item_corpus')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_contributions')}</li>
             </ul>
           </div>
 
