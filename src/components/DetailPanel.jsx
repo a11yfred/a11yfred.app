@@ -25,9 +25,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(finding.desc)
   const [fixText, setFixText] = useState(finding.fix)
-  const [reviseNote, setReviseNote] = useState('')
+  const [aiNote, setAiNote] = useState('')
   const [useAgenticMode, setUseAgenticMode] = useState(agenticMode)
-  const [noteSaved, setNoteSaved] = useState(false)
+  const [findingNoteSaved, setFindingNoteSaved] = useState(false)
   const [copiedDesc, setCopiedDesc] = useState(false)
   const [copiedFix, setCopiedFix] = useState(false)
   const [copiedTitle, setCopiedTitle] = useState(false)
@@ -43,14 +43,14 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   // Field-specific undo stacks, each entry is the text before that AI revision
   const [descHistory, setDescHistory] = useState([])
   const [fixHistory, setFixHistory] = useState([])
-  const [reviseDesc, setReviseDesc] = useState(false)
-  const [reviseFix, setReviseFix] = useState(false)
+  const [aiReviseDesc, setAiReviseDesc] = useState(false)
+  const [aiReviseFix, setAiReviseFix] = useState(false)
   const [copiedAll, setCopiedAll] = useState(false)
   const [resetAllDone, setResetAllDone] = useState(false)
   const [includeDescTitle, setIncludeDescTitle] = useState(false)
   const [includeFixTitle, setIncludeFixTitle] = useState(false)
   const typeTimerRef = useRef(null)
-  const refineButtonRef = useRef(null)
+  const aiRevisionButtonRef = useRef(null)
   const descCopyBtnRef = useRef(null)
   const fixCopyBtnRef = useRef(null)
 
@@ -68,17 +68,17 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     if (!debugPanelCmd) return
     const provider = localStorage.getItem('ai_provider') || 'anthropic'
     const providerLabel = PROVIDER_LABELS[provider] || provider
-    if (debugPanelCmd === 'debug wrong')   { setRevisionFailed(t('detail.revise_error_body')); onDebugPanelCmdHandled?.(); return } // eslint-disable-line react-hooks/set-state-in-effect
-    if (debugPanelCmd === 'debug 401')     { setRevisionFailed(t('detail.revise_error_invalid_key', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
-    if (debugPanelCmd === 'debug 429')     { setRevisionFailed(t('detail.revise_error_rate_limit', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
-    if (debugPanelCmd === 'debug 503')     { setRevisionFailed(t('detail.revise_error_service_error', { provider: providerLabel, status: 503 })); onDebugPanelCmdHandled?.(); return }
-    if (debugPanelCmd === 'debug network') { setRevisionFailed(t('detail.revise_error_network_error')); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === 'debug wrong')   { setRevisionFailed(t('detail.ai_revision_error_body')); onDebugPanelCmdHandled?.(); return } // eslint-disable-line react-hooks/set-state-in-effect
+    if (debugPanelCmd === 'debug 401')     { setRevisionFailed(t('detail.ai_revision_error_invalid_key', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === 'debug 429')     { setRevisionFailed(t('detail.ai_revision_error_rate_limit', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === 'debug 503')     { setRevisionFailed(t('detail.ai_revision_error_service_error', { provider: providerLabel, status: 503 })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === 'debug network') { setRevisionFailed(t('detail.ai_revision_error_network_error')); onDebugPanelCmdHandled?.(); return }
     if (debugPanelCmd === 'debug ok') {
       setRefining(true)
       announce(t('detail.rewriting_text'), { priority: 'assertive' })
       setTimeout(() => {
-        const fakeDesc = reviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
-        const fakeFix = reviseFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
+        const fakeDesc = aiReviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
+        const fakeFix = aiReviseFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
         if (fakeDesc) setDescHistory(h => [...h, descText])
         if (fakeFix) setFixHistory(h => [...h, fixText])
         setRefining(false)
@@ -219,25 +219,25 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   }
 
   const handleRefine = async () => {
-    if (!reviseNote.trim()) return
+    if (!aiNote.trim()) return
 
-    if (aiEnabled && canRevise) {
-      const note = reviseNote.trim()
+    if (aiEnabled && canAiRevise) {
+      const note = aiNote.trim()
       const provider = localStorage.getItem('ai_provider') || 'anthropic'
       const PROVIDER_LABELS = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }
       const providerLabel = PROVIDER_LABELS[provider] || provider
 
-      if (note === 'debug wrong')   { setRevisionFailed(t('detail.revise_error_body')); return }
-      if (note === 'debug 401')     { setRevisionFailed(t('detail.revise_error_invalid_key', { provider: providerLabel })); return }
-      if (note === 'debug 429')     { setRevisionFailed(t('detail.revise_error_rate_limit', { provider: providerLabel })); return }
-      if (note === 'debug 503')     { setRevisionFailed(t('detail.revise_error_service_error', { provider: providerLabel, status: 503 })); return }
-      if (note === 'debug network') { setRevisionFailed(t('detail.revise_error_network_error')); return }
+      if (note === 'debug wrong')   { setRevisionFailed(t('detail.ai_revision_error_body')); return }
+      if (note === 'debug 401')     { setRevisionFailed(t('detail.ai_revision_error_invalid_key', { provider: providerLabel })); return }
+      if (note === 'debug 429')     { setRevisionFailed(t('detail.ai_revision_error_rate_limit', { provider: providerLabel })); return }
+      if (note === 'debug 503')     { setRevisionFailed(t('detail.ai_revision_error_service_error', { provider: providerLabel, status: 503 })); return }
+      if (note === 'debug network') { setRevisionFailed(t('detail.ai_revision_error_network_error')); return }
       if (note === 'debug ai assist on') {
         setRefining(true)
         announce(t('detail.rewriting_text'), { priority: 'assertive' })
         setTimeout(() => {
-          const newDesc = reviseDesc ? `${descText}\n\n[Revision note: ${reviseNote}]` : null
-          const newFix = reviseFix ? `${fixText}\n\n[Revision note: ${reviseNote}]` : null
+          const newDesc = aiReviseDesc ? `${descText}\n\n[AI note: ${aiNote}]` : null
+          const newFix = aiReviseFix ? `${fixText}\n\n[AI note: ${aiNote}]` : null
           if (newDesc) setDescHistory(h => [...h, descText])
           if (newFix) setFixHistory(h => [...h, fixText])
           setRefining(false)
@@ -250,8 +250,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         setRefining(true)
         announce(t('detail.rewriting_text'), { priority: 'assertive' })
         setTimeout(() => {
-          const fakeDesc = reviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
-          const fakeFix = reviseFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
+          const fakeDesc = aiReviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
+          const fakeFix = aiReviseFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
           if (fakeDesc) setDescHistory(h => [...h, descText])
           if (fakeFix) setFixHistory(h => [...h, fixText])
           setRefining(false)
@@ -266,10 +266,10 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
       try {
         const result = useAgenticMode && localStorage.getItem('ai_provider') === 'anthropic'
-          ? await getAgenticRefinement({ finding, descText, fixText, note: reviseNote, corpus: allFindings })
-          : await getAiRefinement({ finding, descText, fixText, note: reviseNote })
-        const newDesc = reviseDesc && result.desc ? result.desc : null
-        const newFix = reviseFix && result.fix ? result.fix : null
+          ? await getAgenticRefinement({ finding, descText, fixText, note: aiNote, corpus: allFindings })
+          : await getAiRefinement({ finding, descText, fixText, note: aiNote })
+        const newDesc = aiReviseDesc && result.desc ? result.desc : null
+        const newFix = aiReviseFix && result.fix ? result.fix : null
 
         if (newDesc) setDescHistory(h => [...h, descText])
         if (newFix) setFixHistory(h => [...h, fixText])
@@ -278,28 +278,28 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         setAnimating(true)
         startTypewriter(newDesc, newFix, t)
       } catch (e) {
-        if (import.meta.env.DEV) console.error('AI refinement failed:', e)
+        if (import.meta.env.DEV) console.error('AI revision failed:', e)
         setRefining(false)
         setAnimating(false)
         if (e instanceof AiApiError) {
           const label = PROVIDER_LABELS[e.provider] || e.provider || 'AI'
-          setRevisionFailed(t(`detail.revise_error_${e.type}`, { provider: label, status: e.status }))
+          setRevisionFailed(t(`detail.ai_revision_error_${e.type}`, { provider: label, status: e.status }))
         } else {
-          setRevisionFailed(t('detail.revise_error_body'))
+          setRevisionFailed(t('detail.ai_revision_error_body'))
         }
       }
     } else {
       setNoteSaved(true)
-      announce(t('detail.saved_note_aria'))
+      announce(t('detail.saved_finding_note_aria'))
       setTimeout(() => setNoteSaved(false), NOTIFICATION_TIMEOUT)
     }
   }
 
-  const canRevise = reviseDesc || reviseFix
+  const canAiRevise = aiReviseDesc || aiReviseFix
   const p = SEVERITY_VARS[finding.severity] || SEVERITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
   const fixLabel = t('detail.fix_label')
-  const refineLabel = t(aiEnabled ? 'detail.refine_label_ai' : 'detail.refine_label_no_ai')
+  const aiRevisionLabel = t('detail.ai_revision_label')
 
   return (
     <div className="detail-panel">
@@ -455,9 +455,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel, descCopyBtnRef)}
         undoable={descHistory.length > 1}
         onUndo={handleUndoDesc}
-        selected={reviseDesc}
+        selected={aiReviseDesc}
         onSelectChange={setReviseDesc}
-        selectLabel={t('detail.revise_desc_checkbox')}
+        selectLabel={t('detail.ai_revise_desc_checkbox')}
         animating={animating}
         wasUpdated={descHistory.length > 0}
         isDesktop={isDesktop}
@@ -480,9 +480,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         onReset={() => handleReset(finding.fix, fixText, setFixText, setResetFix, fixLabel, fixCopyBtnRef)}
         undoable={fixHistory.length > 1}
         onUndo={handleUndoFix}
-        selected={reviseFix}
+        selected={aiReviseFix}
         onSelectChange={setReviseFix}
-        selectLabel={t('detail.revise_fix_checkbox')}
+        selectLabel={t('detail.ai_revise_fix_checkbox')}
         animating={animating}
         wasUpdated={fixHistory.length > 0}
         isDesktop={isDesktop}
@@ -493,20 +493,20 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         includeTitleLabel={t('detail.include_fix_title_when_copied')}
       />
 
-      <div className="detail-refine">
-        <label htmlFor="revise-note" className="detail-label">{refineLabel}</label>
-        <p className="detail-refine-hint">
+      <div className="detail-ai-revision">
+        <label htmlFor="ai-note" className="detail-label">{aiRevisionLabel}</label>
+        <p className="detail-ai-revision-hint">
           {aiEnabled
-            ? <>{t('detail.refine_hint_ai')}{' '}
+            ? <>{t('detail.ai_revision_hint')}{' '}
                 <a href="/settings" className="detail-settings-link">
                   {t('common.settings')}
                 </a>.
               </>
-            : <>{t('detail.refine_hint_no_ai')}{' '}
+            : <>{t('detail.finding_note_hint')}{' '}
                 <a href="/settings" className="detail-settings-link">
                   {t('common.settings')}
                 </a>{' '}
-                {t('detail.refine_hint_no_ai_suffix')}
+                {t('detail.finding_note_hint_suffix')}
               </>}
         </p>
         {aiEnabled && localStorage.getItem('ai_provider') === 'anthropic' && (
@@ -527,26 +527,26 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             </p>
           </div>
         )}
-        <div className="detail-refine-row">
+        <div className="detail-ai-revision-row">
           <textarea
-            id="revise-note"
-            value={reviseNote}
+            id="ai-note"
+            value={aiNote}
             onChange={e => setReviseNote(e.target.value)}
-            placeholder={t('detail.refine_placeholder_no_ai')}
+            placeholder={t('detail.finding_note_placeholder')}
             className="detail-input detail-input--textarea"
             rows={3}
           />
           <button
-            ref={refineButtonRef}
+            ref={aiRevisionButtonRef}
             onClick={handleRefine}
-            disabled={refining || animating || !reviseNote.trim()}
+            disabled={refining || animating || !aiNote.trim()}
             aria-busy={refining ? true : undefined}
-            className={`btn--primary detail-revise-btn btn--height-standard${noteSaved ? ' btn__field--success' : ''}`}
+            className={`btn--primary detail-ai-revision-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
             aria-label={
               refining ? t('detail.rewriting_aria')
-              : aiEnabled ? t('detail.rewrite_aria')
-              : noteSaved ? t('detail.saved_note_aria')
-              : t('detail.save_note_aria')
+              : aiEnabled ? t('detail.ai_revision_aria')
+              : findingNoteSaved ? t('detail.saved_finding_note_aria')
+              : t('detail.save_finding_note_aria')
             }
           >
             {refining
@@ -559,18 +559,18 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
               : aiEnabled
                 ? <>
                     <span className="btn-icon">
-                      <Sparkles size={12} strokeWidth={2} className="detail-revise-icon" aria-hidden="true" />
+                      <Sparkles size={12} strokeWidth={2} className="detail-ai-revision-icon" aria-hidden="true" />
                     </span>
-                    <span>{t('detail.save_rewrite_text')}</span>
+                    <span>{t('detail.ai_revision_save_text')}</span>
                   </>
-                : noteSaved
+                : findingNoteSaved
                   ? <>
                       <span className="btn-icon">
                         <Check size={14} aria-hidden="true" />
                       </span>
-                      <span>{t('detail.saved_note_text')}</span>
+                      <span>{t('detail.saved_finding_note_text')}</span>
                     </>
-                  : t('detail.save_note_text')}
+                  : t('detail.save_finding_note_text')}
           </button>
         </div>
         {(descText !== finding.desc || fixText !== finding.fix) && (
@@ -634,8 +634,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       <Modal
         open={!!revisionFailed}
         onClose={() => setRevisionFailed(null)}
-        heading={t('detail.revise_error_heading')}
-        returnFocusRef={refineButtonRef}
+        heading={t('detail.ai_revision_error_heading')}
+        returnFocusRef={aiRevisionButtonRef}
       >
         <p>{revisionFailed}</p>
       </Modal>
