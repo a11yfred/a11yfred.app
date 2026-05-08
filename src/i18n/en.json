@@ -282,7 +282,7 @@
   "about.what_heading": "What Is This?",
   "about.what_body": "This is a library of accessibility findings for manual audits. Search for what you observed, find a description that fits, and copy it into your report.",
   "about.what_body_2": "The same issues come up on almost every site. This tool keeps your descriptions consistent across reports so you are not writing from scratch each time. The library was built from real audit work — hundreds of findings from manual reviews, refined for plain language, accuracy, and WCAG alignment.",
-  "about.what_wcag": "This data extends up to {wcag} (Level A and AA).",
+  "about.what_wcag": "This data covers {wcag} Level A and AA, the standard used by most organizations and the basis for legal accessibility requirements. A small number of Level AAA success criteria are also included where the accessibility community broadly considers the failure pattern significant.",
   "about.examples_intro": "Examples include:",
   "about.features_heading": "Notable Features",
   "about.feature_ai_label": "AI Assist",
