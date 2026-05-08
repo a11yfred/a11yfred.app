@@ -4,6 +4,22 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 7, 2026
+
+### Personal corpus: full normalization pass (169 entries)
+
+All 169 personal corpus entries have been through a structured quality pass covering titles, descriptions, and suggested fixes.
+
+**Titles:** Standardized qualifier vocabulary across same-SC clusters. "Missing" is the canonical form (not "Lacks", "Has No", or "Exposes No"). State and value failures use "Not Programmatically Determined"; label relationship failures use "Not Programmatically Associated". Seven entries updated.
+
+**Descriptions:** Each entry now opens with the system as the subject -- what the code does wrong, not what the user experiences. Speculative language ("may", "might", "could") has been removed throughout in favor of concrete failure statements. AT names (VoiceOver, TalkBack, Switch Control, Voice Control) already imply their platform, so "on iOS" / "on Android" alongside an AT name has been removed. They/them pronouns are used for third-person gender-neutral references. WCAG terminology is consistent: "focus order" not "tab order", "focus indicator" not "focus ring", SC citations as "SC X.X.X" not "WCAG X.X.X".
+
+**Suggested fixes:** All "Ensure X." standalone openers have been rewritten as direct imperatives. Hedging "should" has been removed in favor of direct instructions. "The user" in population-level references has been replaced with "users" or restructured; it remains only in scenario-specific conditionals (when the user clicks, after the user submits, etc.). "Note that" constructions have been removed.
+
+**Keywords:** SC numbers cited in descriptions or fixes are now added as keywords on those entries, enabling cross-referencing in search. Nine entries received new SC keyword additions.
+
+---
+
 ## May 6, 2026
 
 ### Complete removal of app-specific logic from portable UI components

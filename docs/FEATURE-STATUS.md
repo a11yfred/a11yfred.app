@@ -60,6 +60,12 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | --- | --- | --- |
 | Advanced Search Syntax | ✅ | 100 |
 
+**Not Started (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Corpus Guide Page (/corpus-guide) | 🔲 | 0 |
+
 **Backend Only (3):**
 
 | Feature | Status | % |
@@ -273,17 +279,22 @@ Missing:
 Done:
 
 - 107 public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
+- 169 personal corpus entries (gitignored); fully normalized across titles, desc, and fix fields
 - Platform classification across web-only, web & mobile, iOS, Android, and other variants
 - All entries 100% sourced with minimum 2 expert sources each
 - Sources deep-linked where available (e.g., Roselli's "Where to Put Focus When Opening a Modal Dialog")
 - 10-expert consensus: Adrian Roselli, Scott O'Hara, Eric Bailey, Marco Zehe, Scott Vinkle, Kat Holmes, Eric Eggert, Karl Groves, Steve Faulkner, Patrick H. Lauke
-- All titles standardized to consistent pattern
+- All titles standardized: AP title case, qualifier vocabulary normalized ("Missing" canonical form), consistent noun-phrase structure
+- Desc normalization complete: defect-first order, no speculative language, WCAG terminology, platform framing rules, they/them pronouns, AT names imply platform
+- Fix normalization complete: direct imperatives, no "Ensure" or "should" openers, "focus order"/"focus indicator" terminology, SC citation format
+- SC cross-reference keywords: SC numbers cited in desc/fix added as keywords for cross-referencing in search
 - Corpus fully validated: zero broken links, zero root domain links, proper WCAG prefix formatting, clean source credits structure
 
 Missing (future enhancements):
 
-- Keyword audit (entries could use synonym expansion; optional optimization)
-- Native-specific gaps: 4 area gaps identified (Dynamic Type, contentDescription, announce notifications, custom accessibility actions; addressed via platform classification)
+- Keyword synonym expansion (optional optimization)
+- Document platform (PDF, Word, PPT) entries: currently zero coverage; planned additions
+- Native-specific gaps: Dynamic Type, contentDescription, announce notifications, custom accessibility actions
 
 ---
 
@@ -395,6 +406,29 @@ Missing:
 - Widget disabled pending console error resolution
 - Selector re-verification vs. live Ko-fi DOM
 - Ko-fi link fallback in footer
+
+---
+
+---
+
+### Corpus Guide Page ,  0%
+
+A dedicated `/corpus-guide` route documenting the corpus for contributors and power users.
+
+Missing:
+
+- React component: `CorpusGuidePanel.jsx` (Panel pattern, same as AboutPanel)
+- Route registration in router plugin
+- en.json keys for all content sections
+- Content sections:
+  - Entry structure (schema fields and their purpose)
+  - Title conventions (AP title case, qualifier vocabulary, noun-phrase, (Native App) suffix)
+  - desc writing rules (defect-first, no speculative language, WCAG terminology, platform framing, they/them)
+  - fix writing rules (direct imperatives, no Ensure/should openers, focus order/indicator, SC citations)
+  - Severity model (Critical / High / Medium / Best Practice with definitions)
+  - Platform field values and when to use each
+  - SC cross-reference keyword rule
+  - Contributing placeholder (template for external contributors)
 
 ---
 
