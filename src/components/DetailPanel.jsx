@@ -26,6 +26,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   const [descText, setDescText] = useState(finding.desc)
   const [fixText, setFixText] = useState(finding.fix)
   const [aiNote, setAiNote] = useState('')
+  const [findingNote, setFindingNote] = useState(() => localStorage.getItem(`finding_note_${finding.id}`) || '')
   const [useAgenticMode, setUseAgenticMode] = useState(agenticMode)
   const [findingNoteSaved, setFindingNoteSaved] = useState(false)
   const [copiedDesc, setCopiedDesc] = useState(false)
@@ -43,8 +44,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   // Field-specific undo stacks, each entry is the text before that AI revision
   const [descHistory, setDescHistory] = useState([])
   const [fixHistory, setFixHistory] = useState([])
-  const [aiReviseDesc, setAiReviseDesc] = useState(false)
-  const [aiReviseFix, setAiReviseFix] = useState(false)
+  const [aiRevisedDesc, setAiRevisedDesc] = useState(false)
+  const [aiRevisedFix, setAiRevisedFix] = useState(false)
   const [copiedAll, setCopiedAll] = useState(false)
   const [resetAllDone, setResetAllDone] = useState(false)
   const [includeDescTitle, setIncludeDescTitle] = useState(false)
@@ -62,6 +63,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
   useEffect(() => {
     titleRef.current?.focus()
+    setFindingNote(localStorage.getItem(`finding_note_${finding.id}`) || '')
+    setAiNote('')
   }, [finding.id])
 
   useEffect(() => {
@@ -77,8 +80,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       setRefining(true)
       announce(t('detail.rewriting_text'), { priority: 'assertive' })
       setTimeout(() => {
-        const fakeDesc = aiReviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
-        const fakeFix = aiReviseFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
+        const fakeDesc = aiRevisedDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
+        const fakeFix = aiRevisedFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
         if (fakeDesc) setDescHistory(h => [...h, descText])
         if (fakeFix) setFixHistory(h => [...h, fixText])
         setRefining(false)
@@ -219,9 +222,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   }
 
   const handleRefine = async () => {
-    if (!aiNote.trim()) return
+    if (!aiNote.trim() || !canAiRevise) return
 
-    if (aiEnabled && canAiRevise) {
+    {
       const note = aiNote.trim()
       const provider = localStorage.getItem('ai_provider') || 'anthropic'
       const PROVIDER_LABELS = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }
@@ -236,8 +239,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         setRefining(true)
         announce(t('detail.rewriting_text'), { priority: 'assertive' })
         setTimeout(() => {
-          const newDesc = aiReviseDesc ? `${descText}\n\n[AI note: ${aiNote}]` : null
-          const newFix = aiReviseFix ? `${fixText}\n\n[AI note: ${aiNote}]` : null
+          const newDesc = aiRevisedDesc ? `${descText}\n\n[AI note: ${aiNote}]` : null
+          const newFix = aiRevisedFix ? `${fixText}\n\n[AI note: ${aiNote}]` : null
           if (newDesc) setDescHistory(h => [...h, descText])
           if (newFix) setFixHistory(h => [...h, fixText])
           setRefining(false)
@@ -250,8 +253,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         setRefining(true)
         announce(t('detail.rewriting_text'), { priority: 'assertive' })
         setTimeout(() => {
-          const fakeDesc = aiReviseDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
-          const fakeFix = aiReviseFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
+          const fakeDesc = aiRevisedDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
+          const fakeFix = aiRevisedFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
           if (fakeDesc) setDescHistory(h => [...h, descText])
           if (fakeFix) setFixHistory(h => [...h, fixText])
           setRefining(false)
@@ -268,8 +271,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         const result = useAgenticMode && localStorage.getItem('ai_provider') === 'anthropic'
           ? await getAgenticRefinement({ finding, descText, fixText, note: aiNote, corpus: allFindings })
           : await getAiRefinement({ finding, descText, fixText, note: aiNote })
-        const newDesc = aiReviseDesc && result.desc ? result.desc : null
-        const newFix = aiReviseFix && result.fix ? result.fix : null
+        const newDesc = aiRevisedDesc && result.desc ? result.desc : null
+        const newFix = aiRevisedFix && result.fix ? result.fix : null
 
         if (newDesc) setDescHistory(h => [...h, descText])
         if (newFix) setFixHistory(h => [...h, fixText])
@@ -288,14 +291,10 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           setRevisionFailed(t('detail.ai_revision_error_body'))
         }
       }
-    } else {
-      setNoteSaved(true)
-      announce(t('detail.saved_finding_note_aria'))
-      setTimeout(() => setNoteSaved(false), NOTIFICATION_TIMEOUT)
     }
   }
 
-  const canAiRevise = aiReviseDesc || aiReviseFix
+  const canAiRevise = aiRevisedDesc || aiRevisedFix
   const p = SEVERITY_VARS[finding.severity] || SEVERITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
   const fixLabel = t('detail.fix_label')
@@ -455,9 +454,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel, descCopyBtnRef)}
         undoable={descHistory.length > 1}
         onUndo={handleUndoDesc}
-        selected={aiReviseDesc}
+        selected={aiRevisedDesc}
         onSelectChange={setReviseDesc}
-        selectLabel={t('detail.ai_revise_desc_checkbox')}
+        selectLabel={t('detail.ai_revised_desc_checkbox')}
         animating={animating}
         wasUpdated={descHistory.length > 0}
         isDesktop={isDesktop}
@@ -480,9 +479,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         onReset={() => handleReset(finding.fix, fixText, setFixText, setResetFix, fixLabel, fixCopyBtnRef)}
         undoable={fixHistory.length > 1}
         onUndo={handleUndoFix}
-        selected={aiReviseFix}
+        selected={aiRevisedFix}
         onSelectChange={setReviseFix}
-        selectLabel={t('detail.ai_revise_fix_checkbox')}
+        selectLabel={t('detail.ai_revised_fix_checkbox')}
         animating={animating}
         wasUpdated={fixHistory.length > 0}
         isDesktop={isDesktop}
@@ -493,93 +492,97 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         includeTitleLabel={t('detail.include_fix_title_when_copied')}
       />
 
-      <div className="detail-ai-revision">
-        <label htmlFor="ai-note" className="detail-label">{aiRevisionLabel}</label>
-        <p className="detail-ai-revision-hint">
-          {aiEnabled
-            ? <>{t('detail.ai_revision_hint')}{' '}
-                <a href="/settings" className="detail-settings-link">
-                  {t('common.settings')}
-                </a>.
-              </>
-            : <>{t('detail.finding_note_hint')}{' '}
-                <a href="/settings" className="detail-settings-link">
-                  {t('common.settings')}
-                </a>{' '}
-                {t('detail.finding_note_hint_suffix')}
-              </>}
-        </p>
-        {aiEnabled && localStorage.getItem('ai_provider') === 'anthropic' && (
-          <div className="detail-agentic-mode-row">
-            <label>
-              <input
-                id="agentic-toggle"
-                type="checkbox"
-                checked={useAgenticMode}
-                onChange={e => setUseAgenticMode(e.target.checked)}
-                className="detail-agentic-toggle"
-                title={t('detail.agentic_mode_help') || 'Use AI with corpus search to write more accurate descriptions'}
-              />
-              <span className="detail-agentic-mode-label">{t('detail.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}</span>
-            </label>
-            <p className="detail-agentic-mode-hint">
-              {t('detail.agentic_mode_hint') || 'AI searches the corpus to match your style and depth'}
-            </p>
-          </div>
-        )}
-        <div className="detail-ai-revision-row">
+      {finding.note && (
+        <div className="detail-corpus-note">
+          <span className="detail-corpus-note-label">{t('detail.note_label')}</span>
+          <p className="detail-corpus-note-body">{finding.note}</p>
+        </div>
+      )}
+
+      <div className="detail-finding-note">
+        <label htmlFor="finding-note" className="detail-label">{t('detail.finding_note_label')}</label>
+        <div className="detail-finding-note-row">
           <textarea
-            id="ai-note"
-            value={aiNote}
-            onChange={e => setReviseNote(e.target.value)}
+            id="finding-note"
+            value={findingNote}
+            onChange={e => setFindingNote(e.target.value)}
             placeholder={t('detail.finding_note_placeholder')}
             className="detail-input detail-input--textarea"
             rows={3}
           />
           <button
-            ref={aiRevisionButtonRef}
-            onClick={handleRefine}
-            disabled={refining || animating || !aiNote.trim()}
-            aria-busy={refining ? true : undefined}
-            className={`btn--primary detail-ai-revision-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
-            aria-label={
-              refining ? t('detail.rewriting_aria')
-              : aiEnabled ? t('detail.ai_revision_aria')
-              : findingNoteSaved ? t('detail.saved_finding_note_aria')
-              : t('detail.save_finding_note_aria')
-            }
+            onClick={() => {
+              localStorage.setItem(`finding_note_${finding.id}`, findingNote)
+              setFindingNoteSaved(true)
+              announce(t('detail.saved_finding_note_aria'))
+              setTimeout(() => setFindingNoteSaved(false), NOTIFICATION_TIMEOUT)
+            }}
+            disabled={!findingNote.trim()}
+            className={`btn--primary detail-finding-note-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
+            aria-label={findingNoteSaved ? t('detail.saved_finding_note_aria') : t('detail.save_finding_note_aria')}
           >
-            {refining
-              ? <>
-                  <span className="btn-icon">
-                    <Loader2 size={12} strokeWidth={2} className="detail-revising-spinner" aria-hidden="true" />
-                  </span>
-                  <span>{t('detail.rewriting_text')}</span>
-                </>
-              : aiEnabled
-                ? <>
-                    <span className="btn-icon">
-                      <Sparkles size={12} strokeWidth={2} className="detail-ai-revision-icon" aria-hidden="true" />
-                    </span>
-                    <span>{t('detail.ai_revision_save_text')}</span>
-                  </>
-                : findingNoteSaved
-                  ? <>
-                      <span className="btn-icon">
-                        <Check size={14} aria-hidden="true" />
-                      </span>
-                      <span>{t('detail.saved_finding_note_text')}</span>
-                    </>
-                  : t('detail.save_finding_note_text')}
+            {findingNoteSaved
+              ? <><span className="btn-icon"><Check size={14} aria-hidden="true" /></span><span>{t('detail.saved_finding_note_text')}</span></>
+              : t('detail.save_finding_note_text')}
           </button>
         </div>
-        {(descText !== finding.desc || fixText !== finding.fix) && (
-          <p className="detail-edit-warning" role="status">
-            <AlertCircle size={16} aria-hidden="true" className="detail-edit-warning-icon" />
-            {t('detail.edit_lang_warning')}
-          </p>
-        )}
       </div>
+
+      {aiEnabled && (
+        <div className="detail-ai-revision">
+          <label htmlFor="ai-note" className="detail-label">{aiRevisionLabel}</label>
+          <p className="detail-ai-revision-hint">
+            {t('detail.ai_revision_hint')}{' '}
+            <a href="/settings" className="detail-settings-link">{t('common.settings')}</a>.
+          </p>
+          {localStorage.getItem('ai_provider') === 'anthropic' && (
+            <div className="detail-agentic-mode-row">
+              <label>
+                <input
+                  id="agentic-toggle"
+                  type="checkbox"
+                  checked={useAgenticMode}
+                  onChange={e => setUseAgenticMode(e.target.checked)}
+                  className="detail-agentic-toggle"
+                  title={t('detail.agentic_mode_help') || 'Use AI with corpus search to write more accurate descriptions'}
+                />
+                <span className="detail-agentic-mode-label">{t('detail.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}</span>
+              </label>
+              <p className="detail-agentic-mode-hint">
+                {t('detail.agentic_mode_hint') || 'AI searches the corpus to match your style and depth'}
+              </p>
+            </div>
+          )}
+          <div className="detail-ai-revision-row">
+            <textarea
+              id="ai-note"
+              value={aiNote}
+              onChange={e => setAiNote(e.target.value)}
+              placeholder={t('detail.ai_revision_placeholder')}
+              className="detail-input detail-input--textarea"
+              rows={3}
+            />
+            <button
+              ref={aiRevisionButtonRef}
+              onClick={handleRefine}
+              disabled={refining || animating || !aiNote.trim()}
+              aria-busy={refining ? true : undefined}
+              className="btn--primary detail-ai-revision-btn btn--height-standard"
+              aria-label={refining ? t('detail.rewriting_aria') : t('detail.ai_revision_aria')}
+            >
+              {refining
+                ? <><span className="btn-icon"><Loader2 size={12} strokeWidth={2} className="detail-revising-spinner" aria-hidden="true" /></span><span>{t('detail.rewriting_text')}</span></>
+                : <><span className="btn-icon"><Sparkles size={12} strokeWidth={2} className="detail-ai-revision-icon" aria-hidden="true" /></span><span>{t('detail.ai_revision_save_text')}</span></>}
+            </button>
+          </div>
+          {(descText !== finding.desc || fixText !== finding.fix) && (
+            <p className="detail-edit-warning" role="status">
+              <AlertCircle size={16} aria-hidden="true" className="detail-edit-warning-icon" />
+              {t('detail.edit_lang_warning')}
+            </p>
+          )}
+        </div>
+      )}
 
       <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
       <SourceLinks
