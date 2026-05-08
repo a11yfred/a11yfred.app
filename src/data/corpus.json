@@ -2231,7 +2231,7 @@
     "severity": "High",
     "platform": "both",
     "desc": "The keyboard focus order does not match the visual reading order, focus is not moved to new content when it appears, focus is placed on elements without user initiation, or focus is not returned to the trigger when a dialog closes. These failures cause keyboard and screen reader users to lose their place in the page, encounter content in the wrong sequence, or be surprised by unexpected focus movement.",
-    "fix": "Ensure the DOM order matches the visual order so Tab sequence is logical. When a modal opens, move focus to the first interactive element inside it. When a modal closes, return focus to the element that triggered it. When content is dynamically inserted or updated, move focus to the new content or to a summary element. Do not move focus to elements the user has not interacted with. For native apps, use accessibilityElements (iOS) or accessibility traversal order (Android) to define a logical focus sequence.",
+    "fix": "Ensure the DOM order matches the visual order so Tab sequence is logical. When a modal opens, move focus to the first interactive element inside it. When a modal closes, return focus to the element that triggered it. When content is dynamically inserted or updated, move focus to the new content or to a summary element. Do not move focus to elements the user has not interacted with. Avoid positive tabindex values (tabindex=\"1\", tabindex=\"2\", and so on): they create an unpredictable priority tab ring that overrides natural DOM order and is a common cause of illogical focus sequences. For native apps, use accessibilityElements (iOS) or accessibility traversal order (Android) to define a logical focus sequence.",
     "creditNames": [
       "WCAG",
       "W3C WAI APG"
@@ -2418,7 +2418,7 @@
     "severity": "High",
     "platform": "web",
     "desc": "The page has no headings, uses headings that skip levels without reason, applies heading markup to non-heading content, or uses headings with generic or empty text. Screen reader users navigate pages primarily by heading. A missing or broken heading structure means users cannot skim to a section, understand the page hierarchy, or jump to content they need.",
-    "fix": "Use a single h1 for the main page title. Use h2 for major sections, h3 for sub-sections, and so on. Do not skip heading levels to achieve visual styling. Do not use heading elements on content that is not a section title. Heading text must describe the section it introduces. An empty heading element is a failure.",
+    "fix": "Use a single h1 for the main page title. Use h2 for major sections, h3 for sub-sections, and so on. Do not skip heading levels to achieve visual styling. Do not use heading elements on content that is not a section title. Heading text must describe the section it introduces. An empty heading element is a failure. A page with no h1 at all is a common instance: screen reader users expect the h1 as the primary entry point when navigating by heading, and its absence forces linear top-to-bottom traversal.",
     "creditNames": [
       "WCAG",
       "WebAIM"
@@ -3478,7 +3478,7 @@
     "severity": "Critical",
     "platform": "web",
     "desc": "A custom interactive component such as a combobox, menu, tree, or tablist does not implement the keyboard interaction pattern screen reader users expect. Users who know the standard pattern navigate incorrectly and cannot operate the widget. Custom select widgets that are inaccessible are a common instance of this failure.",
-    "fix": "Implement the WAI-ARIA Authoring Practices Guide pattern for the widget type. Each composite widget type (menu, tree, grid, tablist, combobox, listbox) has documented keyboard interactions. For example, a combobox requires arrow key navigation in the list, Enter to select, and Escape to close. Native HTML equivalents (select, input type=\"checkbox\") implement these patterns automatically and are strongly preferred.",
+    "fix": "Implement the WAI-ARIA Authoring Practices Guide pattern for the widget type. Each composite widget type (menu, tree, grid, tablist, combobox, listbox) has documented keyboard interactions. For example, a combobox requires arrow key navigation in the list, Enter to select, and Escape to close. Native HTML equivalents (select, input type=\"checkbox\") implement these patterns automatically and are strongly preferred. ARIA tab patterns (tablist, tab, tabpanel) are a frequent source of this failure: arrow key navigation inside the tab list surprises many users and the pattern is commonly implemented incompletely. If the tabs reveal content panels on the same page, a button-per-panel approach with aria-expanded is often simpler and equally valid.",
     "creditNames": [
       "WCAG",
       "W3C WAI APG"
@@ -3836,8 +3836,8 @@
     "wcagVersion": "2.0",
     "severity": "Critical",
     "platform": "native",
-    "desc": "A slider, stepper, rating control, or other adjustable element in a native app does not implement the accessibility actions that allow VoiceOver and TalkBack users to increment or decrement the value. Users who interact with the control through assistive technology cannot change its value.",
-    "fix": "iOS UIKit: implement the UIAccessibilityTraitAdjustable trait and the accessibilityIncrement() and accessibilityDecrement() methods on custom adjustable views. SwiftUI: use the accessibilityAdjustableAction modifier to handle increment and decrement. Android: implement custom AccessibilityNodeInfoCompat actions for increase and decrease on custom adjustable views.",
+    "desc": "A slider, stepper, rating control, or other adjustable element in a native app does not implement the accessibility actions that allow VoiceOver and TalkBack users to increment or decrement the value. Users who interact with the control through assistive technology cannot change its value. The same principle applies to any contextual actions exposed through swipe gestures or long-press menus: if those actions are not mirrored as custom accessibility actions, VoiceOver and TalkBack users lose access to them entirely.",
+    "fix": "iOS UIKit: implement the UIAccessibilityTraitAdjustable trait and the accessibilityIncrement() and accessibilityDecrement() methods on custom adjustable views. SwiftUI: use the accessibilityAdjustableAction modifier to handle increment and decrement. Android: implement custom AccessibilityNodeInfoCompat actions for increase and decrease on custom adjustable views. For contextual actions available through swipe gestures or long-press menus (delete, reply, archive): iOS: add UIAccessibilityCustomAction objects to the accessibilityCustomActions array of the view, one per action, with a clear name and handler block. Android: override onInitializeAccessibilityNodeInfo and call info.addAction() with AccessibilityNodeInfoCompat.AccessibilityActionCompat for each contextual action.",
     "creditNames": [
       "WCAG",
       "Apple",
@@ -3854,7 +3854,13 @@
       "TalkBack",
       "accessibilityIncrement",
       "accessibilityAdjustableAction",
-      "native app"
+      "native app",
+      "custom action",
+      "swipe action",
+      "context menu",
+      "long press",
+      "UIAccessibilityCustomAction",
+      "delete action"
     ],
     "relatedSC": [
       "2.1.1 Keyboard (Level A)"
@@ -4090,205 +4096,6 @@
       {
         "text": "APG Accordion Pattern",
         "url": "https://www.w3.org/WAI/ARIA/apg/patterns/accordion/"
-      }
-    ]
-  },
-  {
-    "id": "ACC-107",
-    "sc": "4.1.2",
-    "title": "Custom Accessibility Actions Not Provided (Native App)",
-    "wcagLevel": "A",
-    "wcagVersion": "2.0",
-    "severity": "High",
-    "platform": "native",
-    "desc": "Contextual actions available through swipe gestures, long-press menus, or custom interactions are not exposed to assistive technology. VoiceOver users cannot use the rotor or swipe up/down to reveal actions on a focused element, and TalkBack users have no equivalent accessibility action. Users who rely on assistive technology or cannot perform complex gestures lose access to these features entirely.",
-    "fix": "iOS: add UIAccessibilityCustomAction objects to the accessibilityCustomActions array of the affected view. Provide a clear action name and a handler block for each. For list rows with swipe actions (delete, reply, archive), mirror each swipe option as a custom action. SwiftUI: use the accessibilityAction modifier. Android: override onInitializeAccessibilityNodeInfo and add AccessibilityNodeInfoCompat.AccessibilityActionCompat actions for each contextual operation. For RecyclerView items, expose each action this way. Test with VoiceOver (swipe up/down on the element) and TalkBack (double-tap-hold gesture).",
-    "creditNames": [
-      "WCAG",
-      "Apple",
-      "Google"
-    ],
-    "keywords": [
-      "custom action",
-      "accessibility action",
-      "UIAccessibilityCustomAction",
-      "AccessibilityAction",
-      "VoiceOver",
-      "TalkBack",
-      "swipe action",
-      "context menu",
-      "long press",
-      "delete action",
-      "reply action",
-      "rotor",
-      "native gesture",
-      "iOS",
-      "Android"
-    ],
-    "relatedSC": [
-      "2.1.1 Keyboard (Level A)"
-    ],
-    "primarySC": "4.1.2 Name, Role, Value (Level A)",
-    "creditLinks": [
-      {
-        "text": "Understanding 4.1.2 Name, Role, Value (Level A)",
-        "url": "https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html"
-      },
-      {
-        "text": "Apple: UIAccessibilityCustomAction",
-        "url": "https://developer.apple.com/documentation/uikit/uiaccessibilitycustomaction"
-      }
-    ],
-    "note": "Severity is commonly High. It rises to Critical when the hidden contextual actions are the only way to perform a task, for example when a swipe-to-delete action is the sole delete path."
-  },
-  {
-    "id": "ACC-108",
-    "sc": "",
-    "title": "Positive tabindex Values Disrupt Keyboard Focus Order",
-    "wcagLevel": "A",
-    "wcagVersion": "2.0",
-    "severity": "Best Practice",
-    "platform": "web",
-    "desc": "Elements use positive tabindex values (tabindex=\"1\", tabindex=\"2\", and so on) to manually control the keyboard focus sequence. Positive tabindex creates a separate priority tab ring that moves before anything with tabindex=\"0\" or no tabindex. This is nearly impossible to maintain correctly as content changes and routinely produces confusing, unpredictable focus order in practice.",
-    "fix": "Remove all positive tabindex values. Use tabindex=\"0\" to include a custom interactive element in the natural document order, and tabindex=\"-1\" to make an element focusable by script without placing it in the tab sequence. Fix focus order problems by reordering elements in the DOM, not by overriding with tabindex integers.",
-    "creditNames": [
-      "Deque",
-      "Adrian Roselli"
-    ],
-    "keywords": [
-      "tabindex",
-      "positive tabindex",
-      "tabindex 1",
-      "tabindex 2",
-      "focus order",
-      "tab order",
-      "tab sequence",
-      "keyboard navigation",
-      "focus management"
-    ],
-    "relatedSC": [
-      "2.4.3 Focus Order (Level A)"
-    ],
-    "primarySC": "",
-    "creditLinks": [
-      {
-        "text": "Deque: Avoid positive tabindex",
-        "url": "https://dequeuniversity.com/tips/tabindex-positive-numbers"
-      }
-    ]
-  },
-  {
-    "id": "ACC-109",
-    "sc": "",
-    "title": "Custom CSS Scrollbar Overrides User Accessibility Settings",
-    "wcagLevel": "AA",
-    "wcagVersion": "2.1",
-    "severity": "Best Practice",
-    "platform": "web",
-    "desc": "Custom CSS scrollbar styles override the operating system native scrollbars. Custom scrollbars commonly become invisible or unusable in Windows Forced Colors Mode (High Contrast), ignore OS-level scrollbar width preferences configured by low-vision users, and frequently fail the 3:1 non-text contrast requirement against their background. Users who depend on scrollbar visibility for orientation lose a functional navigation aid.",
-    "fix": "Remove custom scrollbar CSS (::-webkit-scrollbar, scrollbar-color, scrollbar-width: thin). Let the browser render native scrollbars that automatically adapt to OS accessibility settings, including Forced Colors Mode and user-defined scrollbar sizes. If a styled scrollbar is required for design reasons, test it against all forced-colors media query states and verify the track, thumb, and gutter each pass 3:1 contrast against their respective backgrounds.",
-    "creditNames": [
-      "Eric Bailey",
-      "WCAG"
-    ],
-    "keywords": [
-      "custom scrollbar",
-      "css scrollbar",
-      "::-webkit-scrollbar",
-      "scrollbar-color",
-      "scrollbar styling",
-      "scrollbar contrast",
-      "scrollbar visibility",
-      "forced colors",
-      "high contrast mode",
-      "windows high contrast",
-      "low vision"
-    ],
-    "relatedSC": [
-      "1.4.11 Non-text Contrast (Level AA)"
-    ],
-    "primarySC": "",
-    "creditLinks": [
-      {
-        "text": "Eric Bailey: Don't use custom CSS scrollbars",
-        "url": "https://ericwbailey.website/published/dont-use-custom-css-scrollbars"
-      }
-    ]
-  },
-  {
-    "id": "ACC-110",
-    "sc": "",
-    "title": "Page Has No H1 Heading",
-    "wcagLevel": "AA",
-    "wcagVersion": "2.0",
-    "severity": "Best Practice",
-    "platform": "both",
-    "desc": "The page has no h1 heading. WCAG does not require a specific h1, but the h1 is the most predictable entry point for screen reader users navigating by heading. Without it, users who skip to the first heading to orient themselves find either nothing or a heading that does not name the page topic.",
-    "fix": "Add a single h1 to each page that names the main topic or purpose of that page. On pages where the page title and the h1 would be identical, that is expected and correct. Avoid multiple h1 elements on a single page. All section headings should use h2 through h6 in logical descending order beneath the h1.",
-    "creditNames": [
-      "TPGi",
-      "WCAG"
-    ],
-    "keywords": [
-      "h1",
-      "heading",
-      "heading level one",
-      "missing h1",
-      "no h1",
-      "page structure",
-      "screen reader navigation",
-      "heading navigation"
-    ],
-    "relatedSC": [
-      "2.4.6 Headings and Labels (Level AA)",
-      "1.3.1 Info and Relationships (Level A)"
-    ],
-    "primarySC": "",
-    "creditLinks": [
-      {
-        "text": "TPGi: When do headings fail WCAG?",
-        "url": "https://www.tpgi.com/when-do-headings-fail-wcag/"
-      }
-    ]
-  },
-  {
-    "id": "ACC-111",
-    "sc": "",
-    "title": "ARIA Tab Pattern Used Where a Simpler Alternative Would Work",
-    "wcagLevel": "A",
-    "wcagVersion": "2.1",
-    "severity": "Best Practice",
-    "platform": "web",
-    "desc": "The component uses ARIA tabs (role=\"tablist\", role=\"tab\", role=\"tabpanel\"), which require arrow key navigation inside the tab list. Many users do not expect arrow key navigation in this context, and the pattern is difficult to implement correctly. Common failures include arrow keys not working, Tab key skipping the tab panel, or the selected tab not being announced. Adopting the ARIA tab pattern incurs a high implementation cost for a user experience that simpler patterns can match.",
-    "fix": "Consider replacing ARIA tabs with a simpler pattern. If the tabs link to different pages or sections, use real anchor links. If the tabs show and hide content panels on the same page, a group of buttons each controlling a panel with aria-expanded, or an accordion pattern, provides equivalent functionality with a lower implementation burden and a more predictable keyboard experience. If you keep ARIA tabs, implement the full APG Tabs pattern: arrow keys move between tabs in the tablist, Tab moves focus to the active tabpanel, and the correct aria-selected and aria-controls relationships are set.",
-    "creditNames": [
-      "WAI-ARIA APG",
-      "Heydon Pickering"
-    ],
-    "keywords": [
-      "aria tabs",
-      "aria tab",
-      "tablist",
-      "tabpanel",
-      "tab role",
-      "arrow key navigation",
-      "keyboard pattern",
-      "overengineering",
-      "accordion alternative"
-    ],
-    "relatedSC": [
-      "4.1.2 Name, Role, Value (Level A)",
-      "2.1.1 Keyboard (Level A)"
-    ],
-    "primarySC": "",
-    "creditLinks": [
-      {
-        "text": "APG: Tabs Pattern",
-        "url": "https://www.w3.org/WAI/ARIA/apg/patterns/tabs/"
-      },
-      {
-        "text": "Inclusive Components: Tabbed Interfaces",
-        "url": "https://inclusive-components.design/tabbed-interfaces/"
       }
     ]
   },
@@ -9046,7 +8853,7 @@
       "unlabeled select",
       "visible"
     ],
-    "desc": "A select element or custom dropdown has no label. Screen reader users hear the control announced without context -- for example, hearing the options without knowing whether the field is for country, language, or quantity.",
+    "desc": "A select element or custom dropdown has no label. Screen reader users hear the control announced without context, for example hearing the options without knowing whether the field is for country, language, or quantity.",
     "fix": "Add a visible label element with a for attribute that matches the select element's id. If you cannot show a visible label, use aria-label or aria-labelledby instead.",
     "sources": [
       {
