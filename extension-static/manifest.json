@@ -1,6 +1,6 @@
-{
+﻿{
   "manifest_version": 3,
-  "name": "A11yTextHelper",
+  "name": "A11yHelper",
   "short_name": "A11yText",
   "version": "0.1.0",
   "description": "Accessibility audit writing assistant — search WCAG findings and copy polished defect descriptions.",
@@ -9,7 +9,7 @@
     "default_path": "index.html"
   },
   "action": {
-    "default_title": "A11yTextHelper"
+    "default_title": "A11yHelper"
   },
   "background": {
     "service_worker": "background.js"

@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite'
+﻿import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // Uncomment and set to your repo name when deploying to a GitHub Pages subpath.
 // Leave as '/' for Netlify or root-path GitHub Pages.
-//const REPO_NAME = 'a11ytexthelper'
+//const REPO_NAME = 'A11yHelper'
 
 export default defineConfig({
   plugins: [react()],

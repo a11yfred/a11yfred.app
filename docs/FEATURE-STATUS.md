@@ -1,6 +1,6 @@
-# Feature Status
+﻿# Feature Status
 
-Living tracker of every feature in A11yTextHelper, what is shipped, what is half-done, and what has not started.
+Living tracker of every feature in A11yHelper, what is shipped, what is half-done, and what has not started.
 
 Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed · 🔲 Not started
 

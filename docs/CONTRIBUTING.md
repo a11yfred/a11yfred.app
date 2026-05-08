@@ -1,12 +1,12 @@
-# Contributing
+﻿# Contributing
 
 Contributions welcome, especially finding entries, keyword improvements, and bug fixes.
 
 ## Setup
 
 ```bash
-git clone https://github.com/<your-username>/a11ytexthelper
-cd a11ytexthelper
+git clone https://github.com/<your-username>/A11yHelper
+cd A11yHelper
 npm install
 npm run dev   # http://localhost:5173
 ```

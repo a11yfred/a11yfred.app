@@ -1,5 +1,5 @@
-{
-  "app.name": "A11yTextHelper",
+﻿{
+  "app.name": "A11yHelper",
   "app.tagline": "A searchable library of accessibility findings you can copy into any report",
 
   "common.close": "Close",
@@ -18,7 +18,7 @@
   "header.close_settings": "Close settings",
   "header.open_about": "About this app",
 
-  "onboarding.heading": "Welcome to A11yTextHelper",
+  "onboarding.heading": "Welcome to A11yHelper",
   "onboarding.skip_tour": "Skip Tour",
   "onboarding.next": "Next",
   "onboarding.back": "Back",

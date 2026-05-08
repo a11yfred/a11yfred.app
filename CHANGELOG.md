@@ -1,6 +1,6 @@
-# Changelog
+﻿# Changelog
 
-All notable changes to A11yTextHelper are documented here.
+All notable changes to A11yHelper are documented here.
 
 ## [Unreleased]
 

@@ -1,6 +1,6 @@
-# TODO
+﻿# TODO
 
-Personal backlog for A11yTextHelper. Active items only. Remaining scope is listed explicitly for partial items.
+Personal backlog for A11yHelper. Active items only. Remaining scope is listed explicitly for partial items.
 
 Items are ordered **high value + low effort first** within each section.
 

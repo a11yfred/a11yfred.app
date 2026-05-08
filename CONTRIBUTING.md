@@ -1,6 +1,6 @@
-# Contributing
+﻿# Contributing
 
-Guidelines for working on A11yTextHelper (during development and for open source contributors).
+Guidelines for working on A11yHelper (during development and for open source contributors).
 
 ## Branch Protection
 

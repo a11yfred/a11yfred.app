@@ -1,4 +1,4 @@
-# debug plugin
+﻿# debug plugin
 
 Dev-only diagnostic tools: keyboard focus tracking, accessible names, live announcements, deployment banners. Renders nothing in production (localhost-only via `IS_DEV` checks).
 
@@ -78,7 +78,7 @@ These commands control the `DeployBanner`. Use them to check banner appearance d
 
 Anything project-specific is wired up in the application layer and passed to `DebugHelp` via the `customCommands` prop. These are not part of the plugin itself.
 
-### Example: A11yTextHelper
+### Example: A11yHelper
 
 | Command | Where | Effect |
 | ------- | ----- | ------ |

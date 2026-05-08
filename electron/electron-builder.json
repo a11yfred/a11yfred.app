@@ -1,6 +1,6 @@
-{
-  "appId": "com.mikeyilagan.a11ytexthelper",
-  "productName": "A11yTextHelper",
+﻿{
+  "appId": "com.mikeyilagan.A11yHelper",
+  "productName": "A11yHelper",
   "copyright": "Copyright © 2025 Mikey Ilagan",
   "directories": {
     "buildResources": "build",

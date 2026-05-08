@@ -1,11 +1,11 @@
-# Firefox Extension Pre-Launch Checklist
+﻿# Firefox Extension Pre-Launch Checklist
 
 ## Required before submission
 
 - [ ] Add PNG icons at 16, 48, and 96px — reference them in `manifest.json` under `"icons"` and `"sidebar_action.default_icon"`
 - [ ] Load temporarily in Firefox: `about:debugging` → This Firefox → Load Temporary Add-on → pick `dist-extension-firefox/manifest.json`
 - [ ] Test in Firefox: search, copy, settings save, AI refine (confirm fetch to external APIs is not blocked)
-- [ ] Create an account on addons.mozilla.org (AMO) and register the extension ID `a11ytexthelper@mikeyilagan.com`
+- [ ] Create an account on addons.mozilla.org (AMO) and register the extension ID `A11yHelper@mikeyilagan.com`
 - [ ] Sync version in `manifest.json` with `package.json` before each release
 - [ ] Submit build zip to AMO for review (AMO requires source code submission for minified JS)
 

@@ -1,6 +1,16 @@
-# Updates
+﻿# Updates
 
 Plain-language record of what changed and why. For technical details see `CHANGELOG.md`.
+
+---
+
+## May 8, 2026
+
+### App renamed from A11yTextHelper to A11yHelper
+
+The app is now called **A11yHelper** with the domain **a11yhelper.app**. The previous name was a mouthful that leaned too hard into describing the tool mechanically. A11yHelper is cleaner, more brandable, and easier to say out loud.
+
+All references updated across 89 files: `package.json`, `index.html`, `App.jsx`, all 64 locale JSON files, all docs, extension manifests, Electron builder config, and plugin/script files.
 
 ---
 
@@ -496,7 +506,7 @@ Service Worker now caches the app shell and corpus JSON, enabling full offline s
 
 Three distribution targets are now in active development on feature branches. The same React app powers all of them — no source rewrites needed.
 
-**Chrome extension** (`feature/chrome-extension`) — runs as a Chrome side panel, which opens beside whatever page you're auditing. That's the natural fit for an audit tool: you search A11yTextHelper on the left, review the page on the right, copy and paste. Build with `npm run build:extension`, then load the `dist-extension/` folder as an unpacked extension in Chrome.
+**Chrome extension** (`feature/chrome-extension`) — runs as a Chrome side panel, which opens beside whatever page you're auditing. That's the natural fit for an audit tool: you search A11yHelper on the left, review the page on the right, copy and paste. Build with `npm run build:extension`, then load the `dist-extension/` folder as an unpacked extension in Chrome.
 
 **Firefox extension** (`feature/firefox-extension`) — same idea, using Firefox's sidebar instead. No background script needed; Firefox opens the sidebar automatically when you click the extension icon. Build with `npm run build:extension:firefox`, load temporarily via `about:debugging`.
 
@@ -627,7 +637,7 @@ Type `debug help` in the search bar to see all available commands in a floating 
 
 ### Debug Launcher (opt-in FAB)
 
-The debug plugin now includes a floating action button that can be enabled for any project. When active it sits in the corner like an accessibility overlay button and opens a spotlight-style command input — useful for projects that don't have a search bar or command field to type debug commands into. A11yTextHelper leaves it off by default since commands go in the search bar, but it's one prop change to enable.
+The debug plugin now includes a floating action button that can be enabled for any project. When active it sits in the corner like an accessibility overlay button and opens a spotlight-style command input — useful for projects that don't have a search bar or command field to type debug commands into. A11yHelper leaves it off by default since commands go in the search bar, but it's one prop change to enable.
 
 ### Easter egg improvements
 
@@ -930,7 +940,7 @@ The router plugin README has been fully rewritten to cover the Drawer and Bottom
 
 ### GitHub link in the footer now works
 
-The "Fork on GitHub" link at the bottom of the page now points to the actual repo at github.com/mikeyil/a11ytexthelper. It was a placeholder before.
+The "Fork on GitHub" link at the bottom of the page now points to the actual repo at github.com/mikeyil/A11yHelper. It was a placeholder before.
 
 ### Docs moved to their own folder
 
@@ -1071,6 +1081,6 @@ The layout is now properly mobile-first — it works well on a phone and expands
 
 ## April 23, 2026 — Initial build
 
-First working version of A11yTextHelper. Type a description of a defect, get matching entries from the corpus, pick one, optionally add a location prefix ("Global:", "Cart:", etc.), and copy the text straight into your audit spreadsheet.
+First working version of A11yHelper. Type a description of a defect, get matching entries from the corpus, pick one, optionally add a location prefix ("Global:", "Cart:", etc.), and copy the text straight into your audit spreadsheet.
 
 AI assist is off by default. Turn it on in Settings, add your API key for the provider of your choice, and the Refine field will rewrite the description and remediation based on your note.

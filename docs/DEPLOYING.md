@@ -1,4 +1,4 @@
-# Deploying A11yTextHelper
+﻿# Deploying A11yHelper
 
 Three deployment targets are configured. Only one should be active at a time.
 
@@ -27,7 +27,7 @@ Three deployment targets are configured. Only one should be active at a time.
 git checkout -b feature/new-search
 git commit -am "Add fuzzy search"
 git push origin feature/new-search
-# → Netlify builds automatically to https://deploy-preview-1--a11ytexthelper.netlify.app
+# → Netlify builds automatically to https://deploy-preview-1--A11yHelper.netlify.app
 
 # Test the preview, then merge
 git checkout main
@@ -38,7 +38,7 @@ git push origin main
 # Release day, tag and push to production
 git tag v0.1.0
 git push origin v0.1.0
-# → Netlify builds and deploys to https://a11ytexthelper.com (or your domain)
+# → Netlify builds and deploys to https://a11yhelper.app (or your domain)
 ```
 
 **Rate limit:** ~20-30 builds/month (2-3 per feature + 1 per release) vs. 300/month limit. Safe.
@@ -73,7 +73,7 @@ Requires the repository to be **public** (GitHub free plan restriction).
 1. Make the repository public.
 2. In GitHub: **Settings → Pages → Source → GitHub Actions**.
 3. In `vite.config.js`: uncomment the `REPO_NAME` lines and set the name if deploying
-   to a subpath (`https://user.github.io/a11ytexthelper/`). Leave `base: '/'` for a
+   to a subpath (`https://user.github.io/A11yHelper/`). Leave `base: '/'` for a
    custom domain at the root.
 4. In `.github/workflows/deploy-pages.yml`: uncomment the `push` trigger block
    and comment out `workflow_dispatch`.

@@ -1,6 +1,15 @@
-# Changelog
+﻿# Changelog
 
-All significant changes to A11yTextHelper, newest first.
+All significant changes to A11yHelper, newest first.
+
+---
+
+## 2026-05-08
+
+### App rename: A11yTextHelper → A11yHelper
+
+- Renamed app from A11yTextHelper to A11yHelper; domain updated to a11yhelper.app
+- Updated 89 files: package.json, index.html, App.jsx, all 64 locale JSON files, all docs, extension manifests, Electron builder config, plugin and script files
 
 ---
 
@@ -1120,7 +1129,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 - `/about` promoted from component state to a hash route (`route === '/about'`)
 - `/defect/:id` route added: selecting a defect navigates there; closing navigates back; settings/about close restores the defect URL if one was open behind them
 - Auto-select on cold load: if the page is opened at `/#/defect/ATH-023`, the matching defect is found and selected once data finishes loading
-- Document title now updates to `A11yTextHelper | <defect title>` when the detail panel is the foreground view
+- Document title now updates to `A11yHelper | <defect title>` when the detail panel is the foreground view
 
 ### UI fixes
 
@@ -1577,7 +1586,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 ### Footer
 
-- `src/App.jsx` — GitHub link updated from placeholder to actual repository URL: `https://github.com/mikeyil/a11ytexthelper`
+- `src/App.jsx` — GitHub link updated from placeholder to actual repository URL: `https://github.com/mikeyil/A11yHelper`
 
 ### Docs reorganization
 
