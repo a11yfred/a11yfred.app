@@ -301,6 +301,7 @@ function AppContent({
       if (!selected) findingTriggerRef.current = document.activeElement
       if (viewAll) returnViewAllRef.current = true
       sessionStorage.setItem('lastSelectedId', finding.id)
+      recordOpen(finding.id)
       try {
         const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
         const deduped = recent.filter(id => id !== finding.id)
@@ -322,6 +323,7 @@ function AppContent({
     if (!finding) return
     setFindingHistory(h => selected ? [...h, selected] : h)
     sessionStorage.setItem('lastSelectedId', finding.id)
+    recordOpen(finding.id)
     try {
       const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
       const deduped = recent.filter(id => id !== finding.id)
@@ -349,9 +351,15 @@ function AppContent({
   const [findingHistory, setFindingHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
-  const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings } = useFindingRatings()
-  const { pinnedIds, togglePin, clearPins } = usePinnedFindings()
-  const { recordCopy, getPairsFor } = useCoSelection()
+  const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings, recordPin, recordOpen, recordCopy } = useFindingRatings()
+  const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedFindings()
+  const togglePin = useCallback((id) => {
+    const isPinning = !pinnedIds.has(id)
+    if (isPinning && ratings[id]?.archived) toggleArchive(id)
+    if (isPinning) recordPin(id)
+    _togglePin(id)
+  }, [pinnedIds, ratings, toggleArchive, recordPin, _togglePin])
+  const { getPairsFor } = useCoSelection()
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
   const userOverridesHook = useUserOverrides()
@@ -360,14 +368,36 @@ function AppContent({
   const activeQuery = liveSearch ? query : submittedQuery
   const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
-  const [sortBy, setSortBy] = useState('relevance')
+  const [sortBy, setSortBy] = useState('smart')
 
   const SEVERITY_SORT_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }
+  const SEVERITY_SCORE     = { Critical: 40, High: 30, Medium: 20, Low: 10, 'Best Practice': 5 }
   const WCAG_VERSION_ORDER = { '2.0': 0, '2.1': 1, '2.2': 2 }
   const WCAG_LEVEL_ORDER = { A: 0, AA: 1, AAA: 2 }
   const PLATFORM_ORDER = { web: 0, native: 1, document: 2 }
 
+  const smartScore = useCallback((f, index) => {
+    const r = ratings[f.id]
+    let score = SEVERITY_SCORE[f.severity] ?? 0
+    if (r?.starred) {
+      score += 50
+      if (r.starredAt) {
+        const days = (Date.now() - r.starredAt) / 86400000
+        score += Math.log1p(days)
+      }
+    }
+    if (r?.score)      score += r.score * 10
+    if (r?.popularity) score += (r.popularity ?? 0) * 2
+    if (r?.archived)   score -= 100
+    score -= index * 0.1
+    return score
+  }, [ratings]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const applySortBy = useCallback((arr) => {
+    if (sortBy === 'smart') {
+      const scores = new Map(arr.map((f, i) => [f.id, smartScore(f, i)]))
+      return [...arr].sort((a, b) => scores.get(b.id) - scores.get(a.id))
+    }
     if (sortBy === 'severity-desc') return [...arr].sort((a, b) => (SEVERITY_SORT_ORDER[a.severity] ?? 99) - (SEVERITY_SORT_ORDER[b.severity] ?? 99))
     if (sortBy === 'severity-asc')  return [...arr].sort((a, b) => (SEVERITY_SORT_ORDER[b.severity] ?? 99) - (SEVERITY_SORT_ORDER[a.severity] ?? 99))
     if (sortBy === 'title-az') return [...arr].sort((a, b) => a.title.localeCompare(b.title))
@@ -376,9 +406,10 @@ function AppContent({
     if (sortBy === 'wcag-version') return [...arr].sort((a, b) => (WCAG_VERSION_ORDER[a.wcagVersion] ?? 99) - (WCAG_VERSION_ORDER[b.wcagVersion] ?? 99))
     if (sortBy === 'wcag-level')   return [...arr].sort((a, b) => (WCAG_LEVEL_ORDER[a.wcagLevel] ?? 99) - (WCAG_LEVEL_ORDER[b.wcagLevel] ?? 99))
     if (sortBy === 'platform')     return [...arr].sort((a, b) => (PLATFORM_ORDER[a.platform] ?? 99) - (PLATFORM_ORDER[b.platform] ?? 99))
-    if (sortBy === 'popularity')   return [...arr].sort((a, b) => ((ratings[b.id]?.score ?? 0) - (ratings[a.id]?.score ?? 0)))
+    if (sortBy === 'popularity')   return [...arr].sort((a, b) => ((ratings[b.id]?.popularity ?? 0) - (ratings[a.id]?.popularity ?? 0)))
+    if (sortBy === 'relevance')    return arr
     return arr
-  }, [sortBy, ratings]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [sortBy, ratings, smartScore]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const pinnedResults = useMemo(() =>
     allFindings.filter(f => pinnedIds.has(f.id)),
@@ -863,7 +894,6 @@ function AppContent({
       {!dataError && !dataLoading && !viewAllLoading && pinnedIds.size > 0 && (
         <PinnedSection
           findings={pinnedResults}
-          selected={selected}
           onSelect={handleSelectFinding}
           ratings={ratings}
           onRankUp={rankUp}
@@ -1311,7 +1341,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
             label={t('common.close')}
             title={t('common.close')}
             icon={<X size={20} strokeWidth={2.5} aria-hidden="true" />}
-            variant="accent"
             className="page-header__close-btn"
           />
         ) : !onboardingOpen && (
@@ -1321,7 +1350,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               label={t('help.open_help')}
               title={t('help.open_help')}
               icon={<HelpCircle size={20} strokeWidth={2} aria-hidden="true" />}
-              variant="accent"
               className="page-header__help-btn"
             />
             <IconButton
@@ -1329,7 +1357,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               label={t('header.open_about')}
               title={t('header.open_about')}
               icon={<Info size={20} strokeWidth={2} aria-hidden="true" />}
-              variant="accent"
               className="page-header__about-btn"
             />
             <IconButton
@@ -1337,7 +1364,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               label={t('header.open_settings')}
               title={t('header.open_settings')}
               icon={<Settings size={20} strokeWidth={2} aria-hidden="true" />}
-              variant="accent"
               className="page-header__settings-btn"
             />
           </>

@@ -247,8 +247,8 @@ export default function AdminPanel({
           <h2 className="admin-section__title">Corpus</h2>
           <div className="admin-dataset-tabs">
             {[
-              { key: 'public',   label: 'Public',   count: accCorpus.length },
-              { key: 'legacy',   label: 'Legacy',   count: athCorpus.length },
+              { key: 'public',   label: 'Public',   count: publicCorpus.length },
+              { key: 'legacy',   label: 'Legacy',   count: legacyCorpus.length },
               { key: 'personal', label: 'Personal', count: personalCorpus.length },
             ].map(({ key, label, count }) => (
               <button

@@ -103,6 +103,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 .sheet-panel.is-collapsed {
   transform: translateX(-50%) translateY(calc(100% - var(--sheet-chrome-height)));
+  outline: 1px solid var(--accent);
 }
 
 /* Chrome row — handle centered via absolute positioning; close button in normal
@@ -125,7 +126,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transform: translate(-50%, -50%);
   width: 2.5rem;
   height: 4px;
-  background: var(--border-control);
+  background: var(--accent-text);
   border-radius: var(--radius-full);
   pointer-events: none;
 }
@@ -135,30 +136,17 @@ body:has(.modal-panel.is-open) .drawer-panel {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  min-width: 44px;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: background var(--duration-fast);
-}
-
-.sheet-handle--btn:hover {
-  background: var(--bg-subtle);
-}
-
-.sheet-handle--btn:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus);
-  outline-offset: var(--focus-outline-offset);
+  color: var(--accent-text);
 }
 
 .sheet-close-btn {
   flex-shrink: 0;
+}
+
+.btn--icon.sheet-close-btn,
+.btn--icon.sheet-handle--btn,
+.btn--icon.sheet-back-btn {
+  color: var(--accent-text);
 }
 
 .sheet-back-btn {
@@ -218,6 +206,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
 .sheet-close-bottom-btn {
   display: block;
   width: auto;
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius);
   font-size: var(--fs-body);

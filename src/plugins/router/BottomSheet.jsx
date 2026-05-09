@@ -173,7 +173,7 @@ export default function BottomSheet({
         <div ref={chromeRef} className="sheet-chrome">
           {isDesktop ? (
             <button
-              className="sheet-handle--btn"
+              className="btn--icon sheet-handle--btn"
               aria-label={collapsed ? 'Expand sheet' : 'Collapse sheet'}
               onClick={() => onCollapse?.(!collapsed)}
             >
@@ -189,7 +189,7 @@ export default function BottomSheet({
             <button
               onClick={onBack}
               aria-label={backLabel}
-              className="btn--icon btn--icon-accent sheet-back-btn"
+              className="btn--icon sheet-back-btn"
             >
               <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" role="presentation" />
             </button>
@@ -197,7 +197,7 @@ export default function BottomSheet({
           <button
             onClick={onClose}
             aria-label={closeLabel}
-            className="btn--icon btn--icon-accent sheet-close-btn"
+            className="btn--icon sheet-close-btn"
           >
             <CloseIcon size={20} strokeWidth={2.5} aria-hidden="true" />
           </button>

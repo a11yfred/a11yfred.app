@@ -66,13 +66,13 @@
   /* Typography — scale (rem, base 16px browser default)
      4 stops only. Nothing in the UI should use a size below --fs-small.
 
-     --fs-small    12px — metadata, labels, fine print (absolute minimum)
+     --fs-small    14px — metadata, labels, fine print (absolute minimum)
      --fs-body     16px — body copy, inputs, result titles, button text
      --fs-sub      18px — card headings, slightly emphasized text
      --fs-heading  24px — panel / section headings (h2 inside dialogs/panels)
 
      The page h1 uses --fs-h1, overridden on desktop below. */
-  --fs-small:   0.75rem;  /* 12px */
+  --fs-small:   0.875rem; /* 14px */
   --fs-body:    1rem;     /* 16px */
   --fs-sub:     1.125rem; /* 18px */
   --fs-heading: 1.5rem;   /* 24px */

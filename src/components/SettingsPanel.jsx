@@ -142,7 +142,9 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
   const [saved, setSaved] = useState(false)
   const privacyOpen = route === '/settings/privacy'
+  const [privacyCollapsed, setPrivacyCollapsed] = useState(false)
   const [rhgPending, setRhgPending] = useState(false)
+  const [partyConfirmOpen, setPartyConfirmOpen] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
@@ -338,7 +340,10 @@ const SettingsPanel = forwardRef(function SettingsPanel({
               value={value}
               label={t(labelKey)}
               current={pendingTheme}
-              onChange={(val) => { setPendingTheme(val); announce(t(announceKey)) }}
+              onChange={(val) => {
+                if (val === 'party') { setPartyConfirmOpen(true); return }
+                setPendingTheme(val); announce(t(announceKey))
+              }}
             />
           ))}
         </div>
@@ -757,6 +762,8 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <BottomSheet
         open={privacyOpen}
         onClose={() => navigate('/settings')}
+        collapsed={privacyCollapsed}
+        onCollapse={setPrivacyCollapsed}
         label={t('settings.privacy_heading')}
         closeLabel={t('common.close')}
         returnFocusRef={privacyButtonRef}
@@ -817,7 +824,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         <div className="settings-reset-sheet">
           <h2 className="sheet-heading">{t('settings.confirm_reset_all_heading')}</h2>
 
-          <div className="settings-reset-warning">
+          <div className="alert-banner alert-banner--warning">
             <AlertTriangle size={18} aria-hidden="true" />
             <p>{t('settings.confirm_reset_all_intro')}</p>
           </div>
@@ -886,6 +893,18 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         heading={t('settings.no_changes_heading')}
       >
         <p>{t('settings.no_changes_body')}</p>
+      </Modal>
+
+      <Modal
+        open={partyConfirmOpen}
+        onClose={() => setPartyConfirmOpen(false)}
+        heading={t('settings.party_confirm_heading')}
+        actions={[
+          { label: t('settings.party_confirm_yes'), onClick: () => { setPendingTheme('party'); announce(t('settings.theme_party_announce')); setPartyConfirmOpen(false) }, className: 'btn--primary' },
+          { label: t('settings.party_confirm_no'),  onClick: () => setPartyConfirmOpen(false), className: 'btn--tertiary' },
+        ]}
+      >
+        <p>{t('settings.party_confirm_body')}</p>
       </Modal>
     </Panel>
   )

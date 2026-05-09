@@ -13,25 +13,25 @@ import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
 
-export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins, headingRef }) {
+export function PinnedSection({ findings, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins, headingRef }) {
   const t = useT()
   if (!findings.length) return null
   return (
     <div className="pinned-section pinned-results">
-      <div className={`pinned-section__header${showRanking ? ' pinned-section__header--with-sort' : ''}`}>
+      <div className="pinned-section__header">
         <h2 ref={headingRef} tabIndex={-1} className="pinned-section__heading">
           {t('results.pinned_heading')}
           <span className="pinned-section__count">{findings.length}</span>
         </h2>
         {onClearPins && (
-          <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={onClearPins}>
+          <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={onClearPins} icon={<PinOff size={14} aria-hidden="true" />}>
             {t('results.unpin_all')}
           </Button>
         )}
       </div>
       <ResultList
         results={findings}
-        selected={selected}
+        selected={null}
         onSelect={onSelect}
         query=""
         ratings={ratings}
@@ -50,7 +50,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRa
   )
 }
 
-export default function ResultList({ results, selected, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange }) {
   const t = useT()
   const itemRefs = useRef({})
   const focusNextRef = useRef(null)
@@ -227,6 +227,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
                   }}
                   wrapClass="results-sort-select-wrap"
                 >
+                  <option value="smart">{t('results.sort_smart')}</option>
                   {query && <option value="relevance">{t('results.sort_relevance')}</option>}
                   <option value="severity-desc">{t('results.sort_severity_desc')}</option>
                   <option value="severity-asc">{t('results.sort_severity_asc')}</option>
@@ -441,7 +442,10 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
                   ref={el => { itemRefs.current[finding.id] = el }}
                   href={`#/finding/${finding.id}/${findingSlug(finding.title)}`}
                   aria-label={cardLabel}
-                  onClick={archived ? e => e.preventDefault() : undefined}
+                  onClick={e => {
+                    e.preventDefault()
+                    if (!archived) onSelect?.(finding)
+                  }}
                   onKeyDown={e => {
                     if (e.key === 'ArrowDown') { e.preventDefault(); itemRefs.current[results[index + 1]?.id]?.focus() }
                     if (e.key === 'ArrowUp')   { e.preventDefault(); itemRefs.current[results[index - 1]?.id]?.focus() }
@@ -513,7 +517,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
               )}
               </div>
 
-              {showRanking && <div className="result-rank-col">
+              {showRanking && !pinned && <div className="result-rank-col">
                 <IconButton
                   variant="tertiary"
                   label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
