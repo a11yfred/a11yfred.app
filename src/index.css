@@ -1243,7 +1243,6 @@ select:disabled {
 
 .result-list {
   list-style: none;
-  margin-top: 2em;
 }
 
 /* Each row holds the vote column + the selectable card side by side */
