@@ -514,7 +514,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
               )}
               </div>
 
-              {showRanking && <div className="result-rank-col">
+              {showRanking && !pinned && <div className="result-rank-col">
                 <IconButton
                   variant="tertiary"
                   label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}

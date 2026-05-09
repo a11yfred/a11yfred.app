@@ -2193,7 +2193,8 @@ input[type="radio"].control:not(:checked):hover {
   margin-bottom: 4px;
 }
 
-.detail-field-row:has(:disabled) .detail-label {
+.detail-field-row:has(:disabled) .detail-label,
+.detail-label--disabled {
   color: var(--text-body);
 }
 

@@ -516,7 +516,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
       {aiEnabled && (
         <div className="detail-section">
-          <label htmlFor="ai-note" className="detail-label">{aiRevisionLabel}</label>
+          <label htmlFor="ai-note" className={`detail-label${animating ? ' detail-label--disabled' : ''}`}>{aiRevisionLabel}</label>
           <p className="detail-ai-revision-hint">
             {t('detail.ai_revision_hint')}{' '}
             <a href="/settings" className="detail-settings-link">{t('common.settings')}</a>.

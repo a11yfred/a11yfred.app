@@ -350,7 +350,12 @@ function AppContent({
   const sessionRestoredRef = useRef(false)
 
   const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings } = useFindingRatings()
-  const { pinnedIds, togglePin, clearPins } = usePinnedFindings()
+  const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedFindings()
+  const togglePin = useCallback((id) => {
+    const isPinning = !pinnedIds.has(id)
+    if (isPinning && ratings[id]?.archived) toggleArchive(id)
+    _togglePin(id)
+  }, [pinnedIds, ratings, toggleArchive, _togglePin])
   const { recordCopy, getPairsFor } = useCoSelection()
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
