@@ -1352,7 +1352,7 @@ input.search-input--disabled {
   display: inline-block;
   animation: typewriter-fade 2.5s ease both;
   font-style: italic;
-  color: var(--accent);
+  color: var(--accent-text);
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 18ch;
@@ -1369,7 +1369,7 @@ input.search-input--disabled {
 }
 
 .search-typewriter__phrase:hover {
-  color: var(--accent-text);
+  color: var(--text-heading);
   text-decoration-style: solid;
 }
 
