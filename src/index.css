@@ -3596,7 +3596,7 @@ input[type="radio"].settings-checkbox:checked {
 
 .field__footer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 1em;
   margin-top: 0;
