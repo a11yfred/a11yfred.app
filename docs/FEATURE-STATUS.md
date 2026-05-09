@@ -290,7 +290,6 @@ Missing:
 Done:
 
 - Public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
-- 169 personal corpus entries (gitignored); fully normalized across titles, desc, and fix fields
 - Platform classification across web-only, web & mobile, iOS, Android, and other variants
 - All entries 100% sourced with minimum 2 expert sources each
 - Sources deep-linked where available (e.g., Roselli's "Where to Put Focus When Opening a Modal Dialog")
