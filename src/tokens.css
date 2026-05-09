@@ -15,10 +15,13 @@
   --border-control:  #767676;
 
   /* Color — text
-     All values checked for ≥ 4.5:1 contrast against --bg (#fff). */
-  --text:            #111;  /* 15.9:1 */
-  --text-muted:      #666;  /* 5.7:1  */
-  --text-faint:      #696969;  /* 5.5:1 on white — comfortable passing margin */
+     All values checked for ≥ 4.5:1 contrast against --bg (#fff).
+     --text-heading  headings, labels, strong emphasis (12.9:1)
+     --text-body     body copy, default paragraph text (5.7:1)
+     --text-muted    secondary/supplementary text, minimum passing (4.6:1) */
+  --text-heading:    #2b2b2b;  /* 12.9:1 */
+  --text-body:       #666;     /*  5.7:1 — body copy */
+  --text-muted:      #767676;  /*  4.6:1 — secondary text, minimum passing */
   --text-disabled:   #b5b5b5;  /* intentionally below 4.5:1 — disabled controls (WCAG 1.4.3 exception) */
 
   /* Color — accent */
@@ -159,9 +162,9 @@
   --border:      #2a2a2a;
 
   /* Dark mode text: all ≥ 4.5:1 against --bg (#111). */
-  --text:          #eee;  /* 13.7:1 */
-  --text-muted:    #999;  /*  5.8:1 */
-  --text-faint:    #909090;  /*  5.0:1 */
+  --text-heading:  #eee;     /* 13.7:1 */
+  --text-body:     #999;     /*  5.8:1 — body copy */
+  --text-muted:    #888;     /*  4.7:1 — secondary text, minimum passing */
   --text-disabled: #505050;  /* intentionally below 4.5:1 — disabled controls (WCAG 1.4.3 exception) */
 
   --accent:      #7f77dd;
@@ -219,16 +222,17 @@
 /* Increased contrast for users who have requested it (WCAG 1.4.6) */
 @media (prefers-contrast: more) {
   :root {
-    --text-muted:      #444;
-    --text-faint:      #555;
+    --text-body:      #444;
+    --text-muted:      #555;
     --border-control:  #555;
     --border:          #aaa;
   }
 
   [data-theme="dark"] {
-    --text-muted:      #ccc;
-    --text-faint:      #bbb;
+    --text-body:      #ccc;
+    --text-muted:      #bbb;
     --border-control:  #aaa;
     --border:          #555;
   }
 }
+

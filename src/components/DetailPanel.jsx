@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw } from 'lucide-react'
+import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Info, Save } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { getAgenticRefinement } from '../services/agenticAiService.js'
 import { useMediaQuery, Modal } from '../plugins/router/index.js'
@@ -7,6 +7,7 @@ import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
+import Toggle from './ui/Toggle.jsx'
 
 import InputWithClear from './ui/InputWithClear.jsx'
 import Badge from './ui/Badge.jsx'
@@ -361,9 +362,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           {finding.wcagVersion && finding.wcagLevel && (
             <button
               type="button"
-              className="wcag-badge"
+              className="badge--wcag"
               style={{ '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }}
-              onClick={() => onBadgeClick?.({ type: 'wcag', value: finding.wcagVersion })}
+              onClick={() => onBadgeClick?.({ type: 'wcag', value: finding.wcagVersion, level: finding.wcagLevel })}
               aria-label={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel}, ${t('results.badge_filter_aria')}`}
             >
               <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
@@ -423,7 +424,14 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         </ul>
       </div>
 
-      <div className="detail-field-row">
+      {finding.note && (
+        <div className="detail-corpus-note">
+          <h3 className="detail-corpus-note-label"><Info size={13} aria-hidden="true" className="detail-corpus-note-icon" />{t('detail.note_label')}</h3>
+          <p className="detail-corpus-note-body">{finding.note}</p>
+        </div>
+      )}
+
+      <div className="detail-section">
         <label htmlFor="location-prefix" className="detail-label">
           {t('detail.location_label')}
           {!location.trim() && <span className="detail-optional">{' '}{t('common.optional')}</span>}
@@ -439,6 +447,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           wrapClassName="detail-location-input-wrap"
           inputClassName="detail-input"
           clearButtonClassName="btn--primary detail-location-clear-btn"
+          disabled={animating}
         />
       </div>
 
@@ -484,24 +493,17 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         includeTitleLabel={t('detail.include_fix_title_when_copied')}
       />
 
-      {finding.note && (
-        <div className="detail-corpus-note">
-          <h3 className="detail-corpus-note-label">{t('detail.note_label')}</h3>
-          <p className="detail-corpus-note-body">{finding.note}</p>
-        </div>
-      )}
-
-      <div className="detail-finding-note">
+      <div className="detail-section">
         <label htmlFor="finding-note" className="detail-label">{t('detail.finding_note_label')}</label>
-        <div className="detail-finding-note-row">
-          <textarea
-            id="finding-note"
-            value={findingNote}
-            onChange={e => setFindingNote(e.target.value)}
-            placeholder={t('detail.finding_note_placeholder')}
-            className="detail-input detail-input--textarea"
-            rows={3}
-          />
+        <textarea
+          id="finding-note"
+          value={findingNote}
+          onChange={e => setFindingNote(e.target.value)}
+          placeholder={t('detail.finding_note_placeholder')}
+          className="detail-input detail-input--textarea"
+          rows={3}
+        />
+        <div className="detail-section-controls">
           <button
             onClick={() => {
               localStorage.setItem(`finding_note_${finding.id}`, findingNote)
@@ -510,18 +512,18 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
               setTimeout(() => setFindingNoteSaved(false), NOTIFICATION_TIMEOUT)
             }}
             disabled={!findingNote.trim()}
-            className={`btn--primary detail-finding-note-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
+            className={`btn--primary detail-section-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
             aria-label={findingNoteSaved ? t('detail.saved_finding_note_aria') : t('detail.save_finding_note_aria')}
           >
             {findingNoteSaved
-              ? <><span className="btn-icon"><Check size={14} aria-hidden="true" /></span><span>{t('detail.saved_finding_note_text')}</span></>
-              : t('detail.save_finding_note_text')}
+              ? <><Check size={14} aria-hidden="true" /><span>{t('detail.saved_finding_note_text')}</span></>
+              : <><Save size={14} aria-hidden="true" /><span>{t('detail.save_finding_note_text')}</span></>}
           </button>
         </div>
       </div>
 
       {aiEnabled && (
-        <div className="detail-ai-revision">
+        <div className="detail-section">
           <label htmlFor="ai-note" className="detail-label">{aiRevisionLabel}</label>
           <p className="detail-ai-revision-hint">
             {t('detail.ai_revision_hint')}{' '}
@@ -548,34 +550,32 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
               />
               <span>{fixLabel}</span>
             </label>
+          </div>
+          <textarea
+            id="ai-note"
+            value={aiNote}
+            onChange={e => setAiNote(e.target.value)}
+            placeholder={t('detail.ai_revision_placeholder')}
+            className="detail-input detail-input--textarea"
+            rows={3}
+          />
+          <div className="detail-section-controls">
             {localStorage.getItem('ai_provider') === 'anthropic' && (
-              <label className="detail-ai-field-select-item detail-ai-field-select-item--agentic">
-                <input
-                  type="checkbox"
-                  className="app-checkbox"
+              <label className="detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
+                <span className="detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
+                <Toggle
+                  id="agentic-mode-toggle"
                   checked={useAgenticMode}
-                  onChange={e => setUseAgenticMode(e.target.checked)}
-                  disabled={animating}
+                  onChange={setUseAgenticMode}
                 />
-                <span>{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
               </label>
             )}
-          </div>
-          <div className="detail-ai-revision-row">
-            <textarea
-              id="ai-note"
-              value={aiNote}
-              onChange={e => setAiNote(e.target.value)}
-              placeholder={t('detail.ai_revision_placeholder')}
-              className="detail-input detail-input--textarea"
-              rows={3}
-            />
             <button
               ref={aiRevisionButtonRef}
               onClick={handleRefine}
               disabled={refining || animating || !aiNote.trim()}
               aria-busy={refining ? true : undefined}
-              className="btn--primary detail-ai-revision-btn btn--height-standard"
+              className="btn--primary detail-section-btn btn--height-standard"
               aria-label={refining ? t('detail.rewriting_aria') : t('detail.ai_revision_aria')}
             >
               {refining
@@ -614,7 +614,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         </button>
         <button
           type="button"
-          className={`btn--secondary detail-action-btn btn--height-standard${copiedAll ? ' btn__field--success' : ''}`}
+          className={`btn--primary detail-action-btn btn--height-standard${copiedAll ? ' btn__field--success' : ''}`}
           onClick={handleCopyAll}
           aria-label={t('detail.copy_all_aria')}
         >

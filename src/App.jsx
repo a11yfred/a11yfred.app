@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useMemo, lazy, Suspense } from 'react'
+﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
 import { Settings, X, Info, HelpCircle, ExternalLink, ChevronDown } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
@@ -45,7 +45,7 @@ const AdminPanel = import.meta.env.DEV
 // Cleaned up when switching to any other theme.
 const PARTY_KEYS = [
   '--bg', '--bg-subtle', '--border', '--border-control',
-  '--text', '--text-muted', '--text-faint', '--text-disabled',
+  '--text-heading', '--text-body', '--text-muted', '--text-disabled',
   '--accent', '--accent-bg', '--accent-text', '--focus', '--success', '--overlay-bg',
   '--severity-critical-text', '--severity-critical-bg',
   '--severity-high-text', '--severity-high-bg',
@@ -63,9 +63,9 @@ function generatePartyPalette() {
     '--bg-subtle':       `hsl(${h},    75%, 80%)`,
     '--border':          `hsl(${h},    50%, 68%)`,
     '--border-control':  `hsl(${comp}, 55%, 30%)`,
-    '--text':            `hsl(${comp}, 70%,  8%)`,
-    '--text-muted':      `hsl(${comp}, 45%, 22%)`,
-    '--text-faint':      `hsl(${comp}, 35%, 32%)`,
+    '--text-heading':            `hsl(${comp}, 70%,  8%)`,
+    '--text-body':      `hsl(${comp}, 45%, 22%)`,
+    '--text-muted':      `hsl(${comp}, 35%, 32%)`,
     '--text-disabled':   `hsl(${comp}, 20%, 58%)`,
     '--accent':          `hsl(${tri},  85%, 38%)`,
     '--accent-bg':       `hsl(${tri},  75%, 88%)`,
@@ -123,7 +123,7 @@ function AppShell() {
   )
   const partyUnlocked = saveCount >= 2 || theme === 'party'
   const [liveSearch, setLiveSearch] = useState(() => localStorage.getItem('liveSearch') !== 'false')
-  const [showVoting, setShowVoting] = useState(() => localStorage.getItem('showVoting') !== 'false')
+  const [showVoting, setShowVoting] = useState(() => localStorage.getItem('showRanking') !== 'false')
   const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get('q') || '')
   const [submittedQuery, setSubmittedQuery] = useState(() => new URLSearchParams(window.location.search).get('q') || '')
   const [searchKey, setSearchKey] = useState(0)
@@ -201,6 +201,12 @@ function AppContent({
   const didMount = useRef(false)
   const aboutWasOpenRef = useRef(false)
   const settingsTriggerRef = useRef(null)
+  const settingsPanelRef = useRef(null)
+  const pinnedHeadingRef = useRef(null)
+  const handleGuardedCloseSettings = () => {
+    if (settingsPanelRef.current) { settingsPanelRef.current.guardedClose() }
+    else { handleCloseSettings() }
+  }
   const aboutTriggerRef = useRef(null)
   const helpTriggerRef = useRef(null)
   const onboardingTriggerRef = useRef(null)
@@ -213,9 +219,13 @@ function AppContent({
     const colonIdx = badge.indexOf(':')
     if (colonIdx < 0) return null
     const type = badge.slice(0, colonIdx)
-    const value = badge.slice(colonIdx + 1)
-    if (!['severity', 'source', 'wcag'].includes(type) || !value) return null
-    return { type, value }
+    const rest = badge.slice(colonIdx + 1)
+    if (!['severity', 'source', 'wcag'].includes(type) || !rest) return null
+    if (type === 'wcag' && rest.includes('|')) {
+      const [value, level] = rest.split('|')
+      return { type, value, level }
+    }
+    return { type, value: rest }
   })
   const resultsCountRef = useRef(null)
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
@@ -321,7 +331,7 @@ function AppContent({
   const [findingHistory, setFindingHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
-  const { ratings, rankUp, rankDown, toggleStar, toggleArchive } = useFindingRatings()
+  const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings } = useFindingRatings()
   const { pinnedIds, togglePin, clearPins } = usePinnedFindings()
   const { recordCopy, getPairsFor } = useCoSelection()
   const userFindingsHook = useUserFindings()
@@ -332,6 +342,25 @@ function AppContent({
   const activeQuery = liveSearch ? query : submittedQuery
   const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
+  const [sortBy, setSortBy] = useState('relevance')
+
+  const SEVERITY_SORT_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }
+  const WCAG_VERSION_ORDER = { '2.0': 0, '2.1': 1, '2.2': 2 }
+  const WCAG_LEVEL_ORDER = { A: 0, AA: 1, AAA: 2 }
+  const PLATFORM_ORDER = { web: 0, native: 1, document: 2 }
+
+  const applySortBy = useCallback((arr) => {
+    if (sortBy === 'severity-desc') return [...arr].sort((a, b) => (SEVERITY_SORT_ORDER[a.severity] ?? 99) - (SEVERITY_SORT_ORDER[b.severity] ?? 99))
+    if (sortBy === 'severity-asc')  return [...arr].sort((a, b) => (SEVERITY_SORT_ORDER[b.severity] ?? 99) - (SEVERITY_SORT_ORDER[a.severity] ?? 99))
+    if (sortBy === 'title-az') return [...arr].sort((a, b) => a.title.localeCompare(b.title))
+    if (sortBy === 'title-za') return [...arr].sort((a, b) => b.title.localeCompare(a.title))
+    if (sortBy === 'sc')           return [...arr].sort((a, b) => (a.primarySC ?? '').localeCompare(b.primarySC ?? ''))
+    if (sortBy === 'wcag-version') return [...arr].sort((a, b) => (WCAG_VERSION_ORDER[a.wcagVersion] ?? 99) - (WCAG_VERSION_ORDER[b.wcagVersion] ?? 99))
+    if (sortBy === 'wcag-level')   return [...arr].sort((a, b) => (WCAG_LEVEL_ORDER[a.wcagLevel] ?? 99) - (WCAG_LEVEL_ORDER[b.wcagLevel] ?? 99))
+    if (sortBy === 'platform')     return [...arr].sort((a, b) => (PLATFORM_ORDER[a.platform] ?? 99) - (PLATFORM_ORDER[b.platform] ?? 99))
+    if (sortBy === 'popularity')   return [...arr].sort((a, b) => ((ratings[b.id]?.score ?? 0) - (ratings[a.id]?.score ?? 0)))
+    return arr
+  }, [sortBy, ratings]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const pinnedResults = useMemo(() =>
     allFindings.filter(f => pinnedIds.has(f.id)),
@@ -339,8 +368,8 @@ function AppContent({
   )
 
   const unpinnedResults = useMemo(() =>
-    results.filter(f => !pinnedIds.has(f.id)),
-    [results, pinnedIds]
+    applySortBy(results.filter(f => !pinnedIds.has(f.id))),
+    [results, pinnedIds, applySortBy]
   )
 
   const pinnedSearchMatches = useMemo(() =>
@@ -354,7 +383,7 @@ function AppContent({
       const p = SEVERITY_VARS[badgeFilter.value]
       return p ? t(p.key) : badgeFilter.value
     }
-    if (badgeFilter.type === 'wcag') return `WCAG ${badgeFilter.value}`
+    if (badgeFilter.type === 'wcag') return badgeFilter.level ? `WCAG ${badgeFilter.value}, Level ${badgeFilter.level}` : `WCAG ${badgeFilter.value}`
     return badgeFilter.value
   }, [badgeFilter, t])
 
@@ -368,7 +397,8 @@ function AppContent({
         if (badgeFilter.value === 'N/A') {
           return !f.wcagVersion || f.wcagVersion === ''
         }
-        return f.wcagVersion === badgeFilter.value
+        const versionMatch = f.wcagVersion === badgeFilter.value
+        return badgeFilter.level ? versionMatch && f.wcagLevel === badgeFilter.level : versionMatch
       }
       return false
     })
@@ -400,12 +430,7 @@ function AppContent({
 
   const handleBadgeClick = (filter) => {
     setBadgeFilter(filter)
-    const label = filter.type === 'severity'
-      ? (SEVERITY_VARS[filter.value] ? t(SEVERITY_VARS[filter.value].key) : filter.value)
-      : filter.type === 'wcag'
-        ? `WCAG ${filter.value}`
-        : filter.value
-    setQuery(label)
+    setQuery('')
     setSubmittedQuery('')
     syncBadgeUrl(filter)
     setSelected(null)
@@ -430,6 +455,11 @@ function AppContent({
     if (liveSearchHadResultsRef.current) announce(t('results.loading_announce'))
     if (results.length > 0) liveSearchHadResultsRef.current = true
   }, [query]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setNarrowMode(false)
+    setNarrowQuery('')
+  }, [activeQuery]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!viewAllLoading) return
@@ -510,8 +540,8 @@ function AppContent({
     }
   }, [language]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => { localStorage.setItem('liveSearch', liveSearch) }, [liveSearch])
-  useEffect(() => { localStorage.setItem('showVoting', showVoting) }, [showVoting])
+  useEffect(() => { localStorage.setItem('liveSearch', String(liveSearch)) }, [liveSearch])
+  useEffect(() => { localStorage.setItem('showRanking', String(showVoting)) }, [showVoting])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
 
   // WCAG 2.4.3: restore focus to the trigger button (or h1) when settings/about close.
@@ -622,7 +652,10 @@ function AppContent({
   const syncBadgeUrl = (filter) => {
     const url = new URL(window.location.href)
     if (filter) {
-      url.searchParams.set('badge', `${filter.type}:${filter.value}`)
+      const badgeValue = filter.type === 'wcag' && filter.level
+        ? `${filter.type}:${filter.value}|${filter.level}`
+        : `${filter.type}:${filter.value}`
+      url.searchParams.set('badge', badgeValue)
       url.searchParams.delete('q')
     } else {
       url.searchParams.delete('badge')
@@ -668,6 +701,7 @@ function AppContent({
     setBadgeFilter(null)
     syncBadgeUrl(null)
     handleSelectFinding(null)
+    setNarrowMode(false)
     if (document.querySelector('.search-input')) {
       document.querySelector('.search-input').focus()
     }
@@ -685,15 +719,12 @@ function AppContent({
   const settingsLanguage = EASTER_EGG_LOCALES.has(language) ? 'en' : language
 
   const handleResetAll = () => {
-    const defaultLang = navigator.language || 'en'
-    // Clear all persisted data
     localStorage.clear()
-    // Reset React state to defaults
     setSaveCount(0)
     setTheme('auto')
-    setLanguage(defaultLang)
+    setLanguage('en')
     setPlatform('web')
-    setWcagFilter({ show20: true, show21: true, show22: true })
+    setWcagFilter({ maxVersion: '2.2', maxLevel: 'AA' })
     setLiveSearch(true)
     setShowVoting(true)
     setAiEnabled(false)
@@ -703,6 +734,7 @@ function AppContent({
     setViewAllConfirmOpen(false)
     setViewAllLoading(false)
     clearPins()
+    clearAllRatings()
     announce(t('settings.reset_all_announce'), { priority: 'assertive' })
   }
 
@@ -730,23 +762,28 @@ function AppContent({
     })
   }
 
+  const handleSettingsSave = ({ theme: t, language: l, platform: p, liveSearch: ls, showVoting: sv, aiEnabled: ai, wcagFilter: wf }) => {
+    setTheme(t)
+    setLanguage(l)
+    setPlatform(p)
+    setLiveSearch(ls)
+    setShowVoting(sv)
+    setAiEnabled(ai)
+    setWcagFilter(wf)
+    try { localStorage.setItem('wcagFilter', JSON.stringify(wf)) } catch { /* localStorage unavailable */ }
+  }
+
   const settingsProps = {
     aiEnabled,
-    onToggleAi: () => { setAiEnabled(a => !a) },
     liveSearch,
-    onToggleLiveSearch: () => { setLiveSearch(s => !s) },
     showVoting,
-    onToggleVoting: () => { setShowVoting(v => !v) },
     theme,
-    onThemeChange: (t) => { setTheme(t) },
     language: settingsLanguage,
-    onLanguageChange: (l) => { setLanguage(l) },
     platform,
-    onPlatformChange: (p) => { setPlatform(p) },
     wcagFilter,
-    onWcagFilterChange: (f) => { setWcagFilter(f); try { localStorage.setItem('wcagFilter', JSON.stringify(f)) } catch { /* localStorage unavailable */ } },
     partyUnlocked,
     onUnlock: unlock,
+    onSave: handleSettingsSave,
     onClose: () => {
       if (selected) navigate(`/finding/${selected.id}/${findingSlug(selected.title)}`)
       else handleCloseSettings()
@@ -758,6 +795,8 @@ function AppContent({
     onClearStarred: handleClearStarred,
     hasArchived: Object.values(ratings).some(r => r.archived),
     onClearArchived: handleClearArchived,
+    hasRankings: Object.values(ratings).some(r => r.score !== 0),
+    onResetRankings: resetRankings,
   }
 
   const adminProps = {
@@ -816,7 +855,8 @@ function AppContent({
           showRanking={showVoting}
           pinnedIds={pinnedIds}
           onPin={togglePin}
-          onClearPins={clearPins}
+          onClearPins={() => { clearPins(); setTimeout(() => resultsCountRef.current?.focus(), 0) }}
+          headingRef={pinnedHeadingRef}
         />
       )}
       {dataError
@@ -834,7 +874,9 @@ function AppContent({
             ? (
               <ResultList
                 key="view-all"
-                results={sortedFindings.filter(f => !pinnedIds.has(f.id))}
+                results={applySortBy(sortedFindings.filter(f => !pinnedIds.has(f.id)))}
+                sortBy={sortBy}
+                onSortChange={setSortBy}
                 selected={selected}
                 onSelect={handleSelectFinding}
                 query=""
@@ -891,6 +933,8 @@ function AppContent({
                   <ResultList
                     key="search"
                     results={unpinnedResults}
+                    sortBy={sortBy}
+                    onSortChange={setSortBy}
                     selected={selected}
                     onSelect={handleSelectFinding}
                     query={activeQuery}
@@ -926,7 +970,9 @@ function AppContent({
                 ? (
                   <ResultList
                     key="badge"
-                    results={badgeResults}
+                    results={applySortBy(badgeResults)}
+                    sortBy={sortBy}
+                    onSortChange={setSortBy}
                     selected={selected}
                     onSelect={handleSelectFinding}
                     query=""
@@ -939,7 +985,7 @@ function AppContent({
                     showRankingSort={showVoting}
                     countRef={resultsCountRef}
                     pinnedIds={pinnedIds}
-                    onPin={togglePin}
+                    onPin={(id) => { const wasPin = !pinnedIds.has(id); togglePin(id); if (wasPin) setTimeout(() => pinnedHeadingRef.current?.focus(), 0) }}
                     filterLabel={badgeFilterLabel}
                     showAds={showAds}
                     adFrequency={adFrequency}
@@ -993,7 +1039,7 @@ function AppContent({
           },
         ]}
       >
-        <p>{t('search.view_all_confirm_body', { count: allFindings.length })}</p>
+        <p>{t('search.view_all_confirm_body', { count: sortedFindings.length })}</p>
         <label className="view-all-dont-ask-label">
           <input
             type="checkbox"
@@ -1096,7 +1142,7 @@ function AppContent({
           helpOpen={helpOpen}
           onboardingOpen={onboardingOpen}
           onOpenSettings={handleOpenSettings}
-          onCloseSettings={handleCloseSettings}
+          onCloseSettings={handleGuardedCloseSettings}
           onOpenAbout={handleOpenAbout}
           onCloseAbout={handleCloseAbout}
           onOpenHelp={handleOpenHelp}
@@ -1112,7 +1158,7 @@ function AppContent({
               : adminOpen
                 ? <AdminPanel {...adminProps} />
                 : isDesktop && settingsOpen
-                  ? <SettingsPanel {...settingsProps} />
+                  ? <SettingsPanel ref={settingsPanelRef} {...settingsProps} />
                   : isDesktop && aboutOpen
                     ? <AboutPanel onClose={handleCloseAbout} />
                     : isDesktop && helpOpen
@@ -1126,9 +1172,9 @@ function AppContent({
       </div>
 
       {!isDesktop && (
-        <Drawer open={settingsOpen} onClose={handleCloseSettings} label={t('settings.drawer_label')} focusOnClose={settingsTriggerRef}>
+        <Drawer open={settingsOpen} onClose={handleGuardedCloseSettings} label={t('settings.drawer_label')} focusOnClose={settingsTriggerRef}>
           <Suspense fallback={null}>
-            <SettingsPanel {...settingsProps} />
+            <SettingsPanel ref={settingsPanelRef} {...settingsProps} />
           </Suspense>
         </Drawer>
       )}
@@ -1326,11 +1372,11 @@ function Footer() {
         {nameIdx >= 0 ? (
           <>
             {credit.slice(0, nameIdx)}
-            <strong>Mikey Ilagan</strong>
+            <a href="https://www.mikey.fyi?ref=a11yhelper" target="_blank" rel="noreferrer" className="footer-link"><strong>Mikey Ilagan</strong></a>
             {credit.slice(nameIdx + 12)}
           </>
         ) : credit}
-        {' · '}
+        <br />
         <a
           href="https://github.com/sponsors/mikeyil"
           target="_blank"

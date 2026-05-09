@@ -6,13 +6,13 @@ import Button from './ui/Button.jsx'
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.
 const TYPEWRITER_PHRASES = [
-  { text: 'modals' },
-  { text: 'buttons' },
-  { text: 'focus management' },
-  { text: 'wcag 2.2' },
-  { text: 'mobile devices' },
-  { text: 'content' },
-  { text: 'ext kb mobile', aria: 'external keyboard mobile' },
+  { text: 'keyboard' },
+  { text: 'screen reader' },
+  { text: 'color contrast' },
+  { text: 'form labels' },
+  { text: 'dialog' },
+  { text: 'heading structure' },
+  { text: 'touch target' },
   { text: 'voiceover' },
 ]
 const CYCLE_MS = 2500
@@ -35,7 +35,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
     inputRef.current?.focus()
   }
 
-  const platformLabel = platform === 'web' ? t('settings.platform_web') : t('settings.platform_native')
+  const platformLabel = platform === 'document' ? t('settings.platform_document') : platform === 'native' ? t('settings.platform_native') : t('settings.platform_web')
   const currentPhrase = TYPEWRITER_PHRASES[phraseIdx]
 
   const inputLabel = t('search.label')

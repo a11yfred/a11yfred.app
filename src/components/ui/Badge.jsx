@@ -1,5 +1,5 @@
 export default function Badge({ variant, bg, color, prefix, onClick, className, children, ...rest }) {
-  const cls = `${variant}-badge${className ? ` ${className}` : ''}`
+  const cls = `badge--${variant}${className ? ` ${className}` : ''}`
   const style = (bg || color)
     ? { '--badge-bg': bg, '--badge-text': color }
     : undefined

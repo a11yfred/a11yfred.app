@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save } from 'lucide-react'
+import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
+import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw } from 'lucide-react'
 import { Modal, BottomSheet, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -80,17 +80,18 @@ const LANGUAGES = [
   { value: 'vi',    label: 'Tiếng Việt',           en: 'Vietnamese' },
 ]
 
-export default function SettingsPanel({
-  aiEnabled, onToggleAi,
-  liveSearch, onToggleLiveSearch,
-  showVoting, onToggleVoting,
-  theme, onThemeChange,
-  language, onLanguageChange,
-  platform, onPlatformChange,
-  wcagFilter, onWcagFilterChange,
+const SettingsPanel = forwardRef(function SettingsPanel({
+  aiEnabled,
+  liveSearch,
+  showVoting,
+  theme,
+  language,
+  platform,
+  wcagFilter,
   partyUnlocked,
   onUnlock,
   onClose,
+  onSave,
   onReset,
   hasPins,
   onClearPins,
@@ -98,7 +99,9 @@ export default function SettingsPanel({
   onClearStarred,
   hasArchived,
   onClearArchived,
-}) {
+  hasRankings,
+  onResetRankings,
+}, ref) {
   const saveButtonRef = useRef(null)
   const privacyButtonRef = useRef(null)
   const resetButtonRef = useRef(null)
@@ -109,52 +112,80 @@ export default function SettingsPanel({
   const settingsPanelRef = useRef(null)
   const [errors, setErrors] = useState({})
 
+  // ── Pending state for all settings ─────────────────────────────────────────
+  const [pendingTheme, setPendingTheme] = useState(theme)
+  const [pendingLanguage, setPendingLanguage] = useState(language)
+  const [pendingPlatform, setPendingPlatform] = useState(platform)
+  const [pendingLiveSearch, setPendingLiveSearch] = useState(liveSearch)
+  const [pendingShowVoting, setPendingShowVoting] = useState(showVoting)
+  const [pendingAiEnabled, setPendingAiEnabled] = useState(aiEnabled)
+  const [pendingWcagFilter, setPendingWcagFilter] = useState(wcagFilter ?? { maxVersion: '2.2', maxLevel: 'AA' })
+  const [pendingAgenticMode, setPendingAgenticMode] = useState(
+    () => localStorage.getItem('agentic_mode') === 'true'
+  )
+
+  // ── AI provider / key / model state ────────────────────────────────────────
   const [keys, setKeys] = useState(() =>
-    // Electron: keys live in safeStorage, loaded async in the useEffect below
     Object.fromEntries(PROVIDERS.map(p => [p.id, window.electronAPI ? '' : localStorage.getItem(`apikey_${p.id}`) || '']))
   )
   const [activeProvider, setActiveProvider] = useState(
     () => localStorage.getItem('ai_provider') || 'anthropic'
   )
+  const [models, setModels] = useState(initModels)
+
+  // Saved snapshots to diff against for hasUnsaved
+  const [savedKeys] = useState(() =>
+    Object.fromEntries(PROVIDERS.map(p => [p.id, window.electronAPI ? '' : localStorage.getItem(`apikey_${p.id}`) || '']))
+  )
+  const [savedProvider] = useState(() => localStorage.getItem('ai_provider') || 'anthropic')
+  const [savedModels] = useState(initModels)
+
   const [saved, setSaved] = useState(false)
   const privacyOpen = route === '/settings/privacy'
   const [rhgPending, setRhgPending] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
-  const [pendingLanguage, setPendingLanguage] = useState('')
-  const [savedLanguage, setSavedLanguage] = useState(language)
-  const [changedLanguage, setChangedLanguage] = useState(false)
-  const [savedKeys, setSavedKeys] = useState(() =>
-    Object.fromEntries(PROVIDERS.map(p => [p.id, window.electronAPI ? '' : localStorage.getItem(`apikey_${p.id}`) || '']))
-  )
-  const [savedProvider, setSavedProvider] = useState(
-    () => localStorage.getItem('ai_provider') || 'anthropic'
-  )
-  const [models, setModels] = useState(initModels)
-  const [savedModels, setSavedModels] = useState(initModels)
-  const [savedPlatform, setSavedPlatform] = useState(platform)
-  const [savedLiveSearch, setSavedLiveSearch] = useState(liveSearch)
-  const [savedShowVoting, setSavedShowVoting] = useState(showVoting)
-  const [savedAiEnabled, setSavedAiEnabled] = useState(aiEnabled)
-  const [agenticMode, setAgenticMode] = useState(
-    () => localStorage.getItem('agentic_mode') === 'true'
-  )
-  const [savedAgenticMode, setSavedAgenticMode] = useState(
-    () => localStorage.getItem('agentic_mode') === 'true'
-  )
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
   const [unpinAllDone, setUnpinAllDone] = useState(false)
   const [unstarAllDone, setUnstarAllDone] = useState(false)
   const [unarchiveAllDone, setUnarchiveAllDone] = useState(false)
-  const hasUnsaved = activeProvider !== savedProvider ||
-    PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id] || models[p.id] !== savedModels[p.id]) ||
-    platform !== savedPlatform ||
-    liveSearch !== savedLiveSearch ||
-    showVoting !== savedShowVoting ||
-    aiEnabled !== savedAiEnabled ||
-    agenticMode !== savedAgenticMode ||
-    (pendingLanguage !== '' && pendingLanguage !== savedLanguage)
-  const didMountLang = useRef(false)
+  const [resetRankingsDone, setResetRankingsDone] = useState(false)
+  const [languagePreviewed, setLanguagePreviewed] = useState(false)
+
+  const hasUnsaved =
+    pendingTheme !== theme ||
+    pendingLanguage !== language ||
+    pendingPlatform !== platform ||
+    pendingLiveSearch !== liveSearch ||
+    pendingShowVoting !== showVoting ||
+    pendingAiEnabled !== aiEnabled ||
+    pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? '2.2') ||
+    pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? 'AA') ||
+    pendingAgenticMode !== (localStorage.getItem('agentic_mode') === 'true') ||
+    activeProvider !== savedProvider ||
+    PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id] || models[p.id] !== savedModels[p.id])
+
+  // Announce when settings first become unsaved so screen reader users know
+  const wasUnsavedRef = useRef(false)
+  useEffect(() => {
+    if (hasUnsaved && !wasUnsavedRef.current) {
+      announce(t('settings.pending_save_note'))
+    }
+    wasUnsavedRef.current = hasUnsaved
+  }, [hasUnsaved]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Sync pending state when props change externally (e.g. Reset All)
+  const didMountRef = useRef(false)
+  useEffect(() => {
+    if (!didMountRef.current) { didMountRef.current = true; return }
+    setPendingTheme(theme)
+    setPendingLanguage(language)
+    setPendingPlatform(platform)
+    setPendingLiveSearch(liveSearch)
+    setPendingShowVoting(showVoting)
+    setPendingAiEnabled(aiEnabled)
+    setPendingWcagFilter(wcagFilter ?? { maxVersion: '2.2', maxLevel: 'AA' })
+  }, [theme, language, platform, liveSearch, showVoting, aiEnabled, wcagFilter]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // In Electron, load API keys from safeStorage after mount
   useEffect(() => {
@@ -163,16 +194,37 @@ export default function SettingsPanel({
       .then(entries => {
         const loaded = Object.fromEntries(entries)
         setKeys(loaded)
-        setSavedKeys(loaded)
       })
   }, [])
 
-  // Sync when language prop changes externally (e.g. Reset All)
+  // Preview theme immediately (visual feedback), but only persists on Save
   useEffect(() => {
-    if (!didMountLang.current) { didMountLang.current = true; return }
-    setPendingLanguage('')
-    setSavedLanguage(language)
-  }, [language])
+    const el = document.documentElement
+    if (pendingTheme === 'party') {
+      el.setAttribute('data-theme', 'party')
+    } else {
+      const resolved = pendingTheme === 'auto'
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        : pendingTheme
+      el.setAttribute('data-theme', resolved)
+    }
+  }, [pendingTheme])
+
+  // Revert theme preview if panel closes without saving
+  useEffect(() => {
+    return () => {
+      // Restore the committed theme on unmount if there were unsaved changes
+      const committed = theme
+      if (committed === 'party') {
+        document.documentElement.setAttribute('data-theme', 'party')
+      } else {
+        const resolved = committed === 'auto'
+          ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+          : committed
+        document.documentElement.setAttribute('data-theme', resolved)
+      }
+    }
+  }, [theme]) // eslint-disable-line react-hooks/exhaustive-deps -- only run on mount/unmount
 
   // Scroll to and focus the first invalid field when errors change
   useEffect(() => {
@@ -183,7 +235,7 @@ export default function SettingsPanel({
     el.focus({ preventScroll: true })
   }, [errors])
 
-  // Escape key, Drawer also listens on mobile; harmless double-fire
+  // Escape key -- Drawer also listens on mobile; harmless double-fire
   useEffect(() => {
     const handler = (e) => {
       if (e.key !== 'Escape') return
@@ -197,9 +249,9 @@ export default function SettingsPanel({
   const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
 
   const handleSave = () => {
-    if (aiEnabled && !keys[activeProvider].trim() && !isLocalhost) {
+    if (pendingAiEnabled && !keys[activeProvider].trim() && !isLocalhost) {
       setErrors({ apiKey: true })
-      onToggleAi() // revert toggle, no key means AI cannot work
+      setPendingAiEnabled(false)
       return
     }
     if (!hasUnsaved) {
@@ -208,6 +260,8 @@ export default function SettingsPanel({
     }
     setErrors({})
     onUnlock?.()
+
+    // Persist AI keys
     PROVIDERS.forEach(p => {
       if (window.electronAPI) {
         if (keys[p.id]) window.electronAPI.keys.set(`apikey_${p.id}`, keys[p.id])
@@ -221,25 +275,34 @@ export default function SettingsPanel({
     PROVIDERS.forEach(p => {
       if (models[p.id]) localStorage.setItem(`ai_model_${p.id}`, models[p.id])
     })
-    setSavedKeys({ ...keys })
-    setSavedModels({ ...models })
-    setSavedProvider(activeProvider)
-    setSavedPlatform(platform)
-    setSavedLiveSearch(liveSearch)
-    setSavedShowVoting(showVoting)
-    setSavedAiEnabled(aiEnabled)
-    localStorage.setItem('agentic_mode', agenticMode.toString())
-    setSavedAgenticMode(agenticMode)
-    if (pendingLanguage !== '') {
-      setSavedLanguage(pendingLanguage)
-      if (pendingLanguage !== language) onLanguageChange(pendingLanguage)
-    }
+    localStorage.setItem('agentic_mode', pendingAgenticMode.toString())
+
+    const langToSave = rhgPending ? language : pendingLanguage
+
+    onSave({
+      theme: pendingTheme,
+      language: langToSave,
+      platform: pendingPlatform,
+      liveSearch: pendingLiveSearch,
+      showVoting: pendingShowVoting,
+      aiEnabled: pendingAiEnabled,
+      wcagFilter: pendingWcagFilter,
+    })
+
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
     announce(t('settings.saved_announce'))
   }
 
   const guardedClose = () => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } }
+
+  useImperativeHandle(ref, () => ({ guardedClose }), [guardedClose]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const savedLanguageLabel = (() => {
+    const entry = LANGUAGES.find(l => l.value === language)
+    if (!entry) return LANGUAGES.find(l => l.value === language?.split('-')[0])?.label ?? language
+    return language?.startsWith('en') && entry.en ? `${entry.label} (${entry.en})` : entry.label
+  })()
 
   return (
     <Panel
@@ -250,6 +313,8 @@ export default function SettingsPanel({
       closeAriaLabel={t('settings.back')}
       pageTitle={t('settings.heading')}
     >
+
+      <p className="settings-panel-intro">{t('settings.save_note')}</p>
 
       {/* ── Appearance ──────────────────────────────── */}
       <h3 className="settings-section-heading">{t('settings.appearance')}</h3>
@@ -269,8 +334,8 @@ export default function SettingsPanel({
               name="theme-setting"
               value={value}
               label={t(labelKey)}
-              current={theme}
-              onChange={(val) => { onThemeChange(val); announce(t(announceKey)) }}
+              current={pendingTheme}
+              onChange={(val) => { setPendingTheme(val); announce(t(announceKey)) }}
             />
           ))}
         </div>
@@ -279,18 +344,12 @@ export default function SettingsPanel({
       {/* Language */}
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.language_label')}</h3>
-        {(() => {
-          const entry = LANGUAGES.find(l => l.value === language)
-          const label = entry
-            ? (language?.startsWith('en') && entry.en ? `${entry.label} (${entry.en})` : entry.label)
-            : LANGUAGES.find(l => l.value === language?.split('-')[0])?.label ?? language
-          return <p className="settings-group__desc">{t('settings.language_current_is', { label })}</p>
-        })()}
+        <p className="settings-group__desc">{t('settings.language_current_is', { label: savedLanguageLabel })}</p>
         <p className="settings-group__desc">{t('settings.language_desc')}</p>
         <div className="settings-language-row">
           <Select
-            value={pendingLanguage}
-            onChange={e => setPendingLanguage(e.target.value)}
+            value={pendingLanguage === language ? '' : pendingLanguage}
+            onChange={e => { setPendingLanguage(e.target.value || language); setLanguagePreviewed(false) }}
             wrapClass="settings-select-wrap--language"
             aria-label={t('settings.language_label')}
           >
@@ -303,26 +362,25 @@ export default function SettingsPanel({
           </Select>
           <Button
             variant="primary"
-            active={changedLanguage}
+            active={languagePreviewed}
             activeIcon={<Check size={14} aria-hidden="true" />}
             className="settings-language-change-btn"
-            disabled={!pendingLanguage}
+            disabled={!pendingLanguage || pendingLanguage === language}
             onClick={() => {
               if (pendingLanguage === 'rhg') { setRhgPending(true) }
               else {
-                onLanguageChange(pendingLanguage)
-                setChangedLanguage(true)
-                setTimeout(() => setChangedLanguage(false), 1500)
+                setLanguagePreviewed(true)
+                setTimeout(() => setLanguagePreviewed(false), 1500)
                 announce(t('settings.language_changed_announce'))
               }
             }}
           >
-            {changedLanguage
-              ? t('settings.language_changed')
-              : t('settings.language_change')
-            }
+            {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
           </Button>
         </div>
+        {pendingLanguage !== language && (
+          <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+        )}
       </div>
 
       {/* ── Search ──────────────────────────────────── */}
@@ -334,29 +392,33 @@ export default function SettingsPanel({
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.platform_label')}</h3>
         <p className="settings-group__desc">
-          {platform === 'web' ? t('settings.platform_web_desc') : t('settings.platform_native_desc')}
+          {pendingPlatform === 'web' ? t('settings.platform_web_desc') : pendingPlatform === 'native' ? t('settings.platform_native_desc') : t('settings.platform_document_desc')}
         </p>
         <fieldset className="settings-fieldset">
           <legend className="sr-only">{t('settings.platform_label')}</legend>
           <div className="radio-chip-group">
             {[
-              { value: 'web',    labelKey: 'settings.platform_web'    },
-              { value: 'native', labelKey: 'settings.platform_native' },
-            ].map(({ value, labelKey }) => (
+              { value: 'web',      labelKey: 'settings.platform_web',      announceKey: 'settings.platform_web_announce'      },
+              { value: 'native',   labelKey: 'settings.platform_native',   announceKey: 'settings.platform_native_announce'   },
+              { value: 'document', labelKey: 'settings.platform_document', announceKey: 'settings.platform_document_announce' },
+            ].map(({ value, labelKey, announceKey }) => (
               <RadioChip
                 key={value}
                 name="platform-setting"
                 value={value}
                 label={t(labelKey)}
-                current={platform}
+                current={pendingPlatform}
                 onChange={(val) => {
-                  onPlatformChange(val)
-                  announce(t(val === 'web' ? 'settings.platform_web_announce' : 'settings.platform_native_announce'))
+                  setPendingPlatform(val)
+                  announce(t(announceKey))
                 }}
               />
             ))}
           </div>
         </fieldset>
+        {pendingPlatform !== platform && (
+          <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+        )}
       </div>
 
       {/* Live search */}
@@ -366,16 +428,23 @@ export default function SettingsPanel({
             <label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>
           </h3>
           <p className="settings-toggle-desc">
-            {liveSearch ? t('settings.live_search_on') : t('settings.live_search_off')}
+            {pendingLiveSearch ? t('settings.live_search_on') : t('settings.live_search_off')}
           </p>
+          {pendingLiveSearch !== liveSearch && (
+            <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+          )}
         </div>
-        <Toggle id="toggle-live-search" checked={liveSearch} onChange={onToggleLiveSearch} />
+        <Toggle id="toggle-live-search" checked={pendingLiveSearch} onChange={() => setPendingLiveSearch(v => !v)} />
       </div>
 
       {/* WCAG Version + Level Filter */}
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.wcag_filter_label')}</h3>
         <p className="settings-group__desc">{t('settings.wcag_filter_desc')}</p>
+        {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? '2.2') ||
+          pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? 'AA')) && (
+          <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+        )}
         <div className="settings-wcag-filter-row">
           <fieldset className="settings-fieldset">
             <legend className="settings-radio-legend">{t('settings.wcag_filter_legend')}</legend>
@@ -385,14 +454,14 @@ export default function SettingsPanel({
                 { value: '2.1', labelKey: 'settings.wcag_filter_21' },
                 { value: '2.2', labelKey: 'settings.wcag_filter_22' },
               ].map(({ value, labelKey }) => (
-                <label key={value} className="settings-checkbox-label">
+                <label key={value} className="settings-control-label">
                   <input
                     type="radio"
                     name="wcag-version"
                     value={value}
-                    checked={(wcagFilter?.maxVersion ?? '2.2') === value}
-                    onChange={() => onWcagFilterChange?.({ maxVersion: value, maxLevel: wcagFilter?.maxLevel ?? 'AA' })}
-                    className="settings-checkbox"
+                    checked={(pendingWcagFilter?.maxVersion ?? '2.2') === value}
+                    onChange={() => setPendingWcagFilter(f => ({ ...f, maxVersion: value }))}
+                    className="settings-control"
                   />
                   {t(labelKey)}
                 </label>
@@ -406,14 +475,14 @@ export default function SettingsPanel({
                 { value: 'A',  labelKey: 'settings.wcag_level_a'  },
                 { value: 'AA', labelKey: 'settings.wcag_level_aa' },
               ].map(({ value, labelKey }) => (
-                <label key={value} className="settings-checkbox-label">
+                <label key={value} className="settings-control-label">
                   <input
                     type="radio"
                     name="wcag-level"
                     value={value}
-                    checked={(wcagFilter?.maxLevel ?? 'AA') === value}
-                    onChange={() => onWcagFilterChange?.({ maxVersion: wcagFilter?.maxVersion ?? '2.2', maxLevel: value })}
-                    className="settings-checkbox"
+                    checked={(pendingWcagFilter?.maxLevel ?? 'AA') === value}
+                    onChange={() => setPendingWcagFilter(f => ({ ...f, maxLevel: value }))}
+                    className="settings-control"
                   />
                   {t(labelKey)}
                 </label>
@@ -421,19 +490,6 @@ export default function SettingsPanel({
             </div>
           </fieldset>
         </div>
-      </div>
-
-      {/* Result ranking */}
-      <div className="settings-toggle-row">
-        <div>
-          <h3 className="settings-toggle-label">
-            <label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>
-          </h3>
-          <p className="settings-toggle-desc">
-            {showVoting ? t('settings.ranking_on') : t('settings.ranking_off')}
-          </p>
-        </div>
-        <Toggle id="toggle-ranking" checked={showVoting} onChange={onToggleVoting} />
       </div>
 
       {/* Pinned Results */}
@@ -463,6 +519,22 @@ export default function SettingsPanel({
         </Button>
       </div>
 
+      {/* Result ranking */}
+      <div className="settings-toggle-row">
+        <div>
+          <h3 className="settings-toggle-label">
+            <label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>
+          </h3>
+          <p className="settings-toggle-desc">
+            {pendingShowVoting ? t('settings.ranking_on') : t('settings.ranking_off')}
+          </p>
+          {pendingShowVoting !== showVoting && (
+            <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+          )}
+        </div>
+        <Toggle id="toggle-ranking" checked={pendingShowVoting} onChange={() => setPendingShowVoting(v => !v)} />
+      </div>
+
       {/* Starred Results */}
       <div className="settings-toggle-row">
         <div>
@@ -487,6 +559,33 @@ export default function SettingsPanel({
           }}
         >
           {unstarAllDone ? t('settings.unstar_all_done') : t('settings.unstar_all')}
+        </Button>
+      </div>
+
+      {/* Ranking Data */}
+      <div className="settings-toggle-row">
+        <div>
+          <h3 className="settings-toggle-label">{t('settings.rankings_label')}</h3>
+          <p className="settings-toggle-desc">
+            {hasRankings ? t('settings.rankings_desc') : t('settings.rankings_empty')}
+          </p>
+        </div>
+        <Button
+          active={resetRankingsDone}
+          icon={<RotateCcw size={14} aria-hidden="true" />}
+          activeIcon={<Check size={14} aria-hidden="true" />}
+          label={t('settings.reset_rankings')}
+          activeLabel={t('settings.reset_rankings_done')}
+          variant="primary"
+          className="settings-reset-rankings-btn"
+          disabled={!hasRankings}
+          onClick={() => {
+            onResetRankings?.()
+            setResetRankingsDone(true)
+            setTimeout(() => setResetRankingsDone(false), 1500)
+          }}
+        >
+          {resetRankingsDone ? t('settings.reset_rankings_done') : t('settings.reset_rankings')}
         </Button>
       </div>
 
@@ -528,8 +627,11 @@ export default function SettingsPanel({
             {t('settings.ai_enable_label')}
           </label>
           <p className="settings-toggle-desc">{t('settings.ai_enable_desc')}</p>
+          {pendingAiEnabled !== aiEnabled && (
+            <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+          )}
         </div>
-        <Toggle id="toggle-ai" checked={aiEnabled} onChange={onToggleAi} />
+        <Toggle id="toggle-ai" checked={pendingAiEnabled} onChange={() => setPendingAiEnabled(v => !v)} />
       </div>
 
       <div className="settings-provider-group">
@@ -540,7 +642,7 @@ export default function SettingsPanel({
           id="active-provider"
           value={activeProvider}
           onChange={e => setActiveProvider(e.target.value)}
-          disabled={!aiEnabled}
+          disabled={!pendingAiEnabled}
         >
           {PROVIDERS.map(p => (
             <option key={p.id} value={p.id}>{p.label}</option>
@@ -557,7 +659,7 @@ export default function SettingsPanel({
             id="active-model"
             value={models[activeProvider]}
             onChange={e => setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
-            disabled={!aiEnabled}
+            disabled={!pendingAiEnabled}
           >
             {PROVIDER_MODELS[activeProvider].map(m => (
               <option key={m.id} value={m.id}>{m.label}</option>
@@ -570,7 +672,7 @@ export default function SettingsPanel({
         <div key={p.id} className="settings-key-group">
           <label htmlFor={`apikey-${p.id}`} className="settings-field-label">
             {t('settings.api_key_label_prefix')}, {p.label}
-            {aiEnabled && <span className="settings-field-required"> {t('settings.api_key_required')}</span>}
+            {pendingAiEnabled && <span className="settings-field-required"> {t('settings.api_key_required')}</span>}
           </label>
           <textarea
             id={`apikey-${p.id}`}
@@ -581,12 +683,12 @@ export default function SettingsPanel({
               if (errors.apiKey) setErrors({})
             }}
             placeholder={t(p.placeholderKey)}
-            disabled={!aiEnabled}
+            disabled={!pendingAiEnabled}
             className="settings-key-input"
-            aria-invalid={errors.apiKey && aiEnabled ? 'true' : undefined}
-            aria-describedby={errors.apiKey && aiEnabled ? 'api-key-error' : undefined}
+            aria-invalid={errors.apiKey && pendingAiEnabled ? 'true' : undefined}
+            aria-describedby={errors.apiKey && pendingAiEnabled ? 'api-key-error' : undefined}
           />
-          {errors.apiKey && aiEnabled && (
+          {errors.apiKey && pendingAiEnabled && (
             <p id="api-key-error" className="settings-field-error">
               {t('settings.api_key_error')}
             </p>
@@ -594,19 +696,20 @@ export default function SettingsPanel({
         </div>
       ))}
 
-      {aiEnabled && activeProvider === 'anthropic' && (
-        <div className="settings-toggle-row settings-toggle-row--sm">
-          <div>
-            <label htmlFor="toggle-agentic" className="settings-toggle-label">
-              {t('settings.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}
-            </label>
-            <p className="settings-toggle-desc">{t('settings.agentic_mode_desc') || 'AI will search past examples to match your style and technical depth when rewriting'}</p>
-          </div>
-          <Toggle id="toggle-agentic" checked={agenticMode} onChange={setAgenticMode} />
+      <div className={`settings-toggle-row settings-toggle-row--sm${!pendingAiEnabled || activeProvider !== 'anthropic' ? ' settings-toggle-row--disabled' : ''}`}>
+        <div>
+          <label htmlFor="toggle-agentic" className="settings-toggle-label">
+            {t('settings.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}
+          </label>
+          <p className="settings-toggle-desc">{t('settings.agentic_mode_desc') || 'AI will search past examples to match your style and technical depth when rewriting'}</p>
+          {pendingAgenticMode !== (localStorage.getItem('agentic_mode') === 'true') && (
+            <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+          )}
         </div>
-      )}
+        <Toggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} disabled={!pendingAiEnabled || activeProvider !== 'anthropic'} />
+      </div>
 
-      {/* ── Footer: privacy link above buttons on mobile; privacy left / buttons right on desktop ── */}
+      {/* ── Footer ──────────────────────────────────── */}
       <div className="settings-footer-row">
         <Button
           ref={privacyButtonRef}
@@ -668,8 +771,8 @@ export default function SettingsPanel({
         onClose={() => setRhgPending(false)}
         heading={t('settings.language_rhg_heading')}
         actions={[
-          { label: t('settings.language_rhg_use_anyway'), onClick: () => { onLanguageChange(pendingLanguage); setRhgPending(false) }, className: 'btn--primary' },
-          { label: t('common.cancel'),                    onClick: () => setRhgPending(false),                                       className: 'btn--tertiary' },
+          { label: t('settings.language_rhg_use_anyway'), onClick: () => { setPendingLanguage('rhg'); setRhgPending(false) }, className: 'btn--primary' },
+          { label: t('common.cancel'),                    onClick: () => setRhgPending(false),                                 className: 'btn--tertiary' },
         ]}
       >
         <p>{t('settings.language_rhg_body_1')}</p>
@@ -720,8 +823,6 @@ export default function SettingsPanel({
             <h3>{t('settings.confirm_reset_all_will_clear')}</h3>
             <ul className="settings-reset-list">
               <li>{t('settings.confirm_reset_all_item_api_keys')}</li>
-              <li>{t('settings.confirm_reset_all_item_ratings')}</li>
-              <li>{t('settings.confirm_reset_all_item_pins')}</li>
               <li>{t('settings.confirm_reset_all_item_frequency')}</li>
               <li>{t('settings.confirm_reset_all_item_recent')}</li>
             </ul>
@@ -733,8 +834,14 @@ export default function SettingsPanel({
               <li>{t('settings.confirm_reset_all_keep_item_theme')}</li>
               <li>{t('settings.confirm_reset_all_keep_item_language')}</li>
               <li>{t('settings.confirm_reset_all_keep_item_platform')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_ai_enabled')}</li>
               <li>{t('settings.confirm_reset_all_keep_item_live_search')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_wcag_filter')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_pins')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_ranking_controls')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_starred')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_ranking_data')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_archived')}</li>
+              <li>{t('settings.confirm_reset_all_keep_item_ai_enabled')}</li>
             </ul>
           </div>
 
@@ -751,13 +858,6 @@ export default function SettingsPanel({
               variant="primary"
               onClick={() => {
                 setResetConfirmOpen(false)
-                setSavedKeys(Object.fromEntries(PROVIDERS.map(p => [p.id, ''])))
-                setSavedProvider('anthropic')
-                setSavedModels(Object.fromEntries(PROVIDERS.map(p => [p.id, MODEL_DEFAULTS[p.id] || ''])))
-                setSavedPlatform('web')
-                setSavedLiveSearch(true)
-                setSavedShowVoting(true)
-                setSavedAiEnabled(false)
                 onReset?.()
                 announce(t('settings.reset_all_announce'))
                 resetButtonRef.current?.setAttribute('disabled', '')
@@ -786,5 +886,6 @@ export default function SettingsPanel({
       </Modal>
     </Panel>
   )
-}
+})
 
+export default SettingsPanel

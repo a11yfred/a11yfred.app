@@ -1,4 +1,4 @@
-export default function Toggle({ id, checked, onChange }) {
+export default function Toggle({ id, checked, onChange, disabled }) {
   return (
     <span className="toggle">
       <input
@@ -6,9 +6,10 @@ export default function Toggle({ id, checked, onChange }) {
         role="switch"
         id={id}
         checked={checked}
-        onChange={onChange}
-        onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onChange(e) } }}
+        onChange={e => onChange(e.target.checked)}
+        onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); onChange(!checked) } }}
         className="toggle__input"
+        disabled={disabled}
       />
       <span aria-hidden="true" role="presentation" className="toggle__track">
         <span role="presentation" className="toggle__thumb">

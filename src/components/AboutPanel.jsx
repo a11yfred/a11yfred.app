@@ -49,17 +49,17 @@ export default function AboutPanel({ onClose }) {
         <ul className="about-features">
           {['a11y', 'languages', 'pinning'].map(key => (
             <li key={key} className="about-feature">
-              <span className="about-feature-label">{t(`about.feature_${key}_label`)}</span>
-              <span className="about-feature-body">{t(`about.feature_${key}_body`)}</span>
+              <h4 className="about-feature-label">{t(`about.feature_${key}_label`)}</h4>
+              <p className="about-feature-body">{t(`about.feature_${key}_body`)}</p>
             </li>
           ))}
           <li className="about-feature">
-            <span className="about-feature-label">{t('about.feature_ai_label')}</span>
-            <span className="about-feature-body">
+            <h4 className="about-feature-label">{t('about.feature_ai_label')}</h4>
+            <p className="about-feature-body">
               {t('about.feature_ai_body')}{' '}
               <a href="#/settings" className="about-inline-link">{t('common.settings')}</a>.{' '}
               {t('about.feature_agentic_body')}
-            </span>
+            </p>
           </li>
         </ul>
       </section>
@@ -76,9 +76,9 @@ export default function AboutPanel({ onClose }) {
       <section className="about-section about-section--last">
         <h3 className="about-section-heading">{t('about.sources_heading')}</h3>
         <p className="about-body">{t('about.sources_body')}</p>
-        <ul className="about-sources-list">
+        <ul className="about-sources-list about-body">
           {['wcag', 'axe', 'webaim', 'deque'].map(key => (
-            <li key={key} className="about-body">{t(`about.sources_${key}`)}</li>
+            <li key={key}>{t(`about.sources_${key}`)}</li>
           ))}
         </ul>
       </section>

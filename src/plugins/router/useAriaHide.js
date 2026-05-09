@@ -1,27 +1,20 @@
 import { useEffect } from 'react'
 
-const MARKER = 'data-overlay-aria-hidden'
-
-const FOCUSABLE = [
-  'a[href]',
-  'button:not([disabled])',
-  'input:not([disabled])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  '[tabindex]:not([tabindex="-1"])',
-].join(', ')
+const MARKER = 'data-overlay-hidden'
 
 /**
  * Hides all document.body children from the accessibility tree while the
  * overlay panel is open, then restores them on close.
  *
- * Before hiding, focus is moved into the panel so that no focused element
- * ends up inside an aria-hidden ancestor, which is an invalid state per
- * WAI-ARIA and generates a browser console warning.
+ * Uses the `inert` attribute (HTML spec, widely supported) instead of
+ * aria-hidden. `inert` simultaneously removes elements from the a11y tree
+ * AND prevents focus, eliminating the "focused element inside aria-hidden
+ * ancestor" browser warning that aria-hidden alone requires manual focus
+ * management to avoid.
  *
- * Stacking: if a body child is already aria-hidden by another overlay, the
- * MARKER is not added, so this instance won't accidentally restore it when it
- * closes. Each overlay only cleans up what it personally hid.
+ * Stacking: if a body child is already inert via another overlay, the MARKER
+ * is not added, so this instance won't accidentally restore it on close. Each
+ * overlay only cleans up what it personally set.
  *
  * @param {React.RefObject} panelRef  ref attached to the overlay panel element
  * @param {boolean}         open      whether the overlay is currently visible
@@ -34,17 +27,9 @@ export function useAriaHide(panelRef, open) {
 
     const targets = [...document.body.children].filter(el => !el.contains(panel))
 
-    // If the currently-focused element is inside a target that will be hidden,
-    // move focus into the panel first so aria-hidden never covers a focused element.
-    const active = document.activeElement
-    if (active && targets.some(el => el.contains(active))) {
-      const first = panel.querySelector(FOCUSABLE)
-      first?.focus()
-    }
-
     targets.forEach(el => {
-      if (!el.hasAttribute('aria-hidden')) {
-        el.setAttribute('aria-hidden', 'true')
+      if (!el.hasAttribute('inert')) {
+        el.setAttribute('inert', '')
         el.setAttribute(MARKER, '')
       }
     })
@@ -52,7 +37,7 @@ export function useAriaHide(panelRef, open) {
     return () => {
       targets.forEach(el => {
         if (el.hasAttribute(MARKER)) {
-          el.removeAttribute('aria-hidden')
+          el.removeAttribute('inert')
           el.removeAttribute(MARKER)
         }
       })

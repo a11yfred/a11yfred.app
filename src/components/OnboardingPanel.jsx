@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Search, Star, Pin, Copy, Sparkles, ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { Search, Star, Copy, ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
 import { useT } from '../i18n/index.jsx'
 import Button from './ui/Button.jsx'
@@ -11,12 +11,12 @@ const SLIDES = [
     bodyKey: 'onboarding.slide_1_body',
   },
   {
-    icons: [Star, Pin],
+    icons: [Star],
     headingKey: 'onboarding.slide_2_heading',
     bodyKey: 'onboarding.slide_2_body',
   },
   {
-    icons: [Copy, Sparkles],
+    icons: [Copy],
     headingKey: 'onboarding.slide_3_heading',
     bodyKey: 'onboarding.slide_3_body',
   },
