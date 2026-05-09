@@ -13,7 +13,7 @@ import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
 import useFindingSearch from './hooks/useFindingSearch.js'
 import useFindingRatings from './hooks/useFindingRatings.js'
 import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY } from './utils/constants.js'
-import { getStorage, setStorage, removeStorage } from './utils/storage.js'
+import { getStorage, setStorage } from './utils/storage.js'
 import {
   Router,
   useRouter,
