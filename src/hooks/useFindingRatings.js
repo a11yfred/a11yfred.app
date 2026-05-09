@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const STORAGE_KEY = 'defect_ratings'
-const DEFAULT_RATING = { score: 0, starred: false, archived: false }
+const DEFAULT_RATING = { score: 0, starred: false, archived: false, popularity: 0, starredAt: null }
 
 function loadRatings() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') } catch { return {} }
@@ -36,10 +36,22 @@ export default function useFindingRatings() {
   return {
     ratings,
     getRating:     (id) => ratings[id] || DEFAULT_RATING,
-    rankUp:        (id) => update(id, r => ({ ...r, score: r.score + 1 })),
-    rankDown:      (id) => update(id, r => ({ ...r, score: r.score - 1 })),
-    toggleStar:    (id) => update(id, r => ({ ...r, starred: !r.starred })),
-    toggleArchive: (id) => update(id, r => ({ ...r, archived: !r.archived })),
+    rankUp:        (id) => update(id, r => ({ ...r, score: r.score + 1, popularity: (r.popularity ?? 0) + 1 })),
+    rankDown:      (id) => update(id, r => ({ ...r, score: r.score - 1, popularity: (r.popularity ?? 0) - 1 })),
+    toggleStar:    (id) => update(id, r => {
+      const nowStarring = !r.starred
+      return {
+        ...r,
+        starred:    nowStarring,
+        starredAt:  nowStarring ? Date.now() : null,
+        popularity: (r.popularity ?? 0) + (nowStarring ? 1 : -1),
+      }
+    }),
+    toggleArchive: (id) => update(id, r => ({
+      ...r,
+      archived:   !r.archived,
+      popularity: (r.popularity ?? 0) + (r.archived ? 1 : -1),
+    })),
     resetRankings,
     clearAllRatings,
   }

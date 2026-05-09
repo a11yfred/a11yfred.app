@@ -376,9 +376,16 @@ function AppContent({
   const smartScore = useCallback((f, index) => {
     const r = ratings[f.id]
     let score = SEVERITY_SCORE[f.severity] ?? 0
-    if (r?.starred)  score += 50
-    if (r?.score)    score += r.score * 10
-    if (r?.archived) score -= 100
+    if (r?.starred) {
+      score += 50
+      if (r.starredAt) {
+        const days = (Date.now() - r.starredAt) / 86400000
+        score += Math.log1p(days)
+      }
+    }
+    if (r?.score)      score += r.score * 10
+    if (r?.popularity) score += (r.popularity ?? 0) * 2
+    if (r?.archived)   score -= 100
     score -= index * 0.1
     return score
   }, [ratings]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -396,7 +403,7 @@ function AppContent({
     if (sortBy === 'wcag-version') return [...arr].sort((a, b) => (WCAG_VERSION_ORDER[a.wcagVersion] ?? 99) - (WCAG_VERSION_ORDER[b.wcagVersion] ?? 99))
     if (sortBy === 'wcag-level')   return [...arr].sort((a, b) => (WCAG_LEVEL_ORDER[a.wcagLevel] ?? 99) - (WCAG_LEVEL_ORDER[b.wcagLevel] ?? 99))
     if (sortBy === 'platform')     return [...arr].sort((a, b) => (PLATFORM_ORDER[a.platform] ?? 99) - (PLATFORM_ORDER[b.platform] ?? 99))
-    if (sortBy === 'popularity')   return [...arr].sort((a, b) => ((ratings[b.id]?.score ?? 0) - (ratings[a.id]?.score ?? 0)))
+    if (sortBy === 'popularity')   return [...arr].sort((a, b) => ((ratings[b.id]?.popularity ?? 0) - (ratings[a.id]?.popularity ?? 0)))
     if (sortBy === 'relevance')    return arr
     return arr
   }, [sortBy, ratings, smartScore]) // eslint-disable-line react-hooks/exhaustive-deps
