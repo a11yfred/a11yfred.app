@@ -2847,13 +2847,13 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .toggle:has(.toggle__input:checked) .toggle__track {
-  background: var(--accent-bg);
-  border-color: var(--accent);
+  background: var(--accent-text);
+  border-color: var(--accent-text);
 }
 
 .toggle:hover:has(.toggle__input:checked) .toggle__track {
-  background: var(--accent-text);
-  border-color: var(--accent-text);
+  background: var(--accent-bg);
+  border-color: var(--accent);
 }
 
 .toggle__thumb {
