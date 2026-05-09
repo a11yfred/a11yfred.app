@@ -110,8 +110,8 @@ function normalizeRow(row, genId, defaultSource) {
   if (!title) return { ok: false, reason: 'Missing required field: title' }
 
   const rawId = pickField(row, 'id')
-  // Reject ATH-* IDs, those belong to the public corpus namespace
-  const id = (rawId && !rawId.match(/^ATH-/i)) ? rawId : genId()
+  // Reject ACC-* and ATH-* IDs, those belong to the corpus namespaces
+  const id = (rawId && !rawId.match(/^(ACC|ATH)-/i)) ? rawId : genId()
 
   const now = new Date().toISOString()
   return {

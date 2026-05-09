@@ -1,7 +1,8 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './admin-panel.css'
 import publicCorpus from '../../data/corpus.json'
+import legacyCorpus from '../../data/legacy-corpus.json'
 import personalCorpus from '../../data/personal-corpus.json'
 import findingSlug from '../../utils/findingSlug.js'
 import Toggle from '../../components/ui/Toggle.jsx'
@@ -133,15 +134,15 @@ export default function AdminPanel({
   onFilter,
   onClose,
 }) {
-  const [dataset, setDataset] = useState('public')
+  const [dataset, setDataset] = useState(() => localStorage.getItem('adminDataset') || 'public')
   const [scFilter, setScFilter] = useState('all')
   const [levelFilter, setLevelFilter] = useState('all')
   const [versionFilter, setVersionFilter] = useState('all')
   const [copied, setCopied] = useState(null)
 
-  const accCorpus = useMemo(() => publicCorpus.filter(e => e.id.startsWith('ACC')), [])
-  const athCorpus = useMemo(() => publicCorpus.filter(e => e.id.startsWith('ATH')), [])
-  const corpus = dataset === 'public' ? accCorpus : dataset === 'legacy' ? athCorpus : personalCorpus
+  useEffect(() => { localStorage.setItem('adminDataset', dataset) }, [dataset])
+
+  const corpus = dataset === 'public' ? publicCorpus : dataset === 'legacy' ? legacyCorpus : personalCorpus
   const stats = useMemo(() => computeStats(corpus), [corpus])
 
   if (!IS_DEV) return null

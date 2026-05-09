@@ -332,7 +332,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             {t(p.key)}
           </Badge>
           {(() => {
-            const sources = finding.creditNames?.filter(src => src !== 'ATH') || []
+            const sources = finding.creditNames || []
             if (sources.length === 0) return null
             if (sources.length === 1) {
               const src = sources[0]

@@ -2,7 +2,7 @@
  * userFindingsService.js
  *
  * Phase 1: localStorage-backed CRUD for user-created findings.
- * IDs use the "USR-NNN" prefix to distinguish them from corpus entries ("ATH-NNN").
+ * IDs use the "USR-NNN" prefix to distinguish them from corpus entries ("ACC-NNN").
  *
  * Phase 2 (Supabase): swap the body of each function to call the Supabase
  * `user_findings` table. The hook (useUserFindings.js) and all callers remain

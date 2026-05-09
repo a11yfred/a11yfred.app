@@ -462,7 +462,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
                     >
                       {t(p.key)}
                     </Badge>
-                    {finding.creditNames?.filter(src => src !== 'ATH').map(src => (
+                    {finding.creditNames?.map(src => (
                       <Badge
                         key={src}
                         variant="source"
