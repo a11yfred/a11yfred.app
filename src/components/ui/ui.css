@@ -176,6 +176,15 @@ select:focus-visible {
   background: transparent;
 }
 
+.btn--tertiary.btn__field--success {
+  color: var(--success);
+}
+
+.btn--tertiary.btn__field--success:hover {
+  color: var(--success);
+  background: transparent;
+}
+
 .btn--primary {
   border: 1px solid var(--accent);
   background: var(--accent-bg);
