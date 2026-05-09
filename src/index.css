@@ -2365,8 +2365,8 @@ input[type="checkbox"].settings-checkbox:checked {
 }
 
 input[type="radio"].settings-checkbox:checked {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='3' fill='%233c3489'/%3E%3C/svg%3E");
-  background-size: 60% 60%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='4.5' fill='%233c3489'/%3E%3C/svg%3E");
+  background-size: 80% 80%;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -2386,7 +2386,7 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 [data-theme="dark"] input[type="radio"].settings-checkbox:checked {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='3' fill='%23afa9ec'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='4.5' fill='%23afa9ec'/%3E%3C/svg%3E");
 }
 
 .radio-chip-group {
