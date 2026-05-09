@@ -24,6 +24,22 @@ Grep `src/index.css` and all JSX for hardcoded color values (`#fff`, `#111`, `rg
 
 Add tokens for values with clear semantic meaning. Update `tokens.css` first, then replace all instances.
 
+### Severity Badge Contrast Check
+
+All five severity badge pairs must pass 4.5:1 contrast ratio between text and background:
+
+| Badge | Pair to check | Target |
+| ----- | ------------- | ------ |
+| Critical | `--severity-critical-text` on `--severity-critical-bg` | 4.5:1+ |
+| High | `--severity-high-text` on `--severity-high-bg` | 4.5:1+ |
+| Medium | `--severity-medium-text` on `--severity-medium-bg` | 4.5:1+ |
+| Low | `--severity-low-text` on `--severity-low-bg` | 4.5:1+ |
+| Best Practice | `--severity-best-practice-text` on `--severity-best-practice-bg` | 4.5:1+ |
+
+Last verified: May 9, 2026 -- all pass (Critical 6.2:1, High 5.8:1, Medium 5.66:1, Low 5.44:1, Best Practice 5.26:1). Re-verify after any token color changes.
+
+Also verify `result-item__desc` on sponsored tiles: must use `var(--text-body)` override, not the default muted color, to pass against the purple gradient badge background.
+
 ### Dead CSS
 
 Search for CSS classes defined in `src/index.css` that are no longer referenced in JSX. Look for overwritten rules where a later declaration always wins (specificity or cascade). Remove both the dead rule and any workaround selectors that exist only to defeat it. Check for commented-out blocks that have not been removed.
@@ -195,6 +211,23 @@ Verify `robots.txt` content matches current phase:
 
 Ensure only one platform is deploying on each push. If switching targets, verify the previous one is paused.
 
+### BottomSheet Collapse
+
+On desktop (viewport > 768px), verify the BottomSheet collapse button appears in the sheet chrome:
+
+- Collapse button shows in header with a 44x44 minimum touch target
+- Clicking collapse slides the sheet to show only chrome (title bar visible, `is-collapsed` on `.sheet-panel`)
+- Clicking the button again re-expands the sheet
+- Focus management works: focus stays within chrome when collapsed
+
+### Admin Panel Corpus Count
+
+Open the admin panel (`debug open admin` or the equivalent search command). Verify:
+
+- Dataset tabs show Public (ACC) and Legacy (ATH) separately
+- Neither tab's count includes the other corpus
+- Total entry counts match `corpus.json` and `personal-corpus.json` lengths respectively
+
 ### Electron Wiring Check
 
 If Electron build is activated:
@@ -301,11 +334,11 @@ The script detects keys still holding English fallback values and translates the
 
 ### Track Edits
 
-Log all `en.json` changes in `docs/i18n-edits.md`. Note key and old/new value. Batch them and run the translate workflow below rather than translating immediately.
+Note all `en.json` key additions or changes in `docs/UPDATES.md` under the session's date heading. Batch them and run the translate workflow below rather than translating immediately.
 
 ### Full Translate Workflow
 
-Run whenever `docs/i18n-edits.md` has unresolved entries:
+Run after deferred translate sessions or following major content changes:
 
 **Step 1 — Parity (no API needed):** Compare `es.json` keys against all other locale files. Add missing keys with English value as placeholder. Commit: `i18n: add missing keys as English placeholders`.
 
@@ -325,7 +358,7 @@ ANTHROPIC_API_KEY=... node scripts/translate-missing.mjs
 
 Commit: `i18n: translate remaining English placeholder values`.
 
-After all three steps, update `docs/i18n-edits.md` to mark resolved entries.
+After all three steps, verify parity is clean and log the translate run in `docs/UPDATES.md`.
 
 ### Announce Audit
 

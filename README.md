@@ -22,7 +22,7 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Complete ,  107-entry public corpus, 169-entry personal corpus (fully normalized), all linters passing (ESLint 9.x + jsx-a11y), UI library complete (2 base button components + 12 primitives), agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
+**Phase 1 (Personal Library)**: Complete ,  213-entry public corpus, 169-entry personal corpus (fully normalized), all linters passing (ESLint 9.x + jsx-a11y), UI library complete (2 base button components + 18 additional components), agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
 
 **Phase 2 (AI + Sharing)**: In Progress ,  Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working. Corpus guide page planned.
 
@@ -34,12 +34,12 @@ npm run build      # production build
 
 Key directories:
 
-- `src/data/` ,  107-entry public corpus + 169-entry personal corpus (gitignored)
+- `src/data/` ,  213-entry public corpus + 169-entry personal corpus (gitignored)
 - `src/services/` ,  Data layer, AI integration, localStorage utilities
 - `src/hooks/` ,  Search, ratings, pinning, user findings, overrides
-- `src/components/` ,  UI components; `ui/` subfolder has 14 reusable primitives (consolidated Button, IconButton, + 12 others)
+- `src/components/` ,  UI components; `ui/` subfolder has 20 reusable components (Button, IconButton, + 18 others)
 - `src/plugins/` ,  Router, Announcer, Debug tools (each with README)
-- `docs/` ,  Deployment, architecture, contributing
+- `docs/` ,  Deployment, maintenance, contributing
 
 ---
 

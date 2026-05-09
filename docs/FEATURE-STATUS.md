@@ -6,9 +6,17 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Phase 1: Complete (17/17 features)
+## Phase 1: Complete (17/17 features, 1 pre-launch remaining)
 
 **Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All linters passing. UI component library fully portable with 14 primitives, zero app-specific dependencies.
+
+**Pre-launch remaining (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Analytics (Umami) | 💤 | 20 |
+
+**Shipped (17/17):**
 
 | Feature | Status | % |
 | --- | --- | --- |
@@ -32,7 +40,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 2: In Progress
 
-**Complete (6):**
+**Complete (5):**
 
 | Feature | Status | % |
 | --- | --- | --- |
@@ -41,7 +49,6 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | How To Use / Onboarding | ✅ | 100 |
 | PWA / Offline | ✅ | 100 |
 | Advanced Search Syntax | ✅ | 100 |
-| Platform Variant Display | ✅ | 100 |
 
 **Partial (2):**
 
@@ -58,17 +65,13 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | User Findings (custom) | 🔧 | 30 |
 | Import / Custom Data Source | 🔧 | 20 |
 
-**Not Started (1):**
+**Not Started (3):**
 
 | Feature | Status | % |
 | --- | --- | --- |
 | Corpus Guide Page (/corpus-guide) | 🔲 | 0 |
-
-**Deferred (1):**
-
-| Feature | Status | % |
-| --- | --- | --- |
-| Ko-fi Integration | 💤 | 50 |
+| Add / Edit / Delete Entry UI | 🔲 | 0 |
+| Export Findings (UI + Email) | 🔲 | 10 |
 
 **Distribution Targets:**
 
@@ -86,13 +89,23 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | --- | --- | --- |
 | Ad Tiles (infrastructure) | ✅ | 100 |
 
-**Stubbed (3):**
+**Stubbed (2):**
 
 | Feature | Status | % |
 | --- | --- | --- |
 | Authentication | 💤 | 10 |
-| Analytics (Umami) | 💤 | 20 |
 | Cloud Sync | 💤 | 5 |
+
+## Deferred Indefinitely
+
+Features parked with no active timeline. Revisit post-launch.
+
+| Feature | Status | Notes |
+| --- | --- | --- |
+| Ko-fi Integration | 💤 | Widget disabled pending console error resolution; Ko-fi link in footer as fallback |
+| SCSS Migration | 💤 | CSS custom properties sufficient; migrate only if specificity/mixin complexity grows |
+| Compare Mode | 💤 | Side-by-side finding comparison; no user demand yet |
+| GitHub Sponsors | 💤 | Activate once public launch is stable |
 
 ---
 
@@ -369,13 +382,30 @@ Missing:
 
 Done:
 
-- Blob download in text / markdown / csv formats
+- `exportFinding.js` utility: blob download in text, markdown, and csv formats (data layer only)
 
 Missing:
 
-- Multi-select UI in result list
-- Format picker (Download vs. Email)
-- Email delivery
+- Multi-select UI in result list (checkboxes or shift-click)
+- Format picker dialog (Markdown / Plain Text / CSV / Excel)
+- Excel export format (requires SheetJS or similar)
+- Download trigger and file naming
+- Email delivery option: compose to current mail client (mailto:) or send via SendGrid/Resend API
+- Google Drive export: upload exported file directly to user's Drive (requires Google OAuth; available when authenticated via Phase 3 auth)
+
+---
+
+### Add / Edit / Delete Entry UI ,  0%
+
+The data layer is complete (`userFindingsService.js`, `useUserFindings` hook, CRUD with `USR-NNN` IDs, merged transparently in search results). Only the UI is missing.
+
+Missing:
+
+- New entry form (title, desc, fix, sc, severity, platform, keywords)
+- Edit mode in DetailPanel for user-owned entries
+- Delete confirmation in DetailPanel
+- Personal vs. public corpus toggle visible in Settings
+- Corpus Guide page (/corpus-guide) as companion reference for entry authoring conventions
 
 ---
 

@@ -57,8 +57,9 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Export & Sharing
 
-- [ ] **Export findings** `[ux]` ,  Multi-select UI, report generation (Markdown/plain text), test formatting.
-- [ ] **Email results** `[ux]` `[enhancement]` ,  Complete Export, add Email delivery option, wire SendGrid/Resend, test end-to-end.
+- [ ] **Export findings** `[ux]` ,  Multi-select UI (checkboxes or shift-click in result list), format picker (Markdown, plain text, CSV, Excel), file download.
+- [ ] **Email results** `[ux]` `[enhancement]` ,  Add Email delivery to Export: mailto: compose option or SendGrid/Resend API, test end-to-end.
+- [ ] **Google Drive export** `[ux]` `[infra]` `[phase3]` ,  After Google OAuth active, add "Save to Drive" option in export format picker; upload exported file directly to user's Drive.
 - [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` ,  Implement Jira/Linear URL generation, test deep links, document format.
 
 ### Data & Content
@@ -184,6 +185,13 @@ Building distributable installers requires `electron-builder` (already a dev dep
 
 ### Launch Readiness
 
+- [ ] **Content audit** `[qa]` `[manual]` `[launch-blocker]` ,  Full editorial pass: all visible UI strings, corpus entry titles and descriptions, About panel, Help panel, Settings labels. Check for placeholder text, inconsistent terminology, em-dashes, and ESL-unfriendly phrasing.
+- [ ] **Code quality audit** `[code]` `[manual]` `[launch-blocker]` ,  Full pass: ESLint/Stylelint/Markdownlint all clean, no dead code, no unused imports, no TODO/FIXME left in production paths, bundle size within target.
+- [ ] **Security audit** `[privacy]` `[manual]` `[launch-blocker]` ,  Review all localStorage keys match privacy disclosure, no keys logged to console, all outbound links have `rel="noreferrer"`, CSP headers correct, `npm audit` has no unresolved high/critical.
+- [ ] **Accessibility audit** `[a11y]` `[manual]` `[launch-blocker]` ,  axe-core zero violations, full keyboard walkthrough, screen reader test (NVDA+Firefox, VoiceOver+Safari), 200%/400% zoom, prefers-reduced-motion, prefers-contrast, text spacing bookmarklet.
+- [ ] **Functional audit** `[qa]` `[manual]` `[launch-blocker]` ,  Test all core flows end-to-end: search, select, copy, refine, reset, settings, platform filter, WCAG filter, language switch, live search toggle, pinning, ranking, narrow results, hash navigation, PWA install.
+- [ ] **Mobile device testing** `[qa]` `[manual]` `[launch-blocker]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, and portrait/landscape layouts.
+- [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  Verify domain ownership in Search Console, submit sitemap.xml, confirm indexing is enabled (remove noindex), monitor for crawl errors post-launch.
 - [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  GDPR/privacy/terms, SEO tags, Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
 - [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
 

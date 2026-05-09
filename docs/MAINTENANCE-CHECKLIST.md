@@ -12,6 +12,7 @@ Add a row to [MAINT-LOG.md](MAINT-LOG.md) after every sweep.
 
 - [ ] **Linters** ,  `npm run lint` (all three: eslint, stylelint, markdownlint)
 - [ ] **Token audit** ,  grep for hardcoded colors/sizes; add tokens, update `tokens.css`
+- [ ] **Severity badge contrast** ,  verify all 5 badge pairs pass 4.5:1 (text/bg); re-verify after any token color changes
 - [ ] **Dead CSS** ,  remove unreferenced classes and overwritten rules
 - [ ] **DRY pass** ,  move repeated inline style patterns to utility classes
 - [ ] **Unused tokens** ,  remove tokens not referenced in `index.css` or JSX (check TODO for placeholders)
@@ -50,6 +51,8 @@ Add a row to [MAINT-LOG.md](MAINT-LOG.md) after every sweep.
 - [ ] **`robots.txt` served** ,  correct content for current phase
 - [ ] **Active target only** ,  one platform deploying per push
 - [ ] **Electron wiring** ,  API keys via `window.electronAPI.keys` (safeStorage), not `localStorage`
+- [ ] **BottomSheet collapse** ,  desktop collapse button visible, collapses/expands correctly, focus stays in chrome when collapsed
+- [ ] **Admin panel counts** ,  Public (ACC) and Legacy (ATH) tabs show separate counts, no combined totals
 
 See [DEPLOYING.md](DEPLOYING.md) for deployment target details.
 
@@ -75,7 +78,7 @@ See [i18n-WORKFLOW.md](i18n-WORKFLOW.md) for detailed translation procedures.
 - [ ] **String coverage** ,  new UI text uses `t('key')`, never hardcoded
 - [ ] **Key parity** ,  every key in `en.json` exists in all 49+ locale files (run parity script)
 - [ ] **Translate new keys** ,  after `en.json` changes, run `npm run translate` to fill all locales
-- [ ] **Track edits** ,  log all `en.json` changes in `docs/i18n-edits.md`
+- [ ] **Track edits** ,  note all `en.json` key additions/changes in `docs/UPDATES.md` session entry
 - [ ] **Announce audit** ,  `announce()` strings pulled from `t()` and translated
 - [ ] **Corpus translation** ,  descriptions and fixes have locale overlays where needed
 - [ ] **Technical term review** ,  flag WCAG terms (accessible name, live region, etc.) for human review
@@ -103,7 +106,7 @@ Plugins are portable; verify they remain app-agnostic.
 - [ ] **Debug commands** ,  open `src/App.jsx`, verify `runCommand()` matches README table
 - [ ] **Easter eggs** ,  open `src/App.jsx`, verify `EASTER_EGGS` object matches README table
 - [ ] **Finding schema** ,  open `src/data/corpus.json`, verify schema block in README accurate
-- [ ] **Corpus count** ,  update README entry count: `node -e "console.log(require('./src/data/corpus.json').length)"`
+- [ ] **Corpus count** ,  `node -e "console.log(require('./src/data/corpus.json').length)"` and update README if changed
 - [ ] **Hooks/services list** ,  verify every file in `src/hooks/` and `src/services/` appears in README
 - [ ] **Plugin READMEs** ,  verify `src/plugins/*/README.md` match current exports
 - [ ] **CONTRIBUTING.md** ,  defect schema example matches `corpus.json` fields exactly
