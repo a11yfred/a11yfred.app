@@ -163,25 +163,34 @@ button {
 
 .header-github-link {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: var(--space-3);
+  transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
-  gap: 0.25em;
+  justify-content: center;
+  gap: var(--space-1);
   font-size: var(--fs-body);
+  font-weight: 500;
   color: var(--accent-text);
   text-decoration: underline;
-  min-height: var(--touch-target);
-  padding: 0 var(--space-3);
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  padding: 0 var(--space-2);
+  height: var(--btn-height-standard);
+  border-radius: var(--radius);
+  transition: background-color var(--duration-fast), color var(--duration-fast);
 }
 
 [dir="rtl"] .header-github-link {
   left: auto;
-  right: 0;
+  right: var(--space-3);
 }
 
 .header-github-link:hover {
+  background: var(--bg-subtle);
   color: var(--text-heading);
+  text-decoration: none;
 }
 
 .page-title-link {
