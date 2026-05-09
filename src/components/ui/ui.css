@@ -252,6 +252,7 @@ select:focus-visible {
 
 .btn--tertiary:not(:disabled):hover {
   background: var(--bg-subtle);
+  text-decoration: none;
 }
 
 .btn--tertiary:not(:disabled):focus-visible {
