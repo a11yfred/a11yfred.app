@@ -41,12 +41,7 @@ The script detects keys still holding English fallback values and translates the
 
 ### Step 3: Track Changes
 
-Log the change in `docs/i18n-edits.md`:
-
-```markdown
-| en.json key | Old value | New value | Action |
-| new_key_here | — | Your English text here | added |
-```
+Log the change in `docs/UPDATES.md` under the current session's date heading. Note the key name and whether it was added or changed.
 
 ### Step 4: Verify Capitalization
 
@@ -94,7 +89,7 @@ If missing keys are found, go to Section 4, Step 1 (Parity).
 
 ## 4. Full Translation Workflow
 
-Run this when `docs/i18n-edits.md` has unresolved entries or after major content changes.
+Run this after major content changes or when the translate run was deferred from a previous session.
 
 Use `src/i18n/es.json` (Spanish) as reference for what keys exist and what translated values look like.
 
@@ -155,24 +150,17 @@ git commit -m "i18n: translate remaining English placeholder values"
 
 ### Step 4: Verify and Resolve
 
-After all three steps, update `docs/i18n-edits.md` to mark resolved entries:
-
-```markdown
-| en.json key | Old value | New value | Status |
-| new_key_here | — | Your English text here | ✅ resolved |
-```
-
-Verify parity is clean by running the parity check (Section 3 above).
+After all three steps, verify parity is clean by running the parity check (Section 3 above). Log the translate run in `docs/UPDATES.md` under the current session date.
 
 ---
 
 ## 5. Hold-off Policy
 
-**⚠ Do not run translate workflows during active content-editing periods.** Running `npm run translate` while English content is still changing wastes effort. Edits to existing keys require re-translation of all 49+ locales, not just additions.
+**Do not run translate workflows during active content-editing periods.** Running `npm run translate` while English content is still changing wastes effort. Edits to existing keys require re-translation of all 49+ locales, not just additions.
 
 Instead:
 
-1. Keep logging changes in `docs/i18n-edits.md` as you edit
+1. Keep noting changed keys in session notes or `docs/UPDATES.md`
 2. Batch them up
 3. Do one translate run when English content has stabilized
 
