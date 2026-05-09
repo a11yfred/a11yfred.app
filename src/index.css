@@ -2453,7 +2453,8 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .settings-field-label {
-  font-size: var(--fs-body);
+  font-size: var(--fs-sub);
+  font-weight: 500;
   color: var(--text);
   display: block;
   margin-bottom: 4px;
