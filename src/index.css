@@ -172,6 +172,7 @@ button {
   color: var(--accent-text);
   text-decoration: underline;
   min-height: var(--touch-target);
+  padding: 0 var(--space-3);
 }
 
 [dir="rtl"] .header-github-link {
@@ -510,7 +511,8 @@ button {
   }
 }
 
-.result-rank-btn {
+.result-rank-btn,
+.result-rank-btn.btn--icon {
   width: 24px;
   height: 24px;
   border-radius: var(--radius-sm);
@@ -670,7 +672,8 @@ button {
 }
 
 /* Pin button — absolutely positioned inside result-card-wrap */
-.result-pin-btn {
+.result-pin-btn,
+.result-pin-btn.btn--icon {
   position: absolute;
   top: 0;
   inset-inline-start: 0;
@@ -1905,21 +1908,27 @@ input[type="radio"].control:not(:checked):hover {
   gap: var(--space-4);
 }
 
-.settings-reset-warning {
+.alert-banner {
   display: flex;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-4);
-  background: rgb(255 0 0 / 0.05);
-  border: 1px solid rgb(255 0 0 / 0.2);
   border-radius: var(--radius);
-  color: var(--text-body);
   font-weight: 500;
 }
 
-.settings-reset-warning svg {
+.alert-banner--warning {
+  background: rgb(255 0 0 / 0.05);
+  border: 1px solid rgb(255 0 0 / 0.2);
+  color: var(--text-heading);
+}
+
+.alert-banner svg {
   flex-shrink: 0;
-  color: var(--alert-color, #d32f2f);
   margin-top: 2px;
+}
+
+.alert-banner--warning svg {
+  color: var(--alert-color, #d32f2f);
 }
 
 .settings-reset-section {

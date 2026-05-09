@@ -218,6 +218,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
 .sheet-close-bottom-btn {
   display: block;
   width: auto;
+  min-height: var(--touch-target);
+  min-width: var(--touch-target);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius);
   font-size: var(--fs-body);

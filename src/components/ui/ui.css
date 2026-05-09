@@ -149,7 +149,8 @@ select:focus-visible {
   transition: color var(--duration-fast), background var(--duration-fast);
 }
 
-.btn--icon-accent:hover {
+.btn--icon-accent:hover,
+.btn--icon-accent:focus-visible {
   color: var(--accent);
   background: var(--accent-bg);
 }

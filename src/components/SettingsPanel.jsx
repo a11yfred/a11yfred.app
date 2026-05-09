@@ -817,7 +817,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         <div className="settings-reset-sheet">
           <h2 className="sheet-heading">{t('settings.confirm_reset_all_heading')}</h2>
 
-          <div className="settings-reset-warning">
+          <div className="alert-banner alert-banner--warning">
             <AlertTriangle size={18} aria-hidden="true" />
             <p>{t('settings.confirm_reset_all_intro')}</p>
           </div>
