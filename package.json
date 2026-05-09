@@ -11,11 +11,7 @@
     "lint:css": "stylelint \"src/**/*.css\"",
     "lint:md": "markdownlint \"docs/**/*.md\" README.md",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:md",
-    "translate": "node scripts/translate-missing.mjs",
-    "build:extension": "vite build --config vite.extension.config.js",
-    "build:extension:firefox": "vite build --config vite.firefox.config.js",
-    "electron:dev": "NODE_ENV=development concurrently \"vite\" \"electron electron/main.js\"",
-    "electron:build": "vite build && electron-builder --config electron/electron-builder.json"
+    "translate": "node scripts/translate-missing.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -29,9 +25,6 @@
     "@axe-core/react": "^4.11.2",
     "@eslint/js": "^9.0.0",
     "@vitejs/plugin-react": "^6.0.1",
-    "concurrently": "^9.2.1",
-    "electron": "^41.3.0",
-    "electron-builder": "^26.8.1",
     "eslint": "^9.0.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.1",
