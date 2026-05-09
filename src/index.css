@@ -2920,6 +2920,14 @@ input[type="radio"].settings-checkbox:checked {
   border-color: var(--text-muted);
 }
 
+[data-theme="dark"] .toggle:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--bg-subtle);
+}
+
+[data-theme="dark"] .toggle:hover:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--bg);
+}
+
 .toggle:hover:not(:has(.toggle__input:checked)) .toggle__thumb {
   outline-color: var(--text-muted);
 }
