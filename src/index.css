@@ -364,7 +364,6 @@ button {
   gap: var(--space-2);
   margin-bottom: var(--space-5);
   min-width: 0;
-  overflow: hidden;
 }
 
 .results-sort-group {
@@ -579,7 +578,7 @@ button {
 }
 
 .result-rank-btn:hover:not(:disabled) {
-  color: var(--accent-text);
+  color: var(--text-heading);
   background: var(--accent-bg);
 }
 
@@ -597,6 +596,9 @@ button {
 
 .result-rank-btn--star.result-rank-btn--active {
   position: relative;
+  color: var(--text-heading);
+  background: var(--accent-bg);
+  border-color: transparent;
 }
 
 .result-rank-btn--star.result-rank-btn--active::after {
@@ -703,7 +705,7 @@ button {
 }
 
 .result-pin-btn:hover {
-  color: var(--accent-text);
+  color: var(--text-heading);
   background: var(--accent-bg);
 }
 
