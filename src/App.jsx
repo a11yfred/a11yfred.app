@@ -128,6 +128,8 @@ function AppShell() {
   const [submittedQuery, setSubmittedQuery] = useState(() => new URLSearchParams(window.location.search).get('q') || '')
   const [searchKey, setSearchKey] = useState(0)
   const [selected, setSelected] = useState(null)
+  const [sheetCollapsed, setSheetCollapsed] = useState(false)
+  const [pendingFinding, setPendingFinding] = useState(null)
   const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
   const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
   const [wcagFilter, setWcagFilter] = useState(() => {
@@ -155,6 +157,8 @@ function AppShell() {
         submittedQuery={submittedQuery} setSubmittedQuery={setSubmittedQuery}
         searchKey={searchKey} setSearchKey={setSearchKey}
         selected={selected} setSelected={setSelected}
+        sheetCollapsed={sheetCollapsed} setSheetCollapsed={setSheetCollapsed}
+        pendingFinding={pendingFinding} setPendingFinding={setPendingFinding}
         platform={platform} setPlatform={setPlatform}
         wcagFilter={wcagFilter} setWcagFilter={setWcagFilter}
         panelFocusTrigger={panelFocusTrigger} setPanelFocusTrigger={setPanelFocusTrigger}
@@ -176,6 +180,8 @@ function AppContent({
   submittedQuery, setSubmittedQuery,
   searchKey, setSearchKey,
   selected, setSelected,
+  sheetCollapsed, setSheetCollapsed,
+  pendingFinding, setPendingFinding,
   platform, setPlatform,
   wcagFilter, setWcagFilter,
   panelFocusTrigger, setPanelFocusTrigger,
@@ -281,6 +287,16 @@ function AppContent({
   }
   const handleCloseOnboarding = () => navigate('/')
   const handleSelectFinding = (finding) => {
+    // If the sheet is collapsed and the user clicks a different finding,
+    // warn before discarding the collapsed panel and its unsaved changes.
+    if (finding && finding.id !== selected?.id && sheetCollapsed) {
+      setPendingFinding(finding)
+      return
+    }
+    applySelectFinding(finding)
+  }
+
+  const applySelectFinding = (finding) => {
     if (finding) {
       if (!selected) findingTriggerRef.current = document.activeElement
       if (viewAll) returnViewAllRef.current = true
@@ -298,6 +314,7 @@ function AppContent({
       returnViewAllRef.current = false
       if (shouldReturn) { navigate('/results/all'); return }
     }
+    setSheetCollapsed(false)
     setSelected(finding)
     navigate(finding ? `/finding/${finding.id}/${findingSlug(finding.title)}` : '/')
   }
@@ -311,6 +328,7 @@ function AppContent({
       deduped.unshift(finding.id)
       localStorage.setItem('recentFindings', JSON.stringify(deduped.slice(0, 10)))
     } catch { /* localStorage unavailable */ }
+    setSheetCollapsed(false)
     setSelected(finding)
     navigate(`/finding/${finding.id}/${findingSlug(finding.title)}`)
     setPanelFocusTrigger(n => n + 1)
@@ -470,7 +488,7 @@ function AppContent({
   // Background is inert when an overlay panel is active.
   // When selected AND settings is open (mobile), the background is inert due
   // to the settings drawer, exclude the panel from triggering it separately.
-  const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!isDesktop && onboardingOpen) || (!!selected && !settingsOpen && !aboutOpen && !adminOpen)
+  const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!isDesktop && onboardingOpen) || (!!selected && !sheetCollapsed && !settingsOpen && !aboutOpen && !adminOpen)
 
   useEffect(() => {
     // Clean up any palette inline styles from a previous party activation
@@ -1199,7 +1217,9 @@ function AppContent({
 
       <BottomSheet
         open={!!selected && !settingsOpen && !aboutOpen && !helpOpen && !onboardingOpen && !adminOpen}
-        onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
+        onClose={() => { applySelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
+        collapsed={sheetCollapsed}
+        onCollapse={setSheetCollapsed}
         keepMounted={(settingsOpen || aboutOpen || helpOpen || onboardingOpen || adminOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
@@ -1218,7 +1238,7 @@ function AppContent({
             allFindings={allFindings}
             onSelect={handleSelectFinding}
             onSelectRelated={handleSelectRelated}
-            onClose={() => { handleSelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
+            onClose={() => { applySelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
             onBadgeClick={handleBadgeClick}
             onCopyEvent={recordCopy}
             getPairsFor={getPairsFor}
@@ -1230,6 +1250,30 @@ function AppContent({
           />
         )}
       </BottomSheet>
+
+      <Modal
+        open={!!pendingFinding}
+        onClose={() => setPendingFinding(null)}
+        heading={t('detail.discard_confirm_heading')}
+        actions={[
+          {
+            label: t('detail.discard_confirm_yes'),
+            onClick: () => {
+              const f = pendingFinding
+              setPendingFinding(null)
+              applySelectFinding(f)
+            },
+            className: 'btn--warning modal-ok-btn',
+          },
+          {
+            label: t('detail.discard_confirm_no'),
+            onClick: () => setPendingFinding(null),
+            className: 'btn--secondary modal-ok-btn',
+          },
+        ]}
+      >
+        <p>{t('detail.discard_confirm_body')}</p>
+      </Modal>
     </div>
   )
 }
