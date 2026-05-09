@@ -142,6 +142,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
   const [saved, setSaved] = useState(false)
   const privacyOpen = route === '/settings/privacy'
+  const [privacyCollapsed, setPrivacyCollapsed] = useState(false)
   const [rhgPending, setRhgPending] = useState(false)
   const [partyConfirmOpen, setPartyConfirmOpen] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
@@ -761,6 +762,8 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <BottomSheet
         open={privacyOpen}
         onClose={() => navigate('/settings')}
+        collapsed={privacyCollapsed}
+        onCollapse={setPrivacyCollapsed}
         label={t('settings.privacy_heading')}
         closeLabel={t('common.close')}
         returnFocusRef={privacyButtonRef}

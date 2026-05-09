@@ -97,14 +97,14 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     ? `${location.trim().replace(/:?\s*$/, ':')} ${finding.desc}`
     : descText
 
-  const copy = (text, setCopied, label, prefix = null, includePrefix = false) => {
+  const copy = (text, setCopied, label, prefix = null, includePrefix = false, type = null) => {
     if (!text?.trim()) { setNothingToCopy(true); return }
     const textToCopy = prefix && includePrefix ? `${prefix}\n${text}` : text
     navigator.clipboard.writeText(textToCopy).then(() => {
       setCopied(true)
       announce(t('detail.copied_announce', { label }))
       setTimeout(() => setCopied(false), NOTIFICATION_TIMEOUT)
-      onCopyEvent?.(finding.id)
+      onCopyEvent?.(finding.id, type)
     })
   }
 
@@ -133,7 +133,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       setCopiedAll(true)
       announce(t('detail.copy_all_announce'))
       setTimeout(() => setCopiedAll(false), 2000)
-      onCopyEvent?.(finding.id)
+      onCopyEvent?.(finding.id, 'all')
     })
   }
 
@@ -175,16 +175,16 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   }
 
   const copyTitle = () => {
-    copy(finding.title, setCopiedTitle, t('detail.title_label'))
+    copy(finding.title, setCopiedTitle, t('detail.title_label'), null, false, 'title')
   }
 
   const copyPrimarySc = () => {
-    copy(finding.primarySC, setCopiedPrimarySc, t('detail.sc_label'))
+    copy(finding.primarySC, setCopiedPrimarySc, t('detail.sc_label'), null, false, 'primarySc')
   }
 
   const copyRelatedSc = () => {
     if (!finding.relatedSC.length) return
-    copy(finding.relatedSC.join(', '), setCopiedRelatedSc, t('detail.sc_label'))
+    copy(finding.relatedSC.join(', '), setCopiedRelatedSc, t('detail.sc_label'), null, false, 'relatedSc')
   }
 
   function startTypewriter(newDesc, newFix, tFunc) {
@@ -378,28 +378,35 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         <div className="detail-sc-group">
           <p className="detail-sc-row">
             <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
-            <ScLink label={finding.primarySC} />
-            <Button
-              variant="tertiary"
-              active={copiedPrimarySc}
-              icon={<Copy size={14} aria-hidden="true" />}
-              activeIcon={<Check size={14} aria-hidden="true" />}
-              label={t('detail.copy_sc_aria')}
-              activeLabel={t('detail.copied_aria')}
-              className="detail-sc-copy-btn"
-              onClick={copyPrimarySc}
-              title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
-            />
+            {finding.primarySC
+              ? <>
+                  <ScLink label={finding.primarySC} />
+                  <Button
+                    variant="tertiary"
+                    active={copiedPrimarySc}
+                    icon={<Copy size={14} aria-hidden="true" />}
+                    activeIcon={<Check size={14} aria-hidden="true" />}
+                    label={t('detail.copy_sc_aria')}
+                    activeLabel={t('detail.copied_aria')}
+                    className="detail-sc-copy-btn"
+                    onClick={copyPrimarySc}
+                    title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+                  />
+                </>
+              : <span className="detail-sc-na">{t('common.na')}</span>
+            }
           </p>
           {finding.relatedSC.length > 0 && (
             <p className="detail-sc-row">
               <span className="detail-sc-label">{t('detail.related_sc')}</span>{' '}
-              {finding.relatedSC.map((r, i) => (
-                <span key={r}>
-                  {i > 0 && ', '}
-                  <ScLink label={r} />
-                </span>
-              ))}
+              <span className="detail-sc-links">
+                {finding.relatedSC.map((r, i) => (
+                  <span key={r}>
+                    {i > 0 && ', '}
+                    <ScLink label={r} />
+                  </span>
+                ))}
+              </span>
               <Button
                 variant="tertiary"
                 active={copiedRelatedSc}
@@ -450,7 +457,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         value={location.trim() ? displayDesc : descText}
         onChange={setDescText}
         copied={copiedDesc}
-        onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel, t('detail.desc_prefix'), includeDescTitle)}
+        onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel, t('detail.desc_prefix'), includeDescTitle, 'desc')}
         reset={resetDesc}
         onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel, descCopyBtnRef)}
         undoable={descHistory.length > 1}
@@ -471,7 +478,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         value={fixText}
         onChange={setFixText}
         copied={copiedFix}
-        onCopy={() => copy(fixText, setCopiedFix, fixLabel, t('detail.fix_prefix'), includeFixTitle)}
+        onCopy={() => copy(fixText, setCopiedFix, fixLabel, t('detail.fix_prefix'), includeFixTitle, 'fix')}
         reset={resetFix}
         onReset={() => handleReset(finding.fix, fixText, setFixText, setResetFix, fixLabel, fixCopyBtnRef)}
         undoable={fixHistory.length > 1}
@@ -521,28 +528,6 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             {t('detail.ai_revision_hint')}{' '}
             <a href="/settings" className="detail-settings-link">{t('common.settings')}</a>.
           </p>
-          <div className="detail-ai-field-select">
-            <label className="detail-ai-field-select-item">
-              <input
-                type="checkbox"
-                className="app-checkbox"
-                checked={aiRevisedDesc}
-                onChange={e => setAiRevisedDesc(e.target.checked)}
-                disabled={animating}
-              />
-              <span>{descLabel}</span>
-            </label>
-            <label className="detail-ai-field-select-item">
-              <input
-                type="checkbox"
-                className="app-checkbox"
-                checked={aiRevisedFix}
-                onChange={e => setAiRevisedFix(e.target.checked)}
-                disabled={animating}
-              />
-              <span>{fixLabel}</span>
-            </label>
-          </div>
           <textarea
             id="ai-note"
             value={aiNote}
@@ -552,16 +537,40 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             rows={3}
           />
           <div className="detail-section-controls">
-            {localStorage.getItem('ai_provider') === 'anthropic' && (
-              <label className="detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
-                <span className="detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
-                <Toggle
-                  id="agentic-mode-toggle"
-                  checked={useAgenticMode}
-                  onChange={setUseAgenticMode}
-                />
-              </label>
-            )}
+            <div className="detail-ai-settings-group">
+              {localStorage.getItem('ai_provider') === 'anthropic' && (
+                <label className="detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
+                  <span className="detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
+                  <Toggle
+                    id="agentic-mode-toggle"
+                    checked={useAgenticMode}
+                    onChange={setUseAgenticMode}
+                  />
+                </label>
+              )}
+              <div className="detail-ai-field-select">
+                <label className="detail-ai-field-select-item">
+                  <input
+                    type="checkbox"
+                    className="app-checkbox"
+                    checked={aiRevisedDesc}
+                    onChange={e => setAiRevisedDesc(e.target.checked)}
+                    disabled={animating}
+                  />
+                  <span>{descLabel}</span>
+                </label>
+                <label className="detail-ai-field-select-item">
+                  <input
+                    type="checkbox"
+                    className="app-checkbox"
+                    checked={aiRevisedFix}
+                    onChange={e => setAiRevisedFix(e.target.checked)}
+                    disabled={animating}
+                  />
+                  <span>{fixLabel}</span>
+                </label>
+              </div>
+            </div>
             <button
               ref={aiRevisionButtonRef}
               onClick={handleRefine}

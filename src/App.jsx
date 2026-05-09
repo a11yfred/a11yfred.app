@@ -301,6 +301,7 @@ function AppContent({
       if (!selected) findingTriggerRef.current = document.activeElement
       if (viewAll) returnViewAllRef.current = true
       sessionStorage.setItem('lastSelectedId', finding.id)
+      recordOpen(finding.id)
       try {
         const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
         const deduped = recent.filter(id => id !== finding.id)
@@ -322,6 +323,7 @@ function AppContent({
     if (!finding) return
     setFindingHistory(h => selected ? [...h, selected] : h)
     sessionStorage.setItem('lastSelectedId', finding.id)
+    recordOpen(finding.id)
     try {
       const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
       const deduped = recent.filter(id => id !== finding.id)
@@ -349,14 +351,15 @@ function AppContent({
   const [findingHistory, setFindingHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
-  const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings } = useFindingRatings()
+  const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings, recordPin, recordOpen, recordCopy } = useFindingRatings()
   const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedFindings()
   const togglePin = useCallback((id) => {
     const isPinning = !pinnedIds.has(id)
     if (isPinning && ratings[id]?.archived) toggleArchive(id)
+    if (isPinning) recordPin(id)
     _togglePin(id)
-  }, [pinnedIds, ratings, toggleArchive, _togglePin])
-  const { recordCopy, getPairsFor } = useCoSelection()
+  }, [pinnedIds, ratings, toggleArchive, recordPin, _togglePin])
+  const { getPairsFor } = useCoSelection()
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
   const userOverridesHook = useUserOverrides()

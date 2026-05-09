@@ -5,6 +5,7 @@
   "common.close": "Close",
   "common.cancel": "Cancel",
   "common.optional": "(optional)",
+  "common.na": "N/A",
   "common.settings": "Settings",
   "common.skip_to_main": "Skip to main content",
   "common.skip_nav": "Skip navigation",
