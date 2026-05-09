@@ -13,7 +13,7 @@ import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
 
-export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins, headingRef }) {
+export function PinnedSection({ findings, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins, headingRef }) {
   const t = useT()
   if (!findings.length) return null
   return (
@@ -31,7 +31,7 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRa
       </div>
       <ResultList
         results={findings}
-        selected={selected}
+        selected={null}
         onSelect={onSelect}
         query=""
         ratings={ratings}

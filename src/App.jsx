@@ -894,7 +894,6 @@ function AppContent({
       {!dataError && !dataLoading && !viewAllLoading && pinnedIds.size > 0 && (
         <PinnedSection
           findings={pinnedResults}
-          selected={selected}
           onSelect={handleSelectFinding}
           ratings={ratings}
           onRankUp={rankUp}

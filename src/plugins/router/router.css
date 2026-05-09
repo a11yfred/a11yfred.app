@@ -126,7 +126,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transform: translate(-50%, -50%);
   width: 2.5rem;
   height: 4px;
-  background: var(--border-control);
+  background: var(--accent-text);
   border-radius: var(--radius-full);
   pointer-events: none;
 }
@@ -136,10 +136,17 @@ body:has(.modal-panel.is-open) .drawer-panel {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  color: var(--accent-text);
 }
 
 .sheet-close-btn {
   flex-shrink: 0;
+}
+
+.btn--icon.sheet-close-btn,
+.btn--icon.sheet-handle--btn,
+.btn--icon.sheet-back-btn {
+  color: var(--accent-text);
 }
 
 .sheet-back-btn {

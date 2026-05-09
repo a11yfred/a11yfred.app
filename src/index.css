@@ -321,6 +321,7 @@ button {
   align-items: center;
   gap: var(--space-2);
   justify-content: flex-start;
+  margin-bottom: var(--space-3);
 }
 
 .results-count {
@@ -380,6 +381,7 @@ button {
   font-size: var(--fs-body);
   border-radius: var(--radius);
   white-space: nowrap;
+  margin-inline-end: var(--space-2);
 }
 
 .results-narrow-btn {
@@ -703,6 +705,10 @@ button {
   filter: grayscale(1);
 }
 
+.result-card-wrap:has(.result-item--selected) .result-pin-btn {
+  color: var(--accent-text);
+}
+
 /* Push card content to inline-start when pin button is present (RTL-aware) */
 .result-item--pinnable {
   padding-inline-start: 3rem;
@@ -1012,8 +1018,9 @@ button {
     margin-top var(--duration-base) var(--ease-out);
 }
 
+.result-item--selected .result-item__sc,
 .result-item--selected .result-item__desc {
-  color: var(--text-body);
+  color: var(--accent-text);
 }
 
 .result-row--archived .result-item__badges,
@@ -1487,6 +1494,10 @@ input.search-input--disabled {
   margin-bottom: var(--space-6);
 }
 
+.panel-header .btn--icon {
+  color: var(--accent-text);
+}
+
 @media (width < 768px) {
   .panel-header {
     gap: var(--space-1);
@@ -1855,7 +1866,7 @@ input[type="radio"].control:not(:checked):hover {
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: var(--text-muted);
+  color: var(--accent-text);
 }
 
 .settings-key-group {
@@ -2145,6 +2156,7 @@ input[type="radio"].control:not(:checked):hover {
 .detail-sc-label {
   color: var(--text-heading);
   font-weight: 500;
+  margin-inline-end: var(--space-1);
 }
 
 .detail-sc-na {
