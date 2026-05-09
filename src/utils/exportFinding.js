@@ -13,12 +13,12 @@ export function exportFinding(finding, format = 'text') {
 
     case 'csv': {
       const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`
-      const header = ['id', 'title', 'sc', 'scLabel', 'severity', 'platform', 'desc', 'fix'].join(',')
+      const header = ['id', 'title', 'sc', 'primarySC', 'severity', 'platform', 'desc', 'fix'].join(',')
       const row = [
         finding.id,
         finding.title,
         finding.sc,
-        finding.scLabel,
+        finding.primarySC,
         finding.severity,
         finding.platform,
         finding.desc,
@@ -31,13 +31,13 @@ export function exportFinding(finding, format = 'text') {
     }
 
     case 'markdown': {
-      const related = finding.related?.length
-        ? `\n\n**Related:** ${finding.related.join(', ')}`
+      const related = finding.relatedSC?.length
+        ? `\n\n**Related:** ${finding.relatedSC.join(', ')}`
         : ''
       content = [
         `# ${finding.title}`,
         '',
-        `**SC:** ${finding.scLabel}  `,
+        `**SC:** ${finding.primarySC}  `,
         `**Severity:** ${finding.severity}  `,
         `**Platform:** ${finding.platform}${related}`,
         '',
@@ -61,7 +61,7 @@ export function exportFinding(finding, format = 'text') {
         finding.title,
         bar,
         '',
-        `SC: ${finding.scLabel}`,
+        `SC: ${finding.primarySC}`,
         `Severity: ${finding.severity}`,
         `Platform: ${finding.platform}`,
         '',

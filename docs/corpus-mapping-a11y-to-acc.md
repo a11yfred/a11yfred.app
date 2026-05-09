@@ -10,9 +10,9 @@
 ## Namespaces
 
 | Prefix | Corpus | Audience | Count |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | A11Y- | Personal (`personal-corpus.json`) | Expert / paid tier | 175 |
-| ACC- | Public (`corpus.json`) | Beginner-accessible, ESL-friendly | ~106 kept, merges reduce final count |
+| ACC- | Public (`corpus.json`) | Beginner-accessible, ESL-friendly | 99 (IDs aligned to A11Y source numbers) |
 | ATH- | Legacy (`corpus-legacy.json`) | Archived reference | 147 |
 
 ---
@@ -54,7 +54,7 @@
 ## Full Mapping Table
 
 | A11Y- | Title | Decision | ACC- | Notes |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | A11Y-001 | Alt Text Missing or Empty | Keep | ACC-001 | Core, universal; covers linked image and background image variants |
 | A11Y-002 | Complex Image or Figure Missing Sufficient Text Alternative | Keep | ACC-002 | Common, distinct from simple missing alt |
 | A11Y-003 | PDF Is Untagged or Is an Image-Only Scan | Drop | -- | Document platform; covered by ACC-003 |

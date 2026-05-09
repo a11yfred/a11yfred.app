@@ -47,7 +47,7 @@ export default function AboutPanel({ onClose }) {
       <section className="about-section">
         <h3 className="about-section-heading">{t('about.features_heading')}</h3>
         <ul className="about-features">
-          {['a11y', 'languages', 'party', 'pinning'].map(key => (
+          {['a11y', 'languages', 'pinning'].map(key => (
             <li key={key} className="about-feature">
               <span className="about-feature-label">{t(`about.feature_${key}_label`)}</span>
               <span className="about-feature-body">{t(`about.feature_${key}_body`)}</span>

@@ -283,7 +283,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
 
           const cardLabel = archived
             ? t('results.archived_label', { title: finding.title })
-            : `${finding.title}, ${t(p.key)}, ${finding.scLabel}, ${truncDesc}`
+            : `${finding.title}, ${t(p.key)}, ${finding.primarySC}, ${truncDesc}`
 
           // Truncate title used in vote-button labels only, full title used in announce() calls
           const shortTitle = (() => {
@@ -402,7 +402,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
                     >
                       {t(p.key)}
                     </Badge>
-                    {finding.sourceCredits?.filter(src => src !== 'ATH').map(src => (
+                    {finding.creditNames?.filter(src => src !== 'ATH').map(src => (
                       <Badge
                         key={src}
                         variant="source"
@@ -426,7 +426,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
                   </span>
                 </div>
 
-                <div className="result-item__sc">{finding.scLabel}</div>
+                <div className="result-item__sc">{finding.primarySC}</div>
 
                 <div className="result-item__desc">{finding.desc}</div>
               </a>

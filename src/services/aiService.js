@@ -98,7 +98,7 @@ function buildPrompt({ finding, descText, fixText, note }) {
 The auditor has this existing finding:
 
 Title: ${finding.title}
-WCAG SC: ${finding.scLabel}
+WCAG SC: ${finding.primarySC}
 Current description: ${descText}
 Current suggested fix: ${fixText}
 
