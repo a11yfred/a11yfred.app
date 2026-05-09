@@ -163,9 +163,8 @@ button {
 
 .header-github-link {
   position: absolute;
-  top: 50%;
-  left: var(--space-3);
-  transform: translateY(-50%);
+  top: 0;
+  left: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -184,7 +183,7 @@ button {
 
 [dir="rtl"] .header-github-link {
   left: auto;
-  right: var(--space-3);
+  right: 0;
 }
 
 .header-github-link:hover {
