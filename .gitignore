@@ -10,3 +10,4 @@ src/data/personal-corpus-backup-*.json
 
 # Archived work documentation
 docs/archive/
+src/data/corpus-legacy.json
