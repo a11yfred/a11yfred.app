@@ -757,7 +757,7 @@ select:disabled {
   align-items: flex-start;
   gap: var(--space-1);
   min-height: var(--touch-target);
-  padding: 10px var(--space-2);
+  padding: 0 var(--space-2);
   border-radius: var(--radius);
   transition: background var(--duration-fast);
 }
