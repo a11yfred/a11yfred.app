@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { ChevronLeft, ChevronRight, X, ChevronsDown, ChevronsUp } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X, ChevronsUp } from 'lucide-react'
 import { useFocusTrap } from './useFocusTrap.js'
 import { useAriaHide } from './useAriaHide.js'
 import { returnFocus } from './returnFocus.js'
@@ -151,13 +151,13 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
         <div ref={chromeRef} className="sheet-chrome">
           {isDesktop ? (
             <button
-              className="sheet-handle sheet-handle--btn"
+              className="sheet-handle--btn"
               aria-label={collapsed ? 'Expand sheet' : 'Collapse sheet'}
               onClick={() => setCollapsed(v => !v)}
             >
               {collapsed
                 ? <ChevronsUp size={16} aria-hidden="true" />
-                : <ChevronsDown size={16} aria-hidden="true" />
+                : <div className="sheet-handle" aria-hidden="true" />
               }
             </button>
           ) : (

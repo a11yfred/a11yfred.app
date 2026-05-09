@@ -1840,6 +1840,12 @@ input[type="radio"].control:not(:checked):hover {
   cursor: not-allowed;
 }
 
+.select:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: 0;
+  border-radius: var(--radius-sm);
+}
+
 .select:not(:disabled):hover {
   background: var(--bg);
 }
