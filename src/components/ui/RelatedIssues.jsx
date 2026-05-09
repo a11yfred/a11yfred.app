@@ -8,9 +8,8 @@ const AAA_PAIRS = {
   '2.4.12': '2.4.11',
   '2.4.7':  '2.4.13',
   '2.4.13': '2.4.7',
-  '2.2.1':  '2.2.5',
+  '2.2.1':  ['2.2.5', '2.2.6'],
   '2.2.5':  '2.2.1',
-  '2.2.1':  '2.2.6',
   '2.2.6':  '2.2.1',
 }
 
@@ -22,7 +21,7 @@ function rankTier(candidate, current, coSelectionPairs) {
   if (!hasSc) return { tier: 7, boost: 0 }
 
   const sameSc = candidate.sc === current.sc
-  const aaaPair = AAA_PAIRS[current.sc] === candidate.sc
+  const aaaPair = [].concat(AAA_PAIRS[current.sc] ?? []).includes(candidate.sc)
   const currentScInCandidateRelated = candidate.relatedSC?.some(r => r.startsWith(current.sc + ' '))
   const sharedRelated = current.relatedSC?.some(r => candidate.relatedSC?.includes(r))
   const keywordOverlap = current.keywords?.filter(k => candidate.keywords?.includes(k)).length || 0

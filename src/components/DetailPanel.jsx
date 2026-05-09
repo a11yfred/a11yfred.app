@@ -64,8 +64,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
   useEffect(() => {
     titleRef.current?.focus()
-    setFindingNote(localStorage.getItem(`finding_note_${finding.id}`) || '')
-    setAiNote('')
+    setFindingNote(localStorage.getItem(`finding_note_${finding.id}`) || '') // eslint-disable-line react-hooks/set-state-in-effect
+    setAiNote('') // eslint-disable-line react-hooks/set-state-in-effect
   }, [finding.id])
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from 'react'
+import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw } from 'lucide-react'
 import { Modal, BottomSheet, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -8,7 +8,7 @@ import RadioChip from './ui/RadioChip.jsx'
 import Select from './ui/Select.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
-import { PROVIDERS, PROVIDER_MODELS, MODEL_DEFAULTS, initModels } from '../utils/aiModels.js'
+import { PROVIDERS, PROVIDER_MODELS, initModels } from '../utils/aiModels.js'
 
 const LANGUAGES = [
   // A
@@ -185,7 +185,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
     setPendingShowVoting(showVoting)
     setPendingAiEnabled(aiEnabled)
     setPendingWcagFilter(wcagFilter ?? { maxVersion: '2.2', maxLevel: 'AA' })
-  }, [theme, language, platform, liveSearch, showVoting, aiEnabled, wcagFilter]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [theme, language, platform, liveSearch, showVoting, aiEnabled, wcagFilter])
 
   // In Electron, load API keys from safeStorage after mount
   useEffect(() => {
@@ -224,7 +224,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         document.documentElement.setAttribute('data-theme', resolved)
       }
     }
-  }, [theme]) // eslint-disable-line react-hooks/exhaustive-deps -- only run on mount/unmount
+  }, [theme]) // only run on mount/unmount
 
   // Scroll to and focus the first invalid field when errors change
   useEffect(() => {
@@ -294,9 +294,12 @@ const SettingsPanel = forwardRef(function SettingsPanel({
     announce(t('settings.saved_announce'))
   }
 
-  const guardedClose = () => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } }
+  const guardedClose = useCallback(
+    () => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } },
+    [hasUnsaved, onClose]
+  )
 
-  useImperativeHandle(ref, () => ({ guardedClose }), [guardedClose]) // eslint-disable-line react-hooks/exhaustive-deps
+  useImperativeHandle(ref, () => ({ guardedClose }), [guardedClose])
 
   const savedLanguageLabel = (() => {
     const entry = LANGUAGES.find(l => l.value === language)
