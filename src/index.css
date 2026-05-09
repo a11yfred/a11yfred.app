@@ -138,27 +138,6 @@ button {
 .page-header__about-btn,
 .page-header__help-btn {
   font-size: 22px;
-  border-radius: var(--radius);
-  transition: background var(--duration-fast);
-}
-
-.page-header__settings-btn:hover,
-.page-header__about-btn:hover,
-.page-header__help-btn:hover {
-  background: var(--bg-subtle);
-}
-
-.page-header__settings-btn:focus-visible,
-.page-header__about-btn:focus-visible,
-.page-header__help-btn:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus);
-  outline-offset: var(--focus-outline-offset);
-}
-
-.page-header__settings-btn:active,
-.page-header__about-btn:active,
-.page-header__help-btn:active {
-  background: var(--border);
 }
 
 .header-github-link {

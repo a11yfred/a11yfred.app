@@ -127,6 +127,7 @@ select:focus-visible {
 
 .btn--icon:hover {
   background: var(--bg-subtle);
+  color: var(--text-heading);
 }
 
 .btn--icon:focus-visible {
