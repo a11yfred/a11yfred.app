@@ -11,7 +11,7 @@ const Radio = forwardRef(function Radio({
   ...rest
 }, ref) {
   return (
-    <label className={`settings-control-label${className ? ` ${className}` : ''}`}>
+    <label className={`control__label${className ? ` ${className}` : ''}`}>
       <input
         ref={ref}
         type="radio"
@@ -20,7 +20,7 @@ const Radio = forwardRef(function Radio({
         checked={checked}
         onChange={onChange}
         disabled={disabled}
-        className="settings-control"
+        className="control"
         {...rest}
       />
       {label}

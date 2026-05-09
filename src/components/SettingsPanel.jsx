@@ -353,7 +353,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           <Select
             value={pendingLanguage === language ? '' : pendingLanguage}
             onChange={e => { setPendingLanguage(e.target.value || language); setLanguagePreviewed(false) }}
-            wrapClass="settings-select-wrap--language"
+            wrapClass="select-wrap--language"
             aria-label={t('settings.language_label')}
           >
             <option value="">{t('settings.language_select_one')}</option>
@@ -457,14 +457,14 @@ const SettingsPanel = forwardRef(function SettingsPanel({
                 { value: '2.1', labelKey: 'settings.wcag_filter_21' },
                 { value: '2.2', labelKey: 'settings.wcag_filter_22' },
               ].map(({ value, labelKey }) => (
-                <label key={value} className="settings-control-label">
+                <label key={value} className="control__label">
                   <input
                     type="radio"
                     name="wcag-version"
                     value={value}
                     checked={(pendingWcagFilter?.maxVersion ?? '2.2') === value}
                     onChange={() => setPendingWcagFilter(f => ({ ...f, maxVersion: value }))}
-                    className="settings-control"
+                    className="control"
                   />
                   {t(labelKey)}
                 </label>
@@ -478,14 +478,14 @@ const SettingsPanel = forwardRef(function SettingsPanel({
                 { value: 'A',  labelKey: 'settings.wcag_level_a'  },
                 { value: 'AA', labelKey: 'settings.wcag_level_aa' },
               ].map(({ value, labelKey }) => (
-                <label key={value} className="settings-control-label">
+                <label key={value} className="control__label">
                   <input
                     type="radio"
                     name="wcag-level"
                     value={value}
                     checked={(pendingWcagFilter?.maxLevel ?? 'AA') === value}
                     onChange={() => setPendingWcagFilter(f => ({ ...f, maxLevel: value }))}
-                    className="settings-control"
+                    className="control"
                   />
                   {t(labelKey)}
                 </label>

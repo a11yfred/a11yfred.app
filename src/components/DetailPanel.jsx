@@ -352,7 +352,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
               <Badge
                 key="sources-badge"
                 variant="source"
-                onClick={() => document.querySelector('.detail-sources-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                onClick={() => document.querySelector('.source-links')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                 aria-label={t('detail.sources_badge_multiple_aria')}
               >
                 {t('detail.sources_badge_multiple')}
