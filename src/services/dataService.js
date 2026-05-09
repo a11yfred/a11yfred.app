@@ -4,14 +4,14 @@
  * Phase 1: reads from local JSON file, with locale-specific overlay for
  * translated title/desc/rem. English keywords are always preserved on the
  * merged record so cross-language search works (e.g. typing "button" in the
- * Japanese locale still finds ATH-001).
+ * Japanese locale still finds ACC-001).
  *
  * Phase 2 (Supabase): replace the body of getFindings() with a Supabase query.
  * Add getUserFindings() to load the user's custom entries from Supabase.
  * No other file needs to change.
  */
 
-import corpusData from '../data/personal-corpus.json'
+import corpusData from '../data/corpus.json'
 
 // Raw overlay data cache, avoids re-fetching the same JSON module
 const overlayCache = {}

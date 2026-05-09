@@ -8,7 +8,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 1: Complete (17/17 features, 1 pre-launch remaining)
 
-**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All linters passing. UI component library fully portable with 14 primitives, zero app-specific dependencies.
+**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All linters passing. UI component library fully portable with 20 components, zero app-specific dependencies.
 
 **Pre-launch remaining (1):**
 

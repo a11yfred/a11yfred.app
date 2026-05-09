@@ -31,11 +31,11 @@ export default function AboutPanel({ onClose }) {
         <p className="about-body">{t('about.examples_intro')}</p>
         <ul className="about-coming">
           {[
-            { id: 'ATH-001', slug: 'unlabeled-button-or-link',                       labelKey: 'about.examples_ath001_label' },
-            { id: 'ATH-010', slug: 'control-label-describes-appearance-not-purpose',  labelKey: 'about.examples_ath010_label' },
-            { id: 'ATH-013', slug: 'incorrect-heading-structure',                     labelKey: 'about.examples_ath013_label' },
-            { id: 'ATH-014', slug: 'no-h1-on-the-page',                              labelKey: 'about.examples_ath014_label' },
-            { id: 'ATH-019', slug: 'aria-used-incorrectly',                          labelKey: 'about.examples_ath019_label' },
+            { id: 'ACC-098', slug: 'control-has-no-accessible-name-wrong-role-or-misleading-name', labelKey: 'about.examples_ath001_label' },
+            { id: 'ACC-082', slug: 'form-input-is-missing-a-label',                               labelKey: 'about.examples_ath010_label' },
+            { id: 'ACC-062', slug: 'heading-structure-is-missing-incorrect-or-non-descriptive',   labelKey: 'about.examples_ath013_label' },
+            { id: 'ACC-055', slug: 'skip-link-is-missing-not-working-or-not-visible-on-focus',    labelKey: 'about.examples_ath014_label' },
+            { id: 'ACC-092', slug: 'incorrect-aria-role-applied-to-an-element',                   labelKey: 'about.examples_ath019_label' },
           ].map(({ id, slug, labelKey }) => (
             <li key={id}>
               <a href={`#/finding/${id}/${slug}`} className="about-inline-link">{t(labelKey)}</a>
