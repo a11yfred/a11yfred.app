@@ -3657,6 +3657,7 @@ input[type="radio"].settings-checkbox:checked {
 }
 
 .field__textarea {
+  display: block;
   width: 100%;
   padding: 8px 10px;
   font-size: var(--fs-small);
