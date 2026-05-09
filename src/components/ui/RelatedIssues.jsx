@@ -23,8 +23,8 @@ function rankTier(candidate, current, coSelectionPairs) {
 
   const sameSc = candidate.sc === current.sc
   const aaaPair = AAA_PAIRS[current.sc] === candidate.sc
-  const currentScInCandidateRelated = candidate.related?.some(r => r.startsWith(current.sc + ' '))
-  const sharedRelated = current.related?.some(r => candidate.related?.includes(r))
+  const currentScInCandidateRelated = candidate.relatedSC?.some(r => r.startsWith(current.sc + ' '))
+  const sharedRelated = current.relatedSC?.some(r => candidate.relatedSC?.includes(r))
   const keywordOverlap = current.keywords?.filter(k => candidate.keywords?.includes(k)).length || 0
 
   // Behavioral boost from co-selection pairs
