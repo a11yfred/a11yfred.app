@@ -139,7 +139,7 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
       const sa = SEVERITY_ORDER[a.severity] ?? 99
       const sb = SEVERITY_ORDER[b.severity] ?? 99
       if (sa !== sb) return sa - sb
-      return (a.scLabel ?? '').localeCompare(b.scLabel ?? '')
+      return (a.primarySC ?? '').localeCompare(b.primarySC ?? '')
     })
   , [versionFiltered, ratings])
 

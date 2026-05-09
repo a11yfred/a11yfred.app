@@ -1,5 +1,5 @@
 import { useRef, useEffect, forwardRef } from 'react'
-import { RotateCcw, Copy, Check, Edit } from 'lucide-react'
+import { RotateCcw, Copy, Check } from 'lucide-react'
 import { useT } from '../../i18n/index.jsx'
 
 const Field = forwardRef(function Field({
@@ -13,13 +13,9 @@ const Field = forwardRef(function Field({
   onReset,
   undoable,
   onUndo,
-  selected,
-  onSelectChange,
-  selectLabel,
   animating,
   wasUpdated,
   isDesktop,
-  aiEnabled,
   hasChanged,
   includeTitle,
   onIncludeTitleChange,
@@ -59,18 +55,7 @@ const Field = forwardRef(function Field({
     <div className="field">
       <div className="field__header">
         <div className="field__label-row">
-          {aiEnabled && (
-            <input
-              type="checkbox"
-              className="field-select-checkbox"
-              checked={selected}
-              onChange={e => onSelectChange(e.target.checked)}
-              aria-label={selectLabel}
-              disabled={animating}
-            />
-          )}
           <label htmlFor={id} className="field__label">
-            {selected && <Edit size={14} aria-hidden="true" className="field__label-icon" />}
             {label}
             {wasUpdated && (
               <span className="field__updated-badge">{t('detail.updated_label')}</span>

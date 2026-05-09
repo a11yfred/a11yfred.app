@@ -106,7 +106,7 @@ function computeStats(corpus) {
     const s = entry.severity || 'Unknown'
     bySeverity[s] = (bySeverity[s] || 0) + 1
     // sourceCredits is string[] (author names); sources is object[] ({ name, url })
-    const sources = entry.sourceCredits ?? []
+    const sources = entry.creditNames ?? []
     for (const src of sources) {
       bySource[src] = (bySource[src] || 0) + 1
     }

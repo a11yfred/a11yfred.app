@@ -363,7 +363,7 @@ function AppContent({
     return sortedFindings.filter(f => {
       if (pinnedIds.has(f.id)) return false
       if (badgeFilter.type === 'severity') return f.severity === badgeFilter.value
-      if (badgeFilter.type === 'source')   return f.sourceCredits?.includes(badgeFilter.value)
+      if (badgeFilter.type === 'source')   return f.creditNames?.includes(badgeFilter.value)
       if (badgeFilter.type === 'wcag') {
         if (badgeFilter.value === 'N/A') {
           return !f.wcagVersion || f.wcagVersion === ''
@@ -383,7 +383,7 @@ function AppContent({
       f.title.toLowerCase().includes(lowerNarrow) ||
       f.desc.toLowerCase().includes(lowerNarrow) ||
       f.keywords?.some(k => k.toLowerCase().includes(lowerNarrow)) ||
-      f.sourceCredits?.some(s => s.toLowerCase().includes(lowerNarrow))
+      f.creditNames?.some(s => s.toLowerCase().includes(lowerNarrow))
     )
     const pinnedMatches = narrowFiltered.filter(f => pinnedIds.has(f.id))
     const unpinnedMatches = narrowFiltered.filter(f => !pinnedIds.has(f.id))

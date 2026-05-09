@@ -90,7 +90,7 @@ export async function getAgenticRefinement({ finding, descText, fixText, note, c
   const userPrompt = `Refine this accessibility finding based on the auditor's note.
 
 Title: ${finding.title}
-WCAG SC: ${finding.scLabel}
+WCAG SC: ${finding.primarySC}
 Severity: ${finding.severity}
 Platform: ${finding.platform}
 

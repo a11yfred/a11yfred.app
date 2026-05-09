@@ -178,12 +178,12 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   }
 
   const copyPrimarySc = () => {
-    copy(finding.scLabel, setCopiedPrimarySc, t('detail.sc_label'))
+    copy(finding.primarySC, setCopiedPrimarySc, t('detail.sc_label'))
   }
 
   const copyRelatedSc = () => {
-    if (!finding.related.length) return
-    copy(finding.related.join(', '), setCopiedRelatedSc, t('detail.sc_label'))
+    if (!finding.relatedSC.length) return
+    copy(finding.relatedSC.join(', '), setCopiedRelatedSc, t('detail.sc_label'))
   }
 
   function startTypewriter(newDesc, newFix, tFunc) {
@@ -331,7 +331,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             {t(p.key)}
           </Badge>
           {(() => {
-            const sources = finding.sourceCredits?.filter(src => src !== 'ATH') || []
+            const sources = finding.creditNames?.filter(src => src !== 'ATH') || []
             if (sources.length === 0) return null
             if (sources.length === 1) {
               const src = sources[0]
@@ -379,7 +379,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             <div className="detail-sc-item-row">
               <span>
                 <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
-                <ScLink label={finding.scLabel} />
+                <ScLink label={finding.primarySC} />
               </span>
               <Button
                 variant="tertiary"
@@ -394,12 +394,12 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
               />
             </div>
           </li>
-          {finding.related.length > 0 && (
+          {finding.relatedSC.length > 0 && (
             <li className="detail-sc-item">
               <div className="detail-sc-item-row">
                 <span>
                   <span className="detail-sc-label">{t('detail.related_sc')}</span>{' '}
-                  {finding.related.map((r, i) => (
+                  {finding.relatedSC.map((r, i) => (
                     <span key={r}>
                       {i > 0 && ', '}
                       <ScLink label={r} />
@@ -454,13 +454,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel, descCopyBtnRef)}
         undoable={descHistory.length > 1}
         onUndo={handleUndoDesc}
-        selected={aiRevisedDesc}
-        onSelectChange={setReviseDesc}
-        selectLabel={t('detail.ai_revised_desc_checkbox')}
         animating={animating}
         wasUpdated={descHistory.length > 0}
         isDesktop={isDesktop}
-        aiEnabled={aiEnabled}
         hasChanged={descText !== finding.desc}
         includeTitle={includeDescTitle}
         onIncludeTitleChange={setIncludeDescTitle}
@@ -479,13 +475,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         onReset={() => handleReset(finding.fix, fixText, setFixText, setResetFix, fixLabel, fixCopyBtnRef)}
         undoable={fixHistory.length > 1}
         onUndo={handleUndoFix}
-        selected={aiRevisedFix}
-        onSelectChange={setReviseFix}
-        selectLabel={t('detail.ai_revised_fix_checkbox')}
         animating={animating}
         wasUpdated={fixHistory.length > 0}
         isDesktop={isDesktop}
-        aiEnabled={aiEnabled}
         hasChanged={fixText !== finding.fix}
         includeTitle={includeFixTitle}
         onIncludeTitleChange={setIncludeFixTitle}
@@ -494,7 +486,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
       {finding.note && (
         <div className="detail-corpus-note">
-          <span className="detail-corpus-note-label">{t('detail.note_label')}</span>
+          <h3 className="detail-corpus-note-label">{t('detail.note_label')}</h3>
           <p className="detail-corpus-note-body">{finding.note}</p>
         </div>
       )}
@@ -535,24 +527,40 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             {t('detail.ai_revision_hint')}{' '}
             <a href="/settings" className="detail-settings-link">{t('common.settings')}</a>.
           </p>
-          {localStorage.getItem('ai_provider') === 'anthropic' && (
-            <div className="detail-agentic-mode-row">
-              <label>
+          <div className="detail-ai-field-select">
+            <label className="detail-ai-field-select-item">
+              <input
+                type="checkbox"
+                className="app-checkbox"
+                checked={aiRevisedDesc}
+                onChange={e => setAiRevisedDesc(e.target.checked)}
+                disabled={animating}
+              />
+              <span>{descLabel}</span>
+            </label>
+            <label className="detail-ai-field-select-item">
+              <input
+                type="checkbox"
+                className="app-checkbox"
+                checked={aiRevisedFix}
+                onChange={e => setAiRevisedFix(e.target.checked)}
+                disabled={animating}
+              />
+              <span>{fixLabel}</span>
+            </label>
+            {localStorage.getItem('ai_provider') === 'anthropic' && (
+              <label className="detail-ai-field-select-item detail-ai-field-select-item--agentic">
                 <input
-                  id="agentic-toggle"
                   type="checkbox"
+                  className="app-checkbox"
                   checked={useAgenticMode}
                   onChange={e => setUseAgenticMode(e.target.checked)}
-                  className="detail-agentic-toggle"
-                  title={t('detail.agentic_mode_help') || 'Use AI with corpus search to write more accurate descriptions'}
+                  disabled={animating}
                 />
-                <span className="detail-agentic-mode-label">{t('detail.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}</span>
+                <span>{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
               </label>
-              <p className="detail-agentic-mode-hint">
-                {t('detail.agentic_mode_hint') || 'AI searches the corpus to match your style and depth'}
-              </p>
-            </div>
-          )}
+            )}
+          </div>
           <div className="detail-ai-revision-row">
             <textarea
               id="ai-note"
@@ -586,7 +594,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
       <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
       <SourceLinks
-        links={finding.links}
+        links={finding.creditLinks}
         singleHeading={t('detail.source_heading')}
         multipleHeading={t('detail.sources_heading')}
       />

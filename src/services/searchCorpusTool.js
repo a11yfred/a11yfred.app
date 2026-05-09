@@ -44,7 +44,7 @@ const FUSE_OPTIONS = {
  * @param {string} query
  * @param {object[]} corpus, full corpus array
  * @param {number} [limit=3]
- * @returns {{ id, title, scLabel, priority, desc, fix }[]}
+ * @returns {{ id, title, primarySC, priority, desc, fix }[]}
  */
 export function searchCorpus(query, corpus, limit = 3) {
   if (!query?.trim() || !Array.isArray(corpus) || corpus.length === 0) return []
@@ -55,7 +55,7 @@ export function searchCorpus(query, corpus, limit = 3) {
     .map(r => ({
       id:       r.item.id,
       title:    r.item.title,
-      scLabel:  r.item.scLabel,
+      primarySC:  r.item.primarySC,
       severity: r.item.severity,
       desc:     r.item.desc,
       fix:      r.item.fix,
