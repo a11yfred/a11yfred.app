@@ -1604,13 +1604,14 @@ select:disabled {
 }
 
 /* Dark-mode overrides: --accent (#7f77dd) is too light for white text (3.76:1);
-   use --accent-bg (#26215c, 14.9:1) as the filled bg instead. */
+   use --accent-bg (#26215c) as the filled bg with --accent-text (#afa9ec, 14.9:1) for icons. */
 [data-theme="dark"] .result-vote-btn:active:not(:disabled),
 [data-theme="dark"] .result-vote-btn.result-vote-btn--active,
 [data-theme="dark"] .result-vote-btn--active:hover:not(:disabled),
 [data-theme="dark"] .result-row--archived .result-vote-btn--archive {
   background: var(--accent-bg);
   border-color: var(--accent);
+  color: var(--accent-text);
 }
 
 .result-item__header {
