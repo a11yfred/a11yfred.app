@@ -11,15 +11,18 @@ import { useDir } from './useDir.js'
  * Rendered via a portal at document.body so that a transformed ancestor
  * (e.g. the Drawer using translateX) does not break position: fixed.
  *
- * - Scroll-locks the body while open
+ * - Scroll-locks the body while open AND not collapsed
  * - Swipe-to-dismiss: drag down from the chrome area to close
- * - Traps Tab focus within the panel while open (WCAG 2.1.2)
- * - Dismisses on Escape or backdrop click
+ * - Traps Tab focus within the panel while open AND not collapsed
+ * - Background remains fully accessible and interactive when collapsed
+ * - Dismisses on Escape or backdrop click (only when not collapsed)
  *
  * Props:
  *   open            boolean         , whether the sheet is visible
  *   onClose         fn              , called on Escape, backdrop click, or close button
- *   label           string          , aria-label for the dialog
+ *   collapsed       boolean         , controlled collapsed state (desktop only)
+ *   onCollapse      fn              , called with next collapsed boolean
+ *   label           string          , aria-label for the dialog/region
  *   keepMounted     boolean         , keep children mounted while closed (preserves state)
  *   returnFocusRef  React.RefObject , if provided, focus this element on close instead of
  *                                      auto-captured trigger; use when child effects move focus
@@ -27,7 +30,23 @@ import { useDir } from './useDir.js'
  *                                      fire before parent effects in React)
  *   children        node            , rendered inside the sheet
  */
-export default function BottomSheet({ open, onClose, label = 'Detail', closeLabel = 'Close', keepMounted = false, returnFocusRef, onBack, backLabel = 'Back', hideCloseBottom = false, closeIcon: CloseIcon = X, backLtrIcon: BackLtrIcon = ChevronLeft, backRtlIcon: BackRtlIcon = ChevronRight, children }) {
+export default function BottomSheet({
+  open,
+  onClose,
+  collapsed = false,
+  onCollapse,
+  label = 'Detail',
+  closeLabel = 'Close',
+  keepMounted = false,
+  returnFocusRef,
+  onBack,
+  backLabel = 'Back',
+  hideCloseBottom = false,
+  closeIcon: CloseIcon = X,
+  backLtrIcon: BackLtrIcon = ChevronLeft,
+  backRtlIcon: BackRtlIcon = ChevronRight,
+  children
+}) {
   const triggerRef = useRef(null)
   const panelRef = useRef(null)
   const dragStartY = useRef(null)
@@ -37,15 +56,15 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
   // Keep children mounted during the exit animation so the sheet doesn't
   // appear empty while sliding down. Unmount 250ms after close (--duration-base).
   const [mounted, setMounted] = useState(open)
-  const [collapsed, setCollapsed] = useState(false)
   const chromeRef = useRef(null)
   useEffect(() => {
     const timer = setTimeout(() => setMounted(open), open ? 0 : 250)
     return () => clearTimeout(timer)
   }, [open])
+
   // Reset collapsed when sheet closes
   // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { if (!open) setCollapsed(false) }, [open])
+  useEffect(() => { if (!open) onCollapse?.(false) }, [open, onCollapse])
 
   // Track chrome height so the collapsed transform is exact
   useEffect(() => {
@@ -53,41 +72,44 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
     const h = chromeRef.current.offsetHeight
     panelRef.current.style.setProperty('--sheet-chrome-height', `${h}px`)
   }, [open])
+
   const BackChevron = dir === 'rtl' ? BackRtlIcon : BackLtrIcon
   const isDesktop = window.matchMedia('(width >= 768px)').matches
 
-  useFocusTrap(panelRef, open)
-  useAriaHide(panelRef, open)
+  // Focus trap and aria-hide are disabled when collapsed so the background
+  // remains fully accessible and interactive.
+  useFocusTrap(panelRef, open && !collapsed)
+  useAriaHide(panelRef, open && !collapsed)
 
   // Save the triggering element on open; focus the panel; restore focus on close.
   // Panel focus fires here (parent effect) after useFocusOnMount in children (child
   // effects run first), so the panel wins and NVDA announces the dialog label once.
   useEffect(() => {
-    if (open) {
+    if (open && !collapsed) {
       if (!returnFocusRef) triggerRef.current = document.activeElement
       panelRef.current?.focus()
-    } else {
+    } else if (!open) {
       returnFocus(returnFocusRef?.current ?? triggerRef.current)
     }
-  }, [open, returnFocusRef])
+  }, [open, collapsed, returnFocusRef])
 
-  // Escape key
+  // Escape key — only active when open and not collapsed
   useEffect(() => {
-    if (!open) return
+    if (!open || collapsed) return
     const handler = (e) => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', handler)
     return () => document.removeEventListener('keydown', handler)
-  }, [open, onClose])
+  }, [open, collapsed, onClose])
 
-  // Scroll lock, prevent background from scrolling when sheet is open
+  // Scroll lock — only when open and not collapsed
   useEffect(() => {
-    if (open) {
+    if (open && !collapsed) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
     }
     return () => { document.body.style.overflow = '' }
-  }, [open])
+  }, [open, collapsed])
 
   // Swipe-to-dismiss: drag the sheet down from the chrome area to close
   const handleTouchStart = (e) => {
@@ -127,19 +149,19 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
 
   return createPortal(
     <>
-      {/* Backdrop, click to dismiss */}
+      {/* Backdrop — hidden when collapsed so background is fully interactive */}
       <div
-        className={`sheet-backdrop${open ? ' is-open' : ''}`}
+        className={`sheet-backdrop${open && !collapsed ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Panel */}
+      {/* Panel — when collapsed: region (not dialog), no inert, no aria-modal */}
       <div
         ref={panelRef}
         className={`sheet-panel${open ? ' is-open' : ''}${collapsed ? ' is-collapsed' : ''}`}
-        role="dialog"
-        aria-modal="true"
+        role={collapsed ? 'region' : 'dialog'}
+        aria-modal={collapsed ? undefined : true}
         aria-label={label}
         tabIndex={-1}
         onTouchStart={handleTouchStart}
@@ -153,7 +175,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
             <button
               className="sheet-handle--btn"
               aria-label={collapsed ? 'Expand sheet' : 'Collapse sheet'}
-              onClick={() => setCollapsed(v => !v)}
+              onClick={() => onCollapse?.(!collapsed)}
             >
               {collapsed
                 ? <ChevronsUp size={16} aria-hidden="true" />
