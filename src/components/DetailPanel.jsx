@@ -375,53 +375,45 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           )}
         </div>
 
-        <ul className="detail-sc-list">
-          <li className="detail-sc-item">
-            <div className="detail-sc-item-row">
-              <span>
-                <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
-                <ScLink label={finding.primarySC} />
-              </span>
+        <div className="detail-sc-group">
+          <p className="detail-sc-row">
+            <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
+            <ScLink label={finding.primarySC} />
+            <Button
+              variant="tertiary"
+              active={copiedPrimarySc}
+              icon={<Copy size={14} aria-hidden="true" />}
+              activeIcon={<Check size={14} aria-hidden="true" />}
+              label={t('detail.copy_sc_aria')}
+              activeLabel={t('detail.copied_aria')}
+              className="detail-sc-copy-btn"
+              onClick={copyPrimarySc}
+              title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+            />
+          </p>
+          {finding.relatedSC.length > 0 && (
+            <p className="detail-sc-row">
+              <span className="detail-sc-label">{t('detail.related_sc')}</span>{' '}
+              {finding.relatedSC.map((r, i) => (
+                <span key={r}>
+                  {i > 0 && ', '}
+                  <ScLink label={r} />
+                </span>
+              ))}
               <Button
                 variant="tertiary"
-                active={copiedPrimarySc}
+                active={copiedRelatedSc}
                 icon={<Copy size={14} aria-hidden="true" />}
                 activeIcon={<Check size={14} aria-hidden="true" />}
                 label={t('detail.copy_sc_aria')}
                 activeLabel={t('detail.copied_aria')}
                 className="detail-sc-copy-btn"
-                onClick={copyPrimarySc}
-                title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+                onClick={copyRelatedSc}
+                title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
               />
-            </div>
-          </li>
-          {finding.relatedSC.length > 0 && (
-            <li className="detail-sc-item">
-              <div className="detail-sc-item-row">
-                <span>
-                  <span className="detail-sc-label">{t('detail.related_sc')}</span>{' '}
-                  {finding.relatedSC.map((r, i) => (
-                    <span key={r}>
-                      {i > 0 && ', '}
-                      <ScLink label={r} />
-                    </span>
-                  ))}
-                </span>
-                <Button
-                  variant="tertiary"
-                  active={copiedRelatedSc}
-                  icon={<Copy size={14} aria-hidden="true" />}
-                  activeIcon={<Check size={14} aria-hidden="true" />}
-                  label={t('detail.copy_sc_aria')}
-                  activeLabel={t('detail.copied_aria')}
-                  className="detail-sc-copy-btn"
-                  onClick={copyRelatedSc}
-                  title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
-                />
-              </div>
-            </li>
+            </p>
           )}
-        </ul>
+        </div>
       </div>
 
       {finding.note && (
