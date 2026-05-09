@@ -360,14 +360,29 @@ function AppContent({
   const activeQuery = liveSearch ? query : submittedQuery
   const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
-  const [sortBy, setSortBy] = useState('relevance')
+  const [sortBy, setSortBy] = useState('smart')
 
   const SEVERITY_SORT_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }
+  const SEVERITY_SCORE     = { Critical: 40, High: 30, Medium: 20, Low: 10, 'Best Practice': 5 }
   const WCAG_VERSION_ORDER = { '2.0': 0, '2.1': 1, '2.2': 2 }
   const WCAG_LEVEL_ORDER = { A: 0, AA: 1, AAA: 2 }
   const PLATFORM_ORDER = { web: 0, native: 1, document: 2 }
 
+  const smartScore = useCallback((f, index) => {
+    const r = ratings[f.id]
+    let score = SEVERITY_SCORE[f.severity] ?? 0
+    if (r?.starred)  score += 50
+    if (r?.score)    score += r.score * 10
+    if (r?.archived) score -= 100
+    score -= index * 0.1
+    return score
+  }, [ratings]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const applySortBy = useCallback((arr) => {
+    if (sortBy === 'smart') {
+      const scores = new Map(arr.map((f, i) => [f.id, smartScore(f, i)]))
+      return [...arr].sort((a, b) => scores.get(b.id) - scores.get(a.id))
+    }
     if (sortBy === 'severity-desc') return [...arr].sort((a, b) => (SEVERITY_SORT_ORDER[a.severity] ?? 99) - (SEVERITY_SORT_ORDER[b.severity] ?? 99))
     if (sortBy === 'severity-asc')  return [...arr].sort((a, b) => (SEVERITY_SORT_ORDER[b.severity] ?? 99) - (SEVERITY_SORT_ORDER[a.severity] ?? 99))
     if (sortBy === 'title-az') return [...arr].sort((a, b) => a.title.localeCompare(b.title))
@@ -377,8 +392,9 @@ function AppContent({
     if (sortBy === 'wcag-level')   return [...arr].sort((a, b) => (WCAG_LEVEL_ORDER[a.wcagLevel] ?? 99) - (WCAG_LEVEL_ORDER[b.wcagLevel] ?? 99))
     if (sortBy === 'platform')     return [...arr].sort((a, b) => (PLATFORM_ORDER[a.platform] ?? 99) - (PLATFORM_ORDER[b.platform] ?? 99))
     if (sortBy === 'popularity')   return [...arr].sort((a, b) => ((ratings[b.id]?.score ?? 0) - (ratings[a.id]?.score ?? 0)))
+    if (sortBy === 'relevance')    return arr
     return arr
-  }, [sortBy, ratings]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [sortBy, ratings, smartScore]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const pinnedResults = useMemo(() =>
     allFindings.filter(f => pinnedIds.has(f.id)),

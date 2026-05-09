@@ -78,6 +78,7 @@
   "results.sort_live_hint": "Live Search is on. Results will sort immediately after making a selection.",
   "results.sort_label": "Sort by",
   "results.sort_apply": "Sort",
+  "results.sort_smart": "Smart",
   "results.sort_relevance": "Relevance",
   "results.sort_severity_desc": "Severity: High to Low",
   "results.sort_severity_asc": "Severity: Low to High",

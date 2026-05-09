@@ -227,6 +227,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
                   }}
                   wrapClass="results-sort-select-wrap"
                 >
+                  <option value="smart">{t('results.sort_smart')}</option>
                   {query && <option value="relevance">{t('results.sort_relevance')}</option>}
                   <option value="severity-desc">{t('results.sort_severity_desc')}</option>
                   <option value="severity-asc">{t('results.sort_severity_asc')}</option>
