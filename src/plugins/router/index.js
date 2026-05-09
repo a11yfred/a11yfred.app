@@ -1,3 +1,4 @@
+import './router.css'
 export { Router, useRouter, matchRoute, useRouteMatch } from './Router.jsx'
 export { default as Route } from './Route.jsx'
 export { default as Link } from './Link.jsx'

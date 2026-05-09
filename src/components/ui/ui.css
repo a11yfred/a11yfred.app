@@ -1,0 +1,795 @@
+/* ─── Button default styling ──────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  font-size: var(--fs-body);
+  border-radius: var(--radius);
+  padding: 0 var(--space-2);
+  height: var(--btn-height-standard);
+  white-space: nowrap;
+  transition: background-color var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  flex-shrink: 0;
+}
+
+
+.btn svg {
+  flex-shrink: 0;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* ─── Focus ───────────────────────────────────────────────── */
+
+/* Keyboard focus ring — 3:1 min contrast against all surfaces.
+   Mouse clicks do not trigger :focus-visible, so this is
+   keyboard-navigation only (correct per WCAG 2.4.11). */
+:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* Programmatic focus-return — always show the ring when a dialog/sheet/panel
+   closes and focus lands back on the trigger, regardless of input modality.
+   The returnFocus() utility in the router plugin sets this attribute before
+   calling .focus() and clears it on the next blur or pointerdown. */
+[data-focus-return]:focus {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-sm);
+}
+
+/* Toggle: show focus ring on the visual track when the hidden checkbox is focused */
+input[role="switch"] {
+  outline: none;
+}
+
+input[role="switch"]:focus-visible + span {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--toggle-radius);
+}
+
+/* Suppress the default outline only on elements that supply
+   their own visible focus treatment via border-color change. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: 0;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Skip link ───────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 999;
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: var(--fs-body);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  transform: translateY(calc(-100% - var(--space-4)));
+  transition: var(--transition-btn);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+}
+
+/* ─── Touch targets ───────────────────────────────────────── */
+
+/* Icon-only buttons: invisible padding keeps the visual size
+   unchanged while meeting the 44px minimum tap target. */
+.btn--icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  color: var(--text-body);
+  border-radius: var(--radius);
+  transition: background var(--duration-fast);
+}
+
+.btn--icon:hover {
+  background: var(--bg-subtle);
+}
+
+.btn--icon:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.btn--icon:active {
+  background: var(--border);
+}
+
+/* ─── Secondary button (neutral border, outline style) ────── */
+
+.btn--secondary {
+  border: 1px solid var(--accent);
+  background: var(--bg-subtle);
+  color: var(--accent-text);
+  font-weight: 500;
+  padding: 0 var(--space-2);
+  transition: var(--transition-btn);
+  border-radius: var(--radius);
+}
+
+/* ─── Icon accent (colored icon buttons) ─────────────────── */
+
+.btn--icon-accent {
+  color: var(--accent-text);
+  transition: color var(--duration-fast), background var(--duration-fast);
+}
+
+.btn--icon-accent:hover {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.btn--icon-accent:active {
+  background: var(--border);
+}
+
+.btn--icon-accent.btn__field--success {
+  color: var(--success);
+}
+
+.btn--icon-accent.btn__field--success:hover {
+  color: var(--success);
+  background: transparent;
+}
+
+.btn--icon-tertiary.btn__field--success {
+  color: var(--success);
+}
+
+.btn--icon-tertiary.btn__field--success:hover {
+  color: var(--success);
+  background: transparent;
+}
+
+.btn--primary {
+  border: 1px solid var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  font-weight: 500;
+  padding: 0 var(--space-2);
+  transition: var(--transition-btn);
+  border-radius: var(--radius);
+}
+
+/* ─── Tertiary button (text-link style — no border, underlined) ── */
+
+.btn--tertiary {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  padding: 0 var(--space-2);
+  transition: var(--transition-btn);
+  border-radius: var(--radius);
+}
+
+
+.btn--tertiary.btn--full-width {
+  padding: 0;
+}
+
+/* ─── Button sizing modifier ───────────────────────────────── */
+
+.btn--height-standard {
+  height: var(--btn-height-standard);
+}
+
+/* ─── Shared disabled state — before hover rules (specificity order) */
+
+.btn--primary:disabled,
+.btn--secondary:disabled,
+.btn--tertiary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary:not(:disabled):hover,
+.btn--secondary:not(:disabled):hover {
+  background: var(--accent-text);
+  color: var(--accent-bg);
+  border-color: var(--accent-text);
+}
+
+.btn--primary:not(:disabled):focus-visible,
+.btn--secondary:not(:disabled):focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.btn--primary:not(:disabled):active,
+.btn--secondary:not(:disabled):active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.btn--tertiary:not(:disabled):hover {
+  background: var(--bg-subtle);
+}
+
+.btn--tertiary:not(:disabled):focus-visible {
+  outline: 1px solid var(--focus);
+  outline-offset: 0;
+  text-decoration: none;
+}
+
+.btn--tertiary:not(:disabled):active {
+  background: var(--border);
+  color: var(--text-heading);
+}
+
+/* ─── Warning button (destructive actions, e.g., reset all) ── */
+
+.btn--warning {
+  border: 1px solid var(--error);
+  background: transparent;
+  color: var(--error);
+  font-weight: 500;
+  padding: 0 var(--space-2);
+  transition: var(--transition-btn);
+  border-radius: var(--radius);
+}
+
+.btn--warning:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--warning:not(:disabled):hover {
+  background: var(--error);
+  color: var(--bg);
+}
+
+.btn--warning:not(:disabled):focus-visible {
+  outline: var(--focus-outline-width) solid var(--error);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.btn--warning:not(:disabled):active {
+  background: var(--error);
+  color: var(--bg);
+  opacity: 0.85;
+}
+
+.error-retry-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+  border-width: 0;
+}
+
+.error-retry-inline:not(:disabled):hover,
+.error-retry-inline:not(:disabled):focus-visible {
+  background: transparent;
+  color: var(--text-heading);
+}
+
+/* ─── Disabled form controls ─────────────────────────────────
+   Browsers apply automatic opacity to disabled <select> elements
+   but not <input>, causing visual inconsistency. Force opacity:1
+   on selects so border and text color are controlled entirely by
+   the component's CSS classes (which already use --text-disabled). */
+
+select:disabled {
+  opacity: 1;
+}
+
+/* ─── Form control placeholder ──────────────────────────────── */
+
+::placeholder {
+  font-style: italic;
+}
+
+/* ─── Visually hidden (screen reader only) ────────────────── */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ─── Radio chip ──────────────────────────────────────────── */
+
+.radio-chip {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: var(--btn-height-standard);
+  padding: 0 var(--space-4);
+  border-radius: 0;
+  margin-left: -1px;
+  border: 1px solid var(--border-control);
+  background: var(--bg-subtle);
+  color: var(--text-body);
+  cursor: pointer;
+  font-size: var(--fs-body);
+  font-weight: 400;
+  text-align: center;
+  transition: all var(--duration-fast);
+}
+
+.radio-chip__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.radio-chip--active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  font-weight: 500;
+}
+
+.radio-chip:has(:focus-visible) {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.radio-chip__indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: transparent;
+  border: var(--border-width-control) solid var(--text-body);
+  flex-shrink: 0;
+  transition: all var(--duration-fast);
+}
+
+.radio-chip--active .radio-chip__indicator {
+  background: var(--accent-text);
+  border: none;
+}
+
+/* ─── Radio chip stars (party mode) ──────────────────────── */
+
+[data-theme="party"] .radio-chip__indicator {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  width: auto;
+  height: auto;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--text-body);
+}
+
+[data-theme="party"] .radio-chip__indicator::before {
+  content: '☆';
+}
+
+[data-theme="party"] .radio-chip--active .radio-chip__indicator {
+  color: var(--accent-text);
+}
+
+[data-theme="party"] .radio-chip--active .radio-chip__indicator::before {
+  content: '★';
+}
+
+/* ─── Segmented chip group ────────────────────────────────────
+   Collapse the gap and share a single-pixel border between chips,
+   rounding only the outer corners of the first and last chip.    */
+.radio-chip:first-child {
+  border-radius: var(--radius) 0 0 var(--radius);
+  margin-left: 0;
+}
+
+.radio-chip:last-child {
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.radio-chip:focus-within {
+  z-index: 1;
+}
+
+/* RTL: outer corner radii and overlap margins flip to match reading direction */
+[dir="rtl"] .radio-chip {
+  margin-left: 0;
+  margin-right: -1px;
+}
+
+[dir="rtl"] .radio-chip:first-child {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-right: 0;
+}
+
+[dir="rtl"] .radio-chip:last-child {
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+@media (width < 768px) {
+  .radio-chip {
+    padding-inline: var(--space-3);
+  }
+
+  .radio-chip:first-child {
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
+
+  .radio-chip:last-child {
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+}
+
+.radio-chip:not(.radio-chip--active):hover {
+  background: var(--bg);
+  border-color: var(--text-muted);
+  color: var(--text-heading);
+}
+
+/* ─── Toggle ──────────────────────────────────────────────── */
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  width: 40px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.toggle__input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.toggle__track {
+  width: 40px;
+  height: 24px;
+  border-radius: 12px;
+  background: var(--border);
+  border: var(--border-width-control) solid var(--border-control);
+  position: relative;
+  transition: background var(--duration-fast), border-color var(--duration-fast);
+  pointer-events: none;
+}
+
+.toggle:has(.toggle__input:checked) .toggle__track {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+.toggle:hover:has(.toggle__input:checked) .toggle__track {
+  background: var(--accent-text);
+  border-color: var(--accent-text);
+}
+
+.toggle__thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg);
+  outline: var(--border-width-control) solid var(--border-control);
+  outline-offset: 0;
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  transition: left var(--duration-fast), outline-color var(--duration-fast), background var(--duration-fast);
+}
+
+[data-theme="dark"] .toggle__thumb {
+  background: #4a4a4a;
+  outline-color: #2a2a2a;
+}
+
+/* RTL: thumb travels from right to left; position from right edge */
+[dir="rtl"] .toggle__thumb {
+  left: auto;
+  right: 3px;
+  transition: right var(--duration-fast), outline-color var(--duration-fast);
+}
+
+.toggle:has(.toggle__input:checked) .toggle__thumb {
+  left: 21px;
+  background: var(--accent);
+  outline-color: var(--accent);
+}
+
+[dir="rtl"] .toggle:has(.toggle__input:checked) .toggle__thumb {
+  right: 21px;
+}
+
+[data-theme="dark"] .toggle:has(.toggle__input:checked) .toggle__thumb {
+  background: var(--accent);
+  outline-color: var(--accent);
+}
+
+.toggle__check {
+  display: block;
+  width: 2px;
+  height: 8px;
+  border-radius: 1px;
+  background: #fff;
+}
+
+[data-theme="dark"] .toggle__check {
+  background: var(--text-heading);
+}
+
+.toggle:hover:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--bg-subtle);
+}
+
+[data-theme="dark"] .toggle:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--bg-subtle);
+}
+
+[data-theme="dark"] .toggle:hover:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--bg);
+}
+
+
+.toggle__ring {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: var(--border-width-control) solid var(--border-control);
+  background: transparent;
+}
+
+[data-theme="dark"] .toggle__ring {
+  border-color: var(--text-heading);
+}
+
+
+.toggle:has(.toggle__input:disabled) {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ─── Field ───────────────────────────────────────────────── */
+
+.field {
+  margin-bottom: var(--space-4);
+}
+
+.field__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35em;
+}
+
+.field__label-row {
+  display: flex;
+  align-items: center;
+}
+
+.field__label {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text-heading);
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.field__label-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.field__updated-badge {
+  display: inline-block;
+  margin-left: 0.4em;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--accent-text);
+}
+
+/* Shared custom checkbox — used across field headers, AI section, and any future checkboxes */
+.app-checkbox,
+.field-select-checkbox,
+.field-include-title-checkbox {
+  appearance: none;
+  width: 1.125em;
+  height: 1.125em;
+  border: var(--border-width-control) solid var(--accent);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-subtle);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin: 0;
+  vertical-align: middle;
+  transition: background-color var(--duration-fast), border-color var(--duration-fast);
+}
+
+.app-checkbox:checked,
+.field-select-checkbox:checked,
+.field-include-title-checkbox:checked {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%233c3489' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.app-checkbox:focus-visible,
+.field-select-checkbox:focus-visible,
+.field-include-title-checkbox:focus-visible {
+  outline-offset: var(--focus-outline-offset);
+}
+
+.app-checkbox:disabled,
+.field-select-checkbox:disabled,
+.field-include-title-checkbox:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] .app-checkbox:checked,
+[data-theme="dark"] .field-select-checkbox:checked,
+[data-theme="dark"] .field-include-title-checkbox:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%23afa9ec' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.field__footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1em;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+
+@media (width < 768px) {
+  .field__footer {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .field__include-title {
+    width: 100%;
+    margin-top: 0.35em;
+  }
+
+  .field__actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .field__actions .btn--field {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+.field__include-title {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 0.35em;
+}
+
+.field__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  margin-top: 0.5em;
+}
+
+.field-include-title-label {
+  font-size: var(--fs-body);
+  color: var(--text-heading);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius);
+  transition: background var(--duration-fast);
+}
+
+.field-include-title-label:hover,
+.field-include-title-label:has(:focus-visible) {
+  background: var(--bg-subtle);
+}
+
+.field-include-title-icon {
+  color: var(--accent-text);
+  flex-shrink: 0;
+}
+
+.btn--field {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  height: var(--btn-height-compact);
+  font-size: var(--fs-body);
+  border-radius: var(--radius);
+  white-space: nowrap;
+}
+
+.btn--primary.btn__field--success,
+.btn--secondary.btn__field--success {
+  color: var(--success);
+  border-color: var(--success);
+  opacity: 1;
+}
+
+.btn--primary.btn__field--success:hover,
+.btn--secondary.btn__field--success:hover {
+  color: var(--success);
+  background: var(--accent-bg);
+  border-color: var(--success);
+}
+
+.field__textarea {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  font-size: var(--fs-small);
+  line-height: 1.6;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius);
+  color: var(--text-heading);
+  resize: none;
+  overflow-y: auto;
+  font-family: ui-monospace, monospace;
+  margin-bottom: 0;
+}
+
+.field__textarea--animating {
+  color: var(--text-body);
+  cursor: wait;
+}
+
