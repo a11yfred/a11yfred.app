@@ -3166,12 +3166,12 @@ input[type="radio"].settings-checkbox:checked {
   background: var(--bg-subtle);
   border-left: 3px solid var(--accent-text);
   border-radius: var(--radius);
-  width: 80%;
-  text-align: left;
 }
 
 .detail-corpus-note-label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.35em;
   font-size: var(--fs-small);
   font-weight: 600;
   color: var(--text-faint);

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw } from 'lucide-react'
+import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Info, Save } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { getAgenticRefinement } from '../services/agenticAiService.js'
 import { useMediaQuery, Modal } from '../plugins/router/index.js'
@@ -486,7 +486,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
       {finding.note && (
         <div className="detail-corpus-note">
-          <h3 className="detail-corpus-note-label">{t('detail.note_label')}</h3>
+          <h3 className="detail-corpus-note-label"><Info size={13} aria-hidden="true" className="detail-corpus-note-icon" />{t('detail.note_label')}</h3>
           <p className="detail-corpus-note-body">{finding.note}</p>
         </div>
       )}
@@ -514,8 +514,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
             aria-label={findingNoteSaved ? t('detail.saved_finding_note_aria') : t('detail.save_finding_note_aria')}
           >
             {findingNoteSaved
-              ? <><span className="btn-icon"><Check size={14} aria-hidden="true" /></span><span>{t('detail.saved_finding_note_text')}</span></>
-              : t('detail.save_finding_note_text')}
+              ? <><Check size={14} aria-hidden="true" /><span>{t('detail.saved_finding_note_text')}</span></>
+              : <><Save size={14} aria-hidden="true" /><span>{t('detail.save_finding_note_text')}</span></>}
           </button>
         </div>
       </div>
