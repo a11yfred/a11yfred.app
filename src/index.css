@@ -2350,6 +2350,8 @@ input.search-input--disabled {
 
 input[type="radio"].settings-checkbox {
   border-radius: 50%;
+  width: 22px;
+  height: 22px;
 }
 
 .settings-checkbox:checked {
