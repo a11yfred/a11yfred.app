@@ -71,21 +71,21 @@ const Field = forwardRef(function Field({
         readOnly={animating}
         className={`field__textarea${animating ? ' field__textarea--animating' : ''}`}
       />
-      <div className="field__include-title">
-        <input
-          type="checkbox"
-          id={`${id}-include-title`}
-          checked={includeTitle}
-          onChange={e => onIncludeTitleChange(e.target.checked)}
-          disabled={animating}
-          className="field-include-title-checkbox"
-        />
-        <label htmlFor={`${id}-include-title`} className="field-include-title-label">
-          {includeTitle && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
-          {includeTitleLabel}
-        </label>
-      </div>
       <div className="field__footer">
+        <div className="field__include-title">
+          <input
+            type="checkbox"
+            id={`${id}-include-title`}
+            checked={includeTitle}
+            onChange={e => onIncludeTitleChange(e.target.checked)}
+            disabled={animating}
+            className="field-include-title-checkbox"
+          />
+          <label htmlFor={`${id}-include-title`} className="field-include-title-label">
+            {includeTitle && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
+            {includeTitleLabel}
+          </label>
+        </div>
         <div className="field__actions">
           <button
             onClick={handleResetOrUndo}
