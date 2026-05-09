@@ -2840,7 +2840,7 @@ input[type="radio"].settings-checkbox:checked {
   height: 24px;
   border-radius: 12px;
   background: var(--border);
-  border: 1px solid var(--border-control);
+  border: var(--border-width-control) solid var(--border-control);
   position: relative;
   transition: background var(--duration-fast), border-color var(--duration-fast);
   pointer-events: none;
@@ -2867,8 +2867,9 @@ input[type="radio"].settings-checkbox:checked {
   outline: var(--border-width-control) solid var(--border-control);
   outline-offset: 0;
   position: absolute;
-  top: 3px;
+  top: 50%;
   left: 3px;
+  transform: translateY(-50%);
   transition: left var(--duration-fast), outline-color var(--duration-fast);
 }
 
