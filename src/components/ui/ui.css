@@ -155,17 +155,6 @@ select:focus-visible {
 
 .btn--icon-accent {
   color: var(--accent-text);
-  transition: color var(--duration-fast), background var(--duration-fast);
-}
-
-.btn--icon-accent:hover,
-.btn--icon-accent:focus-visible {
-  color: var(--accent);
-  background: var(--accent-bg);
-}
-
-.btn--icon-accent:active {
-  background: var(--border);
 }
 
 .btn--icon-accent.btn__field--success {
@@ -494,13 +483,19 @@ select:disabled {
   width: 40px;
   height: 24px;
   flex-shrink: 0;
-  border-radius: var(--radius);
-  padding: 0 var(--space-2);
-  margin: 0 calc(var(--space-2) * -1);
-  transition: background var(--duration-fast);
 }
 
-.toggle:hover {
+.toggle::before {
+  content: '';
+  position: absolute;
+  inset: -10px calc(var(--space-2) * -1);
+  border-radius: var(--radius);
+  background: transparent;
+  transition: background var(--duration-fast);
+  pointer-events: none;
+}
+
+.toggle:hover::before {
   background: var(--bg-subtle);
 }
 

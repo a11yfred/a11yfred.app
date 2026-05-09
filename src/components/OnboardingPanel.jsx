@@ -81,7 +81,7 @@ export default function OnboardingPanel({ onClose }) {
           onClick={handleRequestClose}
           aria-label={t('common.close')}
           title={t('common.close')}
-          className="btn--icon btn--icon-accent onboarding-close-btn"
+          className="btn--icon onboarding-close-btn"
         >
           <X size={20} strokeWidth={2.5} aria-hidden="true" />
         </button>

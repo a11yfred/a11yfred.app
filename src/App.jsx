@@ -1311,7 +1311,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
             label={t('common.close')}
             title={t('common.close')}
             icon={<X size={20} strokeWidth={2.5} aria-hidden="true" />}
-            variant="accent"
             className="page-header__close-btn"
           />
         ) : !onboardingOpen && (
@@ -1321,7 +1320,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               label={t('help.open_help')}
               title={t('help.open_help')}
               icon={<HelpCircle size={20} strokeWidth={2} aria-hidden="true" />}
-              variant="accent"
               className="page-header__help-btn"
             />
             <IconButton
@@ -1329,7 +1327,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               label={t('header.open_about')}
               title={t('header.open_about')}
               icon={<Info size={20} strokeWidth={2} aria-hidden="true" />}
-              variant="accent"
               className="page-header__about-btn"
             />
             <IconButton
@@ -1337,7 +1334,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
               label={t('header.open_settings')}
               title={t('header.open_settings')}
               icon={<Settings size={20} strokeWidth={2} aria-hidden="true" />}
-              variant="accent"
               className="page-header__settings-btn"
             />
           </>
