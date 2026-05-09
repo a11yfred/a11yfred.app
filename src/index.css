@@ -9,6 +9,11 @@
   margin: 0;
 }
 
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   html {
     interpolate-size: allow-keywords;
