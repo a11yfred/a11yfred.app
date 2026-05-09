@@ -40,6 +40,10 @@
   border-radius: var(--radius-sm);
 }
 
+a:focus-visible {
+  text-decoration: none;
+}
+
 /* Programmatic focus-return — always show the ring when a dialog/sheet/panel
    closes and focus lands back on the trigger, regardless of input modality.
    The returnFocus() utility in the router plugin sets this attribute before
