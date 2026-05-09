@@ -4,6 +4,62 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 9, 2026
+
+### Doc cleanup and distribution plan
+
+Removed `EXTENSION-TODO.md`, `FIREFOX-EXTENSION-TODO.md`, and `ELECTRON-TODO.md` from main. All three already live on their respective feature branches (`feature/chrome-extension`, `feature/firefox-extension`, `feature/electron-app`) and do not belong on main. Archived `i18n-edits.md` and `corpus-mapping-a11y-to-acc.md` to `docs/archive/` (neither is actively maintained).
+
+Added a detailed "Extension and Electron distribution" section to `TODO.md` under Phase 2 Infrastructure. Covers Chrome Web Store submission steps, Firefox AMO submission and self-distribution via `web-ext sign`, and `electron-builder` multi-platform builds with code signing requirements per platform (Apple Developer cert + notarytool for macOS, optional DigiCert/Microsoft Trusted Signing for Windows, none required for Linux).
+
+### Admin panel and UI polish (PR #29)
+
+Merged a batch of UI and CSS changes:
+
+**Admin panel:**
+
+- Fixed bloated corpus count in the admin panel. The count was combining both public (ACC) and personal (ATH) corpora. Added separate dataset tabs: Public (ACC) and Legacy (ATH) so each corpus is counted and browsed independently.
+- Restyled the entire admin panel using the app's UI library. Toggle rows use `<Toggle>` with `settings-toggle-row--sm` layout. Close button uses `<IconButton variant="tertiary">`. Dataset tabs, filter buttons, and deploy buttons all use `btn--primary` (active) and `btn--secondary` (inactive).
+- Stripped bespoke button, toggle, tab, and filter CSS from `admin-panel.css`. Converted remaining hardcoded values to space tokens.
+
+**Settings panel:**
+
+- Moved the WCAG filter pending note to sit directly below the `settings-group__desc` paragraph, so the pending indicator is immediately adjacent to the filter it describes.
+
+**About panel:**
+
+- Removed excess `margin-bottom` from feature body paragraphs to match the spacing rhythm used elsewhere on the page.
+- Indented adjacent ULs (`.about-coming`, `.about-sources-list`, `.help-shortcuts`) to `var(--space-3)` to align with the description text.
+
+**Checkbox fix:**
+
+- AI revision checkboxes were double-spacing due to a `margin` + `gap` combination. Changed the shared checkbox `margin` to `0` to let `gap` handle all spacing.
+
+**Results layout:**
+
+- Combined the sort row and actions row into a single `results-actions-row`. Sort controls are wrapped in `results-sort-group` with `max-width: 20rem` so they line up neatly next to narrow results without expanding the container.
+- Moved the rank hint above the actions row.
+- Added `flex-wrap: wrap; overflow: hidden; min-width: 0` to `results-actions-row` to prevent items from overflowing.
+
+**Footer:**
+
+- Linked "Mikey Ilagan" in the footer to `https://www.mikey.fyi?ref=a11yhelper`.
+- Fixed a malformed `<br>` tag in `App.jsx`.
+
+**Sponsored tile:**
+
+- Overrode `result-item__desc` color to `var(--text-body)` for sponsored tiles so the text passes 4.5:1 contrast against the purple-gradient badge background.
+
+**BottomSheet:**
+
+- Added a desktop collapse button to the BottomSheet chrome. On desktop, a handle button in the sheet header lets the user collapse the sheet to show only the chrome (title bar) without fully closing it. Uses `translateY(calc(100% - var(--sheet-chrome-height)))` to slide the sheet partially off-screen. Collapse state uses `useState` (not `useRef`) so the animation triggers a re-render. Full collapse button has a 44x44 minimum touch target.
+
+**Contrast audit:**
+
+- Verified all five severity badge pairs: Critical 6.2:1, High 5.8:1, Medium 5.66:1, Low 5.44:1, Best Practice 5.26:1 -- all pass.
+
+---
+
 ## May 8, 2026
 
 ### App renamed from A11yTextHelper to A11yHelper

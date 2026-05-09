@@ -103,6 +103,45 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Electron desktop app ,  icons, test, merge** `[infra]` ,  Add icons, test on macOS/Windows, code-sign macOS, merge.
 - [ ] **Umami analytics activation** `[infra]` `[manual]` ,  Create account, add site, replace WEBSITE_ID, verify zero cookies, enable at launch.
 
+### Extension and Electron distribution
+
+### Chrome Web Store
+
+1. Create a Google developer account at [chrome.google.com/webstore/devconsole](https://chrome.google.com/webstore/devconsole) and pay the one-time $5 registration fee.
+2. Run `npm run build` and zip the entire `dist/` folder (the output of the Vite build, not the source).
+3. In the developer console, create a new item and upload the zip. Fill in the store listing: name, description (140 chars), screenshots (1280x800 or 640x400), at least one promotional image (440x280).
+4. Set visibility (public or unlisted) and submit for review. Google review typically takes 1 to 3 business days for new extensions, faster for updates.
+5. For updates: increment `version` in `extension-static/manifest.json`, rebuild, re-zip, upload in the console.
+
+### Firefox Add-ons (AMO)
+
+1. Create a Mozilla account at [addons.mozilla.org/developers](https://addons.mozilla.org/en-US/developers/).
+2. Run `npm run build` and zip `dist/` (same build, different manifest).
+3. Submit at AMO Submit: upload the zip, then upload the source code zip (AMO requires source for review of minified code).
+4. Fill in listing details. AMO review for new add-ons is manual and can take days to weeks. Updates to approved add-ons are faster (often same-day auto-approval if no code changes in review scope).
+5. For self-distribution (bypass AMO): sign the xpi via `web-ext sign` using an AMO API key, then distribute the `.xpi` directly. Users install via `about:addons` drag-and-drop.
+
+### Electron: Mac, Windows, Linux
+
+Building distributable installers requires `electron-builder` (already a dev dependency in the scaffold). Steps:
+
+1. Add app icons: `build/icon.png` (512x512, used for Linux and as source), `build/icon.icns` (macOS), `build/icon.ico` (Windows). Tools: `electron-icon-builder` or `icns-gen` from the PNG.
+2. Run `npm run build` to produce `dist/`, then `npx electron-builder` (or add a script: `"dist": "electron-builder"`).
+3. Output by platform:
+   - macOS: `.dmg` installer and `.app` bundle (in `dist/`)
+   - Windows: `.exe` NSIS installer (runs `electron-builder --win`)
+   - Linux: `.AppImage` (runs anywhere), `.deb` (Debian/Ubuntu), `.rpm` (Fedora)
+4. Cross-compilation: building macOS targets requires a Mac or a macOS CI runner. Windows and Linux can cross-compile from each other with some limitations. GitHub Actions with `macos-latest`, `windows-latest`, and `ubuntu-latest` runners covers all three.
+5. Code signing:
+   - macOS: requires an Apple Developer account ($99/yr), a Developer ID Application certificate, and `notarytool` submission after signing. Without signing, users see a Gatekeeper warning.
+   - Windows: optional but recommended. Buy a code-signing certificate (DigiCert, Sectigo, etc.) or use Microsoft Trusted Signing (Azure, cheaper). Without it, Windows Defender SmartScreen shows a warning on first run.
+   - Linux: no signing required.
+6. Distribution:
+   - Self-hosted: upload the built artifacts to a GitHub Release (tag the commit, attach the files). Users download directly.
+   - Mac App Store: requires a separate `mas` build target in electron-builder, an App Store provisioning profile, and Apple review. More restrictive (sandboxing). Most Electron apps skip this and distribute via GitHub Releases or their own site.
+   - Windows Store (MSIX): possible via electron-builder `--win appx` target. Requires a Microsoft Partner Center account. Optional.
+   - Snapcraft / Flathub: Linux packaging for wider distribution. `electron-builder` can produce Snap packages. Flathub requires a separate manifest PR.
+
 ### Privacy & Security
 
 - [ ] **GDPR disclosure for Phase 3** `[privacy]` `[phase3]` `[launch-blocker]` ,  Finalize GDPR-DRAFT.md, move to GDPR.md, publish before launch, cover localStorage/API/tracking/contributions.
@@ -155,7 +194,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and UPDATES.md for technical details.
 
 - ✅ Phase 1 complete (May 6)
-- ✅ 133-entry public corpus fully sourced and WCAG-mapped
+- ✅ Public corpus fully sourced and WCAG-mapped
 - ✅ All linters passing (ESLint 9.x, Stylelint, Markdownlint)
 - ✅ Offline-first support (Service Worker, PWA manifest)
 - ✅ Accessibility baseline (axe-core, WCAG 2.2 AA, keyboard + screen reader tested)
@@ -177,4 +216,9 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ Advanced search syntax (query parser for +term and -term operators)
 - ✅ Phase 2 stubs review (verified against Supabase JS v2 SDK docs)
 - ✅ GitHub README badges (License, Version, Node.js)
+- ✅ Admin panel corpus split into Public (ACC) and Legacy (ATH) dataset tabs (May 9)
+- ✅ Admin panel restyled with UI library components (May 9)
+- ✅ Results layout consolidated: sort + actions in one row, rank hint repositioned (May 9)
+- ✅ Footer: Mikey Ilagan linked to mikey.fyi with ref tracking (May 9)
+- ✅ WCAG filter pending note repositioned to sit directly below description (May 9)
 - 💤 Deferred: SCSS migration, corpus pre-translation, Compare mode, Ko-fi donations, Ko-fi a11y patch, GitHub Sponsors

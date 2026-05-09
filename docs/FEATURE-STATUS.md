@@ -8,7 +8,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 1: Complete (17/17 features)
 
-**Status:** All Phase 1 features shipped and stable. 107-entry public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All linters passing. UI component library fully portable with 14 primitives, zero app-specific dependencies.
+**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All linters passing. UI component library fully portable with 14 primitives, zero app-specific dependencies.
 
 | Feature | Status | % |
 | --- | --- | --- |
@@ -32,7 +32,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 2: In Progress
 
-**Complete (8):**
+**Complete (6):**
 
 | Feature | Status | % |
 | --- | --- | --- |
@@ -40,6 +40,8 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Narrow Results Mode | ✅ | 100 |
 | How To Use / Onboarding | ✅ | 100 |
 | PWA / Offline | ✅ | 100 |
+| Advanced Search Syntax | ✅ | 100 |
+| Platform Variant Display | ✅ | 100 |
 
 **Partial (2):**
 
@@ -48,24 +50,6 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | AI Assist (single-shot) | 🟡 | 85 |
 | AI Agent (Match Existing Style) | 🔧 | 65 |
 
-**Deferred (1):**
-
-| Feature | Status | % |
-| --- | --- | --- |
-| Ko-fi Integration | 💤 | 50 |
-
-**Complete (1):**
-
-| Feature | Status | % |
-| --- | --- | --- |
-| Advanced Search Syntax | ✅ | 100 |
-
-**Not Started (1):**
-
-| Feature | Status | % |
-| --- | --- | --- |
-| Corpus Guide Page (/corpus-guide) | 🔲 | 0 |
-
 **Backend Only (3):**
 
 | Feature | Status | % |
@@ -73,6 +57,18 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Multilingual Edit Flow | 🔧 | 40 |
 | User Findings (custom) | 🔧 | 30 |
 | Import / Custom Data Source | 🔧 | 20 |
+
+**Not Started (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Corpus Guide Page (/corpus-guide) | 🔲 | 0 |
+
+**Deferred (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Ko-fi Integration | 💤 | 50 |
 
 **Distribution Targets:**
 
@@ -134,6 +130,7 @@ Done:
 - Narrow results mode with count display (`X of Y`)
 - Skip-to-next button on each result card (ranking sort mode only)
 - Sponsored tile preview with admin toggle (dev only)
+- Sort and actions consolidated into one row; sort controls in `results-sort-group` (max-width 20rem); rank hint above the row
 
 ---
 
@@ -228,6 +225,7 @@ Done:
 - `DebugHelp` ,  full command reference panel
 - `DebugLauncher` ,  FAB + spotlight command input
 - Unified command dispatcher: `debug all/names/deploy/ai assist/skeleton on|off`, party/language off commands
+- Admin panel restyled with UI library components (Toggle, IconButton, btn--primary/secondary); dataset tabs split into Public (ACC) and Legacy (ATH); bespoke CSS stripped, space tokens used throughout
 
 ---
 
@@ -257,7 +255,7 @@ Done:
 
 ---
 
-## Phase 2 ,  In Progress
+## Phase 2 Feature Details
 
 ### Internationalization ,  80%
 
@@ -265,7 +263,7 @@ Done:
 
 - 50+ locale files with full RTL support (Arabic, Uyghur)
 - `en.json` source of truth; placeholders auto-propagate
-- ~60 keys still pending translation, tracked in i18n-edits.md
+- ~60 keys still pending translation (run `npm run translate` to sync)
 
 Missing:
 
@@ -278,7 +276,7 @@ Missing:
 
 Done:
 
-- 107 public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
+- Public corpus entries with full schema (title, desc, fix, severity, platform, WCAG SC, keywords, related)
 - 169 personal corpus entries (gitignored); fully normalized across titles, desc, and fix fields
 - Platform classification across web-only, web & mobile, iOS, Android, and other variants
 - All entries 100% sourced with minimum 2 expert sources each
@@ -432,8 +430,6 @@ Missing:
 
 ---
 
-## Phase 2 ,  Complete / Partial
-
 ### Platform Variant Display ,  100%
 
 Done:
@@ -443,8 +439,6 @@ Done:
 - Complete and tested
 
 ---
-
-## Phase 2 ,  Partial/Complete
 
 ### Narrow Results Mode ,  100%
 
@@ -459,8 +453,6 @@ Done:
 
 ---
 
-## Phase 2 ,  Not Started
-
 ### Frequent Findings (Implicit Signal) ,  100%
 
 Done:
@@ -471,11 +463,13 @@ Done:
 
 ---
 
-### Advanced Search Syntax ,  0%
+### Advanced Search Syntax ,  100%
 
-Support `+term` (require) and `-term` (exclude) operators, e.g. `keyboard -wcag2.2`.
+Done:
 
-Needs: query parser, syntax hint, i18n keys.
+- `+term` (require) and `-term` (exclude) query operators
+- Fuse.js query parser wired into `useFindingSearch`
+- Syntax hint visible in search bar
 
 ---
 
