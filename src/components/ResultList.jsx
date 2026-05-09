@@ -6,19 +6,20 @@ import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
 import IconButton from './ui/IconButton.jsx'
 import Badge from './ui/Badge.jsx'
+import Select from './ui/Select.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
 import NoResults from './ui/NoResults.jsx'
 import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
 
-export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins }) {
+export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins, headingRef }) {
   const t = useT()
   if (!findings.length) return null
   return (
     <div className="pinned-section pinned-results">
       <div className={`pinned-section__header${showRanking ? ' pinned-section__header--with-sort' : ''}`}>
-        <h2 className="pinned-section__heading">
+        <h2 ref={headingRef} tabIndex={-1} className="pinned-section__heading">
           {t('results.pinned_heading')}
           <span className="pinned-section__count">{findings.length}</span>
         </h2>
@@ -49,13 +50,19 @@ export function PinnedSection({ findings, selected, onSelect, ratings = {}, onRa
   )
 }
 
-export default function ResultList({ results, selected, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false }) {
+export default function ResultList({ results, selected, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange }) {
   const t = useT()
   const itemRefs = useRef({})
   const focusNextRef = useRef(null)
   const countHeadingRef = useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
+  const [pendingSort, setPendingSort] = useState(sortBy)
   const listRef = useRef(null)
+  const [animatingUp, setAnimatingUp] = useState(() => new Set())
+  const [animatingDown, setAnimatingDown] = useState(() => new Set())
+
+  // Keep pendingSort in sync when sortBy changes externally
+  useEffect(() => { setPendingSort(sortBy) }, [sortBy]) // eslint-disable-line react-hooks/set-state-in-effect -- intentional sync from parent prop
 
   // Use narrowResults if provided (filtered), otherwise use all results
   const displayResults = narrowMode && narrowResults ? narrowResults : results
@@ -196,8 +203,53 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
             </Button>
           )}
         </div>
-        {showRanking && <p className="results-vote-hint">{t('results.vote_hint')}</p>}
+        {onSortChange && results.length > 0 && (showRanking || liveSearch) && (
+          <p className="results-rank-hint">
+            {showRanking && t('results.rank_hint')}
+            {showRanking && liveSearch && ' '}
+            {liveSearch && <span className="results-sort-live-hint"><strong>{t('results.sort_live_hint')}</strong></span>}
+          </p>
+        )}
         <div className="results-actions-row">
+          {onSortChange && results.length > 0 && (
+            <div className="results-sort-group">
+              <div className="results-sort-controls">
+                <label htmlFor="results-sort" className="results-sort-label">{t('results.sort_label')}</label>
+                <Select
+                  id="results-sort"
+                  value={liveSearch ? sortBy : pendingSort}
+                  onChange={e => {
+                    if (liveSearch) {
+                      onSortChange(e.target.value)
+                    } else {
+                      setPendingSort(e.target.value)
+                    }
+                  }}
+                  wrapClass="results-sort-select-wrap"
+                >
+                  {query && <option value="relevance">{t('results.sort_relevance')}</option>}
+                  <option value="severity-desc">{t('results.sort_severity_desc')}</option>
+                  <option value="severity-asc">{t('results.sort_severity_asc')}</option>
+                  <option value="title-az">{t('results.sort_title_az')}</option>
+                  <option value="title-za">{t('results.sort_title_za')}</option>
+                  <option value="sc">{t('results.sort_sc')}</option>
+                  <option value="wcag-version">{t('results.sort_wcag_version')}</option>
+                  <option value="wcag-level">{t('results.sort_wcag_level')}</option>
+                  <option value="platform">{t('results.sort_platform')}</option>
+                  <option value="popularity">{t('results.sort_popularity')}</option>
+                </Select>
+                {!liveSearch && (
+                  <Button
+                    variant="primary"
+                    className="results-sort-btn"
+                    onClick={() => onSortChange(pendingSort)}
+                  >
+                    {t('results.sort_apply')}
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
           {results.length > 0 && onNarrow && (
             <Button
               variant="secondary"
@@ -208,7 +260,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
               {narrowMode ? (
                 <>
                   <X size={16} aria-hidden="true" />
-                  <span>{narrowResults ? `${narrowResults.length} Narrow Results` : 'Narrow Results'}</span>
+                  <span>{t('search.exit_narrow')}</span>
                 </>
               ) : (
                 <>
@@ -293,24 +345,32 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
             return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + '…'
           })()
 
-          function handleUpvote(e) {
+          function handleRankUp(e) {
             e.stopPropagation()
-            // Force animation restart by removing and re-adding the class
-            e.currentTarget.classList.remove('animating')
-            void e.currentTarget.offsetWidth // Trigger reflow
-            e.currentTarget.classList.add('animating')
-            setTimeout(() => e.currentTarget.classList.remove('animating'), 400)
+            const btn = e.currentTarget
+            btn.classList.remove('animating')
+            void btn.offsetWidth
+            btn.classList.add('animating')
+            setAnimatingUp(s => new Set(s).add(finding.id))
+            setTimeout(() => {
+              btn.classList.remove('animating')
+              setAnimatingUp(s => { const n = new Set(s); n.delete(finding.id); return n })
+            }, 400)
             onRankUp?.(finding.id)
             announce(t('announce.ranked_up', { title: finding.title, score: score + 1 }))
           }
 
-          function handleDownvote(e) {
+          function handleRankDown(e) {
             e.stopPropagation()
-            // Force animation restart by removing and re-adding the class
-            e.currentTarget.classList.remove('animating')
-            void e.currentTarget.offsetWidth // Trigger reflow
-            e.currentTarget.classList.add('animating')
-            setTimeout(() => e.currentTarget.classList.remove('animating'), 400)
+            const btn = e.currentTarget
+            btn.classList.remove('animating')
+            void btn.offsetWidth
+            btn.classList.add('animating')
+            setAnimatingDown(s => new Set(s).add(finding.id))
+            setTimeout(() => {
+              btn.classList.remove('animating')
+              setAnimatingDown(s => { const n = new Set(s); n.delete(finding.id); return n })
+            }, 400)
             onRankDown?.(finding.id)
             announce(t('announce.ranked_down', { title: finding.title, score: score - 1 }))
           }
@@ -453,7 +513,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
               )}
               </div>
 
-              {showRanking && <div className="result-vote-col">
+              {showRanking && <div className="result-rank-col">
                 <IconButton
                   variant="tertiary"
                   label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
@@ -461,36 +521,38 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
                   disabled={archived}
                   onClick={handleStar}
                   icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
-                  className={`result-vote-btn result-vote-btn--star${starred ? ' result-vote-btn--active' : ''}`}
+                  className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
                 />
 
-                <IconButton
-                  variant="tertiary"
-                  label={t('results.rank_up', { title: shortTitle })}
-                  title={t('results.rank_up', { title: shortTitle })}
-                  disabled={archived}
-                  onClick={handleUpvote}
-                  icon={<ThumbsUp size={14} aria-hidden="true" />}
-                  className="result-vote-btn result-vote-btn--up"
-                />
+                {!pinned && <>
+                  <IconButton
+                    variant="tertiary"
+                    label={t('results.rank_up', { title: shortTitle })}
+                    title={t('results.rank_up', { title: shortTitle })}
+                    disabled={archived}
+                    onClick={handleRankUp}
+                    icon={<ThumbsUp size={14} aria-hidden="true" fill={animatingUp.has(finding.id) ? 'currentColor' : 'none'} />}
+                    className="result-rank-btn result-rank-btn--up"
+                  />
 
-                <span
-                  className="result-vote-score"
-                  aria-label={t('results.score_label', { score })}
-                  title={t('results.score_label', { score })}
-                >
-                  {score}
-                </span>
+                  <span
+                    className="result-rank-score"
+                    aria-label={t('results.score_label', { score })}
+                    title={t('results.score_label', { score })}
+                  >
+                    {score}
+                  </span>
 
-                <IconButton
-                  variant="tertiary"
-                  label={t('results.rank_down', { title: shortTitle })}
-                  title={t('results.rank_down', { title: shortTitle })}
-                  disabled={archived}
-                  onClick={handleDownvote}
-                  icon={<ThumbsDown size={14} aria-hidden="true" />}
-                  className="result-vote-btn result-vote-btn--down"
-                />
+                  <IconButton
+                    variant="tertiary"
+                    label={t('results.rank_down', { title: shortTitle })}
+                    title={t('results.rank_down', { title: shortTitle })}
+                    disabled={archived}
+                    onClick={handleRankDown}
+                    icon={<ThumbsDown size={14} aria-hidden="true" fill={animatingDown.has(finding.id) ? 'currentColor' : 'none'} />}
+                    className="result-rank-btn result-rank-btn--down"
+                  />
+                </>}
 
                 <IconButton
                   variant="tertiary"
@@ -501,7 +563,7 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
                     ? <ArchiveRestore size={13} aria-hidden="true" />
                     : <Archive size={13} aria-hidden="true" />
                   }
-                  className={`result-vote-btn result-vote-btn--archive${archived ? ' result-vote-btn--active' : ''}`}
+                  className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
                 />
               </div>}
             </li>
@@ -516,7 +578,8 @@ export default function ResultList({ results, selected, query, ratings = {}, onR
             variant="secondary"
             className="back-to-top-btn"
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' })
+              const drawer = document.querySelector('.drawer-panel.is-open')
+              ;(drawer ?? window).scrollTo({ top: 0, behavior: 'smooth' })
               countHeadingRef.current?.focus()
             }}
           >

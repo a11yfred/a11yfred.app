@@ -18,6 +18,21 @@ export default function useFindingRatings() {
     })
   }
 
+  function resetRankings() {
+    setRatings(prev => {
+      const next = Object.fromEntries(
+        Object.entries(prev).map(([id, r]) => [id, { ...r, score: 0 }])
+      )
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+      return next
+    })
+  }
+
+  function clearAllRatings() {
+    localStorage.removeItem(STORAGE_KEY)
+    setRatings({})
+  }
+
   return {
     ratings,
     getRating:     (id) => ratings[id] || DEFAULT_RATING,
@@ -25,5 +40,7 @@ export default function useFindingRatings() {
     rankDown:      (id) => update(id, r => ({ ...r, score: r.score - 1 })),
     toggleStar:    (id) => update(id, r => ({ ...r, starred: !r.starred })),
     toggleArchive: (id) => update(id, r => ({ ...r, archived: !r.archived })),
+    resetRankings,
+    clearAllRatings,
   }
 }

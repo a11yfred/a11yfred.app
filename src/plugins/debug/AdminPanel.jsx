@@ -1,8 +1,11 @@
 import { useState, useMemo } from 'react'
+import { X, Copy, Check } from 'lucide-react'
 import './admin-panel.css'
 import publicCorpus from '../../data/corpus.json'
 import personalCorpus from '../../data/personal-corpus.json'
 import findingSlug from '../../utils/findingSlug.js'
+import Toggle from '../../components/ui/Toggle.jsx'
+import IconButton from '../../components/ui/IconButton.jsx'
 
 const IS_DEV = import.meta.env.DEV
 
@@ -105,7 +108,6 @@ function computeStats(corpus) {
     byVersion[v] = (byVersion[v] || 0) + 1
     const s = entry.severity || 'Unknown'
     bySeverity[s] = (bySeverity[s] || 0) + 1
-    // sourceCredits is string[] (author names); sources is object[] ({ name, url })
     const sources = entry.creditNames ?? []
     for (const src of sources) {
       bySource[src] = (bySource[src] || 0) + 1
@@ -137,7 +139,9 @@ export default function AdminPanel({
   const [versionFilter, setVersionFilter] = useState('all')
   const [copied, setCopied] = useState(null)
 
-  const corpus = dataset === 'public' ? publicCorpus : personalCorpus
+  const accCorpus = useMemo(() => publicCorpus.filter(e => e.id.startsWith('ACC')), [])
+  const athCorpus = useMemo(() => publicCorpus.filter(e => e.id.startsWith('ATH')), [])
+  const corpus = dataset === 'public' ? accCorpus : dataset === 'legacy' ? athCorpus : personalCorpus
   const stats = useMemo(() => computeStats(corpus), [corpus])
 
   if (!IS_DEV) return null
@@ -160,16 +164,19 @@ export default function AdminPanel({
     setTimeout(() => setCopied(null), 1200)
   }
 
-  const hasVersionData = true
-
   return (
     <div className="admin-panel">
-      <div className="admin-panel__header">
+      <div className="admin-panel__header panel-header">
         <div className="admin-panel__heading">
           <span className="admin-dev-badge">DEV</span>
           Admin
         </div>
-        <button className="admin-close-btn" onClick={onClose} aria-label="Close admin panel">✕</button>
+        <IconButton
+          icon={<X size={18} aria-hidden="true" />}
+          label="Close admin panel"
+          onClick={onClose}
+          variant="tertiary"
+        />
       </div>
 
       <div className="admin-panel__body">
@@ -179,30 +186,25 @@ export default function AdminPanel({
           <h2 className="admin-section__title">Debug Controls</h2>
           <div className="admin-toggles">
             {[
-              { label: 'All Debug',  value: devAllEnabled,  toggle: () => setDevAllEnabled(v => !v) },
-              { label: 'Names',      value: namesEnabled,   toggle: () => setNamesEnabled(v => !v) },
-              { label: 'FAB',        value: fabEnabled,     toggle: () => setFabEnabled(v => !v) },
-              { label: 'AI Assist',  value: aiEnabled,      toggle: onToggleAi },
-            ].map(({ label, value, toggle }) => (
-              <div key={label} className="admin-toggle-row">
-                <span className="admin-toggle-label">{label}</span>
-                <button
-                  className={`admin-toggle-btn ${value ? 'admin-toggle-btn--on' : ''}`}
-                  onClick={toggle}
-                >
-                  {value ? 'ON' : 'OFF'}
-                </button>
+              { id: 'admin-all-debug', label: 'All Debug',  value: devAllEnabled,  toggle: () => setDevAllEnabled(v => !v) },
+              { id: 'admin-names',     label: 'Names',      value: namesEnabled,   toggle: () => setNamesEnabled(v => !v) },
+              { id: 'admin-fab',       label: 'FAB',        value: fabEnabled,     toggle: () => setFabEnabled(v => !v) },
+              { id: 'admin-ai',        label: 'AI Assist',  value: aiEnabled,      toggle: onToggleAi },
+            ].map(({ id, label, value, toggle }) => (
+              <div key={id} className="settings-toggle-row settings-toggle-row--sm">
+                <label htmlFor={id} className="settings-toggle-label">{label}</label>
+                <Toggle id={id} checked={!!value} onChange={toggle} />
               </div>
             ))}
           </div>
 
           <div className="admin-deploy-row">
-            <span className="admin-toggle-label">Deploy Banner</span>
+            <span className="settings-toggle-label admin-deploy-label">Deploy Banner</span>
             <div className="admin-deploy-opts">
               {DEPLOY_OPTIONS.map(opt => (
                 <button
                   key={String(opt.value)}
-                  className={`admin-deploy-btn ${deployTarget === opt.value ? 'admin-deploy-btn--active' : ''}`}
+                  className={deployTarget === opt.value ? 'btn--primary' : 'btn--secondary'}
                   onClick={() => setDeployTarget(opt.value)}
                 >
                   {opt.label}
@@ -215,17 +217,12 @@ export default function AdminPanel({
         {/* ── Ad Tiles ────────────────────────────────────────── */}
         <section className="admin-section">
           <h2 className="admin-section__title">Ad Tiles</h2>
-          <div className="admin-toggle-row">
-            <span className="admin-toggle-label">Show ads</span>
-            <button
-              className={`admin-toggle-btn ${showAds ? 'admin-toggle-btn--on' : ''}`}
-              onClick={() => setShowAds(v => !v)}
-            >
-              {showAds ? 'ON' : 'OFF'}
-            </button>
+          <div className="settings-toggle-row settings-toggle-row--sm">
+            <label htmlFor="admin-show-ads" className="settings-toggle-label">Show ads</label>
+            <Toggle id="admin-show-ads" checked={!!showAds} onChange={() => setShowAds(v => !v)} />
           </div>
           <div className="admin-deploy-row">
-            <label htmlFor="admin-ad-freq" className="admin-toggle-label">
+            <label htmlFor="admin-ad-freq" className="settings-toggle-label admin-deploy-label">
               Every N results
             </label>
             <input
@@ -248,18 +245,19 @@ export default function AdminPanel({
         <section className="admin-section">
           <h2 className="admin-section__title">Corpus</h2>
           <div className="admin-dataset-tabs">
-            <button
-              className={`admin-tab ${dataset === 'public' ? 'admin-tab--active' : ''}`}
-              onClick={() => setDataset('public')}
-            >
-              Public <span className="admin-tab-count">({publicCorpus.length})</span>
-            </button>
-            <button
-              className={`admin-tab ${dataset === 'personal' ? 'admin-tab--active' : ''}`}
-              onClick={() => setDataset('personal')}
-            >
-              Personal <span className="admin-tab-count">({personalCorpus.length})</span>
-            </button>
+            {[
+              { key: 'public',   label: 'Public',   count: accCorpus.length },
+              { key: 'legacy',   label: 'Legacy',   count: athCorpus.length },
+              { key: 'personal', label: 'Personal', count: personalCorpus.length },
+            ].map(({ key, label, count }) => (
+              <button
+                key={key}
+                className={dataset === key ? 'btn--primary' : 'btn--secondary'}
+                onClick={() => setDataset(key)}
+              >
+                {label} <span className="admin-tab-count">({count})</span>
+              </button>
+            ))}
           </div>
 
           <p className="admin-total">
@@ -267,21 +265,19 @@ export default function AdminPanel({
           </p>
 
           <div className="admin-stats-row">
-            {hasVersionData && (
-              <div className="admin-stat-group">
-                <h3 className="admin-stat-group__title">WCAG Version</h3>
-                <ul className="admin-stat-list">
-                  {['2.0', '2.1', '2.2', 'N/A'].map(v => (
-                    <li key={v}>
-                      <button className="admin-stat-link" onClick={() => { onFilter({ type: 'wcag', value: v }) }}>
-                        WCAG {v}
-                      </button>
-                      <span className="admin-count-badge">{stats.byVersion[v] ?? 0}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            <div className="admin-stat-group">
+              <h3 className="admin-stat-group__title">WCAG Version</h3>
+              <ul className="admin-stat-list">
+                {['2.0', '2.1', '2.2', 'N/A'].map(v => (
+                  <li key={v}>
+                    <button className="admin-stat-link" onClick={() => { onFilter({ type: 'wcag', value: v }) }}>
+                      WCAG {v}
+                    </button>
+                    <span className="admin-count-badge">{stats.byVersion[v] ?? 0}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div className="admin-stat-group">
               <h3 className="admin-stat-group__title">Priority</h3>
@@ -297,7 +293,7 @@ export default function AdminPanel({
               </ul>
             </div>
 
-            {hasVersionData && Object.keys(stats.bySource).length > 0 && (
+            {Object.keys(stats.bySource).length > 0 && (
               <div className="admin-stat-group">
                 <h3 className="admin-stat-group__title">Source</h3>
                 <ul className="admin-stat-list">
@@ -327,19 +323,19 @@ export default function AdminPanel({
             <div className="admin-filter-group">
               <span className="admin-filter-label">Show</span>
               {[['all', 'All'], ['0', 'Missing'], ['1+', 'Covered']].map(([v, l]) => (
-                <button key={v} className={`admin-filter-btn ${scFilter === v ? 'admin-filter-btn--on' : ''}`} onClick={() => setScFilter(v)}>{l}</button>
+                <button key={v} className={scFilter === v ? 'btn--primary' : 'btn--secondary'} onClick={() => setScFilter(v)}>{l}</button>
               ))}
             </div>
             <div className="admin-filter-group">
               <span className="admin-filter-label">Level</span>
               {[['all', 'All'], ['A', 'A'], ['AA', 'AA']].map(([v, l]) => (
-                <button key={v} className={`admin-filter-btn ${levelFilter === v ? 'admin-filter-btn--on' : ''}`} onClick={() => setLevelFilter(v)}>{l}</button>
+                <button key={v} className={levelFilter === v ? 'btn--primary' : 'btn--secondary'} onClick={() => setLevelFilter(v)}>{l}</button>
               ))}
             </div>
             <div className="admin-filter-group">
               <span className="admin-filter-label">Version</span>
               {[['all', 'All'], ['2.0', '2.0'], ['2.1', '2.1'], ['2.2', '2.2']].map(([v, l]) => (
-                <button key={v} className={`admin-filter-btn ${versionFilter === v ? 'admin-filter-btn--on' : ''}`} onClick={() => setVersionFilter(v)}>{l}</button>
+                <button key={v} className={versionFilter === v ? 'btn--primary' : 'btn--secondary'} onClick={() => setVersionFilter(v)}>{l}</button>
               ))}
             </div>
           </div>
@@ -373,7 +369,10 @@ export default function AdminPanel({
                     aria-label={`Copy ${c.sc}`}
                     title="Copy SC number"
                   >
-                    {copied === c.sc ? '✓' : '⎘'}
+                    {copied === c.sc
+                      ? <Check size={13} aria-hidden="true" />
+                      : <Copy size={13} aria-hidden="true" />
+                    }
                   </button>
                 </li>
               )

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, X, ChevronsDown, ChevronsUp } from 'lucide-react'
 import { useFocusTrap } from './useFocusTrap.js'
 import { useAriaHide } from './useAriaHide.js'
 import { returnFocus } from './returnFocus.js'
@@ -37,11 +37,23 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
   // Keep children mounted during the exit animation so the sheet doesn't
   // appear empty while sliding down. Unmount 250ms after close (--duration-base).
   const [mounted, setMounted] = useState(open)
+  const [collapsed, setCollapsed] = useState(false)
+  const chromeRef = useRef(null)
   useEffect(() => {
     const timer = setTimeout(() => setMounted(open), open ? 0 : 250)
     return () => clearTimeout(timer)
   }, [open])
+  // Reset collapsed when sheet closes
+  useEffect(() => { if (!open) setCollapsed(false) }, [open])
+
+  // Track chrome height so the collapsed transform is exact
+  useEffect(() => {
+    if (!open || !chromeRef.current || !panelRef.current) return
+    const h = chromeRef.current.offsetHeight
+    panelRef.current.style.setProperty('--sheet-chrome-height', `${h}px`)
+  }, [open])
   const BackChevron = dir === 'rtl' ? BackRtlIcon : BackLtrIcon
+  const isDesktop = window.matchMedia('(width >= 768px)').matches
 
   useFocusTrap(panelRef, open)
   useAriaHide(panelRef, open)
@@ -124,7 +136,7 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
       {/* Panel */}
       <div
         ref={panelRef}
-        className={`sheet-panel${open ? ' is-open' : ''}`}
+        className={`sheet-panel${open ? ' is-open' : ''}${collapsed ? ' is-collapsed' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label={label}
@@ -134,9 +146,22 @@ export default function BottomSheet({ open, onClose, label = 'Detail', closeLabe
         onTouchEnd={handleTouchEnd}
         inert={!open || undefined}
       >
-        {/* Chrome: drag handle centered, optional back button top-left, close button top-right */}
-        <div className="sheet-chrome">
-          <div className="sheet-handle" aria-hidden="true" />
+        {/* Chrome: handle centered, optional back button top-left, close button top-right */}
+        <div ref={chromeRef} className="sheet-chrome">
+          {isDesktop ? (
+            <button
+              className="sheet-handle sheet-handle--btn"
+              aria-label={collapsed ? 'Expand sheet' : 'Collapse sheet'}
+              onClick={() => setCollapsed(v => !v)}
+            >
+              {collapsed
+                ? <ChevronsUp size={16} aria-hidden="true" />
+                : <ChevronsDown size={16} aria-hidden="true" />
+              }
+            </button>
+          ) : (
+            <div className="sheet-handle" aria-hidden="true" />
+          )}
           {onBack && (
             <button
               onClick={onBack}

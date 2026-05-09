@@ -27,8 +27,8 @@ export default function DataError({
         className="no-results__icon"
       >
         <circle cx="28" cy="28" r="22" stroke="var(--border)" strokeWidth="2.5"/>
-        <line x1="28" y1="16" x2="28" y2="32" stroke="var(--text-faint)" strokeWidth="2.5" strokeLinecap="round"/>
-        <circle cx="28" cy="39" r="1.5" fill="var(--text-faint)"/>
+        <line x1="28" y1="16" x2="28" y2="32" stroke="var(--text-muted)" strokeWidth="2.5" strokeLinecap="round"/>
+        <circle cx="28" cy="39" r="1.5" fill="var(--text-muted)"/>
       </svg>
       <p className="no-results__heading" ref={headingRef} tabIndex={-1}>{heading}</p>
       <p className="no-results__body">

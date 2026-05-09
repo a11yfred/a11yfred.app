@@ -82,15 +82,15 @@ const Field = forwardRef(function Field({
             className="field-include-title-checkbox"
           />
           <label htmlFor={`${id}-include-title`} className="field-include-title-label">
-            {includeTitle && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
             {includeTitleLabel}
+            {includeTitle && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
           </label>
         </div>
         <div className="field__actions">
           <button
             onClick={handleResetOrUndo}
             aria-label={resetBtnLabel}
-            className={`btn--primary btn--field${reset ? ' btn__field--success' : ''}`}
+            className={`btn--secondary btn--field${reset ? ' btn__field--success' : ''}`}
             disabled={animating || (!undoable && !hasChanged)}
           >
             {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}

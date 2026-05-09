@@ -54,7 +54,7 @@ Routes are hash fragments: `example.com/#/settings`. Browser back button works n
 1. **New page:** focus the main heading (`tabIndex={-1}`)
 2. **Modal open:** focus first focusable element (usually close button, then heading)
 3. **Modal close:** restore focus to trigger element (use `useReturnFocus`)
-4. **Background open:** set `inert` on background + `aria-hidden` (overlays do this automatically)
+4. **Background open:** set `inert` on background (overlays do this automatically via `useAriaHide`)
 5. **Escape:** each layer handles its own (overlays built-in)
 6. **Paginated content:** use `usePaginationFocus` to refocus heading on page change
 7. **Accordion:** leave focus on trigger (don't use `useFocusOnMount` on content)
