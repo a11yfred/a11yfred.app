@@ -19,12 +19,12 @@ export default function SourceLinks({
   }
 
   return (
-    <div className="detail-sources-section">
+    <div className="source-links">
       {links.length === 1 ? (
-        <p className="detail-sources detail-sources--single">
-          <span className="detail-sources__heading">{singleHeading}</span>
+        <p className="source-links__row source-links__row--single">
+          <span className="source-links__heading">{singleHeading}</span>
           {links[0].url ? (
-            <a href={links[0].url} target="_blank" rel="noreferrer" className="detail-links__link">
+            <a href={links[0].url} target="_blank" rel="noreferrer" className="source-links__link">
               <LinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
             </a>
           ) : (
@@ -33,14 +33,14 @@ export default function SourceLinks({
         </p>
       ) : (
         <>
-          <p className="detail-sources">
-            <span className="detail-sources__heading">{multipleHeading}</span>
+          <p className="source-links__row">
+            <span className="source-links__heading">{multipleHeading}</span>
           </p>
-          <ul className="detail-sources__list">
+          <ul className="source-links__list">
             {links.map(link => (
               <li key={link.url || link.text}>
                 {link.url ? (
-                  <a href={link.url} target="_blank" rel="noreferrer" className="detail-links__link">
+                  <a href={link.url} target="_blank" rel="noreferrer" className="source-links__link">
                     <LinkTitle url={link.url} fallback={link.text} />{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
                   </a>
                 ) : (
