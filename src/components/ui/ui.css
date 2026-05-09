@@ -40,6 +40,10 @@
   border-radius: var(--radius-sm);
 }
 
+a:hover {
+  color: var(--text-heading);
+}
+
 a:focus-visible {
   text-decoration: none;
 }
@@ -256,6 +260,7 @@ select:focus-visible {
 
 .btn--tertiary:not(:disabled):hover {
   background: var(--bg-subtle);
+  color: var(--text-heading);
   text-decoration: none;
 }
 
