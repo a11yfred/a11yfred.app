@@ -2328,11 +2328,12 @@ input[type="radio"].control:not(:checked):hover {
 
 .detail-ai-agentic-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-2);
   cursor: pointer;
   margin-right: auto;
-  padding: 0 var(--space-2);
+  min-height: var(--touch-target);
+  padding: 10px 0;
   border-radius: var(--radius);
   transition: background var(--duration-fast);
 }
