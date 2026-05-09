@@ -103,6 +103,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 .sheet-panel.is-collapsed {
   transform: translateX(-50%) translateY(calc(100% - var(--sheet-chrome-height)));
+  outline: 1px solid var(--accent);
 }
 
 /* Chrome row — handle centered via absolute positioning; close button in normal
@@ -135,26 +136,6 @@ body:has(.modal-panel.is-open) .drawer-panel {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  min-width: 44px;
-  min-height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: background var(--duration-fast);
-}
-
-.sheet-handle--btn:hover {
-  background: var(--bg-subtle);
-}
-
-.sheet-handle--btn:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus);
-  outline-offset: var(--focus-outline-offset);
 }
 
 .sheet-close-btn {

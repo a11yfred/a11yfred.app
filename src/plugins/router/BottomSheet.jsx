@@ -173,7 +173,7 @@ export default function BottomSheet({
         <div ref={chromeRef} className="sheet-chrome">
           {isDesktop ? (
             <button
-              className="sheet-handle--btn"
+              className="btn--icon sheet-handle--btn"
               aria-label={collapsed ? 'Expand sheet' : 'Collapse sheet'}
               onClick={() => onCollapse?.(!collapsed)}
             >
