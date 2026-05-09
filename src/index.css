@@ -2333,7 +2333,7 @@ input[type="radio"].control:not(:checked):hover {
   cursor: pointer;
   margin-right: auto;
   min-height: var(--touch-target);
-  padding: 10px 0;
+  padding: 0;
   border-radius: var(--radius);
   transition: background var(--duration-fast);
 }
