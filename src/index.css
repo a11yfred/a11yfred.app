@@ -2668,7 +2668,7 @@ input[type="radio"].control:not(:checked):hover {
 
 .about-coming {
   list-style: disc;
-  padding-left: var(--space-3);
+  padding-left: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
@@ -2683,7 +2683,7 @@ input[type="radio"].control:not(:checked):hover {
 
 .about-sources-list {
   list-style: disc;
-  padding-left: var(--space-3);
+  padding-left: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
