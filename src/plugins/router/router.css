@@ -247,6 +247,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   max-height: calc(100dvh - 2 * var(--space-6));
   z-index: 301;
   background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
   display: flex;
@@ -264,6 +265,12 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transform: translate(-50%, -50%) scale(1);
   pointer-events: auto;
 }
+
+.modal-panel.is-open:focus,
+.modal-panel.is-open:focus-visible {
+  outline: none;
+}
+
 
 .modal-body {
   flex: 1;

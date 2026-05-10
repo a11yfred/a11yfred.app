@@ -37,6 +37,7 @@ export default function BottomSheet({
   onCollapse,
   label = 'Detail',
   closeLabel = 'Close',
+  heading,
   keepMounted = false,
   returnFocusRef,
   onBack,
@@ -210,7 +211,11 @@ export default function BottomSheet({
               {children}
               {!hideCloseBottom && (
                 <div className="sheet-close-bottom">
-                  <button onClick={onClose} className="btn--primary sheet-close-bottom-btn">
+                  <button
+                    onClick={onClose}
+                    className="btn--primary sheet-close-bottom-btn"
+                    aria-label={heading ? `${closeLabel} ${heading}` : undefined}
+                  >
                     {closeLabel}
                   </button>
                 </div>

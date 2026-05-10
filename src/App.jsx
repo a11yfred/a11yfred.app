@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
-import { Settings, X, Info, HelpCircle, ExternalLink, ChevronDown } from 'lucide-react'
+import { Settings, X, Info, HelpCircle, ExternalLink, ChevronDown, ClipboardPaste, Hand } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
@@ -130,9 +130,18 @@ function AppShell() {
   const [selected, setSelected] = useState(null)
   const [sheetCollapsed, setSheetCollapsed] = useState(false)
   const [pendingFinding, setPendingFinding] = useState(null)
-  const [platform, setPlatform] = useState(() => localStorage.getItem('platform') || 'web')
+  const [platform, setPlatform] = useState(() => {
+    const p = new URLSearchParams(window.location.search).get('platform')
+    return p || localStorage.getItem('platform') || 'all'
+  })
   const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
   const [wcagFilter, setWcagFilter] = useState(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const urlWcag = urlParams.get('wcag')
+    if (urlWcag) {
+      const [version, level] = urlWcag.split('|')
+      if (version && level) return { maxVersion: version, maxLevel: level }
+    }
     try {
       const saved = localStorage.getItem('wcagFilter')
       if (!saved) return { maxVersion: '2.2', maxLevel: 'AA' }
@@ -141,8 +150,9 @@ function AppShell() {
       return parsed
     } catch { return { maxVersion: '2.2', maxLevel: 'AA' } }
   })
-  const [narrowMode, setNarrowMode] = useState(false)
-  const [narrowQuery, setNarrowQuery] = useState('')
+  const [narrowMode, setNarrowMode] = useState(() => !!new URLSearchParams(window.location.search).get('narrow'))
+  const [narrowQuery, setNarrowQuery] = useState(() => new URLSearchParams(window.location.search).get('narrow') || '')
+  const [submittedNarrowQuery, setSubmittedNarrowQuery] = useState(() => new URLSearchParams(window.location.search).get('narrow') || '')
 
   return (
     <I18nProvider locale={language}>
@@ -164,6 +174,7 @@ function AppShell() {
         panelFocusTrigger={panelFocusTrigger} setPanelFocusTrigger={setPanelFocusTrigger}
         narrowMode={narrowMode} setNarrowMode={setNarrowMode}
         narrowQuery={narrowQuery} setNarrowQuery={setNarrowQuery}
+        submittedNarrowQuery={submittedNarrowQuery} setSubmittedNarrowQuery={setSubmittedNarrowQuery}
       />
     </I18nProvider>
   )
@@ -187,6 +198,7 @@ function AppContent({
   panelFocusTrigger, setPanelFocusTrigger,
   narrowMode, setNarrowMode,
   narrowQuery, setNarrowQuery,
+  submittedNarrowQuery, setSubmittedNarrowQuery,
 }) {
   const { route, navigate, appName } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
@@ -237,7 +249,7 @@ function AppContent({
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
   const [devAllEnabled, setDevAllEnabled] = useState(false)
   const [namesEnabled, setNamesEnabled] = useState(false)
-  const [fabEnabled, setFabEnabled] = useState(true)
+  const [fabEnabled, setFabEnabled] = useState(false)
   const [adFrequency, setAdFrequency] = useState(8)
   const [showAds, setShowAds] = useState(false)
   const [deployTarget, setDeployTarget] = useState(null)  // null | 'netlify' | 'pages' | 'vercel' | 'off'
@@ -285,7 +297,7 @@ function AppContent({
     onboardingTriggerRef.current = document.activeElement
     navigate('/onboarding')
   }
-  const handleCloseOnboarding = () => navigate('/')
+  const handleCloseOnboarding = () => { navigate('/'); setTimeout(() => h1Ref.current?.focus(), 0) }
   const handleSelectFinding = (finding) => {
     // If the sheet is collapsed and the user clicks a different finding,
     // warn before discarding the collapsed panel and its unsaved changes.
@@ -368,7 +380,7 @@ function AppContent({
   const activeQuery = liveSearch ? query : submittedQuery
   const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
-  const [sortBy, setSortBy] = useState('smart')
+  const [sortBy, setSortBy] = useState(() => new URLSearchParams(window.location.search).get('sort') || 'smart')
 
   const SEVERITY_SORT_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }
   const SEVERITY_SCORE     = { Critical: 40, High: 30, Medium: 20, Low: 10, 'Best Practice': 5 }
@@ -454,11 +466,13 @@ function AppContent({
   }, [sortedFindings, badgeFilter, pinnedIds])
 
   // Narrow results filter: applies narrowQuery as a secondary filter within current results
+  const activeNarrowQuery = liveSearch ? narrowQuery : submittedNarrowQuery
   const narrowedResults = useMemo(() => {
-    if (!narrowMode || !narrowQuery) return null
-    if (!results || results.length === 0) return null
-    const lowerNarrow = narrowQuery.toLowerCase()
-    const narrowFiltered = results.filter(f =>
+    if (!narrowMode || !activeNarrowQuery) return null
+    const base = activeQuery.length >= 2 ? results : sortedFindings
+    if (!base || base.length === 0) return null
+    const lowerNarrow = activeNarrowQuery.toLowerCase()
+    const narrowFiltered = base.filter(f =>
       f.title.toLowerCase().includes(lowerNarrow) ||
       f.desc.toLowerCase().includes(lowerNarrow) ||
       f.keywords?.some(k => k.toLowerCase().includes(lowerNarrow)) ||
@@ -467,7 +481,7 @@ function AppContent({
     const pinnedMatches = narrowFiltered.filter(f => pinnedIds.has(f.id))
     const unpinnedMatches = narrowFiltered.filter(f => !pinnedIds.has(f.id))
     return [...pinnedMatches, ...unpinnedMatches]
-  }, [narrowMode, narrowQuery, results, pinnedIds])
+  }, [narrowMode, activeNarrowQuery, results, sortedFindings, pinnedIds])
 
   const handleAdminSearch = (q) => {
     setQuery(q)
@@ -494,7 +508,7 @@ function AppContent({
     if (liveSearch || submittedQuery.length < 2) return
     if (submittedQuery === lastAnnouncedQuery.current) return
     lastAnnouncedQuery.current = submittedQuery
-    announce(t('results.count', { count: results.length }))
+    announce(t('results.count', { count: results.length, result: results.length === 1 ? 'Result' : 'Results' }))
   }, [results, submittedQuery, liveSearch]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Live search: announce "Loading" when query changes and results were already showing.
@@ -505,9 +519,39 @@ function AppContent({
     if (results.length > 0) liveSearchHadResultsRef.current = true
   }, [query]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const lastAnnouncedPlatformRef = useRef(platform)
+  useEffect(() => {
+    if (platform === lastAnnouncedPlatformRef.current) return
+    lastAnnouncedPlatformRef.current = platform
+    if (!dataLoading && allFindings.length > 0) {
+      const base = activeQuery.length >= 2 ? results.length : sortedFindings.length
+      const platformLabel = platform === 'all' ? t('settings.platform_all')
+        : platform === 'web' ? t('settings.platform_web')
+        : platform === 'native' ? t('settings.platform_native')
+        : t('settings.platform_document')
+      if (narrowedResults !== null) {
+        const count = narrowedResults.length
+        const result = count === 1 ? 'Result' : 'Results'
+        if (platform !== 'all') {
+          announce(`${count} ${result} of ${base}; ${platformLabel} only.`)
+        } else {
+          announce(`${count} ${result} of ${base}.`)
+        }
+      } else {
+        const result = base === 1 ? 'Result' : 'Results'
+        if (platform !== 'all') {
+          announce(`${base} ${result}; ${platformLabel} only.`)
+        } else {
+          announce(`${base} ${result}.`)
+        }
+      }
+    }
+  }, [platform, results, sortedFindings, narrowedResults]) // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     setNarrowMode(false)
     setNarrowQuery('')
+    setSubmittedNarrowQuery('')
   }, [activeQuery]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -592,6 +636,7 @@ function AppContent({
   useEffect(() => { localStorage.setItem('liveSearch', String(liveSearch)) }, [liveSearch])
   useEffect(() => { localStorage.setItem('showRanking', String(showVoting)) }, [showVoting])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
+  useEffect(() => { syncFiltersUrl() }, [platform, sortBy, narrowQuery, wcagFilter]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // WCAG 2.4.3: restore focus to the trigger button (or h1) when settings/about close.
   useEffect(() => {
@@ -712,6 +757,24 @@ function AppContent({
     history.replaceState(null, '', url.pathname + url.search + url.hash)
   }
 
+  const syncFiltersUrl = ({ platformVal, sortVal, narrowVal, wcagVal } = {}) => {
+    const url = new URL(window.location.href)
+    const p = platformVal ?? platform
+    const s = sortVal ?? sortBy
+    const n = narrowVal ?? narrowQuery
+    const w = wcagVal ?? wcagFilter
+    if (p && p !== 'all') url.searchParams.set('platform', p)
+    else url.searchParams.delete('platform')
+    if (s && s !== 'smart') url.searchParams.set('sort', s)
+    else url.searchParams.delete('sort')
+    if (n) url.searchParams.set('narrow', n)
+    else url.searchParams.delete('narrow')
+    const isDefaultWcag = w.maxVersion === '2.2' && w.maxLevel === 'AA'
+    if (!isDefaultWcag) url.searchParams.set('wcag', `${w.maxVersion}|${w.maxLevel}`)
+    else url.searchParams.delete('wcag')
+    history.replaceState(null, '', url.pathname + url.search + url.hash)
+  }
+
   const handleQueryChange = (q) => {
     if (q) { setBadgeFilter(null); syncBadgeUrl(null) }
     if (liveSearch) {
@@ -742,15 +805,19 @@ function AppContent({
     setSearchKey(k => k + 1)
     handleSelectFinding(null)
     syncSearchUrl(query)
+    setTimeout(() => resultsCountRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
+  }
+
+  const handleSortChange = (s) => {
+    setSortBy(s)
   }
 
   const handleClearResults = () => {
-    setQuery('')
-    setSubmittedQuery('')
-    setBadgeFilter(null)
-    syncBadgeUrl(null)
-    handleSelectFinding(null)
+    setPlatform('all')
     setNarrowMode(false)
+    setNarrowQuery('')
+    setSubmittedNarrowQuery('')
+    setSortBy('smart')
     if (document.querySelector('.search-input')) {
       document.querySelector('.search-input').focus()
     }
@@ -924,7 +991,7 @@ function AppContent({
                 key="view-all"
                 results={applySortBy(sortedFindings.filter(f => !pinnedIds.has(f.id)))}
                 sortBy={sortBy}
-                onSortChange={setSortBy}
+                onSortChange={handleSortChange}
                 selected={selected}
                 onSelect={handleSelectFinding}
                 query=""
@@ -942,13 +1009,12 @@ function AppContent({
                 narrowQuery={narrowQuery}
                 narrowResults={narrowedResults}
                 onNarrow={() => setNarrowMode(true)}
-                onNarrowExit={() => {
-                  setNarrowMode(false)
-                  setNarrowQuery('')
-                }}
+                onNarrowExit={() => { setNarrowMode(false); setNarrowQuery(''); setSubmittedNarrowQuery('') }}
                 onNarrowChange={setNarrowQuery}
                 liveSearch={liveSearch}
-                onNarrowSearch={() => {}}
+                onNarrowSearch={() => setSubmittedNarrowQuery(narrowQuery)}
+                platform={platform}
+                onPlatformChange={setPlatform}
                 showAds={showAds}
                 adFrequency={adFrequency}
                 onClear={handleClearResults}
@@ -982,7 +1048,7 @@ function AppContent({
                     key="search"
                     results={unpinnedResults}
                     sortBy={sortBy}
-                    onSortChange={setSortBy}
+                    onSortChange={handleSortChange}
                     selected={selected}
                     onSelect={handleSelectFinding}
                     query={activeQuery}
@@ -1000,13 +1066,12 @@ function AppContent({
                     narrowQuery={narrowQuery}
                     narrowResults={narrowedResults}
                     onNarrow={() => setNarrowMode(true)}
-                    onNarrowExit={() => {
-                      setNarrowMode(false)
-                      setNarrowQuery('')
-                    }}
+                    onNarrowExit={() => { setNarrowMode(false); setNarrowQuery(''); setSubmittedNarrowQuery('') }}
                     onNarrowChange={setNarrowQuery}
                     liveSearch={liveSearch}
-                    onNarrowSearch={() => {}}
+                    onNarrowSearch={() => setSubmittedNarrowQuery(narrowQuery)}
+                    platform={platform}
+                    onPlatformChange={setPlatform}
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
@@ -1020,7 +1085,7 @@ function AppContent({
                     key="badge"
                     results={applySortBy(badgeResults)}
                     sortBy={sortBy}
-                    onSortChange={setSortBy}
+                    onSortChange={handleSortChange}
                     selected={selected}
                     onSelect={handleSelectFinding}
                     query=""
@@ -1035,6 +1100,16 @@ function AppContent({
                     pinnedIds={pinnedIds}
                     onPin={(id) => { const wasPin = !pinnedIds.has(id); togglePin(id); if (wasPin) setTimeout(() => pinnedHeadingRef.current?.focus(), 0) }}
                     filterLabel={badgeFilterLabel}
+                    narrowMode={narrowMode}
+                    narrowQuery={narrowQuery}
+                    narrowResults={narrowedResults}
+                    onNarrow={() => setNarrowMode(true)}
+                    onNarrowExit={() => { setNarrowMode(false); setNarrowQuery(''); setSubmittedNarrowQuery('') }}
+                    onNarrowChange={setNarrowQuery}
+                    liveSearch={liveSearch}
+                    onNarrowSearch={() => setSubmittedNarrowQuery(narrowQuery)}
+                    platform={platform}
+                    onPlatformChange={setPlatform}
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
@@ -1087,7 +1162,31 @@ function AppContent({
           },
         ]}
       >
-        <p>{t('search.view_all_confirm_body', { count: sortedFindings.length })}</p>
+        <p className="view-all-confirm-filters">
+          {t('search.view_all_confirm_filters_label')}
+          {' '}
+          {t('search.view_all_confirm_filters', { platform: platform === 'web' ? t('search.view_all_platform_web') : platform === 'native' ? t('search.view_all_platform_native') : platform === 'document' ? t('search.view_all_platform_document') : t('search.view_all_platform_all'), version: wcagFilter.maxVersion, level: wcagFilter.maxLevel })}
+          {'. '}
+          {t('search.view_all_confirm_filters_change')}
+          {' '}
+          <a href="#/settings" className="view-all-confirm-settings-link" onClick={() => setViewAllConfirmOpen(false)}>
+            {t('search.view_all_confirm_filters_link')}
+          </a>.
+        </p>
+        {(() => {
+          const pinnedCount = pinnedIds.size
+          const starredCount = Object.values(ratings).filter(r => r.starred).length
+          const archivedCount = Object.values(ratings).filter(r => r.archived).length
+          if (!pinnedCount && !starredCount && !archivedCount) return null
+          return (
+            <ul className="view-all-confirm-stat-list">
+              {pinnedCount > 0 && <li className="view-all-confirm-stat">{pinnedCount === 1 ? t('search.view_all_confirm_pinned_one') : t('search.view_all_confirm_pinned', { count: pinnedCount })}</li>}
+              {starredCount > 0 && <li className="view-all-confirm-stat">{starredCount === 1 ? t('search.view_all_confirm_starred_one') : t('search.view_all_confirm_starred', { count: starredCount })}</li>}
+              {archivedCount > 0 && <li className="view-all-confirm-stat">{archivedCount === 1 ? t('search.view_all_confirm_archived_one') : t('search.view_all_confirm_archived', { count: archivedCount })}</li>}
+            </ul>
+          )
+        })()}
+        <p className="view-all-confirm-body"><strong>{sortedFindings.length === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body', { count: sortedFindings.length })}</strong></p>
         <label className="view-all-dont-ask-label">
           <input
             type="checkbox"
@@ -1173,16 +1272,14 @@ function AppContent({
       {theme === 'party' && <PartyBanner />}
 
       <div className="app-background" inert={backgroundInert ? true : undefined}>
-        <nav aria-label={t('common.skip_nav')}>
-          <a
-            href="#/"
-            className="skip-link"
-            onClick={(e) => { e.preventDefault(); document.getElementById('finding-search')?.focus() }}
-          >
-            {t('common.skip_to_main')}
-            <ChevronDown size={14} aria-hidden="true" />
-          </a>
-        </nav>
+        <a
+          href="#/"
+          className="skip-link"
+          onClick={(e) => { e.preventDefault(); document.getElementById(onboardingOpen ? 'onboarding-title' : 'finding-search')?.focus() }}
+        >
+          {t('common.skip_to_main')}
+          <ChevronDown size={14} aria-hidden="true" />
+        </a>
         <Header
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}
@@ -1208,7 +1305,7 @@ function AppContent({
                 : isDesktop && settingsOpen
                   ? <SettingsPanel ref={settingsPanelRef} {...settingsProps} />
                   : isDesktop && aboutOpen
-                    ? <AboutPanel onClose={handleCloseAbout} />
+                    ? <AboutPanel onClose={handleCloseAbout} allFindings={allFindings} />
                     : isDesktop && helpOpen
                       ? <HelpPanel onClose={handleCloseHelp} onStartTour={handleOpenOnboarding} />
                       : isDesktop && onboardingOpen
@@ -1229,7 +1326,7 @@ function AppContent({
 
       {!isDesktop && (
         <Drawer open={aboutOpen} onClose={handleCloseAbout} label={t('about.sheet_label')} focusOnClose={aboutTriggerRef}>
-          <AboutPanel onClose={handleCloseAbout} />
+          <AboutPanel onClose={handleCloseAbout} allFindings={allFindings} />
         </Drawer>
       )}
 
@@ -1339,7 +1436,6 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
           <IconButton
             onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : helpOpen ? onCloseHelp : onCloseOnboarding}
             label={t('common.close')}
-            title={t('common.close')}
             icon={<X size={20} strokeWidth={2.5} aria-hidden="true" />}
             className="page-header__close-btn"
           />
@@ -1348,21 +1444,18 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
             <IconButton
               onClick={onOpenHelp}
               label={t('help.open_help')}
-              title={t('help.open_help')}
               icon={<HelpCircle size={20} strokeWidth={2} aria-hidden="true" />}
               className="page-header__help-btn"
             />
             <IconButton
               onClick={onOpenAbout}
               label={t('header.open_about')}
-              title={t('header.open_about')}
               icon={<Info size={20} strokeWidth={2} aria-hidden="true" />}
               className="page-header__about-btn"
             />
             <IconButton
               onClick={onOpenSettings}
               label={t('header.open_settings')}
-              title={t('header.open_settings')}
               icon={<Settings size={20} strokeWidth={2} aria-hidden="true" />}
               className="page-header__settings-btn"
             />
@@ -1370,18 +1463,29 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
         )}
       </div>
 
-      <a href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
+      {(onboardingOpen || settingsOpen || aboutOpen || helpOpen) ? (
         <h1
           ref={h1Ref}
           tabIndex={-1}
           className={compact ? 'sr-only' : 'page-title'}
+          aria-hidden={onboardingOpen ? 'true' : undefined}
         >
-          {t('app.name')}
+          {t('app.name')}<span className="page-title__icons" aria-hidden="true"><Hand size={28} /><ClipboardPaste size={28} /></span>
         </h1>
-      </a>
+      ) : (
+        <a href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
+          <h1
+            ref={h1Ref}
+            tabIndex={-1}
+            className={compact ? 'sr-only' : 'page-title'}
+          >
+            {t('app.name')}<span className="page-title__icons" aria-hidden="true"><Hand size={28} /><ClipboardPaste size={28} /></span>
+          </h1>
+        </a>
+      )}
 
       {!compact && (
-        <p className="page-tagline">{t('app.tagline')}</p>
+        <p className="page-tagline"><em>{t('app.tagline')}</em></p>
       )}
     </header>
   )
@@ -1442,7 +1546,7 @@ function Footer() {
         {nameIdx >= 0 ? (
           <>
             {credit.slice(0, nameIdx)}
-            <a href="https://www.mikey.fyi?ref=a11yhelper" target="_blank" rel="noreferrer" className="footer-link"><strong>Mikey Ilagan</strong></a>
+            <a href="https://www.mikey.fyi?ref=a11yhelper" target="_blank" rel="noreferrer" className="footer-link"><strong className="footer-credit__name">Mikey Ilagan</strong></a>
             {credit.slice(nameIdx + 12)}
           </>
         ) : credit}
@@ -1466,7 +1570,7 @@ function Footer() {
           </svg>
           {t('footer.sponsor')}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
         </a>
-        {' · '}
+        {'  ·  '}
         <a
           href="https://www.linkedin.com/in/mikeyil"
           target="_blank"
