@@ -841,7 +841,6 @@ select:disabled {
   font-weight: 600;
   color: var(--text-heading);
   text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-badge);
   margin: 0;
 }
 

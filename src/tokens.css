@@ -116,9 +116,8 @@
 
   /* Text adjustments — line-height, underlines, etc. */
   --text-underline-offset: 2px;
-  /* Letter spacing for uppercased labels and badges */
-  --letter-spacing-label: 0.06em;
-  --letter-spacing-badge: 0.05em;
+  /* Letter spacing for uppercased labels */
+  --letter-spacing-upper: 0.05em;
 
   /* Modal and panel sizing */
   --modal-max-width: 720px;

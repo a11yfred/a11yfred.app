@@ -1438,7 +1438,6 @@ button {
   color: var(--accent-text);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-badge);
 }
 
 /* ─── No results ──────────────────────────────────────────── */
@@ -1928,7 +1927,7 @@ input.search-input--disabled {
   font-weight: 600;
   color: var(--text-heading);
   text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-label);
+  letter-spacing: var(--letter-spacing-upper);
   margin-bottom: var(--space-3);
 }
 
@@ -2980,7 +2979,7 @@ input[type="radio"].control:not(:checked):hover {
   font-weight: 600;
   color: var(--text-heading);
   text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-label);
+  letter-spacing: var(--letter-spacing-upper);
 }
 
 .about-subheading {
