@@ -389,8 +389,6 @@
   "settings.party_confirm_no": "Never mind",
   "settings.reduced_motion_note": "Reduced motion is on. Animations like confetti are skipped. To re-enable them, turn off reduced motion in your OS accessibility settings.",
   "settings.language_label": "Language",
-  "settings.language_current_is": "The current language is {label}.",
-  "settings.language_desc": "Choose a language below.",
   "settings.language_select_one": "Choose Language",
   "settings.language_change": "Preview",
   "settings.pending_save_note": "{unsaved} Press {save} button to apply.",
