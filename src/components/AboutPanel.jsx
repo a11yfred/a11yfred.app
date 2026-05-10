@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, ArrowLeft } from 'lucide-react'
 import { useT } from '../i18n/index.jsx'
 import Panel from './ui/Panel.jsx'
+import Button from './ui/Button.jsx'
 import findingSlug from '../utils/findingSlug.js'
 
 export default function AboutPanel({ onClose, allFindings = [] }) {
@@ -109,6 +110,17 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
         </ul>
       </section>
 
+      <div className="panel-mobile-back" aria-hidden="true">
+        <Button
+          variant="primary"
+          className="panel-mobile-back-btn"
+          icon={<ArrowLeft size={16} aria-hidden="true" />}
+          onClick={onClose}
+          tabIndex={-1}
+        >
+          {t('settings.back')}
+        </Button>
+      </div>
     </Panel>
   )
 }

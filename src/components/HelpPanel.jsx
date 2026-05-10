@@ -1,4 +1,4 @@
-import { PlayCircle } from 'lucide-react'
+import { PlayCircle, ArrowLeft } from 'lucide-react'
 import { useT } from '../i18n/index.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
@@ -63,6 +63,18 @@ export default function HelpPanel({ onClose, onStartTour }) {
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↓</code> {t('help.shortcut_rank_down')}</li>
         </ul>
       </section>
+
+      <div className="panel-mobile-back" aria-hidden="true">
+        <Button
+          variant="primary"
+          className="panel-mobile-back-btn"
+          icon={<ArrowLeft size={16} aria-hidden="true" />}
+          onClick={onClose}
+          tabIndex={-1}
+        >
+          {t('settings.back')}
+        </Button>
+      </div>
     </Panel>
   )
 }
