@@ -22,7 +22,6 @@
   flex-shrink: 0;
 }
 
-
 .btn svg {
   flex-shrink: 0;
   line-height: 1;
@@ -157,28 +156,14 @@ select:focus-visible {
   color: var(--accent-text);
 }
 
-.btn--icon-accent.btn__field--success {
-  color: var(--success);
-}
-
-.btn--icon-accent.btn__field--success:hover {
-  color: var(--success);
-  background: transparent;
-}
-
-.btn--icon-tertiary.btn__field--success {
-  color: var(--success);
-}
-
-.btn--icon-tertiary.btn__field--success:hover {
-  color: var(--success);
-  background: transparent;
-}
-
+.btn--icon-accent.btn__field--success,
+.btn--icon-tertiary.btn__field--success,
 .btn--tertiary.btn__field--success {
   color: var(--success);
 }
 
+.btn--icon-accent.btn__field--success:hover,
+.btn--icon-tertiary.btn__field--success:hover,
 .btn--tertiary.btn__field--success:hover {
   color: var(--success);
   background: transparent;
@@ -207,7 +192,6 @@ select:focus-visible {
   transition: var(--transition-btn);
   border-radius: var(--radius);
 }
-
 
 .btn--tertiary.btn--full-width {
   padding: 0;
@@ -599,7 +583,6 @@ select:disabled {
   background: var(--bg);
 }
 
-
 .toggle__ring {
   display: block;
   width: 8px;
@@ -612,7 +595,6 @@ select:disabled {
 [data-theme="dark"] .toggle__ring {
   border-color: var(--text-heading);
 }
-
 
 .toggle:has(.toggle__input:disabled) {
   opacity: 0.5;
