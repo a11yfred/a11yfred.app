@@ -757,8 +757,7 @@ button {
 }
 
 @media (width < 768px) {
-  .result-rank-col,
-  .result-pin-btn {
+  .result-rank-col {
     display: none;
   }
 }
@@ -961,6 +960,13 @@ button {
 .result-pin-btn:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: 1px;
+}
+
+@media (width < 768px) {
+  .result-pin-btn,
+  .result-pin-btn.btn--icon {
+    display: none;
+  }
 }
 
 .result-row--archived .result-pin-btn {
