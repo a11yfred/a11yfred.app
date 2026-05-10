@@ -167,14 +167,12 @@ const SettingsPanel = forwardRef(function SettingsPanel({
     activeProvider !== savedProvider ||
     PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id] || models[p.id] !== savedModels[p.id])
 
-  // Announce when settings first become unsaved so screen reader users know
-  const wasUnsavedRef = useRef(false)
+  // Announce whenever a setting changes and there are unsaved changes
+  const isMountedRef = useRef(false)
   useEffect(() => {
-    if (hasUnsaved && !wasUnsavedRef.current) {
-      announce(t('settings.pending_save_note'))
-    }
-    wasUnsavedRef.current = hasUnsaved
-  }, [hasUnsaved]) // eslint-disable-line react-hooks/exhaustive-deps
+    if (!isMountedRef.current) { isMountedRef.current = true; return }
+    if (hasUnsaved) announce(t('settings.pending_save_note'))
+  }, [pendingTheme, pendingLanguage, pendingPlatform, pendingLiveSearch, pendingShowVoting, pendingAiEnabled, pendingWcagFilter, pendingAgenticMode, activeProvider]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sync pending state when props change externally (e.g. Reset All)
   const didMountRef = useRef(false)
@@ -293,7 +291,6 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
-    announce(t('settings.saved_announce'))
   }
 
   const guardedClose = useCallback(
@@ -319,14 +316,17 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       pageTitle={t('settings.heading')}
     >
 
-      <p className="settings-panel-intro">{t('settings.save_note')}</p>
+      <p className="settings-panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
 
       {/* ── Appearance ──────────────────────────────── */}
       <h3 className="settings-section-heading">{t('settings.appearance')}</h3>
 
       {/* Theme */}
+      {pendingTheme !== theme && (
+        <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+      )}
       <fieldset className="settings-fieldset">
-        <legend className="sr-only">{t('settings.theme_legend')}</legend>
+        <legend className="sr-only">{t('settings.appearance')}</legend>
         <div className="radio-chip-group">
           {[
             { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
@@ -352,8 +352,8 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       {/* Language */}
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.language_label')}</h3>
-        <p className="settings-group__desc">{t('settings.language_current_is', { label: savedLanguageLabel })}</p>
-        <p className="settings-group__desc">{t('settings.language_desc')}</p>
+        <p className="settings-group__desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
+        <p className="settings-group__desc">Select a language and press <strong>Save</strong> at the bottom of this panel to apply it.</p>
         <div className="settings-language-row">
           <Select
             value={pendingLanguage === language ? '' : pendingLanguage}
@@ -400,12 +400,22 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.platform_label')}</h3>
         <p className="settings-group__desc">
-          {pendingPlatform === 'web' ? t('settings.platform_web_desc') : pendingPlatform === 'native' ? t('settings.platform_native_desc') : t('settings.platform_document_desc')}
+          {pendingPlatform === 'all'
+            ? <>Show <strong>all results</strong> across web, native apps, and documents.</>
+            : pendingPlatform === 'web'
+              ? <>Show <strong>web-oriented</strong> results.</>
+              : pendingPlatform === 'native'
+                ? <>Show <strong>native app-oriented</strong> results.</>
+                : <>Show <strong>document-oriented</strong> results.</>}
         </p>
+        {pendingPlatform !== platform && (
+          <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+        )}
         <fieldset className="settings-fieldset">
           <legend className="sr-only">{t('settings.platform_label')}</legend>
           <div className="radio-chip-group">
             {[
+              { value: 'all',      labelKey: 'settings.platform_all',      announceKey: 'settings.platform_all_announce'      },
               { value: 'web',      labelKey: 'settings.platform_web',      announceKey: 'settings.platform_web_announce'      },
               { value: 'native',   labelKey: 'settings.platform_native',   announceKey: 'settings.platform_native_announce'   },
               { value: 'document', labelKey: 'settings.platform_document', announceKey: 'settings.platform_document_announce' },
@@ -424,9 +434,6 @@ const SettingsPanel = forwardRef(function SettingsPanel({
             ))}
           </div>
         </fieldset>
-        {pendingPlatform !== platform && (
-          <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
-        )}
       </div>
 
       {/* Live search */}
@@ -436,7 +443,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
             <label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>
           </h3>
           <p className="settings-toggle-desc">
-            {pendingLiveSearch ? t('settings.live_search_on') : t('settings.live_search_off')}
+            {pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}
           </p>
           {pendingLiveSearch !== liveSearch && (
             <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
@@ -448,7 +455,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       {/* WCAG Version + Level Filter */}
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.wcag_filter_label')}</h3>
-        <p className="settings-group__desc">{t('settings.wcag_filter_desc')}</p>
+        <p className="settings-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each version includes all findings from previous versions.</p>
         {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? '2.2') ||
           pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? 'AA')) && (
           <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
@@ -534,7 +541,9 @@ const SettingsPanel = forwardRef(function SettingsPanel({
             <label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>
           </h3>
           <p className="settings-toggle-desc">
-            {pendingShowVoting ? t('settings.ranking_on') : t('settings.ranking_off')}
+            {pendingShowVoting
+              ? <>Ranking controls <strong>are visible on each result</strong>.</>
+              : <>Ranking controls <strong>are hidden</strong>.</>}
           </p>
           {pendingShowVoting !== showVoting && (
             <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
@@ -563,6 +572,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           onClick={() => {
             onClearStarred?.()
             setUnstarAllDone(true)
+            announce(t('settings.unstar_all_done'))
             setTimeout(() => setUnstarAllDone(false), 1500)
           }}
         >
@@ -590,6 +600,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           onClick={() => {
             onResetRankings?.()
             setResetRankingsDone(true)
+            announce(t('settings.reset_rankings_done'))
             setTimeout(() => setResetRankingsDone(false), 1500)
           }}
         >
@@ -617,6 +628,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           onClick={() => {
             onClearArchived?.()
             setUnarchiveAllDone(true)
+            announce(t('settings.unarchive_all_done'))
             setTimeout(() => setUnarchiveAllDone(false), 1500)
           }}
         >
@@ -634,7 +646,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           <label htmlFor="toggle-ai" className="settings-toggle-label">
             {t('settings.ai_enable_label')}
           </label>
-          <p className="settings-toggle-desc">{t('settings.ai_enable_desc')}</p>
+          <p className="settings-toggle-desc">Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</p>
           {pendingAiEnabled !== aiEnabled && (
             <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
           )}
@@ -709,7 +721,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           <label htmlFor="toggle-agentic" className="settings-toggle-label">
             {t('settings.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}
           </label>
-          <p className="settings-toggle-desc">{t('settings.agentic_mode_desc') || 'AI will search past examples to match your style and technical depth when rewriting'}</p>
+          <p className="settings-toggle-desc">Only available with <strong>Claude (Anthropic)</strong>. Searches past revision examples to write in your established tone and technical depth.</p>
           {pendingAgenticMode !== (localStorage.getItem('agentic_mode') === 'true') && (
             <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
           )}
@@ -765,6 +777,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         collapsed={privacyCollapsed}
         onCollapse={setPrivacyCollapsed}
         label={t('settings.privacy_heading')}
+        heading={t('settings.privacy_heading')}
         closeLabel={t('common.close')}
         returnFocusRef={privacyButtonRef}
       >

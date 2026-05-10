@@ -3,7 +3,6 @@ import { forwardRef } from 'react'
 const IconButton = forwardRef(function IconButton({
   icon,
   label,
-  title,
   onClick,
   disabled,
   className = '',
@@ -19,7 +18,6 @@ const IconButton = forwardRef(function IconButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
-      title={title}
       className={`btn--icon${variantClass ? ` ${variantClass}` : ''}${className ? ` ${className}` : ''}`}
       {...rest}
     >

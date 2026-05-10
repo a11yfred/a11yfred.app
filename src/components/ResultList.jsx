@@ -4,11 +4,13 @@ import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
+import RadioChip from './ui/RadioChip.jsx'
 import IconButton from './ui/IconButton.jsx'
 import Badge from './ui/Badge.jsx'
 import Select from './ui/Select.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
 import NoResults from './ui/NoResults.jsx'
+import InfoBox from './ui/InfoBox.jsx'
 import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
@@ -50,27 +52,71 @@ export function PinnedSection({ findings, onSelect, ratings = {}, onRankUp, onRa
   )
 }
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange }) {
+export default function ResultList({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange }) {
   const t = useT()
   const itemRefs = useRef({})
   const focusNextRef = useRef(null)
   const countHeadingRef = useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
   const [pendingSort, setPendingSort] = useState(sortBy)
+  const [sortToCommit, setSortToCommit] = useState(null)
+  const [clearPending, setClearPending] = useState(false)
+  const [sortFlash, setSortFlash] = useState(false)
   const listRef = useRef(null)
   const [animatingUp, setAnimatingUp] = useState(() => new Set())
   const [animatingDown, setAnimatingDown] = useState(() => new Set())
+  const prevNarrowResultsRef = useRef(undefined)
 
   // Keep pendingSort in sync when sortBy changes externally
   useEffect(() => { setPendingSort(sortBy) }, [sortBy]) // eslint-disable-line react-hooks/set-state-in-effect -- intentional sync from parent prop
 
+  // Commit sort after announcement has rendered
+  useEffect(() => {
+    if (sortToCommit === null) return
+    onSortChange(sortToCommit)
+    setSortToCommit(null)
+  }, [sortToCommit]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Commit clear after announcement has rendered
+  useEffect(() => {
+    if (!clearPending) return
+    setClearPending(false)
+    onClear?.()
+  }, [clearPending]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Announce narrow search results count when narrowResults first arrives or changes
+  useEffect(() => {
+    const prev = prevNarrowResultsRef.current
+    prevNarrowResultsRef.current = narrowResults
+    if (!narrowMode || narrowResults === null || narrowResults === undefined) return
+    if (prev === undefined) return // skip mount
+    const count = narrowResults.length
+    const result = count === 1 ? 'Result' : 'Results'
+    const platformLabels = {
+      all:      t('settings.platform_all'),
+      web:      t('settings.platform_web'),
+      native:   t('settings.platform_native'),
+      document: t('settings.platform_document'),
+    }
+    const platformLabel = platformLabels[platform] ?? platform
+    if (platform !== 'all') {
+      announce(t('announce.narrow_results_platform', { count, result, total: results.length, platform: platformLabel }))
+    } else {
+      announce(t('announce.narrow_results', { count, result, total: results.length }))
+    }
+  }, [narrowResults]) // eslint-disable-line react-hooks/exhaustive-deps
+
+
   // Use narrowResults if provided (filtered), otherwise use all results
   const displayResults = narrowMode && narrowResults ? narrowResults : results
+  const r = (n) => n === 1 ? 'Result' : 'Results'
   const displayCount = narrowMode && narrowResults
-    ? t('results.narrow_count', { narrowed: narrowResults.length, total: results.length })
+    ? t('results.narrow_count', { narrowed: narrowResults.length, total: results.length, result: r(narrowResults.length) })
     : (filterLabel
-      ? t('results.count_badge', { count: results.length, filter: filterLabel })
-      : t('results.count', { count: results.length })
+      ? t('results.count_badge', { count: results.length, result: r(results.length), filter: filterLabel })
+      : hasPinnedItems
+        ? t('results.count_more', { count: results.length, result: r(results.length) })
+        : t('results.count', { count: results.length, result: r(results.length) })
     )
 
   useEffect(() => {
@@ -78,6 +124,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     const el = itemRefs.current[focusNextRef.current]
     if (el) { el.focus(); focusNextRef.current = null }
   })
+
 
   const handleKeyDown = useCallback((e) => {
     if (!listRef.current) return
@@ -111,24 +158,18 @@ export default function ResultList({ results, selected, onSelect, query, ratings
       case 's':
         e.preventDefault()
         onStar?.(currentFinding.id)
-        announce(starred
-          ? t('announce.unstarred', { title: currentFinding.title })
-          : t('announce.starred', { title: currentFinding.title })
-        )
+        announce(starred ? t('announce.unstarred') : t('announce.starred'))
         break
       case 'e':
         e.preventDefault()
-        onArchive?.(currentFinding.id)
-        announce(archived
-          ? t('announce.unarchived', { title: currentFinding.title })
-          : t('announce.archived', { title: currentFinding.title })
-        )
+        announce(archived ? t('announce.unarchived') : t('announce.archived'), { priority: 'assertive' })
+        setTimeout(() => onArchive?.(currentFinding.id), 100)
         break
       case 'u':
         e.preventDefault()
         if (archived) {
           onArchive?.(currentFinding.id)
-          announce(t('announce.unarchived', { title: currentFinding.title }))
+          announce(t('announce.unarchived'))
         }
         break
       default:
@@ -152,7 +193,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     return () => listEl?.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
 
-  if (results.length === 0) {
+  if (results.length === 0 && platform === 'all') {
     return <NoResults
       query={query}
       ariaLabel={t('results.no_results_aria')}
@@ -162,14 +203,21 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     />
   }
 
-  if (narrowMode && narrowResults && narrowResults.length === 0) {
-    return <NoResults
-      query={narrowQuery}
-      ariaLabel={t('results.no_results_aria')}
-      heading={t('results.no_results_heading', { query: narrowQuery })}
-      body={t('results.no_results_body')}
-      onMount={() => announce(t('results.no_results_announce', { query: narrowQuery }))}
-    />
+  const platformNoResults = results.length === 0 && platform !== 'all'
+  const narrowNoResults = narrowMode && narrowResults && narrowResults.length === 0
+
+  const sortLabels = {
+    smart: t('results.sort_smart'),
+    relevance: t('results.sort_relevance'),
+    'severity-desc': t('results.sort_severity_desc'),
+    'severity-asc': t('results.sort_severity_asc'),
+    'title-az': t('results.sort_title_az'),
+    'title-za': t('results.sort_title_za'),
+    sc: t('results.sort_sc'),
+    'wcag-version': t('results.sort_wcag_version'),
+    'wcag-level': t('results.sort_wcag_level'),
+    platform: t('results.sort_platform'),
+    popularity: t('results.sort_popularity'),
   }
 
   return (
@@ -203,6 +251,37 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             </Button>
           )}
         </div>
+        {onSortChange && results.length > 0 && (() => {
+          const SORT_LABELS = sortLabels
+          const PLATFORM_LABELS = {
+            all: t('results.platform_all'),
+            web: t('results.platform_web'),
+            native: t('results.platform_native'),
+            document: t('results.platform_document'),
+          }
+          const sortLabel = SORT_LABELS[sortBy] ?? sortBy
+          const platformLabel = PLATFORM_LABELS[platform] ?? platform
+          const hasQuery = !!query
+          const hasNarrow = narrowMode && !!narrowQuery
+          let summaryKey
+          if (hasQuery && hasNarrow) summaryKey = 'results.summary_query'
+          else if (hasQuery) summaryKey = 'results.summary_no_narrow'
+          else if (hasNarrow) summaryKey = 'results.summary_no_query'
+          else summaryKey = 'results.summary_no_query_no_narrow'
+          return (
+            <p className="results-summary">
+              {t(summaryKey, { query, sort: sortLabel, narrow: narrowQuery, platform: platformLabel })}
+            </p>
+          )
+        })()}
+        {onSortChange && results.length > 0 && (() => {
+          const activeSort = sortBy
+          const infoLabel = t('detail.note_label')
+          if (activeSort === 'smart') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_smart_info')}</InfoBox>
+          if (activeSort === 'wcag-level') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_wcag_level_info')}</InfoBox>
+          if (activeSort === 'popularity') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_popularity_info')}</InfoBox>
+          return null
+        })()}
         {onSortChange && results.length > 0 && (showRanking || liveSearch) && (
           <p className="results-rank-hint">
             {showRanking && t('results.rank_hint')}
@@ -211,8 +290,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           </p>
         )}
         <div className="results-actions-row">
-          {onSortChange && results.length > 0 && (
-            <div className="results-sort-group">
+          {onSortChange && (
+            <div className={`results-sort-group${results.length > 0 ? ' results-sort-group--visible' : ''}`}>
               <div className="results-sort-controls">
                 <label htmlFor="results-sort" className="results-sort-label">{t('results.sort_label')}</label>
                 <Select
@@ -221,6 +300,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   onChange={e => {
                     if (liveSearch) {
                       onSortChange(e.target.value)
+                      announce(t('announce.sorted', { count: displayResults.length, result: displayResults.length === 1 ? 'Result' : 'Results', label: sortLabels[e.target.value] ?? e.target.value }))
                     } else {
                       setPendingSort(e.target.value)
                     }
@@ -242,8 +322,14 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 {!liveSearch && (
                   <Button
                     variant="primary"
+                    active={sortFlash}
                     className="results-sort-btn"
-                    onClick={() => onSortChange(pendingSort)}
+                    onClick={() => {
+                      announce(t('announce.sorted', { count: displayResults.length, result: displayResults.length === 1 ? 'Result' : 'Results', label: sortLabels[pendingSort] ?? pendingSort }))
+                      setSortToCommit(pendingSort)
+                      setSortFlash(true)
+                      setTimeout(() => setSortFlash(false), 1000)
+                    }}
                   >
                     {t('results.sort_apply')}
                   </Button>
@@ -271,21 +357,25 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               )}
             </Button>
           )}
-          {results.length > 0 && onClear && (
+          {onClear && (
             <Button
               variant="tertiary"
-              className="results-clear-btn"
+              className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
               aria-label={t('results.clear_results')}
               title={t('results.clear_results')}
-              onClick={onClear}
+              onClick={() => { announce(t('announce.filters_cleared')); setClearPending(true) }}
             >
               {t('results.clear_results')}
             </Button>
           )}
         </div>
 
-        {narrowMode && onNarrowChange && (
-          <div className="results-narrow-input-section">
+        {onNarrowChange && (
+          <div
+            className={`results-narrow-input-section${narrowMode ? ' results-narrow-input-section--visible' : ''}`}
+            aria-hidden={!narrowMode || undefined}
+            inert={!narrowMode || undefined}
+          >
             <label htmlFor="narrow-filter" className="results-narrow-label">
               {t('search.narrowing_results')}
             </label>
@@ -302,7 +392,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 }}
                 onClear={() => onNarrowChange('')}
                 placeholder={narrowResults ? t('search.narrow_placeholder', { count: results.length }) : 'Filter results…'}
-                clearAriaLabel={t('search.clear_aria')}
+                clearAriaLabel={t('search.narrow_clear_aria')}
                 wrapClassName="results-narrow-input-wrap"
                 inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
                 clearButtonClassName="btn--primary results-narrow-clear-btn"
@@ -314,16 +404,46 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   variant="primary"
                   className="results-narrow-submit-btn btn--input-height"
                 >
-                  {t('search.button')}
+                  {t('search.narrow_button')}
                 </Button>
               )}
             </div>
           </div>
         )}
+        {onPlatformChange && narrowMode && (
+          <fieldset className="results-narrow-platform-group">
+            <legend className="sr-only">{t('settings.platform_label')}</legend>
+            <div className="radio-chip-group">
+              {[
+                { value: 'all',      label: t('settings.platform_all')      },
+                { value: 'web',      label: t('settings.platform_web')      },
+                { value: 'native',   label: t('settings.platform_native')   },
+                { value: 'document', label: t('settings.platform_document') },
+              ].map(({ value, label }) => (
+                <RadioChip
+                  key={value}
+                  name="narrow-platform"
+                  value={value}
+                  label={label}
+                  current={platform}
+                  onChange={onPlatformChange}
+                />
+              ))}
+            </div>
+          </fieldset>
+        )}
+        {onPlatformChange && narrowMode && <hr className="results-narrow-divider" aria-hidden="true" />}
       </div>}
 
-      <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>
-        {displayResults.map((finding, index) => {
+      {(narrowNoResults || platformNoResults)
+        ? <NoResults
+            query={narrowNoResults ? narrowQuery : query}
+            ariaLabel={t('results.no_results_aria')}
+            heading={t('results.no_results_heading', { query: narrowNoResults ? narrowQuery : query })}
+            body={t('results.no_results_body')}
+          />
+        : <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>
+          {displayResults.map((finding, index) => {
           const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
           const isSelected = selected?.id === finding.id
           const p = SEVERITY_VARS[finding.severity] || SEVERITY_VARS['Best Practice']
@@ -379,22 +499,18 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           function handleStar(e) {
             e.stopPropagation()
             onStar?.(finding.id)
-            announce(starred
-              ? t('announce.unstarred', { title: finding.title })
-              : t('announce.starred', { title: finding.title })
-            )
           }
 
           function handleArchive(e) {
             e.stopPropagation()
-            const idx = results.indexOf(finding)
-            const next = results[idx + 1] || results[idx - 1]
-            if (next) focusNextRef.current = next.id
-            onArchive?.(finding.id)
-            announce(archived
-              ? t('announce.unarchived', { title: finding.title })
-              : t('announce.archived', { title: finding.title })
-            )
+            announce(t('announce.archived'), { priority: 'assertive' })
+            const idx = displayResults.indexOf(finding)
+            const next = displayResults[idx + 1] || displayResults[idx - 1]
+            const nextId = next?.id
+            setTimeout(() => {
+              onArchive?.(finding.id)
+              if (nextId) requestAnimationFrame(() => itemRefs.current[nextId]?.focus())
+            }, 100)
           }
 
           const pinned = pinnedIds.has(finding.id)
@@ -428,7 +544,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   <IconButton
                     variant="tertiary"
                     label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
-                    title={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                     disabled={archived}
                     onClick={handlePin}
                     icon={pinned
@@ -495,7 +610,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <div className="result-item__desc">{finding.desc}</div>
               </a>
 
-              {showRankingSort && (
+              {showRankingSort && index < displayResults.length - 1 && (
                 <a
                   href="#/"
                   tabIndex={archived ? -1 : 0}
@@ -521,7 +636,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <IconButton
                   variant="tertiary"
                   label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
-                  title={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                   disabled={archived}
                   onClick={handleStar}
                   icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
@@ -532,7 +646,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   <IconButton
                     variant="tertiary"
                     label={t('results.rank_up', { title: shortTitle })}
-                    title={t('results.rank_up', { title: shortTitle })}
                     disabled={archived}
                     onClick={handleRankUp}
                     icon={<ThumbsUp size={14} aria-hidden="true" fill={animatingUp.has(finding.id) ? 'currentColor' : 'none'} />}
@@ -541,16 +654,15 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
                   <span
                     className="result-rank-score"
-                    aria-label={t('results.score_label', { score })}
                     title={t('results.score_label', { score })}
                   >
-                    {score}
+                    <span className="sr-only">{t('results.score_label', { score })}</span>
+                    <span aria-hidden="true">{score}</span>
                   </span>
 
                   <IconButton
                     variant="tertiary"
                     label={t('results.rank_down', { title: shortTitle })}
-                    title={t('results.rank_down', { title: shortTitle })}
                     disabled={archived}
                     onClick={handleRankDown}
                     icon={<ThumbsDown size={14} aria-hidden="true" fill={animatingDown.has(finding.id) ? 'currentColor' : 'none'} />}
@@ -561,7 +673,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 <IconButton
                   variant="tertiary"
                   label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
-                  title={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                   onClick={handleArchive}
                   icon={archived
                     ? <ArchiveRestore size={13} aria-hidden="true" />
@@ -575,7 +686,11 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             </Fragment>
           )
         })}
-      </ul>
+        </ul>
+      }
+      {results.length > 0 && (
+        <p className="results-end-marker">{t('results.end_of_results')}</p>
+      )}
       {results.length > 50 && (
         <div className="view-all-section">
           <Button
