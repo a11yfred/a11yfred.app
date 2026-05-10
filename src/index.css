@@ -987,7 +987,6 @@ button {
   filter: opacity(0.5);
 }
 
-
 .result-item:hover:not(.result-item--selected) {
   border-color: var(--text-heading);
   color: inherit;
@@ -3173,7 +3172,7 @@ input[type="radio"].control:not(:checked):hover {
 
 .help-tour-banner__heading {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: var(--fs-heading);
   font-weight: 600;
   color: var(--accent-text);
   margin: 0 0 var(--space-1);
@@ -3397,7 +3396,7 @@ input[type="radio"].control:not(:checked):hover {
   padding: 0 var(--space-2);
   border-radius: var(--radius);
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: var(--fs-heading);
   display: inline-flex;
   align-items: center;
   justify-content: center;

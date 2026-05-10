@@ -133,7 +133,7 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 2rem;
   height: 4px;
   background: var(--accent-text);
   border-radius: var(--radius-full);
@@ -279,7 +279,6 @@ body:has(.sheet-panel.is-collapsed) .app-container {
 .modal-panel.is-open:focus-visible {
   outline: none;
 }
-
 
 .modal-body {
   flex: 1;
