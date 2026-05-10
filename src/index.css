@@ -591,7 +591,6 @@ button {
   }
 }
 
-
 .results-narrow-submit-btn,
 .search-submit-btn {
   padding: var(--space-3) var(--space-4);
@@ -1140,7 +1139,6 @@ button {
   margin-bottom: var(--space-2);
 }
 
-
 .result-list--has-pinned {
   margin-top: 0;
 }
@@ -1303,7 +1301,6 @@ button {
 .result-item--selected .result-item__title {
   color: var(--accent-text);
 }
-
 
 .badge--severity,
 .badge--source,
@@ -1631,7 +1628,6 @@ input.search-input--disabled {
   color: var(--text-body);
   border-color: var(--border-control);
 }
-
 
 .search-clear-btn,
 .results-narrow-clear-btn {
@@ -2308,7 +2304,6 @@ input[type="radio"].control:not(:checked):hover {
   margin-bottom: var(--space-2);
 }
 
-.settings-save-btn,
 .settings-reset-sheet {
   display: flex;
   flex-direction: column;
@@ -2492,7 +2487,6 @@ input[type="radio"].control:not(:checked):hover {
   flex: 1;
 }
 
-
 @media (width >= 768px) {
   .detail-title {
     font-size: var(--fs-h1);
@@ -2643,7 +2637,6 @@ input[type="radio"].control:not(:checked):hover {
   font-weight: 400;
 }
 
-
 .detail-location-input-wrap {
   position: relative;
   display: flex;
@@ -2771,7 +2764,6 @@ input[type="radio"].control:not(:checked):hover {
   color: var(--text-heading);
 }
 
-
 .detail-ai-revision-icon {
   display: inline;
   vertical-align: -0.15em;
@@ -2850,7 +2842,6 @@ input[type="radio"].control:not(:checked):hover {
     justify-content: center;
   }
 }
-
 
 .detail-action-btn {
   display: inline-flex;
@@ -2957,8 +2948,6 @@ input[type="radio"].control:not(:checked):hover {
   border-radius: 2px;
 }
 
-/* ─── Related issues ─────────────────────────────────────── */
-
 .source-links__list {
   list-style: disc;
   padding-left: var(--space-5);
@@ -3031,7 +3020,6 @@ input[type="radio"].control:not(:checked):hover {
   line-height: 1.6;
   margin-bottom: 0;
 }
-
 
 .about-features {
   list-style: none;
@@ -3352,7 +3340,6 @@ input[type="radio"].control:not(:checked):hover {
   line-height: 1.6;
   margin-bottom: 0;
 }
-
 
 .onboarding-footer {
   display: flex;
