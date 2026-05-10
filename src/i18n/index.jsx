@@ -92,7 +92,7 @@ export function I18nProvider({ locale, children }) {
       let str = (msgs[key] != null && msgs[key] !== '') ? msgs[key] : (MESSAGES.en[key] ?? key)
       if (vars) {
         Object.entries(vars).forEach(([k, v]) => {
-          str = str.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v))
+          str = str.replaceAll(`{${k}}`, String(v))
         })
       }
       return str

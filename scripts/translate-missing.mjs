@@ -88,12 +88,14 @@ const ENGLISH_VARIANTS = new Set(['en', 'en-AU', 'en-GB', 'en-IN', 'en-ZA'])
 
 // Delay between API calls (ms) to avoid rate limiting
 const DELAY_MS = 500
+// Max keys per API call — keeps output well within 8096 tokens
+const CHUNK_SIZE = 30
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-async function translateBatch(locale, keysToValues) {
+async function translateChunk(locale, keysToValues) {
   const langName = LOCALE_NAMES[locale] || locale
   const keyCount = Object.keys(keysToValues).length
 
@@ -141,14 +143,54 @@ ${JSON.stringify(keysToValues, null, 2)}`
   return JSON.parse(jsonMatch[0])
 }
 
+async function translateBatch(locale, keysToValues) {
+  const entries = Object.entries(keysToValues)
+  const results = {}
+
+  for (let i = 0; i < entries.length; i += CHUNK_SIZE) {
+    const chunk = Object.fromEntries(entries.slice(i, i + CHUNK_SIZE))
+    const chunkNum = Math.floor(i / CHUNK_SIZE) + 1
+    const totalChunks = Math.ceil(entries.length / CHUNK_SIZE)
+    if (totalChunks > 1) process.stdout.write(`    chunk ${chunkNum}/${totalChunks}… `)
+    try {
+      const translated = await translateChunk(locale, chunk)
+      Object.assign(results, translated)
+      if (totalChunks > 1) process.stdout.write('done\n')
+    } catch (chunkErr) {
+      if (totalChunks > 1) process.stdout.write('\n')
+      // Retry failed chunk one key at a time to isolate bad translations
+      process.stdout.write(`      chunk ${chunkNum} failed, retrying ${Object.keys(chunk).length} keys individually…\n`)
+      let recovered = 0
+      for (const [k, v] of Object.entries(chunk)) {
+        await sleep(DELAY_MS)
+        try {
+          const single = await translateChunk(locale, { [k]: v })
+          Object.assign(results, single)
+          recovered++
+        } catch {
+          // Skip this key silently
+        }
+      }
+      process.stdout.write(`      recovered ${recovered}/${Object.keys(chunk).length} keys\n`)
+    }
+    if (i + CHUNK_SIZE < entries.length) await sleep(DELAY_MS)
+  }
+
+  return results
+}
+
 // Parse --locale flag
 const localeArg = process.argv.find((a, i) => process.argv[i - 1] === '--locale')
 const targetLocales = localeArg ? localeArg.split(',').map(s => s.trim()) : null
 
+function readJson(filePath) {
+  return JSON.parse(fs.readFileSync(filePath, 'utf8').replace(/^﻿/, ''))
+}
+
 // Load English reference and snapshot of English values at last translation time
-const en = JSON.parse(fs.readFileSync(path.join(I18N_DIR, 'en.json'), 'utf8'))
+const en = readJson(path.join(I18N_DIR, 'en.json'))
 const snapshot = fs.existsSync(SNAPSHOT_PATH)
-  ? JSON.parse(fs.readFileSync(SNAPSHOT_PATH, 'utf8'))
+  ? readJson(SNAPSHOT_PATH)
   : {}
 
 // Keys whose English source changed since the last translation run
@@ -177,7 +219,7 @@ let totalErrors = 0
 
 for (const locale of localeFiles) {
   const filePath = path.join(I18N_DIR, `${locale}.json`)
-  const data = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+  const data = readJson(filePath)
 
   const needsTranslation = {}
   for (const [key, enVal] of Object.entries(en)) {

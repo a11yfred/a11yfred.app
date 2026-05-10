@@ -9,7 +9,6 @@ import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
 import InfoBox from './ui/InfoBox.jsx'
 import Toggle from './ui/Toggle.jsx'
-
 import InputWithClear from './ui/InputWithClear.jsx'
 import Badge from './ui/Badge.jsx'
 import Field from './ui/Field.jsx'
@@ -117,7 +116,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       setTimeout(() => {
         setFlag(false)
         focusRef?.current?.focus()
-      }, 2000)
+      }, NOTIFICATION_TIMEOUT)
     }
     if (!current?.trim() || !isSignificantlyChanged(original, current)) {
       doReset()
@@ -133,7 +132,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     navigator.clipboard.writeText(text).then(() => {
       setCopiedAll(true)
       announce(t('detail.copy_all_announce'))
-      setTimeout(() => setCopiedAll(false), 2000)
+      setTimeout(() => setCopiedAll(false), NOTIFICATION_TIMEOUT)
       onCopyEvent?.(finding.id, 'all')
     })
   }
@@ -229,7 +228,6 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     {
       const note = aiNote.trim()
       const provider = localStorage.getItem('ai_provider') || 'anthropic'
-      const PROVIDER_LABELS = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }
       const providerLabel = PROVIDER_LABELS[provider] || provider
 
       if (note === 'debug wrong')   { setRevisionFailed(t('detail.ai_revision_error_body')); return }
@@ -525,7 +523,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           <label htmlFor="ai-note" className={`detail-label${animating ? ' detail-label--disabled' : ''}`}>{aiRevisionLabel}</label>
           <p className="detail-ai-revision-hint">
             {t('detail.ai_revision_hint')}{' '}
-            <a href="/settings" className="detail-settings-link">{t('common.settings')}</a>.
+            <a href="#/settings" className="detail-settings-link">{t('common.settings')}</a>.
           </p>
           <textarea
             id="ai-note"

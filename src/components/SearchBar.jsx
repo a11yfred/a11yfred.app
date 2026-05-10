@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { useT } from '../i18n/index.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
 import Button from './ui/Button.jsx'
+import { CYCLE_MS } from '../utils/constants.js'
 
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.
@@ -17,7 +18,6 @@ const TYPEWRITER_PHRASES = [
   { text: 'alt text' },
   { text: 'error' },
 ]
-const CYCLE_MS = 2500
 
 export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false }) {
   const t = useT()
@@ -109,7 +109,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {hasPins ? ` ${t('search.hint_pin')}` : ''}
           {' '}
           {t('search.hint_syntax_prefix')}{' '}
-          <a href="?q=keyboard+%2Bscreen+reader+-wcag2.2" className="search-hint-link">keyboard +screen reader -wcag2.2</a>
+          <a href="#/?q=keyboard+%2Bscreen+reader+-wcag2.2" className="search-hint-link">keyboard +screen reader -wcag2.2</a>
           {t('search.hint_syntax_suffix')}
           {' '}
           {t('search.hint_change_in')}{' '}

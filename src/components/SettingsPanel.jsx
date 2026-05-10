@@ -9,6 +9,18 @@ import Select from './ui/Select.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
 import { PROVIDERS, PROVIDER_MODELS, initModels } from '../utils/aiModels.js'
+import { TOAST_HIDE_DURATION } from '../utils/constants.js'
+
+function PendingNote({ t }) {
+  const raw = t('settings.pending_save_note')
+  const [before, rest] = raw.split('{unsaved}')
+  const [middle, after] = rest.split('{save}')
+  return (
+    <p className="settings-pending-note">
+      {before}<strong>Unsaved.</strong>{middle}<strong>Save</strong>{after}
+    </p>
+  )
+}
 
 const LANGUAGES = [
   // A
@@ -290,7 +302,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
     })
 
     setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    setTimeout(() => setSaved(false), TOAST_HIDE_DURATION)
   }
 
   const guardedClose = useCallback(
@@ -322,7 +334,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
       {/* Theme */}
       {pendingTheme !== theme && (
-        <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+        <PendingNote t={t} />
       )}
       <fieldset className="settings-fieldset">
         <legend className="sr-only">{t('settings.appearance')}</legend>
@@ -352,7 +364,6 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.language_label')}</h3>
         <p className="settings-group__desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
-        <p className="settings-group__desc">Select a language and press <strong>Save</strong> at the bottom of this panel to apply it.</p>
         <div className="settings-language-row">
           <Select
             value={pendingLanguage === language ? '' : pendingLanguage}
@@ -386,7 +397,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           </Button>
         </div>
         {pendingLanguage !== language && (
-          <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+          <PendingNote t={t} />
         )}
       </div>
 
@@ -408,7 +419,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
                 : <>Show <strong>document-oriented</strong> results.</>}
         </p>
         {pendingPlatform !== platform && (
-          <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+          <PendingNote t={t} />
         )}
         <fieldset className="settings-fieldset">
           <legend className="sr-only">{t('settings.platform_label')}</legend>
@@ -445,7 +456,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
             {pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}
           </p>
           {pendingLiveSearch !== liveSearch && (
-            <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+            <PendingNote t={t} />
           )}
         </div>
         <Toggle id="toggle-live-search" checked={pendingLiveSearch} onChange={() => setPendingLiveSearch(v => !v)} />
@@ -457,7 +468,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         <p className="settings-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each version includes all findings from previous versions.</p>
         {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? '2.2') ||
           pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? 'AA')) && (
-          <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+          <PendingNote t={t} />
         )}
         <div className="settings-wcag-filter-row">
           <fieldset className="settings-fieldset">
@@ -545,7 +556,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
               : <>Ranking controls <strong>are hidden</strong>.</>}
           </p>
           {pendingShowVoting !== showVoting && (
-            <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+            <PendingNote t={t} />
           )}
         </div>
         <Toggle id="toggle-ranking" checked={pendingShowVoting} onChange={() => setPendingShowVoting(v => !v)} />
@@ -647,7 +658,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           </label>
           <p className="settings-toggle-desc">Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</p>
           {pendingAiEnabled !== aiEnabled && (
-            <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+            <PendingNote t={t} />
           )}
         </div>
         <Toggle id="toggle-ai" checked={pendingAiEnabled} onChange={() => setPendingAiEnabled(v => !v)} />
@@ -718,11 +729,11 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <div className={`settings-toggle-row settings-toggle-row--sm${!pendingAiEnabled || activeProvider !== 'anthropic' ? ' settings-toggle-row--disabled' : ''}`}>
         <div>
           <label htmlFor="toggle-agentic" className="settings-toggle-label">
-            {t('settings.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}
+            {t('settings.agentic_mode_label')}
           </label>
-          <p className="settings-toggle-desc">Only available with <strong>Claude (Anthropic)</strong>. Searches past revision examples to write in your established tone and technical depth.</p>
+          <p className="settings-toggle-desc">{t('settings.agentic_mode_desc')}</p>
           {pendingAgenticMode !== (localStorage.getItem('agentic_mode') === 'true') && (
-            <p className="settings-pending-note">{t('settings.pending_save_note')}</p>
+            <PendingNote t={t} />
           )}
         </div>
         <Toggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} disabled={!pendingAiEnabled || activeProvider !== 'anthropic'} />

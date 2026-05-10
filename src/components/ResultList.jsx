@@ -13,7 +13,7 @@ import NoResults from './ui/NoResults.jsx'
 import InfoBox from './ui/InfoBox.jsx'
 import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
-import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
+import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE } from '../utils/constants.js'
 
 export function PinnedSection({ findings, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins, headingRef }) {
   const t = useT()
@@ -69,9 +69,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   const [swipeOpenId, setSwipeOpenId] = useState(null) // null | { id, side: 'left'|'right' }
   const swipeTouchRef = useRef(null) // { startX, startY, id, el }
   const swipeStateRef = useRef({}) // snapshot of swipe-related state for native touchmove handler
-  const SWIPE_REVEAL = 44
-  const SWIPE_THRESHOLD = 22
-  const SWIPE_ACTIVATE = 120 // full rightward swipe triggers pin directly
 
   // Keep swipeStateRef in sync so native touchmove handler always sees current values
   useEffect(() => { swipeStateRef.current = { swipeOpenId, showRanking, onPin, pinnedIds } })
@@ -150,7 +147,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     }
   }, [narrowResults]) // eslint-disable-line react-hooks/exhaustive-deps
 
-
   // Use narrowResults if provided (filtered), otherwise use all results
   const displayResults = narrowMode && narrowResults ? narrowResults : results
   const r = (n) => n === 1 ? 'Result' : 'Results'
@@ -168,7 +164,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     const el = itemRefs.current[focusNextRef.current]
     if (el) { el.focus(); focusNextRef.current = null }
   })
-
 
   const handleKeyDown = useCallback((e) => {
     if (!listRef.current) return
@@ -308,14 +303,13 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           )}
         </div>
         {onSortChange && results.length > 0 && (() => {
-          const SORT_LABELS = sortLabels
           const PLATFORM_LABELS = {
             all: t('results.platform_all'),
             web: t('results.platform_web'),
             native: t('results.platform_native'),
             document: t('results.platform_document'),
           }
-          const sortLabel = SORT_LABELS[sortBy] ?? sortBy
+          const sortLabel = sortLabels[sortBy] ?? sortBy
           const platformLabel = PLATFORM_LABELS[platform] ?? platform
           const hasQuery = !!query
           const hasNarrow = narrowMode && !!narrowQuery
@@ -583,7 +577,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           }
 
           const swipeIsOpen = swipeOpenId?.id === finding.id
-          const swipeSide = swipeOpenId?.id === finding.id ? swipeOpenId.side : null
+          const swipeSide = swipeIsOpen ? swipeOpenId.side : null
 
           function handleSwipeTouchStart(e) {
             const t = e.touches[0]
@@ -724,6 +718,21 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       <ArrowDown size={14} aria-hidden="true" />
                     </a>
                   )}
+                  {onPin && (
+                    <IconButton
+                      variant="tertiary"
+                      label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                      disabled={archived}
+                      onClick={handlePin}
+                      icon={pinned
+                        ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
+                        : <Pin size={14} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} />
+                      }
+                      className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                      aria-hidden={true}
+                      tabIndex={-1}
+                    />
+                  )}
                 </div>
 
                 {showRanking && !pinned && <div className="result-rank-col">
@@ -778,6 +787,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               </div>
 
               {/* Right action panel: pin (revealed by swiping right) */}
+              {/* Mobile: pin button inside swipe-reveal action panel */}
               {onPin && (
                 <div className="result-action-panel result-action-panel--right">
                   <IconButton

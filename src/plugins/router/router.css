@@ -84,7 +84,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   bottom: 0;
   width: 100%;
   max-width: var(--modal-max-width);
-  max-height: 92dvh;
+  max-height: var(--modal-max-height-mobile);
   z-index: 202;
   background: var(--bg);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
@@ -103,7 +103,12 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 .sheet-panel.is-collapsed {
   transform: translateX(-50%) translateY(calc(100% - var(--sheet-chrome-height)));
-  outline: 1px solid var(--accent);
+  border-top: 1px solid var(--border);
+  border-inline: 1px solid var(--border);
+}
+
+.sheet-panel.is-collapsed:hover {
+  border-color: var(--text-heading);
 }
 
 body:has(.sheet-panel.is-collapsed) .app-container {
@@ -128,7 +133,7 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 2.5rem;
+  width: 2rem;
   height: 4px;
   background: var(--accent-text);
   border-radius: var(--radius-full);
@@ -175,41 +180,8 @@ body:has(.sheet-panel.is-collapsed) .app-container {
 }
 
 /* Close button at the bottom of the sheet */
-.sheet-close-bottom {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: var(--space-4);
-  margin-top: var(--space-5);
-  border-top: 1px solid var(--border);
-}
-
-[dir="rtl"] .sheet-close-bottom {
-  justify-content: flex-start;
-}
-
-@media (width < 768px) {
-  .sheet-close-bottom {
-    display: block;
-  }
-
-  .sheet-close-bottom .sheet-close-bottom-btn {
-    width: 100%;
-    padding: var(--space-3) var(--space-4);
-    background: transparent;
-    border-color: transparent;
-    color: var(--text-body);
-  }
-
-  .sheet-close-bottom .sheet-close-bottom-btn:hover {
-    background: var(--bg-subtle);
-    border-color: var(--border);
-    color: var(--text-heading);
-  }
-}
-
 .sheet-close-bottom-btn {
   display: block;
-  width: auto;
   min-height: var(--touch-target);
   min-width: var(--touch-target);
   padding: var(--space-2) var(--space-4);
@@ -217,7 +189,46 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   font-size: var(--fs-body);
   font-weight: 600;
   text-align: center;
-  justify-content: center;
+}
+
+.sheet-close-bottom {
+  display: block;
+  padding-top: var(--space-4);
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.sheet-close-bottom .sheet-close-bottom-btn {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-body);
+}
+
+.sheet-close-bottom .sheet-close-bottom-btn:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border);
+  color: var(--text-heading);
+}
+
+[dir="rtl"] .sheet-close-bottom {
+  justify-content: flex-start;
+}
+
+@media (width >= 768px) {
+  .sheet-close-bottom {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .sheet-close-bottom .sheet-close-bottom-btn {
+    width: auto;
+    padding: var(--space-2) var(--space-4);
+    background: revert;
+    border-color: revert;
+    color: revert;
+  }
 }
 
 /* ─── Modal (centered dialog) ─────────────────────────────── */
@@ -247,7 +258,7 @@ body:has(.sheet-panel.is-collapsed) .app-container {
      max-height uses calc so the panel is always ≥ --space-6 from each viewport
      edge: with top:50% and max-height:(100dvh - 2*--space-6), the panel's top
      edge = 50dvh - (at most 50dvh - --space-6) = at least --space-6 from top. */
-  width: min(360px, calc(100vw - var(--space-8)));
+  width: var(--panel-width-mobile);
   max-height: calc(100dvh - 2 * var(--space-6));
   z-index: 301;
   background: var(--bg);
@@ -269,12 +280,6 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   transform: translate(-50%, -50%) scale(1);
   pointer-events: auto;
 }
-
-.modal-panel.is-open:focus,
-.modal-panel.is-open:focus-visible {
-  outline: none;
-}
-
 
 .modal-body {
   flex: 1;
@@ -405,27 +410,19 @@ body:has(.drawer-panel.is-open) {
   }
 }
 
-/* ─── Confetti canvas (party mode) ───────────────────────── */
+/* ─── Party mode canvases (confetti + sparkles) ───────────── */
 
-.confetti-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 198;
-}
-
-/* ─── Sparkles canvas (party mode) ───────────────────────── */
-
+.confetti-canvas,
 .sparkles-canvas {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 199;
 }
+
+.confetti-canvas { z-index: 198; }
+.sparkles-canvas { z-index: 199; }
 
 /* ─── Floating music player (party mode) ─────────────────── */
 
@@ -475,4 +472,3 @@ body:has(.drawer-panel.is-open) {
     animation: none;
   }
 }
-

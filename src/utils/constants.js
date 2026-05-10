@@ -15,16 +15,16 @@ export const RESULTS_COUNT_FOCUS_DELAY = 80
 export const VIEW_ALL_LOADING_DELAY = 400
 export const ANIMATION_COMPLETE_DELAY = 5000
 
-export const PRIORITY_ORDER = ['Critical', 'Major', 'Best Practice']
-export const VERSION_ORDER = ['Added', 'Updated', 'Fixed', 'Removed']
-export const LEVEL_ORDER = ['A', 'AA', 'AAA']
-
 export const PROVIDER_LABELS = {
   anthropic: 'Claude',
   openai: 'GPT',
   google: 'Gemini',
   microsoft: 'Copilot',
 }
+
+export const SWIPE_REVEAL = 44
+export const SWIPE_THRESHOLD = 22
+export const SWIPE_ACTIVATE = 120
 
 export const MAX_SEARCH_RESULTS = 8
 export const MAX_SEARCH_ALL = 12
