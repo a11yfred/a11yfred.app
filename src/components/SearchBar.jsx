@@ -109,7 +109,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {hasPins ? ` ${t('search.hint_pin')}` : ''}
           {' '}
           {t('search.hint_syntax_prefix')}{' '}
-          <a href="?q=keyboard+%2Bscreen+reader+-wcag2.2" className="search-hint-link">keyboard +screen reader -wcag2.2</a>
+          <a href="#/?q=keyboard+%2Bscreen+reader+-wcag2.2" className="search-hint-link">keyboard +screen reader -wcag2.2</a>
           {t('search.hint_syntax_suffix')}
           {' '}
           {t('search.hint_change_in')}{' '}
