@@ -106,6 +106,10 @@ body:has(.modal-panel.is-open) .drawer-panel {
   outline: 1px solid var(--accent);
 }
 
+body:has(.sheet-panel.is-collapsed) .app-container {
+  padding-bottom: var(--sheet-chrome-height);
+}
+
 /* Chrome row — handle centered via absolute positioning; close button in normal
    flex flow at the right. padding-top ≥ --radius-lg keeps the button's focus
    ring clear of the top-corner clip zone on the panel. */

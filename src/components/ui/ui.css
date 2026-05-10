@@ -753,7 +753,7 @@ select:disabled {
   display: flex;
   justify-content: flex-end;
   gap: var(--space-1);
-  margin-top: 0.5em;
+  margin-top: 0.35em;
 }
 
 .field-include-title-label {

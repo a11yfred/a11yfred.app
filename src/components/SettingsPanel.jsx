@@ -315,7 +315,6 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       closeAriaLabel={t('settings.back')}
       pageTitle={t('settings.heading')}
     >
-
       <p className="settings-panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
 
       {/* ── Appearance ──────────────────────────────── */}

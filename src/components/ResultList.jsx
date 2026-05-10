@@ -1,4 +1,4 @@
-import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ArrowDown, ChevronLeft, ChevronRight, ChevronUp, X } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ArrowDown, ChevronsLeft, ChevronsRight, ChevronUp, X } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -68,9 +68,48 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   const prevNarrowResultsRef = useRef(undefined)
   const [swipeOpenId, setSwipeOpenId] = useState(null) // null | { id, side: 'left'|'right' }
   const swipeTouchRef = useRef(null) // { startX, startY, id, el }
-  const SWIPE_REVEAL = 80
-  const SWIPE_THRESHOLD = 40
-  const SWIPE_ACTIVATE = 70 // full rightward swipe triggers pin directly
+  const swipeStateRef = useRef({}) // snapshot of swipe-related state for native touchmove handler
+  const SWIPE_REVEAL = 44
+  const SWIPE_THRESHOLD = 22
+  const SWIPE_ACTIVATE = 120 // full rightward swipe triggers pin directly
+
+  // Keep swipeStateRef in sync so native touchmove handler always sees current values
+  useEffect(() => { swipeStateRef.current = { swipeOpenId, showRanking, onPin, pinnedIds } })
+
+  // Non-passive native touchmove so e.preventDefault() actually works
+  useEffect(() => {
+    const listEl = listRef.current
+    if (!listEl) return
+    function handleTouchMove(e) {
+      const touch = swipeTouchRef.current
+      if (!touch) return
+      const dx = e.touches[0].clientX - touch.startX
+      const dy = e.touches[0].clientY - touch.startY
+      if (!touch.moved && Math.abs(dy) > Math.abs(dx)) { swipeTouchRef.current = null; return }
+      touch.moved = true
+      const li = listEl.querySelector(`[data-swipe-id="${touch.id}"]`)
+      const el = li?.querySelector('.result-swipe-wrap')
+      if (!el) return
+      const { swipeOpenId: openId, showRanking: sr, onPin: op, pinnedIds: pids } = swipeStateRef.current
+      const isOpen = openId?.id === touch.id
+      const side = isOpen ? openId.side : null
+      const pinned = pids.has(touch.id)
+      const base = isOpen ? (side === 'left' ? -SWIPE_REVEAL : SWIPE_REVEAL) : 0
+      const minX = (sr && !pinned) ? -SWIPE_REVEAL : 0
+      const maxX = op ? SWIPE_ACTIVATE : 0
+      if (minX === 0 && maxX === 0) return
+      const clamped = Math.max(minX, Math.min(maxX, base + dx))
+      el.style.transition = 'none'
+      el.style.transform = `translateX(${clamped}px)`
+      const leftPanel = li?.querySelector('.result-action-panel--left')
+      if (leftPanel && clamped < 0) leftPanel.style.width = `${Math.abs(clamped)}px`
+      const rightPanel = li?.querySelector('.result-action-panel--right')
+      if (rightPanel && clamped > 0) rightPanel.style.width = `${clamped}px`
+      e.preventDefault()
+    }
+    listEl.addEventListener('touchmove', handleTouchMove, { passive: false })
+    return () => listEl.removeEventListener('touchmove', handleTouchMove)
+  }) // no deps -- re-runs each render to track listRef.current
 
   // Keep pendingSort in sync when sortBy changes externally
   useEffect(() => { setPendingSort(sortBy) }, [sortBy]) // eslint-disable-line react-hooks/set-state-in-effect -- intentional sync from parent prop
@@ -354,37 +393,39 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               </div>
             </div>
           )}
-          {results.length > 0 && onNarrow && (
-            <Button
-              variant="secondary"
-              className="results-narrow-btn"
-              title={narrowMode ? t('search.exit_narrow_aria') : t('results.narrow_title')}
-              onClick={narrowMode ? onNarrowExit : onNarrow}
-            >
-              {narrowMode ? (
-                <>
-                  <X size={16} aria-hidden="true" />
-                  <span>{t('search.exit_narrow')}</span>
-                </>
-              ) : (
-                <>
-                  <Filter size={16} aria-hidden="true" />
-                  <span>{t('results.narrow_results')}</span>
-                </>
-              )}
-            </Button>
-          )}
-          {onClear && (
-            <Button
-              variant="tertiary"
-              className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
-              aria-label={t('results.clear_results')}
-              title={t('results.clear_results')}
-              onClick={() => { announce(t('announce.filters_cleared')); setClearPending(true) }}
-            >
-              {t('results.clear_results')}
-            </Button>
-          )}
+          <div className="results-filter-btns">
+            {results.length > 0 && onNarrow && (
+              <Button
+                variant="secondary"
+                className="results-narrow-btn"
+                title={narrowMode ? t('search.exit_narrow_aria') : t('results.narrow_title')}
+                onClick={narrowMode ? onNarrowExit : onNarrow}
+              >
+                {narrowMode ? (
+                  <>
+                    <X size={16} aria-hidden="true" />
+                    <span>{t('search.exit_narrow')}</span>
+                  </>
+                ) : (
+                  <>
+                    <Filter size={16} aria-hidden="true" />
+                    <span>{t('results.narrow_results')}</span>
+                  </>
+                )}
+              </Button>
+            )}
+            {onClear && (
+              <Button
+                variant="tertiary"
+                className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
+                aria-label={t('results.clear_results')}
+                title={t('results.clear_results')}
+                onClick={() => { announce(t('announce.filters_cleared')); setClearPending(true) }}
+              >
+                {t('results.clear_results')}
+              </Button>
+            )}
+          </div>
         </div>
 
         {onNarrowChange && (
@@ -549,28 +590,16 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             swipeTouchRef.current = { startX: t.clientX, startY: t.clientY, id: finding.id, moved: false }
           }
 
-          function handleSwipeTouchMove(e) {
-            const touch = swipeTouchRef.current
-            if (!touch || touch.id !== finding.id) return
-            const dx = e.touches[0].clientX - touch.startX
-            const dy = e.touches[0].clientY - touch.startY
-            if (!touch.moved && Math.abs(dy) > Math.abs(dx)) { swipeTouchRef.current = null; return }
-            touch.moved = true
-            const el = e.currentTarget.querySelector('.result-swipe-wrap')
-            if (!el) return
-            const base = swipeIsOpen ? (swipeSide === 'left' ? -SWIPE_REVEAL : SWIPE_REVEAL) : 0
-            const clamped = Math.max(-SWIPE_REVEAL, Math.min(SWIPE_REVEAL, base + dx))
-            el.style.transition = 'none'
-            el.style.transform = `translateX(${clamped}px)`
-            e.preventDefault()
-          }
-
           function handleSwipeTouchEnd(e) {
             const touch = swipeTouchRef.current
             if (!touch || touch.id !== finding.id) return
             swipeTouchRef.current = null
             const el = e.currentTarget.querySelector('.result-swipe-wrap')
             if (!el) return
+            const leftPanel = e.currentTarget.querySelector('.result-action-panel--left')
+            if (leftPanel) leftPanel.style.width = ''
+            const rightPanel = e.currentTarget.querySelector('.result-action-panel--right')
+            if (rightPanel) rightPanel.style.width = ''
             const current = new DOMMatrix(getComputedStyle(el).transform).m41
             el.style.transition = ''
             const base = swipeIsOpen ? (swipeSide === 'left' ? -SWIPE_REVEAL : SWIPE_REVEAL) : 0
@@ -606,84 +635,26 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}`}
               style={{ '--result-i': index }}
               onTouchStart={(showRanking || onPin) ? handleSwipeTouchStart : undefined}
-              onTouchMove={(showRanking || onPin) ? handleSwipeTouchMove : undefined}
               onTouchEnd={(showRanking || onPin) ? handleSwipeTouchEnd : undefined}
             >
-              {/* Left action panel: ranking controls (revealed by swiping left) */}
-              {showRanking && !pinned && (
-                <div className="result-action-panel result-action-panel--left" aria-hidden="true">
-                  <IconButton variant="tertiary" label="" tabIndex={-1} onClick={handleStar}
-                    icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
-                    className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
-                  />
-                  <IconButton variant="tertiary" label="" tabIndex={-1} disabled={archived} onClick={handleRankUp}
-                    icon={<ThumbsUp size={14} aria-hidden="true" />}
-                    className="result-rank-btn result-rank-btn--up"
-                  />
-                  <span className="result-rank-score" aria-hidden="true">{score}</span>
-                  <IconButton variant="tertiary" label="" tabIndex={-1} disabled={archived} onClick={handleRankDown}
-                    icon={<ThumbsDown size={14} aria-hidden="true" />}
-                    className="result-rank-btn result-rank-btn--down"
-                  />
-                  <IconButton variant="tertiary" label="" tabIndex={-1} onClick={handleArchive}
-                    icon={archived ? <ArchiveRestore size={13} aria-hidden="true" /> : <Archive size={13} aria-hidden="true" />}
-                    className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
-                  />
-                </div>
-              )}
-
-              {/* Right action panel: pin (revealed by swiping right) */}
-              {onPin && (
-                <div className="result-action-panel result-action-panel--right" aria-hidden="true">
-                  <IconButton
-                    variant="tertiary"
-                    label=""
-                    tabIndex={-1}
-                    disabled={archived}
-                    onClick={handlePin}
-                    icon={pinned
-                      ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
-                      : <Pin size={14} aria-hidden="true" fill="none" />
-                    }
-                    className={`result-rank-btn${pinned ? ' result-pin-btn--active' : ''}`}
-                  />
-                </div>
-              )}
-
               {/* Swipe wrap: slides over the action panels */}
               <div className="result-swipe-wrap">
-                {/* Swipe hint indicators */}
-                {showRanking && (
-                  <div className="result-swipe-hint" aria-hidden="true">
-                    <span className="result-swipe-hint__edge result-swipe-hint__edge--left" />
-                    <ChevronLeft size={10} className="result-swipe-hint__chevron result-swipe-hint__chevron--left" aria-hidden="true" />
-                    <ChevronRight size={10} className="result-swipe-hint__chevron result-swipe-hint__chevron--right" aria-hidden="true" />
-                    <span className="result-swipe-hint__edge result-swipe-hint__edge--right" />
-                  </div>
-                )}
-
                 <div className="result-card-wrap">
-                  {onPin && (
-                    <IconButton
-                      variant="tertiary"
-                      label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
-                      disabled={archived}
-                      onClick={handlePin}
-                      icon={pinned
-                        ? <PinOff size={12} aria-hidden="true" fill="currentColor" />
-                        : <Pin size={12} aria-hidden="true" fill="none" />
-                      }
-                      className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
-                    />
+                  {(showRanking || onPin) && (
+                    <div className="result-swipe-hint" aria-hidden="true">
+                      {onPin && <ChevronsRight size={18} className="result-swipe-hint__chevron result-swipe-hint__chevron--left" aria-hidden="true" />}
+                      {showRanking && !pinned && <ChevronsLeft size={18} className="result-swipe-hint__chevron result-swipe-hint__chevron--right" aria-hidden="true" />}
+                    </div>
                   )}
                   <a
                     ref={el => { itemRefs.current[finding.id] = el }}
+                    data-finding-id={finding.id}
                     href={`#/finding/${finding.id}/${findingSlug(finding.title)}`}
                     aria-label={cardLabel}
                     onClick={e => {
                       e.preventDefault()
                       if (swipeIsOpen) { setSwipeOpenId(null); return }
-                      if (!archived) onSelect?.(finding)
+                      if (!archived) onSelect?.(finding, e.currentTarget)
                     }}
                     onKeyDown={e => {
                       if (e.key === 'ArrowDown') { e.preventDefault(); itemRefs.current[results[index + 1]?.id]?.focus() }
@@ -693,7 +664,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   >
                     <div className="result-item__header">
                       <span className="result-item__title">
-                        {isSelected && <span aria-hidden="true" className="result-item__dot" />}
                         {finding.title}
                       </span>
                       <span className="result-item__badges">
@@ -806,6 +776,52 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   />
                 </div>}
               </div>
+
+              {/* Right action panel: pin (revealed by swiping right) */}
+              {onPin && (
+                <div className="result-action-panel result-action-panel--right">
+                  <IconButton
+                    variant="tertiary"
+                    label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                    disabled={archived}
+                    onClick={handlePin}
+                    onFocus={() => setSwipeOpenId({ id: finding.id, side: 'right' })}
+                    onBlur={() => setSwipeOpenId(null)}
+                    icon={pinned
+                      ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
+                      : <Pin size={14} aria-hidden="true" fill="currentColor" />
+                    }
+                    className={`result-rank-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                  />
+                </div>
+              )}
+
+              {/* Left action panel: ranking controls (revealed by swiping left) */}
+              {showRanking && !pinned && (
+                <div
+                  className="result-action-panel result-action-panel--left"
+                  onFocus={() => setSwipeOpenId({ id: finding.id, side: 'left' })}
+                  onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setSwipeOpenId(null) }}
+                >
+                  <IconButton variant="tertiary" label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })} onClick={handleStar}
+                    icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
+                    className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
+                  />
+                  <IconButton variant="tertiary" label={t('results.rank_up', { title: shortTitle })} disabled={archived} onClick={handleRankUp}
+                    icon={<ThumbsUp size={14} aria-hidden="true" />}
+                    className="result-rank-btn result-rank-btn--up"
+                  />
+                  <span className="result-rank-score" aria-hidden="true">{score}</span>
+                  <IconButton variant="tertiary" label={t('results.rank_down', { title: shortTitle })} disabled={archived} onClick={handleRankDown}
+                    icon={<ThumbsDown size={14} aria-hidden="true" />}
+                    className="result-rank-btn result-rank-btn--down"
+                  />
+                  <IconButton variant="tertiary" label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })} onClick={handleArchive}
+                    icon={archived ? <ArchiveRestore size={13} aria-hidden="true" /> : <Archive size={13} aria-hidden="true" />}
+                    className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
+                  />
+                </div>
+              )}
             </li>
             {showAdAfter && <SponsoredTile />}
             </Fragment>

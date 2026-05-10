@@ -22,6 +22,7 @@ import {
   BottomSheet,
   Modal,
   useMediaQuery,
+  returnFocus,
 } from './plugins/router/index.js'
 import { Announcer, announce } from './plugins/announce/index.js'
 import { FocusDebugger, NamesDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher } from './plugins/debug/index.js'
@@ -298,19 +299,23 @@ function AppContent({
     navigate('/onboarding')
   }
   const handleCloseOnboarding = () => { navigate('/'); setTimeout(() => h1Ref.current?.focus(), 0) }
-  const handleSelectFinding = (finding) => {
+  const handleSelectFinding = (finding, triggerEl) => {
     // If the sheet is collapsed and the user clicks a different finding,
     // warn before discarding the collapsed panel and its unsaved changes.
     if (finding && finding.id !== selected?.id && sheetCollapsed) {
       setPendingFinding(finding)
       return
     }
-    applySelectFinding(finding)
+    applySelectFinding(finding, triggerEl)
   }
 
-  const applySelectFinding = (finding) => {
+  const applySelectFinding = (finding, triggerEl) => {
     if (finding) {
-      if (!selected) findingTriggerRef.current = document.activeElement
+      if (!selected) {
+        findingTriggerRef.current = triggerEl ?? document.activeElement
+        findingTriggerIdRef.current = triggerEl?.dataset?.findingId ?? null
+        returnHashRef.current = window.location.hash || '#/'
+      }
       if (viewAll) returnViewAllRef.current = true
       sessionStorage.setItem('lastSelectedId', finding.id)
       recordOpen(finding.id)
@@ -323,13 +328,39 @@ function AppContent({
     } else {
       sessionStorage.removeItem('lastSelectedId')
       setFindingHistory([])
+      setSheetCollapsed(false)
+      setSelected(null)
+      const triggerId = findingTriggerIdRef.current
+      // If a panel is open on desktop, stay on it — don't navigate or steal focus.
+      // Leave returnViewAllRef and returnHashRef intact so the panel's own close
+      // handler can navigate back to the right results view.
+      if (isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)) return
       const shouldReturn = returnViewAllRef.current
       returnViewAllRef.current = false
-      if (shouldReturn) { navigate('/results/all'); return }
+      const returnHash = returnHashRef.current
+      returnHashRef.current = null
+      const focusCard = () => {
+        if (!triggerId) return
+        const isTouch = !window.matchMedia('(hover: hover)').matches
+        const focus = (el) => isTouch ? el.focus({ preventScroll: false }) : returnFocus(el)
+        const el = document.querySelector(`[data-finding-id="${triggerId}"]`)
+        if (el) { focus(el); return }
+        requestAnimationFrame(() => {
+          const el2 = document.querySelector(`[data-finding-id="${triggerId}"]`)
+          if (el2) focus(el2)
+        })
+      }
+      if (shouldReturn) { navigate('/results/all'); setTimeout(focusCard, 0); return }
+      if (returnHash && returnHash !== '#/' && !returnHash.startsWith('#/finding/')) {
+        navigate(returnHash.slice(1)); setTimeout(focusCard, 0); return
+      }
+      navigate('/')
+      setTimeout(focusCard, 0)
+      return
     }
     setSheetCollapsed(false)
     setSelected(finding)
-    navigate(finding ? `/finding/${finding.id}/${findingSlug(finding.title)}` : '/')
+    navigate(`/finding/${finding.id}/${findingSlug(finding.title)}`)
   }
   const handleSelectRelated = (finding) => {
     if (!finding) return
@@ -359,7 +390,9 @@ function AppContent({
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
   const findingTriggerRef = useRef(null)
+  const findingTriggerIdRef = useRef(null)
   const returnViewAllRef = useRef(false)
+  const returnHashRef = useRef(null)
   const [findingHistory, setFindingHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
@@ -708,10 +741,11 @@ function AppContent({
 
   useEffect(() => {
     if (!findingIdFromRoute || dataLoading || allFindings.length === 0) return
+    if (sheetCollapsed) return
     if (selected?.id === findingIdFromRoute) return
     const found = allFindings.find(d => d.id === findingIdFromRoute)
     if (found) setSelected(found)
-  }, [findingIdFromRoute, dataLoading]) // eslint-disable-line react-hooks/exhaustive-deps -- allFindings populated when dataLoading flips false
+  }, [findingIdFromRoute, dataLoading, sheetCollapsed]) // eslint-disable-line react-hooks/exhaustive-deps -- allFindings populated when dataLoading flips false
 
   // Restore last-selected finding from sessionStorage when the URL is bare (no finding in path).
   // Fires once per page load; URL-based routing always takes precedence.
@@ -985,14 +1019,14 @@ function AppContent({
           />
         : dataLoading || viewAllLoading
           ? <ResultListSkeleton count={activeQuery === 'debug skeleton' ? sortedFindings.length : undefined} />
-          : viewAll
+          : (viewAll || sheetCollapsed)
             ? (
               <ResultList
                 key="view-all"
                 results={applySortBy(sortedFindings.filter(f => !pinnedIds.has(f.id)))}
                 sortBy={sortBy}
                 onSortChange={handleSortChange}
-                selected={selected}
+                selected={sheetCollapsed ? null : selected}
                 onSelect={handleSelectFinding}
                 query=""
                 ratings={ratings}
@@ -1049,7 +1083,7 @@ function AppContent({
                     results={unpinnedResults}
                     sortBy={sortBy}
                     onSortChange={handleSortChange}
-                    selected={selected}
+                    selected={sheetCollapsed ? null : selected}
                     onSelect={handleSelectFinding}
                     query={activeQuery}
                     ratings={ratings}
@@ -1086,7 +1120,7 @@ function AppContent({
                     results={applySortBy(badgeResults)}
                     sortBy={sortBy}
                     onSortChange={handleSortChange}
-                    selected={selected}
+                    selected={sheetCollapsed ? null : selected}
                     onSelect={handleSelectFinding}
                     query=""
                     ratings={ratings}
@@ -1271,7 +1305,7 @@ function AppContent({
       <PartyMusicPlayer active={theme === 'party'} />
       {theme === 'party' && <PartyBanner />}
 
-      <div className="app-background" inert={backgroundInert ? true : undefined}>
+      <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
         <Header
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}
@@ -1336,14 +1370,13 @@ function AppContent({
       )}
 
       <BottomSheet
-        open={!!selected && !settingsOpen && !aboutOpen && !helpOpen && !onboardingOpen && !adminOpen}
+        open={!!selected && (isDesktop || (!settingsOpen && !aboutOpen && !helpOpen && !onboardingOpen && !adminOpen))}
         onClose={() => { applySelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
         collapsed={sheetCollapsed}
         onCollapse={setSheetCollapsed}
         keepMounted={(settingsOpen || aboutOpen || helpOpen || onboardingOpen || adminOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
-        returnFocusRef={findingTriggerRef}
         onBack={findingHistory.length > 0 ? handleBack : undefined}
         backLabel={t('detail.back_aria')}
         hideCloseBottom

@@ -403,8 +403,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
               <span className="detail-sc-links">
                 {finding.relatedSC.map((r, i) => (
                   <span key={r}>
-                    {i > 0 && ', '}
-                    <ScLink label={r} />
+                    <ScLink label={r} />{i < finding.relatedSC.length - 1 && ', '}
                   </span>
                 ))}
               </span>
@@ -430,7 +429,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         </InfoBox>
       )}
 
-      <div className="detail-section">
+      <div className="detail-section detail-section--location">
         <label htmlFor="location-prefix" className="detail-label">
           {t('detail.location_label')}
           {!location.trim() && <span className="detail-optional">{' '}{t('common.optional')}</span>}
@@ -627,7 +626,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         {onClose && (
           <button
             type="button"
-            className="btn--primary detail-close-btn btn--height-standard"
+            className={`${isDesktop ? 'btn--secondary' : 'btn--tertiary'} detail-close-btn btn--height-standard`}
             onClick={onClose}
           >
             {t('common.close')}
