@@ -66,11 +66,13 @@ export default function BottomSheet({
   // Reset collapsed when sheet closes
   useEffect(() => { if (!open) onCollapse?.(false) }, [open, onCollapse])
 
-  // Track chrome height so the collapsed transform is exact
+  // Track chrome height for the collapsed transform and for CSS page padding.
   useEffect(() => {
     if (!open || !chromeRef.current || !panelRef.current) return
     const h = chromeRef.current.offsetHeight
     panelRef.current.style.setProperty('--sheet-chrome-height', `${h}px`)
+    document.documentElement.style.setProperty('--sheet-chrome-height', `${h}px`)
+    return () => { document.documentElement.style.removeProperty('--sheet-chrome-height') }
   }, [open])
 
   const BackChevron = dir === 'rtl' ? BackRtlIcon : BackLtrIcon

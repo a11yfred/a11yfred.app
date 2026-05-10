@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
-import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw } from 'lucide-react'
+import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw, ArrowLeft } from 'lucide-react'
 import { Modal, BottomSheet, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -315,7 +315,6 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       closeAriaLabel={t('settings.back')}
       pageTitle={t('settings.heading')}
     >
-
       <p className="settings-panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
 
       {/* ── Appearance ──────────────────────────────── */}
@@ -919,6 +918,18 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       >
         <p>{t('settings.party_confirm_body')}</p>
       </Modal>
+
+      <div className="panel-mobile-back">
+        <Button
+          variant="tertiary"
+          className="panel-mobile-back-btn"
+          icon={<ArrowLeft size={16} aria-hidden="true" />}
+          onClick={guardedClose}
+          tabIndex={-1}
+        >
+          {t('settings.back')}
+        </Button>
+      </div>
     </Panel>
   )
 })

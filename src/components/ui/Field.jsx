@@ -83,7 +83,7 @@ const Field = forwardRef(function Field({
           />
           <label htmlFor={`${id}-include-title`} className="field-include-title-label">
             {includeTitleLabel}
-            {includeTitle && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
+            {includeTitle && isDesktop && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
           </label>
         </div>
         <div className="field__actions">
@@ -94,7 +94,7 @@ const Field = forwardRef(function Field({
             disabled={animating || (!undoable && !hasChanged)}
           >
             {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
-            {isDesktop && <span>{resetBtnText}</span>}
+            <span>{resetBtnText}</span>
           </button>
           <button
             ref={copyBtnRef}
@@ -104,7 +104,7 @@ const Field = forwardRef(function Field({
             disabled={animating}
           >
             {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-            {isDesktop && <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>}
+            <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>
           </button>
         </div>
       </div>

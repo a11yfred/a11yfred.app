@@ -64,7 +64,7 @@ export default function HelpPanel({ onClose, onStartTour }) {
         </ul>
       </section>
 
-      <div className="panel-mobile-back" aria-hidden="true">
+      <div className="panel-mobile-back">
         <Button
           variant="primary"
           className="panel-mobile-back-btn"

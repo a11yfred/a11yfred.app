@@ -25,7 +25,9 @@ export function useAriaHide(panelRef, open) {
     const panel = panelRef.current
     if (!panel) return
 
-    const targets = [...document.body.children].filter(el => !el.contains(panel))
+    const targets = [...document.body.children].filter(el =>
+      !el.contains(panel) && !el.querySelector('.sheet-panel.is-open')
+    )
 
     targets.forEach(el => {
       if (!el.hasAttribute('inert')) {
