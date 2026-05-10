@@ -70,6 +70,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   const swipeTouchRef = useRef(null) // { startX, startY, id, el }
   const SWIPE_REVEAL = 80
   const SWIPE_THRESHOLD = 40
+  const SWIPE_ACTIVATE = 70 // full rightward swipe triggers pin directly
 
   // Keep pendingSort in sync when sortBy changes externally
   useEffect(() => { setPendingSort(sortBy) }, [sortBy]) // eslint-disable-line react-hooks/set-state-in-effect -- intentional sync from parent prop
@@ -576,6 +577,9 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             const delta = current - base
             if (delta < -SWIPE_THRESHOLD) {
               setSwipeOpenId({ id: finding.id, side: 'left' })
+            } else if (onPin && current >= SWIPE_ACTIVATE) {
+              setSwipeOpenId(null)
+              if (!archived) handlePin(e)
             } else if (delta > SWIPE_THRESHOLD) {
               setSwipeOpenId({ id: finding.id, side: 'right' })
             } else {
@@ -601,9 +605,9 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               data-swipe-id={finding.id}
               className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}`}
               style={{ '--result-i': index }}
-              onTouchStart={showRanking ? handleSwipeTouchStart : undefined}
-              onTouchMove={showRanking ? handleSwipeTouchMove : undefined}
-              onTouchEnd={showRanking ? handleSwipeTouchEnd : undefined}
+              onTouchStart={(showRanking || onPin) ? handleSwipeTouchStart : undefined}
+              onTouchMove={(showRanking || onPin) ? handleSwipeTouchMove : undefined}
+              onTouchEnd={(showRanking || onPin) ? handleSwipeTouchEnd : undefined}
             >
               {/* Left action panel: ranking controls (revealed by swiping left) */}
               {showRanking && !pinned && (
@@ -809,7 +813,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
         })}
         </ul>
       }
-      {results.length > 0 && (
+      {results.length > 0 && !hideCount && (
         <p className="results-end-marker">{t('results.end_of_results')}</p>
       )}
       {results.length > 50 && (

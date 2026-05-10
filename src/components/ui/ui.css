@@ -361,6 +361,7 @@ select:disabled {
   cursor: pointer;
   font-size: var(--fs-body);
   font-weight: 400;
+  line-height: 1;
   text-align: center;
   transition: all var(--duration-fast);
 }
@@ -715,14 +716,19 @@ select:disabled {
 }
 
 @media (width < 768px) {
+  .field {
+    margin-bottom: 2em;
+  }
+
   .field__footer {
     flex-direction: column;
-    gap: var(--space-2);
+    gap: 0;
   }
 
   .field__include-title {
     width: 100%;
-    margin-top: 0.35em;
+    margin-top: 0;
+    align-items: center;
   }
 
   .field__actions {
@@ -738,7 +744,7 @@ select:disabled {
 
 .field__include-title {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0;
   margin-top: 0.35em;
 }
@@ -755,7 +761,7 @@ select:disabled {
   color: var(--text-heading);
   cursor: pointer;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--space-1);
   min-height: var(--touch-target);
   padding: 0 var(--space-2);
@@ -804,7 +810,7 @@ select:disabled {
   width: 100%;
   padding: 8px 10px;
   font-size: var(--fs-small);
-  line-height: 1.6;
+  line-height: 1.5;
   background: var(--bg-subtle);
   border: 1px solid var(--border-control);
   border-radius: var(--radius);
@@ -859,7 +865,7 @@ select:disabled {
 
 .info-box__text {
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.5;
   font-style: italic;
 }
 
