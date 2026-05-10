@@ -477,7 +477,8 @@ button {
   flex-wrap: wrap;
 }
 
-.results-narrow-btn {
+.results-narrow-btn,
+.results-copy-link-btn {
   font-size: var(--fs-body);
   display: inline-flex;
   align-items: center;
@@ -490,17 +491,6 @@ button {
 
 .results-narrow-btn svg {
   flex-shrink: 0;
-}
-
-.results-copy-link-btn {
-  font-size: var(--fs-body);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  height: var(--btn-height-compact);
-  padding: 0 var(--space-2);
-  border-radius: var(--radius);
 }
 
 .results-clear-btn {
@@ -1883,35 +1873,7 @@ input.search-input--disabled {
 
 /* ─── Settings panel ──────────────────────────────────────── */
 
-.panel-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-6);
-}
-
-.panel-header .btn--icon {
-  color: var(--accent-text);
-}
-
-@media (width < 768px) {
-  .panel-header {
-    gap: var(--space-1);
-  }
-
-  .panel-header .btn--icon {
-    margin-inline-start: calc(var(--space-2) * -1);
-  }
-}
-
-.panel-title {
-  font-size: calc(var(--fs-h1) * 0.85);
-  line-height: 1em;
-  font-weight: 700;
-  color: var(--text-heading);
-  outline: none;
-}
-
+.panel-header,
 .settings-header,
 .about-header,
 .help-header {
@@ -1921,13 +1883,22 @@ input.search-input--disabled {
   margin-bottom: var(--space-6);
 }
 
+.panel-header .btn--icon,
+.settings-header .btn--icon,
+.about-header .btn--icon,
+.help-header .btn--icon {
+  color: var(--accent-text);
+}
+
 @media (width < 768px) {
+  .panel-header,
   .settings-header,
   .about-header,
   .help-header {
     gap: var(--space-1);
   }
 
+  .panel-header .btn--icon,
   .settings-header .btn--icon,
   .about-header .btn--icon,
   .help-header .btn--icon {
@@ -1935,6 +1906,7 @@ input.search-input--disabled {
   }
 }
 
+.panel-title,
 .settings-title,
 .about-title,
 .help-title {
@@ -2977,28 +2949,33 @@ input[type="radio"].control:not(:checked):hover {
 
 /* ─── About Panel ──────────────────────────────────────────── */
 
-.about-panel {
+.about-panel,
+.help-panel {
   display: flex;
   flex-direction: column;
 }
 
-.about-section {
+.about-section,
+.help-section {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
   padding-bottom: var(--space-6);
 }
 
-.about-section + .about-section {
+.about-section + .about-section,
+.help-section + .help-section {
   border-top: 1px solid var(--border);
   padding-top: var(--space-6);
 }
 
-.about-section--last {
+.about-section--last,
+.help-section--last {
   padding-bottom: var(--clearance-kofi);
 }
 
-.about-section-heading {
+.about-section-heading,
+.help-section-heading {
   font-size: var(--fs-body);
   font-weight: 600;
   color: var(--text-heading);
@@ -3073,35 +3050,6 @@ input[type="radio"].control:not(:checked):hover {
 }
 
 /* Help Panel: How to Use guide */
-
-.help-panel {
-  display: flex;
-  flex-direction: column;
-}
-
-.help-section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  padding-bottom: var(--space-6);
-}
-
-.help-section + .help-section {
-  border-top: 1px solid var(--border);
-  padding-top: var(--space-6);
-}
-
-.help-section--last {
-  padding-bottom: var(--clearance-kofi);
-}
-
-.help-section-heading {
-  font-size: var(--fs-body);
-  font-weight: 600;
-  color: var(--text-heading);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
 
 .help-steps {
   list-style: none;
