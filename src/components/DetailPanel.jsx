@@ -229,7 +229,6 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     {
       const note = aiNote.trim()
       const provider = localStorage.getItem('ai_provider') || 'anthropic'
-      const PROVIDER_LABELS = { anthropic: 'Claude', openai: 'GPT', google: 'Gemini', microsoft: 'Copilot' }
       const providerLabel = PROVIDER_LABELS[provider] || provider
 
       if (note === 'debug wrong')   { setRevisionFailed(t('detail.ai_revision_error_body')); return }

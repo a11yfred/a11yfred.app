@@ -13,7 +13,7 @@ import NoResults from './ui/NoResults.jsx'
 import InfoBox from './ui/InfoBox.jsx'
 import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
-import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH } from '../utils/constants.js'
+import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE } from '../utils/constants.js'
 
 export function PinnedSection({ findings, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins, headingRef }) {
   const t = useT()
@@ -69,9 +69,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   const [swipeOpenId, setSwipeOpenId] = useState(null) // null | { id, side: 'left'|'right' }
   const swipeTouchRef = useRef(null) // { startX, startY, id, el }
   const swipeStateRef = useRef({}) // snapshot of swipe-related state for native touchmove handler
-  const SWIPE_REVEAL = 44
-  const SWIPE_THRESHOLD = 22
-  const SWIPE_ACTIVATE = 120 // full rightward swipe triggers pin directly
 
   // Keep swipeStateRef in sync so native touchmove handler always sees current values
   useEffect(() => { swipeStateRef.current = { swipeOpenId, showRanking, onPin, pinnedIds } })
@@ -308,14 +305,13 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           )}
         </div>
         {onSortChange && results.length > 0 && (() => {
-          const SORT_LABELS = sortLabels
           const PLATFORM_LABELS = {
             all: t('results.platform_all'),
             web: t('results.platform_web'),
             native: t('results.platform_native'),
             document: t('results.platform_document'),
           }
-          const sortLabel = SORT_LABELS[sortBy] ?? sortBy
+          const sortLabel = sortLabels[sortBy] ?? sortBy
           const platformLabel = PLATFORM_LABELS[platform] ?? platform
           const hasQuery = !!query
           const hasNarrow = narrowMode && !!narrowQuery
@@ -583,7 +579,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           }
 
           const swipeIsOpen = swipeOpenId?.id === finding.id
-          const swipeSide = swipeOpenId?.id === finding.id ? swipeOpenId.side : null
+          const swipeSide = swipeIsOpen ? swipeOpenId.side : null
 
           function handleSwipeTouchStart(e) {
             const t = e.touches[0]

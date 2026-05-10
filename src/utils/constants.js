@@ -26,6 +26,10 @@ export const PROVIDER_LABELS = {
   microsoft: 'Copilot',
 }
 
+export const SWIPE_REVEAL = 44
+export const SWIPE_THRESHOLD = 22
+export const SWIPE_ACTIVATE = 120
+
 export const MAX_SEARCH_RESULTS = 8
 export const MAX_SEARCH_ALL = 12
 export const MAX_PINNED_DISPLAY = 5
