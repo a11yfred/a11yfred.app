@@ -726,12 +726,6 @@ button {
     display: none;
   }
 
-  /* Hide original rank col and pin button -- swipe panels are the mobile controls */
-  .result-rank-col,
-  .result-pin-btn {
-    display: none;
-  }
-
   /* Card fills full row width with no rank col taking space */
   .result-card-wrap {
     width: 100%;
@@ -759,6 +753,13 @@ button {
 @media (width >= 768px) {
   .result-rank-col {
     justify-content: center;
+  }
+}
+
+@media (width < 768px) {
+  .result-rank-col,
+  .result-pin-btn {
+    display: none;
   }
 }
 
