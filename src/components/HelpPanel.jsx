@@ -1,3 +1,4 @@
+import { PlayCircle } from 'lucide-react'
 import { useT } from '../i18n/index.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
@@ -15,13 +16,15 @@ export default function HelpPanel({ onClose, onStartTour }) {
     >
 
       {onStartTour && (
-        <section className="help-section">
-          <h3 className="help-section-heading">{t('help.walkthrough_heading')}</h3>
-          <div className="help-tour-section">
-            <p className="help-tour-description">{t('help.take_tour_description')}</p>
+        <section className="help-section help-section--tour">
+          <div className="help-tour-banner">
+            <div className="help-tour-banner__body">
+              <p className="help-tour-banner__heading"><PlayCircle size={20} className="help-tour-banner__icon" aria-hidden="true" />{t('help.walkthrough_heading')}</p>
+              <p className="help-tour-banner__desc">{t('help.take_tour_description')}</p>
+            </div>
             <Button
               variant="primary"
-              className="help-tour-btn help-tour-btn--with-margin"
+              className="help-tour-btn"
               onClick={() => { onClose(); onStartTour() }}
             >
               {t('help.take_tour')}

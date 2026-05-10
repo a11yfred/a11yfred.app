@@ -109,15 +109,10 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
   }, [corpusFindings, userFindings, locale, userOverrides])
 
   const platformFiltered = useMemo(() => {
-    if (!platform || platform === 'web') {
-      return allFindings.filter(d => !d.platform || d.platform === 'web')
-    }
-    if (platform === 'native') {
-      return allFindings.filter(d => !d.platform || d.platform === 'native')
-    }
-    if (platform === 'document') {
-      return allFindings.filter(d => !d.platform || d.platform === 'document')
-    }
+    if (!platform || platform === 'all') return allFindings
+    if (platform === 'web') return allFindings.filter(d => !d.platform || d.platform === 'web')
+    if (platform === 'native') return allFindings.filter(d => !d.platform || d.platform === 'native')
+    if (platform === 'document') return allFindings.filter(d => !d.platform || d.platform === 'document')
     return allFindings
   }, [allFindings, platform])
 

@@ -8,12 +8,14 @@ import Button from './ui/Button.jsx'
 const TYPEWRITER_PHRASES = [
   { text: 'keyboard' },
   { text: 'screen reader' },
-  { text: 'color contrast' },
-  { text: 'form labels' },
-  { text: 'dialog' },
-  { text: 'heading structure' },
+  { text: 'contrast' },
+  { text: 'label' },
+  { text: 'modal' },
+  { text: 'heading' },
   { text: 'touch target' },
-  { text: 'voiceover' },
+  { text: 'focus' },
+  { text: 'alt text' },
+  { text: 'error' },
 ]
 const CYCLE_MS = 2500
 
@@ -48,9 +50,9 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
   }
 
   return (
-    <search aria-label={t('search.aria_label')} className="search-bar">
+    <search className="search-bar">
       <div className="search-label-row">
-        <label htmlFor="finding-search" className="search-label">
+        <label htmlFor="finding-search" className={`search-label${narrowMode ? ' search-label--disabled' : ''}`}>
           {inputLabel}
         </label>
         {query.length === 0 && !narrowMode && !prefersReducedMotion && (
@@ -60,9 +62,6 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
               key={phraseIdx}
               type="button"
               className="search-typewriter__phrase"
-              aria-label={currentPhrase.aria
-                ? `${t('search.typewriter_try')} ${currentPhrase.aria}`
-                : undefined}
               onClick={() => handlePhraseClick(currentPhrase)}
             >
               {currentPhrase.text}
@@ -93,7 +92,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
             onClick={onSearch}
             disabled={query.length < 2}
             variant="primary"
-            className="search-submit-btn btn--input-height"
+            className={`search-submit-btn btn--input-height${narrowMode ? ' search-submit-btn--disabled' : ''}`}
           >
             {t('search.button')}
           </Button>
@@ -109,7 +108,9 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           {showRanking ? ` ${t('search.hint_ranking')}` : ''}
           {hasPins ? ` ${t('search.hint_pin')}` : ''}
           {' '}
-          {t('search.hint_syntax')}
+          {t('search.hint_syntax_prefix')}{' '}
+          <a href="?q=keyboard+%2Bscreen+reader+-wcag2.2" className="search-hint-link">keyboard +screen reader -wcag2.2</a>
+          {t('search.hint_syntax_suffix')}
           {' '}
           {t('search.hint_change_in')}{' '}
           <a href="#/settings" className="search-hint-link">

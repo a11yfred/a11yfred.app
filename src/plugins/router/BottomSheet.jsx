@@ -64,7 +64,6 @@ export default function BottomSheet({
   }, [open])
 
   // Reset collapsed when sheet closes
-  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { if (!open) onCollapse?.(false) }, [open, onCollapse])
 
   // Track chrome height so the collapsed transform is exact

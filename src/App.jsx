@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
-import { Settings, X, Info, HelpCircle, ExternalLink, ChevronDown, ClipboardPaste, Hand } from 'lucide-react'
+import { Settings, X, Info, HelpCircle, ExternalLink, ArrowDown, ClipboardPaste, Hand } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
@@ -633,6 +633,45 @@ function AppContent({
     }
   }, [language]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const syncSearchUrl = (q) => {
+    const url = new URL(window.location.href)
+    if (q) url.searchParams.set('q', q)
+    else url.searchParams.delete('q')
+    history.replaceState(null, '', url.pathname + url.search + url.hash)
+  }
+
+  const syncBadgeUrl = (filter) => {
+    const url = new URL(window.location.href)
+    if (filter) {
+      const badgeValue = filter.type === 'wcag' && filter.level
+        ? `${filter.type}:${filter.value}|${filter.level}`
+        : `${filter.type}:${filter.value}`
+      url.searchParams.set('badge', badgeValue)
+      url.searchParams.delete('q')
+    } else {
+      url.searchParams.delete('badge')
+    }
+    history.replaceState(null, '', url.pathname + url.search + url.hash)
+  }
+
+  const syncFiltersUrl = ({ platformVal, sortVal, narrowVal, wcagVal } = {}) => {
+    const url = new URL(window.location.href)
+    const p = platformVal ?? platform
+    const s = sortVal ?? sortBy
+    const n = narrowVal ?? narrowQuery
+    const w = wcagVal ?? wcagFilter
+    if (p && p !== 'all') url.searchParams.set('platform', p)
+    else url.searchParams.delete('platform')
+    if (s && s !== 'smart') url.searchParams.set('sort', s)
+    else url.searchParams.delete('sort')
+    if (n) url.searchParams.set('narrow', n)
+    else url.searchParams.delete('narrow')
+    const isDefaultWcag = w.maxVersion === '2.2' && w.maxLevel === 'AA'
+    if (!isDefaultWcag) url.searchParams.set('wcag', `${w.maxVersion}|${w.maxLevel}`)
+    else url.searchParams.delete('wcag')
+    history.replaceState(null, '', url.pathname + url.search + url.hash)
+  }
+
   useEffect(() => { localStorage.setItem('liveSearch', String(liveSearch)) }, [liveSearch])
   useEffect(() => { localStorage.setItem('showRanking', String(showVoting)) }, [showVoting])
   useEffect(() => { localStorage.setItem('platform', platform) }, [platform])
@@ -734,45 +773,6 @@ function AppContent({
       setDebugPanelCmd(lq); setQuery(submittedQuery); return true
     }
     return false
-  }
-
-  const syncSearchUrl = (q) => {
-    const url = new URL(window.location.href)
-    if (q) url.searchParams.set('q', q)
-    else url.searchParams.delete('q')
-    history.replaceState(null, '', url.pathname + url.search + url.hash)
-  }
-
-  const syncBadgeUrl = (filter) => {
-    const url = new URL(window.location.href)
-    if (filter) {
-      const badgeValue = filter.type === 'wcag' && filter.level
-        ? `${filter.type}:${filter.value}|${filter.level}`
-        : `${filter.type}:${filter.value}`
-      url.searchParams.set('badge', badgeValue)
-      url.searchParams.delete('q')
-    } else {
-      url.searchParams.delete('badge')
-    }
-    history.replaceState(null, '', url.pathname + url.search + url.hash)
-  }
-
-  const syncFiltersUrl = ({ platformVal, sortVal, narrowVal, wcagVal } = {}) => {
-    const url = new URL(window.location.href)
-    const p = platformVal ?? platform
-    const s = sortVal ?? sortBy
-    const n = narrowVal ?? narrowQuery
-    const w = wcagVal ?? wcagFilter
-    if (p && p !== 'all') url.searchParams.set('platform', p)
-    else url.searchParams.delete('platform')
-    if (s && s !== 'smart') url.searchParams.set('sort', s)
-    else url.searchParams.delete('sort')
-    if (n) url.searchParams.set('narrow', n)
-    else url.searchParams.delete('narrow')
-    const isDefaultWcag = w.maxVersion === '2.2' && w.maxLevel === 'AA'
-    if (!isDefaultWcag) url.searchParams.set('wcag', `${w.maxVersion}|${w.maxLevel}`)
-    else url.searchParams.delete('wcag')
-    history.replaceState(null, '', url.pathname + url.search + url.hash)
   }
 
   const handleQueryChange = (q) => {
@@ -1272,14 +1272,6 @@ function AppContent({
       {theme === 'party' && <PartyBanner />}
 
       <div className="app-background" inert={backgroundInert ? true : undefined}>
-        <a
-          href="#/"
-          className="skip-link"
-          onClick={(e) => { e.preventDefault(); document.getElementById(onboardingOpen ? 'onboarding-title' : 'finding-search')?.focus() }}
-        >
-          {t('common.skip_to_main')}
-          <ChevronDown size={14} aria-hidden="true" />
-        </a>
         <Header
           h1Ref={h1Ref}
           settingsOpen={settingsOpen}
@@ -1294,6 +1286,7 @@ function AppContent({
           onCloseHelp={handleCloseHelp}
           onCloseOnboarding={handleCloseOnboarding}
           isDesktop={isDesktop}
+          skipTarget={onboardingOpen ? 'onboarding-title' : 'finding-search'}
         />
         <main className="app-main">
           <Announcer devEnabled={devAllEnabled} />
@@ -1405,11 +1398,19 @@ function AppContent({
   )
 }
 
-function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop }) {
+function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop, skipTarget }) {
   const t = useT()
   const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
+      <a
+        href="#/"
+        className="skip-link"
+        onClick={(e) => { e.preventDefault(); document.getElementById(skipTarget)?.focus() }}
+      >
+        {t('common.skip_to_main')}
+        <ArrowDown size={14} aria-hidden="true" />
+      </a>
       {!compact && (
         <a
           href="https://github.com/mikeyil/A11yHelper"

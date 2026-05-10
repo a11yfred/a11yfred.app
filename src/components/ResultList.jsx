@@ -1,4 +1,4 @@
-import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ArrowDown, ChevronUp, X } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -74,13 +74,13 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   useEffect(() => {
     if (sortToCommit === null) return
     onSortChange(sortToCommit)
-    setSortToCommit(null)
+    setSortToCommit(null) // eslint-disable-line react-hooks/set-state-in-effect
   }, [sortToCommit]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Commit clear after announcement has rendered
   useEffect(() => {
     if (!clearPending) return
-    setClearPending(false)
+    setClearPending(false) // eslint-disable-line react-hooks/set-state-in-effect
     onClear?.()
   }, [clearPending]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -627,7 +627,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   className="skip-link"
                 >
                   {t('results.skip_to_next')}
-                  <ChevronDown size={14} aria-hidden="true" />
+                  <ArrowDown size={14} aria-hidden="true" />
                 </a>
               )}
               </div>

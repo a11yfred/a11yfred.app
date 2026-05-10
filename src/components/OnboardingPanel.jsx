@@ -1,22 +1,23 @@
 import { useState, useEffect, useRef } from 'react'
-import { Search, Star, Copy, ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
 import { usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
+import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import Button from './ui/Button.jsx'
 
 const SLIDES = [
   {
-    icons: [Search],
+    Icon: Search,
     headingKey: 'onboarding.slide_1_heading',
     bodyKey: 'onboarding.slide_1_body',
   },
   {
-    icons: [Star],
+    Icon: Star,
     headingKey: 'onboarding.slide_2_heading',
     bodyKey: 'onboarding.slide_2_body',
   },
   {
-    icons: [Copy],
+    Icon: Copy,
     headingKey: 'onboarding.slide_3_heading',
     bodyKey: 'onboarding.slide_3_body',
   },
@@ -25,13 +26,17 @@ const SLIDES = [
 export default function OnboardingPanel({ onClose }) {
   const t = useT()
   const dir = useDir()
-  const FwdChevron  = dir === 'rtl' ? ChevronLeft  : ChevronRight
-  const BackChevron = dir === 'rtl' ? ChevronRight : ChevronLeft
+  const FwdArrow  = dir === 'rtl' ? CircleArrowLeft  : CircleArrowRight
+  const BackArrow = dir === 'rtl' ? CircleArrowRight : CircleArrowLeft
 
   const [step, setStep] = useState(0)
+  const [gradAngle, setGradAngle] = useState(() => Math.floor(Math.random() * 360))
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const titleRef = useRef(null)
   const stepHeadingRef = useRef(null)
   usePaginationFocus(stepHeadingRef, step)
+
+  useEffect(() => { titleRef.current?.focus() }, [])
 
   usePageTitle(t('onboarding.heading'))
 
@@ -52,12 +57,10 @@ export default function OnboardingPanel({ onClose }) {
     }
   }
 
-  // Intercept Escape in capture phase before the Drawer's bubble-phase listener fires,
-  // so we can show the confirm modal instead of immediately closing the panel.
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key !== 'Escape') return
-      if (confirmOpen) return // let the confirm Modal handle it
+      if (confirmOpen) return
       e.stopImmediatePropagation()
       handleRequestClose()
     }
@@ -66,60 +69,45 @@ export default function OnboardingPanel({ onClose }) {
   }, [isLast, confirmOpen]) // eslint-disable-line react-hooks/exhaustive-deps -- handleRequestClose reads isLast
 
   const slide = SLIDES[step]
+  const SlideIcon = slide.Icon
 
   return (
-    <div className="onboarding-panel">
-      <div className="onboarding-header">
-        <h2
-          tabIndex={-1}
-          className="onboarding-title"
-        >
-          {t('onboarding.heading')}
-        </h2>
-        <button
-          type="button"
-          onClick={handleRequestClose}
-          aria-label={t('common.close')}
-          title={t('common.close')}
-          className="btn--icon onboarding-close-btn"
-        >
-          <X size={20} strokeWidth={2.5} aria-hidden="true" />
-        </button>
+    <div className="onboarding-panel" style={{ '--onboarding-grad-angle': `${gradAngle}deg` }}>
+      <div className="onboarding-deco" aria-hidden="true">
+        <Hand size={64} className="onboarding-deco__icon" />
+        <ClipboardPaste size={64} className="onboarding-deco__icon" />
       </div>
 
-      <div className="onboarding-content" aria-live="polite" aria-atomic="true">
-        <div className="onboarding-step-heading-row">
-          <div className="onboarding-icons" aria-hidden="true">
-            {slide.icons.map((Icon, i) => (
-              <Icon key={i} size={40} strokeWidth={1.5} className="onboarding-icon" />
-            ))}
-          </div>
-          <h3
-            ref={stepHeadingRef}
-            tabIndex={-1}
-            className="onboarding-step-heading"
-          >
-            {t(slide.headingKey)}
-          </h3>
-        </div>
+      <div className="onboarding-header">
+        <h1 id="onboarding-title" ref={titleRef} tabIndex={-1} className="onboarding-title">
+          {t('onboarding.heading')}
+        </h1>
+      </div>
+
+      <div className="onboarding-content">
+        <h2 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
+          <SlideIcon size={36} strokeWidth={1.5} className="onboarding-step-icon" aria-hidden="true" />
+          {t(slide.headingKey)}
+        </h2>
         <p className="onboarding-step-body">
           {t(slide.bodyKey)}
         </p>
       </div>
 
-      <nav aria-label={t('onboarding.step_of', { step: step + 1, total })} className="onboarding-nav">
-        <Button
-          variant="secondary"
-          className="onboarding-nav-btn"
-          onClick={() => setStep(s => s - 1)}
-          aria-label={t('onboarding.prev_aria')}
-          disabled={isFirst}
-          aria-hidden={isFirst ? 'true' : undefined}
-          tabIndex={isFirst ? -1 : undefined}
-        >
-          <BackChevron size={16} aria-hidden="true" />
-          {t('onboarding.back')}
-        </Button>
+      <div className="onboarding-nav">
+        {isFirst
+          ? <span className="onboarding-arrow-placeholder" aria-hidden="true" />
+          : (
+            <button
+              type="button"
+              className="onboarding-arrow-btn"
+              onClick={() => { setGradAngle(Math.floor(Math.random() * 360)); setStep(s => { const next = s - 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }) }}
+              aria-label={t('onboarding.prev_aria')}
+            >
+              <BackArrow size={36} aria-hidden="true" />
+            </button>
+          )
+        }
 
         <ol className="onboarding-dots" aria-hidden="true">
           {SLIDES.map((_, i) => (
@@ -127,16 +115,15 @@ export default function OnboardingPanel({ onClose }) {
           ))}
         </ol>
 
-        <Button
-          variant="primary"
-          className="onboarding-nav-btn onboarding-nav-btn--next"
-          onClick={() => isLast ? commitClose() : setStep(s => s + 1)}
+        <button
+          type="button"
+          className="onboarding-arrow-btn"
+          onClick={() => isLast ? commitClose() : (setGradAngle(Math.floor(Math.random() * 360)), setStep(s => { const next = s + 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }))}
           aria-label={isLast ? t('onboarding.done_aria') : t('onboarding.next_aria')}
         >
-          {isLast ? t('onboarding.done') : t('onboarding.next')}
-          {!isLast && <FwdChevron size={16} aria-hidden="true" />}
-        </Button>
-      </nav>
+          <FwdArrow size={36} aria-hidden="true" />
+        </button>
+      </div>
 
       <div className="onboarding-footer">
         <Button

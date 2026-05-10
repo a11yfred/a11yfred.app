@@ -185,7 +185,7 @@ button {
 }
 
 .page-title {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: Outfit, system-ui, sans-serif;
   font-size: var(--fs-h1);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -2995,7 +2995,8 @@ input[type="radio"].control:not(:checked):hover {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, var(--accent-bg) 0%, var(--bg-subtle) 100%);
+  background: linear-gradient(var(--onboarding-grad-angle, 135deg), var(--accent-bg) 0%, var(--bg-subtle) 100%);
+  transition: background var(--duration-base) var(--ease-out);
   border: 1px solid var(--accent-bg);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
@@ -3019,7 +3020,7 @@ input[type="radio"].control:not(:checked):hover {
 }
 
 .onboarding-title {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: Outfit, system-ui, sans-serif;
   font-size: var(--fs-sub);
   font-weight: 800;
   color: var(--text-heading);
@@ -3037,7 +3038,7 @@ input[type="radio"].control:not(:checked):hover {
 }
 
 .onboarding-step-heading {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: Outfit, system-ui, sans-serif;
   font-size: var(--fs-h1);
   font-weight: 800;
   color: var(--text-heading);
