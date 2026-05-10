@@ -987,8 +987,10 @@ button {
   filter: opacity(0.5);
 }
 
+
 .result-item:hover:not(.result-item--selected) {
-  border-color: var(--text-muted);
+  border-color: var(--text-heading);
+  color: inherit;
 }
 
 .result-item--selected {
@@ -3170,6 +3172,7 @@ input[type="radio"].control:not(:checked):hover {
 }
 
 .help-tour-banner__heading {
+  font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--accent-text);
@@ -3221,12 +3224,14 @@ input[type="radio"].control:not(:checked):hover {
   position: relative;
   display: flex;
   flex-direction: column;
+  flex: 1;
   background: linear-gradient(var(--onboarding-grad-angle, 135deg), var(--accent-bg) 0%, var(--bg-subtle) 100%);
   transition: background var(--duration-base) var(--ease-out);
-  border: 1px solid var(--accent-bg);
+  border: 1px solid var(--accent-text);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   margin-top: var(--space-8);
+  min-height: 390px;
   overflow: hidden;
 }
 
@@ -3391,10 +3396,20 @@ input[type="radio"].control:not(:checked):hover {
   height: var(--btn-height-compact);
   padding: 0 var(--space-2);
   border-radius: var(--radius);
+  font-family: var(--font-display);
   font-size: 1.5rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 70%, var(--accent-bg)) 100%);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  color: var(--accent-bg);
+  transition: background-position var(--duration-base) var(--ease-in-out);
+}
+
+.help-tour-btn:hover {
+  background-position: 100% 100%;
 }
 
 .help-tour-btn--with-margin {

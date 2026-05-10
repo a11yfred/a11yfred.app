@@ -103,7 +103,12 @@ body:has(.modal-panel.is-open) .drawer-panel {
 
 .sheet-panel.is-collapsed {
   transform: translateX(-50%) translateY(calc(100% - var(--sheet-chrome-height)));
-  outline: 1px solid var(--accent);
+  border-top: 1px solid var(--border);
+  border-inline: 1px solid var(--border);
+}
+
+.sheet-panel.is-collapsed:hover {
+  border-color: var(--text-heading);
 }
 
 body:has(.sheet-panel.is-collapsed) .app-container {
@@ -128,7 +133,7 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 2.5rem;
+  width: 80%;
   height: 4px;
   background: var(--accent-text);
   border-radius: var(--radius-full);

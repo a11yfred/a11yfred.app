@@ -728,7 +728,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       onClick={handlePin}
                       icon={pinned
                         ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
-                        : <Pin size={14} aria-hidden="true" fill="currentColor" />
+                        : <Pin size={14} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} />
                       }
                       className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
                       aria-hidden={true}
