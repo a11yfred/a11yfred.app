@@ -1,4 +1,4 @@
-import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ArrowDown, ChevronLeft, ChevronRight, ChevronUp, X } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -66,6 +66,10 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   const [animatingUp, setAnimatingUp] = useState(() => new Set())
   const [animatingDown, setAnimatingDown] = useState(() => new Set())
   const prevNarrowResultsRef = useRef(undefined)
+  const [swipeOpenId, setSwipeOpenId] = useState(null) // null | { id, side: 'left'|'right' }
+  const swipeTouchRef = useRef(null) // { startX, startY, id, el }
+  const SWIPE_REVEAL = 80
+  const SWIPE_THRESHOLD = 40
 
   // Keep pendingSort in sync when sortBy changes externally
   useEffect(() => { setPendingSort(sortBy) }, [sortBy]) // eslint-disable-line react-hooks/set-state-in-effect -- intentional sync from parent prop
@@ -74,13 +78,13 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   useEffect(() => {
     if (sortToCommit === null) return
     onSortChange(sortToCommit)
-    setSortToCommit(null)
+    setSortToCommit(null) // eslint-disable-line react-hooks/set-state-in-effect
   }, [sortToCommit]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Commit clear after announcement has rendered
   useEffect(() => {
     if (!clearPending) return
-    setClearPending(false)
+    setClearPending(false) // eslint-disable-line react-hooks/set-state-in-effect
     onClear?.()
   }, [clearPending]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -192,6 +196,18 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     listEl?.addEventListener('keydown', handleKeyDown)
     return () => listEl?.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
+
+  // Close swipe drawer on outside tap (iOS Mail behaviour)
+  useEffect(() => {
+    if (!swipeOpenId) return
+    function handleOutsideTap(e) {
+      if (!e.target.closest(`[data-swipe-id="${swipeOpenId.id}"]`)) {
+        setSwipeOpenId(null)
+      }
+    }
+    document.addEventListener('pointerdown', handleOutsideTap)
+    return () => document.removeEventListener('pointerdown', handleOutsideTap)
+  }, [swipeOpenId])
 
   if (results.length === 0 && platform === 'all') {
     return <NoResults
@@ -524,6 +540,50 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             )
           }
 
+          const swipeIsOpen = swipeOpenId?.id === finding.id
+          const swipeSide = swipeOpenId?.id === finding.id ? swipeOpenId.side : null
+
+          function handleSwipeTouchStart(e) {
+            const t = e.touches[0]
+            swipeTouchRef.current = { startX: t.clientX, startY: t.clientY, id: finding.id, moved: false }
+          }
+
+          function handleSwipeTouchMove(e) {
+            const touch = swipeTouchRef.current
+            if (!touch || touch.id !== finding.id) return
+            const dx = e.touches[0].clientX - touch.startX
+            const dy = e.touches[0].clientY - touch.startY
+            if (!touch.moved && Math.abs(dy) > Math.abs(dx)) { swipeTouchRef.current = null; return }
+            touch.moved = true
+            const el = e.currentTarget.querySelector('.result-swipe-wrap')
+            if (!el) return
+            const base = swipeIsOpen ? (swipeSide === 'left' ? -SWIPE_REVEAL : SWIPE_REVEAL) : 0
+            const clamped = Math.max(-SWIPE_REVEAL, Math.min(SWIPE_REVEAL, base + dx))
+            el.style.transition = 'none'
+            el.style.transform = `translateX(${clamped}px)`
+            e.preventDefault()
+          }
+
+          function handleSwipeTouchEnd(e) {
+            const touch = swipeTouchRef.current
+            if (!touch || touch.id !== finding.id) return
+            swipeTouchRef.current = null
+            const el = e.currentTarget.querySelector('.result-swipe-wrap')
+            if (!el) return
+            const current = new DOMMatrix(getComputedStyle(el).transform).m41
+            el.style.transition = ''
+            const base = swipeIsOpen ? (swipeSide === 'left' ? -SWIPE_REVEAL : SWIPE_REVEAL) : 0
+            const delta = current - base
+            if (delta < -SWIPE_THRESHOLD) {
+              setSwipeOpenId({ id: finding.id, side: 'left' })
+            } else if (delta > SWIPE_THRESHOLD) {
+              setSwipeOpenId({ id: finding.id, side: 'right' })
+            } else {
+              setSwipeOpenId(null)
+            }
+            el.style.transform = ''
+          }
+
           function handleSkipToNext() {
             const nextIndex = index + 1
             if (nextIndex < displayResults.length) {
@@ -533,154 +593,215 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             }
           }
 
+          const swipeClass = swipeIsOpen ? ` result-row--swipe-${swipeSide}` : ''
+
           return (
             <Fragment key={finding.id}>
             <li
-              className={`result-row${archived ? ' result-row--archived' : ''}`}
+              data-swipe-id={finding.id}
+              className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}`}
               style={{ '--result-i': index }}
+              onTouchStart={showRanking ? handleSwipeTouchStart : undefined}
+              onTouchMove={showRanking ? handleSwipeTouchMove : undefined}
+              onTouchEnd={showRanking ? handleSwipeTouchEnd : undefined}
             >
-              <div className="result-card-wrap">
-                {onPin && (
+              {/* Left action panel: ranking controls (revealed by swiping left) */}
+              {showRanking && !pinned && (
+                <div className="result-action-panel result-action-panel--left" aria-hidden="true">
+                  <IconButton variant="tertiary" label="" tabIndex={-1} onClick={handleStar}
+                    icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
+                    className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
+                  />
+                  <IconButton variant="tertiary" label="" tabIndex={-1} disabled={archived} onClick={handleRankUp}
+                    icon={<ThumbsUp size={14} aria-hidden="true" />}
+                    className="result-rank-btn result-rank-btn--up"
+                  />
+                  <span className="result-rank-score" aria-hidden="true">{score}</span>
+                  <IconButton variant="tertiary" label="" tabIndex={-1} disabled={archived} onClick={handleRankDown}
+                    icon={<ThumbsDown size={14} aria-hidden="true" />}
+                    className="result-rank-btn result-rank-btn--down"
+                  />
+                  <IconButton variant="tertiary" label="" tabIndex={-1} onClick={handleArchive}
+                    icon={archived ? <ArchiveRestore size={13} aria-hidden="true" /> : <Archive size={13} aria-hidden="true" />}
+                    className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
+                  />
+                </div>
+              )}
+
+              {/* Right action panel: pin (revealed by swiping right) */}
+              {onPin && (
+                <div className="result-action-panel result-action-panel--right" aria-hidden="true">
                   <IconButton
                     variant="tertiary"
-                    label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                    label=""
+                    tabIndex={-1}
                     disabled={archived}
                     onClick={handlePin}
                     icon={pinned
-                      ? <PinOff size={12} aria-hidden="true" fill="currentColor" />
-                      : <Pin size={12} aria-hidden="true" fill="none" />
+                      ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
+                      : <Pin size={14} aria-hidden="true" fill="none" />
                     }
-                    className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                    className={`result-rank-btn${pinned ? ' result-pin-btn--active' : ''}`}
                   />
+                </div>
+              )}
+
+              {/* Swipe wrap: slides over the action panels */}
+              <div className="result-swipe-wrap">
+                {/* Swipe hint indicators */}
+                {showRanking && (
+                  <div className="result-swipe-hint" aria-hidden="true">
+                    <span className="result-swipe-hint__edge result-swipe-hint__edge--left" />
+                    <ChevronLeft size={10} className="result-swipe-hint__chevron result-swipe-hint__chevron--left" aria-hidden="true" />
+                    <ChevronRight size={10} className="result-swipe-hint__chevron result-swipe-hint__chevron--right" aria-hidden="true" />
+                    <span className="result-swipe-hint__edge result-swipe-hint__edge--right" />
+                  </div>
                 )}
-                <a
-                  ref={el => { itemRefs.current[finding.id] = el }}
-                  href={`#/finding/${finding.id}/${findingSlug(finding.title)}`}
-                  aria-label={cardLabel}
-                  onClick={e => {
-                    e.preventDefault()
-                    if (!archived) onSelect?.(finding)
-                  }}
-                  onKeyDown={e => {
-                    if (e.key === 'ArrowDown') { e.preventDefault(); itemRefs.current[results[index + 1]?.id]?.focus() }
-                    if (e.key === 'ArrowUp')   { e.preventDefault(); itemRefs.current[results[index - 1]?.id]?.focus() }
-                  }}
-                  className={`result-item${isSelected ? ' result-item--selected' : ''}${onPin ? ' result-item--pinnable' : ''}`}
-                >
-                <div className="result-item__header">
-                  <span className="result-item__title">
-                    {isSelected && <span aria-hidden="true" className="result-item__dot" />}
-                    {finding.title}
-                  </span>
-                  <span className="result-item__badges">
-                    <Badge
-                      variant="severity"
-                      bg={archived ? undefined : p.bg}
-                      color={archived ? undefined : p.color}
-                      prefix={finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
+
+                <div className="result-card-wrap">
+                  {onPin && (
+                    <IconButton
+                      variant="tertiary"
+                      label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                      disabled={archived}
+                      onClick={handlePin}
+                      icon={pinned
+                        ? <PinOff size={12} aria-hidden="true" fill="currentColor" />
+                        : <Pin size={12} aria-hidden="true" fill="none" />
+                      }
+                      className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                    />
+                  )}
+                  <a
+                    ref={el => { itemRefs.current[finding.id] = el }}
+                    href={`#/finding/${finding.id}/${findingSlug(finding.title)}`}
+                    aria-label={cardLabel}
+                    onClick={e => {
+                      e.preventDefault()
+                      if (swipeIsOpen) { setSwipeOpenId(null); return }
+                      if (!archived) onSelect?.(finding)
+                    }}
+                    onKeyDown={e => {
+                      if (e.key === 'ArrowDown') { e.preventDefault(); itemRefs.current[results[index + 1]?.id]?.focus() }
+                      if (e.key === 'ArrowUp')   { e.preventDefault(); itemRefs.current[results[index - 1]?.id]?.focus() }
+                    }}
+                    className={`result-item${isSelected ? ' result-item--selected' : ''}${onPin ? ' result-item--pinnable' : ''}`}
+                  >
+                    <div className="result-item__header">
+                      <span className="result-item__title">
+                        {isSelected && <span aria-hidden="true" className="result-item__dot" />}
+                        {finding.title}
+                      </span>
+                      <span className="result-item__badges">
+                        <Badge
+                          variant="severity"
+                          bg={archived ? undefined : p.bg}
+                          color={archived ? undefined : p.color}
+                          prefix={finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
+                        >
+                          {t(p.key)}
+                        </Badge>
+                        {finding.creditNames?.map(src => (
+                          <Badge
+                            key={src}
+                            variant="source"
+                            prefix={t('badge.source_prefix')}
+                            title={`Source: ${src}`}
+                          >
+                            {src}
+                          </Badge>
+                        ))}
+                        {finding.wcagVersion && finding.wcagLevel && (
+                          <Badge
+                            variant="wcag"
+                            title={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel}`}
+                          >
+                            <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
+                            {finding.wcagVersion},{' '}
+                            <span className="badge-prefix">{t('badge.level_prefix')}</span>
+                            {finding.wcagLevel}
+                          </Badge>
+                        )}
+                      </span>
+                    </div>
+
+                    <div className="result-item__sc">{finding.primarySC}</div>
+
+                    <div className="result-item__desc">{finding.desc}</div>
+                  </a>
+
+                  {showRankingSort && index < displayResults.length - 1 && (
+                    <a
+                      href="#/"
+                      tabIndex={archived ? -1 : 0}
+                      onClick={(e) => { e.preventDefault(); handleSkipToNext() }}
+                      onFocus={(e) => {
+                        const row = e.currentTarget.closest('li.result-row')
+                        if (row) row.classList.add('result-row--skip-focused')
+                      }}
+                      onBlur={(e) => {
+                        const row = e.currentTarget.closest('li.result-row')
+                        if (row) row.classList.remove('result-row--skip-focused')
+                      }}
+                      aria-label={t('results.skip_to_next')}
+                      className="skip-link"
                     >
-                      {t(p.key)}
-                    </Badge>
-                    {finding.creditNames?.map(src => (
-                      <Badge
-                        key={src}
-                        variant="source"
-                        prefix={t('badge.source_prefix')}
-                        title={`Source: ${src}`}
-                      >
-                        {src}
-                      </Badge>
-                    ))}
-                    {finding.wcagVersion && finding.wcagLevel && (
-                      <Badge
-                        variant="wcag"
-                        title={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel}`}
-                      >
-                        <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
-                        {finding.wcagVersion},{' '}
-                        <span className="badge-prefix">{t('badge.level_prefix')}</span>
-                        {finding.wcagLevel}
-                      </Badge>
-                    )}
-                  </span>
+                      {t('results.skip_to_next')}
+                      <ArrowDown size={14} aria-hidden="true" />
+                    </a>
+                  )}
                 </div>
 
-                <div className="result-item__sc">{finding.primarySC}</div>
+                {showRanking && !pinned && <div className="result-rank-col">
+                  <IconButton
+                    variant="tertiary"
+                    label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
+                    disabled={archived}
+                    onClick={handleStar}
+                    icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
+                    className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
+                  />
 
-                <div className="result-item__desc">{finding.desc}</div>
-              </a>
+                  {!pinned && <>
+                    <IconButton
+                      variant="tertiary"
+                      label={t('results.rank_up', { title: shortTitle })}
+                      disabled={archived}
+                      onClick={handleRankUp}
+                      icon={<ThumbsUp size={14} aria-hidden="true" fill={animatingUp.has(finding.id) ? 'currentColor' : 'none'} />}
+                      className="result-rank-btn result-rank-btn--up"
+                    />
 
-              {showRankingSort && index < displayResults.length - 1 && (
-                <a
-                  href="#/"
-                  tabIndex={archived ? -1 : 0}
-                  onClick={(e) => { e.preventDefault(); handleSkipToNext() }}
-                  onFocus={(e) => {
-                    const row = e.currentTarget.closest('li.result-row')
-                    if (row) row.classList.add('result-row--skip-focused')
-                  }}
-                  onBlur={(e) => {
-                    const row = e.currentTarget.closest('li.result-row')
-                    if (row) row.classList.remove('result-row--skip-focused')
-                  }}
-                  aria-label={t('results.skip_to_next')}
-                  className="skip-link"
-                >
-                  {t('results.skip_to_next')}
-                  <ChevronDown size={14} aria-hidden="true" />
-                </a>
-              )}
+                    <span
+                      className="result-rank-score"
+                      title={t('results.score_label', { score })}
+                    >
+                      <span className="sr-only">{t('results.score_label', { score })}</span>
+                      <span aria-hidden="true">{score}</span>
+                    </span>
+
+                    <IconButton
+                      variant="tertiary"
+                      label={t('results.rank_down', { title: shortTitle })}
+                      disabled={archived}
+                      onClick={handleRankDown}
+                      icon={<ThumbsDown size={14} aria-hidden="true" fill={animatingDown.has(finding.id) ? 'currentColor' : 'none'} />}
+                      className="result-rank-btn result-rank-btn--down"
+                    />
+                  </>}
+
+                  <IconButton
+                    variant="tertiary"
+                    label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
+                    onClick={handleArchive}
+                    icon={archived
+                      ? <ArchiveRestore size={13} aria-hidden="true" />
+                      : <Archive size={13} aria-hidden="true" />
+                    }
+                    className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
+                  />
+                </div>}
               </div>
-
-              {showRanking && !pinned && <div className="result-rank-col">
-                <IconButton
-                  variant="tertiary"
-                  label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
-                  disabled={archived}
-                  onClick={handleStar}
-                  icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
-                  className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
-                />
-
-                {!pinned && <>
-                  <IconButton
-                    variant="tertiary"
-                    label={t('results.rank_up', { title: shortTitle })}
-                    disabled={archived}
-                    onClick={handleRankUp}
-                    icon={<ThumbsUp size={14} aria-hidden="true" fill={animatingUp.has(finding.id) ? 'currentColor' : 'none'} />}
-                    className="result-rank-btn result-rank-btn--up"
-                  />
-
-                  <span
-                    className="result-rank-score"
-                    title={t('results.score_label', { score })}
-                  >
-                    <span className="sr-only">{t('results.score_label', { score })}</span>
-                    <span aria-hidden="true">{score}</span>
-                  </span>
-
-                  <IconButton
-                    variant="tertiary"
-                    label={t('results.rank_down', { title: shortTitle })}
-                    disabled={archived}
-                    onClick={handleRankDown}
-                    icon={<ThumbsDown size={14} aria-hidden="true" fill={animatingDown.has(finding.id) ? 'currentColor' : 'none'} />}
-                    className="result-rank-btn result-rank-btn--down"
-                  />
-                </>}
-
-                <IconButton
-                  variant="tertiary"
-                  label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
-                  onClick={handleArchive}
-                  icon={archived
-                    ? <ArchiveRestore size={13} aria-hidden="true" />
-                    : <Archive size={13} aria-hidden="true" />
-                  }
-                  className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
-                />
-              </div>}
             </li>
             {showAdAfter && <SponsoredTile />}
             </Fragment>

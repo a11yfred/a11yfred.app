@@ -30,17 +30,13 @@ export default function Modal({ open, onClose, heading = 'Information', headingI
   useFocusTrap(panelRef, open)
   useAriaHide(panelRef, open)
 
-  // Focus the dialog panel itself (not the heading) so screen readers announce
-  // "Are You Sure? dialog" once via aria-labelledby, without a redundant second
-  // announcement of the heading text when it receives focus.
   useEffect(() => {
     if (open) {
       if (!returnFocusRef) autoTriggerRef.current = document.activeElement
       requestAnimationFrame(() => {
-        if (panelRef.current) {
-          panelRef.current.focus()
-          panelRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
-        }
+        if (!panelRef.current) return
+        panelRef.current.focus({ preventScroll: true })
+        panelRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
       })
     } else {
       const target = returnFocusRef?.current ?? autoTriggerRef.current

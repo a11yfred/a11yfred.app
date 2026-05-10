@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Info, Save } from 'lucide-react'
+import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { getAiRefinement, AiApiError } from '../services/aiService.js'
 import { getAgenticRefinement } from '../services/agenticAiService.js'
 import { useMediaQuery, Modal } from '../plugins/router/index.js'
@@ -7,6 +7,7 @@ import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
+import InfoBox from './ui/InfoBox.jsx'
 import Toggle from './ui/Toggle.jsx'
 
 import InputWithClear from './ui/InputWithClear.jsx'
@@ -65,7 +66,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   useEffect(() => {
     titleRef.current?.focus()
     setFindingNote(localStorage.getItem(`finding_note_${finding.id}`) || '') // eslint-disable-line react-hooks/set-state-in-effect
-    setAiNote('') // eslint-disable-line react-hooks/set-state-in-effect
+    setAiNote('')
   }, [finding.id])
 
   useEffect(() => {
@@ -424,10 +425,9 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       </div>
 
       {finding.note && (
-        <div className="detail-corpus-note">
-          <h3 className="detail-corpus-note-label"><Info size={13} aria-hidden="true" className="detail-corpus-note-icon" />{t('detail.note_label')}</h3>
-          <p className="detail-corpus-note-body">{finding.note}</p>
-        </div>
+        <InfoBox label={t('detail.note_label')} className="detail-corpus-note">
+          {finding.note}
+        </InfoBox>
       )}
 
       <div className="detail-section">
