@@ -9,6 +9,7 @@ import Select from './ui/Select.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
 import { PROVIDERS, PROVIDER_MODELS, initModels } from '../utils/aiModels.js'
+import { TOAST_HIDE_DURATION } from '../utils/constants.js'
 
 function PendingNote({ t }) {
   const raw = t('settings.pending_save_note')
@@ -301,7 +302,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
     })
 
     setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    setTimeout(() => setSaved(false), TOAST_HIDE_DURATION)
   }
 
   const guardedClose = useCallback(
@@ -728,9 +729,9 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <div className={`settings-toggle-row settings-toggle-row--sm${!pendingAiEnabled || activeProvider !== 'anthropic' ? ' settings-toggle-row--disabled' : ''}`}>
         <div>
           <label htmlFor="toggle-agentic" className="settings-toggle-label">
-            {t('settings.agentic_mode_label') || 'Match Existing Style (Agentic AI)'}
+            {t('settings.agentic_mode_label')}
           </label>
-          <p className="settings-toggle-desc">Only available with <strong>Claude (Anthropic)</strong>. Searches past revision examples to write in your established tone and technical depth.</p>
+          <p className="settings-toggle-desc">{t('settings.agentic_mode_desc')}</p>
           {pendingAgenticMode !== (localStorage.getItem('agentic_mode') === 'true') && (
             <PendingNote t={t} />
           )}

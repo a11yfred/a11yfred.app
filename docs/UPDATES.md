@@ -4,6 +4,20 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 10, 2026
+
+### Code quality and refactoring passes
+
+Multiple cleanup passes across JSX, JS, and CSS. Magic numbers replaced with named constants (agentic mode timeout, save button toast, copy/reset timeouts all now use `NOTIFICATION_TIMEOUT` or `TOAST_HIDE_DURATION`). Duplicate `recentFindings` localStorage logic extracted to a single helper. Hardcoded English string in the agentic mode toggle wired to the existing i18n key. Double blank lines removed throughout.
+
+### CSS and JS cleanup passes
+
+Completed a mobile-first CSS refactor across all three stylesheets. Base styles now target mobile by default, with desktop overrides in `@media (width >= 768px)` blocks. The field action row margin is now desktop-only, matching its visual intent.
+
+Dead code removed: three unused exports from `constants.js`, a dead variable in `Button.jsx`, and a triple ternary in `AdminPanel.jsx` replaced with an object map. The i18n translation function no longer allocates a new regex on every variable substitution call.
+
+---
+
 ## May 9, 2026
 
 ### Doc cleanup and distribution plan

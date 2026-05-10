@@ -24,7 +24,6 @@
 
 .btn svg {
   flex-shrink: 0;
-  line-height: 1;
   vertical-align: middle;
 }
 
@@ -82,8 +81,8 @@ select:focus-visible {
 
 .skip-link {
   position: fixed;
-  top: 0.5rem;
-  left: 0.5rem;
+  top: var(--space-2);
+  left: var(--space-2);
   z-index: 999;
   min-width: var(--touch-target);
   min-height: var(--touch-target);
@@ -336,8 +335,7 @@ select:disabled {
   justify-content: center;
   gap: 6px;
   height: var(--btn-height-standard);
-  padding: 0 var(--space-4);
-  border-radius: 0;
+  padding-inline: var(--space-3);
   margin-left: -1px;
   border: 1px solid var(--border-control);
   background: var(--bg-subtle);
@@ -347,7 +345,13 @@ select:disabled {
   font-weight: 400;
   line-height: 1;
   text-align: center;
-  transition: all var(--duration-fast);
+  transition: background-color var(--duration-fast), border-color var(--duration-fast), color var(--duration-fast);
+}
+
+@media (width >= 768px) {
+  .radio-chip {
+    padding: 0 var(--space-4);
+  }
 }
 
 .radio-chip__input {
@@ -377,7 +381,7 @@ select:disabled {
   background: transparent;
   border: var(--border-width-control) solid var(--text-body);
   flex-shrink: 0;
-  transition: all var(--duration-fast);
+  transition: background var(--duration-fast), border-color var(--duration-fast);
 }
 
 .radio-chip--active .radio-chip__indicator {
@@ -441,20 +445,6 @@ select:disabled {
   border-radius: var(--radius) 0 0 var(--radius);
 }
 
-@media (width < 768px) {
-  .radio-chip {
-    padding-inline: var(--space-3);
-  }
-
-  .radio-chip:first-child {
-    border-radius: var(--radius) 0 0 var(--radius);
-  }
-
-  .radio-chip:last-child {
-    border-radius: 0 var(--radius) var(--radius) 0;
-  }
-}
-
 .radio-chip:not(.radio-chip--active):hover {
   background: var(--bg);
   border-color: var(--text-muted);
@@ -489,7 +479,6 @@ select:disabled {
   position: absolute;
   inset: -10px calc(var(--space-2) * -1);
   opacity: 0;
-  margin: 0;
   cursor: pointer;
   z-index: 1;
 }
@@ -604,7 +593,13 @@ select:disabled {
 /* ─── Field ───────────────────────────────────────────────── */
 
 .field {
-  margin-bottom: var(--space-4);
+  margin-bottom: 2em;
+}
+
+@media (width >= 768px) {
+  .field {
+    margin-bottom: var(--space-4);
+  }
 }
 
 .field__header {
@@ -692,50 +687,43 @@ select:disabled {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 1em;
-  margin-top: 0;
+  flex-direction: column;
   margin-bottom: 1.5em;
 }
 
-@media (width < 768px) {
-  .field {
-    margin-bottom: 2em;
-  }
-
+@media (width >= 768px) {
   .field__footer {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .field__include-title {
-    width: 100%;
-    margin-top: 0;
-    align-items: center;
-  }
-
-  .field__actions {
-    width: 100%;
-    justify-content: stretch;
-  }
-
-  .field__actions .btn--field {
-    flex: 1;
-    justify-content: center;
+    flex-direction: row;
+    gap: 1em;
   }
 }
 
 .field__include-title {
   display: flex;
   align-items: center;
-  gap: 0;
-  margin-top: 0.35em;
+  width: 100%;
+}
+
+@media (width >= 768px) {
+  .field__include-title {
+    margin-top: 0.35em;
+    width: auto;
+  }
 }
 
 .field__actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: stretch;
   gap: var(--space-1);
-  margin-top: 0.35em;
+  width: 100%;
+}
+
+@media (width >= 768px) {
+  .field__actions {
+    width: auto;
+    justify-content: flex-end;
+    margin-top: 0.35em;
+  }
 }
 
 .field-include-title-label {
@@ -771,6 +759,18 @@ select:disabled {
   font-size: var(--fs-body);
   border-radius: var(--radius);
   white-space: nowrap;
+}
+
+.field__actions .btn--field {
+  flex: 1;
+  justify-content: center;
+}
+
+@media (width >= 768px) {
+  .field__actions .btn--field {
+    flex: none;
+    justify-content: revert;
+  }
 }
 
 .btn--primary.btn__field--success,
@@ -849,4 +849,3 @@ select:disabled {
   line-height: 1.5;
   font-style: italic;
 }
-

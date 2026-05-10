@@ -9,7 +9,6 @@ import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
 import InfoBox from './ui/InfoBox.jsx'
 import Toggle from './ui/Toggle.jsx'
-
 import InputWithClear from './ui/InputWithClear.jsx'
 import Badge from './ui/Badge.jsx'
 import Field from './ui/Field.jsx'
@@ -117,7 +116,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
       setTimeout(() => {
         setFlag(false)
         focusRef?.current?.focus()
-      }, 2000)
+      }, NOTIFICATION_TIMEOUT)
     }
     if (!current?.trim() || !isSignificantlyChanged(original, current)) {
       doReset()
@@ -133,7 +132,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     navigator.clipboard.writeText(text).then(() => {
       setCopiedAll(true)
       announce(t('detail.copy_all_announce'))
-      setTimeout(() => setCopiedAll(false), 2000)
+      setTimeout(() => setCopiedAll(false), NOTIFICATION_TIMEOUT)
       onCopyEvent?.(finding.id, 'all')
     })
   }

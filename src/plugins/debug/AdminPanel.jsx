@@ -142,7 +142,7 @@ export default function AdminPanel({
 
   useEffect(() => { localStorage.setItem('adminDataset', dataset) }, [dataset])
 
-  const corpus = dataset === 'public' ? publicCorpus : dataset === 'legacy' ? legacyCorpus : personalCorpus
+  const corpus = { public: publicCorpus, legacy: legacyCorpus, personal: personalCorpus }[dataset] ?? publicCorpus
   const stats = useMemo(() => computeStats(corpus), [corpus])
 
   if (!IS_DEV) return null

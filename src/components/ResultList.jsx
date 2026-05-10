@@ -147,7 +147,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     }
   }, [narrowResults]) // eslint-disable-line react-hooks/exhaustive-deps
 
-
   // Use narrowResults if provided (filtered), otherwise use all results
   const displayResults = narrowMode && narrowResults ? narrowResults : results
   const r = (n) => n === 1 ? 'Result' : 'Results'
@@ -165,7 +164,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     const el = itemRefs.current[focusNextRef.current]
     if (el) { el.focus(); focusNextRef.current = null }
   })
-
 
   const handleKeyDown = useCallback((e) => {
     if (!listRef.current) return

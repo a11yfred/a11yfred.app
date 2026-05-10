@@ -25,7 +25,6 @@ const Button = forwardRef(function Button({
 
   const displayIcon = active ? activeIcon : icon
   const displayLabel = active ? activeLabel : label
-  const displayTitle = active && title ? title : title
 
   const finalClassName = `${baseClasses}${stateClass}${disabledClass}${fullWidthClass}${errorClass}${className ? ` ${className}` : ''}`
 
@@ -36,7 +35,7 @@ const Button = forwardRef(function Button({
       onClick={onClick}
       disabled={disabled}
       aria-label={displayLabel}
-      title={displayTitle}
+      title={title}
       className={finalClassName}
       {...rest}
     >

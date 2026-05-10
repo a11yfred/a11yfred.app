@@ -4,6 +4,29 @@ All significant changes to A11yHelper, newest first.
 
 ---
 
+## 2026-05-10
+
+### Code quality and refactoring passes
+
+- `SearchBar.jsx`: removed local `CYCLE_MS` redeclaration; now imports from `constants.js`
+- `SettingsPanel.jsx`: removed redundant `|| 'fallback'` from agentic mode label; wired `t('settings.agentic_mode_desc')` to replace hardcoded English description; imported `TOAST_HIDE_DURATION` for save-button toast
+- `DetailPanel.jsx`: all copy and reset timeouts now use `NOTIFICATION_TIMEOUT`; removed stray blank line in import block
+- `App.jsx`: extracted duplicate `recentFindings` localStorage update into module-level `recordRecentFinding()` helper (was repeated in `applySelectFinding` and `handleSelectRelated`)
+- `constants.js`, `ResultList.jsx`, `Field.jsx`, `index.css`, `router.css`: removed double blank lines
+
+### CSS mobile-first refactor and JS cleanup
+
+- Converted all remaining `(width < 768px)` blocks in `index.css`, `ui.css`, and `router.css` to mobile-first `(width >= 768px)` overrides; base styles now target mobile by default
+- Moved `.field__actions` margin-top from base to desktop-only block
+- Merged `.confetti-canvas` and `.sparkles-canvas` shared declarations in `router.css`; fixed `no-descending-specificity` on `.sheet-close-bottom-btn` by reordering selectors
+- `Button.jsx`: removed dead `displayTitle` variable (always equaled `title`)
+- `constants.js`: removed three dead exports (`PRIORITY_ORDER`, `VERSION_ORDER`, `LEVEL_ORDER`) with no importers anywhere in the codebase
+- `AdminPanel.jsx`: replaced triple ternary corpus selection with object map
+- `i18n/index.jsx`: replaced `new RegExp(..., 'g')` in variable-substitution loop with `replaceAll()` to avoid per-call regex allocation
+- `README.md`: corrected UI component count to 21 (was 20)
+
+---
+
 ## 2026-05-08
 
 ### App rename: A11yTextHelper → A11yHelper

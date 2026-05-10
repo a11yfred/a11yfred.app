@@ -180,41 +180,8 @@ body:has(.sheet-panel.is-collapsed) .app-container {
 }
 
 /* Close button at the bottom of the sheet */
-.sheet-close-bottom {
-  display: flex;
-  justify-content: flex-end;
-  padding-top: var(--space-4);
-  margin-top: var(--space-5);
-  border-top: 1px solid var(--border);
-}
-
-[dir="rtl"] .sheet-close-bottom {
-  justify-content: flex-start;
-}
-
-@media (width < 768px) {
-  .sheet-close-bottom {
-    display: block;
-  }
-
-  .sheet-close-bottom .sheet-close-bottom-btn {
-    width: 100%;
-    padding: var(--space-3) var(--space-4);
-    background: transparent;
-    border-color: transparent;
-    color: var(--text-body);
-  }
-
-  .sheet-close-bottom .sheet-close-bottom-btn:hover {
-    background: var(--bg-subtle);
-    border-color: var(--border);
-    color: var(--text-heading);
-  }
-}
-
 .sheet-close-bottom-btn {
   display: block;
-  width: auto;
   min-height: var(--touch-target);
   min-width: var(--touch-target);
   padding: var(--space-2) var(--space-4);
@@ -222,7 +189,46 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   font-size: var(--fs-body);
   font-weight: 600;
   text-align: center;
-  justify-content: center;
+}
+
+.sheet-close-bottom {
+  display: block;
+  padding-top: var(--space-4);
+  margin-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.sheet-close-bottom .sheet-close-bottom-btn {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-body);
+}
+
+.sheet-close-bottom .sheet-close-bottom-btn:hover {
+  background: var(--bg-subtle);
+  border-color: var(--border);
+  color: var(--text-heading);
+}
+
+[dir="rtl"] .sheet-close-bottom {
+  justify-content: flex-start;
+}
+
+@media (width >= 768px) {
+  .sheet-close-bottom {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .sheet-close-bottom .sheet-close-bottom-btn {
+    width: auto;
+    padding: var(--space-2) var(--space-4);
+    background: revert;
+    border-color: revert;
+    color: revert;
+  }
 }
 
 /* ─── Modal (centered dialog) ─────────────────────────────── */
@@ -273,11 +279,6 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
   pointer-events: auto;
-}
-
-.modal-panel.is-open:focus,
-.modal-panel.is-open:focus-visible {
-  outline: none;
 }
 
 .modal-body {
@@ -409,27 +410,19 @@ body:has(.drawer-panel.is-open) {
   }
 }
 
-/* ─── Confetti canvas (party mode) ───────────────────────── */
+/* ─── Party mode canvases (confetti + sparkles) ───────────── */
 
-.confetti-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 198;
-}
-
-/* ─── Sparkles canvas (party mode) ───────────────────────── */
-
+.confetti-canvas,
 .sparkles-canvas {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 199;
 }
+
+.confetti-canvas { z-index: 198; }
+.sparkles-canvas { z-index: 199; }
 
 /* ─── Floating music player (party mode) ─────────────────── */
 
@@ -479,4 +472,3 @@ body:has(.drawer-panel.is-open) {
     animation: none;
   }
 }
-

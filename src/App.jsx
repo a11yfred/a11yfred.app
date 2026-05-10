@@ -90,6 +90,15 @@ function generatePartyPalette() {
 
 const IGNORED_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLock', 'Escape'])
 
+function recordRecentFinding(id) {
+  try {
+    const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
+    const deduped = recent.filter(r => r !== id)
+    deduped.unshift(id)
+    localStorage.setItem('recentFindings', JSON.stringify(deduped.slice(0, 10)))
+  } catch { /* localStorage unavailable */ }
+}
+
 export default function App() {
   return (
     <Router appName="A11yHelper">
@@ -319,12 +328,7 @@ function AppContent({
       if (viewAll) returnViewAllRef.current = true
       sessionStorage.setItem('lastSelectedId', finding.id)
       recordOpen(finding.id)
-      try {
-        const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
-        const deduped = recent.filter(id => id !== finding.id)
-        deduped.unshift(finding.id)
-        localStorage.setItem('recentFindings', JSON.stringify(deduped.slice(0, 10)))
-      } catch { /* localStorage unavailable */ }
+      recordRecentFinding(finding.id)
     } else {
       sessionStorage.removeItem('lastSelectedId')
       setFindingHistory([])
@@ -367,12 +371,7 @@ function AppContent({
     setFindingHistory(h => selected ? [...h, selected] : h)
     sessionStorage.setItem('lastSelectedId', finding.id)
     recordOpen(finding.id)
-    try {
-      const recent = JSON.parse(localStorage.getItem('recentFindings') || '[]')
-      const deduped = recent.filter(id => id !== finding.id)
-      deduped.unshift(finding.id)
-      localStorage.setItem('recentFindings', JSON.stringify(deduped.slice(0, 10)))
-    } catch { /* localStorage unavailable */ }
+    recordRecentFinding(finding.id)
     setSheetCollapsed(false)
     setSelected(finding)
     navigate(`/finding/${finding.id}/${findingSlug(finding.title)}`)
