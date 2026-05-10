@@ -1757,7 +1757,7 @@ input.search-input--disabled {
 .results-end-marker {
   text-align: center;
   font-size: var(--fs-body);
-  color: var(--text-subtle);
+  color: var(--text-muted);
   margin: var(--space-6) 0 0;
 }
 
@@ -2357,7 +2357,7 @@ input[type="radio"].control:not(:checked):hover {
 }
 
 .settings-save-btn {
-  display: inline;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
@@ -3172,14 +3172,14 @@ input[type="radio"].control:not(:checked):hover {
 
 .help-tour-banner__heading {
   font-family: var(--font-display);
-  font-size: var(--fs-heading);
+  font-size: var(--fs-sub);
   font-weight: 600;
   color: var(--accent-text);
   margin: 0 0 var(--space-1);
 }
 
 .help-tour-banner__desc {
-  font-size: 1.3125rem;
+  font-size: var(--fs-body);
   color: var(--text-heading);
   margin: 0;
 }
@@ -3396,7 +3396,7 @@ input[type="radio"].control:not(:checked):hover {
   padding: 0 var(--space-2);
   border-radius: var(--radius);
   font-family: var(--font-display);
-  font-size: var(--fs-heading);
+  font-size: var(--fs-sub);
   display: inline-flex;
   align-items: center;
   justify-content: center;

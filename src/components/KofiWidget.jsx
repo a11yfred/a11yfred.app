@@ -74,7 +74,6 @@ function patchKofiA11y() {
       if (triggerButton && !triggerButton.dataset.a11yPatched) {
         triggerButton.dataset.a11yPatched = 'true'
         if (!triggerButton.getAttribute('aria-label')) {
-          // i18n key: footer.kofi_aria — pass as prop when re-enabling this widget
           triggerButton.setAttribute('aria-label', 'Support Mikey on Ko-fi (opens panel)')
         }
         const tag = triggerButton.tagName.toLowerCase()
