@@ -88,6 +88,7 @@
   --space-8: 2rem;
 
   /* Borders */
+  --radius-xs:   2px;
   --radius-sm:   4px;
   --radius:      6px;
   --radius-lg:   16px;
@@ -114,20 +115,20 @@
   --focus-outline-offset: 2px;
 
   /* Text adjustments — line-height, underlines, etc. */
-  --text-underline-offset: 4px;
+  --text-underline-offset: 2px;
+  /* Letter spacing for uppercased labels and badges */
+  --letter-spacing-label: 0.06em;
+  --letter-spacing-badge: 0.05em;
 
   /* Modal and panel sizing */
   --modal-max-width: 720px;
   --modal-max-height-mobile: 92dvh;
   --panel-width-mobile: min(360px, calc(100vw - var(--space-8)));
 
-  /* Scrollable content — for flex shrinking below content size */
-  --scroll-min-height: 0;
-
   /* Icon sizing */
-  --icon-size-small: 1rem;
-  --icon-size-medium: 1.5em;
-  --icon-size-large: 24px;
+  --icon-size-sm: 1rem;
+  --icon-size-md: 1.5em;
+  --icon-size-lg: 24px;
 
   /* Toggle control sizing */
   --toggle-width: 40px;
@@ -142,14 +143,11 @@
 
   /* Motion — duration and easing for all transitions.
      Use --duration-fast for micro-interactions (color, border).
-     Use --duration-base for panel and element transitions.
-     Use --duration-slow for larger, more deliberate animations. */
+     Use --duration-base for panel and element transitions. */
   --duration-fast: 150ms;
   --duration-base: 250ms;
-  --duration-slow: 350ms;
 
   --ease-out:    cubic-bezier(0.16, 1,   0.3,  1);  /* spring-y; good for slides entering */
-  --ease-in:     cubic-bezier(0.4,  0,   1,    1);  /* accelerating; good for exits */
   --ease-in-out: cubic-bezier(0.4,  0,   0.2,  1);  /* balanced; good for state toggles */
 
   /* Shared transition shorthand for interactive buttons */

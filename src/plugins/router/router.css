@@ -84,7 +84,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   bottom: 0;
   width: 100%;
   max-width: var(--modal-max-width);
-  max-height: 92dvh;
+  max-height: var(--modal-max-height-mobile);
   z-index: 202;
   background: var(--bg);
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
@@ -247,7 +247,7 @@ body:has(.sheet-panel.is-collapsed) .app-container {
      max-height uses calc so the panel is always ≥ --space-6 from each viewport
      edge: with top:50% and max-height:(100dvh - 2*--space-6), the panel's top
      edge = 50dvh - (at most 50dvh - --space-6) = at least --space-6 from top. */
-  width: min(360px, calc(100vw - var(--space-8)));
+  width: var(--panel-width-mobile);
   max-height: calc(100dvh - 2 * var(--space-6));
   z-index: 301;
   background: var(--bg);

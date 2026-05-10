@@ -168,7 +168,7 @@
   color: var(--accent);
   font-size: 0.82rem;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
   text-align: left;
 }
 
@@ -275,7 +275,7 @@
   min-width: 3.5rem;
   text-align: left;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
 }
 
 .admin-sc-search:hover {
@@ -401,7 +401,7 @@
   min-width: 4.5rem;
   text-align: left;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
 }
 
 .admin-entry-link:hover {

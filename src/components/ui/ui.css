@@ -17,8 +17,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.5em;
-  height: 1.5em;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
   flex-shrink: 0;
 }
 
@@ -186,7 +186,7 @@ select:focus-visible {
   background: transparent;
   color: var(--accent-text);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
   font-weight: 500;
   padding: 0 var(--space-2);
   transition: var(--transition-btn);
@@ -841,7 +841,7 @@ select:disabled {
   font-weight: 600;
   color: var(--text-heading);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-badge);
   margin: 0;
 }
 

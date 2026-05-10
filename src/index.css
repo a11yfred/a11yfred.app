@@ -153,7 +153,7 @@ button {
   font-weight: 500;
   color: var(--accent-text);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
   white-space: nowrap;
   padding: 0 var(--space-2);
   height: var(--btn-height-standard);
@@ -1438,7 +1438,7 @@ button {
   color: var(--accent-text);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--letter-spacing-badge);
 }
 
 /* ─── No results ──────────────────────────────────────────── */
@@ -1477,7 +1477,7 @@ button {
 .skeleton-line {
   position: relative;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   background: var(--bg-subtle);
 }
 
@@ -1705,7 +1705,7 @@ input.search-input--disabled {
   cursor: pointer;
   text-decoration: underline;
   text-decoration-style: dotted;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
   transition: color var(--duration-fast);
 }
 
@@ -1928,7 +1928,7 @@ input.search-input--disabled {
   font-weight: 600;
   color: var(--text-heading);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--letter-spacing-label);
   margin-bottom: var(--space-3);
 }
 
@@ -2906,7 +2906,7 @@ input[type="radio"].control:not(:checked):hover {
   color: var(--accent-text);
   text-align: left;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
 }
 
 .detail-related__btn:hover {
@@ -2917,7 +2917,7 @@ input[type="radio"].control:not(:checked):hover {
 .detail-related__btn:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
 }
 
 .source-links__list {
@@ -2931,7 +2931,7 @@ input[type="radio"].control:not(:checked):hover {
 .source-links__link {
   color: var(--accent-text);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
   font-size: var(--fs-body);
   overflow-wrap: break-word;
 }
@@ -2943,7 +2943,7 @@ input[type="radio"].control:not(:checked):hover {
 .source-links__link:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   text-decoration: none;
 }
 
@@ -2980,7 +2980,7 @@ input[type="radio"].control:not(:checked):hover {
   font-weight: 600;
   color: var(--text-heading);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--letter-spacing-label);
 }
 
 .about-subheading {
@@ -3460,7 +3460,7 @@ input[type="radio"].control:not(:checked):hover {
   font-size: inherit;
   color: var(--accent-text);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: var(--text-underline-offset);
   cursor: pointer;
 }
 
@@ -3471,7 +3471,7 @@ input[type="radio"].control:not(:checked):hover {
 .about-inline-link:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   text-decoration: none;
 }
 
