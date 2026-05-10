@@ -720,6 +720,21 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       <ArrowDown size={14} aria-hidden="true" />
                     </a>
                   )}
+                  {onPin && (
+                    <IconButton
+                      variant="tertiary"
+                      label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                      disabled={archived}
+                      onClick={handlePin}
+                      icon={pinned
+                        ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
+                        : <Pin size={14} aria-hidden="true" fill="currentColor" />
+                      }
+                      className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                      aria-hidden={true}
+                      tabIndex={-1}
+                    />
+                  )}
                 </div>
 
                 {showRanking && !pinned && <div className="result-rank-col">
@@ -774,6 +789,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               </div>
 
               {/* Right action panel: pin (revealed by swiping right) */}
+              {/* Mobile: pin button inside swipe-reveal action panel */}
               {onPin && (
                 <div className="result-action-panel result-action-panel--right">
                   <IconButton

@@ -61,6 +61,7 @@
 
   /* Typography — families */
   --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
   --mono: 'SF Mono', 'Fira Mono', 'Fira Code', 'Consolas', monospace;
 
   /* Typography — scale (rem, base 16px browser default)
@@ -68,15 +69,16 @@
 
      --fs-small    14px — metadata, labels, fine print (absolute minimum)
      --fs-body     16px — body copy, inputs, result titles, button text
-     --fs-sub      18px — card headings, slightly emphasized text
-     --fs-heading  24px — panel / section headings (h2 inside dialogs/panels)
-
-     The page h1 uses --fs-h1, overridden on desktop below. */
+     --fs-sub      20px — card headings, slightly emphasized text
+     --fs-heading  24px — section headings (h3 inside panels)
+     --fs-h2       clamp — panel titles (h2), uses --font-display, scales up on desktop
+     --fs-h1       clamp — page title, uses --font-display, scales up on desktop */
   --fs-small:   0.875rem; /* 14px */
   --fs-body:    1rem;     /* 16px */
-  --fs-sub:     1.125rem; /* 18px */
+  --fs-sub:     1.25rem;  /* 20px */
   --fs-heading: 1.5rem;   /* 24px */
   --fs-h1:      clamp(1.75rem, 10.5vw, 2.667rem);
+  --fs-h2:      clamp(1.5rem, 8vw, 2.25rem);
 
   /* Spacing (rem, scales with html font-size) */
   --space-1: 0.25rem;
@@ -210,8 +212,8 @@
 
 @media (width >= 768px) {
   :root {
-    --fs-sub:     1.5rem;   /* 24px (up from 18px) */
     --fs-heading: 2.5rem;   /* 40px (up from 24px) */
+    --fs-h2:      2.75rem;  /* 44px */
     --fs-h1:      3.5rem;   /* 56px */
   }
 }

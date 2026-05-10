@@ -185,7 +185,7 @@ button {
 }
 
 .page-title {
-  font-family: Outfit, system-ui, sans-serif;
+  font-family: var(--font-display);
   font-size: var(--fs-h1);
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -997,8 +997,7 @@ button {
 }
 
 /* Pin button — absolutely positioned inside result-card-wrap */
-.result-pin-btn,
-.result-pin-btn.btn--icon {
+.result-pin-btn {
   position: absolute;
   top: 0;
   inset-inline-start: 0;
@@ -1024,18 +1023,13 @@ button {
   background: var(--accent-bg);
 }
 
-.result-pin-btn--active {
-  color: var(--accent);
-}
-
 .result-pin-btn:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: 1px;
 }
 
 @media (width < 768px) {
-  .result-pin-btn,
-  .result-pin-btn.btn--icon {
+  .result-pin-btn {
     display: none;
   }
 }
@@ -1909,7 +1903,8 @@ input.search-input--disabled {
 .settings-title,
 .about-title,
 .help-title {
-  font-size: var(--fs-h1);
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
   line-height: 1em;
   font-weight: 700;
   color: var(--text-heading);
@@ -2124,7 +2119,11 @@ input[type="radio"].control:not(:checked):hover {
   font-size: var(--fs-small);
   color: var(--accent-text);
   margin-top: var(--space-2);
-  margin-bottom: 0;
+  margin-bottom: var(--space-3);
+}
+
+.settings-pending-note + .settings-fieldset {
+  margin-top: var(--space-4);
 }
 
 .settings-toggle-row--disabled .settings-toggle-label,
@@ -2450,6 +2449,7 @@ input[type="radio"].control:not(:checked):hover {
 }
 
 .detail-title {
+  font-family: var(--font-display);
   font-size: var(--fs-heading);
   line-height: 1em;
   font-weight: 700;
@@ -2460,7 +2460,7 @@ input[type="radio"].control:not(:checked):hover {
 
 @media (width >= 768px) {
   .detail-title {
-    font-size: var(--fs-h1);
+    font-size: var(--fs-h2);
   }
 }
 
@@ -3246,7 +3246,7 @@ input[type="radio"].control:not(:checked):hover {
 }
 
 .onboarding-title {
-  font-family: Outfit, system-ui, sans-serif;
+  font-family: var(--font-display);
   font-size: var(--fs-sub);
   font-weight: 800;
   color: var(--text-heading);
@@ -3264,8 +3264,8 @@ input[type="radio"].control:not(:checked):hover {
 }
 
 .onboarding-step-heading {
-  font-family: Outfit, system-ui, sans-serif;
-  font-size: var(--fs-h1);
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
   font-weight: 800;
   color: var(--text-heading);
   line-height: 1.15;
