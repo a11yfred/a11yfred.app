@@ -418,3 +418,72 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.admin-check-btn {
+  margin-bottom: 0.5rem;
+}
+
+.admin-section__desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.admin-section__link {
+  color: var(--color-link);
+}
+
+.admin-connectivity-list,
+.admin-overlay-list {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.admin-connectivity-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm);
+}
+
+.admin-connectivity-dot {
+  font-size: 0.6rem;
+  line-height: 1;
+}
+
+.admin-connectivity-item--ok .admin-connectivity-dot { color: var(--color-success, #22c55e); }
+.admin-connectivity-item--fail .admin-connectivity-dot { color: var(--color-error); }
+
+.admin-connectivity-label {
+  font-weight: 600;
+  min-width: 5rem;
+}
+
+.admin-connectivity-status {
+  color: var(--text-muted);
+}
+
+.admin-connectivity-item--fail .admin-connectivity-status {
+  color: var(--color-error);
+}
+
+.admin-overlay-clear {
+  font-size: var(--font-size-sm);
+  color: var(--color-success, #22c55e);
+  margin-top: 0.25rem;
+}
+
+.admin-overlay-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-error);
+  font-weight: 600;
+}
+
+.admin-overlay-dot {
+  color: var(--color-warning, #f59e0b);
+}

@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './admin-panel.css'
 import publicCorpus from '../../data/corpus.json'
@@ -11,6 +11,49 @@ import { LS_ADMIN_DATASET } from '../../utils/constants.js'
 import { getStorage, setStorage } from '../../utils/storage.js'
 
 const IS_DEV = import.meta.env.DEV
+
+// Known a11y overlay script signatures — src substrings and global variable names.
+// Source: overlayfactsheet.com / overlay-fact-sheet vendor list.
+const OVERLAY_SIGNATURES = [
+  { name: 'accessiBe',       src: 'acsbapp.com',          global: 'acsbJS' },
+  { name: 'AudioEye',        src: 'audioeye.com',          global: 'AudioEye' },
+  { name: 'UserWay',         src: 'userway.org',           global: 'UserWay' },
+  { name: 'EqualWeb',        src: 'equalweb.com',          global: 'EqualWeb' },
+  { name: 'MaxAccess',       src: 'maxaccess.io',          global: 'MaxAccess' },
+  { name: 'Recite Me',       src: 'reciteme.com',          global: 'ReciteMe' },
+  { name: 'ADA Site Comply', src: 'adasitecompliance.com', global: null },
+  { name: 'Accessflow',      src: 'accessflow.ai',         global: null },
+  { name: 'Ally',            src: 'allytechno.com',        global: null },
+  { name: 'Enabler',         src: 'wcag.io',               global: null },
+]
+
+function detectOverlays() {
+  const found = []
+  const scripts = Array.from(document.querySelectorAll('script[src]'))
+  for (const sig of OVERLAY_SIGNATURES) {
+    const bySrc = scripts.some(s => s.src.includes(sig.src))
+    const byGlobal = sig.global && typeof window[sig.global] !== 'undefined'
+    if (bySrc || byGlobal) found.push(sig.name)
+  }
+  return found
+}
+
+async function checkConnectivity() {
+  // Probe three endpoints in parallel; report which succeed
+  const probes = [
+    { label: 'anthropic', url: 'https://api.anthropic.com' },
+    { label: 'openai',    url: 'https://api.openai.com' },
+    { label: 'google',    url: 'https://generativelanguage.googleapis.com' },
+  ]
+  const results = await Promise.allSettled(
+    probes.map(p =>
+      fetch(p.url, { method: 'HEAD', mode: 'no-cors', signal: AbortSignal.timeout(4000) })
+        .then(() => ({ label: p.label, ok: true }))
+        .catch(() => ({ label: p.label, ok: false }))
+    )
+  )
+  return results.map(r => r.value || r.reason)
+}
 
 const WCAG_CRITERIA = [
   // 1.1 Text Alternatives
@@ -145,6 +188,20 @@ export default function AdminPanel({
   const [levelFilter, setLevelFilter] = useState('all')
   const [versionFilter, setVersionFilter] = useState('all')
   const [copied, setCopied] = useState(null)
+  const [connectivity, setConnectivity] = useState(null)
+  const [connectivityChecking, setConnectivityChecking] = useState(false)
+  const [overlays, setOverlays] = useState(null)
+
+  const runConnectivityCheck = useCallback(async () => {
+    setConnectivityChecking(true)
+    const results = await checkConnectivity()
+    setConnectivity(results)
+    setConnectivityChecking(false)
+  }, [])
+
+  const runOverlayCheck = useCallback(() => {
+    setOverlays(detectOverlays())
+  }, [])
 
   useEffect(() => { setStorage(LS_ADMIN_DATASET, dataset) }, [dataset])
 
@@ -385,6 +442,58 @@ export default function AdminPanel({
               )
             })}
           </ul>
+        </section>
+
+        {/* ── Connectivity ────────────────────────────────────── */}
+        <section className="admin-section">
+          <h2 className="admin-section__title">AI Connectivity</h2>
+          <button
+            className="btn--secondary admin-check-btn"
+            onClick={runConnectivityCheck}
+            disabled={connectivityChecking}
+          >
+            {connectivityChecking ? 'Checking…' : 'Check providers'}
+          </button>
+          {connectivity && (
+            <ul className="admin-stat-list admin-connectivity-list">
+              {connectivity.map(({ label, ok }) => (
+                <li key={label} className={`admin-connectivity-item ${ok ? 'admin-connectivity-item--ok' : 'admin-connectivity-item--fail'}`}>
+                  <span className="admin-connectivity-dot" aria-hidden="true">{ok ? '●' : '○'}</span>
+                  <span className="admin-connectivity-label">{label}</span>
+                  <span className="admin-connectivity-status">{ok ? 'reachable' : 'blocked / offline'}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {/* ── Overlay Detector ─────────────────────────────────── */}
+        <section className="admin-section">
+          <h2 className="admin-section__title">Overlay Detector</h2>
+          <p className="admin-section__desc">
+            Checks for known a11y overlay scripts (
+            <a href="https://overlayfactsheet.com" target="_blank" rel="noreferrer" className="admin-section__link">
+              overlayfactsheet.com
+            </a>
+            ).
+          </p>
+          <button className="btn--secondary admin-check-btn" onClick={runOverlayCheck}>
+            Scan page
+          </button>
+          {overlays !== null && (
+            overlays.length === 0
+              ? <p className="admin-overlay-clear">No overlays detected.</p>
+              : (
+                <ul className="admin-stat-list admin-overlay-list">
+                  {overlays.map(name => (
+                    <li key={name} className="admin-overlay-item">
+                      <span className="admin-connectivity-dot admin-overlay-dot" aria-hidden="true">⚠</span>
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              )
+          )}
         </section>
 
         {/* ── Entry Lookup ────────────────────────────────────── */}
