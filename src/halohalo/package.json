@@ -1,0 +1,12 @@
+{
+  "name": "@ulam/halohalo",
+  "version": "0.0.0",
+  "description": "AI composition layer for the ulam framework. Provider abstraction, streaming inference, tool-use, and typewriter animation.",
+  "private": true,
+  "keywords": ["ai", "llm", "completion", "anthropic", "openai", "tool-use", "react", "hooks", "ulam"],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18",
+    "fuse.js": ">=7"
+  }
+}

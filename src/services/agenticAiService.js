@@ -1,30 +1,12 @@
-/**
- * agenticAiService.js
- *
- * Agentic AI refinement using Anthropic tool use.
- * Only supports the Anthropic provider, tool use requires the messages API
- * with tool definitions, which is Anthropic-specific in this codebase.
- *
- * Workflow per call:
- *   1. Send user refinement request with the search_corpus tool available
- *   2. If the model calls search_corpus, run it locally via Fuse.js and return results
- *   3. Repeat up to MAX_TOOL_TURNS times
- *   4. Extract the final Description / Suggested Fix output
- *
- * Error handling:
- *   - AiApiError is thrown for all API-level failures
- *   - If MAX_TOOL_TURNS is reached without a final answer, throws AiApiError('api_error')
- *   - Dev console logs every turn and tool call for debugging
- */
-
-import { AiApiError, httpStatusToErrorType } from './aiService.js'
-import { AI_AGENTIC_MAX_TOKENS, ANTHROPIC_API_VERSION, ANTHROPIC_API_URL, AI_DESC_REGEX, AI_FIX_REGEX, AGENTIC_MAX_TOOL_TURNS, LS_APIKEY_PREFIX } from '../utils/constants.js'
+import { callAnthropicWithTools } from '../halohalo/index.js'
+import { makeSearchTool } from '../halohalo/index.js'
+import { AI_AGENTIC_MAX_TOKENS, AGENTIC_MAX_TOOL_TURNS, LS_APIKEY_PREFIX } from '../utils/constants.js'
 import { getStorage, getAiModel } from '../utils/storage.js'
-import { SEARCH_CORPUS_TOOL_SCHEMA, searchCorpus } from './searchCorpusTool.js'
+import { parseAiResponse } from './aiService.js'
 
-const MAX_TOOL_TURNS = AGENTIC_MAX_TOOL_TURNS
+export { AiApiError } from '../halohalo/index.js'
 
-const AGENTIC_SYSTEM_PROMPT = `You are an expert accessibility auditor's AI assistant. Your job is to help rewrite finding descriptions in the auditor's established voice and methodology.
+const SYSTEM_PROMPT = `You are an expert accessibility auditor's AI assistant. Your job is to help rewrite finding descriptions in the auditor's established voice and methodology.
 
 Before rewriting, always call search_corpus at least once to find similar findings that demonstrate the expected tone, technical depth, and format.
 
@@ -38,51 +20,35 @@ Rules:
   Description: [rewritten description]
   Suggested Fix: [rewritten suggested fix]`
 
-async function callAnthropicMessages({ key, model, messages }) {
-  let res
-  try {
-    res = await fetch(ANTHROPIC_API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': key,
-        'anthropic-version': ANTHROPIC_API_VERSION,
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({
-        model,
-        max_tokens: AI_AGENTIC_MAX_TOKENS,
-        system: AGENTIC_SYSTEM_PROMPT,
-        tools: [SEARCH_CORPUS_TOOL_SCHEMA],
-        messages,
-      }),
-    })
-  } catch {
-    throw new AiApiError('network_error', { provider: 'anthropic' })
-  }
+const CORPUS_SEARCH_FIELDS = [
+  { name: 'title',    weight: 0.32 },
+  { name: 'keywords', weight: 0.30 },
+  { name: 'desc',     weight: 0.07 },
+  { name: 'fix',      weight: 0.03 },
+]
 
-  if (!res.ok) {
-    throw new AiApiError(httpStatusToErrorType(res.status), { status: res.status, provider: 'anthropic' })
-  }
+const CORPUS_PICK = ['id', 'title', 'primarySC', 'severity', 'desc', 'fix']
 
-  return res.json()
-}
-
-/**
- * Run an agentic refinement using Anthropic tool use.
- *
- * @param {{ finding, descText, fixText, note, corpus: object[] }} params
- * @returns {Promise<{ desc: string|null, fix: string|null }>}
- */
 export async function getAgenticRefinement({ finding, descText, fixText, note, corpus }) {
   const key = window.electronAPI
     ? await window.electronAPI.keys.get(`${LS_APIKEY_PREFIX}anthropic`)
     : getStorage(`${LS_APIKEY_PREFIX}anthropic`)
-  if (!key) {
-    throw new Error('Anthropic API key required for agentic mode. Add one in Settings → AI Assist.')
-  }
+
+  if (!key) throw new Error('Anthropic API key required for agentic mode. Add one in Settings → AI Assist.')
 
   const model = getAiModel('anthropic')
+
+  const { schema: toolSchema, handler: toolHandler } = makeSearchTool(corpus, {
+    name: 'search_corpus',
+    description:
+      'Search the accessibility finding corpus for entries related to a natural-language query. ' +
+      'Call this before rewriting to find similar findings that demonstrate the expected voice, ' +
+      'tone, and technical depth. Returns up to 3 matching entries.',
+    queryDescription: 'Natural-language search query, e.g. "keyboard focus visible" or "color contrast low vision".',
+    fields: CORPUS_SEARCH_FIELDS,
+    pick: CORPUS_PICK,
+    limit: 3,
+  })
 
   const userPrompt = `Refine this accessibility finding based on the auditor's note.
 
@@ -102,60 +68,17 @@ Auditor's note: "${note}"
 Search the corpus for related findings, then rewrite the description and suggested fix to reflect the refinement.`
 
   const messages = [{ role: 'user', content: userPrompt }]
-  let toolTurns = 0
 
-  while (toolTurns <= MAX_TOOL_TURNS) {
-    const data = await callAnthropicMessages({ key, model, messages })
+  const text = await callAnthropicWithTools({
+    key,
+    model,
+    system: SYSTEM_PROMPT,
+    tools: [toolSchema],
+    messages,
+    maxTokens: AI_AGENTIC_MAX_TOKENS,
+    maxTurns: AGENTIC_MAX_TOOL_TURNS,
+    onToolCall: toolHandler,
+  })
 
-    if (import.meta.env.DEV) {
-      console.log(`[agenticAI] turn ${toolTurns + 1}, stop_reason: ${data.stop_reason}`)
-    }
-
-    messages.push({ role: 'assistant', content: data.content })
-
-    if (data.stop_reason === 'end_turn') {
-      const textBlock = data.content.find(b => b.type === 'text')
-      const text = textBlock?.text || ''
-      const descMatch = text.match(AI_DESC_REGEX)
-      const fixMatch  = text.match(AI_FIX_REGEX)
-      return {
-        desc: descMatch?.[1]?.trim() || null,
-        fix:  fixMatch?.[1]?.trim()  || null,
-      }
-    }
-
-    if (data.stop_reason === 'tool_use') {
-      if (toolTurns >= MAX_TOOL_TURNS) {
-        if (import.meta.env.DEV) {
-          console.warn('[agenticAI] MAX_TOOL_TURNS reached, aborting')
-        }
-        throw new AiApiError('api_error', { provider: 'anthropic' })
-      }
-
-      const toolBlocks = data.content.filter(b => b.type === 'tool_use')
-      const toolResults = toolBlocks.map(block => {
-        const results = searchCorpus(block.input?.query ?? '', corpus)
-        if (import.meta.env.DEV) {
-          console.log(
-            `[agenticAI] tool_use: search_corpus("${block.input?.query}") → ${results.length} results`,
-            results.map(r => r.id)
-          )
-        }
-        return {
-          type: 'tool_result',
-          tool_use_id: block.id,
-          content: JSON.stringify(results),
-        }
-      })
-
-      messages.push({ role: 'user', content: toolResults })
-      toolTurns++
-      continue
-    }
-
-    // Unexpected stop_reason
-    break
-  }
-
-  throw new AiApiError('api_error', { provider: 'anthropic' })
+  return parseAiResponse(text)
 }
