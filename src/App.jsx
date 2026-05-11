@@ -210,6 +210,7 @@ function AppContent({
     return { type, value: rest }
   })
   const resultsCountRef = useRef(null)
+  const searchInputRef = useRef(null)
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
   const [devAllEnabled, setDevAllEnabled] = useState(false)
   const [namesEnabled, setNamesEnabled] = useState(false)
@@ -733,9 +734,7 @@ function AppContent({
     setPlatform('all')
     clearNarrowState()
     setSortBy('smart')
-    if (document.querySelector('.search-input')) {
-      document.querySelector('.search-input').focus()
-    }
+    searchInputRef.current?.focus()
   }
 
   const handleOpenSettings = () => {
@@ -851,6 +850,7 @@ function AppContent({
         onChange={handleQueryChange}
         onSearch={handleSearch}
         liveSearch={liveSearch}
+        inputRef={searchInputRef}
         platform={platform}
         aiEnabled={aiEnabled}
         providerName={providerName}

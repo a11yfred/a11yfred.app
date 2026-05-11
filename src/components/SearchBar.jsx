@@ -20,9 +20,10 @@ const TYPEWRITER_PHRASES = [
   { text: 'error' },
 ]
 
-export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false }) {
+export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false, inputRef: externalRef }) {
   const t = useT()
-  const inputRef = useRef(null)
+  const internalRef = useRef(null)
+  const inputRef = externalRef || internalRef
   const [phraseIdx, setPhraseIdx] = useState(0)
   const prefersReducedMotion = typeof window !== 'undefined'
     && window.matchMedia('(prefers-reduced-motion: reduce)').matches
