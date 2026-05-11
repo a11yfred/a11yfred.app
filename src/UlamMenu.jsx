@@ -12,6 +12,7 @@ import Toggle from './components/ui/Toggle.jsx'
 import Select from './components/ui/Select.jsx'
 import InputWithClear from './components/ui/InputWithClear.jsx'
 import Panel from './components/ui/Panel.jsx'
+import SearchInput from './components/ui/SearchInput.jsx'
 import { BottomSheet, Modal, Drawer } from './plugins/router/index.js'
 import './UlamMenu.css'
 
@@ -41,6 +42,8 @@ export default function UlamMenu() {
   const [toggle3, setToggle3] = useState(false)
   const [selectVal, setSelectVal] = useState('react')
   const [inputVal, setInputVal] = useState('')
+  const [searchVal, setSearchVal] = useState('')
+  const [liveSearch, setLiveSearch] = useState(true)
   const [textVal, setTextVal] = useState('')
   const [sheetOpen, setSheetOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
@@ -257,6 +260,65 @@ export default function UlamMenu() {
             <Select id="disabled-select" value="react" onChange={() => {}} disabled>
               <option value="react">React</option>
             </Select>
+          </Row>
+        </Section>
+
+        <Section title="SearchInput">
+          <Row label="Live search">
+            <SearchInput
+              id="search-live"
+              value={searchVal}
+              onChange={setSearchVal}
+              liveSearch={true}
+              placeholder="Search (live)…"
+              label="Live search example"
+              clearAriaLabel="Clear search"
+            />
+          </Row>
+          <Row label="Submit mode">
+            <SearchInput
+              id="search-submit"
+              value={searchVal}
+              onChange={setSearchVal}
+              onSubmit={() => {}}
+              liveSearch={false}
+              placeholder="Search (submit)…"
+              label="Submit search example"
+              clearAriaLabel="Clear search"
+              submitAriaLabel="Search"
+            />
+          </Row>
+          <Row label="Live search toggle">
+            <label htmlFor="live-tog" className="ulam-toggle-label">
+              <Toggle id="live-tog" checked={liveSearch} onChange={setLiveSearch} />
+              Live search {liveSearch ? 'on' : 'off'}
+            </label>
+          </Row>
+          <Row label="With toggle">
+            <SearchInput
+              id="search-toggled"
+              value={searchVal}
+              onChange={setSearchVal}
+              onSubmit={() => {}}
+              liveSearch={liveSearch}
+              placeholder="Search…"
+              label="Toggled search example"
+              clearAriaLabel="Clear search"
+              submitAriaLabel="Search"
+            />
+          </Row>
+          <Row label="Disabled">
+            <SearchInput
+              id="search-disabled"
+              value=""
+              onChange={() => {}}
+              liveSearch={false}
+              placeholder="Disabled…"
+              label="Disabled search example"
+              disabled
+              clearAriaLabel="Clear"
+              submitAriaLabel="Search"
+            />
           </Row>
         </Section>
 

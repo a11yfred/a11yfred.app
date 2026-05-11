@@ -1,0 +1,143 @@
+@import "../../app-tokens.css";
+
+/* ── Search form ─────────────────────────────────────────── */
+
+.search-input-form {
+  display: block;
+  width: 100%;
+}
+
+/* ── Input wrap ──────────────────────────────────────────── */
+
+.search-input-wrap {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius);
+  background: var(--bg-input, var(--bg-subtle));
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+  box-shadow: 0 0 0 1px #333;
+}
+
+[data-theme="dark"] .search-input-wrap {
+  box-shadow: 0 0 0 1px #e0e0e0;
+}
+
+.search-input-wrap:focus-within {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 var(--focus-width) var(--focus);
+}
+
+/* ── Input field ─────────────────────────────────────────── */
+
+.search-input-field {
+  flex: 1;
+  height: var(--input-height);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-sub);
+  line-height: 1.5;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius) 0 0 var(--radius);
+  color: var(--text-heading);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.search-input-field:focus {
+  outline: none;
+}
+
+.search-input-field--has-value {
+  padding-right: var(--space-2);
+}
+
+.search-input-field--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: var(--text-body);
+}
+
+/* live mode: no submit button, field gets full radius */
+.search-input-wrap--live .search-input-field {
+  border-radius: var(--radius);
+}
+
+/* remove browser default search input clear button */
+.search-input-field::-webkit-search-cancel-button {
+  display: none;
+}
+
+/* ── Clear button ────────────────────────────────────────── */
+
+.search-input-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--input-height);
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+
+.search-input-clear:hover {
+  color: var(--text-heading);
+}
+
+.search-input-clear:focus-visible {
+  outline: var(--focus-width) solid var(--focus);
+  outline-offset: -2px;
+}
+
+/* in live mode, clear is the last element — round the right side */
+.search-input-wrap--live .search-input-clear {
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+/* ── Submit button ───────────────────────────────────────── */
+
+.search-input-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--touch-target);
+  height: var(--input-height);
+  flex-shrink: 0;
+  background: var(--accent);
+  border: none;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--accent-text, #fff);
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+
+.search-input-submit:hover:not(:disabled) {
+  background: var(--accent-hover, var(--accent));
+  filter: brightness(1.1);
+}
+
+.search-input-submit:focus-visible {
+  outline: var(--focus-width) solid var(--focus);
+  outline-offset: -2px;
+}
+
+.search-input-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Reduced motion ──────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .search-input-wrap,
+  .search-input-clear,
+  .search-input-submit {
+    transition: none;
+  }
+}
