@@ -169,6 +169,12 @@ input.search-input--disabled {
   margin: var(--space-6) 0 0;
 }
 
+@media print {
+  .search-bar {
+    display: none !important;
+  }
+}
+
 /* â"€â"€â"€ View All section â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 
 .view-all-section {

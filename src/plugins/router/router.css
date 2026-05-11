@@ -347,3 +347,34 @@ body:has(.modal-panel.is-open) .drawer-panel {
     transition: none;
   }
 }
+
+/* ─── Scroll lock ─────────────────────────────────────────── */
+
+body:has(.drawer-panel.is-open) {
+  overflow: hidden;
+}
+
+/* Sheet collapsed state: reserve space at bottom of page content */
+body:has(.sheet-panel.is-collapsed) .app-container {
+  padding-bottom: var(--sheet-chrome-height, 60px);
+}
+
+/* ─── Print ───────────────────────────────────────────────── */
+
+@media print {
+  .sheet-chrome,
+  .sheet-close-bottom,
+  .overlay-backdrop,
+  .sheet-backdrop {
+    display: none !important;
+  }
+
+  .sheet-panel,
+  .sheet-content {
+    position: static !important;
+    overflow: visible !important;
+    max-height: none !important;
+    padding: 0 !important;
+    transform: none !important;
+  }
+}

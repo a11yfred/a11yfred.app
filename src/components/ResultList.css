@@ -1117,6 +1117,12 @@
   background: var(--bg-subtle);
 }
 
+@media print {
+  .result-list-section {
+    display: none !important;
+  }
+}
+
 .skeleton-line::after {
   content: '';
   position: absolute;

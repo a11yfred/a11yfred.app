@@ -339,6 +339,16 @@
   }
 }
 
+@media print {
+  .detail-panel {
+    padding: 0;
+  }
+
+  .detail-title {
+    font-size: 18pt;
+  }
+}
+
 /* Detail panel â€" reset-all / copy-all / close footer row */
 .detail-actions-end {
   display: flex;
