@@ -3,6 +3,7 @@ import { useT } from '../i18n/index.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
 import Button from './ui/Button.jsx'
 import { CYCLE_MS } from '../utils/constants.js'
+import './SearchBar.css'
 
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.

@@ -14,6 +14,7 @@ import InfoBox from './ui/InfoBox.jsx'
 import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
+import './ResultList.css'
 
 function triggerButtonAnimation(btn, id, setAnimating) {
   btn.classList.remove('animating')
