@@ -14,6 +14,7 @@ import InputWithClear from './components/ui/InputWithClear.jsx'
 import Panel from './components/ui/Panel.jsx'
 import SearchInput from './components/ui/SearchInput.jsx'
 import { BottomSheet, Modal, Drawer } from './plugins/router/index.js'
+import { usePref } from './calamansi/index.jsx'
 import './UlamMenu.css'
 
 function Section({ title, children }) {
@@ -43,7 +44,7 @@ export default function UlamMenu() {
   const [selectVal, setSelectVal] = useState('react')
   const [inputVal, setInputVal] = useState('')
   const [searchVal, setSearchVal] = useState('')
-  const [liveSearch, setLiveSearch] = useState(true)
+  const [liveSearch, setLiveSearch] = usePref('ulam-menu-live-search', true)
   const [textVal, setTextVal] = useState('')
   const [sheetOpen, setSheetOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)

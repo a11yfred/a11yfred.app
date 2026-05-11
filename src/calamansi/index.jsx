@@ -105,3 +105,5 @@ export function I18nProvider({ locale, children }) {
 export function useT() {
   return useContext(I18nContext)
 }
+
+export { usePref } from './usePref.js'
