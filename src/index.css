@@ -3,38 +3,6 @@
    Everything below is app-specific. */
 @import "./app-tokens.css";
 
-/* ─── ube overrides ───────────────────────────────────────────
-   These selectors target ube components or tokens but apply
-   app-specific context that does not belong in the library. */
-
-/* GitHub link in header: ExternalLinkIcon sits flush with no gap */
-.header-github-link .external-link-icon {
-  margin-left: 0;
-  opacity: 0.7;
-}
-
-/* Desktop page panel: push down to align heading with normal H1 position.
-   The compact header has zero flow-height (children are absolute/sr-only),
-   so without this padding panel titles appear at the very top. */
-@keyframes settings-panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (width >= 768px) {
-  .page-panel {
-    padding-top: calc(var(--space-8) + var(--space-6));
-    animation: settings-panel-in var(--duration-base) var(--ease-out) both;
-  }
-}
-
 /* ─── Base ─────────────────────────────────────────────────── */
 
 html {
@@ -143,6 +111,11 @@ body {
   text-decoration: none;
 }
 
+.header-github-link .external-link-icon {
+  margin-left: 0;
+  opacity: 0.7;
+}
+
 .page-title-link {
   color: inherit;
   text-decoration: none;
@@ -183,6 +156,31 @@ body {
   margin-inline: auto;
   text-align: center;
   line-height: 1.25em;
+}
+
+/* ─── Page panels ────────────────────────────────────────── */
+
+/* On desktop, panels render inline inside <main>. Push down to
+   align headings with the H1 position in the normal search view.
+   The compact header has zero flow-height, so without this the
+   panel title appears at the very top of the viewport. */
+@keyframes settings-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (width >= 768px) {
+  .page-panel {
+    padding-top: calc(var(--space-8) + var(--space-6));
+    animation: settings-panel-in var(--duration-base) var(--ease-out) both;
+  }
 }
 
 /* ─── 404 Not Found ─────────────────────────────────────── */
