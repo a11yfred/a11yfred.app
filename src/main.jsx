@@ -19,6 +19,7 @@ import './typography.css'
 import './plugins/router/router.css'
 import './components/ui/ui.css'
 import './index.css'
+import './locales.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
