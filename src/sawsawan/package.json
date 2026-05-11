@@ -1,0 +1,14 @@
+{
+  "name": "@ulam/sawsawan",
+  "version": "0.0.0",
+  "description": "Integration bridge wiring ube, calamansi, and adobo together. No standalone purpose.",
+  "private": true,
+  "keywords": ["ulam", "integration", "bridge", "react"],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18",
+    "@ulam/ube": "*",
+    "@ulam/calamansi": "*",
+    "@ulam/adobo": "*"
+  }
+}

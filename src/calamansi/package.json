@@ -1,0 +1,11 @@
+{
+  "name": "@ulam/calamansi",
+  "version": "0.0.0",
+  "description": "Data-agnostic i18n, hooks, and logic utilities. The sour layer of the ulam framework.",
+  "private": true,
+  "keywords": ["i18n", "internationalization", "react", "hooks", "utilities", "ulam"],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18"
+  }
+}

@@ -1,7 +1,7 @@
 import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ArrowDown, ChevronsLeft, ChevronsRight, ChevronUp, X } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../plugins/announce/index.js'
-import { useT } from '../i18n/index.jsx'
+import { useT } from '../calamansi/index.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
 import RadioChip from './ui/RadioChip.jsx'

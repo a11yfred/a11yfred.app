@@ -27,7 +27,7 @@ import {
 import { Announcer, announce } from './plugins/announce/index.js'
 import { FocusDebugger, NamesDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher } from './plugins/debug/index.js'
 import useThemeManager from './hooks/useThemeManager.js'
-import { I18nProvider, useT } from './i18n/index.jsx'
+import { I18nProvider, useT } from './calamansi/index.jsx'
 import useUserFindings from './hooks/useUserFindings.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'

@@ -1,4 +1,6 @@
 import './ui.css'
+
+// @ulam/ube — UI components
 export { default as Toggle } from './Toggle.jsx'
 export { default as RadioChip } from './RadioChip.jsx'
 export { default as Select } from './Select.jsx'
@@ -11,12 +13,16 @@ export { default as Field } from './Field.jsx'
 export { default as BackButton } from './BackButton.jsx'
 export { default as PanelShell } from './PanelShell.jsx'
 export { default as Panel } from './Panel.jsx'
-export { default as ScLink } from './ScLink.jsx'
 export { default as LinkTitle } from './LinkTitle.jsx'
 export { default as SourceLinks } from './SourceLinks.jsx'
-export { default as RelatedIssues } from './RelatedIssues.jsx'
 export { default as NoResults } from './NoResults.jsx'
 export { default as DataError } from './DataError.jsx'
 export { default as ResultListSkeleton } from './ResultListSkeleton.jsx'
+export { default as InfoBox } from './InfoBox.jsx'
+export { default as Radio } from './Radio.jsx'
 export { default as Modal } from '../../plugins/router/Modal.jsx'
 export { Announcer, announce } from '../../plugins/announce/index.js'
+
+// app-specific (WCAG domain — stays in a11yhelper, not part of @ulam/ube)
+export { default as ScLink } from './ScLink.jsx'
+export { default as RelatedIssues } from './RelatedIssues.jsx'

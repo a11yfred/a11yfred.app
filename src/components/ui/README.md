@@ -1,298 +1,133 @@
-# A11y UI Library
+# @ulam/ube
 
-Portable, accessible React component and utility library. Built for accessibility auditing tools but reusable across any project.
+Accessible React UI components, theming, routing, and screen reader announcements. The sweet layer of the [ulam](../../docs/ulam.md) framework.
+
+Purple-first. Accessible out of the box. No external dependencies beyond React.
+
+## Packages
+
+Ube is one of four ulam packages:
+
+```text
+ulam
+├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce  ← you are here
+├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic
+├── @ulam/adobo        savory  — a11y debug panel, vanilla-first
+└── @ulam/sawsawan     bridge  — wires the three together
+```
 
 ## Components
 
-### Interactive Controls (Base)
+### Interactive Controls
 
-- **Button**: Text button with decorative icons, state transitions, variants (primary, secondary, tertiary, warning)
-- **IconButton**: Icon-only button with variants (accent, tertiary)
-- **ButtonLink**: Anchor element styled as a button (for hash-based navigation links)
-- **Toggle**: Binary on/off switch with accessible labels
-- **RadioChip**: Radio button styled as a selectable chip
-- **Radio**: Plain accessible radio input
-- **Select**: Native-enhanced dropdown with keyboard support
+- **Button** — text button with icon support, state transitions, variants (primary, secondary, tertiary, warning)
+- **IconButton** — icon-only button (accent, tertiary)
+- **ButtonLink** — anchor styled as a button for hash navigation
+- **Toggle** — binary on/off switch with accessible labels
+- **RadioChip** — radio button styled as a selectable chip
+- **Radio** — plain accessible radio input
+- **Select** — native-enhanced dropdown with keyboard support
 
-### Input & Feedback
+### Input and Feedback
 
-- **InputWithClear**: Text input with built-in clear button and focus management
-- **Badge**: Interactive and display badge variants with semantic colors
-- **Field**: Complex textarea with auto-sizing, copy, reset, and undo
+- **InputWithClear** — text input with built-in clear button and focus management
+- **Badge** — interactive and display badge variants with semantic colors
+- **Field** — textarea with auto-sizing, copy, reset, and undo
+- **InfoBox** — informational callout box
 
 ### Data Display
 
-- **ScLink**: WCAG success criterion link with level badge
-- **LinkTitle**: Formatted source link title
-- **SourceLinks**: Source citations list (single inline or bulleted list)
-- **RelatedIssues**: Related findings list with singular/plural label
-- **ResultListSkeleton**: Skeleton loading state for result list
+- **LinkTitle** — formatted source link title
+- **SourceLinks** — source citation list (inline or bulleted)
+- **ResultListSkeleton** — skeleton loading state for result lists
 
-### Containers & Layouts
+### Containers and Layouts
 
-- **PanelShell**: Header + title + content wrapper for drawer/sheet panels
-- **Panel**: PanelShell wrapper with focus management and page title hooks
-- **BackButton**: RTL-aware back chevron button
-- **Modal**: Dialog with focus trapping and Escape handling
-- **Drawer**: Slide-in panel from left (mobile) or full page (desktop)
-- **BottomSheet**: Slide-up panel from bottom with focus management and desktop collapse
+- **PanelShell** — header + title + content wrapper for drawer/sheet panels
+- **Panel** — PanelShell with focus management and page title hooks
+- **BackButton** — RTL-aware back chevron button
+- **Modal** — dialog with focus trapping and Escape handling (from router plugin)
+- **Drawer** — slide-in panel from left with focus management
+- **BottomSheet** — slide-up panel from bottom with focus management
 
 ### States
 
-- **NoResults**: Empty state with illustration and copy
-- **DataError**: Error state with retry action
+- **NoResults** — empty state with illustration and copy
+- **DataError** — error state with retry action
 
-## Utilities & Plugins
+## Plugins
 
-### Announce Plugin (`src/plugins/announce/`)
+Ube ships three plugins as part of the package boundary.
+
+### Announce (`src/plugins/announce/`)
 
 Screen reader announcement system with assertive and polite regions.
 
 ```jsx
-import { Announcer, useAnnounce } from './plugins/announce'
+import { Announcer, announce, useAnnounce } from './plugins/announce'
 
 // Render once at app root
 <Announcer />
 
-// In components
+// Direct call from anywhere
+announce('Settings: Saved')
+announce('Error saving', { priority: 'assertive' })
+
+// Hook style
 const announce = useAnnounce()
-announce('Item copied to clipboard')  // polite (default)
-announce('Error saving', 'assertive')  // urgent, interrupts
 ```
 
-### Router Plugin (`src/plugins/router/`)
+### Router (`src/plugins/router/`)
 
 Hash-based routing with focus management, RTL support, and page title updates.
 
 ```jsx
-import { useRouter, useDir, useFocusOnMount, usePageTitle } from './plugins/router'
+import { Router, useRouter, useFocusOnMount, useDir } from './plugins/router'
 
-const { navigate } = useRouter()
+const { route, navigate } = useRouter()
 const dir = useDir()  // 'ltr' or 'rtl'
-const headingRef = useFocusOnMount()  // focus target on route change
-usePageTitle('Page Name')
+const headingRef = useFocusOnMount()
 ```
 
-Features:
+### Theme
 
-- Hash-based navigation (`/#/finding/123`)
-- Focus trapping in modals/panels
-- Escape key handling
-- RTL direction detection via `html[lang]`
-- Automatic page title updates
-
-### Debug Plugin (`src/plugins/debug/`)
-
-Development-only accessibility debugging tools (focus visualization, accessible names, deployment status).
-
-Features:
-
-- Keyboard focus ring overlay
-- Accessible name tooltip (`debug names on`)
-- Announce toast visualization
-- Deployment banner
-- Command reference panel
+- **useThemeManager** — dark/light/auto/party modes as first-class feature
 
 ## Design Tokens
 
-All components reference design tokens from `src/tokens.css`:
+All components reference design tokens from `src/tokens.css` (design primitives) and `src/app-tokens.css` (app sizing).
 
-- **Colors**: Text, backgrounds, borders, semantic (success/error), focus, badges
-- **Typography**: Font families, sizes (4 scale steps), line-height
-- **Spacing**: Consistent scale (0.25rem to 2rem)
-- **Sizing**: Touch targets (44px), button heights, input heights, icon sizes
-- **Focus & Outlines**: Outline width (2px), offset (2px)
-- **Borders & Radius**: Border widths, radius scale (4px to 9999px)
-- **Motion**: Durations (150ms, 250ms, 350ms), easing functions
+- **Colors** — text, backgrounds, borders, semantic (success/error), focus, severity
+- **Typography** — font families, scale (4 steps), line-height
+- **Spacing** — consistent scale (0.25rem to 2rem)
+- **Sizing** — touch targets (44px minimum), button/input heights, icon sizes
+- **Focus** — outline width (2px), offset (2px)
+- **Motion** — durations (150ms, 250ms, 350ms), easing
 
-## Usage
+## App-specific components (not part of @ulam/ube)
 
-### Components Only
+These live in this folder but will not be included in the ube package when forked:
 
-```jsx
-import { Button, IconButton, Toggle, Badge, Modal } from './components/ui'
-import './components/ui/index.css'
+- **ScLink** — WCAG success criterion link with level badge (a11yhelper domain)
+- **RelatedIssues** — related findings list (a11yhelper domain)
 
-export default function App() {
-  return <Button variant="primary">Click me</Button>
-}
-```
+## Design principles
 
-### With Utilities
+- Accessible by default — WCAG 2.2 AA, keyboard support, focus management built in
+- Token-driven — change tokens, not component code
+- Touch-safe — 44px minimum touch targets (WCAG 2.5.5)
+- Motion-respectful — all animations respect `prefers-reduced-motion`
+- Zero external dependencies — React only
 
-```jsx
-import { Button } from './components/ui'
-import { useAnnounce } from './plugins/announce'
-import { useRouter } from './plugins/router'
-import './tokens.css'
-import './components/ui/index.css'
+## Future: Fork to @ulam/ube
 
-export default function App() {
-  const announce = useAnnounce()
-  const { navigate } = useRouter()
-  
-  return (
-    <>
-      <Announcer />
-      <Button onClick={() => {
-        announce('Navigating to settings')
-        navigate('/settings')
-      }}>
-        Go to Settings
-      </Button>
-    </>
-  )
-}
-```
+This code lives in a11yhelper until closer to the webapp launch. At fork time:
 
-## Architecture
+1. Extract to the `ulam` monorepo
+2. Publish to npm under `@ulam/ube` (org owned by mikeyil)
+3. A11yhelper imports via `npm install @ulam/ube`
 
-```text
-src/
-├── tokens.css                    # Design tokens (colors, spacing, sizing, etc.)
-├── index.css                     # Global styles + component styles
-├── components/
-│   └── ui/
-│       ├── Button.jsx
-│       ├── IconButton.jsx
-│       ├── ButtonLink.jsx
-│       ├── Toggle.jsx
-│       ├── Radio.jsx
-│       ├── RadioChip.jsx
-│       ├── Select.jsx
-│       ├── Badge.jsx
-│       ├── Field.jsx
-│       ├── InputWithClear.jsx
-│       ├── PanelShell.jsx
-│       ├── Panel.jsx
-│       ├── BackButton.jsx
-│       ├── ScLink.jsx
-│       ├── LinkTitle.jsx
-│       ├── SourceLinks.jsx
-│       ├── RelatedIssues.jsx
-│       ├── NoResults.jsx
-│       ├── DataError.jsx
-│       ├── ResultListSkeleton.jsx
-│       ├── index.js              # Barrel export
-│       └── README.md             # This file
-├── plugins/
-│   ├── announce/
-│   │   ├── Announcer.jsx
-│   │   ├── useAnnounce.js
-│   │   ├── index.jsx
-│   │   └── README.md
-│   ├── router/
-│   │   ├── Modal.jsx             # Re-exported via ui/index.js
-│   │   ├── Drawer.jsx
-│   │   ├── BottomSheet.jsx
-│   │   ├── useRouter.js
-│   │   ├── useDir.js
-│   │   ├── useFocusOnMount.js
-│   │   ├── usePageTitle.js
-│   │   ├── index.js
-│   │   └── README.md
-│   └── debug/
-│       ├── AdminPanel.jsx
-│       ├── Debug.jsx
-│       ├── index.jsx
-│       └── README.md
-└── utils/
-    └── constants.js              # Shared constants
-```
-
-## Component Prop Reference
-
-### Button
-
-```jsx
-<Button
-  variant="primary"              // 'primary' | 'secondary' | 'tertiary' | 'warning'
-  onClick={handleClick}
-  disabled={false}
-  fullWidth={false}
-  error={false}
-  icon={<CheckIcon />}           // optional decorative icon
-  activeIcon={<SuccessIcon />}   // icon when active
-  active={false}                 // shows activeIcon/activeLabel
-  label="Save"                   // aria-label or children
-  className="custom-class"
-/>
-```
-
-### IconButton
-
-```jsx
-<IconButton
-  icon={<MenuIcon />}
-  label="Open menu"              // aria-label (required)
-  variant="accent"               // 'accent' | 'tertiary'
-  onClick={handleClick}
-  disabled={false}
-/>
-```
-
-### Toggle
-
-```jsx
-<Toggle
-  checked={false}
-  onChange={(checked) => {...}}
-  label="Enable feature"
-  aria-label="Optional override"
-/>
-```
-
-### Modal
-
-```jsx
-<Modal
-  isOpen={true}
-  onClose={handleClose}
-  title="Confirm Action"
-  description="Are you sure?"
->
-  <button onClick={handleConfirm}>Yes</button>
-  <button onClick={handleClose}>Cancel</button>
-</Modal>
-```
-
-## Design Philosophy
-
-- **Minimal and Opinionated**: Each component does one thing well
-- **Accessible by Default**: WCAG 2.2 AA compliant, keyboard support built-in
-- **Token-Driven**: All values use design tokens; change tokens, not component code
-- **Touch-Safe**: 44px minimum touch targets (WCAG 2.5.5)
-- **Motion-Respectful**: All animations respect `prefers-reduced-motion`
-- **Portable**: No external dependencies beyond React; designed for npm packaging
-
-## Development
-
-### Adding a New Component
-
-1. Create `src/components/ui/ComponentName.jsx` with `forwardRef`
-2. Add styles to `src/index.css` under `/* ─── Component Name ──── */`
-3. Export from `src/components/ui/index.js`
-4. Add comprehensive jsdoc and prop types
-5. Test keyboard navigation and screen reader announcements
-6. Update this README
-
-### Styling Standards
-
-- Use CSS custom properties (tokens) exclusively
-- Prefix component styles with `.component-name`
-- Include states: `:hover`, `:active`, `:disabled`, `:focus-visible`
-- Include dark mode under `[data-theme="dark"]`
-- Include reduced-motion under `@media (prefers-reduced-motion: reduce)`
-
-## Future: Graduation to npm Package
-
-When ready to publish this as a standalone package:
-
-1. Extract to separate repo: `a11y-ui-library`
-2. Create `package.json` with peer dependencies (React, lucide-react)
-3. Publish to npm under `@mikeyil/a11y-ui-library`
-4. This project imports via `npm install @mikeyil/a11y-ui-library`
-5. Use git subtree to keep bidirectional sync during transition period
+The boundary is maintained now by discipline: library code stays in `src/components/ui/`, `src/plugins/`, and `src/tokens/`. App-specific code does not cross in.
 
 ## License
 

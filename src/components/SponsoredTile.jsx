@@ -1,7 +1,7 @@
 // TODO: Wire up EthicalAds network (https://www.ethicalads.io/)
 // This is a placeholder tile. Replace with actual ad network integration after signing up.
 // EthicalAds provides privacy-respecting, non-tracking ads targeted to developers.
-import { useT } from '../i18n/index.jsx'
+import { useT } from '../calamansi/index.jsx'
 
 export default function SponsoredTile() {
   const t = useT()

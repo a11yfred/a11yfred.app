@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useT } from '../../i18n/index.jsx'
+import { useT } from '../../calamansi/index.jsx'
 import findingSlug from '../../utils/findingSlug.js'
 
 // AAA/enhanced SC pairings — both directions

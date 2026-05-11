@@ -1,0 +1,11 @@
+{
+  "name": "@ulam/adobo",
+  "version": "0.0.0",
+  "description": "Vanilla-first accessibility debug panel with a thin React wrapper. The savory layer of the ulam framework.",
+  "private": true,
+  "keywords": ["accessibility", "a11y", "debug", "devtools", "react", "vanilla", "ulam"],
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18"
+  }
+}
