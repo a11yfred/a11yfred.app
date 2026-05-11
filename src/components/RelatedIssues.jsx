@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import { useT } from '../calamansi/index.jsx'
+import { relatedItems } from '../calamansi/relevance.js'
 import findingSlug from '../utils/findingSlug.js'
 
-// AAA/enhanced SC pairings — both directions
+// WCAG AAA/enhanced SC pairings — app-specific, both directions
 const AAA_PAIRS = {
   '2.4.11': '2.4.12',
   '2.4.12': '2.4.11',
@@ -13,21 +14,16 @@ const AAA_PAIRS = {
   '2.2.6':  '2.2.1',
 }
 
-function rankTier(candidate, current, coSelectionPairs) {
-  const cid = candidate.id
-  const hasSc = !!candidate.sc
+// App-supplied rank function: WCAG SC tiering + co-selection boost
+function wcagRankTier(candidate, current, coSelectionPairs) {
+  if (!candidate.sc) return { tier: 7, boost: 0 }
 
-  // Tier 1: Best Practice (no sc) — deprioritized, score 0
-  if (!hasSc) return { tier: 7, boost: 0 }
-
+  const coBoost = coSelectionPairs?.[candidate.id] || 0
   const sameSc = candidate.sc === current.sc
   const aaaPair = [].concat(AAA_PAIRS[current.sc] ?? []).includes(candidate.sc)
   const currentScInCandidateRelated = candidate.relatedSC?.some(r => r.startsWith(current.sc + ' '))
   const sharedRelated = current.relatedSC?.some(r => candidate.relatedSC?.includes(r))
   const keywordOverlap = current.keywords?.filter(k => candidate.keywords?.includes(k)).length || 0
-
-  // Behavioral boost from co-selection pairs
-  const coBoost = coSelectionPairs?.[cid] || 0
 
   if (sameSc)                      return { tier: 1, boost: coBoost }
   if (aaaPair)                     return { tier: 2, boost: coBoost }
@@ -42,16 +38,7 @@ export default function RelatedIssues({ finding, allFindings, onSelect, getPairs
 
   const related = useMemo(() => {
     if (!allFindings?.length) return []
-
-    const coSelectionPairs = getPairsFor?.(finding.id) || {}
-
-    return allFindings
-      .filter(d => d.id !== finding.id)
-      .map(d => ({ finding: d, ...rankTier(d, finding, coSelectionPairs) }))
-      .filter(({ tier }) => tier <= 5) // only show through keyword tier by default
-      .sort((a, b) => a.tier !== b.tier ? a.tier - b.tier : b.boost - a.boost)
-      .slice(0, 5)
-      .map(({ finding: d }) => d)
+    return relatedItems(finding, allFindings, wcagRankTier, getPairsFor)
   }, [allFindings, finding, getPairsFor])
 
   if (!related.length || !onSelect) return null
