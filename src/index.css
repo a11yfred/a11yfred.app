@@ -158,31 +158,6 @@ body {
   line-height: 1.25em;
 }
 
-/* ─── Page panels ────────────────────────────────────────── */
-
-/* On desktop, panels render inline inside <main>. Push down to
-   align headings with the H1 position in the normal search view.
-   The compact header has zero flow-height, so without this the
-   panel title appears at the very top of the viewport. */
-@keyframes settings-panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (width >= 768px) {
-  .page-panel {
-    padding-top: calc(var(--space-8) + var(--space-6));
-    animation: settings-panel-in var(--duration-base) var(--ease-out) both;
-  }
-}
-
 /* ─── 404 Not Found ─────────────────────────────────────── */
 
 .not-found {
