@@ -35,6 +35,7 @@ import usePinnedFindings from './hooks/usePinnedFindings.js'
 import { useCoSelection } from './hooks/useCoSelection.js'
 import { SEVERITY_VARS } from './data/severityStyles.js'
 import findingSlug from './utils/findingSlug.js'
+import './components/PartyMode.css'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 const AdminPanel = import.meta.env.DEV
