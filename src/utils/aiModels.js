@@ -1,4 +1,5 @@
 import { getStorage } from './storage.js'
+import { LS_AI_MODEL_PREFIX, LS_APIKEY_PREFIX, DEFAULT_AI_MODELS } from './constants.js'
 
 export const PROVIDERS = [
   { id: 'anthropic', label: 'Anthropic (Claude)', placeholderKey: 'settings.api_placeholder_anthropic' },
@@ -24,15 +25,14 @@ export const PROVIDER_MODELS = {
   microsoft: [],
 }
 
-export const MODEL_DEFAULTS = {
-  anthropic: 'claude-sonnet-4-6',
-  openai:    'gpt-4o',
-  google:    'gemini-1.5-flash',
-  microsoft: '',
-}
-
 export function initModels() {
   return Object.fromEntries(
-    PROVIDERS.map(p => [p.id, getStorage(`ai_model_${p.id}`, MODEL_DEFAULTS[p.id] || '')])
+    PROVIDERS.map(p => [p.id, getStorage(`${LS_AI_MODEL_PREFIX}${p.id}`, DEFAULT_AI_MODELS[p.id] || '')])
+  )
+}
+
+export function initApiKeys() {
+  return Object.fromEntries(
+    PROVIDERS.map(p => [p.id, window.electronAPI ? '' : getStorage(`${LS_APIKEY_PREFIX}${p.id}`, '')])
   )
 }

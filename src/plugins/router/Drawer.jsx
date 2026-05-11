@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useFocusTrap } from './useFocusTrap.js'
 import { useAriaHide } from './useAriaHide.js'
 import { returnFocus } from './returnFocus.js'
+import { useEscapeKey } from './useEscapeKey.js'
 
 /**
  * Drawer panel that slides in from the left on mobile.
@@ -42,13 +43,7 @@ export default function Drawer({ open, onClose, label = 'Menu', children, focusO
     }
   }, [open, focusOnClose])
 
-  // Escape key
-  useEffect(() => {
-    if (!open) return
-    const handler = (e) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [open, onClose])
+  useEscapeKey(open, onClose)
 
   return (
     <>

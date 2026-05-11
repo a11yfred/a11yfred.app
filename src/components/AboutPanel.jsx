@@ -5,6 +5,12 @@ import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
 import findingSlug from '../utils/findingSlug.js'
 
+const ExtIcon = <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
+
+function ExtLink({ href, children }) {
+  return <a href={href} target="_blank" rel="noreferrer" className="about-inline-link">{children}{ExtIcon}</a>
+}
+
 export default function AboutPanel({ onClose, allFindings = [] }) {
   const t = useT()
 
@@ -28,7 +34,7 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
         <p className="about-body">{t('about.what_body')}</p>
         <p className="about-body">
           {t('about.what_body_2_prefix')}
-          <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="about-inline-link">Web Content Accessibility Guidelines (WCAG)<ExternalLink size={11} aria-hidden="true" className="external-link-icon" /></a>
+          <ExtLink href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG)</ExtLink>
           {t('about.what_body_2_suffix')}
         </p>
         <p className="about-body">{t('about.what_wcag')}</p>
@@ -94,17 +100,17 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
             {' '}(W3C / WAI)
           </li>
           <li>
-            <a href="https://github.com/dequelabs/axe-core" target="_blank" rel="noreferrer" className="about-inline-link">axe-core<ExternalLink size={11} aria-hidden="true" className="external-link-icon" /></a>
+            <ExtLink href="https://github.com/dequelabs/axe-core">axe-core</ExtLink>
             {' '}rule descriptions and{' '}
-            <a href="https://dequeuniversity.com" target="_blank" rel="noreferrer" className="about-inline-link">Deque University<ExternalLink size={11} aria-hidden="true" className="external-link-icon" /></a>
+            <ExtLink href="https://dequeuniversity.com">Deque University</ExtLink>
             {' '}course materials (Deque Systems)
           </li>
           <li>
-            <a href="https://webaim.org" target="_blank" rel="noreferrer" className="about-inline-link">WebAIM<ExternalLink size={11} aria-hidden="true" className="external-link-icon" /></a>
+            <ExtLink href="https://webaim.org">WebAIM</ExtLink>
             {' '}articles and reference guides
           </li>
           <li>
-            <a href="https://appt.org" target="_blank" rel="noreferrer" className="about-inline-link">appt.org<ExternalLink size={11} aria-hidden="true" className="external-link-icon" /></a>
+            <ExtLink href="https://appt.org">appt.org</ExtLink>
             {' '}accessibility guidelines for native apps
           </li>
         </ul>

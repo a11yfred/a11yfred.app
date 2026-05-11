@@ -7,6 +7,8 @@ import personalCorpus from '../../data/personal-corpus.json'
 import findingSlug from '../../utils/findingSlug.js'
 import Toggle from '../../components/ui/Toggle.jsx'
 import IconButton from '../../components/ui/IconButton.jsx'
+import { LS_ADMIN_DATASET } from '../../utils/constants.js'
+import { getStorage, setStorage } from '../../utils/storage.js'
 
 const IS_DEV = import.meta.env.DEV
 
@@ -91,6 +93,10 @@ const DEPLOY_OPTIONS = [
   { value: 'vercel',  label: 'Vercel' },
 ]
 
+const SC_FILTER_OPTIONS      = [['all', 'All'], ['0', 'Missing'], ['1+', 'Covered']]
+const LEVEL_FILTER_OPTIONS   = [['all', 'All'], ['A', 'A'], ['AA', 'AA']]
+const VERSION_FILTER_OPTIONS = [['all', 'All'], ['2.0', '2.0'], ['2.1', '2.1'], ['2.2', '2.2']]
+
 function computeStats(corpus) {
   const bySC = {}
   const byVersion = {}
@@ -134,13 +140,13 @@ export default function AdminPanel({
   onFilter,
   onClose,
 }) {
-  const [dataset, setDataset] = useState(() => localStorage.getItem('adminDataset') || 'public')
+  const [dataset, setDataset] = useState(() => getStorage(LS_ADMIN_DATASET, 'public'))
   const [scFilter, setScFilter] = useState('all')
   const [levelFilter, setLevelFilter] = useState('all')
   const [versionFilter, setVersionFilter] = useState('all')
   const [copied, setCopied] = useState(null)
 
-  useEffect(() => { localStorage.setItem('adminDataset', dataset) }, [dataset])
+  useEffect(() => { setStorage(LS_ADMIN_DATASET, dataset) }, [dataset])
 
   const corpus = { public: publicCorpus, legacy: legacyCorpus, personal: personalCorpus }[dataset] ?? publicCorpus
   const stats = useMemo(() => computeStats(corpus), [corpus])
@@ -323,19 +329,19 @@ export default function AdminPanel({
           <div className="admin-sc-filters">
             <div className="admin-filter-group">
               <span className="admin-filter-label">Show</span>
-              {[['all', 'All'], ['0', 'Missing'], ['1+', 'Covered']].map(([v, l]) => (
+              {SC_FILTER_OPTIONS.map(([v, l]) => (
                 <button key={v} className={scFilter === v ? 'btn--primary' : 'btn--secondary'} onClick={() => setScFilter(v)}>{l}</button>
               ))}
             </div>
             <div className="admin-filter-group">
               <span className="admin-filter-label">Level</span>
-              {[['all', 'All'], ['A', 'A'], ['AA', 'AA']].map(([v, l]) => (
+              {LEVEL_FILTER_OPTIONS.map(([v, l]) => (
                 <button key={v} className={levelFilter === v ? 'btn--primary' : 'btn--secondary'} onClick={() => setLevelFilter(v)}>{l}</button>
               ))}
             </div>
             <div className="admin-filter-group">
               <span className="admin-filter-label">Version</span>
-              {[['all', 'All'], ['2.0', '2.0'], ['2.1', '2.1'], ['2.2', '2.2']].map(([v, l]) => (
+              {VERSION_FILTER_OPTIONS.map(([v, l]) => (
                 <button key={v} className={versionFilter === v ? 'btn--primary' : 'btn--secondary'} onClick={() => setVersionFilter(v)}>{l}</button>
               ))}
             </div>

@@ -6,6 +6,9 @@
  * Calls go directly from the browser to the provider API.
  */
 
+import { AI_MAX_TOKENS, ANTHROPIC_API_VERSION, ANTHROPIC_API_URL, AI_DESC_REGEX, AI_FIX_REGEX, LS_APIKEY_PREFIX } from '../utils/constants.js'
+import { getStorage, getAiProvider, getAiModel } from '../utils/storage.js'
+
 export class AiApiError extends Error {
   /**
    * @param {'invalid_key'|'rate_limit'|'service_error'|'network_error'|'api_error'} type
@@ -19,18 +22,25 @@ export class AiApiError extends Error {
   }
 }
 
+export function httpStatusToErrorType(status) {
+  if (status === 401 || status === 403) return 'invalid_key'
+  if (status === 429) return 'rate_limit'
+  if (status >= 500) return 'service_error'
+  return 'api_error'
+}
+
 const PROVIDER_CONFIGS = {
   anthropic: {
-    url: 'https://api.anthropic.com/v1/messages',
+    url: ANTHROPIC_API_URL,
     buildHeaders: (key) => ({
       'Content-Type': 'application/json',
       'x-api-key': key,
-      'anthropic-version': '2023-06-01',
+      'anthropic-version': ANTHROPIC_API_VERSION,
       'anthropic-dangerous-direct-browser-access': 'true',
     }),
     buildBody: (prompt) => JSON.stringify({
-      model: localStorage.getItem('ai_model_anthropic') || 'claude-sonnet-4-6',
-      max_tokens: 1024,
+      model: getAiModel('anthropic'),
+      max_tokens: AI_MAX_TOKENS,
       messages: [{ role: 'user', content: prompt }],
     }),
     parseResponse: async (res) => {
@@ -46,8 +56,8 @@ const PROVIDER_CONFIGS = {
       'Authorization': `Bearer ${key}`,
     }),
     buildBody: (prompt) => JSON.stringify({
-      model: localStorage.getItem('ai_model_openai') || 'gpt-4o',
-      max_tokens: 1024,
+      model: getAiModel('openai'),
+      max_tokens: AI_MAX_TOKENS,
       messages: [{ role: 'user', content: prompt }],
     }),
     parseResponse: async (res) => {
@@ -58,13 +68,13 @@ const PROVIDER_CONFIGS = {
 
   google: {
     buildUrl: (key) =>
-      `https://generativelanguage.googleapis.com/v1beta/models/${localStorage.getItem('ai_model_google') || 'gemini-1.5-flash'}:generateContent?key=${key}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${getAiModel('google')}:generateContent?key=${key}`,
     buildHeaders: () => ({
       'Content-Type': 'application/json',
     }),
     buildBody: (prompt) => JSON.stringify({
       contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { maxOutputTokens: 1024 },
+      generationConfig: { maxOutputTokens: AI_MAX_TOKENS },
     }),
     parseResponse: async (res) => {
       const data = await res.json()
@@ -82,7 +92,7 @@ const PROVIDER_CONFIGS = {
       'api-key': key,
     }),
     buildBody: (prompt) => JSON.stringify({
-      max_tokens: 1024,
+      max_tokens: AI_MAX_TOKENS,
       messages: [{ role: 'user', content: prompt }],
     }),
     parseResponse: async (res) => {
@@ -112,10 +122,10 @@ Suggested Fix: [rewritten suggested fix]`
 }
 
 export async function getAiRefinement({ finding, descText, fixText, note }) {
-  const provider = localStorage.getItem('ai_provider') || 'anthropic'
+  const provider = getAiProvider()
   const key = window.electronAPI
-    ? await window.electronAPI.keys.get(`apikey_${provider}`)
-    : localStorage.getItem(`apikey_${provider}`)
+    ? await window.electronAPI.keys.get(`${LS_APIKEY_PREFIX}${provider}`)
+    : getStorage(`${LS_APIKEY_PREFIX}${provider}`)
 
   if (!key) {
     throw new Error(`No API key found for ${provider}. Add one in Settings.`)
@@ -150,18 +160,13 @@ export async function getAiRefinement({ finding, descText, fixText, note }) {
   }
 
   if (!res.ok) {
-    const type =
-      res.status === 401 || res.status === 403 ? 'invalid_key'
-      : res.status === 429 ? 'rate_limit'
-      : res.status >= 500 ? 'service_error'
-      : 'api_error'
-    throw new AiApiError(type, { status: res.status, provider })
+    throw new AiApiError(httpStatusToErrorType(res.status), { status: res.status, provider })
   }
 
   const text = await config.parseResponse(res)
 
-  const descMatch = text.match(/^Description:\s*(.+)/m)
-  const fixMatch = text.match(/^Suggested Fix:\s*(.+)/ms)
+  const descMatch = text.match(AI_DESC_REGEX)
+  const fixMatch  = text.match(AI_FIX_REGEX)
 
   return {
     desc: descMatch?.[1]?.trim() || null,

@@ -1,42 +1,13 @@
 import { useCallback, useRef } from 'react'
+import { LS_CO_SELECTION, SS_COPIED_IDS } from '../utils/constants.js'
+import { getStorageJson, setStorageJson, getSessionJson, setSessionJson } from '../utils/storage.js'
 
-const STORAGE_KEY = 'coSelectionPairs'
-const SESSION_KEY = 'sessionCopiedIds'
 const MAX_PAIRS = 500
 
 function pairKey(a, b) {
   return a < b ? `${a}|${b}` : `${b}|${a}`
 }
 
-function readPairs() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
-  } catch {
-    return {}
-  }
-}
-
-function writePairs(pairs) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(pairs))
-  } catch { /* storage unavailable */ }
-}
-
-function readSessionCopied() {
-  try {
-    return new Set(JSON.parse(sessionStorage.getItem(SESSION_KEY) || '[]'))
-  } catch {
-    return new Set()
-  }
-}
-
-function writeSessionCopied(set) {
-  try {
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify([...set]))
-  } catch { /* storage unavailable */ }
-}
-
-// Prune pairs object to MAX_PAIRS by dropping lowest-count entries
 function pruneIfNeeded(pairs) {
   const keys = Object.keys(pairs)
   if (keys.length <= MAX_PAIRS) return pairs
@@ -47,40 +18,29 @@ function pruneIfNeeded(pairs) {
 }
 
 export function useCoSelection() {
-  // Track the last ID that had a copy event this session, for pairing
   const lastCopiedRef = useRef(null)
 
-  // Call this when the user copies desc, fix, or copy-all for a finding
   const recordCopy = useCallback((findingId) => {
     if (!findingId) return
 
-    // Mark this ID as copied in sessionStorage (weak signal)
-    const copied = readSessionCopied()
+    const copied = new Set(getSessionJson(SS_COPIED_IDS, []))
     copied.add(findingId)
-    writeSessionCopied(copied)
+    setSessionJson(SS_COPIED_IDS, [...copied])
 
-    // If there was a previous copy in this session for a different entry, record the pair
     const prev = lastCopiedRef.current
     if (prev && prev !== findingId) {
-      let pairs = readPairs()
+      let pairs = getStorageJson(LS_CO_SELECTION, {})
       const key = pairKey(prev, findingId)
       pairs[key] = (pairs[key] || 0) + 1
       pairs = pruneIfNeeded(pairs)
-      writePairs(pairs)
+      setStorageJson(LS_CO_SELECTION, pairs)
     }
 
     lastCopiedRef.current = findingId
   }, [])
 
-  // Return the count for a specific pair (for ranking use)
-  const getPairCount = useCallback((idA, idB) => {
-    const pairs = readPairs()
-    return pairs[pairKey(idA, idB)] || 0
-  }, [])
-
-  // Return all pair counts as a map keyed by the other ID, given one ID
   const getPairsFor = useCallback((findingId) => {
-    const pairs = readPairs()
+    const pairs = getStorageJson(LS_CO_SELECTION, {})
     const result = {}
     Object.entries(pairs).forEach(([key, count]) => {
       const [a, b] = key.split('|')
@@ -90,5 +50,5 @@ export function useCoSelection() {
     return result
   }, [])
 
-  return { recordCopy, getPairCount, getPairsFor }
+  return { recordCopy, getPairsFor }
 }

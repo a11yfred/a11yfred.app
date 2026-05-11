@@ -248,7 +248,3 @@ export async function importFromUrl(url, options = {}) {
   return processRows(rows, options)
 }
 
-/**
- * Accepted file extensions for use in <input accept="..."> attributes.
- */
-export const ACCEPTED_EXTENSIONS = '.csv,.xlsx,.xls,.json'

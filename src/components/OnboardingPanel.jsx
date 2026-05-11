@@ -4,6 +4,10 @@ import { usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/rout
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
 import Button from './ui/Button.jsx'
+import { LS_ONBOARDING_SEEN } from '../utils/constants.js'
+import { setStorage } from '../utils/storage.js'
+
+const randomAngle = () => Math.floor(Math.random() * 360)
 
 const SLIDES = [
   {
@@ -30,7 +34,7 @@ export default function OnboardingPanel({ onClose }) {
   const BackArrow = dir === 'rtl' ? CircleArrowRight : CircleArrowLeft
 
   const [step, setStep] = useState(0)
-  const [gradAngle, setGradAngle] = useState(() => Math.floor(Math.random() * 360))
+  const [gradAngle, setGradAngle] = useState(() => randomAngle())
   const [confirmOpen, setConfirmOpen] = useState(false)
   const titleRef = useRef(null)
   const stepHeadingRef = useRef(null)
@@ -45,7 +49,7 @@ export default function OnboardingPanel({ onClose }) {
   const isLast = step === total - 1
 
   function commitClose() {
-    localStorage.setItem('onboardingSeen', '1')
+    setStorage(LS_ONBOARDING_SEEN, '1')
     onClose()
   }
 
@@ -101,7 +105,7 @@ export default function OnboardingPanel({ onClose }) {
             <button
               type="button"
               className="onboarding-arrow-btn"
-              onClick={() => { setGradAngle(Math.floor(Math.random() * 360)); setStep(s => { const next = s - 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }) }}
+              onClick={() => { setGradAngle(randomAngle()); setStep(s => { const next = s - 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }) }}
               aria-label={t('onboarding.prev_aria')}
             >
               <BackArrow size={36} aria-hidden="true" />
@@ -118,7 +122,7 @@ export default function OnboardingPanel({ onClose }) {
         <button
           type="button"
           className="onboarding-arrow-btn"
-          onClick={() => isLast ? commitClose() : (setGradAngle(Math.floor(Math.random() * 360)), setStep(s => { const next = s + 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }))}
+          onClick={() => isLast ? commitClose() : (setGradAngle(randomAngle()), setStep(s => { const next = s + 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }))}
           aria-label={isLast ? t('onboarding.done_aria') : t('onboarding.next_aria')}
         >
           <FwdArrow size={36} aria-hidden="true" />

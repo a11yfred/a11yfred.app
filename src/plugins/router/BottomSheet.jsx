@@ -5,6 +5,7 @@ import { useFocusTrap } from './useFocusTrap.js'
 import { useAriaHide } from './useAriaHide.js'
 import { returnFocus } from './returnFocus.js'
 import { useDir } from './useDir.js'
+import { useEscapeKey } from './useEscapeKey.js'
 
 /**
  * Bottom sheet that slides up from the bottom of the viewport.
@@ -95,13 +96,7 @@ export default function BottomSheet({
     }
   }, [open, collapsed, returnFocusRef])
 
-  // Escape key — only active when open and not collapsed
-  useEffect(() => {
-    if (!open || collapsed) return
-    const handler = (e) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [open, collapsed, onClose])
+  useEscapeKey(open && !collapsed, onClose)
 
   // Scroll lock — only when open and not collapsed
   useEffect(() => {

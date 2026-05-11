@@ -1,7 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
-import { getAiRefinement, AiApiError } from '../services/aiService.js'
-import { getAgenticRefinement } from '../services/agenticAiService.js'
 import { useMediaQuery, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../i18n/index.jsx'
@@ -15,8 +13,25 @@ import Field from './ui/Field.jsx'
 import ScLink from './ui/ScLink.jsx'
 import SourceLinks from './ui/SourceLinks.jsx'
 import RelatedIssues from './ui/RelatedIssues.jsx'
-import { isSignificantlyChanged } from '../utils/textComparison.js'
-import { NOTIFICATION_TIMEOUT, PROVIDER_LABELS } from '../utils/constants.js'
+import { NOTIFICATION_TIMEOUT, DEBUG_AI_DELAY_MS, DEBUG_COMMANDS } from '../utils/constants.js'
+import { getAiProvider, getStorage, setStorage, getFindingNoteKey, getProviderLabel } from '../utils/storage.js'
+import useDetailPanelClipboard from '../hooks/useDetailPanelClipboard.js'
+import useDetailPanelRefine from '../hooks/useDetailPanelRefine.js'
+
+function FieldCheckbox({ label, checked, onChange, disabled }) {
+  return (
+    <label className="detail-ai-field-select-item">
+      <input
+        type="checkbox"
+        className="app-checkbox"
+        checked={checked}
+        onChange={e => onChange(e.target.checked)}
+        disabled={disabled}
+      />
+      <span>{label}</span>
+    </label>
+  )
+}
 
 export default function DetailPanel({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
@@ -27,36 +42,54 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   const [descText, setDescText] = useState(finding.desc)
   const [fixText, setFixText] = useState(finding.fix)
   const [aiNote, setAiNote] = useState('')
-  const [findingNote, setFindingNote] = useState(() => localStorage.getItem(`finding_note_${finding.id}`) || '')
+  const [findingNote, setFindingNote] = useState(() => getStorage(getFindingNoteKey(finding.id), ''))
   const [useAgenticMode, setUseAgenticMode] = useState(agenticMode)
   const [findingNoteSaved, setFindingNoteSaved] = useState(false)
-  const [copiedDesc, setCopiedDesc] = useState(false)
-  const [copiedFix, setCopiedFix] = useState(false)
-  const [copiedTitle, setCopiedTitle] = useState(false)
-  const [copiedPrimarySc, setCopiedPrimarySc] = useState(false)
-  const [copiedRelatedSc, setCopiedRelatedSc] = useState(false)
-  const [resetDesc, setResetDesc] = useState(false)
-  const [resetFix, setResetFix] = useState(false)
-  const [refining, setRefining] = useState(false)
-  const [animating, setAnimating] = useState(false)
-  const [confirmReset, setConfirmReset] = useState(null)
-  const [nothingToCopy, setNothingToCopy] = useState(false)
-  const [revisionFailed, setRevisionFailed] = useState(null)
-  // Field-specific undo stacks, each entry is the text before that AI revision
   const [descHistory, setDescHistory] = useState([])
   const [fixHistory, setFixHistory] = useState([])
   const [aiRevisedDesc, setAiRevisedDesc] = useState(false)
   const [aiRevisedFix, setAiRevisedFix] = useState(false)
-  const [copiedAll, setCopiedAll] = useState(false)
-  const [resetAllDone, setResetAllDone] = useState(false)
   const [includeDescTitle, setIncludeDescTitle] = useState(false)
   const [includeFixTitle, setIncludeFixTitle] = useState(false)
-  const typeTimerRef = useRef(null)
-  const aiRevisionButtonRef = useRef(null)
   const descCopyBtnRef = useRef(null)
   const fixCopyBtnRef = useRef(null)
 
-  useEffect(() => () => clearTimeout(typeTimerRef.current), [])
+  const displayDesc = location.trim()
+    ? `${location.trim().replace(/:?\s*$/, ':')} ${finding.desc}`
+    : descText
+
+  const {
+    copiedTitle, copiedPrimarySc, copiedRelatedSc,
+    copiedDesc, setCopiedDesc,
+    copiedFix, setCopiedFix,
+    copiedAll,
+    resetDesc, setResetDesc,
+    resetFix, setResetFix,
+    resetAllDone,
+    nothingToCopy, setNothingToCopy,
+    confirmReset, setConfirmReset,
+    copy, handleReset,
+    handleCopyAll, handleResetAllFields,
+    handleUndoDesc, handleUndoFix,
+    copyTitle, copyPrimarySc, copyRelatedSc,
+  } = useDetailPanelClipboard({
+    finding, descText, fixText, displayDesc,
+    setDescText, setFixText, setDescHistory, setFixHistory,
+    descHistory, fixHistory, onCopyEvent, t,
+  })
+
+  const {
+    refining, setRefining,
+    animating, setAnimating,
+    revisionFailed, setRevisionFailed,
+    aiRevisionButtonRef,
+    startTypewriter,
+    handleRefine,
+  } = useDetailPanelRefine({
+    finding, descText, fixText,
+    aiRevisedDesc, aiRevisedFix, useAgenticMode, aiNote, allFindings,
+    setDescText, setFixText, setDescHistory, setFixHistory, t,
+  })
 
   useEffect(() => {
     if (focusTrigger > 0) titleRef.current?.focus()
@@ -64,20 +97,20 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
 
   useEffect(() => {
     titleRef.current?.focus()
-    setFindingNote(localStorage.getItem(`finding_note_${finding.id}`) || '') // eslint-disable-line react-hooks/set-state-in-effect
+    setFindingNote(getStorage(getFindingNoteKey(finding.id), '')) // eslint-disable-line react-hooks/set-state-in-effect
     setAiNote('')
   }, [finding.id])
 
   useEffect(() => {
     if (!debugPanelCmd) return
-    const provider = localStorage.getItem('ai_provider') || 'anthropic'
-    const providerLabel = PROVIDER_LABELS[provider] || provider
-    if (debugPanelCmd === 'debug wrong')   { setRevisionFailed(t('detail.ai_revision_error_body')); onDebugPanelCmdHandled?.(); return } // eslint-disable-line react-hooks/set-state-in-effect
-    if (debugPanelCmd === 'debug 401')     { setRevisionFailed(t('detail.ai_revision_error_invalid_key', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
-    if (debugPanelCmd === 'debug 429')     { setRevisionFailed(t('detail.ai_revision_error_rate_limit', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
-    if (debugPanelCmd === 'debug 503')     { setRevisionFailed(t('detail.ai_revision_error_service_error', { provider: providerLabel, status: 503 })); onDebugPanelCmdHandled?.(); return }
-    if (debugPanelCmd === 'debug network') { setRevisionFailed(t('detail.ai_revision_error_network_error')); onDebugPanelCmdHandled?.(); return }
-    if (debugPanelCmd === 'debug ok') {
+    const provider = getAiProvider()
+    const providerLabel = getProviderLabel(provider)
+    if (debugPanelCmd === DEBUG_COMMANDS.WRONG)   { setRevisionFailed(t('detail.ai_revision_error_body')); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === DEBUG_COMMANDS.AUTH)     { setRevisionFailed(t('detail.ai_revision_error_invalid_key', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === DEBUG_COMMANDS.RATE)     { setRevisionFailed(t('detail.ai_revision_error_rate_limit', { provider: providerLabel })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === DEBUG_COMMANDS.SERVICE)  { setRevisionFailed(t('detail.ai_revision_error_service_error', { provider: providerLabel, status: 503 })); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === DEBUG_COMMANDS.NETWORK)  { setRevisionFailed(t('detail.ai_revision_error_network_error')); onDebugPanelCmdHandled?.(); return }
+    if (debugPanelCmd === DEBUG_COMMANDS.OK) {
       setRefining(true)
       announce(t('detail.rewriting_text'), { priority: 'assertive' })
       setTimeout(() => {
@@ -87,214 +120,12 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         if (fakeFix) setFixHistory(h => [...h, fixText])
         setRefining(false)
         setAnimating(true)
-        startTypewriter(fakeDesc, fakeFix, t)
-      }, 1200)
+        startTypewriter(fakeDesc, fakeFix)
+      }, DEBUG_AI_DELAY_MS)
       onDebugPanelCmdHandled?.()
     }
   }, [debugPanelCmd]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const displayDesc = location.trim()
-    ? `${location.trim().replace(/:?\s*$/, ':')} ${finding.desc}`
-    : descText
-
-  const copy = (text, setCopied, label, prefix = null, includePrefix = false, type = null) => {
-    if (!text?.trim()) { setNothingToCopy(true); return }
-    const textToCopy = prefix && includePrefix ? `${prefix}\n${text}` : text
-    navigator.clipboard.writeText(textToCopy).then(() => {
-      setCopied(true)
-      announce(t('detail.copied_announce', { label }))
-      setTimeout(() => setCopied(false), NOTIFICATION_TIMEOUT)
-      onCopyEvent?.(finding.id, type)
-    })
-  }
-
-  const handleReset = (original, current, setText, setFlag, label, focusRef) => {
-    const doReset = () => {
-      setText(original)
-      announce(t('detail.reset_announce', { label }))
-      setFlag(true)
-      setTimeout(() => {
-        setFlag(false)
-        focusRef?.current?.focus()
-      }, NOTIFICATION_TIMEOUT)
-    }
-    if (!current?.trim() || !isSignificantlyChanged(original, current)) {
-      doReset()
-    } else {
-      setConfirmReset({ doReset })
-    }
-  }
-
-  const handleCopyAll = () => {
-    const descValue = location.trim() ? displayDesc : descText
-    if (!descValue?.trim() && !fixText?.trim()) { setNothingToCopy(true); return }
-    const text = `Description:\n${descValue}\n\nSuggested Fix:\n${fixText}`
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedAll(true)
-      announce(t('detail.copy_all_announce'))
-      setTimeout(() => setCopiedAll(false), NOTIFICATION_TIMEOUT)
-      onCopyEvent?.(finding.id, 'all')
-    })
-  }
-
-  const handleResetAllFields = () => {
-    const descChanged = isSignificantlyChanged(finding.desc, descText)
-    const fixChanged = isSignificantlyChanged(finding.fix, fixText)
-    const doReset = () => {
-      setDescText(finding.desc)
-      setFixText(finding.fix)
-      setDescHistory([])
-      setFixHistory([])
-      announce(t('detail.reset_all_content_announce'))
-      setResetAllDone(true)
-      setTimeout(() => {
-        setResetAllDone(false)
-      }, 2000)
-    }
-    if (descChanged || fixChanged) {
-      setConfirmReset({ doReset })
-    } else {
-      doReset()
-    }
-  }
-
-  const handleUndoDesc = () => {
-    const prev = descHistory[descHistory.length - 1]
-    if (!prev) return
-    setDescText(prev)
-    setDescHistory(h => h.slice(0, -1))
-    announce(t('detail.undo_last_announce'))
-  }
-
-  const handleUndoFix = () => {
-    const prev = fixHistory[fixHistory.length - 1]
-    if (!prev) return
-    setFixText(prev)
-    setFixHistory(h => h.slice(0, -1))
-    announce(t('detail.undo_last_announce'))
-  }
-
-  const copyTitle = () => {
-    copy(finding.title, setCopiedTitle, t('detail.title_label'), null, false, 'title')
-  }
-
-  const copyPrimarySc = () => {
-    copy(finding.primarySC, setCopiedPrimarySc, t('detail.sc_label'), null, false, 'primarySc')
-  }
-
-  const copyRelatedSc = () => {
-    if (!finding.relatedSC.length) return
-    copy(finding.relatedSC.join(', '), setCopiedRelatedSc, t('detail.sc_label'), null, false, 'relatedSc')
-  }
-
-  function startTypewriter(newDesc, newFix, tFunc) {
-    clearTimeout(typeTimerRef.current)
-    const total = (newDesc?.length ?? 0) + (newFix?.length ?? 0)
-    if (!total) { setAnimating(false); return }
-
-    const charsPerTick = Math.max(2, Math.ceil(total / 40))
-    if (newDesc) setDescText('')
-    if (newFix) setFixText('')
-
-    let descIdx = 0
-    let fixIdx = 0
-
-    function tick() {
-      if (newDesc && descIdx < newDesc.length) {
-        descIdx = Math.min(descIdx + charsPerTick, newDesc.length)
-        setDescText(newDesc.slice(0, descIdx))
-      } else if (newFix && fixIdx < newFix.length) {
-        fixIdx = Math.min(fixIdx + charsPerTick, newFix.length)
-        setFixText(newFix.slice(0, fixIdx))
-      }
-
-      const descDone = !newDesc || descIdx >= newDesc.length
-      const fixDone = !newFix || fixIdx >= newFix.length
-
-      if (descDone && fixDone) {
-        setAnimating(false)
-        announce(tFunc('detail.ai_updated_announce'))
-      } else {
-        typeTimerRef.current = setTimeout(tick, 33)
-      }
-    }
-
-    typeTimerRef.current = setTimeout(tick, 33)
-  }
-
-  const handleRefine = async () => {
-    if (!aiNote.trim() || !canAiRevise) return
-
-    {
-      const note = aiNote.trim()
-      const provider = localStorage.getItem('ai_provider') || 'anthropic'
-      const providerLabel = PROVIDER_LABELS[provider] || provider
-
-      if (note === 'debug wrong')   { setRevisionFailed(t('detail.ai_revision_error_body')); return }
-      if (note === 'debug 401')     { setRevisionFailed(t('detail.ai_revision_error_invalid_key', { provider: providerLabel })); return }
-      if (note === 'debug 429')     { setRevisionFailed(t('detail.ai_revision_error_rate_limit', { provider: providerLabel })); return }
-      if (note === 'debug 503')     { setRevisionFailed(t('detail.ai_revision_error_service_error', { provider: providerLabel, status: 503 })); return }
-      if (note === 'debug network') { setRevisionFailed(t('detail.ai_revision_error_network_error')); return }
-      if (note === 'debug ai assist on') {
-        setRefining(true)
-        announce(t('detail.rewriting_text'), { priority: 'assertive' })
-        setTimeout(() => {
-          const newDesc = aiRevisedDesc ? `${descText}\n\n[AI note: ${aiNote}]` : null
-          const newFix = aiRevisedFix ? `${fixText}\n\n[AI note: ${aiNote}]` : null
-          if (newDesc) setDescHistory(h => [...h, descText])
-          if (newFix) setFixHistory(h => [...h, fixText])
-          setRefining(false)
-          setAnimating(true)
-          startTypewriter(newDesc, newFix, t)
-        }, 2000)
-        return
-      }
-      if (note === 'debug ok') {
-        setRefining(true)
-        announce(t('detail.rewriting_text'), { priority: 'assertive' })
-        setTimeout(() => {
-          const fakeDesc = aiRevisedDesc ? '[Debug] Revised description: this is a placeholder written by the debug trigger, not a real AI response. The typewriter animation and undo flow are both fully exercised by this text.' : null
-          const fakeFix = aiRevisedFix ? '[Debug] Revised suggested fix: verify the fix was applied, then remove this placeholder before sharing the report.' : null
-          if (fakeDesc) setDescHistory(h => [...h, descText])
-          if (fakeFix) setFixHistory(h => [...h, fixText])
-          setRefining(false)
-          setAnimating(true)
-          startTypewriter(fakeDesc, fakeFix, t)
-        }, 1200)
-        return
-      }
-
-      setRefining(true)
-      announce(t('detail.rewriting_text'), { priority: 'assertive' })
-
-      try {
-        const result = useAgenticMode && localStorage.getItem('ai_provider') === 'anthropic'
-          ? await getAgenticRefinement({ finding, descText, fixText, note: aiNote, corpus: allFindings })
-          : await getAiRefinement({ finding, descText, fixText, note: aiNote })
-        const newDesc = aiRevisedDesc && result.desc ? result.desc : null
-        const newFix = aiRevisedFix && result.fix ? result.fix : null
-
-        if (newDesc) setDescHistory(h => [...h, descText])
-        if (newFix) setFixHistory(h => [...h, fixText])
-
-        setRefining(false)
-        setAnimating(true)
-        startTypewriter(newDesc, newFix, t)
-      } catch (e) {
-        if (import.meta.env.DEV) console.error('AI revision failed:', e)
-        setRefining(false)
-        setAnimating(false)
-        if (e instanceof AiApiError) {
-          const label = PROVIDER_LABELS[e.provider] || e.provider || 'AI'
-          setRevisionFailed(t(`detail.ai_revision_error_${e.type}`, { provider: label, status: e.status }))
-        } else {
-          setRevisionFailed(t('detail.ai_revision_error_body'))
-        }
-      }
-    }
-  }
-
-  const canAiRevise = aiRevisedDesc || aiRevisedFix
   const p = SEVERITY_VARS[finding.severity] || SEVERITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
   const fixLabel = t('detail.fix_label')
@@ -502,7 +333,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
         <div className="detail-section-controls">
           <button
             onClick={() => {
-              localStorage.setItem(`finding_note_${finding.id}`, findingNote)
+              setStorage(getFindingNoteKey(finding.id), findingNote)
               setFindingNoteSaved(true)
               announce(t('detail.saved_finding_note_aria'))
               setTimeout(() => setFindingNoteSaved(false), NOTIFICATION_TIMEOUT)
@@ -535,7 +366,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
           />
           <div className="detail-section-controls">
             <div className="detail-ai-settings-group">
-              {localStorage.getItem('ai_provider') === 'anthropic' && (
+              {getAiProvider() === 'anthropic' && (
                 <label className="detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
                   <span className="detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
                   <Toggle
@@ -546,26 +377,8 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
                 </label>
               )}
               <div className="detail-ai-field-select">
-                <label className="detail-ai-field-select-item">
-                  <input
-                    type="checkbox"
-                    className="app-checkbox"
-                    checked={aiRevisedDesc}
-                    onChange={e => setAiRevisedDesc(e.target.checked)}
-                    disabled={animating}
-                  />
-                  <span>{descLabel}</span>
-                </label>
-                <label className="detail-ai-field-select-item">
-                  <input
-                    type="checkbox"
-                    className="app-checkbox"
-                    checked={aiRevisedFix}
-                    onChange={e => setAiRevisedFix(e.target.checked)}
-                    disabled={animating}
-                  />
-                  <span>{fixLabel}</span>
-                </label>
+                <FieldCheckbox label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
+                <FieldCheckbox label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
               </div>
             </div>
             <button
@@ -671,4 +484,3 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     </div>
   )
 }
-

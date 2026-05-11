@@ -9,6 +9,9 @@ const INTERACTIVE_ROLES = new Set([
   'switch', 'tab', 'textbox', 'treeitem', 'link', 'searchbox',
 ])
 
+const TOOLTIP_LEFT_OFFSET = 14
+const TOOLTIP_TOP_OFFSET = 20
+
 function isControl(el) {
   const tag = el.tagName.toUpperCase()
   if (CONTROL_TAGS.has(tag)) return true
@@ -114,11 +117,9 @@ export function NamesDebugger({ enabled = true }) {
 
   if (!IS_DEV || !enabled || !tooltip) return null
 
-  const LEFT_OFFSET = 14
-  const TOP_OFFSET = 20
   const style = {
-    left: pos.x + LEFT_OFFSET,
-    top:  pos.y + TOP_OFFSET,
+    left: pos.x + TOOLTIP_LEFT_OFFSET,
+    top:  pos.y + TOOLTIP_TOP_OFFSET,
   }
 
   return (

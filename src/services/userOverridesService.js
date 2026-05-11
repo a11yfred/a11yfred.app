@@ -14,15 +14,11 @@
  * callers remain unchanged.
  */
 
-const STORAGE_KEY = 'userOverrides'
+import { LS_USER_OVERRIDES } from '../utils/constants.js'
+import { getStorageJson, setStorageJson } from '../utils/storage.js'
 
-function load() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') } catch { return {} }
-}
-
-function persist(overrides) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(overrides)) } catch { /* storage unavailable */ }
-}
+function load() { return getStorageJson(LS_USER_OVERRIDES, {}) }
+function persist(overrides) { setStorageJson(LS_USER_OVERRIDES, overrides) }
 
 export function loadAllOverrides() {
   return load()

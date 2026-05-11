@@ -47,29 +47,19 @@ export const CONTRIBUTION_STATUS = Object.freeze({
   REJECTED: 'rejected',
 })
 
-const STORAGE_KEY = 'pendingContributions'
+import { makeIdGenerator } from '../utils/makeIdGenerator.js'
+import { LS_CONTRIBUTIONS } from '../utils/constants.js'
+import { getStorageJson, setStorageJson } from '../utils/storage.js'
+const nextId = makeIdGenerator('CTB')
 
-function load() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
-}
-
-function persist(contributions) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(contributions)) } catch { /* storage unavailable */ }
-}
-
-function nextId(existing) {
-  const nums = existing
-    .map(c => { const m = c.id?.match(/^CTB-(\d+)$/); return m ? parseInt(m[1], 10) : 0 })
-    .filter(n => n > 0)
-  const max = nums.length ? Math.max(...nums) : 0
-  return `CTB-${String(max + 1).padStart(3, '0')}`
-}
+function load() { return getStorageJson(LS_CONTRIBUTIONS, []) }
+function persist(contributions) { setStorageJson(LS_CONTRIBUTIONS, contributions) }
 
 export function loadContributions() {
   return load()
 }
 
-export function loadPendingContributions() {
+function loadPendingContributions() {
   return load().filter(c => c.status === CONTRIBUTION_STATUS.PENDING)
 }
 

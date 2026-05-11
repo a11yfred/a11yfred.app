@@ -17,12 +17,14 @@
  *   - Dev console logs every turn and tool call for debugging
  */
 
-import { AiApiError } from './aiService.js'
+import { AiApiError, httpStatusToErrorType } from './aiService.js'
+import { AI_AGENTIC_MAX_TOKENS, ANTHROPIC_API_VERSION, ANTHROPIC_API_URL, AI_DESC_REGEX, AI_FIX_REGEX, AGENTIC_MAX_TOOL_TURNS, LS_APIKEY_PREFIX } from '../utils/constants.js'
+import { getStorage, getAiModel } from '../utils/storage.js'
 import { SEARCH_CORPUS_TOOL_SCHEMA, searchCorpus } from './searchCorpusTool.js'
 
-const MAX_TOOL_TURNS = 5
+const MAX_TOOL_TURNS = AGENTIC_MAX_TOOL_TURNS
 
-export const AGENTIC_SYSTEM_PROMPT = `You are an expert accessibility auditor's AI assistant. Your job is to help rewrite finding descriptions in the auditor's established voice and methodology.
+const AGENTIC_SYSTEM_PROMPT = `You are an expert accessibility auditor's AI assistant. Your job is to help rewrite finding descriptions in the auditor's established voice and methodology.
 
 Before rewriting, always call search_corpus at least once to find similar findings that demonstrate the expected tone, technical depth, and format.
 
@@ -39,17 +41,17 @@ Rules:
 async function callAnthropicMessages({ key, model, messages }) {
   let res
   try {
-    res = await fetch('https://api.anthropic.com/v1/messages', {
+    res = await fetch(ANTHROPIC_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': key,
-        'anthropic-version': '2023-06-01',
+        'anthropic-version': ANTHROPIC_API_VERSION,
         'anthropic-dangerous-direct-browser-access': 'true',
       },
       body: JSON.stringify({
         model,
-        max_tokens: 2048,
+        max_tokens: AI_AGENTIC_MAX_TOKENS,
         system: AGENTIC_SYSTEM_PROMPT,
         tools: [SEARCH_CORPUS_TOOL_SCHEMA],
         messages,
@@ -60,12 +62,7 @@ async function callAnthropicMessages({ key, model, messages }) {
   }
 
   if (!res.ok) {
-    const type =
-      res.status === 401 || res.status === 403 ? 'invalid_key'
-      : res.status === 429 ? 'rate_limit'
-      : res.status >= 500 ? 'service_error'
-      : 'api_error'
-    throw new AiApiError(type, { status: res.status, provider: 'anthropic' })
+    throw new AiApiError(httpStatusToErrorType(res.status), { status: res.status, provider: 'anthropic' })
   }
 
   return res.json()
@@ -79,13 +76,13 @@ async function callAnthropicMessages({ key, model, messages }) {
  */
 export async function getAgenticRefinement({ finding, descText, fixText, note, corpus }) {
   const key = window.electronAPI
-    ? await window.electronAPI.keys.get('apikey_anthropic')
-    : localStorage.getItem('apikey_anthropic')
+    ? await window.electronAPI.keys.get(`${LS_APIKEY_PREFIX}anthropic`)
+    : getStorage(`${LS_APIKEY_PREFIX}anthropic`)
   if (!key) {
     throw new Error('Anthropic API key required for agentic mode. Add one in Settings → AI Assist.')
   }
 
-  const model = localStorage.getItem('ai_model_anthropic') || 'claude-sonnet-4-6'
+  const model = getAiModel('anthropic')
 
   const userPrompt = `Refine this accessibility finding based on the auditor's note.
 
@@ -119,8 +116,8 @@ Search the corpus for related findings, then rewrite the description and suggest
     if (data.stop_reason === 'end_turn') {
       const textBlock = data.content.find(b => b.type === 'text')
       const text = textBlock?.text || ''
-      const descMatch = text.match(/^Description:\s*(.+)/m)
-      const fixMatch  = text.match(/^Suggested Fix:\s*(.+)/ms)
+      const descMatch = text.match(AI_DESC_REGEX)
+      const fixMatch  = text.match(AI_FIX_REGEX)
       return {
         desc: descMatch?.[1]?.trim() || null,
         fix:  fixMatch?.[1]?.trim()  || null,

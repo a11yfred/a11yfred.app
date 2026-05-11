@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useEscapeKey } from '../../plugins/router/index.js'
 
 const IS_DEV = import.meta.env.DEV
 
@@ -50,12 +51,7 @@ const STANDARD_SECTIONS = [
 export function DebugLauncher({ enabled = ENABLED, position = POSITION, onCommand, customSections = [] }) {
   const [open, setOpen] = useState(false)
 
-  useEffect(() => {
-    if (!open) return
-    const handler = (e) => { if (e.key === 'Escape') setOpen(false) }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [open])
+  useEscapeKey(open, () => setOpen(false))
 
   if (!IS_DEV || !enabled) return null
 

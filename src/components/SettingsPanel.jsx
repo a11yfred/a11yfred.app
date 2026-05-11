@@ -8,8 +8,39 @@ import RadioChip from './ui/RadioChip.jsx'
 import Select from './ui/Select.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
-import { PROVIDERS, PROVIDER_MODELS, initModels } from '../utils/aiModels.js'
-import { TOAST_HIDE_DURATION } from '../utils/constants.js'
+import { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys } from '../utils/aiModels.js'
+import { applyTheme } from '../hooks/useThemeManager.js'
+import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
+import { getAiProvider, setStorage, removeStorage, isAgenticModeEnabled } from '../utils/storage.js'
+
+function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {
+  return (
+    <div className="settings-toggle-row">
+      <div>
+        <h3 className="settings-toggle-label">{t(labelKey)}</h3>
+        <p className="settings-toggle-desc">{hasData ? t(descKey) : t(emptyKey)}</p>
+      </div>
+      <Button
+        active={isDone}
+        icon={<Icon size={14} aria-hidden="true" />}
+        activeIcon={<Check size={14} aria-hidden="true" />}
+        label={t(labelActionKey)}
+        activeLabel={t(labelDoneKey)}
+        variant="primary"
+        className={className}
+        disabled={!hasData}
+        onClick={() => {
+          onClear?.()
+          setIsDone(true)
+          if (announceKey) announce(t(announceKey))
+          setTimeout(() => setIsDone(false), SETTINGS_FLASH_MS)
+        }}
+      >
+        {isDone ? t(labelDoneKey) : t(labelActionKey)}
+      </Button>
+    </div>
+  )
+}
 
 function PendingNote({ t }) {
   const raw = t('settings.pending_save_note')
@@ -131,25 +162,19 @@ const SettingsPanel = forwardRef(function SettingsPanel({
   const [pendingLiveSearch, setPendingLiveSearch] = useState(liveSearch)
   const [pendingShowVoting, setPendingShowVoting] = useState(showVoting)
   const [pendingAiEnabled, setPendingAiEnabled] = useState(aiEnabled)
-  const [pendingWcagFilter, setPendingWcagFilter] = useState(wcagFilter ?? { maxVersion: '2.2', maxLevel: 'AA' })
+  const [pendingWcagFilter, setPendingWcagFilter] = useState(wcagFilter ?? DEFAULT_WCAG_FILTER)
   const [pendingAgenticMode, setPendingAgenticMode] = useState(
-    () => localStorage.getItem('agentic_mode') === 'true'
+    () => isAgenticModeEnabled()
   )
 
   // ── AI provider / key / model state ────────────────────────────────────────
-  const [keys, setKeys] = useState(() =>
-    Object.fromEntries(PROVIDERS.map(p => [p.id, window.electronAPI ? '' : localStorage.getItem(`apikey_${p.id}`) || '']))
-  )
-  const [activeProvider, setActiveProvider] = useState(
-    () => localStorage.getItem('ai_provider') || 'anthropic'
-  )
+  const [keys, setKeys] = useState(initApiKeys)
+  const [activeProvider, setActiveProvider] = useState(getAiProvider)
   const [models, setModels] = useState(initModels)
 
   // Saved snapshots to diff against for hasUnsaved
-  const [savedKeys] = useState(() =>
-    Object.fromEntries(PROVIDERS.map(p => [p.id, window.electronAPI ? '' : localStorage.getItem(`apikey_${p.id}`) || '']))
-  )
-  const [savedProvider] = useState(() => localStorage.getItem('ai_provider') || 'anthropic')
+  const [savedKeys] = useState(initApiKeys)
+  const [savedProvider] = useState(getAiProvider)
   const [savedModels] = useState(initModels)
 
   const [saved, setSaved] = useState(false)
@@ -173,9 +198,9 @@ const SettingsPanel = forwardRef(function SettingsPanel({
     pendingLiveSearch !== liveSearch ||
     pendingShowVoting !== showVoting ||
     pendingAiEnabled !== aiEnabled ||
-    pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? '2.2') ||
-    pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? 'AA') ||
-    pendingAgenticMode !== (localStorage.getItem('agentic_mode') === 'true') ||
+    pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) ||
+    pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel) ||
+    pendingAgenticMode !== (isAgenticModeEnabled()) ||
     activeProvider !== savedProvider ||
     PROVIDERS.some(p => keys[p.id] !== savedKeys[p.id] || models[p.id] !== savedModels[p.id])
 
@@ -196,13 +221,13 @@ const SettingsPanel = forwardRef(function SettingsPanel({
     setPendingLiveSearch(liveSearch)
     setPendingShowVoting(showVoting)
     setPendingAiEnabled(aiEnabled)
-    setPendingWcagFilter(wcagFilter ?? { maxVersion: '2.2', maxLevel: 'AA' })
+    setPendingWcagFilter(wcagFilter ?? DEFAULT_WCAG_FILTER)
   }, [theme, language, platform, liveSearch, showVoting, aiEnabled, wcagFilter])
 
   // In Electron, load API keys from safeStorage after mount
   useEffect(() => {
     if (!window.electronAPI) return
-    Promise.all(PROVIDERS.map(async p => [p.id, (await window.electronAPI.keys.get(`apikey_${p.id}`)) || '']))
+    Promise.all(PROVIDERS.map(async p => [p.id, (await window.electronAPI.keys.get(`${LS_APIKEY_PREFIX}${p.id}`)) || '']))
       .then(entries => {
         const loaded = Object.fromEntries(entries)
         setKeys(loaded)
@@ -210,32 +235,11 @@ const SettingsPanel = forwardRef(function SettingsPanel({
   }, [])
 
   // Preview theme immediately (visual feedback), but only persists on Save
-  useEffect(() => {
-    const el = document.documentElement
-    if (pendingTheme === 'party') {
-      el.setAttribute('data-theme', 'party')
-    } else {
-      const resolved = pendingTheme === 'auto'
-        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-        : pendingTheme
-      el.setAttribute('data-theme', resolved)
-    }
-  }, [pendingTheme])
+  useEffect(() => { applyTheme(pendingTheme) }, [pendingTheme])
 
   // Revert theme preview if panel closes without saving
   useEffect(() => {
-    return () => {
-      // Restore the committed theme on unmount if there were unsaved changes
-      const committed = theme
-      if (committed === 'party') {
-        document.documentElement.setAttribute('data-theme', 'party')
-      } else {
-        const resolved = committed === 'auto'
-          ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-          : committed
-        document.documentElement.setAttribute('data-theme', resolved)
-      }
-    }
+    return () => { applyTheme(theme) }
   }, [theme]) // only run on mount/unmount
 
   // Scroll to and focus the first invalid field when errors change
@@ -276,18 +280,18 @@ const SettingsPanel = forwardRef(function SettingsPanel({
     // Persist AI keys
     PROVIDERS.forEach(p => {
       if (window.electronAPI) {
-        if (keys[p.id]) window.electronAPI.keys.set(`apikey_${p.id}`, keys[p.id])
-        else window.electronAPI.keys.delete(`apikey_${p.id}`)
+        if (keys[p.id]) window.electronAPI.keys.set(`${LS_APIKEY_PREFIX}${p.id}`, keys[p.id])
+        else window.electronAPI.keys.delete(`${LS_APIKEY_PREFIX}${p.id}`)
       } else {
-        if (keys[p.id]) localStorage.setItem(`apikey_${p.id}`, keys[p.id])
-        else localStorage.removeItem(`apikey_${p.id}`)
+        if (keys[p.id]) setStorage(`${LS_APIKEY_PREFIX}${p.id}`, keys[p.id])
+        else removeStorage(`${LS_APIKEY_PREFIX}${p.id}`)
       }
     })
-    localStorage.setItem('ai_provider', activeProvider)
+    setStorage(LS_AI_PROVIDER, activeProvider)
     PROVIDERS.forEach(p => {
-      if (models[p.id]) localStorage.setItem(`ai_model_${p.id}`, models[p.id])
+      if (models[p.id]) setStorage(`${LS_AI_MODEL_PREFIX}${p.id}`, models[p.id])
     })
-    localStorage.setItem('agentic_mode', pendingAgenticMode.toString())
+    setStorage(LS_AGENTIC_MODE, pendingAgenticMode.toString())
 
     const langToSave = rhgPending ? language : pendingLanguage
 
@@ -388,7 +392,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
               if (pendingLanguage === 'rhg') { setRhgPending(true) }
               else {
                 setLanguagePreviewed(true)
-                setTimeout(() => setLanguagePreviewed(false), 1500)
+                setTimeout(() => setLanguagePreviewed(false), SETTINGS_FLASH_MS)
                 announce(t('settings.language_changed_announce'))
               }
             }}
@@ -466,8 +470,8 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <div className="settings-group">
         <h3 className="settings-group__label">{t('settings.wcag_filter_label')}</h3>
         <p className="settings-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each version includes all findings from previous versions.</p>
-        {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? '2.2') ||
-          pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? 'AA')) && (
+        {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) ||
+          pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel)) && (
           <PendingNote t={t} />
         )}
         <div className="settings-wcag-filter-row">
@@ -484,7 +488,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
                     type="radio"
                     name="wcag-version"
                     value={value}
-                    checked={(pendingWcagFilter?.maxVersion ?? '2.2') === value}
+                    checked={(pendingWcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) === value}
                     onChange={() => setPendingWcagFilter(f => ({ ...f, maxVersion: value }))}
                     className="control"
                   />
@@ -505,7 +509,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
                     type="radio"
                     name="wcag-level"
                     value={value}
-                    checked={(pendingWcagFilter?.maxLevel ?? 'AA') === value}
+                    checked={(pendingWcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel) === value}
                     onChange={() => setPendingWcagFilter(f => ({ ...f, maxLevel: value }))}
                     className="control"
                   />
@@ -518,31 +522,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       </div>
 
       {/* Pinned Results */}
-      <div className="settings-toggle-row">
-        <div>
-          <h3 className="settings-toggle-label">{t('settings.pinned_results_label')}</h3>
-          <p className="settings-toggle-desc">
-            {hasPins ? t('settings.pinned_results_desc') : t('settings.pinned_results_empty')}
-          </p>
-        </div>
-        <Button
-          active={unpinAllDone}
-          icon={<PinOff size={14} aria-hidden="true" />}
-          activeIcon={<Check size={14} aria-hidden="true" />}
-          label={t('settings.unpin_all')}
-          activeLabel={t('settings.unpin_all_done')}
-          variant="primary"
-          className="settings-unpin-all-btn"
-          disabled={!hasPins}
-          onClick={() => {
-            onClearPins?.()
-            setUnpinAllDone(true)
-            setTimeout(() => setUnpinAllDone(false), 1500)
-          }}
-        >
-          {unpinAllDone ? t('settings.unpin_all_done') : t('settings.unpin_all')}
-        </Button>
-      </div>
+      <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-unpin-all-btn" />
 
       {/* Result ranking */}
       <div className="settings-toggle-row">
@@ -563,88 +543,13 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       </div>
 
       {/* Starred Results */}
-      <div className="settings-toggle-row">
-        <div>
-          <h3 className="settings-toggle-label">{t('settings.starred_results_label')}</h3>
-          <p className="settings-toggle-desc">
-            {hasStarred ? t('settings.starred_results_desc') : t('settings.starred_results_empty')}
-          </p>
-        </div>
-        <Button
-          active={unstarAllDone}
-          icon={<Star size={14} aria-hidden="true" />}
-          activeIcon={<Check size={14} aria-hidden="true" />}
-          label={t('settings.unstar_all')}
-          activeLabel={t('settings.unstar_all_done')}
-          variant="primary"
-          className="settings-unstar-all-btn"
-          disabled={!hasStarred}
-          onClick={() => {
-            onClearStarred?.()
-            setUnstarAllDone(true)
-            announce(t('settings.unstar_all_done'))
-            setTimeout(() => setUnstarAllDone(false), 1500)
-          }}
-        >
-          {unstarAllDone ? t('settings.unstar_all_done') : t('settings.unstar_all')}
-        </Button>
-      </div>
+      <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={Star} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" />
 
       {/* Ranking Data */}
-      <div className="settings-toggle-row">
-        <div>
-          <h3 className="settings-toggle-label">{t('settings.rankings_label')}</h3>
-          <p className="settings-toggle-desc">
-            {hasRankings ? t('settings.rankings_desc') : t('settings.rankings_empty')}
-          </p>
-        </div>
-        <Button
-          active={resetRankingsDone}
-          icon={<RotateCcw size={14} aria-hidden="true" />}
-          activeIcon={<Check size={14} aria-hidden="true" />}
-          label={t('settings.reset_rankings')}
-          activeLabel={t('settings.reset_rankings_done')}
-          variant="primary"
-          className="settings-reset-rankings-btn"
-          disabled={!hasRankings}
-          onClick={() => {
-            onResetRankings?.()
-            setResetRankingsDone(true)
-            announce(t('settings.reset_rankings_done'))
-            setTimeout(() => setResetRankingsDone(false), 1500)
-          }}
-        >
-          {resetRankingsDone ? t('settings.reset_rankings_done') : t('settings.reset_rankings')}
-        </Button>
-      </div>
+      <ClearDataRow t={t} labelKey="settings.rankings_label" hasData={hasRankings} descKey="settings.rankings_desc" emptyKey="settings.rankings_empty" isDone={resetRankingsDone} setIsDone={setResetRankingsDone} onClear={onResetRankings} labelActionKey="settings.reset_rankings" labelDoneKey="settings.reset_rankings_done" Icon={RotateCcw} className="settings-reset-rankings-btn" announceKey="settings.reset_rankings_done" />
 
       {/* Archived Results */}
-      <div className="settings-toggle-row">
-        <div>
-          <h3 className="settings-toggle-label">{t('settings.archived_results_label')}</h3>
-          <p className="settings-toggle-desc">
-            {hasArchived ? t('settings.archived_results_desc') : t('settings.archived_results_empty')}
-          </p>
-        </div>
-        <Button
-          active={unarchiveAllDone}
-          icon={<ArchiveRestore size={14} aria-hidden="true" />}
-          activeIcon={<Check size={14} aria-hidden="true" />}
-          label={t('settings.unarchive_all')}
-          activeLabel={t('settings.unarchive_all_done')}
-          variant="primary"
-          className="settings-unarchive-all-btn"
-          disabled={!hasArchived}
-          onClick={() => {
-            onClearArchived?.()
-            setUnarchiveAllDone(true)
-            announce(t('settings.unarchive_all_done'))
-            setTimeout(() => setUnarchiveAllDone(false), 1500)
-          }}
-        >
-          {unarchiveAllDone ? t('settings.unarchive_all_done') : t('settings.unarchive_all')}
-        </Button>
-      </div>
+      <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={ArchiveRestore} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" />
 
       {/* ── AI Assist ───────────────────────────────── */}
       <h3 className="settings-section-heading settings-section-heading--divided">
@@ -732,7 +637,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
             {t('settings.agentic_mode_label')}
           </label>
           <p className="settings-toggle-desc">{t('settings.agentic_mode_desc')}</p>
-          {pendingAgenticMode !== (localStorage.getItem('agentic_mode') === 'true') && (
+          {pendingAgenticMode !== (isAgenticModeEnabled()) && (
             <PendingNote t={t} />
           )}
         </div>

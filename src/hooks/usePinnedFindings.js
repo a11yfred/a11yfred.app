@@ -1,9 +1,9 @@
 import { useState } from 'react'
-
-const STORAGE_KEY = 'pinnedFindings'
+import { LS_PINNED_FINDINGS } from '../utils/constants.js'
+import { getStorageJson, setStorageJson, removeStorage } from '../utils/storage.js'
 
 function loadPins() {
-  try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')) } catch { return new Set() }
+  try { return new Set(getStorageJson(LS_PINNED_FINDINGS, [])) } catch { return new Set() }
 }
 
 export default function usePinnedFindings() {
@@ -14,14 +14,14 @@ export default function usePinnedFindings() {
       const next = new Set(prev)
       if (next.has(id)) next.delete(id)
       else next.add(id)
-      localStorage.setItem(STORAGE_KEY, JSON.stringify([...next]))
+      setStorageJson(LS_PINNED_FINDINGS, [...next])
       return next
     })
   }
 
   function clearPins() {
     setPinnedIds(new Set())
-    localStorage.removeItem(STORAGE_KEY)
+    removeStorage(LS_PINNED_FINDINGS)
   }
 
   return { pinnedIds, togglePin, clearPins }

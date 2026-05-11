@@ -1,6 +1,6 @@
 import { useState } from 'react'
-
-const STORAGE_KEY = 'defect_ratings'
+import { POP_STAR_BONUS, POP_UNSTAR_PENALTY, POP_ARCHIVE_PENALTY, POP_OPEN_BOOST, POP_COPY_BOOST, LS_DEFECT_RATINGS } from '../utils/constants.js'
+import { getStorageJson, setStorageJson, removeStorage } from '../utils/storage.js'
 const DEFAULT_RATING = {
   score: 0,
   starred: false,
@@ -27,9 +27,7 @@ const COPY_FIELD = {
   all:        'lifetimeCopiedAll',
 }
 
-function loadRatings() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') } catch { return {} }
-}
+function loadRatings() { return getStorageJson(LS_DEFECT_RATINGS, {}) }
 
 export default function useFindingRatings() {
   const [ratings, setRatings] = useState(loadRatings)
@@ -37,7 +35,7 @@ export default function useFindingRatings() {
   function update(id, fn) {
     setRatings(prev => {
       const next = { ...prev, [id]: fn(prev[id] || DEFAULT_RATING) }
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+      setStorageJson(LS_DEFECT_RATINGS, next)
       return next
     })
   }
@@ -47,13 +45,13 @@ export default function useFindingRatings() {
       const next = Object.fromEntries(
         Object.entries(prev).map(([id, r]) => [id, { ...r, score: 0 }])
       )
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+      setStorageJson(LS_DEFECT_RATINGS, next)
       return next
     })
   }
 
   function clearAllRatings() {
-    localStorage.removeItem(STORAGE_KEY)
+    removeStorage(LS_DEFECT_RATINGS)
     setRatings({})
   }
 
@@ -69,13 +67,13 @@ export default function useFindingRatings() {
         starred:         nowStarring,
         starredAt:       nowStarring ? Date.now() : null,
         lifetimeStarred: (r.lifetimeStarred ?? 0) + (nowStarring ? 1 : 0),
-        popularity:      (r.popularity ?? 0) + (nowStarring ? 2 : -1),
+        popularity:      (r.popularity ?? 0) + (nowStarring ? POP_STAR_BONUS : -POP_UNSTAR_PENALTY),
       }
     }),
     toggleArchive: (id) => update(id, r => ({
       ...r,
       archived:   !r.archived,
-      popularity: (r.popularity ?? 0) + (r.archived ? 1 : -1),
+      popularity: (r.popularity ?? 0) + (r.archived ? POP_ARCHIVE_PENALTY : -POP_ARCHIVE_PENALTY),
     })),
     recordPin: (id) => update(id, r => ({
       ...r,
@@ -85,14 +83,14 @@ export default function useFindingRatings() {
     recordOpen: (id) => update(id, r => ({
       ...r,
       lifetimeOpened: (r.lifetimeOpened ?? 0) + 1,
-      popularity:     (r.popularity ?? 0) + 0.5,
+      popularity:     (r.popularity ?? 0) + POP_OPEN_BOOST,
     })),
     recordCopy: (id, type) => update(id, r => {
       const field = COPY_FIELD[type]
       return {
         ...r,
         ...(field ? { [field]: (r[field] ?? 0) + 1 } : {}),
-        popularity: (r.popularity ?? 0) + 0.25,
+        popularity: (r.popularity ?? 0) + POP_COPY_BOOST,
       }
     }),
     resetRankings,

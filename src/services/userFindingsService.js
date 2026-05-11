@@ -9,23 +9,13 @@
  * unchanged, only this file needs updating.
  */
 
-const STORAGE_KEY = 'userFindings'
+import { makeIdGenerator } from '../utils/makeIdGenerator.js'
+import { LS_USER_FINDINGS } from '../utils/constants.js'
+import { getStorageJson, setStorageJson } from '../utils/storage.js'
+const nextId = makeIdGenerator('USR')
 
-function load() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
-}
-
-function persist(findings) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(findings)) } catch { /* storage unavailable */ }
-}
-
-function nextId(existing) {
-  const nums = existing
-    .map(f => { const m = f.id?.match(/^USR-(\d+)$/); return m ? parseInt(m[1], 10) : 0 })
-    .filter(n => n > 0)
-  const max = nums.length ? Math.max(...nums) : 0
-  return `USR-${String(max + 1).padStart(3, '0')}`
-}
+function load() { return getStorageJson(LS_USER_FINDINGS, []) }
+function persist(findings) { setStorageJson(LS_USER_FINDINGS, findings) }
 
 export function loadUserFindings() {
   return load()

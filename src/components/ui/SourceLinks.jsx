@@ -1,22 +1,21 @@
 import { ExternalLink } from 'lucide-react'
 import LinkTitle from './LinkTitle.jsx'
 
+function isExternalLink(url) {
+  try {
+    const linkUrl = new URL(url)
+    return linkUrl.protocol.startsWith('http') && linkUrl.hostname !== window.location.hostname
+  } catch {
+    return false
+  }
+}
+
 export default function SourceLinks({
   links,
   singleHeading = 'Source',
   multipleHeading = 'Sources'
 }) {
   if (!links?.length) return null
-
-  const isExternalLink = (url) => {
-    try {
-      const linkUrl = new URL(url)
-      const currentHost = window.location.hostname
-      return linkUrl.protocol.startsWith('http') && linkUrl.hostname !== currentHost
-    } catch {
-      return false
-    }
-  }
 
   return (
     <div className="source-links">

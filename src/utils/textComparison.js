@@ -1,4 +1,4 @@
-export function editDistance(a, b) {
+function editDistance(a, b) {
   const m = a.length, n = b.length
   const dp = Array.from({ length: m + 1 }, (_, i) => [i])
   for (let j = 1; j <= n; j++) dp[0][j] = j
@@ -12,7 +12,9 @@ export function editDistance(a, b) {
   return dp[m][n]
 }
 
-export function isSignificantlyChanged(original, current, threshold = 0.7) {
+const TEXT_CHANGE_THRESHOLD = 0.7
+
+export function isSignificantlyChanged(original, current, threshold = TEXT_CHANGE_THRESHOLD) {
   if (!original || original === current) return false
   return editDistance(original, current) / original.length > threshold
 }
