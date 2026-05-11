@@ -17,7 +17,7 @@ import '@fontsource/inter/latin-ext-700.css'
 import './plugins/router/router.css'
 import './components/ui/ui.css'
 import './index.css'
-import './locales.css'
+import './calamansi/locales.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
