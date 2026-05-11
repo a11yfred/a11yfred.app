@@ -17,6 +17,7 @@ import { NOTIFICATION_TIMEOUT, DEBUG_AI_DELAY_MS, DEBUG_COMMANDS } from '../util
 import { getAiProvider, getStorage, setStorage, getFindingNoteKey, getProviderLabel } from '../utils/storage.js'
 import useDetailPanelClipboard from '../hooks/useDetailPanelClipboard.js'
 import useDetailPanelRefine from '../hooks/useDetailPanelRefine.js'
+import './DetailPanel.css'
 
 function FieldCheckbox({ label, checked, onChange, disabled }) {
   return (

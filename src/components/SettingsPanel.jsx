@@ -12,6 +12,7 @@ import { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys } from '../utils/ai
 import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
 import { getAiProvider, setStorage, removeStorage, isAgenticModeEnabled } from '../utils/storage.js'
+import './SettingsPanel.css'
 
 function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {
   return (

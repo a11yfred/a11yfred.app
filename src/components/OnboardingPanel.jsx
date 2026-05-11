@@ -6,6 +6,7 @@ import { useT } from '../i18n/index.jsx'
 import Button from './ui/Button.jsx'
 import { LS_ONBOARDING_SEEN } from '../utils/constants.js'
 import { setStorage } from '../utils/storage.js'
+import './OnboardingPanel.css'
 
 const randomAngle = () => Math.floor(Math.random() * 360)
 

@@ -1098,7 +1098,7 @@ function AppContent({
         <label className="view-all-dont-ask-label">
           <input
             type="checkbox"
-            className="view-all-dont-ask-checkbox"
+            className="app-checkbox"
             checked={viewAllDontAsk}
             onChange={e => setViewAllDontAsk(e.target.checked)}
           />

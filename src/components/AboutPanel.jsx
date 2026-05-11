@@ -4,6 +4,7 @@ import { useT } from '../i18n/index.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
 import findingSlug from '../utils/findingSlug.js'
+import './AboutPanel.css'
 
 const ExtIcon = <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
 
