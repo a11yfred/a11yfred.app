@@ -142,7 +142,7 @@ Verify the count in SettingsPanel privacy disclosure matches reality.
 
 ### Privacy Disclosure
 
-SettingsPanel (About → Privacy & Storage) must list all `localStorage` keys. Update `settings.privacy_body_2` in `src/i18n/en.json` whenever storage changes. Propagate to all locale files.
+SettingsPanel (About → Privacy & Storage) must list all `localStorage` keys. Update `settings.privacy_body_2` in `src/calamansi/en.json` whenever storage changes. Propagate to all locale files.
 
 ### No Analytics
 
@@ -301,7 +301,7 @@ See [i18n-WORKFLOW.md](i18n-WORKFLOW.md) for complete translation procedures inc
 
 ### String Coverage
 
-Any new UI text must use `t('key')` from `src/i18n/en.json`. Never hardcode English strings in components.
+Any new UI text must use `t('key')` from `src/calamansi/en.json`. Never hardcode English strings in components.
 
 ### Key Parity
 
@@ -388,7 +388,7 @@ Apply when adding keys or updating existing ones.
 
 ## Plugin Workflows
 
-Plugins (`src/plugins/router/`, `src/plugins/announce/`, `src/plugins/debug/`) are designed to be portable.
+Plugins (`src/plugins/router/`, `src/plugins/announce/`, `src/plugins/adobo/`) are designed to be portable.
 
 ### Import Isolation
 
@@ -408,7 +408,7 @@ List any non-React external packages imported by plugins (currently: `lucide-rea
 
 ### README Accuracy
 
-Verify `src/plugins/router/README.md`, `src/plugins/announce/README.md`, and `src/plugins/debug/README.md` match current exports. Update if hooks or components were added, renamed, or removed.
+Verify `src/plugins/router/README.md`, `src/plugins/announce/README.md`, and `src/plugins/adobo/README.md` match current exports. Update if hooks or components were added, renamed, or removed.
 
 ---
 

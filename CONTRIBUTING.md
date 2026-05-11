@@ -44,7 +44,7 @@ The `main` branch is protected. Direct pushes are blocked by a pre-push hook. Al
 ### Branch Types
 
 - **main** — Production code (protected, PR-only)
-- **feature/\*** — Active development (ui-library, chrome-extension, firefox-extension, electron-app)
+- **feature/\*** — Active development (ulam, chrome-extension, firefox-extension, electron-app)
 
 ### Syncing Feature Branches
 
@@ -56,27 +56,11 @@ git merge main  # Bring in latest main changes
 git push origin feature/your-feature
 ```
 
-**Special rule for `feature/ui-library`:**
+**Special rule for `feature/ulam`:**
 
-The ui-library branch is a **clean, portable library** focused on reusable components and plugins. It should only receive updates that affect the core library itself:
+The ulam branch tracks the ulam framework boundary — `src/components/ui/`, `src/plugins/`, `src/calamansi/`, `src/sawsawan/`, and token CSS files. It stays in sync with main. The branch exists to mark what will become the standalone `ulam` monorepo at fork time.
 
-**Include (cherry-pick from main):**
-
-- Core UI components (Button, IconButton, Toggle, Badge, etc.)
-- Design tokens (tokens.css)
-- Plugins (announce, router, debug)
-- Component library documentation (src/components/ui/README.md)
-
-**Exclude (don't merge/cherry-pick):**
-
-- Application components (DetailPanel, SettingsPanel, SearchBar, etc.)
-- App-specific logic and services
-- App-specific documentation (main README, docs/*, CHANGELOG)
-- Build configuration for the web app
-
-Use `git cherry-pick <commit-hash>` to pull only specific core component or plugin improvements into ui-library. Do **not** use `git merge main` on this branch — it will pull in app-specific changes that belong only on main.
-
-For the full sync workflow, see `UI-LIBRARY-SYNC.md`.
+For the full sync workflow, see `ULAM-SYNC.md`.
 
 ## Pre-Push Hook
 

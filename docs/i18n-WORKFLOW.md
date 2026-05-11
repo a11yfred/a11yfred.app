@@ -6,7 +6,7 @@ Complete translation procedures for adding, updating, and maintaining 50+ locale
 
 ## Quick Reference
 
-**New UI text?** Add key to `src/i18n/en.json`, then run:
+**New UI text?** Add key to `src/calamansi/en.json`, then run:
 
 ```bash
 ANTHROPIC_API_KEY=... npm run translate
@@ -22,7 +22,7 @@ ANTHROPIC_API_KEY=... npm run translate
 
 ### Step 1: Add to `en.json`
 
-Add your key and English value to `src/i18n/en.json`:
+Add your key and English value to `src/calamansi/en.json`:
 
 ```json
 {
@@ -91,7 +91,7 @@ If missing keys are found, go to Section 4, Step 1 (Parity).
 
 Run this after major content changes or when the translate run was deferred from a previous session.
 
-Use `src/i18n/es.json` (Spanish) as reference for what keys exist and what translated values look like.
+Use `src/calamansi/es.json` (Spanish) as reference for what keys exist and what translated values look like.
 
 ### Step 1: Parity (No API Needed)
 
@@ -108,7 +108,7 @@ Compare `es.json` keys against all other locale files. For every key present in 
 Commit:
 
 ```bash
-git add src/i18n/
+git add src/calamansi/
 git commit -m "i18n: add missing keys as English placeholders"
 ```
 
@@ -127,7 +127,7 @@ The script auto-detects changed keys by comparing `en.json` against the snapshot
 Commit:
 
 ```bash
-git add src/i18n/ scripts/en-snapshot.json
+git add src/calamansi/ scripts/en-snapshot.json
 git commit -m "i18n: retranslate stale keys, English source changed"
 ```
 
@@ -144,7 +144,7 @@ Same script, picks up any remaining placeholders.
 Commit:
 
 ```bash
-git add src/i18n/
+git add src/calamansi/
 git commit -m "i18n: translate remaining English placeholder values"
 ```
 
@@ -240,4 +240,4 @@ Current: 50+ locale files
 - 1 source: `en.json`
 - 49+ translations: `ar-PS.json`, `bg.json`, `cs.json`, `da.json`, `de.json`, `el.json`, `es.json`, `et.json`, `fi.json`, `fr.json`, `hu.json`, `id.json`, `it.json`, `ja.json`, `ko.json`, `lt.json`, `lv.json`, `nb.json`, `nl.json`, `pl.json`, `pt-BR.json`, `pt-PT.json`, `ro.json`, `ru.json`, `sk.json`, `sl.json`, `sv.json`, `th.json`, `tr.json`, `ug.json`, `uk.json`, `zh-CN.json`, `zh-TW.json`, plus others
 
-Check `src/i18n/` for current count.
+Check `src/calamansi/` for current count.

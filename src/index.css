@@ -334,5 +334,5 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   padding-bottom: var(--sheet-chrome-height, 60px);
 }
 
-/* â"€â"€â"€ Dev-only styles live in src/plugins/debug/debug.css â"€â"€ */
+/* â"€â"€â"€ Dev-only styles live in src/plugins/adobo/debug.css â"€â"€ */
 
