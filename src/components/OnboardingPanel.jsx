@@ -76,7 +76,7 @@ export default function OnboardingPanel({ onClose }) {
   const SlideIcon = slide.Icon
 
   return (
-    <div className="onboarding-panel" style={{ '--onboarding-grad-angle': `${gradAngle}deg` }}>
+    <div className="onboarding-panel page-panel" style={{ '--onboarding-grad-angle': `${gradAngle}deg` }}>
       <div className="onboarding-deco" aria-hidden="true">
         <Hand size={64} className="onboarding-deco__icon" />
         <ClipboardPaste size={64} className="onboarding-deco__icon" />

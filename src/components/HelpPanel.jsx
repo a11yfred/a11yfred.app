@@ -8,7 +8,7 @@ export default function HelpPanel({ onClose, onStartTour }) {
 
   return (
     <Panel
-      className="help-panel"
+      className="help-panel page-panel"
       heading={t('help.sheet_label')}
       onClose={onClose}
       closeAriaLabel={t('settings.back')}
@@ -16,7 +16,7 @@ export default function HelpPanel({ onClose, onStartTour }) {
     >
 
       {onStartTour && (
-        <section className="help-section help-section--tour">
+        <section className="panel-section help-section--tour">
           <div className="help-tour-banner">
             <div className="help-tour-banner__body">
               <p className="help-tour-banner__heading"><PlayCircle size={20} className="help-tour-banner__icon" aria-hidden="true" />{t('help.walkthrough_heading')}</p>
@@ -33,8 +33,8 @@ export default function HelpPanel({ onClose, onStartTour }) {
         </section>
       )}
 
-      <section className="help-section">
-        <h3 className="help-section-heading">{t('help.how_heading')}</h3>
+      <section className="panel-section">
+        <h3 className="panel-section-heading">{t('help.how_heading')}</h3>
         <ol className="help-steps">
           {[1, 2, 3, 4, 5].map(n => (
             <li key={n} className="help-step">
@@ -50,8 +50,8 @@ export default function HelpPanel({ onClose, onStartTour }) {
         </ol>
       </section>
 
-      <section className="help-section help-section--last">
-        <h3 className="help-section-heading">{t('help.shortcuts_heading')}</h3>
+      <section className="panel-section help-section--last">
+        <h3 className="panel-section-heading">{t('help.shortcuts_heading')}</h3>
         <p className="help-shortcuts-note">{t('help.shortcuts_note')}</p>
         <ul className="help-shortcuts">
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">J</code> {t('help.shortcut_j')}</li>
@@ -59,8 +59,8 @@ export default function HelpPanel({ onClose, onStartTour }) {
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">S</code> {t('help.shortcut_s')}</li>
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">E</code> {t('help.shortcut_e')}</li>
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">U</code> {t('help.shortcut_u')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↑</code> {t('help.shortcut_rank_up')}</li>
-          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Shift+↓</code> {t('help.shortcut_rank_down')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">{'Shift+↑'}</code> {t('help.shortcut_rank_up')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">{'Shift+↓'}</code> {t('help.shortcut_rank_down')}</li>
         </ul>
       </section>
 

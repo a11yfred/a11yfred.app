@@ -1,5 +1,5 @@
-/* ─── Reset ───────────────────────────────────────────────── */
-/* Josh Comeau's Modern CSS Reset — https://www.joshwcomeau.com/css/custom-css-reset/ */
+﻿/* â”€â”€â”€ Reset â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Josh Comeau's Modern CSS Reset â€” https://www.joshwcomeau.com/css/custom-css-reset/ */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -33,7 +33,7 @@ p, h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
-/* ─── Base ────────────────────────────────────────────────── */
+/* â”€â”€â”€ Base â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 html {
   /* 100% = respect the browser's base (typically 16px) and any font-size
@@ -79,7 +79,7 @@ button {
   border: none;
 }
 
-/* ─── Layout ─────────────────────────────────────────────── */
+/* â”€â”€â”€ Layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .app-container {
   padding: var(--space-2) var(--space-4) var(--space-5);
@@ -106,7 +106,7 @@ button {
   flex: 1;
 }
 
-/* ─── Page header ─────────────────────────────────────────── */
+/* â”€â”€â”€ Page header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .page-header {
   position: relative;
@@ -214,7 +214,7 @@ button {
   line-height: 1.25em;
 }
 
-/* ─── 404 Not Found ───────────────────────────────────────── */
+/* â”€â”€â”€ 404 Not Found â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .not-found {
   display: flex;
@@ -244,7 +244,7 @@ button {
   font-size: var(--fs-body);
 }
 
-/* ─── Footer ─────────────────────────────────────────────── */
+/* â”€â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .page-footer {
   border-top: 1px solid var(--border);
@@ -280,7 +280,7 @@ button {
   color: var(--text-heading);
 }
 
-/* ─── Inline icon (SVG in text flow) ─────────────────────── */
+/* â”€â”€â”€ Inline icon (SVG in text flow) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .inline-icon {
   display: inline-block;
@@ -303,7 +303,7 @@ button {
   opacity: 0.7;
 }
 
-/* ─── Settings page (desktop) ─────────────────────────────── */
+/* â”€â”€â”€ Settings page (desktop) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 @keyframes settings-panel-in {
   from {
@@ -317,21 +317,18 @@ button {
   }
 }
 
-/* On desktop the settings/about panels render inline inside <main>.
+/* On desktop the page panels render inline inside <main>.
    Push them down to align their headings with where the H1 sits in the normal view.
    The compact header has zero flow-height (children are absolute/sr-only), so without
    this padding the panel titles appear at the very top of the viewport. */
 @media (width >= 768px) {
-  .settings-panel,
-  .about-panel,
-  .help-panel,
-  .onboarding-panel {
+  .page-panel {
     padding-top: calc(var(--space-8) + var(--space-6));
     animation: settings-panel-in var(--duration-base) var(--ease-out) both;
   }
 }
 
-/* ─── Result list ─────────────────────────────────────────── */
+/* â”€â”€â”€ Result list â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .result-list-section {
   position: relative;
@@ -667,7 +664,7 @@ button {
   }
 }
 
-/* ─── Swipe-to-reveal action panels (mobile only) ─────────── */
+/* â”€â”€â”€ Swipe-to-reveal action panels (mobile only) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .result-swipe-wrap {
   display: flex;
@@ -1020,7 +1017,7 @@ button {
   background: var(--accent-bg);
 }
 
-/* Pin button — hidden on mobile, absolutely positioned on desktop */
+/* Pin button â€” hidden on mobile, absolutely positioned on desktop */
 .result-pin-btn {
   display: none;
 }
@@ -1079,7 +1076,7 @@ button {
   }
 }
 
-/* Skip to next button — overlay centered on card */
+/* Skip to next button â€” overlay centered on card */
 /* Skip link variant within result items */
 .result-card-wrap .skip-link {
   position: absolute;
@@ -1110,7 +1107,7 @@ button {
   opacity: 0.5;
 }
 
-/* Detail copy buttons — icon-only with state change */
+/* Detail copy buttons â€” icon-only with state change */
 .detail-copy-btn,
 .detail-sc-copy-btn {
   min-width: var(--touch-target);
@@ -1180,7 +1177,7 @@ button {
   opacity: 0.3;
 }
 
-/* ── Pinned results in search (when pinned finding matches active query) ── */
+/* â”€â”€ Pinned results in search (when pinned finding matches active query) â”€â”€ */
 
 .pinned-search-matches {
   margin-bottom: var(--space-3);
@@ -1379,7 +1376,7 @@ button {
   margin-top: 0;
 }
 
-/* ─── Sponsored tile ──────────────────────────────────────── */
+/* â”€â”€â”€ Sponsored tile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .result-row--sponsored {
   --result-i: 999;
@@ -1408,7 +1405,7 @@ button {
   text-transform: uppercase;
 }
 
-/* ─── No results ──────────────────────────────────────────── */
+/* â”€â”€â”€ No results â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .no-results {
   text-align: center;
@@ -1434,7 +1431,7 @@ button {
   margin-bottom: 0;
 }
 
-/* ─── Result skeleton ────────────────────────────────────── */
+/* â”€â”€â”€ Result skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 @keyframes skeleton-shimmer {
   from { transform: translateX(-100%); }
@@ -1485,7 +1482,7 @@ button {
   gap: var(--space-2);
 }
 
-/* Skeleton line widths — for shimmer cards */
+/* Skeleton line widths â€” for shimmer cards */
 .skeleton-line--sm {
   width: 3.5rem;
   border-radius: var(--radius-full);
@@ -1510,7 +1507,7 @@ button {
   vertical-align: middle;
 }
 
-/* ─── Search bar ──────────────────────────────────────────── */
+/* â”€â”€â”€ Search bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .search-bar {
   display: block;
@@ -1607,7 +1604,7 @@ input.search-input--disabled {
   color: var(--text-heading);
 }
 
-/* ─── Search typewriter ───────────────────────────────────── */
+/* â”€â”€â”€ Search typewriter â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .search-label-row {
   display: flex;
@@ -1670,7 +1667,7 @@ input.search-input--disabled {
   text-decoration: none;
 }
 
-/* ─── End of Results marker ───────────────────────────────── */
+/* â”€â”€â”€ End of Results marker â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .results-end-marker {
   text-align: center;
@@ -1679,7 +1676,7 @@ input.search-input--disabled {
   margin: var(--space-6) 0 0;
 }
 
-/* ─── View All section ────────────────────────────────────── */
+/* â”€â”€â”€ View All section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .view-all-section {
   margin-top: 0;
@@ -1783,7 +1780,7 @@ input.search-input--disabled {
   min-height: 3rem;
 }
 
-/* ─── Settings panel ──────────────────────────────────────── */
+/* â”€â”€â”€ Settings panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .settings-panel-intro {
   font-size: var(--fs-body);
@@ -1792,11 +1789,6 @@ input.search-input--disabled {
 }
 
 .settings-section-heading {
-  font-size: var(--fs-body);
-  font-weight: 600;
-  color: var(--text-heading);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-upper);
   margin-bottom: var(--space-3);
 }
 
@@ -2288,7 +2280,7 @@ input[type="radio"].control:not(:checked):hover {
   margin-bottom: 0;
 }
 
-/* ─── Detail panel ────────────────────────────────────────── */
+/* â”€â”€â”€ Detail panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .detail-panel {
   padding-top: var(--space-2);
@@ -2631,7 +2623,7 @@ input[type="radio"].control:not(:checked):hover {
   }
 }
 
-/* Detail panel — reset-all / copy-all / close footer row */
+/* Detail panel â€” reset-all / copy-all / close footer row */
 .detail-actions-end {
   display: flex;
   flex-direction: column;
@@ -2689,7 +2681,7 @@ input[type="radio"].control:not(:checked):hover {
   }
 }
 
-/* Detail panel — edit session warning */
+/* Detail panel â€” edit session warning */
 .detail-edit-warning {
   font-size: var(--fs-body);
   color: var(--text-body);
@@ -2705,7 +2697,7 @@ input[type="radio"].control:not(:checked):hover {
   flex-shrink: 0;
 }
 
-/* ─── Related issues ─────────────────────────────────────── */
+/* â”€â”€â”€ Related issues â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .detail-related {
   margin-top: var(--space-5);
@@ -2728,7 +2720,7 @@ input[type="radio"].control:not(:checked):hover {
   margin-bottom: var(--space-4);
 }
 
-/* ─── Source ───────────────────────────────────────────────── */
+/* â”€â”€â”€ Source â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .source-links {
   margin-top: var(--space-5);
@@ -2807,30 +2799,26 @@ input[type="radio"].control:not(:checked):hover {
   text-decoration: none;
 }
 
-/* ─── About Panel ──────────────────────────────────────────── */
+/* â”€â”€â”€ About / Help panels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
-.about-panel,
-.help-panel {
+.page-panel {
   display: flex;
   flex-direction: column;
 }
 
-.about-section,
-.help-section {
+.panel-section {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
   padding-bottom: var(--space-6);
 }
 
-.about-section + .about-section,
-.help-section + .help-section {
+.panel-section + .panel-section {
   border-top: 1px solid var(--border);
   padding-top: var(--space-6);
 }
 
-.about-section-heading,
-.help-section-heading {
+.panel-section-heading {
   font-size: var(--fs-body);
   font-weight: 600;
   color: var(--text-heading);
@@ -2989,7 +2977,7 @@ input[type="radio"].control:not(:checked):hover {
   padding-bottom: 0;
 }
 
-.help-section--tour + .help-section {
+.help-section--tour + .panel-section {
   border-top: none;
 }
 
@@ -3047,7 +3035,7 @@ input[type="radio"].control:not(:checked):hover {
   margin: 0;
 }
 
-/* ─── Onboarding panel ────────────────────────────────────── */
+/* â”€â”€â”€ Onboarding panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 .onboarding-panel {
   position: relative;
@@ -3251,7 +3239,7 @@ input[type="radio"].control:not(:checked):hover {
   margin-bottom: var(--space-3);
 }
 
-/* ─── Print ───────────────────────────────────────────────── */
+/* â”€â”€â”€ Print â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 @media print {
   .page-header,
@@ -3310,10 +3298,10 @@ input[type="radio"].control:not(:checked):hover {
   text-decoration: none;
 }
 
-/* ─── Na'vi locale: Papyrus headings ─────────────────────── */
+/* â”€â”€â”€ Na'vi locale: Papyrus headings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root[lang="nav"] .page-title,
 :root[lang="nav"] .panel-title,
-:root[lang="nav"] .about-section-heading,
+:root[lang="nav"] .panel-section-heading,
 :root[lang="nav"] .about-subheading,
 :root[lang="nav"] .settings-section-heading,
 :root[lang="nav"] .detail-title,
@@ -3325,12 +3313,12 @@ input[type="radio"].control:not(:checked):hover {
   font-family: Papyrus, fantasy;
 }
 
-/* ─── Easter egg locale heading fonts ───────────────────── */
+/* â”€â”€â”€ Easter egg locale heading fonts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 /* Pig Latin + Simlish: playful */
 :root[lang="pig"] .page-title,
 :root[lang="pig"] .panel-title,
-:root[lang="pig"] .about-section-heading,
+:root[lang="pig"] .panel-section-heading,
 :root[lang="pig"] .about-subheading,
 :root[lang="pig"] .settings-section-heading,
 :root[lang="pig"] .settings-group__label,
@@ -3349,7 +3337,7 @@ input[type="radio"].control:not(:checked):hover {
 :root[lang="pig"] .pinned-section__heading,
 :root[lang="sim"] .page-title,
 :root[lang="sim"] .panel-title,
-:root[lang="sim"] .about-section-heading,
+:root[lang="sim"] .panel-section-heading,
 :root[lang="sim"] .about-subheading,
 :root[lang="sim"] .settings-section-heading,
 :root[lang="sim"] .settings-group__label,
@@ -3372,7 +3360,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Pirate + High Valyrian: elegant old-world serif */
 :root[lang="pir"] .page-title,
 :root[lang="pir"] .panel-title,
-:root[lang="pir"] .about-section-heading,
+:root[lang="pir"] .panel-section-heading,
 :root[lang="pir"] .about-subheading,
 :root[lang="pir"] .settings-section-heading,
 :root[lang="pir"] .settings-group__label,
@@ -3391,7 +3379,7 @@ input[type="radio"].control:not(:checked):hover {
 :root[lang="pir"] .pinned-section__heading,
 :root[lang="val"] .page-title,
 :root[lang="val"] .panel-title,
-:root[lang="val"] .about-section-heading,
+:root[lang="val"] .panel-section-heading,
 :root[lang="val"] .about-subheading,
 :root[lang="val"] .settings-section-heading,
 :root[lang="val"] .settings-group__label,
@@ -3414,7 +3402,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Quenya + Sindarin: Tolkien Elvish */
 :root[lang="qya"] .page-title,
 :root[lang="qya"] .panel-title,
-:root[lang="qya"] .about-section-heading,
+:root[lang="qya"] .panel-section-heading,
 :root[lang="qya"] .about-subheading,
 :root[lang="qya"] .settings-section-heading,
 :root[lang="qya"] .settings-group__label,
@@ -3433,7 +3421,7 @@ input[type="radio"].control:not(:checked):hover {
 :root[lang="qya"] .pinned-section__heading,
 :root[lang="sjn"] .page-title,
 :root[lang="sjn"] .panel-title,
-:root[lang="sjn"] .about-section-heading,
+:root[lang="sjn"] .panel-section-heading,
 :root[lang="sjn"] .about-subheading,
 :root[lang="sjn"] .settings-section-heading,
 :root[lang="sjn"] .settings-group__label,
@@ -3456,7 +3444,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Klingon + Hodor + Newspeak: harsh and blunt */
 :root[lang="tlh"] .page-title,
 :root[lang="tlh"] .panel-title,
-:root[lang="tlh"] .about-section-heading,
+:root[lang="tlh"] .panel-section-heading,
 :root[lang="tlh"] .about-subheading,
 :root[lang="tlh"] .settings-section-heading,
 :root[lang="tlh"] .settings-group__label,
@@ -3475,7 +3463,7 @@ input[type="radio"].control:not(:checked):hover {
 :root[lang="tlh"] .pinned-section__heading,
 :root[lang="hod"] .page-title,
 :root[lang="hod"] .panel-title,
-:root[lang="hod"] .about-section-heading,
+:root[lang="hod"] .panel-section-heading,
 :root[lang="hod"] .about-subheading,
 :root[lang="hod"] .settings-section-heading,
 :root[lang="hod"] .settings-group__label,
@@ -3494,7 +3482,7 @@ input[type="radio"].control:not(:checked):hover {
 :root[lang="hod"] .pinned-section__heading,
 :root[lang="nws"] .page-title,
 :root[lang="nws"] .panel-title,
-:root[lang="nws"] .about-section-heading,
+:root[lang="nws"] .panel-section-heading,
 :root[lang="nws"] .about-subheading,
 :root[lang="nws"] .settings-section-heading,
 :root[lang="nws"] .settings-group__label,
@@ -3517,7 +3505,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Belter + Nadsat + Cityspeak: typewriter / industrial */
 :root[lang="blt"] .page-title,
 :root[lang="blt"] .panel-title,
-:root[lang="blt"] .about-section-heading,
+:root[lang="blt"] .panel-section-heading,
 :root[lang="blt"] .about-subheading,
 :root[lang="blt"] .settings-section-heading,
 :root[lang="blt"] .settings-group__label,
@@ -3536,7 +3524,7 @@ input[type="radio"].control:not(:checked):hover {
 :root[lang="blt"] .pinned-section__heading,
 :root[lang="nds"] .page-title,
 :root[lang="nds"] .panel-title,
-:root[lang="nds"] .about-section-heading,
+:root[lang="nds"] .panel-section-heading,
 :root[lang="nds"] .about-subheading,
 :root[lang="nds"] .settings-section-heading,
 :root[lang="nds"] .settings-group__label,
@@ -3555,7 +3543,7 @@ input[type="radio"].control:not(:checked):hover {
 :root[lang="nds"] .pinned-section__heading,
 :root[lang="csp"] .page-title,
 :root[lang="csp"] .panel-title,
-:root[lang="csp"] .about-section-heading,
+:root[lang="csp"] .panel-section-heading,
 :root[lang="csp"] .about-subheading,
 :root[lang="csp"] .settings-section-heading,
 :root[lang="csp"] .settings-group__label,
@@ -3578,7 +3566,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Dothraki: ancient tribal */
 :root[lang="dot"] .page-title,
 :root[lang="dot"] .panel-title,
-:root[lang="dot"] .about-section-heading,
+:root[lang="dot"] .panel-section-heading,
 :root[lang="dot"] .about-subheading,
 :root[lang="dot"] .settings-section-heading,
 :root[lang="dot"] .settings-group__label,
@@ -3601,7 +3589,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Toki Pona: handwritten simplicity */
 :root[lang="tok"] .page-title,
 :root[lang="tok"] .panel-title,
-:root[lang="tok"] .about-section-heading,
+:root[lang="tok"] .panel-section-heading,
 :root[lang="tok"] .about-subheading,
 :root[lang="tok"] .settings-section-heading,
 :root[lang="tok"] .settings-group__label,
@@ -3624,7 +3612,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Dovahzul: Gothic runic */
 :root[lang="dov"] .page-title,
 :root[lang="dov"] .panel-title,
-:root[lang="dov"] .about-section-heading,
+:root[lang="dov"] .panel-section-heading,
 :root[lang="dov"] .about-subheading,
 :root[lang="dov"] .settings-section-heading,
 :root[lang="dov"] .settings-group__label,
@@ -3647,7 +3635,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Mandoa: sci-fi terminal */
 :root[lang="mnd"] .page-title,
 :root[lang="mnd"] .panel-title,
-:root[lang="mnd"] .about-section-heading,
+:root[lang="mnd"] .panel-section-heading,
 :root[lang="mnd"] .about-subheading,
 :root[lang="mnd"] .settings-section-heading,
 :root[lang="mnd"] .settings-group__label,
@@ -3670,7 +3658,7 @@ input[type="radio"].control:not(:checked):hover {
 /* Alienese: stark alien */
 :root[lang="ali"] .page-title,
 :root[lang="ali"] .panel-title,
-:root[lang="ali"] .about-section-heading,
+:root[lang="ali"] .panel-section-heading,
 :root[lang="ali"] .about-subheading,
 :root[lang="ali"] .settings-section-heading,
 :root[lang="ali"] .settings-group__label,
@@ -3690,7 +3678,7 @@ input[type="radio"].control:not(:checked):hover {
   font-family: "Arial Black", Impact, sans-serif;
 }
 
-/* ─── Party mode ──────────────────────────────────────────── */
+/* â”€â”€â”€ Party mode â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 [data-theme="party"] body {
   background-image: radial-gradient(
@@ -3792,7 +3780,7 @@ input[type="radio"].control:not(:checked):hover {
   outline-offset: 3px;
 }
 
-/* ─── Drawer scroll lock ──────────────────────────────────── */
+/* â”€â”€â”€ Drawer scroll lock â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 
 body:has(.drawer-panel.is-open) {
   overflow: hidden;
@@ -3803,5 +3791,5 @@ body:has(.sheet-panel.is-collapsed) .app-container {
   padding-bottom: var(--sheet-chrome-height, 60px);
 }
 
-/* ─── Dev-only styles live in src/plugins/debug/debug.css ── */
+/* â”€â”€â”€ Dev-only styles live in src/plugins/debug/debug.css â”€â”€ */
 

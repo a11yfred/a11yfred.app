@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { ExternalLink, ArrowLeft } from 'lucide-react'
 import { useT } from '../i18n/index.jsx'
 import Panel from './ui/Panel.jsx'
@@ -22,15 +22,15 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
 
   return (
     <Panel
-      className="about-panel"
+      className="about-panel page-panel"
       heading={t('about.sheet_label')}
       onClose={onClose}
       closeAriaLabel={t('settings.back')}
       pageTitle={t('about.sheet_label')}
     >
 
-      <section className="about-section">
-        <h3 className="about-section-heading">{t('about.what_heading')}</h3>
+      <section className="panel-section">
+        <h3 className="panel-section-heading">{t('about.what_heading')}</h3>
         <p className="about-body">{t('about.what_body')}</p>
         <p className="about-body">
           {t('about.what_body_2_prefix')}
@@ -52,8 +52,8 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
         )}
       </section>
 
-      <section className="about-section">
-        <h3 className="about-section-heading">{t('about.features_heading')}</h3>
+      <section className="panel-section">
+        <h3 className="panel-section-heading">{t('about.features_heading')}</h3>
         <ul className="about-features">
           <li className="about-feature">
             <h4 className="about-feature-label">{t('about.feature_a11y_label')}</h4>
@@ -81,8 +81,8 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
         </ul>
       </section>
 
-      <section className="about-section">
-        <h3 className="about-section-heading">{t('settings.privacy_heading')}</h3>
+      <section className="panel-section">
+        <h3 className="panel-section-heading">{t('settings.privacy_heading')}</h3>
         <h4 className="about-subheading">{t('settings.privacy_subhead_storage')}</h4>
         <p className="about-body">{t('settings.privacy_body_1')}</p>
         <p className="about-body">{t('settings.privacy_body_2')}</p>
@@ -90,8 +90,8 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
         <p className="about-body">{t('settings.privacy_body_translations')}</p>
       </section>
 
-      <section className="about-section about-section--last">
-        <h3 className="about-section-heading">{t('about.sources_heading')}</h3>
+      <section className="panel-section">
+        <h3 className="panel-section-heading">{t('about.sources_heading')}</h3>
         <p className="about-body">{t('about.sources_body')}</p>
         <p className="about-body">{t('about.sources_intro')}</p>
         <ul className="about-sources-list about-body">

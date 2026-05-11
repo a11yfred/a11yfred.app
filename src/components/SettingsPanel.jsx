@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
+﻿import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw, ArrowLeft } from 'lucide-react'
 import { Modal, BottomSheet, useRouter } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
@@ -325,7 +325,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
   return (
     <Panel
       ref={settingsPanelRef}
-      className="settings-panel"
+      className="settings-panel page-panel"
       heading={t('settings.heading')}
       onClose={guardedClose}
       closeAriaLabel={t('settings.back')}
@@ -334,7 +334,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <p className="settings-panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
 
       {/* ── Appearance ──────────────────────────────── */}
-      <h3 className="settings-section-heading">{t('settings.appearance')}</h3>
+      <h3 className="panel-section-heading settings-section-heading">{t('settings.appearance')}</h3>
 
       {/* Theme */}
       {pendingTheme !== theme && (
@@ -406,7 +406,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       </div>
 
       {/* ── Search ──────────────────────────────────── */}
-      <h3 className="settings-section-heading settings-section-heading--divided">
+      <h3 className="panel-section-heading settings-section-heading settings-section-heading--divided">
         {t('settings.search_section')}
       </h3>
 
@@ -552,7 +552,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={ArchiveRestore} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" />
 
       {/* ── AI Assist ───────────────────────────────── */}
-      <h3 className="settings-section-heading settings-section-heading--divided">
+      <h3 className="panel-section-heading settings-section-heading settings-section-heading--divided">
         {t('settings.ai_heading')}
       </h3>
 
