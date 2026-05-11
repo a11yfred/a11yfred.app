@@ -1,6 +1,7 @@
 import { callProvider } from '../halohalo/index.js'
+import { getAdapter } from '../sawsawan/platformAdapter.js'
 import { AI_MAX_TOKENS, AI_DESC_REGEX, AI_FIX_REGEX, LS_APIKEY_PREFIX } from '../utils/constants.js'
-import { getStorage, getAiProvider, getAiModel } from '../utils/storage.js'
+import { getAiProvider, getAiModel } from '../utils/storage.js'
 
 export { AiApiError, httpStatusToErrorType } from '../halohalo/index.js'
 
@@ -34,9 +35,7 @@ export function parseAiResponse(text) {
 
 export async function getAiRefinement({ finding, descText, fixText, note }) {
   const provider = getAiProvider()
-  const key = window.electronAPI
-    ? await window.electronAPI.keys.get(`${LS_APIKEY_PREFIX}${provider}`)
-    : getStorage(`${LS_APIKEY_PREFIX}${provider}`)
+  const key = await getAdapter().getKey(`${LS_APIKEY_PREFIX}${provider}`)
 
   if (!key) throw new Error(`No API key found for ${provider}. Add one in Settings.`)
 

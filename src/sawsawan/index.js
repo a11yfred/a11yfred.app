@@ -10,3 +10,4 @@
 // None of those three import from sawsawan or from each other.
 
 export { useSawsawan } from './useSawsawan.js'
+export { setPlatformAdapter, getAdapter, makeElectronAdapter } from './platformAdapter.js'

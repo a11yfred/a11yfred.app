@@ -1,26 +1,19 @@
 import { useState, useCallback } from 'react'
 import { DEFAULT_MODELS, DEFAULT_PROVIDERS, DEFAULT_PROVIDER_LABELS } from './providers.js'
+import { getAdapter } from '../sawsawan/platformAdapter.js'
 
 // ─── useProviderConfig ────────────────────────────────────────────────────────
 // Manages active provider, per-provider model selection, API keys, and an
-// optional boolean mode flag — all persisted to localStorage.
+// optional boolean mode flag — all persisted via the platform adapter.
 //
 // storageKeys: {
-//   provider:   string  — key for the active provider id
+//   provider:    string — key for the active provider id
 //   modelPrefix: string — prefix; full key = modelPrefix + providerId
-//   keyPrefix:  string  — prefix; full key = keyPrefix + providerId
-//   mode:       string  — optional key for a boolean mode flag (e.g. agentic)
+//   keyPrefix:   string — prefix; full key = keyPrefix + providerId
+//   mode:        string — optional key for a boolean mode flag (e.g. agentic)
 // }
 // providers: optional array of { id, label, defaultModel? } — defaults to the
 //            four built-in providers
-
-function readLocal(key, fallback = null) {
-  try { return localStorage.getItem(key) ?? fallback } catch { return fallback }
-}
-
-function writeLocal(key, value) {
-  try { localStorage.setItem(key, value) } catch { /* storage unavailable */ }
-}
 
 export function useProviderConfig(storageKeys, providers = DEFAULT_PROVIDERS) {
   const { provider: providerKey, modelPrefix, keyPrefix, mode: modeKey } = storageKeys
@@ -30,58 +23,52 @@ export function useProviderConfig(storageKeys, providers = DEFAULT_PROVIDERS) {
   )
 
   const [provider, setProviderState] = useState(
-    () => readLocal(providerKey) || providerList[0]?.id || 'anthropic'
+    () => getAdapter().readPref(providerKey) || providerList[0]?.id || 'anthropic'
   )
 
   const [models, setModelsState] = useState(() =>
     Object.fromEntries(
       providerList.map(p => [
         p.id,
-        readLocal(`${modelPrefix}${p.id}`) || p.defaultModel || DEFAULT_MODELS[p.id] || '',
+        getAdapter().readPref(`${modelPrefix}${p.id}`) || p.defaultModel || DEFAULT_MODELS[p.id] || '',
       ])
     )
   )
 
+  // Keys are not pre-loaded in memory when the adapter is async (Electron).
+  // getKey() is always async — callers must await it.
   const [keys, setKeysState] = useState(() =>
-    Object.fromEntries(
-      providerList.map(p => [
-        p.id,
-        window.electronAPI ? '' : readLocal(`${keyPrefix}${p.id}`) || '',
-      ])
-    )
+    Object.fromEntries(providerList.map(p => [p.id, '']))
   )
 
   const [mode, setModeState] = useState(
-    () => modeKey ? readLocal(modeKey) === 'true' : false
+    () => modeKey ? getAdapter().readPref(modeKey) === 'true' : false
   )
 
   const setProvider = useCallback((id) => {
-    writeLocal(providerKey, id)
+    getAdapter().writePref(providerKey, id)
     setProviderState(id)
   }, [providerKey])
 
   const setModel = useCallback((providerId, modelId) => {
-    writeLocal(`${modelPrefix}${providerId}`, modelId)
+    getAdapter().writePref(`${modelPrefix}${providerId}`, modelId)
     setModelsState(prev => ({ ...prev, [providerId]: modelId }))
   }, [modelPrefix])
 
   const setKey = useCallback((providerId, value) => {
-    writeLocal(`${keyPrefix}${providerId}`, value)
+    getAdapter().setKey(`${keyPrefix}${providerId}`, value)
     setKeysState(prev => ({ ...prev, [providerId]: value }))
   }, [keyPrefix])
 
   const setMode = useCallback((value) => {
     if (!modeKey) return
-    writeLocal(modeKey, value ? 'true' : 'false')
+    getAdapter().writePref(modeKey, value ? 'true' : 'false')
     setModeState(value)
   }, [modeKey])
 
   const getKey = useCallback(async (providerId) => {
-    if (window.electronAPI) {
-      return window.electronAPI.keys.get(`${keyPrefix}${providerId}`) || ''
-    }
-    return keys[providerId] || ''
-  }, [keyPrefix, keys])
+    return (await getAdapter().getKey(`${keyPrefix}${providerId}`)) || ''
+  }, [keyPrefix])
 
   const getModel = useCallback((providerId) => {
     return models[providerId] || DEFAULT_MODELS[providerId] || ''

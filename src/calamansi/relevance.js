@@ -1,26 +1,11 @@
 import { useState, useCallback, useRef } from 'react'
+import { getAdapter } from '../sawsawan/platformAdapter.js'
 
-// ─── Storage helpers (self-contained — no app dependency) ────────────────────
-
-function readJson(key, fallback) {
-  try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)) } catch { return fallback }
-}
-
-function writeJson(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)) } catch { /* storage unavailable */ }
-}
-
-function readSessionJson(key, fallback) {
-  try { return JSON.parse(sessionStorage.getItem(key) || JSON.stringify(fallback)) } catch { return fallback }
-}
-
-function writeSessionJson(key, value) {
-  try { sessionStorage.setItem(key, JSON.stringify(value)) } catch { /* storage unavailable */ }
-}
-
-function removeKey(key) {
-  try { localStorage.removeItem(key) } catch { /* storage unavailable */ }
-}
+const readJson      = (key, fallback) => getAdapter().readPrefJson(key, fallback)
+const writeJson     = (key, value)    => getAdapter().writePrefJson(key, value)
+const readSessionJson  = (key, fallback) => getAdapter().readSessionJson(key, fallback)
+const writeSessionJson = (key, value)    => getAdapter().writeSessionJson(key, value)
+const removeKey     = (key)           => getAdapter().removePref(key)
 
 // ─── useItemSignals ──────────────────────────────────────────────────────────
 // Tracks all user interaction signals for a corpus of items.

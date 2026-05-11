@@ -1,7 +1,7 @@
-import { callAnthropicWithTools } from '../halohalo/index.js'
-import { makeSearchTool } from '../halohalo/index.js'
+import { callAnthropicWithTools, makeSearchTool } from '../halohalo/index.js'
+import { getAdapter } from '../sawsawan/platformAdapter.js'
 import { AI_AGENTIC_MAX_TOKENS, AGENTIC_MAX_TOOL_TURNS, LS_APIKEY_PREFIX } from '../utils/constants.js'
-import { getStorage, getAiModel } from '../utils/storage.js'
+import { getAiModel } from '../utils/storage.js'
 import { parseAiResponse } from './aiService.js'
 
 export { AiApiError } from '../halohalo/index.js'
@@ -30,9 +30,7 @@ const CORPUS_SEARCH_FIELDS = [
 const CORPUS_PICK = ['id', 'title', 'primarySC', 'severity', 'desc', 'fix']
 
 export async function getAgenticRefinement({ finding, descText, fixText, note, corpus }) {
-  const key = window.electronAPI
-    ? await window.electronAPI.keys.get(`${LS_APIKEY_PREFIX}anthropic`)
-    : getStorage(`${LS_APIKEY_PREFIX}anthropic`)
+  const key = await getAdapter().getKey(`${LS_APIKEY_PREFIX}anthropic`)
 
   if (!key) throw new Error('Anthropic API key required for agentic mode. Add one in Settings → AI Assist.')
 
