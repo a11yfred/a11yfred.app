@@ -1,6 +1,41 @@
+/* app-tokens.css re-exports tokens.css, then adds app layout overrides.
+   ui.css (loaded via index.js barrel) covers the ube base layer.
+   Everything below is app-specific. */
 @import "./app-tokens.css";
 
-/* â"€â"€â"€ App typography â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ─── ube overrides ───────────────────────────────────────────
+   These selectors target ube components or tokens but apply
+   app-specific context that does not belong in the library. */
+
+/* GitHub link in header: ExternalLinkIcon sits flush with no gap */
+.header-github-link .external-link-icon {
+  margin-left: 0;
+  opacity: 0.7;
+}
+
+/* Desktop page panel: push down to align heading with normal H1 position.
+   The compact header has zero flow-height (children are absolute/sr-only),
+   so without this padding panel titles appear at the very top. */
+@keyframes settings-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (width >= 768px) {
+  .page-panel {
+    padding-top: calc(var(--space-8) + var(--space-6));
+    animation: settings-panel-in var(--duration-base) var(--ease-out) both;
+  }
+}
+
+/* ─── Base ─────────────────────────────────────────────────── */
 
 html {
   height: 100%;
@@ -15,7 +50,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* â"€â"€â"€ Layout â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ─── Layout ─────────────────────────────────────────────── */
 
 .app-container {
   padding: var(--space-2) var(--space-4) var(--space-5);
@@ -42,7 +77,7 @@ body {
   flex: 1;
 }
 
-/* â"€â"€â"€ Page header â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ─── Page header ─────────────────────────────────────────── */
 
 .page-header {
   position: relative;
@@ -150,7 +185,7 @@ body {
   line-height: 1.25em;
 }
 
-/* â"€â"€â"€ 404 Not Found â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ─── 404 Not Found ─────────────────────────────────────── */
 
 .not-found {
   display: flex;
@@ -180,7 +215,7 @@ body {
   font-size: var(--fs-body);
 }
 
-/* â"€â"€â"€ Footer â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ─── Footer ─────────────────────────────────────────────── */
 
 .page-footer {
   border-top: 1px solid var(--border);
@@ -216,49 +251,22 @@ body {
   color: var(--text-heading);
 }
 
-/* â"€â"€â"€ Inline icon (SVG in text flow) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-
-.inline-icon {
-  display: inline-block;
-  vertical-align: -0.15em;
-  margin-right: 0.25em;
-}
-
 .footer-link .inline-icon {
   vertical-align: -0.4em;
 }
 
-.header-github-link .external-link-icon {
-  margin-left: 0;
-  opacity: 0.7;
+/* ─── Scroll lock ─────────────────────────────────────────── */
+
+body:has(.drawer-panel.is-open) {
+  overflow: hidden;
 }
 
-/* â"€â"€â"€ Settings page (desktop) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-
-@keyframes settings-panel-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Sheet collapsed state: reserve space at bottom of page content */
+body:has(.sheet-panel.is-collapsed) .app-container {
+  padding-bottom: var(--sheet-chrome-height, 60px);
 }
 
-/* On desktop the page panels render inline inside <main>.
-   Push them down to align their headings with where the H1 sits in the normal view.
-   The compact header has zero flow-height (children are absolute/sr-only), so without
-   this padding the panel titles appear at the very top of the viewport. */
-@media (width >= 768px) {
-  .page-panel {
-    padding-top: calc(var(--space-8) + var(--space-6));
-    animation: settings-panel-in var(--duration-base) var(--ease-out) both;
-  }
-}
-
-/* â"€â"€â"€ Print â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ─── Print ──────────────────────────────────────────────── */
 
 @media print {
   .page-header,
@@ -295,38 +303,6 @@ body {
   }
 }
 
-.about-inline-link {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: inherit;
-  color: var(--accent-text);
-  text-decoration: underline;
-  text-underline-offset: var(--text-underline-offset);
-  cursor: pointer;
-}
-
-.about-inline-link:hover {
-  color: var(--text-heading);
-}
-
-.about-inline-link:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus);
-  outline-offset: var(--focus-outline-offset);
-  border-radius: var(--radius-xs);
-  text-decoration: none;
-}
-
-/* â"€â"€â"€ Drawer scroll lock â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-
-body:has(.drawer-panel.is-open) {
-  overflow: hidden;
-}
-
-/* Sheet collapsed state: reserve space at bottom of page content */
-body:has(.sheet-panel.is-collapsed) .app-container {
-  padding-bottom: var(--sheet-chrome-height, 60px);
-}
-
-/* â"€â"€â"€ Dev-only styles live in src/plugins/adobo/debug.css â"€â"€ */
-
+/* ─── Adobo plugin styles (debug/admin) ──────────────────────
+   Base styles load via src/plugins/adobo/debug.css, imported
+   by the plugin itself. Override here without editing adobo. */

@@ -351,6 +351,14 @@ select:disabled {
   font-style: italic;
 }
 
+/* ─── Inline icon (SVG in text flow) ─────────────────────── */
+
+.inline-icon {
+  display: inline-block;
+  vertical-align: -0.15em;
+  margin-right: 0.25em;
+}
+
 /* ─── Visually hidden (screen reader only) ────────────────── */
 
 .sr-only {
