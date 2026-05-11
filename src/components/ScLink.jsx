@@ -1,5 +1,5 @@
-import ExternalLinkIcon from './ExternalLinkIcon.jsx'
-import scToWaiUrl from '../../utils/scToWaiUrl.js'
+import ExternalLinkIcon from './ui/ExternalLinkIcon.jsx'
+import scToWaiUrl from '../utils/scToWaiUrl.js'
 
 export default function ScLink({ label }) {
   const href = scToWaiUrl(label)

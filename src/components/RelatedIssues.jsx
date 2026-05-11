@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { useT } from '../../calamansi/index.jsx'
-import findingSlug from '../../utils/findingSlug.js'
+import { useT } from '../calamansi/index.jsx'
+import findingSlug from '../utils/findingSlug.js'
 
 // AAA/enhanced SC pairings — both directions
 const AAA_PAIRS = {

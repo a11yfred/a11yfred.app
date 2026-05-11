@@ -25,6 +25,3 @@ export { default as Radio } from './Radio.jsx'
 export { default as Modal } from '../../plugins/router/Modal.jsx'
 export { Announcer, announce } from '../../plugins/announce/index.js'
 
-// app-specific (WCAG domain — stays in a11yhelper, not part of @ulam/ube)
-export { default as ScLink } from './ScLink.jsx'
-export { default as RelatedIssues } from './RelatedIssues.jsx'

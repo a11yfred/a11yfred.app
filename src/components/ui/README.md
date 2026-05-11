@@ -711,14 +711,7 @@ Import order:
 
 ---
 
-## A11yhelper boundary notes
-
-The following components live in this folder but are a11yhelper-specific and will not be included in the published `@ulam/ube` package:
-
-- **ScLink** — WCAG success criterion link with level badge
-- **RelatedIssues** — related findings list
-
-Everything else is portable.
+All components in this folder are portable `@ulam/ube` primitives.
 
 ---
 
