@@ -334,81 +334,84 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <p className="settings-panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
 
       {/* ── Appearance ──────────────────────────────── */}
-      <h3 className="panel-section-heading settings-section-heading">{t('settings.appearance')}</h3>
+      <section className="panel-section">
+        <h3 className="panel-section-heading settings-section-heading">{t('settings.appearance')}</h3>
 
-      {/* Theme */}
-      {pendingTheme !== theme && (
-        <PendingNote t={t} />
-      )}
-      <fieldset className="settings-fieldset">
-        <legend className="sr-only">{t('settings.appearance')}</legend>
-        <div className="radio-chip-group">
-          {[
-            { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
-            { value: 'auto',  labelKey: 'settings.theme_auto',  announceKey: 'settings.theme_auto_announce'  },
-            { value: 'dark',  labelKey: 'settings.theme_dark',  announceKey: 'settings.theme_dark_announce'  },
-            ...(partyUnlocked ? [{ value: 'party', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
-          ].map(({ value, labelKey, announceKey }) => (
-            <RadioChip
-              key={value}
-              name="theme-setting"
-              value={value}
-              label={t(labelKey)}
-              current={pendingTheme}
-              onChange={(val) => {
-                if (val === 'party') { setPartyConfirmOpen(true); return }
-                setPendingTheme(val); announce(t(announceKey))
-              }}
-            />
-          ))}
-        </div>
-      </fieldset>
-
-      {/* Language */}
-      <div className="settings-group">
-        <h3 className="settings-group__label">{t('settings.language_label')}</h3>
-        <p className="settings-group__desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
-        <div className="settings-language-row">
-          <Select
-            value={pendingLanguage === language ? '' : pendingLanguage}
-            onChange={e => { setPendingLanguage(e.target.value || language); setLanguagePreviewed(false) }}
-            wrapClass="select-wrap--language"
-            aria-label={t('settings.language_label')}
-          >
-            <option value="">{t('settings.language_select_one')}</option>
-            {LANGUAGES.map(lang => (
-              <option key={lang.value} value={lang.value}>
-                {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
-              </option>
-            ))}
-          </Select>
-          <Button
-            variant="primary"
-            active={languagePreviewed}
-            activeIcon={<Check size={14} aria-hidden="true" />}
-            className="settings-language-change-btn"
-            disabled={!pendingLanguage || pendingLanguage === language}
-            onClick={() => {
-              if (pendingLanguage === 'rhg') { setRhgPending(true) }
-              else {
-                setLanguagePreviewed(true)
-                setTimeout(() => setLanguagePreviewed(false), SETTINGS_FLASH_MS)
-                announce(t('settings.language_changed_announce'))
-              }
-            }}
-          >
-            {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
-          </Button>
-        </div>
-        {pendingLanguage !== language && (
+        {/* Theme */}
+        {pendingTheme !== theme && (
           <PendingNote t={t} />
         )}
-      </div>
+        <fieldset className="settings-fieldset">
+          <legend className="sr-only">{t('settings.appearance')}</legend>
+          <div className="radio-chip-group">
+            {[
+              { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
+              { value: 'auto',  labelKey: 'settings.theme_auto',  announceKey: 'settings.theme_auto_announce'  },
+              { value: 'dark',  labelKey: 'settings.theme_dark',  announceKey: 'settings.theme_dark_announce'  },
+              ...(partyUnlocked ? [{ value: 'party', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
+            ].map(({ value, labelKey, announceKey }) => (
+              <RadioChip
+                key={value}
+                name="theme-setting"
+                value={value}
+                label={t(labelKey)}
+                current={pendingTheme}
+                onChange={(val) => {
+                  if (val === 'party') { setPartyConfirmOpen(true); return }
+                  setPendingTheme(val); announce(t(announceKey))
+                }}
+              />
+            ))}
+          </div>
+        </fieldset>
+
+        {/* Language */}
+        <div className="settings-group">
+          <h3 className="settings-group__label">{t('settings.language_label')}</h3>
+          <p className="settings-group__desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
+          <div className="settings-language-row">
+            <Select
+              value={pendingLanguage === language ? '' : pendingLanguage}
+              onChange={e => { setPendingLanguage(e.target.value || language); setLanguagePreviewed(false) }}
+              wrapClass="select-wrap--language"
+              aria-label={t('settings.language_label')}
+            >
+              <option value="">{t('settings.language_select_one')}</option>
+              {LANGUAGES.map(lang => (
+                <option key={lang.value} value={lang.value}>
+                  {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
+                </option>
+              ))}
+            </Select>
+            <Button
+              variant="primary"
+              active={languagePreviewed}
+              activeIcon={<Check size={14} aria-hidden="true" />}
+              className="settings-language-change-btn"
+              disabled={!pendingLanguage || pendingLanguage === language}
+              onClick={() => {
+                if (pendingLanguage === 'rhg') { setRhgPending(true) }
+                else {
+                  setLanguagePreviewed(true)
+                  setTimeout(() => setLanguagePreviewed(false), SETTINGS_FLASH_MS)
+                  announce(t('settings.language_changed_announce'))
+                }
+              }}
+            >
+              {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
+            </Button>
+          </div>
+          {pendingLanguage !== language && (
+            <PendingNote t={t} />
+          )}
+        </div>
+      </section>
 
       {/* ── Search ──────────────────────────────────── */}
-      <h3 className="panel-section-heading settings-section-heading settings-section-heading--divided">
-        {t('settings.search_section')}
-      </h3>
+      <section className="panel-section">
+        <h3 className="panel-section-heading settings-section-heading">
+          {t('settings.search_section')}
+        </h3>
 
       {/* Platform */}
       <div className="settings-group">
@@ -550,11 +553,13 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
       {/* Archived Results */}
       <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={ArchiveRestore} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" />
+      </section>
 
       {/* ── AI Assist ───────────────────────────────── */}
-      <h3 className="panel-section-heading settings-section-heading settings-section-heading--divided">
-        {t('settings.ai_heading')}
-      </h3>
+      <section className="panel-section">
+        <h3 className="panel-section-heading settings-section-heading">
+          {t('settings.ai_heading')}
+        </h3>
 
       <div className="settings-toggle-row settings-toggle-row--sm">
         <div>
@@ -643,6 +648,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         </div>
         <Toggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} disabled={!pendingAiEnabled || activeProvider !== 'anthropic'} />
       </div>
+      </section>
 
       {/* ── Footer ──────────────────────────────────── */}
       <div className="settings-footer-row">

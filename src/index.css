@@ -1792,10 +1792,6 @@ input.search-input--disabled {
   margin-bottom: var(--space-3);
 }
 
-.settings-section-heading--divided {
-  border-top: 1px solid var(--border);
-  padding-top: var(--space-4);
-}
 
 .settings-group {
   margin-bottom: var(--space-5);
