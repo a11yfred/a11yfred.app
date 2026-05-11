@@ -79,7 +79,7 @@ const Field = forwardRef(function Field({
             checked={includeTitle}
             onChange={e => onIncludeTitleChange(e.target.checked)}
             disabled={animating}
-            className="field-include-title-checkbox"
+            className="app-checkbox"
           />
           <label htmlFor={`${id}-include-title`} className="field-include-title-label">
             {includeTitleLabel}

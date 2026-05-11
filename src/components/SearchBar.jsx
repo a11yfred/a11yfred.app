@@ -37,23 +37,14 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
     inputRef.current?.focus()
   }
 
-  const platformLabel = platform === 'document' ? t('settings.platform_document') : platform === 'native' ? t('settings.platform_native') : t('settings.platform_web')
+  const platformLabel = { web: t('settings.platform_web'), native: t('settings.platform_native'), document: t('settings.platform_document') }[platform] ?? t('settings.platform_web')
   const currentPhrase = TYPEWRITER_PHRASES[phraseIdx]
-
-  const inputLabel = t('search.label')
-  const clearAriaLabel = t('search.clear_aria')
-  const currentInputLength = query.length
-  const handleKeyDownInner = (e) => {
-    if (e.key === 'Enter') {
-      onSearch()
-    }
-  }
 
   return (
     <search className="search-bar">
       <div className="search-label-row">
         <label htmlFor="finding-search" className={`search-label${narrowMode ? ' search-label--disabled' : ''}`}>
-          {inputLabel}
+          {t('search.label')}
         </label>
         {query.length === 0 && !narrowMode && !prefersReducedMotion && (
           <span className="search-typewriter">
@@ -75,15 +66,15 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           type="text"
           value={query}
           onChange={onChange}
-          onKeyDown={handleKeyDownInner}
+          onKeyDown={(e) => { if (e.key === 'Enter') onSearch() }}
           onClear={() => onChange('')}
           placeholder={t('search.placeholder')}
           autoComplete="off"
           spellCheck={false}
-          clearAriaLabel={clearAriaLabel}
+          clearAriaLabel={t('search.clear_aria')}
           wrapClassName="search-input-wrap"
           inputClassName={`search-input${query.length ? ' search-input--has-value' : ''}${narrowMode ? ' search-input--disabled' : ''}`}
-          clearButtonClassName="btn--primary search-clear-btn"
+          clearButtonClassName="btn--primary input-clear-btn"
           inputRef={inputRef}
           disabled={narrowMode}
         />
@@ -98,7 +89,7 @@ export default function SearchBar({ query, onChange, onSearch, liveSearch, platf
           </Button>
         )}
       </div>
-      {currentInputLength === 0 && !narrowMode && (
+      {query.length === 0 && !narrowMode && (
         <p className="search-hint">
           {liveSearch ? t('search.hint_live') : t('search.hint_submit')}
           {' '}

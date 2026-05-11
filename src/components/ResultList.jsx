@@ -13,9 +13,20 @@ import NoResults from './ui/NoResults.jsx'
 import InfoBox from './ui/InfoBox.jsx'
 import SponsoredTile from './SponsoredTile.jsx'
 import findingSlug from '../utils/findingSlug.js'
-import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE } from '../utils/constants.js'
+import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
 
-export function PinnedSection({ findings, onSelect, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, pinnedIds = new Set(), onPin, onClearPins, headingRef }) {
+function triggerButtonAnimation(btn, id, setAnimating) {
+  btn.classList.remove('animating')
+  void btn.offsetWidth
+  btn.classList.add('animating')
+  setAnimating(s => new Set(s).add(id))
+  setTimeout(() => {
+    btn.classList.remove('animating')
+    setAnimating(s => { const n = new Set(s); n.delete(id); return n })
+  }, RANK_ANIM_MS)
+}
+
+export function PinnedSection({ findings, onClearPins, headingRef, showRanking = true, ...listProps }) {
   const t = useT()
   if (!findings.length) return null
   return (
@@ -32,20 +43,13 @@ export function PinnedSection({ findings, onSelect, ratings = {}, onRankUp, onRa
         )}
       </div>
       <ResultList
+        {...listProps}
         results={findings}
         selected={null}
-        onSelect={onSelect}
         query=""
-        ratings={ratings}
-        onRankUp={onRankUp}
-        onRankDown={onRankDown}
-        onStar={onStar}
-        onArchive={onArchive}
         showRanking={showRanking}
-        pinnedIds={pinnedIds}
-        onPin={onPin}
-        hideCount
         showRankingSort={showRanking}
+        hideCount
         hasPinnedItems={false}
       />
     </div>
@@ -54,6 +58,12 @@ export function PinnedSection({ findings, onSelect, ratings = {}, onRankUp, onRa
 
 export default function ResultList({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange }) {
   const t = useT()
+  const platformLabels = {
+    all:      t('settings.platform_all'),
+    web:      t('settings.platform_web'),
+    native:   t('settings.platform_native'),
+    document: t('settings.platform_document'),
+  }
   const itemRefs = useRef({})
   const focusNextRef = useRef(null)
   const countHeadingRef = useRef(null)
@@ -132,13 +142,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
     if (!narrowMode || narrowResults === null || narrowResults === undefined) return
     if (prev === undefined) return // skip mount
     const count = narrowResults.length
-    const result = count === 1 ? 'Result' : 'Results'
-    const platformLabels = {
-      all:      t('settings.platform_all'),
-      web:      t('settings.platform_web'),
-      native:   t('settings.platform_native'),
-      document: t('settings.platform_document'),
-    }
+    const result = pluralResult(count)
     const platformLabel = platformLabels[platform] ?? platform
     if (platform !== 'all') {
       announce(t('announce.narrow_results_platform', { count, result, total: results.length, platform: platformLabel }))
@@ -149,14 +153,13 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
   // Use narrowResults if provided (filtered), otherwise use all results
   const displayResults = narrowMode && narrowResults ? narrowResults : results
-  const r = (n) => n === 1 ? 'Result' : 'Results'
   const displayCount = narrowMode && narrowResults
-    ? t('results.narrow_count', { narrowed: narrowResults.length, total: results.length, result: r(narrowResults.length) })
+    ? t('results.narrow_count', { narrowed: narrowResults.length, total: results.length, result: pluralResult(narrowResults.length) })
     : (filterLabel
-      ? t('results.count_badge', { count: results.length, result: r(results.length), filter: filterLabel })
+      ? t('results.count_badge', { count: results.length, result: pluralResult(results.length), filter: filterLabel })
       : hasPinnedItems
-        ? t('results.count_more', { count: results.length, result: r(results.length) })
-        : t('results.count', { count: results.length, result: r(results.length) })
+        ? t('results.count_more', { count: results.length, result: pluralResult(results.length) })
+        : t('results.count', { count: results.length, result: pluralResult(results.length) })
     )
 
   useEffect(() => {
@@ -202,7 +205,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
       case 'e':
         e.preventDefault()
         announce(archived ? t('announce.unarchived') : t('announce.archived'), { priority: 'assertive' })
-        setTimeout(() => onArchive?.(currentFinding.id), 100)
+        setTimeout(() => onArchive?.(currentFinding.id), ARCHIVE_FOCUS_DELAY_MS)
         break
       case 'u':
         e.preventDefault()
@@ -303,14 +306,6 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           )}
         </div>
         {onSortChange && results.length > 0 && (() => {
-          const PLATFORM_LABELS = {
-            all: t('results.platform_all'),
-            web: t('results.platform_web'),
-            native: t('results.platform_native'),
-            document: t('results.platform_document'),
-          }
-          const sortLabel = sortLabels[sortBy] ?? sortBy
-          const platformLabel = PLATFORM_LABELS[platform] ?? platform
           const hasQuery = !!query
           const hasNarrow = narrowMode && !!narrowQuery
           let summaryKey
@@ -320,16 +315,15 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           else summaryKey = 'results.summary_no_query_no_narrow'
           return (
             <p className="results-summary">
-              {t(summaryKey, { query, sort: sortLabel, narrow: narrowQuery, platform: platformLabel })}
+              {t(summaryKey, { query, sort: sortLabels[sortBy] ?? sortBy, narrow: narrowQuery, platform: platformLabels[platform] ?? platform })}
             </p>
           )
         })()}
         {onSortChange && results.length > 0 && (() => {
-          const activeSort = sortBy
           const infoLabel = t('detail.note_label')
-          if (activeSort === 'smart') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_smart_info')}</InfoBox>
-          if (activeSort === 'wcag-level') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_wcag_level_info')}</InfoBox>
-          if (activeSort === 'popularity') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_popularity_info')}</InfoBox>
+          if (sortBy === 'smart') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_smart_info')}</InfoBox>
+          if (sortBy === 'wcag-level') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_wcag_level_info')}</InfoBox>
+          if (sortBy === 'popularity') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_popularity_info')}</InfoBox>
           return null
         })()}
         {onSortChange && results.length > 0 && (showRanking || liveSearch) && (
@@ -350,7 +344,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   onChange={e => {
                     if (liveSearch) {
                       onSortChange(e.target.value)
-                      announce(t('announce.sorted', { count: displayResults.length, result: displayResults.length === 1 ? 'Result' : 'Results', label: sortLabels[e.target.value] ?? e.target.value }))
+                      announce(t('announce.sorted', { count: displayResults.length, result: pluralResult(displayResults.length), label: sortLabels[e.target.value] ?? e.target.value }))
                     } else {
                       setPendingSort(e.target.value)
                     }
@@ -375,10 +369,10 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                     active={sortFlash}
                     className="results-sort-btn"
                     onClick={() => {
-                      announce(t('announce.sorted', { count: displayResults.length, result: displayResults.length === 1 ? 'Result' : 'Results', label: sortLabels[pendingSort] ?? pendingSort }))
+                      announce(t('announce.sorted', { count: displayResults.length, result: pluralResult(displayResults.length), label: sortLabels[pendingSort] ?? pendingSort }))
                       setSortToCommit(pendingSort)
                       setSortFlash(true)
-                      setTimeout(() => setSortFlash(false), 1000)
+                      setTimeout(() => setSortFlash(false), SORT_FLASH_MS)
                     }}
                   >
                     {t('results.sort_apply')}
@@ -447,7 +441,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 clearAriaLabel={t('search.narrow_clear_aria')}
                 wrapClassName="results-narrow-input-wrap"
                 inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
-                clearButtonClassName="btn--primary results-narrow-clear-btn"
+                clearButtonClassName="btn--primary input-clear-btn"
               />
               {!liveSearch && (
                 <Button
@@ -466,12 +460,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           <fieldset className="results-narrow-platform-group">
             <legend className="sr-only">{t('settings.platform_label')}</legend>
             <div className="radio-chip-group">
-              {[
-                { value: 'all',      label: t('settings.platform_all')      },
-                { value: 'web',      label: t('settings.platform_web')      },
-                { value: 'native',   label: t('settings.platform_native')   },
-                { value: 'document', label: t('settings.platform_document') },
-              ].map(({ value, label }) => (
+              {Object.entries(platformLabels).map(([value, label]) => (
                 <RadioChip
                   key={value}
                   name="narrow-platform"
@@ -520,30 +509,14 @@ export default function ResultList({ results, selected, onSelect, query, ratings
 
           function handleRankUp(e) {
             e.stopPropagation()
-            const btn = e.currentTarget
-            btn.classList.remove('animating')
-            void btn.offsetWidth
-            btn.classList.add('animating')
-            setAnimatingUp(s => new Set(s).add(finding.id))
-            setTimeout(() => {
-              btn.classList.remove('animating')
-              setAnimatingUp(s => { const n = new Set(s); n.delete(finding.id); return n })
-            }, 400)
+            triggerButtonAnimation(e.currentTarget, finding.id, setAnimatingUp)
             onRankUp?.(finding.id)
             announce(t('announce.ranked_up', { title: finding.title, score: score + 1 }))
           }
 
           function handleRankDown(e) {
             e.stopPropagation()
-            const btn = e.currentTarget
-            btn.classList.remove('animating')
-            void btn.offsetWidth
-            btn.classList.add('animating')
-            setAnimatingDown(s => new Set(s).add(finding.id))
-            setTimeout(() => {
-              btn.classList.remove('animating')
-              setAnimatingDown(s => { const n = new Set(s); n.delete(finding.id); return n })
-            }, 400)
+            triggerButtonAnimation(e.currentTarget, finding.id, setAnimatingDown)
             onRankDown?.(finding.id)
             announce(t('announce.ranked_down', { title: finding.title, score: score - 1 }))
           }
@@ -562,7 +535,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             setTimeout(() => {
               onArchive?.(finding.id)
               if (nextId) requestAnimationFrame(() => itemRefs.current[nextId]?.focus())
-            }, 100)
+            }, ARCHIVE_FOCUS_DELAY_MS)
           }
 
           const pinned = pinnedIds.has(finding.id)
@@ -842,7 +815,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
       {results.length > 0 && !hideCount && (
         <p className="results-end-marker">{t('results.end_of_results')}</p>
       )}
-      {results.length > 50 && (
+      {results.length > RESULTS_VIEW_ALL_THRESHOLD && (
         <div className="view-all-section">
           <Button
             variant="secondary"
