@@ -515,7 +515,6 @@
 
 /* Reduced-motion overrides */
 @media (prefers-reduced-motion: reduce) {
-  .announce-toast--fading,
   .focus-toast--fading,
   .ai-debug-toast--fading {
     animation: none;

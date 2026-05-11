@@ -636,10 +636,8 @@ select:disabled {
   color: var(--accent-text);
 }
 
-/* Shared custom checkbox — used across field headers, AI section, and any future checkboxes */
-.app-checkbox,
-.field-select-checkbox,
-.field-include-title-checkbox {
+/* Shared custom checkbox */
+.app-checkbox {
   appearance: none;
   width: 1.125em;
   height: 1.125em;
@@ -653,9 +651,7 @@ select:disabled {
   transition: background-color var(--duration-fast), border-color var(--duration-fast);
 }
 
-.app-checkbox:checked,
-.field-select-checkbox:checked,
-.field-include-title-checkbox:checked {
+.app-checkbox:checked {
   background-color: var(--accent-bg);
   border-color: var(--accent);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%233c3489' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -664,22 +660,16 @@ select:disabled {
   background-repeat: no-repeat;
 }
 
-.app-checkbox:focus-visible,
-.field-select-checkbox:focus-visible,
-.field-include-title-checkbox:focus-visible {
+.app-checkbox:focus-visible {
   outline-offset: var(--focus-outline-offset);
 }
 
-.app-checkbox:disabled,
-.field-select-checkbox:disabled,
-.field-include-title-checkbox:disabled {
+.app-checkbox:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-[data-theme="dark"] .app-checkbox:checked,
-[data-theme="dark"] .field-select-checkbox:checked,
-[data-theme="dark"] .field-include-title-checkbox:checked {
+[data-theme="dark"] .app-checkbox:checked {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%23afa9ec' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
@@ -848,4 +838,110 @@ select:disabled {
   margin: 0;
   line-height: 1.5;
   font-style: italic;
+}
+
+/* ─── Input clear button (absolute-positioned inside InputWithClear) ── */
+
+.input-clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  padding: 10px;
+  border-radius: 50%;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Panel header / title ─────────────────────────────────── */
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+}
+
+@media (width >= 768px) {
+  .panel-header {
+    gap: var(--space-3);
+  }
+
+  .panel-header .btn--icon {
+    margin-inline-start: 0;
+  }
+}
+
+.panel-header .btn--icon {
+  color: var(--accent-text);
+  margin-inline-start: calc(var(--space-2) * -1);
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: 1em;
+  font-weight: 700;
+  color: var(--text-heading);
+  outline: none;
+}
+
+.panel-mobile-back {
+  display: block;
+  margin-top: var(--space-2);
+}
+
+.panel-mobile-back .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (width >= 768px) {
+  .panel-mobile-back {
+    display: none;
+  }
+}
+
+/* ─── Badge variants ───────────────────────────────────────── */
+
+.badge--severity,
+.badge--source,
+.badge--wcag,
+.badge--platform {
+  font-size: var(--fs-small);
+  font-family: var(--mono);
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.badge--severity {
+  background: var(--badge-bg);
+  color: var(--badge-text);
+}
+
+.badge--source {
+  background: var(--source-bg);
+  color: var(--source-text);
+}
+
+.badge--wcag {
+  background: var(--wcag-bg);
+  color: var(--wcag-text);
+}
+
+.badge--platform {
+  background: var(--platform-bg);
+  color: var(--platform-text);
+}
+
+.badge-prefix {
+  display: none;
 }
