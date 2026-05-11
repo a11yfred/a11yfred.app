@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useFocusOnMount } from '../../plugins/router/index.js'
 import { RotateCcw } from 'lucide-react'
 
 export default function DataError({
@@ -9,11 +9,10 @@ export default function DataError({
   retryLabel = 'Try again',
   onMount
 }) {
-  const headingRef = useRef(null)
+  const headingRef = useFocusOnMount()
 
   useEffect(() => {
     onMount?.()
-    headingRef.current?.focus()
   }, [onMount])
 
   return (

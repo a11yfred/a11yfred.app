@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
-import { usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
+import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../calamansi/index.jsx'
 import Button from './ui/Button.jsx'
@@ -37,11 +37,9 @@ export default function OnboardingPanel({ onClose }) {
   const [step, setStep] = useState(0)
   const [gradAngle, setGradAngle] = useState(() => randomAngle())
   const [confirmOpen, setConfirmOpen] = useState(false)
-  const titleRef = useRef(null)
+  const titleRef = useFocusOnMount()
   const stepHeadingRef = useRef(null)
   usePaginationFocus(stepHeadingRef, step)
-
-  useEffect(() => { titleRef.current?.focus() }, [])
 
   usePageTitle(t('onboarding.heading'))
 

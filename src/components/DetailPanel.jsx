@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
-import { useMediaQuery, Modal } from '../plugins/router/index.js'
+import { useMediaQuery, useFocusOnChange, Modal } from '../plugins/router/index.js'
 import { announce } from '../plugins/announce/index.js'
 import { useT } from '../calamansi/index.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
@@ -92,12 +92,10 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     setDescText, setFixText, setDescHistory, setFixHistory, t,
   })
 
-  useEffect(() => {
-    if (focusTrigger > 0) titleRef.current?.focus()
-  }, [focusTrigger])
+  useFocusOnChange(titleRef, focusTrigger)
+  useFocusOnChange(titleRef, finding.id)
 
   useEffect(() => {
-    titleRef.current?.focus()
     setFindingNote(getStorage(getFindingNoteKey(finding.id), '')) // eslint-disable-line react-hooks/set-state-in-effect
     setAiNote('')
   }, [finding.id])

@@ -256,7 +256,7 @@ function AppContent({
     onboardingTriggerRef.current = document.activeElement
     navigate('/onboarding')
   }
-  const handleCloseOnboarding = () => { navigate('/'); setTimeout(() => h1Ref.current?.focus(), 0) }
+  const handleCloseOnboarding = () => { navigate('/'); setTimeout(() => returnFocus(h1Ref.current), 0) }
   const handleSelectFinding = (finding, triggerEl) => {
     // If the sheet is collapsed and the user clicks a different finding,
     // warn before discarding the collapsed panel and its unsaved changes.
@@ -605,10 +605,10 @@ function AppContent({
         setPanelFocusTrigger(n => n + 1)
         returnToPanelRef.current = false
       } else if (settingsTriggerRef.current) {
-        settingsTriggerRef.current.focus()
+        returnFocus(settingsTriggerRef.current)
         settingsTriggerRef.current = null
       } else if (isDesktop) {
-        h1Ref.current?.focus()
+        returnFocus(h1Ref.current)
       }
     }
   }, [settingsOpen, isDesktop]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -617,10 +617,10 @@ function AppContent({
     if (aboutOpen) { aboutWasOpenRef.current = true; return }
     if (aboutWasOpenRef.current) {
       if (aboutTriggerRef.current) {
-        aboutTriggerRef.current.focus()
+        returnFocus(aboutTriggerRef.current)
         aboutTriggerRef.current = null
       } else if (isDesktop) {
-        h1Ref.current?.focus()
+        returnFocus(h1Ref.current)
       }
       aboutWasOpenRef.current = false
     }
