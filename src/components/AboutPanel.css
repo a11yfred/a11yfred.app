@@ -233,3 +233,25 @@
   color: var(--text-heading);
   margin: 0;
 }
+
+.about-inline-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: var(--text-underline-offset);
+  cursor: pointer;
+}
+
+.about-inline-link:hover {
+  color: var(--text-heading);
+}
+
+.about-inline-link:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-xs);
+  text-decoration: none;
+}
