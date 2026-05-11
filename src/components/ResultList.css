@@ -1,4 +1,6 @@
-/* â”€â”€â”€ Result list â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+@import "../app-tokens.css";
+
+/* â"€â"€â"€ Result list â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 
 .result-list-section {
   position: relative;
@@ -334,7 +336,7 @@
   }
 }
 
-/* â”€â”€â”€ Swipe-to-reveal action panels (mobile only) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â"€â"€â"€ Swipe-to-reveal action panels (mobile only) â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 
 .result-swipe-wrap {
   display: flex;
@@ -687,7 +689,7 @@
   background: var(--accent-bg);
 }
 
-/* Pin button â€” hidden on mobile, absolutely positioned on desktop */
+/* Pin button â€" hidden on mobile, absolutely positioned on desktop */
 .result-pin-btn {
   display: none;
 }
@@ -746,7 +748,7 @@
   }
 }
 
-/* Skip to next button â€” overlay centered on card */
+/* Skip to next button â€" overlay centered on card */
 /* Skip link variant within result items */
 .result-card-wrap .skip-link {
   position: absolute;
@@ -777,7 +779,7 @@
   opacity: 0.5;
 }
 
-/* Detail copy buttons â€” icon-only with state change */
+/* Detail copy buttons â€" icon-only with state change */
 .detail-copy-btn,
 .detail-sc-copy-btn {
   min-width: var(--touch-target);
@@ -847,7 +849,7 @@
   opacity: 0.3;
 }
 
-/* â”€â”€ Pinned results in search (when pinned finding matches active query) â”€â”€ */
+/* â"€â"€ Pinned results in search (when pinned finding matches active query) â"€â"€ */
 
 .pinned-search-matches {
   margin-bottom: var(--space-3);
@@ -1046,7 +1048,7 @@
   margin-top: 0;
 }
 
-/* â”€â”€â”€ Sponsored tile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â"€â"€â"€ Sponsored tile â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 
 .result-row--sponsored {
   --result-i: 999;
@@ -1075,7 +1077,7 @@
   text-transform: uppercase;
 }
 
-/* â”€â”€â”€ No results â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â"€â"€â"€ No results â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 
 .no-results {
   text-align: center;
@@ -1101,7 +1103,7 @@
   margin-bottom: 0;
 }
 
-/* â”€â”€â”€ Result skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* â"€â"€â"€ Result skeleton â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 
 @keyframes skeleton-shimmer {
   from { transform: translateX(-100%); }
@@ -1152,7 +1154,7 @@
   gap: var(--space-2);
 }
 
-/* Skeleton line widths â€” for shimmer cards */
+/* Skeleton line widths â€" for shimmer cards */
 .skeleton-line--sm {
   width: 3.5rem;
   border-radius: var(--radius-full);

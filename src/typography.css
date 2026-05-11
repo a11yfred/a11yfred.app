@@ -1,1 +1,47 @@
-/* Reserved for typography utilities. No classes currently in use. */
+@import "./tokens.css";
+
+/* ─── UI Typography Baseline ──────────────────────────────────
+   Generic structural typography defaults. No app-specific font
+   family choices. Components that need typography utilities
+   import this file.
+──────────────────────────────────────────────────────────── */
+
+html {
+  /* Respect the browser base font-size (WCAG 1.4.4 Resize Text). */
+  font-size: 100%;
+}
+
+body {
+  font-size: var(--fs-body);
+  line-height: 1.5;
+  color: var(--text-body);
+  background: var(--bg);
+}
+
+p {
+  line-height: 1.5em;
+  margin-bottom: 2em;
+  color: var(--text-body);
+}
+
+a {
+  text-underline-offset: var(--text-underline-offset);
+}
+
+input, textarea, button, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  margin-bottom: 2em;
+}

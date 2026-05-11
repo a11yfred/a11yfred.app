@@ -10,7 +10,6 @@ if (import.meta.env.DEV) {
     }
   )
 }
-import './reset.css'
 import '@fontsource/inter/latin-ext-400.css'
 import '@fontsource/inter/latin-ext-500.css'
 import '@fontsource/inter/latin-ext-600.css'

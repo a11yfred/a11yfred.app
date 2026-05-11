@@ -1,0 +1,34 @@
+@import "./tokens.css";
+
+/* ─── App Tokens ──────────────────────────────────────────────
+   App-specific sizing and layout decisions. Not design
+   primitives — these encode application UI constraints.
+   Components that need both layers import this file only.
+──────────────────────────────────────────────────────────── */
+
+:root {
+  /* Sizing — WCAG 2.5.5 minimum touch target (44px) applied as
+     concrete heights for each control type. Kept here rather than
+     in tokens.css because these are app UI decisions, not
+     design primitives. */
+  --select-height: 44px;
+  --btn-height-compact: 44px;
+  --btn-height-standard: 44px;
+  --input-height: 4rem;
+
+  /* Modal and panel sizing */
+  --modal-max-width: 720px;
+  --modal-max-height-mobile: 92dvh;
+  --panel-width-mobile: min(360px, calc(100vw - var(--space-8)));
+
+  /* Toggle control sizing */
+  --toggle-width: 40px;
+  --toggle-height: 22px;
+  --toggle-radius: 11px;
+  --toggle-thumb-size: 16px;
+  --toggle-thumb-offset: 3px;
+  --toggle-thumb-transition-offset: 21px;
+
+  /* Shared transition shorthand for interactive buttons */
+  --transition-btn: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+}

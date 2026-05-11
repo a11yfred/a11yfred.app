@@ -5,6 +5,7 @@
     "comment-empty-line-before": null,
     "alpha-value-notation": null,
     "color-function-notation": null,
+    "import-notation": null,
     "selector-class-pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*(__[a-z][a-z0-9]*(-[a-z0-9]+)*)?(--[a-z][a-z0-9]*(-[a-z0-9]+)*)?$"
   }
 }
