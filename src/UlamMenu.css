@@ -1,0 +1,244 @@
+@import "./tokens.css";
+
+/* ── Layout ─────────────────────────────────────────────── */
+
+.ulam-menu {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text-body);
+  font-family: var(--font);
+  font-size: var(--fs-body);
+}
+
+.ulam-menu-header {
+  padding: var(--space-8) var(--space-6);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+}
+
+.ulam-menu-header-brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.ulam-menu-wordmark {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.ulam-menu-tagline {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.ulam-menu-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  max-width: 56ch;
+  margin: 0;
+}
+
+.ulam-menu-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+/* ── Section ─────────────────────────────────────────────── */
+
+.ulam-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ulam-section-title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.ulam-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* ── Row ─────────────────────────────────────────────────── */
+
+.ulam-row {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.ulam-row-label {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  padding-top: 2px;
+}
+
+.ulam-row-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ── Component helpers ───────────────────────────────────── */
+
+.ulam-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ulam-toggle-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+
+.ulam-toggle-label--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Menu-local input styles (no app dependencies) ───────── */
+
+.ulam-input {
+  height: var(--input-height, 2.75rem);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--text-body);
+  font-size: var(--fs-body);
+  width: 100%;
+  max-width: 320px;
+}
+
+.ulam-input:focus-visible {
+  outline: var(--focus-width) solid var(--focus);
+  outline-offset: var(--focus-offset);
+}
+
+.ulam-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ulam-textarea {
+  padding: var(--space-3);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  color: var(--text-body);
+  font-size: var(--fs-body);
+  width: 100%;
+  max-width: 480px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.ulam-textarea:focus-visible {
+  outline: var(--focus-width) solid var(--focus);
+  outline-offset: var(--focus-offset);
+}
+
+.ulam-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 320px;
+  width: 100%;
+}
+
+.ulam-input-wrap .ulam-input {
+  max-width: 100%;
+  padding-right: var(--space-8);
+}
+
+.ulam-input-clear {
+  position: absolute;
+  right: var(--space-2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+}
+
+.ulam-input-clear:focus-visible {
+  outline: var(--focus-width) solid var(--focus);
+  outline-offset: var(--focus-offset);
+}
+
+/* ── Overlay helpers ─────────────────────────────────────── */
+
+.ulam-overlay-content {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ulam-overlay-content h3 {
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+.ulam-modal-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+  margin-top: var(--space-4);
+}
+
+.ulam-panel-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--bg);
+}
+
+/* ── Status indicators ───────────────────────────────────── */
+
+.ulam-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ulam-status--info    { color: var(--accent); }
+.ulam-status--success { color: var(--success); }
+.ulam-status--warning { color: var(--severity-high-text, #b45309); }
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  .ulam-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ulam-menu-main {
+    padding: var(--space-6) var(--space-4);
+  }
+}
