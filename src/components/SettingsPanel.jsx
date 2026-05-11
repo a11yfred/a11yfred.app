@@ -335,7 +335,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
       {/* ── Appearance ──────────────────────────────── */}
       <section className="panel-section">
-        <h3 className="panel-section-heading settings-section-heading">{t('settings.appearance')}</h3>
+        <h3 className="panel-section-heading">{t('settings.appearance')}</h3>
 
         {/* Theme */}
         {pendingTheme !== theme && (
@@ -409,7 +409,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
       {/* ── Search ──────────────────────────────────── */}
       <section className="panel-section">
-        <h3 className="panel-section-heading settings-section-heading">
+        <h3 className="panel-section-heading">
           {t('settings.search_section')}
         </h3>
 
@@ -557,7 +557,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
       {/* ── AI Assist ───────────────────────────────── */}
       <section className="panel-section">
-        <h3 className="panel-section-heading settings-section-heading">
+        <h3 className="panel-section-heading">
           {t('settings.ai_heading')}
         </h3>
 
