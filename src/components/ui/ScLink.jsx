@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react'
+import ExternalLinkIcon from './ExternalLinkIcon.jsx'
 import scToWaiUrl from '../../utils/scToWaiUrl.js'
 
 export default function ScLink({ label }) {
@@ -6,7 +6,7 @@ export default function ScLink({ label }) {
   if (href) {
     return (
       <a href={href} target="_blank" rel="noreferrer" className="detail-sc-link">
-        {label}<ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
+        {label}<ExternalLinkIcon />
       </a>
     )
   }

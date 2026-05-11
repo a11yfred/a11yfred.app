@@ -1,15 +1,14 @@
 ﻿import { useState } from 'react'
-import { ExternalLink, ArrowLeft } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
 import { useT } from '../calamansi/index.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
+import ExternalLinkIcon from './ui/ExternalLinkIcon.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import './AboutPanel.css'
 
-const ExtIcon = <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />
-
 function ExtLink({ href, children }) {
-  return <a href={href} target="_blank" rel="noreferrer" className="about-inline-link">{children}{ExtIcon}</a>
+  return <a href={href} target="_blank" rel="noreferrer" className="about-inline-link">{children}<ExternalLinkIcon /></a>
 }
 
 export default function AboutPanel({ onClose, allFindings = [] }) {
@@ -97,7 +96,7 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
         <p className="about-body">{t('about.sources_intro')}</p>
         <ul className="about-sources-list about-body">
           <li>
-            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="about-inline-link">WCAG 2.2 Understanding documents<ExternalLink size={11} aria-hidden="true" className="external-link-icon" /></a>
+            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="about-inline-link">WCAG 2.2 Understanding documents<ExternalLinkIcon /></a>
             {' '}(W3C / WAI)
           </li>
           <li>

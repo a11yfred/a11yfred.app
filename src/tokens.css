@@ -102,6 +102,23 @@
   /* WCAG 2.5.5 minimum touch target size. */
   --touch-target: 44px;
 
+  /* Component defaults — override in your app layer if needed */
+  --btn-height-standard:  44px;
+  --btn-height-compact:   44px;
+  --input-height:         4rem;
+  --select-height:        44px;
+
+  /* Toggle control sizing */
+  --toggle-width:              40px;
+  --toggle-height:             22px;
+  --toggle-radius:             11px;
+  --toggle-thumb-size:         16px;
+  --toggle-thumb-offset:       3px;
+  --toggle-thumb-transition-offset: 21px;
+
+  /* Shared transition shorthand for interactive buttons */
+  --transition-btn: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
+
   /* Focus and outline — used by keyboard focus ring */
   --focus-outline-width: 2px;
   --focus-outline-offset: 2px;

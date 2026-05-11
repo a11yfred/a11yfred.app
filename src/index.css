@@ -228,12 +228,6 @@ body {
   vertical-align: -0.4em;
 }
 
-.external-link-icon {
-  display: inline-block;
-  vertical-align: -0.1em;
-  margin-left: 0.2em;
-}
-
 .header-github-link .external-link-icon {
   margin-left: 0;
   opacity: 0.7;

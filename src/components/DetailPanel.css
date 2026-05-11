@@ -111,10 +111,6 @@
   white-space: nowrap;
 }
 
-.detail-sc-link .external-link-icon {
-  flex-shrink: 0;
-}
-
 .detail-sc-link:hover {
   color: var(--text-heading);
   text-decoration: underline;

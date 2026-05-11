@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react'
+import ExternalLinkIcon from './ExternalLinkIcon.jsx'
 import LinkTitle from './LinkTitle.jsx'
 
 function isExternalLink(url) {
@@ -24,7 +24,7 @@ export default function SourceLinks({
           <span className="source-links__heading">{singleHeading}</span>
           {links[0].url ? (
             <a href={links[0].url} target="_blank" rel="noreferrer" className="source-links__link">
-              <LinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
+              <LinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <ExternalLinkIcon />}
             </a>
           ) : (
             <span>{links[0].text}</span>
@@ -40,7 +40,7 @@ export default function SourceLinks({
               <li key={link.url || link.text}>
                 {link.url ? (
                   <a href={link.url} target="_blank" rel="noreferrer" className="source-links__link">
-                    <LinkTitle url={link.url} fallback={link.text} />{isExternalLink(link.url) && <ExternalLink size={11} aria-hidden="true" className="external-link-icon" />}
+                    <LinkTitle url={link.url} fallback={link.text} />{isExternalLink(link.url) && <ExternalLinkIcon />}
                   </a>
                 ) : (
                   <span>{link.text}</span>
