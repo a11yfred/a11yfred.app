@@ -1,0 +1,203 @@
+/* â”€â”€â”€ Onboarding panel â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+
+.onboarding-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: linear-gradient(var(--onboarding-grad-angle, 135deg), var(--accent-bg) 0%, var(--bg-subtle) 100%);
+  transition: background var(--duration-base) var(--ease-out);
+  border: 1px solid var(--accent-text);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  margin-top: var(--space-8);
+  min-height: 390px;
+  overflow: hidden;
+}
+
+.onboarding-deco {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  display: flex;
+  gap: 0.1em;
+  color: var(--accent-text);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.onboarding-header {
+  margin-bottom: var(--space-5);
+}
+
+.onboarding-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-sub);
+  font-weight: 800;
+  color: var(--text-heading);
+  letter-spacing: 0.02em;
+  outline: none;
+  margin: 0;
+}
+
+.onboarding-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-height: 10rem;
+}
+
+.onboarding-step-heading {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 800;
+  color: var(--text-heading);
+  line-height: 1.15;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  outline: none;
+}
+
+.onboarding-step-icon {
+  color: var(--accent-text);
+  flex-shrink: 0;
+}
+
+.onboarding-step-body {
+  font-size: 1.125rem;
+  color: var(--text-heading);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.onboarding-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-2);
+}
+
+.onboarding-skip-btn {
+  font-size: var(--fs-small);
+  color: white;
+  background: none;
+  border: none;
+  text-decoration: underline;
+}
+
+.onboarding-skip-btn:not(:disabled):hover,
+.onboarding-skip-btn:not(:disabled):focus-visible {
+  background: none;
+  outline: 1px solid white;
+  text-decoration: none;
+}
+
+.onboarding-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.onboarding-arrow-placeholder {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.onboarding-arrow-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--accent-text);
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius);
+  transition: opacity var(--duration-fast);
+}
+
+.onboarding-arrow-btn:hover,
+.onboarding-arrow-btn:focus-visible {
+  opacity: 0.7;
+}
+
+.onboarding-arrow-btn:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+
+.onboarding-nav-btn {
+  font-size: var(--fs-body);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.onboarding-nav-btn--next {
+  margin-inline: auto;
+}
+
+.onboarding-dots {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  justify-content: center;
+}
+
+.onboarding-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--text-heading);
+  display: block;
+  transition: box-shadow var(--duration-fast);
+}
+
+.onboarding-dot--active {
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px var(--text-heading);
+}
+
+.help-tour-btn {
+  align-self: center;
+  width: 100%;
+  height: var(--btn-height-compact);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius);
+  font-family: var(--font-display);
+  font-size: var(--fs-sub);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 70%, var(--accent-bg)) 100%);
+  background-size: 200% 200%;
+  background-position: 0% 0%;
+  color: var(--accent-bg);
+  transition: background-position var(--duration-base) var(--ease-in-out);
+}
+
+.help-tour-btn:hover {
+  background-position: 100% 100%;
+}
+
+@media (width >= 768px) {
+  .help-tour-btn {
+    width: auto;
+  }
+}
+
+.help-tour-btn--with-margin {
+  margin-bottom: var(--space-3);
+}
