@@ -198,15 +198,15 @@ export default function AdminPanel({
               { id: 'admin-fab',       label: 'FAB',        value: fabEnabled,     toggle: () => setFabEnabled(v => !v) },
               { id: 'admin-ai',        label: 'AI Assist',  value: aiEnabled,      toggle: onToggleAi },
             ].map(({ id, label, value, toggle }) => (
-              <div key={id} className="settings-toggle-row settings-toggle-row--sm">
-                <label htmlFor={id} className="settings-toggle-label">{label}</label>
+              <div key={id} className="panel-toggle-row panel-toggle-row--sm">
+                <label htmlFor={id} className="panel-toggle-label">{label}</label>
                 <Toggle id={id} checked={!!value} onChange={toggle} />
               </div>
             ))}
           </div>
 
           <div className="admin-deploy-row">
-            <span className="settings-toggle-label admin-deploy-label">Deploy Banner</span>
+            <span className="panel-toggle-label admin-deploy-label">Deploy Banner</span>
             <div className="admin-deploy-opts">
               {DEPLOY_OPTIONS.map(opt => (
                 <button
@@ -224,12 +224,12 @@ export default function AdminPanel({
         {/* ── Ad Tiles ────────────────────────────────────────── */}
         <section className="admin-section">
           <h2 className="admin-section__title">Ad Tiles</h2>
-          <div className="settings-toggle-row settings-toggle-row--sm">
-            <label htmlFor="admin-show-ads" className="settings-toggle-label">Show ads</label>
+          <div className="panel-toggle-row panel-toggle-row--sm">
+            <label htmlFor="admin-show-ads" className="panel-toggle-label">Show ads</label>
             <Toggle id="admin-show-ads" checked={!!showAds} onChange={() => setShowAds(v => !v)} />
           </div>
           <div className="admin-deploy-row">
-            <label htmlFor="admin-ad-freq" className="settings-toggle-label admin-deploy-label">
+            <label htmlFor="admin-ad-freq" className="panel-toggle-label admin-deploy-label">
               Every N results
             </label>
             <input

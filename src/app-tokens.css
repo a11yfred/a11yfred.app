@@ -1,14 +1,6 @@
 @import "./tokens.css";
 
-/* ─── App Tokens ──────────────────────────────────────────────
-   App-specific sizing and layout decisions. Not design
-   primitives — these encode application UI constraints.
-   Components that need both layers import this file only.
-──────────────────────────────────────────────────────────── */
+/* ─── App token overrides ─────────────────────────────────────
+   Override ube token defaults for this app here.
+   tokens.css defines the defaults; this file wins the cascade. */
 
-:root {
-  /* App layout — modal and panel sizing specific to this app */
-  --modal-max-width: 720px;
-  --modal-max-height-mobile: 92dvh;
-  --panel-width-mobile: min(360px, calc(100vw - var(--space-8)));
-}

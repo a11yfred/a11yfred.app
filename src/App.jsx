@@ -42,6 +42,9 @@ const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 const AdminPanel = import.meta.env.DEV
   ? lazy(() => import('./plugins/adobo/AdminPanel.jsx'))
   : () => null
+const UlamMenu = import.meta.env.DEV
+  ? lazy(() => import('./UlamMenu.jsx'))
+  : () => null
 
 
 const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
@@ -143,7 +146,7 @@ function AppShell() {
   )
 }
 
-const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/help', '/onboarding', '/results/all', '/admin'])
+const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/help', '/onboarding', '/results/all', '/admin', '/ulam'])
 
 function AppContent({
   theme, setTheme,
@@ -173,6 +176,7 @@ function AppContent({
   const helpOpen = route === '/help'
   const onboardingOpen = route === '/onboarding'
   const adminOpen = route === '/admin'
+  const ulamOpen = import.meta.env.DEV && route === '/ulam'
   const viewAll = route === '/results/all'
   const findingMatchSlug = useRouteMatch('/finding/:id/:slug')
   const findingMatchBare = useRouteMatch('/finding/:id')
@@ -1203,7 +1207,9 @@ function AppContent({
           <Suspense fallback={null}>
             {isNotFound
               ? <NotFoundPage />
-              : adminOpen
+              : ulamOpen
+                ? <UlamMenu />
+                : adminOpen
                 ? <AdminPanel {...adminProps} />
                 : isDesktop && settingsOpen
                   ? <SettingsPanel ref={settingsPanelRef} {...settingsProps} />

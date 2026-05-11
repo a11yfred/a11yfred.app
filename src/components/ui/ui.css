@@ -1,39 +1,6 @@
 @import "../../tokens.css";
-@import "../../typography.css";
-
-/* ─── Reset ───────────────────────────────────────────────── */
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-*:not(dialog) {
-  margin: 0;
-}
-
-ul, ol {
-  padding: 0;
-  list-style: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    interpolate-size: allow-keywords;
-  }
-}
-
-img, picture, video, canvas, svg {
-  display: block;
-  max-width: 100%;
-}
-
-p, h1, h2, h3, h4, h5, h6 {
-  overflow-wrap: break-word;
-}
-
-#root {
-  isolation: isolate;
-}
+@import "./reset.css";
+@import "./typography.css";
 
 /* ─── Button default styling ──────────────────────────────── */
 
@@ -506,6 +473,10 @@ select:disabled {
   flex-shrink: 0;
 }
 
+.panel-toggle-row .toggle {
+  margin-top: 2px;
+}
+
 .toggle::before {
   content: '';
   position: absolute;
@@ -951,6 +922,314 @@ select:disabled {
   .panel-mobile-back {
     display: none;
   }
+}
+
+/* ─── Panel intro / pending note ──────────────────────────── */
+
+.panel-intro {
+  font-size: var(--fs-body);
+  color: var(--text-body);
+  margin-bottom: var(--space-4);
+}
+
+.panel-pending-note {
+  font-size: var(--fs-small);
+  color: var(--accent-text);
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+/* ─── Panel group (labeled section with heading + desc) ────── */
+
+.panel-group {
+  margin-bottom: var(--space-5);
+}
+
+.panel-group__label {
+  font-size: var(--fs-sub);
+  font-weight: 500;
+  color: var(--text-heading);
+  margin-bottom: 0;
+}
+
+.panel-group__desc {
+  font-size: var(--fs-body);
+  color: var(--text-body);
+  margin-top: 2px;
+  margin-bottom: var(--space-3);
+}
+
+/* ─── Panel toggle row (label+desc+toggle layout) ──────────── */
+
+.panel-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: var(--touch-target);
+  margin-bottom: var(--space-5);
+}
+
+.panel-toggle-row--sm {
+  margin-bottom: var(--space-4);
+}
+
+.panel-toggle-label {
+  font-size: var(--fs-sub);
+  font-weight: 500;
+  color: var(--text-heading);
+  margin-bottom: 0;
+  display: block;
+}
+
+.panel-toggle-desc {
+  font-size: var(--fs-body);
+  color: var(--text-body);
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+
+.panel-toggle-row--disabled .panel-toggle-label,
+.panel-toggle-row--disabled .panel-toggle-desc {
+  color: var(--text-body);
+}
+
+/* ─── Panel radio group ────────────────────────────────────── */
+
+.panel-radio-legend {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text-heading);
+  padding: 0;
+  margin: 0 0 var(--space-3);
+}
+
+.panel-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ─── Panel form field label / error / required ────────────── */
+
+.panel-field-label {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text-heading);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.panel-field-required {
+  color: var(--text-muted);
+}
+
+.panel-field-error {
+  color: var(--error);
+  font-size: var(--fs-small);
+  margin-top: 0.5em;
+  margin-bottom: var(--space-2);
+}
+
+/* ─── Alert banner ─────────────────────────────────────────── */
+
+.alert-banner {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius);
+  font-weight: 500;
+}
+
+.alert-banner--warning {
+  background: rgb(255 0 0 / 0.05);
+  border: 1px solid rgb(255 0 0 / 0.2);
+  color: var(--text-heading);
+}
+
+.alert-banner--warning p {
+  margin-bottom: 0;
+  color: inherit;
+}
+
+.alert-banner svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.alert-banner--warning svg {
+  color: var(--alert-color, #d32f2f);
+}
+
+/* ─── Select control ───────────────────────────────────────── */
+
+.select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--select-height);
+}
+
+.select {
+  width: 100%;
+  height: var(--select-height);
+  padding: 0 30px 0 10px;
+  font-size: var(--fs-body);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius);
+  color: var(--text-heading);
+  cursor: pointer;
+  appearance: none;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  transition: background-color var(--duration-fast);
+}
+
+.select:disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.select:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: 0;
+  border-radius: var(--radius-sm);
+}
+
+.select:not(:disabled):hover {
+  background: var(--bg);
+}
+
+.select__chevron {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--accent-text);
+}
+
+/* ─── Control (checkbox / radio) ───────────────────────────── */
+
+.control {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: var(--border-width-control) solid var(--accent);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-subtle);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--duration-fast), border-color var(--duration-fast);
+}
+
+input[type="radio"].control {
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  background-color: var(--border);
+  border-color: var(--border-control);
+}
+
+.control:checked {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+}
+
+input[type="checkbox"].control:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%233c3489' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+input[type="radio"].control:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='5.5' fill='%233c3489'/%3E%3C/svg%3E");
+  background-size: 80% 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-color: var(--accent);
+  border-width: 2px;
+}
+
+input[type="radio"].control:not(:checked):hover {
+  background-color: var(--bg-subtle);
+}
+
+.control:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+}
+
+.control:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] input[type="checkbox"].control:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,8 5,11 12,3' fill='none' stroke='%23afa9ec' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+[data-theme="dark"] input[type="radio"].control:checked {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Ccircle cx='7' cy='7' r='5.5' fill='%23afa9ec'/%3E%3C/svg%3E");
+}
+
+.control__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-body);
+  color: var(--text-heading);
+  cursor: pointer;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-2);
+  border-radius: var(--radius);
+  transition: background var(--duration-fast);
+}
+
+.control__label:hover,
+.control__label:has(:focus-visible) {
+  background: var(--bg-subtle);
+}
+
+/* ─── Panel body text ──────────────────────────────────────── */
+
+.panel-body {
+  font-size: var(--fs-body);
+  color: var(--text-body);
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.panel-subheading {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text-heading);
+  margin-top: var(--space-4);
+  margin-bottom: 0;
+}
+
+.panel-inline-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: var(--text-underline-offset);
+  cursor: pointer;
+}
+
+.panel-inline-link:hover {
+  color: var(--text-heading);
+}
+
+.panel-inline-link:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+  border-radius: var(--radius-xs);
+  text-decoration: none;
 }
 
 /* ─── Page panel (full-page panel view) ───────────────────── */

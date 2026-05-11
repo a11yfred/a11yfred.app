@@ -16,10 +16,10 @@ import './SettingsPanel.css'
 
 function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {
   return (
-    <div className="settings-toggle-row">
+    <div className="panel-toggle-row">
       <div>
-        <h3 className="settings-toggle-label">{t(labelKey)}</h3>
-        <p className="settings-toggle-desc">{hasData ? t(descKey) : t(emptyKey)}</p>
+        <h3 className="panel-toggle-label">{t(labelKey)}</h3>
+        <p className="panel-toggle-desc">{hasData ? t(descKey) : t(emptyKey)}</p>
       </div>
       <Button
         active={isDone}
@@ -48,7 +48,7 @@ function PendingNote({ t }) {
   const [before, rest] = raw.split('{unsaved}')
   const [middle, after] = rest.split('{save}')
   return (
-    <p className="settings-pending-note">
+    <p className="panel-pending-note">
       {before}<strong>Unsaved.</strong>{middle}<strong>Save</strong>{after}
     </p>
   )
@@ -332,7 +332,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       closeAriaLabel={t('settings.back')}
       pageTitle={t('settings.heading')}
     >
-      <p className="settings-panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
+      <p className="panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
 
       {/* ── Appearance ──────────────────────────────── */}
       <section className="panel-section">
@@ -342,7 +342,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         {pendingTheme !== theme && (
           <PendingNote t={t} />
         )}
-        <fieldset className="settings-fieldset">
+        <fieldset>
           <legend className="sr-only">{t('settings.appearance')}</legend>
           <div className="radio-chip-group">
             {[
@@ -367,9 +367,9 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         </fieldset>
 
         {/* Language */}
-        <div className="settings-group">
-          <h3 className="settings-group__label">{t('settings.language_label')}</h3>
-          <p className="settings-group__desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
+        <div className="panel-group">
+          <h3 className="panel-group__label">{t('settings.language_label')}</h3>
+          <p className="panel-group__desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
           <div className="settings-language-row">
             <Select
               value={pendingLanguage === language ? '' : pendingLanguage}
@@ -415,9 +415,9 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         </h3>
 
       {/* Platform */}
-      <div className="settings-group">
-        <h3 className="settings-group__label">{t('settings.platform_label')}</h3>
-        <p className="settings-group__desc">
+      <div className="panel-group">
+        <h3 className="panel-group__label">{t('settings.platform_label')}</h3>
+        <p className="panel-group__desc">
           {pendingPlatform === 'all'
             ? <>Show <strong>all results</strong> across web, native apps, and documents.</>
             : pendingPlatform === 'web'
@@ -429,7 +429,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         {pendingPlatform !== platform && (
           <PendingNote t={t} />
         )}
-        <fieldset className="settings-fieldset">
+        <fieldset>
           <legend className="sr-only">{t('settings.platform_label')}</legend>
           <div className="radio-chip-group">
             {[
@@ -455,12 +455,12 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       </div>
 
       {/* Live search */}
-      <div className="settings-toggle-row">
+      <div className="panel-toggle-row">
         <div>
-          <h3 className="settings-toggle-label">
+          <h3 className="panel-toggle-label">
             <label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>
           </h3>
-          <p className="settings-toggle-desc">
+          <p className="panel-toggle-desc">
             {pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}
           </p>
           {pendingLiveSearch !== liveSearch && (
@@ -471,17 +471,17 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       </div>
 
       {/* WCAG Version + Level Filter */}
-      <div className="settings-group">
-        <h3 className="settings-group__label">{t('settings.wcag_filter_label')}</h3>
-        <p className="settings-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each version includes all findings from previous versions.</p>
+      <div className="panel-group">
+        <h3 className="panel-group__label">{t('settings.wcag_filter_label')}</h3>
+        <p className="panel-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each version includes all findings from previous versions.</p>
         {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) ||
           pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel)) && (
           <PendingNote t={t} />
         )}
         <div className="settings-wcag-filter-row">
-          <fieldset className="settings-fieldset">
-            <legend className="settings-radio-legend">{t('settings.wcag_filter_legend')}</legend>
-            <div className="settings-radio-group">
+          <fieldset>
+            <legend className="panel-radio-legend">{t('settings.wcag_filter_legend')}</legend>
+            <div className="panel-radio-group">
               {[
                 { value: '2.0', labelKey: 'settings.wcag_filter_20' },
                 { value: '2.1', labelKey: 'settings.wcag_filter_21' },
@@ -501,9 +501,9 @@ const SettingsPanel = forwardRef(function SettingsPanel({
               ))}
             </div>
           </fieldset>
-          <fieldset className="settings-fieldset">
-            <legend className="settings-radio-legend">{t('settings.wcag_level_legend')}</legend>
-            <div className="settings-radio-group">
+          <fieldset>
+            <legend className="panel-radio-legend">{t('settings.wcag_level_legend')}</legend>
+            <div className="panel-radio-group">
               {[
                 { value: 'A',  labelKey: 'settings.wcag_level_a'  },
                 { value: 'AA', labelKey: 'settings.wcag_level_aa' },
@@ -529,12 +529,12 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-unpin-all-btn" />
 
       {/* Result ranking */}
-      <div className="settings-toggle-row">
+      <div className="panel-toggle-row">
         <div>
-          <h3 className="settings-toggle-label">
+          <h3 className="panel-toggle-label">
             <label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>
           </h3>
-          <p className="settings-toggle-desc">
+          <p className="panel-toggle-desc">
             {pendingShowVoting
               ? <>Ranking controls <strong>are visible on each result</strong>.</>
               : <>Ranking controls <strong>are hidden</strong>.</>}
@@ -562,12 +562,12 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           {t('settings.ai_heading')}
         </h3>
 
-      <div className="settings-toggle-row settings-toggle-row--sm">
+      <div className="panel-toggle-row panel-toggle-row--sm">
         <div>
-          <label htmlFor="toggle-ai" className="settings-toggle-label">
+          <label htmlFor="toggle-ai" className="panel-toggle-label">
             {t('settings.ai_enable_label')}
           </label>
-          <p className="settings-toggle-desc">Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</p>
+          <p className="panel-toggle-desc">Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</p>
           {pendingAiEnabled !== aiEnabled && (
             <PendingNote t={t} />
           )}
@@ -576,7 +576,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       </div>
 
       <div className="settings-provider-group">
-        <label htmlFor="active-provider" className="settings-field-label">
+        <label htmlFor="active-provider" className="panel-field-label">
           {t('settings.provider_label')}
         </label>
         <Select
@@ -593,7 +593,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
       {PROVIDER_MODELS[activeProvider].length > 0 && (
         <div className="settings-provider-group">
-          <label htmlFor="active-model" className="settings-field-label">
+          <label htmlFor="active-model" className="panel-field-label">
             {t('settings.model_label')}
           </label>
           <Select
@@ -611,9 +611,9 @@ const SettingsPanel = forwardRef(function SettingsPanel({
 
       {PROVIDERS.filter(p => p.id === activeProvider).map(p => (
         <div key={p.id} className="settings-key-group">
-          <label htmlFor={`apikey-${p.id}`} className="settings-field-label">
+          <label htmlFor={`apikey-${p.id}`} className="panel-field-label">
             {t('settings.api_key_label_prefix')}, {p.label}
-            {pendingAiEnabled && <span className="settings-field-required"> {t('settings.api_key_required')}</span>}
+            {pendingAiEnabled && <span className="panel-field-required"> {t('settings.api_key_required')}</span>}
           </label>
           <textarea
             id={`apikey-${p.id}`}
@@ -630,19 +630,19 @@ const SettingsPanel = forwardRef(function SettingsPanel({
             aria-describedby={errors.apiKey && pendingAiEnabled ? 'api-key-error' : undefined}
           />
           {errors.apiKey && pendingAiEnabled && (
-            <p id="api-key-error" className="settings-field-error">
+            <p id="api-key-error" className="panel-field-error">
               {t('settings.api_key_error')}
             </p>
           )}
         </div>
       ))}
 
-      <div className={`settings-toggle-row settings-toggle-row--sm${!pendingAiEnabled || activeProvider !== 'anthropic' ? ' settings-toggle-row--disabled' : ''}`}>
+      <div className={`panel-toggle-row panel-toggle-row--sm${!pendingAiEnabled || activeProvider !== 'anthropic' ? ' panel-toggle-row--disabled' : ''}`}>
         <div>
-          <label htmlFor="toggle-agentic" className="settings-toggle-label">
+          <label htmlFor="toggle-agentic" className="panel-toggle-label">
             {t('settings.agentic_mode_label')}
           </label>
-          <p className="settings-toggle-desc">{t('settings.agentic_mode_desc')}</p>
+          <p className="panel-toggle-desc">{t('settings.agentic_mode_desc')}</p>
           {pendingAgenticMode !== (isAgenticModeEnabled()) && (
             <PendingNote t={t} />
           )}
@@ -704,10 +704,10 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         returnFocusRef={privacyButtonRef}
       >
         <h2 className="sheet-heading">{t('settings.privacy_heading')}</h2>
-        <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_storage')}</h3>
+        <h3 className="panel-subheading">{t('settings.privacy_subhead_storage')}</h3>
         <p>{t('settings.privacy_body_1')}</p>
         <p>{t('settings.privacy_body_2')}</p>
-        <h3 className="settings-modal-subhead">{t('settings.privacy_subhead_translations')}</h3>
+        <h3 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h3>
         <p>{t('settings.privacy_body_translations')}</p>
       </BottomSheet>
 

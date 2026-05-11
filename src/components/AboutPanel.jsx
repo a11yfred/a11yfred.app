@@ -8,7 +8,7 @@ import findingSlug from '../utils/findingSlug.js'
 import './AboutPanel.css'
 
 function ExtLink({ href, children }) {
-  return <a href={href} target="_blank" rel="noreferrer" className="about-inline-link">{children}<ExternalLinkIcon /></a>
+  return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<ExternalLinkIcon /></a>
 }
 
 export default function AboutPanel({ onClose, allFindings = [] }) {
@@ -31,20 +31,20 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
 
       <section className="panel-section">
         <h3 className="panel-section-heading">{t('about.what_heading')}</h3>
-        <p className="about-body">{t('about.what_body')}</p>
-        <p className="about-body">
+        <p className="panel-body">{t('about.what_body')}</p>
+        <p className="panel-body">
           {t('about.what_body_2_prefix')}
           <ExtLink href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG)</ExtLink>
           {t('about.what_body_2_suffix')}
         </p>
-        <p className="about-body">{t('about.what_wcag')}</p>
+        <p className="panel-body">{t('about.what_wcag')}</p>
         {exampleFindings.length > 0 && (
           <>
-            <p className="about-body">{t('about.examples_intro')}</p>
+            <p className="panel-body">{t('about.examples_intro')}</p>
             <ul className="about-coming">
               {exampleFindings.map(f => (
                 <li key={f.id}>
-                  <a href={`#/finding/${f.id}/${findingSlug(f.title)}`} className="about-inline-link">{f.title}</a>
+                  <a href={`#/finding/${f.id}/${findingSlug(f.title)}`} className="panel-inline-link">{f.title}</a>
                 </li>
               ))}
             </ul>
@@ -63,7 +63,7 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
             <h4 className="about-feature-label">{t('about.feature_ai_label')}</h4>
             <p className="about-feature-body">
               {t('about.feature_ai_body')}{' '}
-              <a href="#/settings" className="about-inline-link">{t('common.settings')}</a>.{' '}
+              <a href="#/settings" className="panel-inline-link">{t('common.settings')}</a>.{' '}
               {t('about.feature_agentic_body')}
             </p>
           </li>
@@ -75,7 +75,7 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
             <h4 className="about-feature-label">{t('about.feature_languages_label')}</h4>
             <p className="about-feature-body">
               {t('about.feature_languages_body')}{' '}
-              <a href="#/settings" className="about-inline-link">{t('common.settings')}</a>.
+              <a href="#/settings" className="panel-inline-link">{t('common.settings')}</a>.
             </p>
           </li>
         </ul>
@@ -83,20 +83,20 @@ export default function AboutPanel({ onClose, allFindings = [] }) {
 
       <section className="panel-section">
         <h3 className="panel-section-heading">{t('settings.privacy_heading')}</h3>
-        <h4 className="about-subheading">{t('settings.privacy_subhead_storage')}</h4>
-        <p className="about-body">{t('settings.privacy_body_1')}</p>
-        <p className="about-body">{t('settings.privacy_body_2')}</p>
-        <h4 className="about-subheading">{t('settings.privacy_subhead_translations')}</h4>
-        <p className="about-body">{t('settings.privacy_body_translations')}</p>
+        <h4 className="panel-subheading">{t('settings.privacy_subhead_storage')}</h4>
+        <p className="panel-body">{t('settings.privacy_body_1')}</p>
+        <p className="panel-body">{t('settings.privacy_body_2')}</p>
+        <h4 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h4>
+        <p className="panel-body">{t('settings.privacy_body_translations')}</p>
       </section>
 
       <section className="panel-section">
         <h3 className="panel-section-heading">{t('about.sources_heading')}</h3>
-        <p className="about-body">{t('about.sources_body')}</p>
-        <p className="about-body">{t('about.sources_intro')}</p>
-        <ul className="about-sources-list about-body">
+        <p className="panel-body">{t('about.sources_body')}</p>
+        <p className="panel-body">{t('about.sources_intro')}</p>
+        <ul className="about-sources-list panel-body">
           <li>
-            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="about-inline-link">WCAG 2.2 Understanding documents<ExternalLinkIcon /></a>
+            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="panel-inline-link">WCAG 2.2 Understanding documents<ExternalLinkIcon /></a>
             {' '}(W3C / WAI)
           </li>
           <li>

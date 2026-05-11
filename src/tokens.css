@@ -103,6 +103,10 @@
   --touch-target: 44px;
 
   /* Component defaults — override in your app layer if needed */
+  --modal-max-width: 720px;
+  --modal-max-height-mobile: 92dvh;
+  --panel-width-mobile: min(360px, calc(100vw - var(--space-8)));
+
   --btn-height-standard:  44px;
   --btn-height-compact:   44px;
   --input-height:         4rem;

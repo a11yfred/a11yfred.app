@@ -630,10 +630,10 @@ All components consume CSS custom properties. Override any token to retheme with
 Import order:
 
 ```css
-@import '@ulam/ube/tokens.css';     /* design primitives */
-@import '@ulam/ube/app-tokens.css'; /* sizing and layout */
+@import '@ulam/ube/tokens.css';     /* design primitives + component defaults */
 @import '@ulam/ube/typography.css'; /* structural baseline */
 @import '@ulam/ube/ui.css';         /* component styles + reset */
+/* Optional: override token defaults for your app after this */
 ```
 
 **Color tokens:**
