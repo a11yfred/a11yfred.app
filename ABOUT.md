@@ -91,13 +91,18 @@ Dev-only tools are all guarded by an `IS_DEV` check (`hostname === 'localhost'`)
 
 The router provides primitives — `useRouter`, `useRouteMatch`, `Route` — but not a 404 concept. The 404 check (`const isNotFound = !KNOWN_ROUTES.has(route) && !findingMatch`) is app-level logic in `AppContent`, using the router's `route` value against a local `Set` of valid paths. Anything not in that set renders a `NotFoundPage` with a "Back to Home" link. It's a few lines of app code, not a router plugin feature, and it's intentionally kept that way — the set of valid routes is app-specific, not something a portable router should own.
 
-### Plugins
+### Framework packages
 
-Three self-contained plugins ship with the app. Each has a barrel export and a README. All dependencies are React only — no external packages required.
+A11yHelper is built on the ulam accessibility framework, developed alongside the app. Each package has a barrel export. See [ULAM.md](ULAM.md) for full documentation.
 
-- **[router](src/plugins/router/README.md)** — hash-based SPA router with full WCAG 2.2 focus management. Exports `Router`, `useRouter`, `Route`, `Link`, `Drawer`, `BottomSheet`, `Modal`, `useFocusOnMount`, `useReturnFocus`, `useFocusTrap`, `useAriaHide`, `useDir`, `useMediaQuery`, `usePageTitle`, and `usePaginationFocus`.
-- **[announce](src/plugins/announce/README.md)** — ARIA live region pub/sub. Mount `<Announcer />` once, call `announce(message)` from anywhere. Supports `polite` and `assertive` priorities with automatic clearing.
-- **[debug](src/plugins/debug/README.md)** — dev-only diagnostics: KB focus toast, ARIA announcer toast, AI assist toggle toast, deploy status banner, full command reference panel, and an optional FAB launcher for projects without a dedicated command field. Renders nothing in production.
+- **@ulam/ube** (`src/components/ui/`) — UI component library: Button, Modal, Drawer, Sheet, and 18 others. Vanilla-first with thin React wrappers.
+- **@ulam/taho** (`src/taho/`) — ARIA live region announcer. Call `announce(message)` from anywhere. React wrapper in `@ulam/taho-bayabas`.
+- **@ulam/sili** (`src/sili/`) — Focus management core: focus trap, return focus, aria-hide, escape key. React hooks in `@ulam/siling-labuyo`.
+- **@ulam/calamansi** (`src/calamansi/`) — i18n, locale-aware hooks, and text utilities.
+- **@ulam/halohalo** (`src/halohalo/`) — AI integration layer with connectivity checks.
+- **@ulam/sawsawan** (`src/sawsawan/`) — Integration bridge wiring the packages together.
+- **@ulam/meryenda** (`tools/meryenda/`) — Dev-only a11y diagnostics: focus debugger, names debugger, heading map, tab stops, deploy banner. Renders nothing in production.
+- **@ulam/palaman** (`tools/palaman/`) — ESLint and Stylelint a11y rules including ARIA nuance rules and ulam-specific patterns.
 
 ---
 

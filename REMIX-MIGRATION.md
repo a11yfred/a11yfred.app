@@ -33,7 +33,7 @@ Two separate efforts — do them in order:
 | Package | React surface | Status |
 |---------|--------------|--------|
 | `@ulam/calamansi` | `I18nProvider` context, `useT`, `usePref` hooks | ✅ DONE |
-| `@ulam/adobo` | 8 debug components | ✅ DONE |
+| `@ulam/meryenda` | 8 debug components | ✅ DONE |
 | `@ulam/ube` | UI components | ✅ DONE (Groups A–D) |
 | `@ulam/siling-labuyo` | hooks + `Modal`, `Drawer`, `Sheet` components | ✅ DONE |
 | `@ulam/taho-bayabas` | `Announcer`, `useAnnounce` | In progress |
@@ -56,13 +56,13 @@ Two separate efforts — do them in order:
 
 ---
 
-### Phase 2 — adobo ✅ DONE
+### Phase 2 — meryenda ✅ DONE
 
 **Shipped:** `d49d80a`
 
 Three-layer architecture:
 ```text
-@ulam/adobo
+@ulam/meryenda
 ├── core/        vanilla JS — createFocusWatcher, createNamesWatcher, createHeadingWatcher, createTabStopWatcher
 ├── overlay/     vanilla JS DOM mounting — mountFocusDebugger, mountNamesDebugger, mountHeadingMapDebugger,
 │                mountTabStopsDebugger, mountDebugLauncher, mountDebugHelp, mountDeployBanner
@@ -71,7 +71,7 @@ Three-layer architecture:
 ```
 
 - `index.js` exports vanilla only (`core/`, `overlay/`)
-- `react.js` exports React components — `import { FocusDebugger } from '@ulam/adobo/react'`
+- `react.js` exports React components — `import { FocusDebugger } from '@ulam/meryenda/react'`
 - React marked as optional peer dep
 
 ---
@@ -180,9 +180,9 @@ Current hash routes → Remix file-based routes:
 - Replace `usePageTitle` calls with `meta` exports per route
 - Replace `useThemeManager` with loader-driven `data-theme` on `<html>`
 
-### Phase 5 — adobo in Remix
-- Replace React adobo component tree with `adobo.init()` call in root layout effect
-- Or: keep React wrappers via `@ulam/adobo/react` subpath — no urgency to change
+### Phase 5 — meryenda in Remix
+- Replace React meryenda component tree with `meryenda.init()` call in root layout effect
+- Or: keep React wrappers via `@ulam/meryenda/react` subpath — no urgency to change
 
 ---
 
@@ -201,7 +201,7 @@ Current hash routes → Remix file-based routes:
 ```
 Part 1 (framework):
   1. calamansi              ✅ DONE — f5a289b
-  2. adobo                  ✅ DONE — d49d80a
+  2. meryenda                  ✅ DONE — d49d80a
   3. ube Groups A–D         ✅ DONE — caf371e + naming commits
   4. siling-labuyo overlays ✅ DONE — cd9bb81
   5. taho-bayabas, halohalo, sawsawan — in progress
@@ -212,5 +212,5 @@ Part 2 (app — after Part 1 + Remix 3 stable):
   2. Route file structure            — 1–2 days
   3. Loaders replace data fetching   — 3–5 days (largest app change)
   4. Component migration             — 2–3 days
-  5. adobo in Remix                  — half day
+  5. meryenda in Remix                  — half day
 ```

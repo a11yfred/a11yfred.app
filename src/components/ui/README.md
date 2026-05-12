@@ -12,11 +12,11 @@ Ube is one of four ulam packages:
 ulam
 ├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce  ← you are here
 ├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic
-├── @ulam/adobo        savory  — a11y debug panel, vanilla-first
+├── @ulam/meryenda        savory  — a11y debug panel, vanilla-first
 └── @ulam/sawsawan     bridge  — wires the three together
 ```
 
-Use ube independently, or with the full ulam stack. No cross-package dependencies — ube does not import from calamansi, adobo, or sawsawan.
+Use ube independently, or with the full ulam stack. No cross-package dependencies — ube does not import from calamansi, meryenda, or sawsawan.
 
 ## Install
 
@@ -35,7 +35,7 @@ Install with aliases:
 ```bash
 npm install ube@npm:@ulam/ube
 npm install calamansi@npm:@ulam/calamansi
-npm install adobo@npm:@ulam/adobo
+npm install meryenda@npm:@ulam/meryenda
 npm install sawsawan@npm:@ulam/sawsawan
 ```
 
@@ -46,7 +46,7 @@ Your `package.json` will show:
   "dependencies": {
     "ube": "npm:@ulam/ube",
     "calamansi": "npm:@ulam/calamansi",
-    "adobo": "npm:@ulam/adobo",
+    "meryenda": "npm:@ulam/meryenda",
     "sawsawan": "npm:@ulam/sawsawan"
   }
 }
@@ -64,7 +64,7 @@ Or use any name you like — the alias is yours to choose:
 ```bash
 npm install ui@npm:@ulam/ube
 npm install i18n@npm:@ulam/calamansi
-npm install a11y-debug@npm:@ulam/adobo
+npm install a11y-debug@npm:@ulam/meryenda
 ```
 
 The canonical package names (`@ulam/ube` etc.) are always the stable reference. Aliases are a local convenience and do not affect the published package.

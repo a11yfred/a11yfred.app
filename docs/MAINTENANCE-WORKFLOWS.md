@@ -388,7 +388,7 @@ Apply when adding keys or updating existing ones.
 
 ## Plugin Workflows
 
-Plugins (`src/plugins/router/`, `src/plugins/announce/`, `src/plugins/adobo/`) are designed to be portable.
+Framework packages (`src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, `src/halohalo/`) and dev tools (`tools/meryenda/`, `tools/palaman/`) are designed to be portable.
 
 ### Import Isolation
 
@@ -408,7 +408,7 @@ List any non-React external packages imported by plugins (currently: `lucide-rea
 
 ### README Accuracy
 
-Verify `src/plugins/router/README.md`, `src/plugins/announce/README.md`, and `src/plugins/adobo/README.md` match current exports. Update if hooks or components were added, renamed, or removed.
+Verify READMEs in `src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, `src/halohalo/`, `tools/meryenda/`, and `tools/palaman/` match current exports. Update if hooks or components were added, renamed, or removed.
 
 ---
 

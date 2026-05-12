@@ -86,7 +86,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ## Plugins
 
-- [ ] **Easter egg locale bundle** `[code]` `[i18n]` ,  18 locales built and functional; extraction to standalone package pending. **Remaining**: (1) extract locale JSONs and `EASTER_EGG_LOCALES` map to `src/plugins/easter-eggs/`, (2) implement lazy-loading for locale files to avoid bloating main bundle, (3) document plugin API for drop-in usage in other React projects
+- [ ] **Easter egg locale bundle** `[code]` `[i18n]` ,  18 locales built and functional; extraction to standalone package pending. **Remaining**: (1) extract locale JSONs and `EASTER_EGG_LOCALES` map to `src/calamansi/easter-eggs/`, (2) implement lazy-loading for locale files to avoid bloating main bundle, (3) document in calamansi package for drop-in usage in other React projects
 
 ---
 

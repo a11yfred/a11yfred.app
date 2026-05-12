@@ -31,7 +31,7 @@ ulam
 │   └── @ulam/halohalo               — AI service adapters, model config, prefs
 │
 ├── Debug Layer
-│   └── @ulam/adobo        savory  — a11y debug panel, dependency-free
+│   └── @ulam/meryenda        savory  — a11y debug panel, dependency-free
 │
 └── Linting
     └── @ulam/palaman                — ESLint + Stylelint a11y rules
@@ -57,12 +57,12 @@ taho-pandan    ── taho (planned)
 ube            ── sili + siling-labuyo + taho + taho-bayabas + react
 calamansi      ── zero runtime deps
 halohalo       ── zero runtime deps
-adobo          ── react only (no other ulam packages)
+meryenda          ── react only (no other ulam packages)
 
-sawsawan       ── ube + calamansi + adobo + halohalo (the only cross-importer)
+sawsawan       ── ube + calamansi + meryenda + halohalo (the only cross-importer)
 ```
 
-Neither `ube`, `adobo`, nor `calamansi` import from each other. `sawsawan` is the only package that wires them together.
+Neither `ube`, `meryenda`, nor `calamansi` import from each other. `sawsawan` is the only package that wires them together.
 
 ---
 
@@ -249,15 +249,15 @@ AI service adapters, model configuration, and user preference management. Zero r
 
 ---
 
-## @ulam/adobo — A11y debug panel
+## @ulam/meryenda — A11y debug panel
 
-`src/plugins/adobo/`
+`tools/meryenda/`
 
 Named for the Filipino braised dish — deeply flavored, goes with everything.
 
 The React Query DevTools of accessibility. Drop it into any project in dev mode. Zero dependencies beyond React — no other ulam packages required.
 
-**Portable components (part of `@ulam/adobo`):**
+**Portable components (part of `@ulam/meryenda`):**
 
 | Component | Description |
 |-----------|-------------|
@@ -270,7 +270,7 @@ The React Query DevTools of accessibility. Drop it into any project in dev mode.
 | `DebugHelp` | Full command reference panel. |
 
 ```jsx
-import { FocusDebugger, TabStopsDebugger, HeadingMapDebugger, DebugLauncher } from '@ulam/adobo'
+import { FocusDebugger, TabStopsDebugger, HeadingMapDebugger, DebugLauncher } from '@ulam/meryenda'
 
 // All components are dev-only and aria-hidden
 {import.meta.env.DEV && <>
@@ -283,7 +283,7 @@ import { FocusDebugger, TabStopsDebugger, HeadingMapDebugger, DebugLauncher } fr
 
 All styles live in `debug.css` — self-contained, high-contrast dark, no ube token dependency.
 
-See [src/plugins/adobo/README.md](src/plugins/adobo/README.md) for full API.
+See [tools/meryenda/README.md](tools/meryenda/README.md) for full API.
 
 ---
 
@@ -312,7 +312,7 @@ export default [palaman.configs.recommended]
 { "plugins": ["@ulam/palaman"], "rules": { "ulam/user-preferences": true, "ulam/no-outline-none": true } }
 ```
 
-See [src/palaman/RULES.md](src/palaman/RULES.md) for the full rule catalog with sources and rationale.
+See [tools/palaman/RULES.md](tools/palaman/RULES.md) for the full rule catalog with sources and rationale.
 
 ---
 
@@ -330,7 +330,7 @@ See [src/palaman/RULES.md](src/palaman/RULES.md) for the full rule catalog with 
 
 **RTL-aware.** Direction-sensitive components respond to `html[dir="rtl"]` automatically.
 
-**Zero cross-package dependencies.** `ube`, `calamansi`, and `adobo` do not import from each other. `sawsawan` is the only wiring layer.
+**Zero cross-package dependencies.** `ube`, `calamansi`, and `meryenda` do not import from each other. `sawsawan` is the only wiring layer.
 
 ---
 
@@ -350,7 +350,7 @@ All packages are named for Filipino food — the framework's origin story.
 | calamansi | Sour citrus — essential accent | i18n + logic |
 | sawsawan | Dipping sauce — brings it all together | Integration bridge |
 | halohalo | Mixed dessert — many layers | AI layer |
-| adobo | Braised dish — savory, goes with everything | Debug panel |
+| meryenda | Braised dish — savory, goes with everything | Debug panel |
 | palaman | Sandwich filling — completes the stack | Linting |
 
 ---

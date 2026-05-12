@@ -1,4 +1,4 @@
-# @ulam/adobo
+# @ulam/meryenda
 
 Vanilla-first accessibility debug panel with a thin React wrapper. The savory layer of the [ulam](../../../docs/ulam.md) framework.
 
@@ -6,13 +6,13 @@ The React Query DevTools of accessibility. Drop it into any project, see focus, 
 
 ## Packages
 
-Adobo is one of four ulam packages:
+Meryenda is one of four ulam packages:
 
 ```text
 ulam
 ├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce
 ├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic
-├── @ulam/adobo        savory  — a11y debug panel, vanilla-first  ← you are here
+├── @ulam/meryenda        savory  — a11y debug panel, vanilla-first  ← you are here
 └── @ulam/sawsawan     bridge  — wires the three together
 ```
 
@@ -21,7 +21,7 @@ ulam
 Vanilla-first: core inspection logic has no framework dependency. React is a thin mount/unmount wrapper.
 
 ```text
-@ulam/adobo
+@ulam/meryenda
 ├── core/
 │   ├── focus.js      — formatTarget, getOutlineInfo, flashElement, createFocusWatcher
 │   ├── names.js      — isControl, getAccessibleName, createNamesWatcher
@@ -96,7 +96,7 @@ import {
   FocusDebugger,
   NamesDebugger,
   DeployBanner,
-} from '@ulam/adobo'
+} from '@ulam/meryenda'
 
 export default function Root() {
   const [debugFocus, setDebugFocus] = useState(false)
@@ -132,9 +132,9 @@ For `DebugLauncher`, wire `onCommand` to your state setters:
 Use the vanilla core directly. Create composables that wrap `create*Watcher`:
 
 ```js
-// composables/useAdobo.js
+// composables/useMeryenda.js
 import { ref, onMounted, onUnmounted } from 'vue'
-import { createFocusWatcher, createNamesWatcher } from '@ulam/adobo'
+import { createFocusWatcher, createNamesWatcher } from '@ulam/meryenda'
 
 export function useFocusDebugger(enabled) {
   const toast = ref(null)
@@ -173,7 +173,7 @@ Then in a component:
 ```vue
 <script setup>
 import { ref } from 'vue'
-import { useFocusDebugger } from './composables/useAdobo'
+import { useFocusDebugger } from './composables/useMeryenda'
 
 const enabled = ref(true)
 const { toast } = useFocusDebugger(enabled)
@@ -190,7 +190,7 @@ const { toast } = useFocusDebugger(enabled)
 Import `debug.css` once in your app entry:
 
 ```js
-import '@ulam/adobo/debug.css'
+import '@ulam/meryenda/debug.css'
 ```
 
 ### Angular
@@ -201,7 +201,7 @@ Use the vanilla core in Angular services:
 // debug.service.ts
 import { Injectable, OnDestroy } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
-import { createFocusWatcher, createNamesWatcher } from '@ulam/adobo'
+import { createFocusWatcher, createNamesWatcher } from '@ulam/meryenda'
 
 @Injectable({ providedIn: 'root' })
 export class DebugService implements OnDestroy {
@@ -257,7 +257,7 @@ export class FocusToastComponent {
 Import `debug.css` in `angular.json` styles or your global stylesheet:
 
 ```json
-"styles": ["node_modules/@ulam/adobo/debug.css", "src/styles.css"]
+"styles": ["node_modules/@ulam/meryenda/debug.css", "src/styles.css"]
 ```
 
 ### Vanilla JS (script tag / no framework)
@@ -265,7 +265,7 @@ Import `debug.css` in `angular.json` styles or your global stylesheet:
 Use the watcher factories directly. Wire them to your own DOM or to nothing — just inspect:
 
 ```js
-import { createFocusWatcher, createNamesWatcher } from '@ulam/adobo'
+import { createFocusWatcher, createNamesWatcher } from '@ulam/meryenda'
 
 // Log focus events to the console
 const focus = createFocusWatcher(({ label, isFocusVisible }) => {
@@ -285,7 +285,7 @@ names.destroy()
 
 ---
 
-## App-specific exports (not part of @ulam/adobo)
+## App-specific exports (not part of @ulam/meryenda)
 
 These live in this folder but are a11yhelper-specific:
 
@@ -315,7 +315,7 @@ Type in the search bar (live search on) or submit (live search off):
 
 All styles live in `debug.css`. Import it once — it covers all components.
 
-Adobo CSS is self-contained and opinionated (dark, high contrast). No ube token dependency — looks the same regardless of host app theme.
+Meryenda CSS is self-contained and opinionated (dark, high contrast). No ube token dependency — looks the same regardless of host app theme.
 
 ---
 

@@ -38,7 +38,9 @@ Key directories:
 - `src/services/` ,  Data layer, AI integration, localStorage utilities
 - `src/hooks/` ,  Search, ratings, pinning, user findings, overrides
 - `src/components/` ,  UI components; `ui/` subfolder has 21 reusable components (Button, IconButton, + 19 others)
-- `src/plugins/` ,  Router, Announcer, Debug tools (each with README)
+- `src/taho/`, `src/sili/`, `src/calamansi/`, `src/halohalo/`, `src/sawsawan/` ,  ulam framework packages
+- `tools/meryenda/` ,  Dev-only a11y diagnostics panel
+- `tools/palaman/` ,  ESLint and Stylelint a11y rules
 - `docs/` ,  Deployment, maintenance, contributing
 
 ---

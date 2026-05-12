@@ -58,7 +58,7 @@ git push origin feature/your-feature
 
 **Special rule for `feature/ulam`:**
 
-The ulam branch tracks the ulam framework boundary — `src/components/ui/`, `src/plugins/`, `src/calamansi/`, `src/sawsawan/`, and token CSS files. It stays in sync with main. The branch exists to mark what will become the standalone `ulam` monorepo at fork time.
+The ulam branch tracks the ulam framework boundary — `src/components/ui/`, `src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, `src/halohalo/`, and token CSS files. It stays in sync with main. The branch exists to mark what will become the standalone `ulam` monorepo at fork time. Note: `tools/meryenda/` and `tools/palaman/` are dev tooling, not framework packages, so they are not included in the ulam boundary.
 
 For the full sync workflow, see `ULAM-SYNC.md`.
 

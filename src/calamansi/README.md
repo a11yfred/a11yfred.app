@@ -12,7 +12,7 @@ Calamansi is one of four ulam packages:
 ulam
 ├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce
 ├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic  ← you are here
-├── @ulam/adobo        savory  — a11y debug panel, vanilla-first
+├── @ulam/meryenda        savory  — a11y debug panel, vanilla-first
 └── @ulam/sawsawan     bridge  — wires the three together
 ```
 
@@ -55,7 +55,7 @@ Calamansi has no dependency on ube. Dependency flows one direction only:
 calamansi ──► sawsawan (only cross-importer)
 ```
 
-Neither ube nor adobo import from calamansi.
+Neither ube nor meryenda import from calamansi.
 
 ## Future: Fork to @ulam/calamansi
 

@@ -108,7 +108,7 @@ Plugins are portable; verify they remain app-agnostic.
 - [ ] **Finding schema** ,  open `src/data/corpus.json`, verify schema block in README accurate
 - [ ] **Corpus count** ,  `node -e "console.log(require('./src/data/corpus.json').length)"` and update README if changed
 - [ ] **Hooks/services list** ,  verify every file in `src/hooks/` and `src/services/` appears in README
-- [ ] **Plugin READMEs** ,  verify `src/plugins/*/README.md` match current exports
+- [ ] **Package READMEs** ,  verify READMEs in `src/taho/`, `src/sili/`, `src/calamansi/`, `tools/meryenda/`, `tools/palaman/` match current exports
 - [ ] **CONTRIBUTING.md** ,  defect schema example matches `corpus.json` fields exactly
 - [ ] **MAINT-LOG.md** ,  add row after every sweep; keep newest first
 - [ ] **Privacy disclosure** ,  About panel lists all `localStorage` keys accurately
