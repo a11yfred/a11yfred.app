@@ -66,7 +66,7 @@ function loadPendingContributions() {
 /**
  * Submit a new contribution to the local queue.
  *
- * @param {string} findingId   - corpus entry ID, e.g. "ATH-001"
+ * @param {string} findingId   - corpus entry ID, e.g. "ACC-001"
  * @param {string} locale      - BCP-47 locale being edited, e.g. "es"
  * @param {'lang_only'|'lang_and_en'|'all_langs'} scope
  * @param {{ desc?: string, rem?: string }} localeFields  - edited locale copy
