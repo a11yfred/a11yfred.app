@@ -14,7 +14,7 @@ import Select from './components/ui/Select.jsx'
 import InputWithClear from './components/ui/InputWithClear.jsx'
 import Panel from './components/ui/PanelReact.jsx'
 import InputSearch from './components/ui/InputSearch.jsx'
-import { BottomSheet, Modal, Drawer } from './siling-labuyo/index.js'
+import { Sheet, Modal, Drawer } from './siling-labuyo/index.js'
 import { usePref } from './calamansi/react.js'
 import { setLocale, getT } from './calamansi/index.js'
 import './UlamMenu.css'
@@ -367,7 +367,7 @@ export default function UlamMenu() {
         <Section title="Overlays">
           <Row label="Bottom Sheet">
             <Button variant="secondary" onClick={() => setSheetOpen(true)}>Open Bottom Sheet</Button>
-            <BottomSheet
+            <Sheet
               open={sheetOpen}
               onClose={() => setSheetOpen(false)}
               label="Example Bottom Sheet"
@@ -377,7 +377,7 @@ export default function UlamMenu() {
                 <h3>Bottom Sheet</h3>
                 <p>Slides up from the bottom. Escape or swipe down dismisses. Focus is trapped while open (WCAG 2.1.2) and returns to the trigger on close.</p>
               </div>
-            </BottomSheet>
+            </Sheet>
           </Row>
           <Row label="Modal">
             <Button variant="secondary" onClick={() => setModalOpen(true)}>Open Modal</Button>

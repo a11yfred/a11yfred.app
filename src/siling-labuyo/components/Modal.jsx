@@ -1,54 +1,22 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { useFocusTrap } from '../hooks/useFocusTrap.js'
-import { useAriaHide } from '../hooks/useAriaHide.js'
-import { returnFocus } from '../../sili/core/returnFocus.js'
-import { onEscapeKey } from '../../sili/core/escapeKey.js'
 
 /**
- * Centered dialog modal rendered via a portal at document.body.
- *
- * - Centers in the viewport regardless of scroll or ancestor transforms
- * - Focuses the panel (tabIndex -1) on open; scrolls it into view as fallback
- * - Restores focus to the trigger element on close
- * - Traps Tab focus within the modal while open (WCAG 2.1.2)
- * - Dismisses on Escape (capture phase, before underlying panels) or action buttons
+ * Modal shell — structure only, no focus management or escape handling.
+ * Use Modal (from @ulam/siling-labuyo/react) for the fully-wired React + sili version.
  *
  * Props:
  *   open          boolean
  *   onClose       fn
- *   heading       string                           aria-label and visible heading text
- *   headingIcon   ReactNode                        optional icon before heading (visual only)
- *   actions       [{ label, onClick, className }]  footer buttons; defaults to single OK
- *   returnFocusRef React.RefObject                 explicit return-focus target
+ *   heading       string
+ *   headingIcon   ReactNode
+ *   actions       [{ label, onClick, className }]
+ *   panelRef      React.RefObject
  *   children      node
  */
-export default function Modal({ open, onClose, heading = 'Information', headingIcon, actions, children, returnFocusRef }) {
-  const autoTriggerRef = useRef(null)
-  const panelRef = useRef(null)
-
-  useFocusTrap(panelRef, open)
-  useAriaHide(panelRef, open)
-
-  useEffect(() => {
-    if (open) {
-      if (!returnFocusRef) autoTriggerRef.current = document.activeElement
-      requestAnimationFrame(() => {
-        if (!panelRef.current) return
-        panelRef.current.focus({ preventScroll: true })
-        panelRef.current.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
-      })
-    } else {
-      const target = returnFocusRef?.current ?? autoTriggerRef.current
-      returnFocus(target)
-    }
-  }, [open, returnFocusRef])
-
-  // Capture phase so this fires before Drawer / BottomSheet Escape handlers
-  useEffect(() => {
-    if (!open) return
-    return onEscapeKey(onClose, { useCapture: true, stopPropagation: true })
-  }, [open, onClose])
+export default function ModalShell({ open, onClose, heading = 'Information', headingIcon, actions, children, panelRef: externalPanelRef }) {
+  const internalPanelRef = useRef(null)
+  const panelRef = externalPanelRef ?? internalPanelRef
 
   return createPortal(
     <>

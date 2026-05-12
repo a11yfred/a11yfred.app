@@ -21,10 +21,15 @@ export { useDir } from './hooks/useDir.js'
 export { useMediaQuery } from './hooks/useMediaQuery.js'
 export { usePageTitle } from './hooks/usePageTitle.js'
 
-// React component shells
-export { default as Modal } from './components/Modal.jsx'
-export { default as Drawer } from './components/Drawer.jsx'
-export { default as BottomSheet } from './components/BottomSheet.jsx'
+// React components (fully wired with sili hooks)
+export { default as Modal } from './components/ModalReact.jsx'
+export { default as Drawer } from './components/DrawerReact.jsx'
+export { default as Sheet } from './components/SheetReact.jsx'
+
+// Primitive shells (structure only, no sili hooks) — for framework-agnostic use
+export { default as ModalPrimitive } from './components/Modal.jsx'
+export { default as DrawerPrimitive } from './components/Drawer.jsx'
+export { default as SheetPrimitive } from './components/Sheet.jsx'
 
 // Hash router (move to siling-mahaba when Remix lands)
 export { Router, useRouter, useRouteMatch, matchRoute } from './router/Router.jsx'

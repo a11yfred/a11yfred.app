@@ -1,33 +1,67 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import { ChevronLeft, ChevronRight, X, ChevronsUp } from 'lucide-react'
-import { useFocusTrap } from '../hooks/useFocusTrap.js'
-import { useAriaHide } from '../hooks/useAriaHide.js'
-import { useEscapeKey } from '../hooks/useEscapeKey.js'
-import { useDir } from '../hooks/useDir.js'
-import { returnFocus } from '../../sili/core/returnFocus.js'
+
+function DefaultCloseIcon() {
+  return (
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  )
+}
+
+function DefaultBackLtrIcon() {
+  return (
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="15 18 9 12 15 6" />
+    </svg>
+  )
+}
+
+function DefaultBackRtlIcon() {
+  return (
+    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 18 15 12 9 6" />
+    </svg>
+  )
+}
+
+function DefaultCollapseIcon() {
+  return (
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="17 11 12 6 7 11" /><polyline points="17 18 12 13 7 18" />
+    </svg>
+  )
+}
 
 /**
- * Bottom sheet that slides up from the bottom of the viewport.
- * Rendered via a portal at document.body so transformed ancestors don't break position:fixed.
- *
- * - Scroll-locks the body while open AND not collapsed
- * - Swipe-to-dismiss: drag down from the chrome area to close
- * - Traps Tab focus while open AND not collapsed
- * - Background remains fully accessible and interactive when collapsed
- * - Dismisses on Escape or backdrop click (only when not collapsed)
+ * Bottom sheet shell — structure, swipe gesture, and CSS classes only.
+ * No focus management, aria-hide, escape handling, or scroll lock.
+ * Use SheetReact (exported as Sheet from @ulam/siling-labuyo/react) for the
+ * fully-wired React + sili version.
  *
  * Props:
  *   open            boolean
  *   onClose         fn
- *   collapsed       boolean         controlled collapsed state (desktop only)
- *   onCollapse      fn              called with next collapsed boolean
- *   label           string          aria-label for the dialog/region
- *   keepMounted     boolean         keep children mounted while closed (preserves state)
- *   returnFocusRef  React.RefObject explicit return-focus target
+ *   collapsed       boolean
+ *   onCollapse      fn
+ *   label           string
+ *   closeLabel      string
+ *   heading         string
+ *   keepMounted     boolean
+ *   panelRef        React.RefObject   attach to the panel div (for focus trap etc.)
+ *   chromeRef       React.RefObject   attach to the chrome div (for height measurement)
+ *   dir             'ltr' | 'rtl'
+ *   isDesktop       boolean
+ *   onBack          fn
+ *   backLabel       string
+ *   hideCloseBottom boolean
+ *   closeIcon       component
+ *   backLtrIcon     component
+ *   backRtlIcon     component
+ *   collapseIcon    component
  *   children        node
  */
-export default function BottomSheet({
+export default function Sheet({
   open,
   onClose,
   collapsed = false,
@@ -36,25 +70,28 @@ export default function BottomSheet({
   closeLabel = 'Close',
   heading,
   keepMounted = false,
-  returnFocusRef,
+  panelRef: externalPanelRef,
+  chromeRef: externalChromeRef,
+  dir = 'ltr',
+  isDesktop = false,
   onBack,
   backLabel = 'Back',
   hideCloseBottom = false,
-  closeIcon: CloseIcon = X,
-  backLtrIcon: BackLtrIcon = ChevronLeft,
-  backRtlIcon: BackRtlIcon = ChevronRight,
-  children
+  closeIcon: CloseIcon = DefaultCloseIcon,
+  backLtrIcon: BackLtrIcon = DefaultBackLtrIcon,
+  backRtlIcon: BackRtlIcon = DefaultBackRtlIcon,
+  collapseIcon: CollapseIcon = DefaultCollapseIcon,
+  children,
 }) {
-  const triggerRef = useRef(null)
-  const panelRef = useRef(null)
+  const internalPanelRef = useRef(null)
+  const internalChromeRef = useRef(null)
+  const panelRef = externalPanelRef ?? internalPanelRef
+  const chromeRef = externalChromeRef ?? internalChromeRef
+
   const dragStartY = useRef(null)
   const dragDelta = useRef(0)
-  const dir = useDir()
 
-  // Keep children mounted during exit animation so the sheet doesn't appear empty
-  // while sliding down. Unmount 250ms after close (--duration-base).
   const [mounted, setMounted] = useState(open)
-  const chromeRef = useRef(null)
   useEffect(() => {
     const timer = setTimeout(() => setMounted(open), open ? 0 : 250)
     return () => clearTimeout(timer)
@@ -62,7 +99,6 @@ export default function BottomSheet({
 
   useEffect(() => { if (!open) onCollapse?.(false) }, [open, onCollapse])
 
-  // Track chrome height for collapsed transform and CSS page padding
   useEffect(() => {
     if (!open || !chromeRef.current || !panelRef.current) return
     const h = chromeRef.current.offsetHeight
@@ -72,32 +108,6 @@ export default function BottomSheet({
   }, [open])
 
   const BackChevron = dir === 'rtl' ? BackRtlIcon : BackLtrIcon
-  const isDesktop = window.matchMedia('(width >= 768px)').matches
-
-  // Trap and aria-hide disabled when collapsed so background remains accessible
-  useFocusTrap(panelRef, open && !collapsed)
-  useAriaHide(panelRef, open && !collapsed)
-
-  // Parent effect fires after child effects — panel focus wins over useFocusOnMount in children
-  useEffect(() => {
-    if (open && !collapsed) {
-      if (!returnFocusRef) triggerRef.current = document.activeElement
-      panelRef.current?.focus()
-    } else if (!open) {
-      returnFocus(returnFocusRef?.current ?? triggerRef.current)
-    }
-  }, [open, collapsed, returnFocusRef])
-
-  useEscapeKey(open && !collapsed, onClose)
-
-  useEffect(() => {
-    if (open && !collapsed) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => { document.body.style.overflow = '' }
-  }, [open, collapsed])
 
   const handleTouchStart = (e) => {
     const panel = panelRef.current
@@ -122,10 +132,7 @@ export default function BottomSheet({
 
   const handleTouchEnd = () => {
     if (dragStartY.current === null) return
-    const DISMISS_THRESHOLD = 100
-    if (dragDelta.current > DISMISS_THRESHOLD) {
-      onClose()
-    }
+    if (dragDelta.current > 100) onClose()
     if (panelRef.current) {
       panelRef.current.style.transform = ''
       panelRef.current.style.transition = ''
@@ -161,7 +168,7 @@ export default function BottomSheet({
               onClick={() => onCollapse?.(!collapsed)}
             >
               {collapsed
-                ? <ChevronsUp size={16} aria-hidden="true" />
+                ? <CollapseIcon />
                 : <div className="sheet-handle" aria-hidden="true" />
               }
             </button>
@@ -169,20 +176,12 @@ export default function BottomSheet({
             <div className="sheet-handle" aria-hidden="true" />
           )}
           {onBack && (
-            <button
-              onClick={onBack}
-              aria-label={backLabel}
-              className="btn--icon sheet-back-btn"
-            >
-              <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
+            <button onClick={onBack} aria-label={backLabel} className="btn--icon sheet-back-btn">
+              <BackChevron />
             </button>
           )}
-          <button
-            onClick={onClose}
-            aria-label={closeLabel}
-            className="btn--icon sheet-close-btn"
-          >
-            <CloseIcon size={20} strokeWidth={2.5} aria-hidden="true" />
+          <button onClick={onClose} aria-label={closeLabel} className="btn--icon sheet-close-btn">
+            <CloseIcon />
           </button>
         </div>
 

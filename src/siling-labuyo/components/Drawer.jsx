@@ -1,42 +1,19 @@
-import { useEffect, useRef } from 'react'
-import { useFocusTrap } from '../hooks/useFocusTrap.js'
-import { useAriaHide } from '../hooks/useAriaHide.js'
-import { useEscapeKey } from '../hooks/useEscapeKey.js'
-import { returnFocus } from '../../sili/core/returnFocus.js'
+import { useRef } from 'react'
 
 /**
- * Drawer panel that slides in from the left on mobile.
- *
- * - Saves focus to the trigger on open; restores on close
- * - Traps Tab focus within the panel while open (WCAG 2.1.2)
- * - Uses `inert` to block interaction with closed content
- * - Dismisses on Escape or backdrop click
+ * Drawer shell — structure only, no focus management or escape handling.
+ * Use Drawer (from @ulam/siling-labuyo/react) for the fully-wired React + sili version.
  *
  * Props:
  *   open         boolean
  *   onClose      fn
- *   label        string           aria-label for the dialog (default: 'Menu')
- *   focusOnClose React.RefObject  if provided, receives focus on close
+ *   label        string
+ *   panelRef     React.RefObject
  *   children     node
  */
-export default function Drawer({ open, onClose, label = 'Menu', children, focusOnClose }) {
-  const triggerRef = useRef(null)
-  const panelRef = useRef(null)
-
-  useFocusTrap(panelRef, open)
-  useAriaHide(panelRef, open)
-
-  useEffect(() => {
-    if (open) {
-      triggerRef.current = document.activeElement
-      panelRef.current?.focus()
-    } else {
-      const target = focusOnClose?.current ?? triggerRef.current
-      returnFocus(target)
-    }
-  }, [open, focusOnClose])
-
-  useEscapeKey(open, onClose)
+export default function DrawerShell({ open, onClose, label = 'Menu', children, panelRef: externalPanelRef }) {
+  const internalPanelRef = useRef(null)
+  const panelRef = externalPanelRef ?? internalPanelRef
 
   return (
     <>

@@ -14,9 +14,9 @@ export { useDir }             from '../siling-labuyo/hooks/useDir.js'
 export { useMediaQuery }      from '../siling-labuyo/hooks/useMediaQuery.js'
 
 // Overlay components are router-agnostic — re-exported unchanged
-export { default as Modal }       from '../siling-labuyo/components/Modal.jsx'
-export { default as Drawer }      from '../siling-labuyo/components/Drawer.jsx'
-export { default as BottomSheet } from '../siling-labuyo/components/BottomSheet.jsx'
+export { default as Modal }       from '../siling-labuyo/components/ModalReact.jsx'
+export { default as Drawer }      from '../siling-labuyo/components/DrawerReact.jsx'
+export { default as Sheet }       from '../siling-labuyo/components/SheetReact.jsx'
 
 // Remix-backed router hooks — replace siling-labuyo's hash-router equivalents
 export { useRouter, useRouteMatch } from './router/useRouter.js'

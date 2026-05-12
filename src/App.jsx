@@ -21,7 +21,7 @@ import {
   useRouter,
   useRouteMatch,
   Drawer,
-  BottomSheet,
+  Sheet,
   Modal,
   useMediaQuery,
   returnFocus,
@@ -1266,7 +1266,7 @@ function AppContent({
         </Drawer>
       )}
 
-      <BottomSheet
+      <Sheet
         open={!!selected && (isDesktop || (!settingsOpen && !aboutOpen && !helpOpen && !onboardingOpen && !adminOpen))}
         onClose={() => { applySelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
         collapsed={sheetCollapsed}
@@ -1299,7 +1299,7 @@ function AppContent({
             onDebugPanelCmdHandled={() => setDebugPanelCmd(null)}
           />
         )}
-      </BottomSheet>
+      </Sheet>
 
       <Modal
         open={!!pendingFinding}

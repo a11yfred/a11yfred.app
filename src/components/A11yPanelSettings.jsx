@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw, ArrowLeft } from 'lucide-react'
-import { Modal, BottomSheet, useRouter } from '../siling-labuyo/index.js'
+import { Modal, Sheet, useRouter } from '../siling-labuyo/index.js'
 import { announce } from '../taho-bayabas/index.js'
 import { useT } from '../calamansi/react.js'
 import Toggle from './ui/Toggle.jsx'
@@ -656,7 +656,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
         </p>
       )}
 
-      <BottomSheet
+      <Sheet
         open={privacyOpen}
         onClose={() => navigate('/settings')}
         collapsed={privacyCollapsed}
@@ -672,7 +672,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
         <p>{t('settings.privacy_body_2')}</p>
         <h3 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h3>
         <p>{t('settings.privacy_body_translations')}</p>
-      </BottomSheet>
+      </Sheet>
 
       <Modal
         open={rhgPending}
@@ -712,7 +712,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
         <p>{t('settings.unsaved_body')}</p>
       </Modal>
 
-      <BottomSheet
+      <Sheet
         open={resetConfirmOpen}
         onClose={() => setResetConfirmOpen(false)}
         label={t('settings.confirm_reset_all_heading')}
@@ -782,7 +782,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
             </Button>
           </div>
         </div>
-      </BottomSheet>
+      </Sheet>
 
       <Modal
         open={noChangesOpen}
