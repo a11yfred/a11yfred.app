@@ -1,10 +1,19 @@
-// TODO: replace with Remix's built-in meta export pattern
-// In Remix, page titles are set via the `meta` export on each route module:
-//
-//   export const meta = () => [{ title: 'A11yHelper | Settings' }]
-//
-// usePageTitle is React-state-based and unnecessary in Remix — delete this
-// file and use the meta export instead when migration is complete.
-
-// Temporary: delegate to siling-labuyo until Remix migration
-export { usePageTitle } from '../../siling-labuyo/hooks/usePageTitle.js'
+/**
+ * No-op shim for the Remix migration period.
+ *
+ * In Remix, page titles are set via the `meta` export on each route module —
+ * not imperatively via a hook. This shim lets existing usePageTitle() call
+ * sites compile without errors during the migration so they can be removed
+ * one route at a time.
+ *
+ * Migration path for each call site:
+ *   1. Add a `meta` export to the route module:
+ *        export const meta = () => [{ title: 'A11yHelper | Settings' }]
+ *   2. Remove the usePageTitle() call.
+ *   3. Delete the import.
+ *
+ * Once all call sites are migrated, delete this file.
+ */
+export function usePageTitle(_pageTitle) {
+  // intentional no-op
+}
