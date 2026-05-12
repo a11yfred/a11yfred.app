@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { useNavigation, useLocation } from '@remix-run/react'
+import { useNavigation, useLocation } from 'react-router'
 import { announce } from '../taho/announce.js'
 
 /**

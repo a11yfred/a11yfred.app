@@ -73,6 +73,11 @@ export default [
       '@ulam/palaman/no-combobox-without-expanded': 'error',
       '@ulam/palaman/no-mouse-only-events': 'error',
 
+      // @ulam framework-specific rules
+      '@ulam/palaman/no-announce-in-render': 'error',
+      '@ulam/palaman/no-hash-router-in-remix': 'warn',
+      '@ulam/palaman/no-use-page-title-in-remix': 'warn',
+
       // Allow _-prefixed parameters in stubs and intentionally unused args
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       // Modern React (17+) doesn't require React import for JSX

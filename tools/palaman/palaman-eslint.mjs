@@ -31,9 +31,10 @@
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import { h } from './lib/helpers-jsx.js'
 import { buildRules, buildRecommendedRules } from './lib/rules.js'
+import { buildUlamRules, buildUlamRecommendedRules } from './lib/ulam-rules.js'
 
 const NS = '@ulam/palaman'
-const rules = buildRules(h)
+const rules = { ...buildRules(h), ...buildUlamRules() }
 
 const plugin = { meta: { name: NS }, rules }
 
@@ -48,6 +49,7 @@ export default {
       rules: {
         ...jsxA11y.configs.recommended.rules,
         ...buildRecommendedRules(NS),
+        ...buildUlamRecommendedRules(NS),
       },
     },
   },
