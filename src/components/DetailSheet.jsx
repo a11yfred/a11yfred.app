@@ -16,9 +16,9 @@ import RelatedIssues from './RelatedIssues.jsx'
 import { DEBUG_COMMANDS, DEBUG_AI_DELAY_MS, getAiProvider, getProviderLabel } from '../halohalo/index.js'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 import { getStorage, setStorage, getFindingNoteKey } from '../utils/storage.js'
-import useDetailPanelClipboard from '../hooks/useDetailPanelClipboard.js'
-import useDetailPanelRefine from '../hooks/useDetailPanelRefine.js'
-import './DetailPanel.css'
+import useDetailSheetClipboard from '../hooks/useDetailSheetClipboard.js'
+import useDetailSheetRefine from '../hooks/useDetailSheetRefine.js'
+import './DetailSheet.css'
 
 function FieldCheckbox({ label, checked, onChange, disabled }) {
   return (
@@ -35,7 +35,7 @@ function FieldCheckbox({ label, checked, onChange, disabled }) {
   )
 }
 
-export default function DetailPanel({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function DetailSheet({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
@@ -74,7 +74,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     handleCopyAll, handleResetAllFields,
     handleUndoDesc, handleUndoFix,
     copyTitle, copyPrimarySc, copyRelatedSc,
-  } = useDetailPanelClipboard({
+  } = useDetailSheetClipboard({
     finding, descText, fixText, displayDesc,
     setDescText, setFixText, setDescHistory, setFixHistory,
     descHistory, fixHistory, onCopyEvent, t,
@@ -87,7 +87,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
     aiRevisionButtonRef,
     startTypewriter,
     handleRefine,
-  } = useDetailPanelRefine({
+  } = useDetailSheetRefine({
     finding, descText, fixText,
     aiRevisedDesc, aiRevisedFix, useAgenticMode, aiNote, allFindings,
     setDescText, setFixText, setDescHistory, setFixHistory, t,
@@ -132,7 +132,7 @@ export default function DetailPanel({ finding, aiEnabled, agenticMode = false, f
   const aiRevisionLabel = t('detail.ai_revision_label')
 
   return (
-    <div className="detail-panel">
+    <div className="detail-sheet">
       <div className="detail-header">
         <div className="detail-title-row">
           <h2 ref={titleRef} tabIndex={-1} className="detail-title">

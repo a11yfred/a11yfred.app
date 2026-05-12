@@ -4,7 +4,7 @@ import { announce } from '../taho-bayabas/index.js'
 import { TYPEWRITER_TICK_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVISOR } from '../utils/constants.js'
 
 /**
- * Manages AI refinement state and the typewriter animation for DetailPanel.
+ * Manages AI refinement state and the typewriter animation for DetailSheet.
  *
  * @param {object} finding - the active finding object
  * @param {string} descText - current description text
@@ -27,7 +27,7 @@ import { TYPEWRITER_TICK_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVI
  *   handleRefine: Function,
  * }}
  */
-export default function useDetailPanelRefine({
+export default function useDetailSheetRefine({
   finding,
   descText,
   fixText,

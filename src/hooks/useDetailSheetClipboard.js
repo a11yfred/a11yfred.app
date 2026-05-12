@@ -6,7 +6,7 @@ const resetAfterNotification = (setState) => setTimeout(() => setState(false), N
 import { isSignificantlyChanged } from '../calamansi/index.js'
 
 /**
- * Manages clipboard copy state and reset confirmation flow for DetailPanel.
+ * Manages clipboard copy state and reset confirmation flow for DetailSheet.
  *
  * @param {object} finding - the active finding object
  * @param {string} descText - current description text
@@ -31,7 +31,7 @@ import { isSignificantlyChanged } from '../calamansi/index.js'
  *   copyTitle: Function, copyPrimarySc: Function, copyRelatedSc: Function,
  * }}
  */
-export default function useDetailPanelClipboard({
+export default function useDetailSheetClipboard({
   finding,
   descText,
   fixText,

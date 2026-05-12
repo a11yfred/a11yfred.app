@@ -2,7 +2,7 @@
 import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
-import DetailPanel from './components/DetailPanel.jsx'
+import DetailSheet from './components/DetailSheet.jsx'
 import AboutPanel from './components/AboutPanel.jsx'
 import HelpPanel from './components/HelpPanel.jsx'
 import OnboardingPanel from './components/OnboardingPanel.jsx'
@@ -1278,7 +1278,7 @@ function AppContent({
         hideCloseBottom
       >
         {selected && (
-          <DetailPanel
+          <DetailSheet
             key={selected.id}
             finding={selected}
             aiEnabled={aiEnabled}

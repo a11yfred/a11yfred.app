@@ -2,7 +2,7 @@
 
 /* â"€â"€â"€ Detail panel â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 
-.detail-panel {
+.detail-sheet {
   padding-top: var(--space-2);
 }
 
@@ -340,7 +340,7 @@
 }
 
 @media print {
-  .detail-panel {
+  .detail-sheet {
     padding: 0;
   }
 
