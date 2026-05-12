@@ -4,7 +4,7 @@ import { announce } from '../taho-bayabas/index.js'
 import { useT } from '../calamansi/react.js'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
-import SkipLink from './ui/SkipLink.jsx'
+import LinkSkipTo from './ui/SkipLink.jsx'
 import RadioChip from './ui/RadioChip.jsx'
 import ButtonIcon from './ui/ButtonIcon.jsx'
 import Badge from './ui/Badge.jsx'
@@ -12,10 +12,10 @@ import Select from './ui/Select.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
 import NoResults from './ui/NoResults.jsx'
 import InfoBox from './ui/InfoBox.jsx'
-import SponsoredTile from './SponsoredTile.jsx'
+import TileAd from './TileAd.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
-import './ResultList.css'
+import './A11yListResult.css'
 
 function triggerButtonAnimation(btn, id, setAnimating) {
   btn.classList.remove('animating')
@@ -44,7 +44,7 @@ export function PinnedSection({ findings, onClearPins, headingRef, showRanking =
           </Button>
         )}
       </div>
-      <ResultList
+      <A11yListResult
         {...listProps}
         results={findings}
         selected={null}
@@ -58,7 +58,7 @@ export function PinnedSection({ findings, onClearPins, headingRef, showRanking =
   )
 }
 
-export default function ResultList({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange }) {
+export default function A11yListResult({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange }) {
   const t = useT()
   const platformLabels = {
     all:      t('settings.platform_all'),
@@ -674,7 +674,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   </a>
 
                   {showRankingSort && index < displayResults.length - 1 && (
-                    <SkipLink
+                    <LinkSkipTo
                       href={skipHref}
                       tabIndex={archived ? -1 : 0}
                       onClick={handleSkipToNext}
@@ -688,7 +688,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       }}
                     >
                       {t('results.skip_to_next')}
-                    </SkipLink>
+                    </LinkSkipTo>
                   )}
                   {onPin && (
                     <ButtonIcon
@@ -805,7 +805,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 </div>
               )}
             </li>
-            {showAdAfter && <SponsoredTile />}
+            {showAdAfter && <TileAd />}
             </Fragment>
           )
         })}
@@ -834,5 +834,5 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   )
 }
 
-export { default as ResultListSkeleton } from './ResultListSkeleton.jsx'
+export { default as A11yListResultSkeleton } from './A11yListResultSkeleton.jsx'
 export { default as DataError } from './ui/DataError.jsx'

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { X, Copy, Check } from 'lucide-react'
-import './admin-panel.css'
+import './A11yPanelAdmin.css'
 import publicCorpus from '../data/corpus.json'
 import legacyCorpus from '../data/legacy-corpus.json'
 import personalCorpus from '../data/personal-corpus.json'
@@ -171,7 +171,7 @@ function copyText(text) {
   navigator.clipboard?.writeText(text).catch(() => {})
 }
 
-export default function AdminPanel({
+export default function A11yPanelAdmin({
   devAllEnabled, setDevAllEnabled,
   namesEnabled, setNamesEnabled,
   fabEnabled, setFabEnabled,

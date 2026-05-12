@@ -10,7 +10,7 @@ const IS_DEV = import.meta.env.DEV
  *   state   'on' | 'off' | null
  *   fading  boolean
  */
-export function AiDebugToast({ state, fading }) {
+export function A11yToastAiDebug({ state, fading }) {
   if (!IS_DEV || !state) return null
   return (
     <div className={`ai-debug-toast${fading ? ' ai-debug-toast--fading' : ''}`} aria-hidden="true">

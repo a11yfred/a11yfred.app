@@ -3,7 +3,7 @@ import { useT } from '../calamansi/react.js'
 import InputWithClear from './ui/InputWithClear.jsx'
 import Button from './ui/Button.jsx'
 import { CYCLE_MS } from '../utils/constants.js'
-import './SearchBar.css'
+import './A11yInputSearchHero.css'
 
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.
@@ -20,7 +20,7 @@ const TYPEWRITER_PHRASES = [
   { text: 'error' },
 ]
 
-export default function SearchBar({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false, inputRef: externalRef }) {
+export default function A11yInputSearchHero({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false, inputRef: externalRef }) {
   const t = useT()
   const internalRef = useRef(null)
   const inputRef = externalRef || internalRef

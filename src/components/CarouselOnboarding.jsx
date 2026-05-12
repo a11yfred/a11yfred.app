@@ -6,7 +6,7 @@ import { useT } from '../calamansi/react.js'
 import Button from './ui/Button.jsx'
 import { LS_ONBOARDING_SEEN } from '../utils/constants.js'
 import { setStorage } from '../utils/storage.js'
-import './OnboardingPanel.css'
+import './CarouselOnboarding.css'
 
 const randomAngle = () => Math.floor(Math.random() * 360)
 
@@ -28,7 +28,7 @@ const SLIDES = [
   },
 ]
 
-export default function OnboardingPanel({ onClose }) {
+export default function CarouselOnboarding({ onClose }) {
   const t = useT()
   const dir = useDir()
   const FwdArrow  = dir === 'rtl' ? CircleArrowLeft  : CircleArrowRight

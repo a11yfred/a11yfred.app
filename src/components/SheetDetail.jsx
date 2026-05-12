@@ -9,16 +9,16 @@ import InfoBox from './ui/InfoBox.jsx'
 import Toggle from './ui/Toggle.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
 import Badge from './ui/Badge.jsx'
-import Field from './Field.jsx'
-import ScLink from './ScLink.jsx'
-import SourceLinks from './SourceLinks.jsx'
-import RelatedIssues from './RelatedIssues.jsx'
+import A11yTextareaCopyable from './A11yTextareaCopyable.jsx'
+import A11yLinkSc from './A11yLinkSc.jsx'
+import A11yLinksSource from './A11yLinksSource.jsx'
+import A11yListRelated from './A11yListRelated.jsx'
 import { DEBUG_COMMANDS, DEBUG_AI_DELAY_MS, getAiProvider, getProviderLabel } from '../halohalo/index.js'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 import { getStorage, setStorage, getFindingNoteKey } from '../utils/storage.js'
 import useDetailSheetClipboard from '../hooks/useDetailSheetClipboard.js'
 import useDetailSheetRefine from '../hooks/useDetailSheetRefine.js'
-import './DetailSheet.css'
+import './SheetDetail.css'
 
 function FieldCheckbox({ label, checked, onChange, disabled }) {
   return (
@@ -35,7 +35,7 @@ function FieldCheckbox({ label, checked, onChange, disabled }) {
   )
 }
 
-export default function DetailSheet({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function SheetDetail({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
@@ -210,7 +210,7 @@ export default function DetailSheet({ finding, aiEnabled, agenticMode = false, f
             <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
             {finding.primarySC
               ? <>
-                  <ScLink label={finding.primarySC} />
+                  <A11yLinkSc label={finding.primarySC} />
                   <Button
                     variant="tertiary"
                     active={copiedPrimarySc}
@@ -232,7 +232,7 @@ export default function DetailSheet({ finding, aiEnabled, agenticMode = false, f
               <span className="detail-sc-links">
                 {finding.relatedSC.map((r, i) => (
                   <span key={r}>
-                    <ScLink label={r} />{i < finding.relatedSC.length - 1 && ', '}
+                    <A11yLinkSc label={r} />{i < finding.relatedSC.length - 1 && ', '}
                   </span>
                 ))}
               </span>
@@ -278,7 +278,7 @@ export default function DetailSheet({ finding, aiEnabled, agenticMode = false, f
         />
       </div>
 
-      <Field
+      <A11yTextareaCopyable
         ref={descCopyBtnRef}
         id="finding-desc"
         label={descLabel}
@@ -299,7 +299,7 @@ export default function DetailSheet({ finding, aiEnabled, agenticMode = false, f
         includeTitleLabel={t('detail.include_desc_title_when_copied')}
       />
 
-      <Field
+      <A11yTextareaCopyable
         ref={fixCopyBtnRef}
         id="finding-fix"
         label={fixLabel}
@@ -403,8 +403,8 @@ export default function DetailSheet({ finding, aiEnabled, agenticMode = false, f
         </div>
       )}
 
-      <RelatedIssues finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
-      <SourceLinks
+      <A11yListRelated finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
+      <A11yLinksSource
         links={finding.creditLinks}
         singleHeading={t('detail.source_heading')}
         multipleHeading={t('detail.sources_heading')}

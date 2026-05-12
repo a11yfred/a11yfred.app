@@ -1,35 +1,28 @@
 import { forwardRef } from 'react'
-import { useFocusOnMount, usePageTitle } from '../../siling-labuyo/index.js'
-import PanelShell from './PanelShell.jsx'
+import BackButton from './BackButton.jsx'
 
 const Panel = forwardRef(function Panel({
+  panelClassName,
+  headerClassName,
+  titleClassName,
   heading,
+  headingRef,
   onClose,
   closeAriaLabel,
-  className,
-  pageTitle,
-  dir = 'ltr',
   children,
+  dir = 'ltr',
   ...rest
 }, ref) {
-  const headingRef = useFocusOnMount()
-  usePageTitle(pageTitle || heading)
-
   return (
-    <PanelShell
-      ref={ref}
-      panelClassName={className}
-      headerClassName="panel-header"
-      titleClassName="panel-title"
-      heading={heading}
-      headingRef={headingRef}
-      onClose={onClose}
-      closeAriaLabel={closeAriaLabel}
-      dir={dir}
-      {...rest}
-    >
+    <div ref={ref} className={panelClassName} {...rest}>
+      <div className={headerClassName}>
+        <BackButton onClick={onClose} ariaLabel={closeAriaLabel} dir={dir} />
+        <h2 ref={headingRef} tabIndex={-1} className={titleClassName}>
+          {heading}
+        </h2>
+      </div>
       {children}
-    </PanelShell>
+    </div>
   )
 })
 

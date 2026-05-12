@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export default function LinkTitle({ url, fallback }) {
+export default function A11yLinkTitle({ url, fallback }) {
   const [title, setTitle] = useState(fallback)
 
   const decodeHtml = (html) => {

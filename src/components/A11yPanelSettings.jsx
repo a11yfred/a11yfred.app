@@ -7,13 +7,13 @@ import Toggle from './ui/Toggle.jsx'
 import RadioChip from './ui/RadioChip.jsx'
 import SettingRow from './ui/SettingRow.jsx'
 import Select from './ui/Select.jsx'
-import Panel from './ui/Panel.jsx'
+import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
 import { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '../halohalo/index.js'
 import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
 import { setStorage, removeStorage } from '../utils/storage.js'
-import './SettingsPanel.css'
+import './A11yPanelSettings.css'
 
 function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {
   return (
@@ -125,7 +125,7 @@ const LANGUAGES = [
   { value: 'vi',    label: 'Tiếng Việt',           en: 'Vietnamese' },
 ]
 
-const SettingsPanel = forwardRef(function SettingsPanel({
+const SettingsPanel = forwardRef(function A11yPanelSettings({
   aiEnabled,
   liveSearch,
   showVoting,
@@ -820,4 +820,4 @@ const SettingsPanel = forwardRef(function SettingsPanel({
   )
 })
 
-export default SettingsPanel
+export default A11yPanelSettings

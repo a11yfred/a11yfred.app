@@ -1,16 +1,16 @@
 ﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
 import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon } from 'lucide-react'
-import SearchBar from './components/SearchBar.jsx'
-import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
-import DetailSheet from './components/DetailSheet.jsx'
-import AboutPanel from './components/AboutPanel.jsx'
-import HelpPanel from './components/HelpPanel.jsx'
-import OnboardingPanel from './components/OnboardingPanel.jsx'
+import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
+import A11yListResult, { A11yListResultSkeleton, DataError, PinnedSection } from './components/A11yListResult.jsx'
+import SheetDetail from './components/SheetDetail.jsx'
+import A11yPanelAbout from './components/A11yPanelAbout.jsx'
+import A11yPanelHelp from './components/A11yPanelHelp.jsx'
+import CarouselOnboarding from './components/CarouselOnboarding.jsx'
 import ButtonIcon from './components/ui/ButtonIcon.jsx'
-import SkipLink from './components/ui/SkipLink.jsx'
-import Confetti from './components/Confetti.jsx'
-import FiestaSparkles from './components/FiestaSparkles.jsx'
-import FiestaMusicPlayer from './components/FiestaMusicPlayer.jsx'
+import LinkSkipTo from './components/ui/SkipLink.jsx'
+import EffectConfetti from './components/EffectConfetti.jsx'
+import EffectFiestaSparkles from './components/EffectFiestaSparkles.jsx'
+import WidgetFiestaMusicPlayer from './components/WidgetFiestaMusicPlayer.jsx'
 import useFindingSearch from './hooks/useFindingSearch.js'
 import { useItemSignals, usePinnedItems, useCoSelection } from './hooks/relevance.js'
 import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_FINDINGS, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_FINDINGS, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP } from './utils/constants.js'
@@ -28,7 +28,7 @@ import {
 } from './siling-labuyo/index.js'
 import { Announcer, announce } from './taho-bayabas/index.js'
 import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from './plugins/adobo/react.js'
-import { AiDebugToast, useAiDebugToast } from './components/AiDebugToast.jsx'
+import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
 import { I18nProvider, useT } from './calamansi/react.js'
 import { useSawsawan } from './sawsawan/index.js'
@@ -37,11 +37,11 @@ import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'
 import { SEVERITY_VARS } from './data/severityStyles.js'
 import findingSlug from './utils/findingSlug.js'
-import './components/FiestaMode.css'
+import './components/ThemeFiestaMode.css'
 
-const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
-const AdminPanel = import.meta.env.DEV
-  ? lazy(() => import('./components/AdminPanel.jsx'))
+const A11yPanelSettings = lazy(() => import('./components/A11yPanelSettings.jsx'))
+const A11yPanelAdmin = import.meta.env.DEV
+  ? lazy(() => import('./components/A11yPanelAdmin.jsx'))
   : () => null
 const UlamMenu = import.meta.env.DEV
   ? lazy(() => import('./UlamMenu.jsx'))
@@ -858,7 +858,7 @@ function AppContent({
 
   const searchView = (
     <>
-      <SearchBar
+      <A11yInputSearchHero
         query={query}
         onChange={handleQueryChange}
         onSearch={handleSearch}
@@ -907,10 +907,10 @@ function AppContent({
             onMount={() => announce(t('error.announce'), { priority: 'assertive' })}
           />
         : dataLoading || viewAllLoading
-          ? <ResultListSkeleton count={activeQuery === 'debug skeleton' ? sortedFindings.length : undefined} />
+          ? <A11yListResultSkeleton count={activeQuery === 'debug skeleton' ? sortedFindings.length : undefined} />
           : (viewAll || sheetCollapsed)
             ? (
-              <ResultList
+              <A11yListResult
                 key="view-all"
                 results={applySortBy(sortedFindings.filter(f => !pinnedIds.has(f.id)))}
                 sortBy={sortBy}
@@ -967,7 +967,7 @@ function AppContent({
                       </ul>
                     </div>
                   )}
-                  <ResultList
+                  <A11yListResult
                     key="search"
                     results={unpinnedResults}
                     sortBy={sortBy}
@@ -1004,7 +1004,7 @@ function AppContent({
               )
               : badgeFilter
                 ? (
-                  <ResultList
+                  <A11yListResult
                     key="badge"
                     results={applySortBy(badgeResults)}
                     sortBy={sortBy}
@@ -1127,7 +1127,7 @@ function AppContent({
     <div className="app-container">
       {import.meta.env.DEV && <>
         <div className="dev-toast-stack" aria-hidden="true">
-          <AiDebugToast state={aiDebugToast} fading={aiDebugToastFading} />
+          <A11yToastAiDebug state={aiDebugToast} fading={aiDebugToastFading} />
           {devAllEnabled && <FocusDebugger />}
         </div>
         <NamesDebugger enabled={namesEnabled} />
@@ -1195,9 +1195,9 @@ function AppContent({
           ]}
         />
       </>}
-      <Confetti active={theme === 'fiesta'} />
-      <FiestaSparkles active={theme === 'fiesta'} />
-      <FiestaMusicPlayer active={theme === 'fiesta'} />
+      <EffectConfetti active={theme === 'fiesta'} />
+      <EffectFiestaSparkles active={theme === 'fiesta'} />
+      <WidgetFiestaMusicPlayer active={theme === 'fiesta'} />
       {theme === 'fiesta' && <FiestaBanner />}
 
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
@@ -1225,15 +1225,15 @@ function AppContent({
               : ulamOpen
                 ? <UlamMenu />
                 : adminOpen
-                ? <AdminPanel {...adminProps} />
+                ? <A11yPanelAdmin {...adminProps} />
                 : isDesktop && settingsOpen
-                  ? <SettingsPanel ref={settingsPanelRef} {...settingsProps} />
+                  ? <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
                   : isDesktop && aboutOpen
-                    ? <AboutPanel onClose={handleCloseOverlay} allFindings={allFindings} />
+                    ? <A11yPanelAbout onClose={handleCloseOverlay} allFindings={allFindings} />
                     : isDesktop && helpOpen
-                      ? <HelpPanel onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+                      ? <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
                       : isDesktop && onboardingOpen
-                        ? <OnboardingPanel onClose={handleCloseOnboarding} />
+                        ? <CarouselOnboarding onClose={handleCloseOnboarding} />
                         : searchView}
           </Suspense>
         </main>
@@ -1243,26 +1243,26 @@ function AppContent({
       {!isDesktop && (
         <Drawer open={settingsOpen} onClose={handleGuardedCloseSettings} label={t('settings.drawer_label')} focusOnClose={settingsTriggerRef}>
           <Suspense fallback={null}>
-            <SettingsPanel ref={settingsPanelRef} {...settingsProps} />
+            <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
           </Suspense>
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={aboutOpen} onClose={handleCloseOverlay} label={t('about.sheet_label')} focusOnClose={aboutTriggerRef}>
-          <AboutPanel onClose={handleCloseOverlay} allFindings={allFindings} />
+          <A11yPanelAbout onClose={handleCloseOverlay} allFindings={allFindings} />
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={helpOpen} onClose={handleCloseOverlay} label={t('help.sheet_label')} focusOnClose={helpTriggerRef}>
-          <HelpPanel onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+          <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={onboardingOpen} onClose={handleCloseOnboarding} label={t('onboarding.heading')} focusOnClose={onboardingTriggerRef}>
-          <OnboardingPanel onClose={handleCloseOnboarding} />
+          <CarouselOnboarding onClose={handleCloseOnboarding} />
         </Drawer>
       )}
 
@@ -1279,7 +1279,7 @@ function AppContent({
         hideCloseBottom
       >
         {selected && (
-          <DetailSheet
+          <SheetDetail
             key={selected.id}
             finding={selected}
             aiEnabled={aiEnabled}
@@ -1337,7 +1337,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
   const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
-      <SkipLink href={`#${skipTarget}`}>{t('common.skip_to_main')}</SkipLink>
+      <LinkSkipTo href={`#${skipTarget}`}>{t('common.skip_to_main')}</LinkSkipTo>
       {!compact && (
         <a
           href={URL_GITHUB_REPO}

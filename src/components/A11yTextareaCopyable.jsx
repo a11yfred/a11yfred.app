@@ -2,7 +2,7 @@ import { useRef, useEffect, forwardRef } from 'react'
 import { RotateCcw, Copy, Check } from 'lucide-react'
 import { useT } from '../calamansi/react.js'
 
-const Field = forwardRef(function Field({
+const TextareaCopyable = forwardRef(function TextareaCopyable({
   id,
   label,
   value,
@@ -112,4 +112,4 @@ const Field = forwardRef(function Field({
   )
 })
 
-export default Field
+export default TextareaCopyable

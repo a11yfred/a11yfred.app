@@ -1,7 +1,7 @@
 import ExternalLinkIcon from './ui/ExternalLinkIcon.jsx'
 import scToWaiUrl from '../utils/scToWaiUrl.js'
 
-export default function ScLink({ label }) {
+export default function A11yLinkSc({ label }) {
   const href = scToWaiUrl(label)
   if (href) {
     return (

@@ -1,17 +1,17 @@
 ﻿import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { useT } from '../calamansi/react.js'
-import Panel from './ui/Panel.jsx'
+import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
 import ExternalLinkIcon from './ui/ExternalLinkIcon.jsx'
 import findingSlug from '../utils/findingSlug.js'
-import './AboutPanel.css'
+import './A11yPanelAbout.css'
 
 function ExtLink({ href, children }) {
   return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<ExternalLinkIcon /></a>
 }
 
-export default function AboutPanel({ onClose, allFindings = [] }) {
+export default function A11yPanelAbout({ onClose, allFindings = [] }) {
   const t = useT()
 
   const [exampleFindings] = useState(() => {

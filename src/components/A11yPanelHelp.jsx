@@ -1,9 +1,9 @@
 import { PlayCircle, ArrowLeft } from 'lucide-react'
 import { useT } from '../calamansi/react.js'
-import Panel from './ui/Panel.jsx'
+import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
 
-export default function HelpPanel({ onClose, onStartTour }) {
+export default function A11yPanelHelp({ onClose, onStartTour }) {
   const t = useT()
 
   return (

@@ -15,7 +15,7 @@ import { useEffect } from 'react'
  *   - visible labels for inputs that only have placeholder text
  *   - Escape key handler to close the panel and restore focus
  */
-export default function KofiWidget() {
+export default function WidgetKofi() {
   useEffect(() => {
     const script = document.createElement('script')
     script.src = 'https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'

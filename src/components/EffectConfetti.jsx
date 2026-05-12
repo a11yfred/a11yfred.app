@@ -19,7 +19,7 @@ function makeParticle(canvasWidth, canvasHeight) {
   }
 }
 
-export default function Confetti({ active }) {
+export default function EffectConfetti({ active }) {
   const canvasRef = useRef(null)
   const animRef = useRef(null)
   const startTimeRef = useRef(null)

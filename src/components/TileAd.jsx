@@ -3,7 +3,7 @@
 // EthicalAds provides privacy-respecting, non-tracking ads targeted to developers.
 import { useT } from '../calamansi/react.js'
 
-export default function SponsoredTile() {
+export default function TileAd() {
   const t = useT()
 
   return (

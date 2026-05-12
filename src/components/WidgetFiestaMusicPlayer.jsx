@@ -10,7 +10,7 @@ function rndPos() {
   }
 }
 
-export default function FiestaMusicPlayer({ active }) {
+export default function WidgetFiestaMusicPlayer({ active }) {
   const t = useT()
   const [playing, setPlaying] = useState(false)
   const [pos, setPos] = useState(() => rndPos())

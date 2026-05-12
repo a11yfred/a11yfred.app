@@ -3,7 +3,7 @@ import {
   Star, Settings, Search, X, Plus, Trash2,
   AlertTriangle, Info, CheckCircle, Copy,
 } from 'lucide-react'
-import SkipLink from './components/ui/SkipLink.jsx'
+import LinkSkipTo from './components/ui/SkipLink.jsx'
 import Button from './components/ui/Button.jsx'
 import ButtonLink from './components/ui/ButtonLink.jsx'
 import ButtonIcon from './components/ui/ButtonIcon.jsx'
@@ -12,7 +12,7 @@ import RadioChip from './components/ui/RadioChip.jsx'
 import Toggle from './components/ui/Toggle.jsx'
 import Select from './components/ui/Select.jsx'
 import InputWithClear from './components/ui/InputWithClear.jsx'
-import Panel from './components/ui/Panel.jsx'
+import Panel from './components/ui/PanelReact.jsx'
 import InputSearch from './components/ui/InputSearch.jsx'
 import { BottomSheet, Modal, Drawer } from './siling-labuyo/index.js'
 import { usePref } from './calamansi/react.js'
@@ -429,13 +429,13 @@ export default function UlamMenu() {
         <Section title="SkipLink">
           <Row label="Anchor (href)">
             <p id="ulam-skip-target" tabIndex={-1} style={{ outline: 'none' }}>← focus lands here</p>
-            <SkipLink href="#ulam-skip-target">Skip to target</SkipLink>
+            <LinkSkipTo href="#ulam-skip-target">Skip to target</LinkSkipTo>
           </Row>
           <Row label="Button (onClick)">
-            <SkipLink onClick={() => alert('skip action fired')}>Skip (button)</SkipLink>
+            <LinkSkipTo onClick={() => alert('skip action fired')}>Skip (button)</LinkSkipTo>
           </Row>
           <Row label="No icon">
-            <SkipLink href="#ulam-skip-target" showIcon={false}>Skip (no icon)</SkipLink>
+            <LinkSkipTo href="#ulam-skip-target" showIcon={false}>Skip (no icon)</LinkSkipTo>
           </Row>
         </Section>
 
