@@ -1,0 +1,32 @@
+// @ulam/siling-labuyo — React adapter for sili focus management
+// Re-exports all hooks and component shells for React / React Router apps.
+// For Remix, use @ulam/siling-mahaba instead.
+
+// Vanilla core (re-exported for convenience)
+export { returnFocus } from '../sili/core/returnFocus.js'
+export { onEscapeKey } from '../sili/core/escapeKey.js'
+export { trapFocus, getFocusable } from '../sili/core/focusTrap.js'
+export { hideBackground } from '../sili/core/ariaHide.js'
+export { lockScroll } from '../sili/core/scrollLock.js'
+
+// React hooks
+export { useFocusTrap } from './hooks/useFocusTrap.js'
+export { useAriaHide } from './hooks/useAriaHide.js'
+export { useReturnFocus } from './hooks/useReturnFocus.js'
+export { useEscapeKey } from './hooks/useEscapeKey.js'
+export { useFocusOnMount } from './hooks/useFocusOnMount.js'
+export { useFocusOnChange } from './hooks/useFocusOnChange.js'
+export { usePaginationFocus } from './hooks/usePaginationFocus.js'
+export { useDir } from './hooks/useDir.js'
+export { useMediaQuery } from './hooks/useMediaQuery.js'
+export { usePageTitle } from './hooks/usePageTitle.js'
+
+// React component shells
+export { default as Modal } from './components/Modal.jsx'
+export { default as Drawer } from './components/Drawer.jsx'
+export { default as BottomSheet } from './components/BottomSheet.jsx'
+
+// Hash router (move to siling-mahaba when Remix lands)
+export { Router, useRouter, useRouteMatch, matchRoute } from './router/Router.jsx'
+export { default as Route } from './router/Route.jsx'
+export { default as Link } from './router/Link.jsx'

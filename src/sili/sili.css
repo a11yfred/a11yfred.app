@@ -1,4 +1,4 @@
-@import "../../tokens.css";
+@import "../tokens.css";
 
 /* ─── Overlay backdrop (shared by Drawer, BottomSheet, Modal) ── */
 
@@ -32,7 +32,6 @@
   transform: translateX(-100%);
   transition: transform var(--duration-base) var(--ease-in-out);
   will-change: transform;
-  outline: none;
 }
 
 .drawer-panel.is-open {
@@ -50,6 +49,8 @@
 [dir="rtl"] .drawer-panel.is-open {
   transform: translateX(0);
 }
+
+.drawer-panel:focus:not(:focus-visible) { outline: none; }
 
 /* Lock drawer scroll whenever a sheet or modal is in the foreground */
 body:has(.sheet-panel.is-open) .drawer-panel,
@@ -96,8 +97,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transform: translateX(-50%) translateY(100%);
   transition: transform var(--duration-base) var(--ease-in-out);
   will-change: transform;
-  outline: none;
 }
+.sheet-panel:focus:not(:focus-visible) { outline: none; }
 
 .sheet-panel.is-open {
   transform: translateX(-50%) translateY(0);
@@ -270,8 +271,8 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transition:
     opacity var(--duration-base) var(--ease-out),
     transform var(--duration-base) var(--ease-out);
-  outline: none;
 }
+.modal-panel:focus:not(:focus-visible) { outline: none; }
 
 .modal-panel.is-open {
   opacity: 1;

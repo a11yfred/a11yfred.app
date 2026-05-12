@@ -1,35 +1,31 @@
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronLeft, ChevronRight, X, ChevronsUp } from 'lucide-react'
-import { useFocusTrap } from './useFocusTrap.js'
-import { useAriaHide } from './useAriaHide.js'
-import { returnFocus } from './returnFocus.js'
-import { useDir } from './useDir.js'
-import { useEscapeKey } from './useEscapeKey.js'
+import { useFocusTrap } from '../hooks/useFocusTrap.js'
+import { useAriaHide } from '../hooks/useAriaHide.js'
+import { useEscapeKey } from '../hooks/useEscapeKey.js'
+import { useDir } from '../hooks/useDir.js'
+import { returnFocus } from '../../sili/core/returnFocus.js'
 
 /**
  * Bottom sheet that slides up from the bottom of the viewport.
- * Rendered via a portal at document.body so that a transformed ancestor
- * (e.g. the Drawer using translateX) does not break position: fixed.
+ * Rendered via a portal at document.body so transformed ancestors don't break position:fixed.
  *
  * - Scroll-locks the body while open AND not collapsed
  * - Swipe-to-dismiss: drag down from the chrome area to close
- * - Traps Tab focus within the panel while open AND not collapsed
+ * - Traps Tab focus while open AND not collapsed
  * - Background remains fully accessible and interactive when collapsed
  * - Dismisses on Escape or backdrop click (only when not collapsed)
  *
  * Props:
- *   open            boolean         , whether the sheet is visible
- *   onClose         fn              , called on Escape, backdrop click, or close button
- *   collapsed       boolean         , controlled collapsed state (desktop only)
- *   onCollapse      fn              , called with next collapsed boolean
- *   label           string          , aria-label for the dialog/region
- *   keepMounted     boolean         , keep children mounted while closed (preserves state)
- *   returnFocusRef  React.RefObject , if provided, focus this element on close instead of
- *                                      auto-captured trigger; use when child effects move focus
- *                                      before this component's useEffect fires (child effects
- *                                      fire before parent effects in React)
- *   children        node            , rendered inside the sheet
+ *   open            boolean
+ *   onClose         fn
+ *   collapsed       boolean         controlled collapsed state (desktop only)
+ *   onCollapse      fn              called with next collapsed boolean
+ *   label           string          aria-label for the dialog/region
+ *   keepMounted     boolean         keep children mounted while closed (preserves state)
+ *   returnFocusRef  React.RefObject explicit return-focus target
+ *   children        node
  */
 export default function BottomSheet({
   open,
@@ -55,8 +51,8 @@ export default function BottomSheet({
   const dragDelta = useRef(0)
   const dir = useDir()
 
-  // Keep children mounted during the exit animation so the sheet doesn't
-  // appear empty while sliding down. Unmount 250ms after close (--duration-base).
+  // Keep children mounted during exit animation so the sheet doesn't appear empty
+  // while sliding down. Unmount 250ms after close (--duration-base).
   const [mounted, setMounted] = useState(open)
   const chromeRef = useRef(null)
   useEffect(() => {
@@ -64,10 +60,9 @@ export default function BottomSheet({
     return () => clearTimeout(timer)
   }, [open])
 
-  // Reset collapsed when sheet closes
   useEffect(() => { if (!open) onCollapse?.(false) }, [open, onCollapse])
 
-  // Track chrome height for the collapsed transform and for CSS page padding.
+  // Track chrome height for collapsed transform and CSS page padding
   useEffect(() => {
     if (!open || !chromeRef.current || !panelRef.current) return
     const h = chromeRef.current.offsetHeight
@@ -79,14 +74,11 @@ export default function BottomSheet({
   const BackChevron = dir === 'rtl' ? BackRtlIcon : BackLtrIcon
   const isDesktop = window.matchMedia('(width >= 768px)').matches
 
-  // Focus trap and aria-hide are disabled when collapsed so the background
-  // remains fully accessible and interactive.
+  // Trap and aria-hide disabled when collapsed so background remains accessible
   useFocusTrap(panelRef, open && !collapsed)
   useAriaHide(panelRef, open && !collapsed)
 
-  // Save the triggering element on open; focus the panel; restore focus on close.
-  // Panel focus fires here (parent effect) after useFocusOnMount in children (child
-  // effects run first), so the panel wins and NVDA announces the dialog label once.
+  // Parent effect fires after child effects — panel focus wins over useFocusOnMount in children
   useEffect(() => {
     if (open && !collapsed) {
       if (!returnFocusRef) triggerRef.current = document.activeElement
@@ -98,7 +90,6 @@ export default function BottomSheet({
 
   useEscapeKey(open && !collapsed, onClose)
 
-  // Scroll lock — only when open and not collapsed
   useEffect(() => {
     if (open && !collapsed) {
       document.body.style.overflow = 'hidden'
@@ -108,7 +99,6 @@ export default function BottomSheet({
     return () => { document.body.style.overflow = '' }
   }, [open, collapsed])
 
-  // Swipe-to-dismiss: drag the sheet down from the chrome area to close
   const handleTouchStart = (e) => {
     const panel = panelRef.current
     if (!panel) return
@@ -146,14 +136,11 @@ export default function BottomSheet({
 
   return createPortal(
     <>
-      {/* Backdrop — hidden when collapsed so background is fully interactive */}
       <div
         className={`sheet-backdrop${open && !collapsed ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
       />
-
-      {/* Panel — when collapsed: region (not dialog), no inert, no aria-modal */}
       <div
         ref={panelRef}
         className={`sheet-panel${open ? ' is-open' : ''}${collapsed ? ' is-collapsed' : ''}`}
@@ -166,7 +153,6 @@ export default function BottomSheet({
         onTouchEnd={handleTouchEnd}
         inert={!open || undefined}
       >
-        {/* Chrome: handle centered, optional back button top-left, close button top-right */}
         <div ref={chromeRef} className="sheet-chrome">
           {isDesktop ? (
             <button
@@ -188,7 +174,7 @@ export default function BottomSheet({
               aria-label={backLabel}
               className="btn--icon sheet-back-btn"
             >
-              <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" role="presentation" />
+              <BackChevron size={20} strokeWidth={2.5} aria-hidden="true" />
             </button>
           )}
           <button
@@ -200,7 +186,6 @@ export default function BottomSheet({
           </button>
         </div>
 
-        {/* Content area */}
         <div className="sheet-content">
           {(mounted || keepMounted) && (
             <>

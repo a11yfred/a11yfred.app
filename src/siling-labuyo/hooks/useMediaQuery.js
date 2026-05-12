@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
 /**
- * Reactive wrapper around window.matchMedia. Returns true when the
- * media query matches and updates automatically if the viewport changes.
+ * Reactive wrapper around window.matchMedia. Returns true when the media query
+ * matches and updates automatically if the viewport changes.
  *
  * Usage:
  *   const isDesktop = useMediaQuery('(width >= 768px)')
@@ -14,7 +14,6 @@ export function useMediaQuery(query) {
 
   useEffect(() => {
     const mq = window.matchMedia(query)
-    // Re-read when query changes so stale value from previous query doesn't linger.
     setMatches(mq.matches) // eslint-disable-line react-hooks/set-state-in-effect
     const handler = (e) => setMatches(e.matches)
     mq.addEventListener('change', handler)

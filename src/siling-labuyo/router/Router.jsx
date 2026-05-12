@@ -3,14 +3,11 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 const RouterContext = createContext(null)
 
 /**
- * Hash-based SPA router. Reads/writes window.location.hash so the
- * browser's back button works and no server redirect config is needed.
- * Routes are the hash fragment without the '#', e.g. '/' or '/settings'.
- */
-/**
- * @param {string} [appName] - Base application name used by usePageTitle to
- *   build "AppName | Page" strings and to restore the title on page unmount.
- *   Pass once here; every usePageTitle call reads it from context.
+ * Hash-based SPA router. Reads/writes window.location.hash so the browser's
+ * back button works without server redirect config.
+ *
+ * @param {string} [appName] - Base app name used by usePageTitle to build
+ *   "AppName | Page" strings and to restore the title on page unmount.
  */
 export function Router({ children, appName = '' }) {
   const getRoute = () => {
@@ -21,7 +18,6 @@ export function Router({ children, appName = '' }) {
   const [route, setRoute] = useState(getRoute)
 
   useEffect(() => {
-    // Ensure a clean initial hash without triggering hashchange
     if (!window.location.hash) {
       window.history.replaceState(null, '', '#/')
     }
@@ -30,7 +26,6 @@ export function Router({ children, appName = '' }) {
     return () => window.removeEventListener('hashchange', onHashChange)
   }, [])
 
-  // Initialise the document title to the base app name on first mount.
   useEffect(() => {
     if (appName) document.title = appName
   }, [appName])

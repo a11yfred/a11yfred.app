@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react'
 
 /**
- * Returns the current document writing direction, 'ltr' or 'rtl'.
- * Reactively updates whenever document.documentElement.dir changes,
- * so components re-render automatically when the user switches to/from
- * a right-to-left language.
- *
- * Usage:
- *   const dir = useDir()
- *   const isRTL = dir === 'rtl'
+ * Returns the current document writing direction ('ltr' or 'rtl').
+ * Updates reactively whenever document.documentElement.dir changes.
  */
 export function useDir() {
   const [dir, setDir] = useState(() => document.documentElement.dir || 'ltr')
