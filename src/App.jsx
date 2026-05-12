@@ -8,9 +8,9 @@ import A11yPanelHelp from './components/A11yPanelHelp.jsx'
 import CarouselOnboarding from './components/CarouselOnboarding.jsx'
 import ButtonIcon from './components/ui/ButtonIcon.jsx'
 import LinkSkipTo from './components/ui/SkipLink.jsx'
-import EffectConfetti from './components/EffectConfetti.jsx'
-import EffectFiestaSparkles from './components/EffectFiestaSparkles.jsx'
-import WidgetFiestaMusicPlayer from './components/WidgetFiestaMusicPlayer.jsx'
+import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
+import ThemeEffectFiestaSparkles from './components/ThemeEffectFiestaSparkles.jsx'
+import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPlayer.jsx'
 import useFindingSearch from './hooks/useFindingSearch.js'
 import { useItemSignals, usePinnedItems, useCoSelection } from './hooks/relevance.js'
 import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_FINDINGS, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_FINDINGS, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP } from './utils/constants.js'
@@ -1197,9 +1197,9 @@ function AppContent({
           ]}
         />
       </>}
-      <EffectConfetti active={theme === 'fiesta'} />
-      <EffectFiestaSparkles active={theme === 'fiesta'} />
-      <WidgetFiestaMusicPlayer active={theme === 'fiesta'} />
+      <ThemeEffectConfetti active={theme === 'fiesta'} />
+      <ThemeEffectFiestaSparkles active={theme === 'fiesta'} />
+      <ThemeWidgetFiestaMusicPlayer active={theme === 'fiesta'} />
       {theme === 'fiesta' && <FiestaBanner />}
 
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
