@@ -82,10 +82,10 @@ export const FIESTA_TRIAD_OFFSET      = 120
 export const FIESTA_GRAD_RANGE        = 80
 export const FIESTA_GRAD_MIN          = 10
 
-export const URL_GITHUB_REPO      = 'https://github.com/mikeyil/A11yHelper'
+export const URL_GITHUB_REPO      = 'https://github.com/a11yfred/a11yfred'
 export const URL_GITHUB_SPONSORS  = 'https://github.com/sponsors/mikeyil'
 export const URL_LINKEDIN         = 'https://www.linkedin.com/in/mikeyil'
-export const URL_PERSONAL_SITE    = 'https://www.mikey.fyi?ref=a11yhelper'
+export const URL_PERSONAL_SITE    = 'https://www.mikey.fyi?ref=a11yfred'
 
 export const LS_FINDING_NOTE_PREFIX = 'finding_note_'
 

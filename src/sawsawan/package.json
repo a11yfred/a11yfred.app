@@ -1,7 +1,7 @@
 {
   "name": "@ulam/sawsawan",
   "version": "0.0.0",
-  "description": "Integration bridge wiring ube, calamansi, and meryenda together. No standalone purpose.",
+  "description": "Integration bridge wiring ube, calamansi, and rogers together. No standalone purpose.",
   "private": true,
   "keywords": ["ulam", "integration", "bridge", "react"],
   "license": "MIT",
@@ -13,7 +13,7 @@
     "react": ">=18",
     "@ulam/ube": "*",
     "@ulam/calamansi": "*",
-    "@ulam/meryenda": "*"
+    "@a11yfred/rogers": "*"
   },
   "peerDependenciesMeta": {
     "react": { "optional": true }

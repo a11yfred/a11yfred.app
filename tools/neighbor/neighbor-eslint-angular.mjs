@@ -1,7 +1,7 @@
 /**
- * @ulam/palaman — ESLint plugin (Angular templates)
+ * @a11yfred/neighbor — ESLint plugin (Angular templates)
  *
- * Flags the same ARIA anti-patterns as palaman-eslint.mjs but for Angular
+ * Flags the same ARIA anti-patterns as neighbor-eslint.mjs but for Angular
  * component templates. Requires @angular-eslint/template-parser.
  *
  * Rules that require ancestor walking (no-log-with-interactive-children,
@@ -11,14 +11,14 @@
  *
  * Usage in eslint.config.js:
  *   import angularTemplateParser from '@angular-eslint/template-parser'
- *   import palaman from '@ulam/palaman/angular'
+ *   import neighbor from '@a11yfred/neighbor/angular'
  *
  *   export default [
  *     {
  *       files: ['**\/*.html'],
  *       languageOptions: { parser: angularTemplateParser },
- *       plugins: { '@ulam/palaman': palaman },
- *       rules: palaman.configs.recommended.rules,
+ *       plugins: { '@a11yfred/neighbor': neighbor },
+ *       rules: neighbor.configs.recommended.rules,
  *     },
  *   ]
  */
@@ -26,7 +26,7 @@
 import { h } from './lib/helpers-angular.js'
 import { buildRules, buildRecommendedRules, buildPortabilityRules } from './lib/rules.js'
 
-const NS = '@ulam/palaman'
+const NS = '@a11yfred/neighbor'
 const rules = buildRules(h)
 const plugin = { meta: { name: `${NS}/angular` }, rules }
 

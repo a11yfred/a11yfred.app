@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-A11yHelper is a client-side web application currently in pre-release (Phase 2). Only the latest commit on the `main` branch is actively maintained.
+A11yFred is a client-side web application currently in pre-release (Phase 2). Only the latest commit on the `main` branch is actively maintained.
 
 | Version | Supported |
 | ------- | --------- |
@@ -12,7 +12,7 @@ A11yHelper is a client-side web application currently in pre-release (Phase 2). 
 
 Please **do not** open a public GitHub issue for security vulnerabilities.
 
-To report a vulnerability, email **<mikey@a11yhelper.app>** with:
+To report a vulnerability, email **<mikey@a11yfred.app>** with:
 
 - A description of the vulnerability and its potential impact
 - Steps to reproduce or a proof-of-concept (if applicable)

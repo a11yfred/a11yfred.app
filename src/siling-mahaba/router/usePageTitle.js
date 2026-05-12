@@ -8,7 +8,7 @@
  *
  * Migration path for each call site:
  *   1. Add a `meta` export to the route module:
- *        export const meta = () => [{ title: 'A11yHelper | Settings' }]
+ *        export const meta = () => [{ title: 'MyApp | Settings' }]
  *   2. Remove the usePageTitle() call.
  *   3. Delete the import.
  *

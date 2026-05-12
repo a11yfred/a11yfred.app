@@ -9,7 +9,7 @@ import Toggle from './ui/Toggle.jsx'
 import ButtonIcon from './ui/ButtonIcon.jsx'
 import { LS_ADMIN_DATASET } from '../utils/constants.js'
 import { getStorage, setStorage } from '../utils/storage.js'
-import { detectOverlays, WCAG_CRITERIA } from '../../tools/meryenda/index.js'
+import { detectOverlays, WCAG_CRITERIA } from '../../tools/rogers/index.js'
 import { checkConnectivity } from '../halohalo/index.js'
 
 const IS_DEV = import.meta.env.DEV

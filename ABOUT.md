@@ -1,6 +1,6 @@
 ﻿# About This Build
 
-A11yHelper started as a clipboard tool. Type an accessibility defect ID, copy the description and remediation, paste it into a bug report. That's the whole pitch. But somewhere along the way it became a peculiar little project.
+A11yFred started as a clipboard tool. Type an accessibility defect ID, copy the description and remediation, paste it into a bug report. That's the whole pitch. But somewhere along the way it became a peculiar little project.
 
 ---
 
@@ -93,7 +93,7 @@ The router provides primitives — `useRouter`, `useRouteMatch`, `Route` — but
 
 ### Framework packages
 
-A11yHelper is built on the ulam accessibility framework, developed alongside the app. Each package has a barrel export. See [ULAM.md](ULAM.md) for full documentation.
+A11yFred is built on the ulam accessibility framework, developed alongside the app. Each package has a barrel export. See [ULAM.md](ULAM.md) for full documentation.
 
 - **@ulam/ube** (`src/components/ui/`) — UI component library: Button, Modal, Drawer, Sheet, and 18 others. Vanilla-first with thin React wrappers.
 - **@ulam/taho** (`src/taho/`) — ARIA live region announcer. Call `announce(message)` from anywhere. React wrapper in `@ulam/taho-bayabas`.
@@ -101,8 +101,8 @@ A11yHelper is built on the ulam accessibility framework, developed alongside the
 - **@ulam/calamansi** (`src/calamansi/`) — i18n, locale-aware hooks, and text utilities.
 - **@ulam/halohalo** (`src/halohalo/`) — AI integration layer with connectivity checks.
 - **@ulam/sawsawan** (`src/sawsawan/`) — Integration bridge wiring the packages together.
-- **@ulam/meryenda** (`tools/meryenda/`) — Dev-only a11y diagnostics: focus debugger, names debugger, heading map, tab stops, deploy banner. Renders nothing in production.
-- **@ulam/palaman** (`tools/palaman/`) — ESLint and Stylelint a11y rules including ARIA nuance rules and ulam-specific patterns.
+- **@a11yfred/rogers** (`tools/rogers/`) — Dev-only a11y diagnostics: focus debugger, names debugger, heading map, tab stops, deploy banner. Renders nothing in production.
+- **@a11yfred/neighbor** (`tools/neighbor/`) — ESLint and Stylelint a11y rules including ARIA nuance rules and ulam-specific patterns.
 
 ---
 

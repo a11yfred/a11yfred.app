@@ -1,6 +1,6 @@
 # Ulam Framework Sync Guide
 
-The `feature/ulam` branch tracks the ulam framework boundary inside a11yhelper. It stays in sync with main and exists to mark what will become the standalone `ulam` monorepo at fork time.
+The `feature/ulam` branch tracks the ulam framework boundary inside a11yfred. It stays in sync with main and exists to mark what will become the standalone `ulam` monorepo at fork time.
 
 ## Framework boundary
 
@@ -26,9 +26,9 @@ src/UlamMenu.jsx        ulam — component gallery (the menu)
 src/UlamMenu.css        ulam — component gallery styles
 ```
 
-Note: `tools/meryenda/` and `tools/palaman/` are dev tooling, not framework packages. They are not extracted at fork time.
+Note: `tools/rogers/` and `tools/neighbor/` are dev tooling, not framework packages. They are not extracted at fork time.
 
-Everything else is a11yhelper-specific and stays in the app.
+Everything else is a11yfred-specific and stays in the app.
 
 ## Syncing feature/ulam with main
 
@@ -44,12 +44,12 @@ git push --no-verify origin feature/ulam
 No file moves until the fork. The boundary is maintained by:
 
 - `package.json` stubs inside each package folder declaring `@ulam/*` names
-- Comments in `src/components/ui/index.js` and `tools/meryenda/index.js` marking app-specific exports
+- Comments in `src/components/ui/index.js` and `tools/rogers/index.js` marking app-specific exports
 - This document
 
 ## What NOT to include in the ulam package
 
-These files live near the boundary but are a11yhelper-specific:
+These files live near the boundary but are a11yfred-specific:
 
 - `src/components/A11yLinkSc.jsx` — WCAG success criterion link
 - `src/components/A11yListRelated.jsx` — related findings list
@@ -58,11 +58,11 @@ These files live near the boundary but are a11yhelper-specific:
 
 ## Future fork
 
-When a11yhelper is close to webapp launch:
+When a11yfred is close to webapp launch:
 
 1. Create `ulam` monorepo at `github.com/mikeyfyi/ulam`
 2. Extract each package folder using git subtree split
 3. Publish to npm under `@ulam/*` (org owned by mikeyil)
-4. A11yhelper replaces local imports with `npm install @ulam/ube @ulam/calamansi @ulam/meryenda @ulam/sawsawan @ulam/halohalo`
+4. A11yFred replaces local imports with `npm install @ulam/ube @ulam/calamansi @a11yfred/rogers @ulam/sawsawan @ulam/halohalo`
 
 See `src/components/ui/README.md` for full framework documentation.

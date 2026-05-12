@@ -8,7 +8,7 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ### Lint clean pass
 
-All three linters now pass with zero errors. JS errors eliminated: fixed a bad export in `A11yPanelSettings`, refactored two hooks to use `useState` lazy initialization instead of reading refs during render, escaped an unescaped apostrophe in the ulam dev menu, and tightened up the `no-announce-in-render` rule to stop firing on legitimate callback patterns. CSS clean: added reduced-motion and reduced-transparency fallback blocks across all UI components (a real accessibility improvement, not just a lint fix). Markdown clean: fixed heading and list spacing throughout `meryenda-scope.md`. The palaman stylelint rule was also improved to recognize when a selector already has a prefers override elsewhere in the file.
+All three linters now pass with zero errors. JS errors eliminated: fixed a bad export in `A11yPanelSettings`, refactored two hooks to use `useState` lazy initialization instead of reading refs during render, escaped an unescaped apostrophe in the ulam dev menu, and tightened up the `no-announce-in-render` rule to stop firing on legitimate callback patterns. CSS clean: added reduced-motion and reduced-transparency fallback blocks across all UI components (a real accessibility improvement, not just a lint fix). Markdown clean: fixed heading and list spacing throughout `rogers-scope.md`. The neighbor stylelint rule was also improved to recognize when a selector already has a prefers override elsewhere in the file.
 
 ---
 
@@ -16,7 +16,7 @@ All three linters now pass with zero errors. JS errors eliminated: fixed a bad e
 
 ### ulam framework extraction and platform adapters
 
-Extracted shared logic into dedicated `@ulam` packages alongside the app. `@ulam/halohalo` holds the AI layer (provider config, completions, connectivity check). `@ulam/calamansi/relevance` holds relevance scoring and the finding search service. `@ulam/sawsawan` provides runtime-agnostic storage adapters so the same storage calls work in the browser, Chrome extension, and Electron without any import changes at the call site. `@ulam/palaman` packages the ESLint and Stylelint plugins with all custom accessibility lint rules.
+Extracted shared logic into dedicated `@ulam` packages alongside the app. `@ulam/halohalo` holds the AI layer (provider config, completions, connectivity check). `@ulam/calamansi/relevance` holds relevance scoring and the finding search service. `@ulam/sawsawan` provides runtime-agnostic storage adapters so the same storage calls work in the browser, Chrome extension, and Electron without any import changes at the call site. `@a11yfred/neighbor` packages the ESLint and Stylelint plugins with all custom accessibility lint rules.
 
 The AdminPanel also picked up two new tools: a live AI connectivity check (pings the configured provider and shows a status indicator) and an overlay detector that flags known accessibility overlay scripts on any page under audit.
 

@@ -40,7 +40,7 @@ jobs:
 
       - name: Build
         run: npm run build
-        # If deploying to a subpath (https://user.github.io/a11yhelper/),
+        # If deploying to a subpath (https://user.github.io/a11yfred/),
         # first uncomment the REPO_NAME lines in vite.config.js and set the name.
         # If deploying to a root domain (CNAME), no vite.config change needed.
 

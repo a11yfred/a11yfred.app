@@ -1,4 +1,4 @@
-# @ulam/palaman — Rule Reference
+# @a11yfred/neighbor — Rule Reference
 
 Complete catalogue of all rules across the ESLint and Stylelint plugins.
 
@@ -22,7 +22,7 @@ Complete catalogue of all rules across the ESLint and Stylelint plugins.
 
 ---
 
-## ESLint rules (`palaman-eslint.mjs`, `palaman-eslint-vue.mjs`, `palaman-eslint-angular.mjs`)
+## ESLint rules (`neighbor-eslint.mjs`, `neighbor-eslint-vue.mjs`, `neighbor-eslint-angular.mjs`)
 
 All rules share the same logic via `lib/rules.js` with framework-specific AST helpers.
 
@@ -71,7 +71,7 @@ All rules share the same logic via `lib/rules.js` with framework-specific AST he
 
 ---
 
-## Stylelint rules (`palaman-stylelint.mjs`)
+## Stylelint rules (`neighbor-stylelint.mjs`)
 
 | Rule | Severity | What it flags | Source |
 |---|---|---|---|

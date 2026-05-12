@@ -1,5 +1,5 @@
 /**
- * palaman/lib/rules.js
+ * neighbor/lib/rules.js
  * Framework-agnostic rule factories.
  *
  * Every factory is called as makeXxx(h) where h is the framework-specific
@@ -1223,7 +1223,7 @@ export function makeNoDialogWithoutClose(h) {
 
 // ═══ Rules that fill jsx-a11y gaps for Vue/Angular consumers ═════════════════
 // These are NOT included in the JSX config — jsx-a11y already covers them there.
-// They are included in palaman-eslint-vue.mjs and palaman-eslint-angular.mjs.
+// They are included in neighbor-eslint-vue.mjs and neighbor-eslint-angular.mjs.
 
 // ─── no-anchor-ambiguous-text ────────────────────────────────────────────────
 // Links with generic text like "click here", "read more" are meaningless out of
@@ -1782,6 +1782,238 @@ export function makeNoScopeOnTd(h) {
   }
 }
 
+// ─── no-duplicate-id ──────────────────────────────────────────────────────────
+// Duplicate IDs break aria-labelledby, aria-describedby, aria-controls,
+// aria-owns, aria-activedescendant, and htmlFor — AT uses only the first match.
+// WCAG 4.1.1 was removed in WCAG 2.2; failures now map to SC 1.3.1 / 4.1.2.
+// We only flag duplicates that are actually referenced by an ARIA relation,
+// to avoid noise from IDs used purely for styling or scripting.
+// Ref: axe-core duplicate-id-aria (MPL-2.0, reimplemented); SC 1.3.1 / 4.1.2
+
+const ARIA_ID_ATTRS = ['aria-labelledby', 'aria-describedby', 'aria-controls', 'aria-owns', 'aria-activedescendant']
+
+export function makeNoDuplicateId(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow duplicate id values on elements referenced by ARIA attributes' },
+      messages: {
+        duplicate:
+          'id="{{id}}" appears more than once. AT resolves aria-labelledby/describedby/controls/owns/activedescendant by first match — duplicate IDs silently break these associations. (SC 1.3.1 / 4.1.2)',
+      },
+      schema: [],
+    },
+    create(context) {
+      const idNodes = new Map()   // id string → first node with that id
+      const idDups  = new Map()   // id string → subsequent nodes (to report)
+      const ariaRefs = new Set()  // all id values referenced by ARIA attrs or htmlFor
+
+      return {
+        [h.elementVisitor](node) {
+          const id = h.getAttrStringValue(h.getAttr(node, 'id'))
+          if (id) {
+            if (!idNodes.has(id)) {
+              idNodes.set(id, node)
+            } else {
+              if (!idDups.has(id)) idDups.set(id, [])
+              idDups.get(id).push(node)
+            }
+          }
+
+          for (const attr of ARIA_ID_ATTRS) {
+            const val = h.getAttrStringValue(h.getAttr(node, attr))
+            if (val) val.trim().split(/\s+/).forEach(ref => ariaRefs.add(ref))
+          }
+          // htmlFor (JSX) and for (Vue/Angular)
+          const forVal = h.getAttrStringValue(h.getAttr(node, 'htmlFor') ?? h.getAttr(node, 'for'))
+          if (forVal) ariaRefs.add(forVal.trim())
+        },
+
+        'Program:exit'() {
+          for (const [id, nodes] of idDups) {
+            if (!ariaRefs.has(id)) continue
+            for (const node of nodes) {
+              context.report({
+                node: h.getAttr(node, 'id'),
+                messageId: 'duplicate',
+                data: { id },
+              })
+            }
+          }
+        },
+      }
+    },
+  }
+}
+
+// ─── no-button-type-missing ───────────────────────────────────────────────────
+// <button> without an explicit type attribute defaults to type="submit" when
+// inside a <form>, causing accidental form submission. This is an HTML spec
+// issue (not a WCAG SC), but it is the root cause of unexpected navigation and
+// double-submit bugs. We only flag when the button is inside a <form> ancestor
+// (where getAncestors is available — JSX and Vue). Angular silently passes
+// because getParent returns null and ancestor walking is unavailable there.
+// Ref: HTML Living Standard §4.10.18.5; H32 Technique
+
+export function makeNoButtonTypeMissing(h) {
+  return {
+    meta: {
+      type: 'suggestion',
+      docs: { description: 'Require explicit type attribute on <button> elements inside forms' },
+      messages: {
+        missingType:
+          '<button> without an explicit type defaults to type="submit" inside a <form>, which can cause accidental form submission. Add type="button", type="submit", or type="reset". (HTML spec §4.10.18.5)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (h.getElementName(node) !== 'button') return
+          if (h.hasAttr(node, 'type')) return
+
+          // Only flag when inside a <form> — outside a form, the default is harmless.
+          // Angular's getAncestors yields nothing (parent is null), so the loop
+          // completes without finding 'form' and we silently skip — correct behaviour.
+          let insideForm = false
+          for (const ancestor of h.getAncestors(node)) {
+            if (h.getElementName(ancestor) === 'form') { insideForm = true; break }
+          }
+          if (!insideForm) return
+
+          context.report({ node, messageId: 'missingType' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-summary-without-details ───────────────────────────────────────────────
+// <summary> must be the first child of <details>. Orphaned <summary> elements
+// are still exposed as interactive by Firefox and Safari even though they are
+// not keyboard-operable — a SC 2.1.1 and 4.1.2 failure.
+// Angular skips silently because getParent returns null there.
+// Ref: HTML Living Standard §4.11.1; O'Hara scottohara.me/blog/2022/09/12/details-summary.html
+
+export function makeNoSummaryWithoutDetails(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require <summary> to be a child of <details>' },
+      messages: {
+        orphaned:
+          '<summary> outside <details> is invalid HTML. Firefox and Safari still expose it as an interactive element, but it is not keyboard-operable — a phantom control. Wrap it in <details> or remove it. (SC 2.1.1 / 4.1.2 / HTML spec)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (h.getElementName(node) !== 'summary') return
+          const parent = h.getParent(node)
+          // Angular returns null — cannot check parent, skip silently.
+          if (parent === null) return
+          if (h.getElementName(parent) !== 'details')
+            context.report({ node, messageId: 'orphaned' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-aria-required-on-non-form ────────────────────────────────────────────
+// aria-required is only meaningful on 8 ARIA roles per the ARIA 1.2 spec:
+// checkbox, combobox, gridcell, listbox, radiogroup, spinbutton, textbox, tree.
+// On any other element or role AT ignores it — dead code that misleads authors.
+// Ref: ARIA 1.2 §6.6.9 aria-required; SC 4.1.2
+
+const ARIA_REQUIRED_VALID_ROLES = new Set([
+  'checkbox', 'combobox', 'gridcell', 'listbox', 'radiogroup', 'spinbutton', 'textbox', 'tree',
+])
+
+// Input types whose implicit ARIA role supports aria-required
+const ARIA_REQUIRED_VALID_INPUT_TYPES = new Set([
+  'text', 'email', 'password', 'search', 'tel', 'url', 'number', 'checkbox',
+])
+
+export function makeNoAriaRequiredOnNonForm(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow aria-required on elements whose role does not support it' },
+      messages: {
+        invalid:
+          'aria-required is only valid on roles: checkbox, combobox, gridcell, listbox, radiogroup, spinbutton, textbox, tree. On <{{el}}> with no matching role, AT ignores it. Use a native required attribute or apply aria-required to a control with a valid role. (ARIA 1.2 §6.6.9 / SC 4.1.2)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const attr = h.getAttr(node, 'aria-required')
+          if (!attr) return
+
+          const role = h.getRoleValue(node)
+          if (role && ARIA_REQUIRED_VALID_ROLES.has(role)) return
+
+          const el = h.getElementName(node)
+
+          // select and textarea have implicit listbox/textbox roles — valid
+          if (el === 'select' || el === 'textarea') return
+
+          if (el === 'input') {
+            const type = (h.getAttrStringValue(h.getAttr(node, 'type')) ?? 'text').toLowerCase()
+            if (ARIA_REQUIRED_VALID_INPUT_TYPES.has(type)) return
+          }
+
+          context.report({ node: attr, messageId: 'invalid', data: { el: el ?? 'unknown' } })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-input-type-invalid ────────────────────────────────────────────────────
+// <input type="X"> with an invalid type silently falls back to type="text",
+// losing mobile keyboard hints, native pickers, format validation, and browser
+// autofill matching. WCAG 1.3.5 Identify Input Purpose.
+// Dynamic type values (JSX expression, v-bind, Angular binding) are skipped —
+// getAttrStringValue returns null for those and we cannot validate at lint time.
+// Ref: HTML Living Standard §4.10.18.5; SC 1.3.5
+
+const VALID_INPUT_TYPES = new Set([
+  'button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file',
+  'hidden', 'image', 'month', 'number', 'password', 'radio', 'range', 'reset',
+  'search', 'submit', 'tel', 'text', 'time', 'url', 'week',
+])
+
+export function makeNoInputTypeInvalid(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require valid HTML type attribute values on <input> elements' },
+      messages: {
+        invalid:
+          'type="{{type}}" is not a valid HTML input type and silently falls back to type="text", losing mobile keyboard hints, native pickers, and autofill matching. Use a valid type value. (HTML spec / SC 1.3.5)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (h.getElementName(node) !== 'input') return
+          const typeAttr = h.getAttr(node, 'type')
+          if (!typeAttr) return  // missing type — defaults to text, valid
+          const val = h.getAttrStringValue(typeAttr)
+          if (val === null) return  // dynamic expression — cannot validate
+          if (!VALID_INPUT_TYPES.has(val.toLowerCase()))
+            context.report({ node: typeAttr, messageId: 'invalid', data: { type: val } })
+        },
+      }
+    },
+  }
+}
+
 // ─── All rules map ────────────────────────────────────────────────────────────
 
 export const RULE_FACTORIES = {
@@ -1838,6 +2070,11 @@ export const RULE_FACTORIES = {
   'prefer-semantic-element':                    makePreferSemanticElement,
   'no-role-supports-aria-props':                makeNoRoleSupportsAriaProps,
   'no-scope-on-td':                             makeNoScopeOnTd,
+  'no-duplicate-id':                            makeNoDuplicateId,
+  'no-button-type-missing':                     makeNoButtonTypeMissing,
+  'no-summary-without-details':                 makeNoSummaryWithoutDetails,
+  'no-aria-required-on-non-form':               makeNoAriaRequiredOnNonForm,
+  'no-input-type-invalid':                      makeNoInputTypeInvalid,
 }
 
 /** Build the rules map for a plugin by applying helpers to all factories. */
@@ -1879,6 +2116,11 @@ export function buildRecommendedRules(ns) {
     [`${ns}/no-tree-without-treeitem`]:                   'error',
     [`${ns}/no-feed-without-article`]:                    'error',
     [`${ns}/no-aria-activedescendant-without-id`]:        'error',
+    [`${ns}/no-duplicate-id`]:                             'error',
+    [`${ns}/no-summary-without-details`]:                 'error',
+    [`${ns}/no-aria-required-on-non-form`]:               'error',
+    [`${ns}/no-input-type-invalid`]:                      'error',
+    [`${ns}/no-button-type-missing`]:                     'warn',
     // warnings — strong guidance, occasional legitimate overrides
     [`${ns}/no-tooltip-role-misuse`]:                     'warn',
     [`${ns}/no-application-role`]:                        'warn',

@@ -1,5 +1,5 @@
 /**
- * palaman/lib/helpers.js
+ * neighbor/lib/helpers.js
  * Shared constants and pure data — no AST dependency.
  */
 

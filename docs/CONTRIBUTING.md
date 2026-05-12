@@ -5,8 +5,8 @@ Contributions welcome, especially finding entries, keyword improvements, and bug
 ## Setup
 
 ```bash
-git clone https://github.com/<your-username>/A11yHelper
-cd A11yHelper
+git clone https://github.com/a11yfred/a11yfred
+cd a11yfred
 npm install
 npm run dev   # http://localhost:5173
 ```

@@ -1,5 +1,5 @@
 /**
- * @ulam/palaman — ESLint plugin (React / JSX)
+ * @a11yfred/neighbor — ESLint plugin (React / JSX)
  *
  * Flags ARIA patterns that are widely derided, semantically wrong, or have
  * poor/no AT support — but are not caught by eslint-plugin-jsx-a11y recommended.
@@ -33,7 +33,7 @@ import { h } from './lib/helpers-jsx.js'
 import { buildRules, buildRecommendedRules } from './lib/rules.js'
 import { buildUlamRules, buildUlamRecommendedRules } from './lib/ulam-rules.js'
 
-const NS = '@ulam/palaman'
+const NS = '@a11yfred/neighbor'
 const rules = { ...buildRules(h), ...buildUlamRules() }
 
 const plugin = { meta: { name: NS }, rules }

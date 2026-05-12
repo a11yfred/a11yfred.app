@@ -31,10 +31,10 @@ ulam
 │   └── @ulam/halohalo               — AI service adapters, model config, prefs
 │
 ├── Debug Layer
-│   └── @ulam/meryenda        savory  — a11y debug panel, dependency-free
+│   └── @a11yfred/rogers        savory  — a11y debug panel, dependency-free
 │
 └── Linting
-    └── @ulam/palaman                — ESLint + Stylelint a11y rules
+    └── @a11yfred/neighbor                — ESLint + Stylelint a11y rules
 ```
 
 ---
@@ -44,7 +44,7 @@ ulam
 The packages form a strict one-way graph. No cycles.
 
 ```text
-palaman        ── zero runtime deps (dev-only linting tool)
+neighbor        ── zero runtime deps (dev-only linting tool)
 
 sili           ── zero runtime deps (vanilla JS)
 siling-labuyo  ── sili + react
@@ -57,12 +57,12 @@ taho-pandan    ── taho (planned)
 ube            ── sili + siling-labuyo + taho + taho-bayabas + react
 calamansi      ── zero runtime deps
 halohalo       ── zero runtime deps
-meryenda          ── react only (no other ulam packages)
+rogers          ── react only (no other ulam packages)
 
-sawsawan       ── ube + calamansi + meryenda + halohalo (the only cross-importer)
+sawsawan       ── ube + calamansi + rogers + halohalo (the only cross-importer)
 ```
 
-Neither `ube`, `meryenda`, nor `calamansi` import from each other. `sawsawan` is the only package that wires them together.
+Neither `ube`, `rogers`, nor `calamansi` import from each other. `sawsawan` is the only package that wires them together.
 
 ---
 
@@ -249,15 +249,15 @@ AI service adapters, model configuration, and user preference management. Zero r
 
 ---
 
-## @ulam/meryenda — A11y debug panel
+## @a11yfred/rogers — A11y debug panel
 
-`tools/meryenda/`
+`tools/rogers/`
 
 Named for the Filipino braised dish — deeply flavored, goes with everything.
 
 The React Query DevTools of accessibility. Drop it into any project in dev mode. Zero dependencies beyond React — no other ulam packages required.
 
-**Portable components (part of `@ulam/meryenda`):**
+**Portable components (part of `@a11yfred/rogers`):**
 
 | Component | Description |
 |-----------|-------------|
@@ -270,7 +270,7 @@ The React Query DevTools of accessibility. Drop it into any project in dev mode.
 | `DebugHelp` | Full command reference panel. |
 
 ```jsx
-import { FocusDebugger, TabStopsDebugger, HeadingMapDebugger, DebugLauncher } from '@ulam/meryenda'
+import { FocusDebugger, TabStopsDebugger, HeadingMapDebugger, DebugLauncher } from '@a11yfred/rogers'
 
 // All components are dev-only and aria-hidden
 {import.meta.env.DEV && <>
@@ -283,13 +283,13 @@ import { FocusDebugger, TabStopsDebugger, HeadingMapDebugger, DebugLauncher } fr
 
 All styles live in `debug.css` — self-contained, high-contrast dark, no ube token dependency.
 
-See [tools/meryenda/README.md](tools/meryenda/README.md) for full API.
+See [tools/rogers/README.md](tools/rogers/README.md) for full API.
 
 ---
 
-## @ulam/palaman — Linting
+## @a11yfred/neighbor — Linting
 
-`palaman/`
+`neighbor/`
 
 ESLint and Stylelint plugins enforcing the accessibility patterns that ulam components implement. Dev-only — no runtime footprint.
 
@@ -305,14 +305,14 @@ ESLint and Stylelint plugins enforcing the accessibility patterns that ulam comp
 
 ```js
 // eslint.config.js
-import palaman from '@ulam/palaman/eslint'
-export default [palaman.configs.recommended]
+import neighbor from '@a11yfred/neighbor/eslint'
+export default [neighbor.configs.recommended]
 
 // .stylelintrc.json
-{ "plugins": ["@ulam/palaman"], "rules": { "ulam/user-preferences": true, "ulam/no-outline-none": true } }
+{ "plugins": ["@a11yfred/neighbor"], "rules": { "ulam/user-preferences": true, "ulam/no-outline-none": true } }
 ```
 
-See [tools/palaman/RULES.md](tools/palaman/RULES.md) for the full rule catalog with sources and rationale.
+See [tools/neighbor/RULES.md](tools/neighbor/RULES.md) for the full rule catalog with sources and rationale.
 
 ---
 
@@ -330,7 +330,7 @@ See [tools/palaman/RULES.md](tools/palaman/RULES.md) for the full rule catalog w
 
 **RTL-aware.** Direction-sensitive components respond to `html[dir="rtl"]` automatically.
 
-**Zero cross-package dependencies.** `ube`, `calamansi`, and `meryenda` do not import from each other. `sawsawan` is the only wiring layer.
+**Zero cross-package dependencies.** `ube`, `calamansi`, and `rogers` do not import from each other. `sawsawan` is the only wiring layer.
 
 ---
 
@@ -350,8 +350,8 @@ All packages are named for Filipino food — the framework's origin story.
 | calamansi | Sour citrus — essential accent | i18n + logic |
 | sawsawan | Dipping sauce — brings it all together | Integration bridge |
 | halohalo | Mixed dessert — many layers | AI layer |
-| meryenda | Braised dish — savory, goes with everything | Debug panel |
-| palaman | Sandwich filling — completes the stack | Linting |
+| rogers | Braised dish — savory, goes with everything | Debug panel |
+| neighbor | Sandwich filling — completes the stack | Linting |
 
 ---
 

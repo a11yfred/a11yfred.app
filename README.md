@@ -1,9 +1,9 @@
-﻿# A11yHelper
+﻿# A11yFred
 
 > Audit finding descriptions, fast.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/mikeyil/A11yHelper/releases)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
 
 A personal accessibility audit writing assistant. Search a corpus of WCAG-aligned finding write-ups by natural language, pick a match, optionally add a location prefix, refine the text with AI, and copy it straight into your spreadsheet.
@@ -22,7 +22,7 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Complete ,  106-entry public corpus (ACC prefix), all linters passing (ESLint 9.x + jsx-a11y + @ulam/palaman), ulam framework extracted (taho, sili, calamansi, halohalo, sawsawan), meryenda dev tools and palaman linter moved to tools/, agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
+**Phase 1 (Personal Library)**: Complete ,  106-entry public corpus (ACC prefix), all linters passing (ESLint 9.x + jsx-a11y + @a11yfred/neighbor), ulam framework extracted (taho, sili, calamansi, halohalo, sawsawan), rogers dev tools and neighbor linter moved to tools/, agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
 
 **Phase 2 (AI + Sharing)**: In Progress ,  Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working. Corpus guide page planned.
 
@@ -39,8 +39,8 @@ Key directories:
 - `src/hooks/` ,  Search, ratings, pinning, user findings, overrides
 - `src/components/` ,  UI components; `ui/` subfolder has 21 reusable components (Button, IconButton, + 19 others)
 - `src/taho/`, `src/sili/`, `src/calamansi/`, `src/halohalo/`, `src/sawsawan/` ,  ulam framework packages
-- `tools/meryenda/` ,  Dev-only a11y diagnostics panel
-- `tools/palaman/` ,  ESLint and Stylelint a11y rules
+- `tools/rogers/` ,  Dev-only a11y diagnostics panel
+- `tools/neighbor/` ,  ESLint and Stylelint a11y rules
 - `docs/` ,  Deployment, maintenance, contributing
 
 ---

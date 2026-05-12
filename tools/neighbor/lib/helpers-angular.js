@@ -1,5 +1,5 @@
 /**
- * palaman/lib/helpers-angular.js
+ * neighbor/lib/helpers-angular.js
  * Helpers for Angular template AST via @angular-eslint/template-parser.
  *
  * Parser: @angular-eslint/eslint-plugin-template provides its own rule format.

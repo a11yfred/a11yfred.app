@@ -1,6 +1,6 @@
 ﻿# Changelog
 
-All significant changes to A11yHelper, newest first.
+All significant changes to A11yFred, newest first.
 
 ---
 

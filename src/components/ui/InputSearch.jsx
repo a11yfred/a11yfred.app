@@ -65,7 +65,7 @@ export default function InputSearch({
         'search-input-wrap',
         liveSearch ? 'search-input-wrap--live' : '',
       ].filter(Boolean).join(' ')}>
-        {/* eslint-disable @ulam/palaman/no-placeholder-only -- labeled via parent <form role="search" aria-label> */}
+        {/* eslint-disable @a11yfred/neighbor/no-placeholder-only -- labeled via parent <form role="search" aria-label> */}
         <input
           ref={ref}
           id={id}
@@ -84,7 +84,7 @@ export default function InputSearch({
           ].filter(Boolean).join(' ')}
           {...rest}
         />
-        {/* eslint-enable @ulam/palaman/no-placeholder-only */}
+        {/* eslint-enable @a11yfred/neighbor/no-placeholder-only */}
 
         {hasValue && !disabled && (
           <button

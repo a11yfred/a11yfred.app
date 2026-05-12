@@ -1,13 +1,13 @@
 # ulam → Vanilla / Remix 3 Migration Plan
 
 Remix 3 drops React as a hard dependency. This document is the plan for making
-ulam framework-agnostic so a11yhelper can migrate to Remix 3 without rewriting
+ulam framework-agnostic so a11yfred can migrate to Remix 3 without rewriting
 the framework from scratch.
 
 Two separate efforts — do them in order:
 
 1. **Framework migration** — make ulam packages vanilla-first
-2. **App migration** — migrate a11yhelper itself to Remix 3 on top of the new framework
+2. **App migration** — migrate a11yfred itself to Remix 3 on top of the new framework
 
 ---
 
@@ -19,7 +19,7 @@ Two separate efforts — do them in order:
 |---------|--------|
 | `@ulam/sili` | Pure vanilla JS — focus primitives |
 | `@ulam/taho` | Pure vanilla JS — live region core |
-| `@ulam/palaman` | Pure vanilla JS — linting, dev-only |
+| `@a11yfred/neighbor` | Pure vanilla JS — linting, dev-only |
 
 ### Remix adapters
 
@@ -33,7 +33,7 @@ Two separate efforts — do them in order:
 | Package | React surface | Status |
 |---------|--------------|--------|
 | `@ulam/calamansi` | `I18nProvider` context, `useT`, `usePref` hooks | ✅ DONE |
-| `@ulam/meryenda` | 8 debug components | ✅ DONE |
+| `@a11yfred/rogers` | 8 debug components | ✅ DONE |
 | `@ulam/ube` | UI components | ✅ DONE (Groups A–D) |
 | `@ulam/siling-labuyo` | hooks + `Modal`, `Drawer`, `Sheet` components | ✅ DONE |
 | `@ulam/taho-bayabas` | `Announcer`, `useAnnounce` | In progress |
@@ -56,13 +56,13 @@ Two separate efforts — do them in order:
 
 ---
 
-### Phase 2 — meryenda ✅ DONE
+### Phase 2 — rogers ✅ DONE
 
 **Shipped:** `d49d80a`
 
 Three-layer architecture:
 ```text
-@ulam/meryenda
+@a11yfred/rogers
 ├── core/        vanilla JS — createFocusWatcher, createNamesWatcher, createHeadingWatcher, createTabStopWatcher
 ├── overlay/     vanilla JS DOM mounting — mountFocusDebugger, mountNamesDebugger, mountHeadingMapDebugger,
 │                mountTabStopsDebugger, mountDebugLauncher, mountDebugHelp, mountDeployBanner
@@ -71,7 +71,7 @@ Three-layer architecture:
 ```
 
 - `index.js` exports vanilla only (`core/`, `overlay/`)
-- `react.js` exports React components — `import { FocusDebugger } from '@ulam/meryenda/react'`
+- `react.js` exports React components — `import { FocusDebugger } from '@a11yfred/rogers/react'`
 - React marked as optional peer dep
 
 ---
@@ -142,7 +142,7 @@ Each overlay now has a primitive/React split:
 
 ---
 
-## Part 2 — App migration (a11yhelper → Remix 3)
+## Part 2 — App migration (a11yfred → Remix 3)
 
 Do this after Part 1 is complete and Remix 3 is stable.
 
@@ -180,9 +180,9 @@ Current hash routes → Remix file-based routes:
 - Replace `usePageTitle` calls with `meta` exports per route
 - Replace `useThemeManager` with loader-driven `data-theme` on `<html>`
 
-### Phase 5 — meryenda in Remix
-- Replace React meryenda component tree with `meryenda.init()` call in root layout effect
-- Or: keep React wrappers via `@ulam/meryenda/react` subpath — no urgency to change
+### Phase 5 — rogers in Remix
+- Replace React rogers component tree with `rogers.init()` call in root layout effect
+- Or: keep React wrappers via `@a11yfred/rogers/react` subpath — no urgency to change
 
 ---
 
@@ -190,7 +190,7 @@ Current hash routes → Remix file-based routes:
 
 - All CSS — zero changes to any `.css` file
 - `@ulam/sili` and `@ulam/taho` — already vanilla
-- `@ulam/palaman` — linting, unaffected
+- `@a11yfred/neighbor` — linting, unaffected
 - The `@ulam/*/react` subpath shims — React consumers keep working throughout
 - Token names, component names, command names — all stable public API
 
@@ -201,7 +201,7 @@ Current hash routes → Remix file-based routes:
 ```
 Part 1 (framework):
   1. calamansi              ✅ DONE — f5a289b
-  2. meryenda                  ✅ DONE — d49d80a
+  2. rogers                  ✅ DONE — d49d80a
   3. ube Groups A–D         ✅ DONE — caf371e + naming commits
   4. siling-labuyo overlays ✅ DONE — cd9bb81
   5. taho-bayabas, halohalo, sawsawan — in progress
@@ -212,5 +212,5 @@ Part 2 (app — after Part 1 + Remix 3 stable):
   2. Route file structure            — 1–2 days
   3. Loaders replace data fetching   — 3–5 days (largest app change)
   4. Component migration             — 2–3 days
-  5. meryenda in Remix                  — half day
+  5. rogers in Remix                  — half day
 ```

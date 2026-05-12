@@ -7,7 +7,7 @@ import { useRouter } from '../hashRouter/Router.jsx' // hash router — swap for
  *
  * Usage:
  *   function SettingsPanel() {
- *     usePageTitle('Settings')   // → "A11yHelper | Settings"
+ *     usePageTitle('Settings')   // → "MyApp | Settings"
  *   }
  */
 export function usePageTitle(pageTitle) {

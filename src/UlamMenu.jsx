@@ -104,7 +104,7 @@ export default function UlamMenu() {
           <span className="ulam-menu-wordmark">ulam</span>
           <span className="ulam-menu-tagline">the menu</span>
         </div>
-        <p className="ulam-menu-desc">Component gallery for the ulam framework — @ulam/ube, @ulam/calamansi, @ulam/meryenda, @ulam/sawsawan.</p>
+        <p className="ulam-menu-desc">Component gallery for the ulam framework — @ulam/ube, @ulam/calamansi, @a11yfred/rogers, @ulam/sawsawan.</p>
       </header>
 
       <main className="ulam-menu-main">
@@ -191,10 +191,10 @@ export default function UlamMenu() {
 
         <Section title="ButtonLink">
           <Row label="Primary">
-            <ButtonLink href="https://a11yhelper.app" variant="primary">a11yhelper.app</ButtonLink>
+            <ButtonLink href="https://a11yfred.app" variant="primary">a11yfred.app</ButtonLink>
           </Row>
           <Row label="Secondary">
-            <ButtonLink href="https://a11yhelper.app" variant="secondary">Secondary link</ButtonLink>
+            <ButtonLink href="https://a11yfred.app" variant="secondary">Secondary link</ButtonLink>
           </Row>
         </Section>
 

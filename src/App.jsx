@@ -28,7 +28,7 @@ import {
 } from './siling-labuyo/index.js'
 import { announce } from './taho/index.js'
 import { Announcer } from './taho-bayabas/react.js'
-import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from '../tools/meryenda/react.js'
+import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from '../tools/rogers/react.js'
 import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
 import { I18nProvider, useT } from './calamansi/react.js'
@@ -68,7 +68,7 @@ function recordRecentFinding(id) {
 
 export default function App() {
   return (
-    <Router appName="A11yHelper">
+    <Router appName="A11yFred">
       <AppShell />
     </Router>
   )
@@ -1150,7 +1150,7 @@ function AppContent({
           onCommand={runCommand}
           customSections={[
             {
-              heading: 'Custom, A11yHelper',
+              heading: 'Custom, A11yFred',
               rows: [
                 { cmd: 'debug tab stops',   desc: 'Tab order overlay' },
                 { cmd: 'debug heading map', desc: 'Heading hierarchy overlay' },
@@ -1178,7 +1178,7 @@ function AppContent({
           onClose={() => setDebugHelpOpen(false)}
           customCommands={[
             {
-              heading: 'Custom, A11yHelper',
+              heading: 'Custom, A11yFred',
               note: <>Append <code>off</code> to disable (e.g. <code>debug ai assist off</code>).</>,
               rows: [
                 { cmd: 'debug tab stops',    desc: 'Tab order overlay — records focus sequence as you Tab through the page' },

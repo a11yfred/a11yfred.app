@@ -1,8 +1,8 @@
-# A11yHelper — Privacy-first accessibility tool
+# A11yFred — Accessibility defect descriptions, fast
 # Single-page app (SPA); all content served from root with hash routing
 
 User-agent: *
 Allow: /
 Crawl-delay: 1
 
-Sitemap: https://a11yhelper.app/sitemap.xml
+Sitemap: https://a11yfred.app/sitemap.xml

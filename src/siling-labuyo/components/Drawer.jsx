@@ -22,7 +22,7 @@ export default function DrawerShell({ open, onClose, label = 'Menu', children, p
         onClick={onClose}
         aria-hidden="true"
       />
-      { /* eslint-disable-next-line @ulam/palaman/no-dialog-without-close -- close button always provided by children */ }
+      { /* eslint-disable-next-line @a11yfred/neighbor/no-dialog-without-close -- close button always provided by children */ }
       <div
         ref={panelRef}
         className={`drawer-panel${open ? ' is-open' : ''}`}

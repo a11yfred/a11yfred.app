@@ -1,5 +1,5 @@
 /**
- * @ulam/palaman — Stylelint plugin
+ * @a11yfred/neighbor — Stylelint plugin
  *
  * Rules:
  *   ulam/user-preferences  — Warn when motion, transparency, or alpha colors

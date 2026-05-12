@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import react from 'eslint-plugin-react'
-import palaman from './tools/palaman/palaman-eslint.mjs'
+import neighbor from './tools/neighbor/neighbor-eslint.mjs'
 
 export default [
   js.configs.recommended,
@@ -12,7 +12,7 @@ export default [
     plugins: {
       react,
       'react-hooks': reactHooks,
-      ...palaman.configs.recommended.plugins,
+      ...neighbor.configs.recommended.plugins,
     },
     languageOptions: {
       globals: {
@@ -30,53 +30,53 @@ export default [
       // Hooks
       ...reactHooks.configs.recommended.rules,
 
-      // jsx-a11y + @ulam/palaman (composed in palaman recommended)
-      ...palaman.configs.recommended.rules,
+      // jsx-a11y + @a11yfred/neighbor (composed in neighbor recommended)
+      ...neighbor.configs.recommended.rules,
       // autoFocus is intentional on the search input — single-purpose tool where
       // search is always the first action. Downgraded to warn, not suppressed.
       'jsx-a11y/no-autofocus': 'warn',
 
-      // @ulam/palaman — bad ARIA patterns not caught by jsx-a11y recommended
+      // @a11yfred/neighbor — bad ARIA patterns not caught by jsx-a11y recommended
       // errors — definite breakage or phantom controls
-      '@ulam/palaman/no-aria-label-on-generic': 'error',
-      '@ulam/palaman/no-assertive-live-overuse': 'error',
-      '@ulam/palaman/no-unblocked-aria-disabled': 'error',
-      '@ulam/palaman/no-roles-without-name': 'error',
-      '@ulam/palaman/no-group-without-name': 'error',
-      '@ulam/palaman/no-presentation-on-focusable': 'error',
-      '@ulam/palaman/no-log-with-interactive-children': 'error',
-      '@ulam/palaman/no-aria-hidden-in-link': 'error',
-      '@ulam/palaman/no-redundant-aria-hidden-with-presentation': 'error',
-      '@ulam/palaman/no-aria-owns-on-void': 'error',
-      '@ulam/palaman/no-title-as-label': 'error',
+      '@a11yfred/neighbor/no-aria-label-on-generic': 'error',
+      '@a11yfred/neighbor/no-assertive-live-overuse': 'error',
+      '@a11yfred/neighbor/no-unblocked-aria-disabled': 'error',
+      '@a11yfred/neighbor/no-roles-without-name': 'error',
+      '@a11yfred/neighbor/no-group-without-name': 'error',
+      '@a11yfred/neighbor/no-presentation-on-focusable': 'error',
+      '@a11yfred/neighbor/no-log-with-interactive-children': 'error',
+      '@a11yfred/neighbor/no-aria-hidden-in-link': 'error',
+      '@a11yfred/neighbor/no-redundant-aria-hidden-with-presentation': 'error',
+      '@a11yfred/neighbor/no-aria-owns-on-void': 'error',
+      '@a11yfred/neighbor/no-title-as-label': 'error',
       // warnings — strong guidance, occasional legitimate overrides
-      '@ulam/palaman/no-tooltip-role-misuse': 'warn',
-      '@ulam/palaman/no-application-role': 'warn',
-      '@ulam/palaman/no-grid-role': 'warn',
-      '@ulam/palaman/no-menu-role-on-nav': 'warn',
-      '@ulam/palaman/no-aria-roledescription': 'warn',
-      '@ulam/palaman/no-aria-readonly': 'warn',
-      '@ulam/palaman/no-href-hash': 'warn',
-      '@ulam/palaman/no-tabs-without-structure': 'error',
-      '@ulam/palaman/no-tab-without-controls': 'warn',
-      '@ulam/palaman/no-positive-tabindex': 'error',
-      '@ulam/palaman/no-autoplay-without-controls': 'error',
-      '@ulam/palaman/no-heading-inside-interactive': 'error',
-      '@ulam/palaman/no-placeholder-only': 'error',
-      '@ulam/palaman/warn-role-alert': 'warn',
-      '@ulam/palaman/prefer-aria-disabled': 'warn',
-      '@ulam/palaman/no-target-blank-without-label': 'warn',
-      '@ulam/palaman/no-empty-button': 'error',
-      '@ulam/palaman/no-image-role-without-name': 'error',
-      '@ulam/palaman/no-spinbutton-without-range': 'error',
-      '@ulam/palaman/no-slider-without-range': 'error',
-      '@ulam/palaman/no-combobox-without-expanded': 'error',
-      '@ulam/palaman/no-mouse-only-events': 'error',
+      '@a11yfred/neighbor/no-tooltip-role-misuse': 'warn',
+      '@a11yfred/neighbor/no-application-role': 'warn',
+      '@a11yfred/neighbor/no-grid-role': 'warn',
+      '@a11yfred/neighbor/no-menu-role-on-nav': 'warn',
+      '@a11yfred/neighbor/no-aria-roledescription': 'warn',
+      '@a11yfred/neighbor/no-aria-readonly': 'warn',
+      '@a11yfred/neighbor/no-href-hash': 'warn',
+      '@a11yfred/neighbor/no-tabs-without-structure': 'error',
+      '@a11yfred/neighbor/no-tab-without-controls': 'warn',
+      '@a11yfred/neighbor/no-positive-tabindex': 'error',
+      '@a11yfred/neighbor/no-autoplay-without-controls': 'error',
+      '@a11yfred/neighbor/no-heading-inside-interactive': 'error',
+      '@a11yfred/neighbor/no-placeholder-only': 'error',
+      '@a11yfred/neighbor/warn-role-alert': 'warn',
+      '@a11yfred/neighbor/prefer-aria-disabled': 'warn',
+      '@a11yfred/neighbor/no-target-blank-without-label': 'warn',
+      '@a11yfred/neighbor/no-empty-button': 'error',
+      '@a11yfred/neighbor/no-image-role-without-name': 'error',
+      '@a11yfred/neighbor/no-spinbutton-without-range': 'error',
+      '@a11yfred/neighbor/no-slider-without-range': 'error',
+      '@a11yfred/neighbor/no-combobox-without-expanded': 'error',
+      '@a11yfred/neighbor/no-mouse-only-events': 'error',
 
       // @ulam framework-specific rules
-      '@ulam/palaman/no-announce-in-render': 'error',
-      '@ulam/palaman/no-hash-router-in-remix': 'warn',
-      '@ulam/palaman/no-use-page-title-in-remix': 'warn',
+      '@a11yfred/neighbor/no-announce-in-render': 'error',
+      '@a11yfred/neighbor/no-hash-router-in-remix': 'warn',
+      '@a11yfred/neighbor/no-use-page-title-in-remix': 'warn',
 
       // Allow _-prefixed parameters in stubs and intentionally unused args
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

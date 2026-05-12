@@ -1,5 +1,5 @@
 /**
- * palaman/lib/helpers-vue.js
+ * neighbor/lib/helpers-vue.js
  * Helpers for Vue SFC AST via vue-eslint-parser.
  * Nodes: VElement (has startTag.attributes), VAttribute, VLiteral, VExpressionContainer
  *

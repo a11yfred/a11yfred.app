@@ -1,5 +1,5 @@
 /**
- * palaman/lib/ulam-rules.js
+ * neighbor/lib/ulam-rules.js
  * Lint rules specific to @ulam framework patterns.
  *
  * These rules operate on JS/JSX call expressions and import declarations,

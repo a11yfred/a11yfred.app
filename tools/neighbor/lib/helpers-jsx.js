@@ -1,5 +1,5 @@
 /**
- * palaman/lib/helpers-jsx.js
+ * neighbor/lib/helpers-jsx.js
  * Helpers for React/JSX AST (espree + @babel/eslint-parser).
  * Nodes: JSXOpeningElement, JSXAttribute, JSXElement, JSXText, JSXExpressionContainer
  *

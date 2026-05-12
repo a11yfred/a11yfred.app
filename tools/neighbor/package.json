@@ -1,0 +1,28 @@
+{
+  "name": "@a11yfred/neighbor",
+  "version": "0.0.0",
+  "description": "Accessibility linting plugin for a11yfred — Stylelint (user-preference fallbacks) and ESLint (bad ARIA patterns). Won't you be my neighbor?",
+  "type": "module",
+  "main": "./neighbor-stylelint.mjs",
+  "exports": {
+    ".": "./neighbor-stylelint.mjs",
+    "./stylelint": "./neighbor-stylelint.mjs",
+    "./eslint": "./neighbor-eslint.mjs",
+    "./eslint-vue": "./neighbor-eslint-vue.mjs",
+    "./eslint-angular": "./neighbor-eslint-angular.mjs"
+  },
+  "keywords": ["stylelint", "stylelint-plugin", "eslint", "eslint-plugin", "a11yfred", "css", "aria", "accessibility", "a11y"],
+  "peerDependencies": {
+    "eslint": ">=8",
+    "eslint-plugin-jsx-a11y": ">=6",
+    "eslint-plugin-vuejs-accessibility": ">=2",
+    "@angular-eslint/eslint-plugin-template": ">=17",
+    "stylelint": ">=14"
+  },
+  "peerDependenciesMeta": {
+    "eslint": { "optional": true },
+    "eslint-plugin-vuejs-accessibility": { "optional": true },
+    "@angular-eslint/eslint-plugin-template": { "optional": true },
+    "stylelint": { "optional": true }
+  }
+}

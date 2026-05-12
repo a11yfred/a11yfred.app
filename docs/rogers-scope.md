@@ -1,16 +1,16 @@
-# Meryenda Browser Extension — Scope
+# rogers Browser Extension — Scope
 
 ## What it is
 
 A Chrome extension that combines three things no single tool does together today:
 
 1. **Automated a11y auditing** via axe-core
-2. **Interactive visual debuggers** via meryenda
-3. **Overlay detection and blocking** via declarativeNetRequest + meryenda signatures
+2. **Interactive visual debuggers** via rogers
+3. **Overlay detection and blocking** via declarativeNetRequest + rogers signatures
 
 ## Competitive position
 
-| Capability | axe DevTools | Accessibility Insights | WAVE | ARC Toolkit | AccessiByeBye | **Meryenda** |
+| Capability | axe DevTools | Accessibility Insights | WAVE | ARC Toolkit | AccessiByeBye | **rogers** |
 | --- | --- | --- | --- | --- | --- | --- |
 | Automated rules (axe-core) | ✓ | ✓ | partial | ✓ | — | ✓ |
 | Visual focus debugger | — | partial | — | — | — | ✓ |
@@ -28,7 +28,7 @@ A Chrome extension that combines three things no single tool does together today
 extension/
   manifest.json         # MV3, declarativeNetRequest, content_scripts
   background.js         # service worker — rule updates, message routing
-  content.js            # injects meryenda debuggers into inspected page
+  content.js            # injects rogers debuggers into inspected page
   popup/
     popup.html
     popup.js
@@ -41,7 +41,7 @@ extension/
 
 ### Content script
 
-- Imports meryenda core (focus, names, headings, tabstops, overlays)
+- Imports rogers core (focus, names, headings, tabstops, overlays)
 - Receives toggle messages from popup via `chrome.runtime.onMessage`
 - Runs `axe.run()` on demand, posts results back to popup
 - Fallback DOM removal for overlays not caught at network level
@@ -67,7 +67,7 @@ extension/
 
 - `manifest.json` — MV3, permissions: `activeTab`, `scripting`, `declarativeNetRequest`, `storage`
 - `background.js` — service worker, message routing
-- `content.js` — meryenda injector + axe runner
+- `content.js` — rogers injector + axe runner
 - `popup/` — vanilla UI
 
 ### 2. Overlay blocker
@@ -76,9 +76,9 @@ extension/
 - `rules.json` generated from `OVERLAY_SIGNATURES` src domains via build script
 - DOM removal fallback in content script for anything that loads anyway
 
-### 3. Rule generator (palaman build script)
+### 3. Rule generator (neighbor build script)
 
-- Reads `meryenda/core/overlays.js` OVERLAY_SIGNATURES
+- Reads `rogers/core/overlays.js` OVERLAY_SIGNATURES
 - Outputs `extension/rules/rules.json` in declarativeNetRequest format
 - Run after `sync-overlays` to keep block list in sync with signatures
 
@@ -89,9 +89,9 @@ extension/
 - Return violations to popup, display grouped by impact level
 - Link each violation to its WCAG SC via `WCAG_CRITERIA`
 
-### 5. IS_DEV guard removal in meryenda
+### 5. IS_DEV guard removal in rogers
 
-- All meryenda overlay mounts currently check `import.meta.env.DEV`
+- All rogers overlay mounts currently check `import.meta.env.DEV`
 - Extension needs them in production — replace env guard with an `enabled` option
 - Keep IS_DEV behavior in the app by passing `enabled: import.meta.env.DEV`
 
@@ -104,18 +104,18 @@ extension/
 
 ## Open questions
 
-1. **Repo** — lives here alongside meryenda, or separate repo?
-2. **Name** — "Meryenda DevTools"? "Meryenda"? Something else entirely?
+1. **Repo** — lives here alongside rogers, or separate repo?
+2. **Name** — "rogers DevTools"? "rogers"? Something else entirely?
 3. **Auto-blocking default** — block overlays by default (opt-out) or off by default (opt-in)?
 
 ## Dependencies
 
 - `axe-core` — MPL 2.0, free to embed
-- `meryenda` (this repo) — vanilla, no framework
+- `rogers` (this repo) — vanilla, no framework
 - No other runtime dependencies
 
 ## Maintenance
 
 - `npm run sync-overlays` detects new vendors on overlayfactsheet.com
-- After adding new signatures to `meryenda/core/overlays.js`, run rule generator to update `rules.json`
+- After adding new signatures to `rogers/core/overlays.js`, run rule generator to update `rules.json`
 - Both steps can be chained: `npm run sync-overlays && npm run generate-rules`

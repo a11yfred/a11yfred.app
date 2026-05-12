@@ -1,4 +1,4 @@
-# @ulam/meryenda
+# @a11yfred/rogers
 
 Vanilla-first accessibility debug panel with a thin React wrapper. The savory layer of the [ulam](../../../docs/ulam.md) framework.
 
@@ -6,13 +6,13 @@ The React Query DevTools of accessibility. Drop it into any project, see focus, 
 
 ## Packages
 
-Meryenda is one of four ulam packages:
+rogers is one of four ulam packages:
 
 ```text
 ulam
 ├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce
 ├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic
-├── @ulam/meryenda        savory  — a11y debug panel, vanilla-first  ← you are here
+├── @a11yfred/rogers        savory  — a11y debug panel, vanilla-first  ← you are here
 └── @ulam/sawsawan     bridge  — wires the three together
 ```
 
@@ -21,7 +21,7 @@ ulam
 Vanilla-first: core inspection logic has no framework dependency. React is a thin mount/unmount wrapper.
 
 ```text
-@ulam/meryenda
+@a11yfred/rogers
 ├── core/
 │   ├── focus.js      — formatTarget, getOutlineInfo, flashElement, createFocusWatcher
 │   ├── names.js      — isControl, getAccessibleName, createNamesWatcher
@@ -35,8 +35,8 @@ Vanilla-first: core inspection logic has no framework dependency. React is a thi
 ├── DeployBanner.jsx  — pure-render React (no DOM watcher)
 ├── DebugHelp.jsx     — pure-render React
 ├── DebugLauncher.jsx — React FAB + command input
-├── AdminPanel.jsx    — app-specific (a11yhelper)
-└── AiDebugToast.jsx  — app-specific (a11yhelper)
+├── AdminPanel.jsx    — app-specific (a11yfred)
+└── AiDebugToast.jsx  — app-specific (a11yfred)
 ```
 
 The `create*Watcher` functions follow a common pattern:
@@ -96,7 +96,7 @@ import {
   FocusDebugger,
   NamesDebugger,
   DeployBanner,
-} from '@ulam/meryenda'
+} from '@a11yfred/rogers'
 
 export default function Root() {
   const [debugFocus, setDebugFocus] = useState(false)
@@ -132,9 +132,9 @@ For `DebugLauncher`, wire `onCommand` to your state setters:
 Use the vanilla core directly. Create composables that wrap `create*Watcher`:
 
 ```js
-// composables/useMeryenda.js
+// composables/useRogers.js
 import { ref, onMounted, onUnmounted } from 'vue'
-import { createFocusWatcher, createNamesWatcher } from '@ulam/meryenda'
+import { createFocusWatcher, createNamesWatcher } from '@a11yfred/rogers'
 
 export function useFocusDebugger(enabled) {
   const toast = ref(null)
@@ -173,7 +173,7 @@ Then in a component:
 ```vue
 <script setup>
 import { ref } from 'vue'
-import { useFocusDebugger } from './composables/useMeryenda'
+import { useFocusDebugger } from './composables/useRogers'
 
 const enabled = ref(true)
 const { toast } = useFocusDebugger(enabled)
@@ -190,7 +190,7 @@ const { toast } = useFocusDebugger(enabled)
 Import `debug.css` once in your app entry:
 
 ```js
-import '@ulam/meryenda/debug.css'
+import '@a11yfred/rogers/debug.css'
 ```
 
 ### Angular
@@ -201,7 +201,7 @@ Use the vanilla core in Angular services:
 // debug.service.ts
 import { Injectable, OnDestroy } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
-import { createFocusWatcher, createNamesWatcher } from '@ulam/meryenda'
+import { createFocusWatcher, createNamesWatcher } from '@a11yfred/rogers'
 
 @Injectable({ providedIn: 'root' })
 export class DebugService implements OnDestroy {
@@ -257,7 +257,7 @@ export class FocusToastComponent {
 Import `debug.css` in `angular.json` styles or your global stylesheet:
 
 ```json
-"styles": ["node_modules/@ulam/meryenda/debug.css", "src/styles.css"]
+"styles": ["node_modules/@a11yfred/rogers/debug.css", "src/styles.css"]
 ```
 
 ### Vanilla JS (script tag / no framework)
@@ -265,7 +265,7 @@ Import `debug.css` in `angular.json` styles or your global stylesheet:
 Use the watcher factories directly. Wire them to your own DOM or to nothing — just inspect:
 
 ```js
-import { createFocusWatcher, createNamesWatcher } from '@ulam/meryenda'
+import { createFocusWatcher, createNamesWatcher } from '@a11yfred/rogers'
 
 // Log focus events to the console
 const focus = createFocusWatcher(({ label, isFocusVisible }) => {
@@ -285,15 +285,15 @@ names.destroy()
 
 ---
 
-## App-specific exports (not part of @ulam/meryenda)
+## App-specific exports (not part of @a11yfred/rogers)
 
-These live in this folder but are a11yhelper-specific:
+These live in this folder but are a11yfred-specific:
 
 | Export | Description |
 | ------ | ----------- |
-| `AiDebugToast` | Toast for AI assist toggle (wired to a11yhelper AI service) |
+| `AiDebugToast` | Toast for AI assist toggle (wired to a11yfred AI service) |
 | `useAiDebugToast` | State + timer logic for AiDebugToast |
-| `AdminPanel` | Admin corpus management panel (a11yhelper data wiring) |
+| `AdminPanel` | Admin corpus management panel (a11yfred data wiring) |
 
 ---
 
@@ -315,7 +315,7 @@ Type in the search bar (live search on) or submit (live search off):
 
 All styles live in `debug.css`. Import it once — it covers all components.
 
-Meryenda CSS is self-contained and opinionated (dark, high contrast). No ube token dependency — looks the same regardless of host app theme.
+rogers CSS is self-contained and opinionated (dark, high contrast). No ube token dependency — looks the same regardless of host app theme.
 
 ---
 
