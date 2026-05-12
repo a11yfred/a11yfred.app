@@ -1,9 +1,10 @@
-import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ArrowDown, ChevronsLeft, ChevronsRight, ChevronUp, X } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ChevronsLeft, ChevronsRight, ChevronUp, X } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '../taho-bayabas/index.js'
 import { useT } from '../calamansi/index.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
+import SkipLink from './ui/SkipLink.jsx'
 import RadioChip from './ui/RadioChip.jsx'
 import IconButton from './ui/IconButton.jsx'
 import Badge from './ui/Badge.jsx'
@@ -585,13 +586,12 @@ export default function ResultList({ results, selected, onSelect, query, ratings
             el.style.transform = ''
           }
 
-          function handleSkipToNext() {
-            const nextIndex = index + 1
-            if (nextIndex < displayResults.length) {
-              itemRefs.current[displayResults[nextIndex].id]?.focus()
-            } else {
-              itemRefs.current[displayResults[0].id]?.focus()
-            }
+          const nextFinding = displayResults[index + 1] ?? displayResults[0]
+          const skipHref = `#result-${nextFinding.id}`
+
+          function handleSkipToNext(e) {
+            e.preventDefault()
+            itemRefs.current[nextFinding.id]?.focus()
           }
 
           const swipeClass = swipeIsOpen ? ` result-row--swipe-${swipeSide}` : ''
@@ -599,6 +599,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
           return (
             <Fragment key={finding.id}>
             <li
+              id={`result-${finding.id}`}
               data-swipe-id={finding.id}
               className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}`}
               style={{ '--result-i': index }}
@@ -673,8 +674,8 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   </a>
 
                   {showRankingSort && index < displayResults.length - 1 && (
-                    <button
-                      type="button"
+                    <SkipLink
+                      href={skipHref}
                       tabIndex={archived ? -1 : 0}
                       onClick={handleSkipToNext}
                       onFocus={(e) => {
@@ -685,11 +686,9 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                         const row = e.currentTarget.closest('li.result-row')
                         if (row) row.classList.remove('result-row--skip-focused')
                       }}
-                      className="skip-link"
                     >
                       {t('results.skip_to_next')}
-                      <ArrowDown size={14} aria-hidden="true" />
-                    </button>
+                    </SkipLink>
                   )}
                   {onPin && (
                     <IconButton

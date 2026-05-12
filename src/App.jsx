@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
-import { Settings, X, Info, HelpCircle, ArrowDown, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon } from 'lucide-react'
+import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
@@ -7,6 +7,7 @@ import AboutPanel from './components/AboutPanel.jsx'
 import HelpPanel from './components/HelpPanel.jsx'
 import OnboardingPanel from './components/OnboardingPanel.jsx'
 import IconButton from './components/ui/IconButton.jsx'
+import SkipLink from './components/ui/SkipLink.jsx'
 import Confetti from './components/Confetti.jsx'
 import FiestaSparkles from './components/FiestaSparkles.jsx'
 import FiestaMusicPlayer from './components/FiestaMusicPlayer.jsx'
@@ -1335,14 +1336,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
   const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
-      <button
-        type="button"
-        className="skip-link"
-        onClick={() => document.getElementById(skipTarget)?.focus()}
-      >
-        {t('common.skip_to_main')}
-        <ArrowDown size={14} aria-hidden="true" />
-      </button>
+      <SkipLink href={`#${skipTarget}`}>{t('common.skip_to_main')}</SkipLink>
       {!compact && (
         <a
           href={URL_GITHUB_REPO}
