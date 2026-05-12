@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 const COLORS = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b', '#cc5de8', '#ff6b81', '#74c0fc']
 const COUNT = 14
 
-export default function EffectFiestaSparkles({ active }) {
+export default function ThemeEffectFiestaSparkles({ active }) {
   const canvasRef = useRef(null)
   const particlesRef = useRef([])
   const animRef = useRef(null)

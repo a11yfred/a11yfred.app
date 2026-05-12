@@ -34,7 +34,11 @@ import useThemeManager from './hooks/useThemeManager.js'
 import { I18nProvider, useT } from './calamansi/react.js'
 import { initI18n } from './calamansi/index.js'
 import I18N_LOCALES from './i18n-locales.js'
+import { initHalohalo } from './halohalo/index.js'
+import { buildPrompt, AGENTIC_SYSTEM_PROMPT } from './ai-config.js'
+import RTL_LOCALES from './rtl-locales.js'
 initI18n(I18N_LOCALES)
+initHalohalo({ buildPrompt, systemPrompt: AGENTIC_SYSTEM_PROMPT })
 import { useSawsawan } from './sawsawan/react.js'
 import useUserFindings from './hooks/useUserFindings.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
@@ -554,7 +558,7 @@ function AppContent({
     )
   })
 
-  useSawsawan(language, t)
+  useSawsawan(language, t, null, RTL_LOCALES)
 
   useEffect(() => {
     if (!EASTER_EGG_LOCALES.has(language)) {

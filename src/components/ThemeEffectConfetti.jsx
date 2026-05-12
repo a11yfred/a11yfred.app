@@ -19,7 +19,7 @@ function makeParticle(canvasWidth, canvasHeight) {
   }
 }
 
-export default function EffectConfetti({ active }) {
+export default function ThemeEffectConfetti({ active }) {
   const canvasRef = useRef(null)
   const animRef = useRef(null)
   const startTimeRef = useRef(null)

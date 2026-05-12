@@ -10,7 +10,7 @@ function rndPos() {
   }
 }
 
-export default function WidgetFiestaMusicPlayer({ active }) {
+export default function ThemeWidgetFiestaMusicPlayer({ active }) {
   const t = useT()
   const [playing, setPlaying] = useState(false)
   const [pos, setPos] = useState(() => rndPos())

@@ -1,4 +1,5 @@
 // vanilla core
+export { initHalohalo } from './init.js'
 export { AiApiError, httpStatusToErrorType, PROVIDER_CONFIGS } from './providers.js'
 export { callProvider, callAnthropicWithTools } from './fetch.js'
 export { searchItems, makeSearchTool } from './search.js'

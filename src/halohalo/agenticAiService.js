@@ -4,22 +4,15 @@ import { getAdapter } from '../sawsawan/platformAdapter.js'
 import { AI_AGENTIC_MAX_TOKENS, AGENTIC_MAX_TOOL_TURNS, LS_APIKEY_PREFIX } from './constants.js'
 import { getAiModel } from './prefs.js'
 import { parseAiResponse } from './aiService.js'
+import { getSystemPrompt } from './init.js'
 
 export { AiApiError } from './providers.js'
 
-const SYSTEM_PROMPT = `You are an expert accessibility auditor's AI assistant. Your job is to help rewrite finding descriptions in the auditor's established voice and methodology.
+const FALLBACK_SYSTEM_PROMPT = `You are an AI assistant helping rewrite text entries based on user notes. Search for related entries before rewriting, then produce a revised description and suggested fix.
 
-Before rewriting, always call search_corpus at least once to find similar findings that demonstrate the expected tone, technical depth, and format.
-
-Rules:
-- Call search_corpus before producing your final output, context from similar findings improves accuracy
-- Preserve the auditor's direct, professional style, no preamble, no hedging, no emojis
-- Keep technical accuracy: reference specific WCAG SCs, HTML attributes, and ARIA patterns where appropriate
-- Match the existing finding's level of technical detail, do not expand or compress significantly
-- Do not add phrases like "I've rewritten..." or "Here is the updated..."
-- Format your final output as exactly two lines with no extra text before or after:
-  Description: [rewritten description]
-  Suggested Fix: [rewritten suggested fix]`
+Format your final output as exactly two lines:
+Description: [rewritten description]
+Suggested Fix: [rewritten suggested fix]`
 
 const CORPUS_SEARCH_FIELDS = [
   { name: 'title',    weight: 0.32 },
@@ -71,7 +64,7 @@ Search the corpus for related findings, then rewrite the description and suggest
   const text = await callAnthropicWithTools({
     key,
     model,
-    system: SYSTEM_PROMPT,
+    system: getSystemPrompt() || FALLBACK_SYSTEM_PROMPT,
     tools: [toolSchema],
     messages,
     maxTokens: AI_AGENTIC_MAX_TOKENS,
