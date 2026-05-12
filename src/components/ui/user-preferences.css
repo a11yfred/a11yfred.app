@@ -1,0 +1,173 @@
+/* ─── User Preference Overrides ───────────────────────────────
+   Framework-level responses to OS/browser user preferences.
+   Each section is a placeholder for ulam users to extend.
+
+   Component-scoped prefers-reduced-motion rules live in each
+   component's own CSS file as well — this file handles the
+   framework-level token and layout fallbacks.
+──────────────────────────────────────────────────────────── */
+
+/* ── prefers-reduced-motion ───────────────────────────────────
+   Snap all transitions and animations to instant.
+   Component-level keyframe rules belong in each component's
+   CSS; this covers the shared token layer. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+  }
+
+  /* Snap any animation that slipped through to a single frame */
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── prefers-reduced-transparency ────────────────────────────
+   Replace translucent surfaces with fully opaque equivalents.
+   opacity-based disabled/decorative states are given solid
+   color fallbacks via color tokens so no information is lost. */
+@media (prefers-reduced-transparency: reduce) {
+  /* Overlay backdrop */
+  :root {
+    --overlay-bg: #000;
+  }
+
+  /* Disabled controls — swap opacity dim for an explicit muted color */
+  .btn--primary:disabled,
+  .btn--secondary:disabled,
+  .btn--tertiary:disabled,
+  .btn--warning:disabled,
+  .toggle:has(.toggle__input:disabled),
+  .app-checkbox:disabled,
+  .control:disabled,
+  .search-input-submit:disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+    border-color: var(--border);
+  }
+
+  .search-input-field--disabled,
+  input.search-input--disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+
+  .result-rank-btn:disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+
+  /* Archived result rows — replace opacity dim with muted color */
+  .result-row--archived .result-pin-btn,
+  .result-row--archived .result-rank-btn:not(.result-rank-btn--archive),
+  .result-row--archived .result-rank-score,
+  .result-row--archived .result-item__badges,
+  .result-row--archived .result-item__sc,
+  .result-row--archived .result-item__desc {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+
+  /* Folded card content (no-selection state) — use visibility instead of opacity */
+  .app-background:not([data-sheet-collapsed]) .result-list--has-selection
+    .result-row:not(:has(.result-item--selected)) .result-item__sc,
+  .app-background:not([data-sheet-collapsed]) .result-list--has-selection
+    .result-row:not(:has(.result-item--selected)) .result-item__desc {
+    opacity: 1;
+    visibility: hidden;
+  }
+
+  /* Decorative / secondary opacity dims — swap for muted token */
+  .result-swipe-hint__chevron {
+    opacity: 1;
+    color: var(--text-muted);
+  }
+
+  .announce-toast__badge {
+    opacity: 1;
+    color: inherit;
+  }
+
+  .help-tour-banner__icon {
+    opacity: 1;
+  }
+
+  .header-github-link .external-link-icon {
+    opacity: 1;
+    color: var(--text-muted);
+  }
+
+  .onboarding-arrow-btn:hover,
+  .onboarding-arrow-btn:focus-visible {
+    opacity: 1;
+    color: var(--text-muted);
+  }
+
+  /* Toast / overlay backgrounds — replace alpha with opaque equivalents */
+  .announce-toast {
+    background: #111;
+  }
+
+  .announce-toast--assertive {
+    background: #b40000;
+  }
+
+  /* Fading animation — collapse instantly instead of fading */
+  .announce-toast--fading {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ── prefers-contrast ─────────────────────────────────────────
+   Increase text/border contrast for users who have requested it
+   (WCAG 1.4.6). */
+@media (prefers-contrast: more) {
+  :root {
+    --text-body:      #383838;
+    --text-muted:     #484848;
+    --border-control: #484848;
+    --border:         #999;
+  }
+
+  [data-theme="dark"] {
+    --text-body:      #ccc;
+    --text-muted:     #bbb;
+    --border-control: #aaa;
+    --border:         #555;
+  }
+}
+
+@media (prefers-contrast: less) {
+  /* placeholder */
+}
+
+/* ── prefers-color-scheme ─────────────────────────────────────
+   Automatic dark/light mode when no [data-theme] override is
+   present. Theme toggling in this app is handled via
+   [data-theme="dark"] on <html>; add fallback rules here if
+   you want OS-level color scheme to apply without JS. */
+@media (prefers-color-scheme: dark) {
+  /* placeholder */
+}
+
+/* ── forced-colors ────────────────────────────────────────────
+   Windows High Contrast / Forced Colors mode. The browser
+   replaces most colors with system keywords. Use this block to
+   restore structure lost in the replacement (borders on
+   borderless elements, focus rings, icon fills). */
+@media (forced-colors: active) {
+  /* placeholder */
+}
+
+/* ── prefers-reduced-data ─────────────────────────────────────
+   Omit non-essential network requests: web fonts, heavy
+   background images, auto-loaded media. */
+@media (prefers-reduced-data: reduce) {
+  /* placeholder */
+}
