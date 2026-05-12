@@ -97,3 +97,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 ## License
 
 MIT
+
+---
+
+*Built with help from Claude.*
