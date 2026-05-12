@@ -5,8 +5,15 @@
   "private": true,
   "keywords": ["ai", "llm", "completion", "anthropic", "openai", "tool-use", "react", "hooks", "ulam"],
   "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./react": "./react.js"
+  },
   "peerDependencies": {
     "react": ">=18",
     "fuse.js": ">=7"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
   }
 }

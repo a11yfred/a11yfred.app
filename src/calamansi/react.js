@@ -4,6 +4,24 @@
  * Thin React wrappers around the vanilla calamansi module API.
  * Use these in React apps during transition; vanilla consumers import
  * directly from '@ulam/calamansi'.
+ *
+ * REMIX 3 MIGRATION — I18nProvider:
+ *   In Remix 3, locale comes from a loader, not a React provider.
+ *   Replace <I18nProvider locale={locale}> in root.jsx with:
+ *
+ *     // app/root.jsx
+ *     export async function loader({ request }) {
+ *       const locale = detectLocale(request)   // your locale detection logic
+ *       return { locale }
+ *     }
+ *     export default function Root() {
+ *       const { locale } = useLoaderData()
+ *       setLocale(locale)                      // vanilla call — no provider needed
+ *       return <Outlet />
+ *     }
+ *
+ *   I18nProvider can then be deleted. All useT() calls continue to work
+ *   because setLocale() notifies the same subscriber set.
  */
 import { useState, useEffect, useCallback } from 'react'
 import { setLocale, getT, _subscribe, getPref, setPref } from './index.js'
@@ -13,6 +31,9 @@ import { setLocale, getT, _subscribe, getPref, setPref } from './index.js'
  * Children can call useT() anywhere in the tree without prop drilling.
  *
  * @param {{ locale: string, children: React.ReactNode }} props
+ *
+ * @deprecated Replace with a direct setLocale() call in the Remix 3 root loader.
+ *   See REMIX 3 MIGRATION note at the top of this file.
  */
 export function I18nProvider({ locale, children }) {
   useEffect(() => {

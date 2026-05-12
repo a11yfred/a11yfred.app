@@ -3,12 +3,12 @@ import { ArrowLeft } from 'lucide-react'
 import { useT } from '../calamansi/react.js'
 import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
-import ExternalLinkIcon from './ui/ExternalLinkIcon.jsx'
+import IconExternalLink from './ui/IconExternalLink.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import './A11yPanelAbout.css'
 
 function ExtLink({ href, children }) {
-  return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<ExternalLinkIcon /></a>
+  return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<IconExternalLink /></a>
 }
 
 export default function A11yPanelAbout({ onClose, allFindings = [] }) {
@@ -96,7 +96,7 @@ export default function A11yPanelAbout({ onClose, allFindings = [] }) {
         <p className="panel-body">{t('about.sources_intro')}</p>
         <ul className="about-sources-list panel-body">
           <li>
-            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="panel-inline-link">WCAG 2.2 Understanding documents<ExternalLinkIcon /></a>
+            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="panel-inline-link">WCAG 2.2 Understanding documents<IconExternalLink /></a>
             {' '}(W3C / WAI)
           </li>
           <li>

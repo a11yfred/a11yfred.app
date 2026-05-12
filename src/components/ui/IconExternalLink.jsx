@@ -1,6 +1,6 @@
-import './ExternalLinkIcon.css'
+import './IconExternalLink.css'
 
-export default function ExternalLinkIcon({ size = 11, className = '' }) {
+export default function IconExternalLink({ size = 11, className = '' }) {
   return (
     <svg
       aria-hidden="true"

@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
-import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon } from 'lucide-react'
+import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
 import A11yListResult, { A11yListResultSkeleton, DataError, PinnedSection } from './components/A11yListResult.jsx'
 import SheetDetail from './components/SheetDetail.jsx'
@@ -905,6 +905,7 @@ function AppContent({
             heading={t('error.heading')}
             body={t('error.body')}
             retryLabel={t('error.retry')}
+            retryIcon={() => <RotateCcw size={12} strokeWidth={2} aria-hidden="true" />}
             onMount={() => announce(t('error.announce'), { priority: 'assertive' })}
           />
         : dataLoading || viewAllLoading
@@ -1278,6 +1279,10 @@ function AppContent({
         onBack={findingHistory.length > 0 ? handleBack : undefined}
         backLabel={t('detail.back_aria')}
         hideCloseBottom
+        closeIcon={() => <X size={20} strokeWidth={2.5} aria-hidden="true" />}
+        backLtrIcon={() => <ChevronLeft size={20} strokeWidth={2.5} aria-hidden="true" />}
+        backRtlIcon={() => <ChevronRight size={20} strokeWidth={2.5} aria-hidden="true" />}
+        collapseIcon={() => <ChevronsUp size={16} strokeWidth={2} aria-hidden="true" />}
       >
         {selected && (
           <SheetDetail

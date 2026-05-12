@@ -5,7 +5,14 @@
   "private": true,
   "keywords": ["i18n", "internationalization", "react", "hooks", "utilities", "ulam"],
   "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./react": "./react.js"
+  },
   "peerDependencies": {
     "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
   }
 }

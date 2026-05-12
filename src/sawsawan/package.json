@@ -5,10 +5,17 @@
   "private": true,
   "keywords": ["ulam", "integration", "bridge", "react"],
   "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./react": "./react.js"
+  },
   "peerDependencies": {
     "react": ">=18",
     "@ulam/ube": "*",
     "@ulam/calamansi": "*",
     "@ulam/adobo": "*"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
   }
 }
