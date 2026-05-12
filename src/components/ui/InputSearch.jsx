@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { Search, X } from 'lucide-react'
 import './SearchInput.css'
 
 /**
@@ -11,7 +10,7 @@ import './SearchInput.css'
  *
  * Pair with a visible <label> or pass label to set aria-label on the form.
  */
-export default function SearchInput({
+export default function InputSearch({
   id,
   value,
   onChange,
@@ -94,7 +93,9 @@ export default function SearchInput({
             onClick={handleClear}
             aria-label={clearAriaLabel}
           >
-            <X size={16} aria-hidden="true" />
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         )}
 
@@ -105,7 +106,9 @@ export default function SearchInput({
             aria-label={submitAriaLabel}
             disabled={disabled || !hasValue}
           >
-            <Search size={18} aria-hidden="true" />
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
           </button>
         )}
       </div>

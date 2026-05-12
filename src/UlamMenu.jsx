@@ -13,7 +13,7 @@ import Toggle from './components/ui/Toggle.jsx'
 import Select from './components/ui/Select.jsx'
 import InputWithClear from './components/ui/InputWithClear.jsx'
 import Panel from './components/ui/Panel.jsx'
-import SearchInput from './components/ui/SearchInput.jsx'
+import InputSearch from './components/ui/InputSearch.jsx'
 import { BottomSheet, Modal, Drawer } from './siling-labuyo/index.js'
 import { usePref } from './calamansi/react.js'
 import { setLocale, getT } from './calamansi/index.js'
@@ -266,9 +266,9 @@ export default function UlamMenu() {
           </Row>
         </Section>
 
-        <Section title="SearchInput">
+        <Section title="InputSearch">
           <Row label="Live search">
-            <SearchInput
+            <InputSearch
               id="search-live"
               value={searchVal}
               onChange={setSearchVal}
@@ -279,7 +279,7 @@ export default function UlamMenu() {
             />
           </Row>
           <Row label="Submit mode">
-            <SearchInput
+            <InputSearch
               id="search-submit"
               value={searchVal}
               onChange={setSearchVal}
@@ -298,7 +298,7 @@ export default function UlamMenu() {
             </label>
           </Row>
           <Row label="With toggle">
-            <SearchInput
+            <InputSearch
               id="search-toggled"
               value={searchVal}
               onChange={setSearchVal}
@@ -311,7 +311,7 @@ export default function UlamMenu() {
             />
           </Row>
           <Row label="Disabled">
-            <SearchInput
+            <InputSearch
               id="search-disabled"
               value=""
               onChange={() => {}}
