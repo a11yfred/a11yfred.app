@@ -21,9 +21,7 @@
   text-align: left;
 }
 
-.radio-chip-group {
-  display: flex;
-  gap: 0;
+.settings-panel .radio-chip-group {
   margin-bottom: 2em;
 }
 

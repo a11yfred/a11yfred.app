@@ -981,6 +981,13 @@ select:disabled {
   color: var(--text-body);
 }
 
+/* ─── Radio chip group ─────────────────────────────────────── */
+
+.radio-chip-group {
+  display: flex;
+  gap: 0;
+}
+
 /* ─── Panel radio group ────────────────────────────────────── */
 
 .panel-radio-legend {
