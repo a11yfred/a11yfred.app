@@ -89,7 +89,7 @@ if (!hasChanges) {
   if (newVendors.length > 0) {
     console.log('NEW vendors on factsheet not in our signatures:')
     for (const v of newVendors) console.log(`  + ${v}`)
-    console.log('\nAdd these to src/plugins/adobo/core/overlays.js with their CDN domain and global.\n')
+    console.log('\nAdd these to tools/adobo/core/overlays.js with their CDN domain and global.\n')
   }
 
   if (removedVendors.length > 0) {

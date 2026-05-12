@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import react from 'eslint-plugin-react'
-import palaman from './src/palaman/palaman-eslint.mjs'
+import palaman from './tools/palaman/palaman-eslint.mjs'
 
 export default [
   js.configs.recommended,

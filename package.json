@@ -12,7 +12,7 @@
     "lint:md": "markdownlint \"docs/**/*.md\" README.md",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:md",
     "translate": "node scripts/translate-missing.mjs",
-    "sync-overlays": "node src/palaman/sync-overlays.mjs"
+    "sync-overlays": "node tools/palaman/sync-overlays.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
