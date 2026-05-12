@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
-import { Settings, X, Info, HelpCircle, ArrowDown, ClipboardPaste, Hand } from 'lucide-react'
+import { Settings, X, Info, HelpCircle, ArrowDown, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon } from 'lucide-react'
 import SearchBar from './components/SearchBar.jsx'
 import ResultList, { ResultListSkeleton, DataError, PinnedSection } from './components/ResultList.jsx'
 import DetailPanel from './components/DetailPanel.jsx'
@@ -11,9 +11,10 @@ import Confetti from './components/Confetti.jsx'
 import PartySparkles from './components/PartySparkles.jsx'
 import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
 import useFindingSearch from './hooks/useFindingSearch.js'
-import { useItemSignals, usePinnedItems, useCoSelection } from './calamansi/relevance.js'
-import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_FINDINGS, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_FINDINGS, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP } from './utils/constants.js'
-import { getStorage, setStorage, setStorageJson, getStorageJson, getSession, setSession, removeSession, getAiProvider, getProviderLabel, isAgenticModeEnabled, clearAllStorage } from './utils/storage.js'
+import { useItemSignals, usePinnedItems, useCoSelection } from './hooks/relevance.js'
+import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_FINDINGS, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_FINDINGS, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP } from './utils/constants.js'
+import { getStorage, setStorage, setStorageJson, getStorageJson, getSession, setSession, removeSession, clearAllStorage } from './utils/storage.js'
+import { getAiProvider, getProviderLabel, isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from './halohalo/index.js'
 import {
   Router,
   useRouter,
@@ -23,9 +24,9 @@ import {
   Modal,
   useMediaQuery,
   returnFocus,
-} from './plugins/router/index.js'
-import { Announcer, announce } from './plugins/announce/index.js'
-import { FocusDebugger, NamesDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher } from './plugins/adobo/index.js'
+} from './siling-labuyo/index.js'
+import { Announcer, announce } from './taho-bayabas/index.js'
+import { FocusDebugger, NamesDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from './plugins/adobo/index.js'
 import useThemeManager from './hooks/useThemeManager.js'
 import { I18nProvider, useT } from './calamansi/index.jsx'
 import { useSawsawan } from './sawsawan/index.js'
@@ -222,6 +223,8 @@ function AppContent({
   const [deployTarget, setDeployTarget] = useState(null)  // null | 'netlify' | 'pages' | 'vercel' | 'off'
   const [debugHelpOpen, setDebugHelpOpen] = useState(false)
   const [debugPanelCmd, setDebugPanelCmd] = useState(null)
+  const [tabStopsEnabled, setTabStopsEnabled] = useState(false)
+  const [headingMapEnabled, setHeadingMapEnabled] = useState(false)
   const handleCloseSettings = () => {
     if (returnViewAllRef.current && !returnToPanelRef.current) {
       returnViewAllRef.current = false
@@ -685,6 +688,10 @@ function AppContent({
     if (lq === 'debug fab' || lq === 'debug fab on')  { setFabEnabled(true);  setQuery(''); return true }
     if (lq === 'debug fab off')                       { setFabEnabled(false); setQuery(''); return true }
     if (lq === 'debug admin')                         { navigate('/admin');   setQuery(''); return true }
+    if (lq === 'debug tab stops' || lq === 'debug tab stops on')  { setTabStopsEnabled(true);  setQuery(''); return true }
+    if (lq === 'debug tab stops off')                             { setTabStopsEnabled(false); setQuery(''); return true }
+    if (lq === 'debug heading map' || lq === 'debug heading map on')  { setHeadingMapEnabled(true);  setQuery(''); return true }
+    if (lq === 'debug heading map off')                               { setHeadingMapEnabled(false); setQuery(''); return true }
     // Detail Panel debug triggers, routed via prop; require a finding to be selected
     if (DEBUG_COMMAND_VALUES.includes(lq)) {
       setDebugPanelCmd(lq); setQuery(submittedQuery); return true
@@ -1122,6 +1129,8 @@ function AppContent({
           {devAllEnabled && <FocusDebugger />}
         </div>
         <NamesDebugger enabled={namesEnabled} />
+        <TabStopsDebugger enabled={tabStopsEnabled} />
+        <HeadingMapDebugger enabled={headingMapEnabled} />
         <DeployBanner target={deployTarget} />
       </>}
       {import.meta.env.DEV && <>
@@ -1132,10 +1141,12 @@ function AppContent({
             {
               heading: 'Custom, A11yHelper',
               rows: [
-                { cmd: 'debug skeleton',  desc: 'Skeleton loading state' },
-                { cmd: 'debug ai assist', desc: 'AI Assist on' },
-                { cmd: 'debug fab off',   desc: 'Hide this FAB' },
-                { cmd: 'debug admin',     desc: 'Open Admin panel' },
+                { cmd: 'debug tab stops',   desc: 'Tab order overlay' },
+                { cmd: 'debug heading map', desc: 'Heading hierarchy overlay' },
+                { cmd: 'debug skeleton',    desc: 'Skeleton loading state' },
+                { cmd: 'debug ai assist',   desc: 'AI Assist on' },
+                { cmd: 'debug fab off',     desc: 'Hide this FAB' },
+                { cmd: 'debug admin',       desc: 'Open Admin panel' },
               ],
             },
             {
@@ -1159,10 +1170,12 @@ function AppContent({
               heading: 'Custom, A11yHelper',
               note: <>Append <code>off</code> to disable (e.g. <code>debug ai assist off</code>).</>,
               rows: [
-                { cmd: 'debug skeleton',   desc: 'Skeleton loading state' },
-                { cmd: 'debug ai assist',  desc: 'AI Assist + debug toast' },
-                { cmd: 'debug fab',        desc: 'Floating debug button (DebugLauncher)' },
-                { cmd: 'debug admin',      desc: 'Admin panel (corpus stats + debug controls)' },
+                { cmd: 'debug tab stops',    desc: 'Tab order overlay — records focus sequence as you Tab through the page' },
+                { cmd: 'debug heading map',  desc: 'Heading hierarchy overlay + floating outline panel' },
+                { cmd: 'debug skeleton',     desc: 'Skeleton loading state' },
+                { cmd: 'debug ai assist',    desc: 'AI Assist + debug toast' },
+                { cmd: 'debug fab',          desc: 'Floating debug button (DebugLauncher)' },
+                { cmd: 'debug admin',        desc: 'Admin panel (corpus stats + debug controls)' },
               ],
             },
             {
@@ -1322,14 +1335,14 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
   const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
-      <a
-        href="#/"
+      <button
+        type="button"
         className="skip-link"
-        onClick={(e) => { e.preventDefault(); document.getElementById(skipTarget)?.focus() }}
+        onClick={() => document.getElementById(skipTarget)?.focus()}
       >
         {t('common.skip_to_main')}
         <ArrowDown size={14} aria-hidden="true" />
-      </a>
+      </button>
       {!compact && (
         <a
           href={URL_GITHUB_REPO}
@@ -1388,11 +1401,11 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
           <AppTitle t={t} />
         </h1>
       ) : (
-        <a href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
-          <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'}>
+        <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'}>
+          <a href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
             <AppTitle t={t} />
-          </h1>
-        </a>
+          </a>
+        </h1>
       )}
 
       {!compact && (
@@ -1439,7 +1452,7 @@ function NotFoundPage() {
       <p className="not-found__body">{t('notfound.body')}</p>
       <button
         onClick={() => navigate('/')}
-        className="btn--primary not-found__btn"
+        className="btn--primary"
       >
         {t('notfound.button')}
       </button>

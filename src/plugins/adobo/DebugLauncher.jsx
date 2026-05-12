@@ -1,5 +1,13 @@
-import { useState } from 'react'
-import { useEscapeKey } from '../../plugins/router/index.js'
+import { useState, useRef, useEffect } from 'react'
+
+function useEscapeKey(isActive, onEscape) {
+  useEffect(() => {
+    if (!isActive) return
+    const handler = (e) => { if (e.key === 'Escape') onEscape() }
+    document.addEventListener('keydown', handler)
+    return () => document.removeEventListener('keydown', handler)
+  }, [isActive, onEscape])
+}
 
 const IS_DEV = import.meta.env.DEV
 
@@ -40,28 +48,72 @@ const STANDARD_SECTIONS = [
 ]
 
 /**
- * Floating debug launcher, pill FAB that opens a clickable command menu.
+ * Floating debug launcher — pill FAB with two modes:
+ *
+ *   Menu mode   (default) — clickable command list, same as before.
+ *   Input mode  — a spotlight-style text field that fires onCommand on Enter.
+ *                 Activated by clicking the ⌨ icon in the menu header, or by
+ *                 pressing "/" while the menu is open.
+ *
+ * The input mode is the self-contained path for projects that don't have a
+ * dedicated search input to hook into. The onCommand prop works identically
+ * in both modes.
  *
  * Props:
- *   enabled         boolean                   , override ENABLED constant
- *   position        string                    , override POSITION constant
- *   onCommand       fn(cmd) → boolean         , called when a command button is clicked
- *   customSections  [{ heading, rows: [{cmd, desc}] }] , project-specific command groups
+ *   enabled         boolean                              override ENABLED constant
+ *   position        string                               override POSITION constant
+ *   onCommand       fn(cmd) → boolean                   called for every fired command
+ *   customSections  [{ heading, rows: [{cmd, desc}] }]  project-specific command groups
  */
 export function DebugLauncher({ enabled = ENABLED, position = POSITION, onCommand, customSections = [] }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen]           = useState(false)
+  const [inputMode, setInputMode] = useState(false)
+  const [inputVal, setInputVal]   = useState('')
+  const inputRef = useRef(null)
 
-  useEscapeKey(open, () => setOpen(false))
+  useEscapeKey(open, () => close())
 
-  if (!IS_DEV || !enabled) return null
+  // Auto-focus the input when switching to input mode
+  useEffect(() => {
+    if (inputMode && open) inputRef.current?.focus()
+  }, [inputMode, open])
 
-  const posStyle = POSITION_STYLES[position] ?? POSITION_STYLES['bottom-right']
-  const allSections = [...STANDARD_SECTIONS, ...customSections]
+  // Press "/" while menu is open → jump to input mode
+  useEffect(() => {
+    if (!open) return
+    const handleKey = (e) => {
+      if (e.key === '/' && !inputMode) {
+        e.preventDefault()
+        setInputMode(true)
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [open, inputMode])
+
+  function close() {
+    setOpen(false)
+    setInputMode(false)
+    setInputVal('')
+  }
 
   function fire(cmd) {
     onCommand?.(cmd)
-    setOpen(false)
+    close()
   }
+
+  function handleInputKeyDown(e) {
+    if (e.key === 'Enter') {
+      const cmd = inputVal.trim()
+      if (cmd) fire(cmd)
+    }
+    if (e.key === 'Escape') close()
+  }
+
+  if (!IS_DEV || !enabled) return null
+
+  const posStyle  = POSITION_STYLES[position] ?? POSITION_STYLES['bottom-right']
+  const allSections = [...STANDARD_SECTIONS, ...customSections]
 
   return (
     <>
@@ -89,35 +141,85 @@ export function DebugLauncher({ enabled = ENABLED, position = POSITION, onComman
       {open && (
         <>
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-          <div className="debug-fab-menu-backdrop" onClick={() => setOpen(false)} />
-          <div className="debug-fab-menu" style={posStyle} role="menu">
-            <div className="debug-fab-menu__header">
-              <span className="debug-fab-menu__title">Debug</span>
-              <button
-                className="debug-fab-menu__close"
-                onClick={() => setOpen(false)}
-                aria-label="Close debug menu"
-              >✕</button>
+          <div className="debug-fab-menu-backdrop" onClick={close} />
+
+          {inputMode ? (
+            /* ── Input / spotlight mode ── */
+            <div className="debug-fab-menu debug-fab-menu--input" style={posStyle}>
+              <div className="debug-fab-menu__header">
+                <span className="debug-fab-menu__title">Command</span>
+                <button
+                  className="debug-fab-menu__close"
+                  onClick={() => { setInputMode(false); setInputVal('') }}
+                  aria-label="Back to menu"
+                >←</button>
+              </div>
+              <input
+                ref={inputRef}
+                className="debug-spotlight-input debug-fab-input"
+                type="text"
+                placeholder="debug …"
+                value={inputVal}
+                onChange={e => setInputVal(e.target.value)}
+                onKeyDown={handleInputKeyDown}
+                aria-label="Debug command input"
+                autoComplete="off"
+                spellCheck={false}
+              />
+              <p className="debug-spotlight-hint">
+                Type a command and press <code>Enter</code> — <code>Esc</code> to close
+              </p>
             </div>
-            <div className="debug-fab-menu__body">
-              {allSections.map(section => (
-                <div key={section.heading} className="debug-fab-menu__section">
-                  <div className="debug-fab-menu__section-title">{section.heading}</div>
-                  {section.rows.map(row => (
-                    <button
-                      key={row.cmd}
-                      className="debug-fab-menu__row"
-                      onClick={() => fire(row.cmd)}
-                      role="menuitem"
-                    >
-                      <code className="debug-fab-menu__cmd">{row.cmd}</code>
-                      <span className="debug-fab-menu__desc">{row.desc}</span>
-                    </button>
-                  ))}
+          ) : (
+            /* ── Menu mode ── */
+            // eslint-disable-next-line @ulam/palaman/no-menu-role-on-nav -- true command-palette app menu, not site navigation
+            <div className="debug-fab-menu" style={posStyle} role="menu">
+              <div className="debug-fab-menu__header">
+                <span className="debug-fab-menu__title">Debug</span>
+                <div className="debug-fab-menu__header-actions">
+                  <button
+                    className="debug-fab-menu__icon-btn"
+                    onClick={() => setInputMode(true)}
+                    aria-label="Open command input"
+                    title="Type a command  (/)"
+                  >
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none">
+                      <rect x="1.5" y="1.5" width="13" height="10" rx="2" stroke="currentColor" strokeWidth="1.4"/>
+                      <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                  <button
+                    className="debug-fab-menu__close"
+                    onClick={close}
+                    aria-label="Close debug menu"
+                  >✕</button>
                 </div>
-              ))}
+              </div>
+              <div className="debug-fab-menu__body">
+                {allSections.map(section => (
+                  <div key={section.heading} className="debug-fab-menu__section">
+                    <div className="debug-fab-menu__section-title">{section.heading}</div>
+                    {/* eslint-disable @ulam/palaman/no-menu-role-on-nav -- true command-palette app menu */}
+                    {section.rows.map(row => (
+                      <button
+                        key={row.cmd}
+                        className="debug-fab-menu__row"
+                        onClick={() => fire(row.cmd)}
+                        role="menuitem"
+                      >
+                        <code className="debug-fab-menu__cmd">{row.cmd}</code>
+                        <span className="debug-fab-menu__desc">{row.desc}</span>
+                      </button>
+                    ))}
+                    {/* eslint-enable @ulam/palaman/no-menu-role-on-nav */}
+                  </div>
+                ))}
+                <div className="debug-fab-menu__input-hint">
+                  Press <kbd>/</kbd> to type a command
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </>
       )}
     </>
