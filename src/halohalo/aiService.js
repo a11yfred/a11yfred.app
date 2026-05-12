@@ -1,9 +1,9 @@
-import { callProvider } from '../halohalo/index.js'
+import { callProvider } from './fetch.js'
 import { getAdapter } from '../sawsawan/platformAdapter.js'
-import { AI_MAX_TOKENS, AI_DESC_REGEX, AI_FIX_REGEX, LS_APIKEY_PREFIX } from '../utils/constants.js'
-import { getAiProvider, getAiModel } from '../utils/storage.js'
+import { AI_MAX_TOKENS, AI_DESC_REGEX, AI_FIX_REGEX, LS_APIKEY_PREFIX } from './constants.js'
+import { getAiProvider, getAiModel } from './prefs.js'
 
-export { AiApiError, httpStatusToErrorType } from '../halohalo/index.js'
+export { AiApiError, httpStatusToErrorType } from './providers.js'
 
 function buildPrompt({ item, descText, fixText, note }) {
   return `You are helping an accessibility auditor write finding descriptions in their established voice and methodology.

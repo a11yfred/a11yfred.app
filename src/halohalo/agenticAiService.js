@@ -1,10 +1,11 @@
-import { callAnthropicWithTools, makeSearchTool } from '../halohalo/index.js'
+import { callAnthropicWithTools } from './fetch.js'
+import { makeSearchTool } from './search.js'
 import { getAdapter } from '../sawsawan/platformAdapter.js'
-import { AI_AGENTIC_MAX_TOKENS, AGENTIC_MAX_TOOL_TURNS, LS_APIKEY_PREFIX } from '../utils/constants.js'
-import { getAiModel } from '../utils/storage.js'
+import { AI_AGENTIC_MAX_TOKENS, AGENTIC_MAX_TOOL_TURNS, LS_APIKEY_PREFIX } from './constants.js'
+import { getAiModel } from './prefs.js'
 import { parseAiResponse } from './aiService.js'
 
-export { AiApiError } from '../halohalo/index.js'
+export { AiApiError } from './providers.js'
 
 const SYSTEM_PROMPT = `You are an expert accessibility auditor's AI assistant. Your job is to help rewrite finding descriptions in the auditor's established voice and methodology.
 

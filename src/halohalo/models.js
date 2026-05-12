@@ -1,4 +1,4 @@
-import { getStorage } from './storage.js'
+import { getStorage } from '../utils/storage.js'
 import { LS_AI_MODEL_PREFIX, LS_APIKEY_PREFIX, DEFAULT_AI_MODELS } from './constants.js'
 
 export const PROVIDERS = [
