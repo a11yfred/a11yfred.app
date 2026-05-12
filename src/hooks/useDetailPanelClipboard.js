@@ -3,7 +3,7 @@ import { announce } from '../taho-bayabas/index.js'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 
 const resetAfterNotification = (setState) => setTimeout(() => setState(false), NOTIFICATION_TIMEOUT)
-import { isSignificantlyChanged } from '../utils/textComparison.js'
+import { isSignificantlyChanged } from '../calamansi/index.jsx'
 
 /**
  * Manages clipboard copy state and reset confirmation flow for DetailPanel.
