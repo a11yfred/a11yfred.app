@@ -90,15 +90,28 @@ const _listeners = new Set()
  * Push a message into the page's ARIA live region.
  *
  * @param {string} message
- * @param {{ priority?: 'polite' | 'assertive' }} [options]
- *   priority 'polite' (default) — waits for a natural pause before reading.
- *   priority 'assertive'        — interrupts immediately. Reserve for errors
- *                                 and time-sensitive alerts only.
+ * @param {object} [options]
+ * @param {'polite' | 'assertive'} [options.priority='polite']
+ *   'polite'    — waits for a natural pause before reading. Default. Use for
+ *                 status updates, confirmations, background notifications.
+ *   'assertive' — interrupts the screen reader immediately. Use only for
+ *                 time-critical errors the user must act on right now.
+ * @param {boolean} [options.alert=false]
+ *   Explicitly route the message through role="alert" (same DOM node as
+ *   priority:'assertive'). Use when semantics matter — e.g. a form validation
+ *   summary that should be recognised as an alert by ATs, not just a loud
+ *   live region. Implies assertive interruption.
+ *
+ *   ⚠ Use alert sparingly. It interrupts whatever the screen reader is
+ *   currently reading. Overuse desensitises users. Prefer priority:'polite'
+ *   for anything that is not a genuine error or time-sensitive warning.
  */
-export function announce(message, { priority = 'polite' } = {}) {
+export function announce(message, { priority = 'polite', alert = false } = {}) {
   _init()
 
-  if (priority === 'assertive') {
+  const useAssertive = priority === 'assertive' || alert
+
+  if (useAssertive) {
     // Longer hold: 50ms per character, min 2500ms, so screen readers finish
     // reading before the DOM text is cleared.
     _set(_assertiveEl, message, Math.max(2500, message.length * 50))
@@ -106,7 +119,8 @@ export function announce(message, { priority = 'polite' } = {}) {
     _set(_politeEl, message, 1000)
   }
 
-  _listeners.forEach(fn => fn(message, priority))
+  const resolvedPriority = useAssertive ? 'assertive' : 'polite'
+  _listeners.forEach(fn => fn(message, resolvedPriority))
 }
 
 /**
