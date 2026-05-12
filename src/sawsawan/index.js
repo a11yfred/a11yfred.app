@@ -11,3 +11,4 @@
 
 export { initSawsawan } from './initSawsawan.js'
 export { setPlatformAdapter, getAdapter, makeElectronAdapter } from './platformAdapter.js'
+export { makeIdGenerator } from './makeIdGenerator.js'

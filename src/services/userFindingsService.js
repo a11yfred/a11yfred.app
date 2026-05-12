@@ -9,7 +9,7 @@
  * unchanged, only this file needs updating.
  */
 
-import { makeIdGenerator } from '../utils/makeIdGenerator.js'
+import { makeIdGenerator } from '../sawsawan/makeIdGenerator.js'
 import { LS_USER_FINDINGS } from '../utils/constants.js'
 import { getStorageJson, setStorageJson } from '../utils/storage.js'
 const nextId = makeIdGenerator('USR')

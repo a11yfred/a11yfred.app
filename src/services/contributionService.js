@@ -47,7 +47,7 @@ export const CONTRIBUTION_STATUS = Object.freeze({
   REJECTED: 'rejected',
 })
 
-import { makeIdGenerator } from '../utils/makeIdGenerator.js'
+import { makeIdGenerator } from '../sawsawan/makeIdGenerator.js'
 import { LS_CONTRIBUTIONS } from '../utils/constants.js'
 import { getStorageJson, setStorageJson } from '../utils/storage.js'
 const nextId = makeIdGenerator('CTB')

@@ -9,6 +9,7 @@ export { getAiRefinement, parseAiResponse } from './aiService.js'
 export { getAgenticRefinement } from './agenticAiService.js'
 export { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys } from './models.js'
 export { getAiProvider, isAgenticModeEnabled, getAiModel, getProviderLabel } from './prefs.js'
+export { checkConnectivity } from './connectivity.js'
 export {
   LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX,
   AI_MAX_TOKENS, AI_AGENTIC_MAX_TOKENS, AGENTIC_MAX_TOOL_TURNS,
