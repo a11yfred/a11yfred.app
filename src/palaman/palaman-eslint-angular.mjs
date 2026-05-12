@@ -28,14 +28,38 @@ import { buildRules, buildRecommendedRules } from './lib/rules.js'
 
 const NS = '@ulam/palaman'
 const rules = buildRules(h)
+const plugin = { meta: { name: `${NS}/angular` }, rules }
+
+let angularA11y = null
+try { angularA11y = (await import('@angular-eslint/eslint-plugin-template')).default } catch {}
+
+const ANGULAR_A11Y_RULES = [
+  'alt-text', 'click-events-have-key-events', 'elements-content',
+  'interactive-supports-focus', 'label-has-associated-control',
+  'mouse-events-have-key-events', 'no-autofocus', 'no-distracting-elements',
+  'no-positive-tabindex', 'role-has-required-aria', 'table-scope', 'valid-aria',
+]
+
+function getAngularA11yRules(plugin) {
+  const out = {}
+  for (const rule of ANGULAR_A11Y_RULES) {
+    if (plugin.rules?.[rule]) out[`@angular-eslint/template/${rule}`] = 'error'
+  }
+  return out
+}
 
 export default {
-  meta: { name: `${NS}/angular` },
-  rules,
+  ...plugin,
   configs: {
     recommended: {
-      plugins: [NS],
-      rules: buildRecommendedRules(NS),
+      plugins: {
+        [NS]: plugin,
+        ...(angularA11y ? { '@angular-eslint/template': angularA11y } : {}),
+      },
+      rules: {
+        ...(angularA11y ? getAngularA11yRules(angularA11y) : {}),
+        ...buildRecommendedRules(NS),
+      },
     },
   },
 }

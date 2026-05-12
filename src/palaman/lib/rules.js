@@ -1040,6 +1040,181 @@ export function makeNoMouseOnlyEvents(h) {
   }
 }
 
+// ─── no-listbox-without-option ───────────────────────────────────────────────
+// ARIA 1.2: listbox required owned elements = option (or group > option).
+// A listbox with no option children is an empty, non-functional widget.
+// Ref: ARIA 1.2 §5.3.13; APG Listbox Pattern
+
+export function makeNoListboxWithoutOption(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require role="option" children inside role="listbox"' },
+      messages: {
+        missingOption:
+          'role="listbox" must contain elements with role="option" (directly or via role="group"). Without options the listbox is empty and non-functional for AT. (ARIA 1.2 §5.3.13 / APG: Listbox Pattern)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementWithChildrenVisitor](node) {
+          const opening = h.getOpeningElement(node)
+          if (h.getRoleValue(opening) !== 'listbox') return
+          const hasOption = h.getChildOpeningElementsFromWrapper(node).some(
+            child => h.getRoleValue(child) === 'option' || h.getRoleValue(child) === 'group'
+          )
+          if (!hasOption)
+            context.report({ node: opening, messageId: 'missingOption' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-tree-without-treeitem ─────────────────────────────────────────────────
+// APG: "Each element serving as a tree node has role treeitem."
+// A tree with no treeitem children is structurally broken.
+// Ref: ARIA 1.2 §5.3.25; APG Tree View Pattern
+
+export function makeNoTreeWithoutTreeitem(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require role="treeitem" children inside role="tree"' },
+      messages: {
+        missingTreeitem:
+          'role="tree" must contain elements with role="treeitem". Without treeitems the tree is structurally broken and non-functional for AT. (ARIA 1.2 §5.3.25 / APG: Tree View Pattern)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementWithChildrenVisitor](node) {
+          const opening = h.getOpeningElement(node)
+          if (h.getRoleValue(opening) !== 'tree') return
+          const hasTreeitem = h.getChildOpeningElementsFromWrapper(node).some(
+            child => h.getRoleValue(child) === 'treeitem' || h.getRoleValue(child) === 'group'
+          )
+          if (!hasTreeitem)
+            context.report({ node: opening, messageId: 'missingTreeitem' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-feed-without-article ──────────────────────────────────────────────────
+// APG: "Each unit of content in a feed is contained in an element with role article."
+// A feed with no article children violates the required owned elements contract.
+// Ref: ARIA 1.2 feed role; APG Feed Pattern
+
+export function makeNoFeedWithoutArticle(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require role="article" children inside role="feed"' },
+      messages: {
+        missingArticle:
+          'role="feed" must contain elements with role="article". The APG requires all feed content to be in article elements so AT can navigate between items. (ARIA 1.2 / APG: Feed Pattern)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementWithChildrenVisitor](node) {
+          const opening = h.getOpeningElement(node)
+          if (h.getRoleValue(opening) !== 'feed') return
+          const hasArticle = h.getChildOpeningElementsFromWrapper(node).some(
+            child => h.getRoleValue(child) === 'article' || h.getElementName(child) === 'article'
+          )
+          if (!hasArticle)
+            context.report({ node: opening, messageId: 'missingArticle' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-aria-activedescendant-without-id ─────────────────────────────────────
+// ARIA 1.2: aria-activedescendant must reference a valid ID.
+// At lint time we can verify the value is a non-empty static string ID
+// (not empty, not a dynamic expression we can't resolve).
+// Ref: ARIA 1.2 §6.6.3
+
+export function makeNoAriaActivedescendantWithoutId(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require aria-activedescendant to have a non-empty static ID value' },
+      messages: {
+        emptyId:
+          'aria-activedescendant must reference a non-empty element ID. An empty or missing value means no descendant is active, which confuses AT. (ARIA 1.2 §6.6.3)',
+        dynamicOnly:
+          'aria-activedescendant value cannot be verified statically — ensure it always resolves to a valid element ID at runtime. (ARIA 1.2 §6.6.3)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const attr = h.getAttr(node, 'aria-activedescendant')
+          if (!attr) return
+          const val = h.getAttrStringValue(attr)
+          if (val === null) {
+            // Dynamic value — warn but don't error, we can't resolve it
+            context.report({ node: attr, messageId: 'dynamicOnly' })
+            return
+          }
+          if (val.trim() === '')
+            context.report({ node: attr, messageId: 'emptyId' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-dialog-without-close ─────────────────────────────────────────────────
+// APG: "It is strongly recommended that the tab sequence of all dialogs include
+// a visible element with role button that closes the dialog."
+// We can only detect a close button statically by looking for a button with
+// a close-like aria-label or text content. Warn rather than error — Escape key
+// alone satisfies the keyboard requirement even without a visible close button.
+// Ref: APG Dialog (Modal) Pattern; WCAG 2.1.2
+
+export function makeNoDialogWithoutClose(h) {
+  const CLOSE_PATTERN = /\b(close|dismiss|cancel|✕|×|x)\b/i
+
+  return {
+    meta: {
+      type: 'suggestion',
+      docs: { description: 'Warn when role="dialog" has no detectable close button' },
+      messages: {
+        missingClose:
+          'role="dialog" has no detectable close button. The APG strongly recommends a visible close button inside every dialog. Escape key alone is insufficient for pointer-only users. (APG: Dialog Pattern / WCAG 2.1.2)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementWithChildrenVisitor](node) {
+          const opening = h.getOpeningElement(node)
+          if (h.getRoleValue(opening) !== 'dialog') return
+          const hasClose = h.getChildOpeningElementsFromWrapper(node).some(child => {
+            const el = h.getElementName(child)
+            const role = h.getRoleValue(child)
+            if (el !== 'button' && role !== 'button') return false
+            const label = h.getAttrStringValue(h.getAttr(child, 'aria-label')) ?? ''
+            return CLOSE_PATTERN.test(label)
+          })
+          if (!hasClose)
+            context.report({ node: opening, messageId: 'missingClose' })
+        },
+      }
+    },
+  }
+}
+
 // ─── All rules map ────────────────────────────────────────────────────────────
 
 export const RULE_FACTORIES = {
@@ -1076,6 +1251,11 @@ export const RULE_FACTORIES = {
   'no-slider-without-range':                    makeNoSliderWithoutRange,
   'no-combobox-without-expanded':               makeNoComboboxWithoutExpanded,
   'no-mouse-only-events':                       makeNoMouseOnlyEvents,
+  'no-listbox-without-option':                  makeNoListboxWithoutOption,
+  'no-tree-without-treeitem':                   makeNoTreeWithoutTreeitem,
+  'no-feed-without-article':                    makeNoFeedWithoutArticle,
+  'no-aria-activedescendant-without-id':        makeNoAriaActivedescendantWithoutId,
+  'no-dialog-without-close':                    makeNoDialogWithoutClose,
 }
 
 /** Build the rules map for a plugin by applying helpers to all factories. */
@@ -1113,6 +1293,10 @@ export function buildRecommendedRules(ns) {
     [`${ns}/no-slider-without-range`]:                    'error',
     [`${ns}/no-combobox-without-expanded`]:               'error',
     [`${ns}/no-mouse-only-events`]:                       'error',
+    [`${ns}/no-listbox-without-option`]:                  'error',
+    [`${ns}/no-tree-without-treeitem`]:                   'error',
+    [`${ns}/no-feed-without-article`]:                    'error',
+    [`${ns}/no-aria-activedescendant-without-id`]:        'error',
     // warnings — strong guidance, occasional legitimate overrides
     [`${ns}/no-tooltip-role-misuse`]:                     'warn',
     [`${ns}/no-application-role`]:                        'warn',
@@ -1125,5 +1309,6 @@ export function buildRecommendedRules(ns) {
     [`${ns}/warn-role-alert`]:                            'warn',
     [`${ns}/prefer-aria-disabled`]:                       'warn',
     [`${ns}/no-target-blank-without-label`]:              'warn',
+    [`${ns}/no-dialog-without-close`]:                    'warn',
   }
 }

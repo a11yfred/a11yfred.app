@@ -23,14 +23,23 @@ import { buildRules, buildRecommendedRules } from './lib/rules.js'
 
 const NS = '@ulam/palaman'
 const rules = buildRules(h)
+const plugin = { meta: { name: `${NS}/vue` }, rules }
+
+let vueA11y = null
+try { vueA11y = (await import('eslint-plugin-vuejs-accessibility')).default } catch {}
 
 export default {
-  meta: { name: `${NS}/vue` },
-  rules,
+  ...plugin,
   configs: {
     recommended: {
-      plugins: [NS],
-      rules: buildRecommendedRules(NS),
+      plugins: {
+        [NS]: plugin,
+        ...(vueA11y ? { 'vuejs-accessibility': vueA11y } : {}),
+      },
+      rules: {
+        ...(vueA11y ? vueA11y.configs['flat/recommended'].rules : {}),
+        ...buildRecommendedRules(NS),
+      },
     },
   },
 }
