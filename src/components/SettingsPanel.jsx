@@ -5,6 +5,7 @@ import { announce } from '../taho-bayabas/index.js'
 import { useT } from '../calamansi/react.js'
 import Toggle from './ui/Toggle.jsx'
 import RadioChip from './ui/RadioChip.jsx'
+import SettingRow from './ui/SettingRow.jsx'
 import Select from './ui/Select.jsx'
 import Panel from './ui/Panel.jsx'
 import Button from './ui/Button.jsx'
@@ -367,9 +368,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         </fieldset>
 
         {/* Language */}
-        <div className="panel-group">
-          <h3 className="panel-group__label">{t('settings.language_label')}</h3>
-          <p className="panel-group__desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
+        <SettingRow block label={t('settings.language_label')} description={<>The current language is <strong>{savedLanguageLabel}</strong>.</>}>
           <div className="settings-language-row">
             <Select
               value={pendingLanguage === language ? '' : pendingLanguage}
@@ -402,10 +401,8 @@ const SettingsPanel = forwardRef(function SettingsPanel({
               {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
             </Button>
           </div>
-          {pendingLanguage !== language && (
-            <PendingNote t={t} />
-          )}
-        </div>
+          {pendingLanguage !== language && <PendingNote t={t} />}
+        </SettingRow>
       </section>
 
       {/* ── Search ──────────────────────────────────── */}
@@ -415,20 +412,13 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         </h3>
 
       {/* Platform */}
-      <div className="panel-group">
-        <h3 className="panel-group__label">{t('settings.platform_label')}</h3>
-        <p className="panel-group__desc">
-          {pendingPlatform === 'all'
-            ? <>Show <strong>all results</strong> across web, native apps, and documents.</>
-            : pendingPlatform === 'web'
-              ? <>Show <strong>web-oriented</strong> results.</>
-              : pendingPlatform === 'native'
-                ? <>Show <strong>native app-oriented</strong> results.</>
-                : <>Show <strong>document-oriented</strong> results.</>}
-        </p>
-        {pendingPlatform !== platform && (
-          <PendingNote t={t} />
-        )}
+      <SettingRow block label={t('settings.platform_label')} description={
+        pendingPlatform === 'all'    ? <>Show <strong>all results</strong> across web, native apps, and documents.</> :
+        pendingPlatform === 'web'    ? <>Show <strong>web-oriented</strong> results.</> :
+        pendingPlatform === 'native' ? <>Show <strong>native app-oriented</strong> results.</> :
+                                       <>Show <strong>document-oriented</strong> results.</>
+      }>
+        {pendingPlatform !== platform && <PendingNote t={t} />}
         <fieldset>
           <legend className="sr-only">{t('settings.platform_label')}</legend>
           <div className="radio-chip-group">
@@ -444,31 +434,18 @@ const SettingsPanel = forwardRef(function SettingsPanel({
                 value={value}
                 label={t(labelKey)}
                 current={pendingPlatform}
-                onChange={(val) => {
-                  setPendingPlatform(val)
-                  announce(t(announceKey))
-                }}
+                onChange={(val) => { setPendingPlatform(val); announce(t(announceKey)) }}
               />
             ))}
           </div>
         </fieldset>
-      </div>
+      </SettingRow>
 
       {/* Live search */}
-      <div className="panel-toggle-row">
-        <div>
-          <h3 className="panel-toggle-label">
-            <label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>
-          </h3>
-          <p className="panel-toggle-desc">
-            {pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}
-          </p>
-          {pendingLiveSearch !== liveSearch && (
-            <PendingNote t={t} />
-          )}
-        </div>
+      <SettingRow label={<label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>} description={pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}>
+        {pendingLiveSearch !== liveSearch && <PendingNote t={t} />}
         <Toggle id="toggle-live-search" checked={pendingLiveSearch} onChange={() => setPendingLiveSearch(v => !v)} />
-      </div>
+      </SettingRow>
 
       {/* WCAG Version + Level Filter */}
       <div className="panel-group">
@@ -529,22 +506,15 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-unpin-all-btn" />
 
       {/* Result ranking */}
-      <div className="panel-toggle-row">
-        <div>
-          <h3 className="panel-toggle-label">
-            <label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>
-          </h3>
-          <p className="panel-toggle-desc">
-            {pendingShowVoting
-              ? <>Ranking controls <strong>are visible on each result</strong>.</>
-              : <>Ranking controls <strong>are hidden</strong>.</>}
-          </p>
-          {pendingShowVoting !== showVoting && (
-            <PendingNote t={t} />
-          )}
-        </div>
+      <SettingRow
+        label={<label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>}
+        description={pendingShowVoting
+          ? <>Ranking controls <strong>are visible on each result</strong>.</>
+          : <>Ranking controls <strong>are hidden</strong>.</>}
+      >
+        {pendingShowVoting !== showVoting && <PendingNote t={t} />}
         <Toggle id="toggle-ranking" checked={pendingShowVoting} onChange={() => setPendingShowVoting(v => !v)} />
-      </div>
+      </SettingRow>
 
       {/* Starred Results */}
       <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={Star} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" />
@@ -562,18 +532,14 @@ const SettingsPanel = forwardRef(function SettingsPanel({
           {t('settings.ai_heading')}
         </h3>
 
-      <div className="panel-toggle-row panel-toggle-row--sm">
-        <div>
-          <label htmlFor="toggle-ai" className="panel-toggle-label">
-            {t('settings.ai_enable_label')}
-          </label>
-          <p className="panel-toggle-desc">Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</p>
-          {pendingAiEnabled !== aiEnabled && (
-            <PendingNote t={t} />
-          )}
-        </div>
+      <SettingRow
+        sm
+        label={<label htmlFor="toggle-ai">{t('settings.ai_enable_label')}</label>}
+        description={<>Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</>}
+      >
+        {pendingAiEnabled !== aiEnabled && <PendingNote t={t} />}
         <Toggle id="toggle-ai" checked={pendingAiEnabled} onChange={() => setPendingAiEnabled(v => !v)} />
-      </div>
+      </SettingRow>
 
       <div className="settings-provider-group">
         <label htmlFor="active-provider" className="panel-field-label">
@@ -637,18 +603,15 @@ const SettingsPanel = forwardRef(function SettingsPanel({
         </div>
       ))}
 
-      <div className={`panel-toggle-row panel-toggle-row--sm${!pendingAiEnabled || activeProvider !== 'anthropic' ? ' panel-toggle-row--disabled' : ''}`}>
-        <div>
-          <label htmlFor="toggle-agentic" className="panel-toggle-label">
-            {t('settings.agentic_mode_label')}
-          </label>
-          <p className="panel-toggle-desc">{t('settings.agentic_mode_desc')}</p>
-          {pendingAgenticMode !== (isAgenticModeEnabled()) && (
-            <PendingNote t={t} />
-          )}
-        </div>
+      <SettingRow
+        sm
+        disabled={!pendingAiEnabled || activeProvider !== 'anthropic'}
+        label={<label htmlFor="toggle-agentic">{t('settings.agentic_mode_label')}</label>}
+        description={t('settings.agentic_mode_desc')}
+      >
+        {pendingAgenticMode !== (isAgenticModeEnabled()) && <PendingNote t={t} />}
         <Toggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} disabled={!pendingAiEnabled || activeProvider !== 'anthropic'} />
-      </div>
+      </SettingRow>
       </section>
 
       {/* ── Footer ──────────────────────────────────── */}
