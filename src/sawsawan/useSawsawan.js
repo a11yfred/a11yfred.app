@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { announce } from '../taho-bayabas/index.js'
+export { getStorage, setStorage, removeStorage, clearAllStorage, getStorageJson, setStorageJson, getSession, setSession, removeSession, getSessionJson, setSessionJson } from './storage.js'
 
 // RTL locales — duplicated here so sawsawan has no dependency on app constants.
 // The authoritative list lives in calamansi when the fork happens.

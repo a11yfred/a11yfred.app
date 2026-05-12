@@ -107,3 +107,4 @@ export function useT() {
 }
 
 export { usePref } from './usePref.js'
+export { isSignificantlyChanged } from './textComparison.js'

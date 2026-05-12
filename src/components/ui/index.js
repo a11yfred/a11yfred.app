@@ -24,4 +24,5 @@ export { default as InfoBox } from './InfoBox.jsx'
 export { default as Radio } from './Radio.jsx'
 export { default as Modal } from '../../siling-labuyo/components/Modal.jsx'
 export { Announcer, announce } from '../../taho-bayabas/index.js'
+export { applyTheme, useThemeManager } from './theme.js'
 
