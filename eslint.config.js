@@ -1,7 +1,6 @@
 import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
 import react from 'eslint-plugin-react'
 import palaman from './src/palaman/palaman-eslint.mjs'
 
@@ -13,8 +12,7 @@ export default [
     plugins: {
       react,
       'react-hooks': reactHooks,
-      'jsx-a11y': jsxA11y,
-      '@ulam/palaman': palaman,
+      ...palaman.configs.recommended.plugins,
     },
     languageOptions: {
       globals: {
@@ -32,8 +30,8 @@ export default [
       // Hooks
       ...reactHooks.configs.recommended.rules,
 
-      // Accessibility (jsx-a11y recommended)
-      ...jsxA11y.configs.recommended.rules,
+      // jsx-a11y + @ulam/palaman (composed in palaman recommended)
+      ...palaman.configs.recommended.rules,
       // autoFocus is intentional on the search input — single-purpose tool where
       // search is always the first action. Downgraded to warn, not suppressed.
       'jsx-a11y/no-autofocus': 'warn',

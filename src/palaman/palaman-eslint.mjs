@@ -28,19 +28,27 @@
  *   input missing label                → jsx-a11y/label-has-associated-control
  */
 
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 import { h } from './lib/helpers-jsx.js'
 import { buildRules, buildRecommendedRules } from './lib/rules.js'
 
 const NS = '@ulam/palaman'
 const rules = buildRules(h)
 
+const plugin = { meta: { name: NS }, rules }
+
 export default {
-  meta: { name: NS },
-  rules,
+  ...plugin,
   configs: {
     recommended: {
-      plugins: [NS],
-      rules: buildRecommendedRules(NS),
+      plugins: {
+        [NS]: plugin,
+        'jsx-a11y': jsxA11y,
+      },
+      rules: {
+        ...jsxA11y.configs.recommended.rules,
+        ...buildRecommendedRules(NS),
+      },
     },
   },
 }

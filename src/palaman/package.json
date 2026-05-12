@@ -14,10 +14,12 @@
   "keywords": ["stylelint", "stylelint-plugin", "eslint", "eslint-plugin", "ulam", "css", "aria", "accessibility", "a11y"],
   "peerDependencies": {
     "eslint": ">=8",
+    "eslint-plugin-jsx-a11y": ">=6",
     "stylelint": ">=14"
   },
   "peerDependenciesMeta": {
     "eslint": { "optional": true },
+    "eslint-plugin-jsx-a11y": { "optional": true },
     "stylelint": { "optional": true }
   }
 }
