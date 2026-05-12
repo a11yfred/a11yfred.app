@@ -20,7 +20,7 @@ const TYPEWRITER_PHRASES = [
   { text: 'error' },
 ]
 
-export default function A11yInputSearchHero({ query, onChange, onSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false, inputRef: externalRef }) {
+export default function A11yInputSearchHero({ query, onChange, onSearch, onExampleSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false, inputRef: externalRef }) {
   const t = useT()
   const internalRef = useRef(null)
   const inputRef = externalRef || internalRef
@@ -102,7 +102,11 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, liveSea
           {hasPins ? ` ${t('search.hint_pin')}` : ''}
           {' '}
           {t('search.hint_syntax_prefix')}{' '}
-          <a href="#/?q=keyboard+%2Bscreen+reader+-wcag2.2" className="search-hint-link">keyboard +screen reader -wcag2.2</a>
+          <a
+            href="#/?q=focus+-missing"
+            className="search-hint-link"
+            onClick={e => { e.preventDefault(); onExampleSearch?.('focus -missing') }}
+          >focus -missing</a>
           {t('search.hint_syntax_suffix')}
           {' '}
           {t('search.hint_change_in')}{' '}

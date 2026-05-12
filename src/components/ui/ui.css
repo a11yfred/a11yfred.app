@@ -144,7 +144,6 @@ select:focus-visible {
 .btn--icon.btn--disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  pointer-events: none;
 }
 
 /* ─── Secondary button (neutral border, outline style) ────── */
@@ -222,7 +221,14 @@ select:focus-visible {
 .btn--tertiary.btn--disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  pointer-events: none;
+}
+
+.btn--primary[aria-disabled="true"]:focus-visible,
+.btn--secondary[aria-disabled="true"]:focus-visible,
+.btn--primary.btn--disabled:focus-visible,
+.btn--secondary.btn--disabled:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .btn--primary:not([aria-disabled="true"]):hover,
@@ -278,7 +284,11 @@ select:focus-visible {
 .btn--warning.btn--disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  pointer-events: none;
+}
+
+.btn--warning[aria-disabled="true"]:focus-visible {
+  outline: var(--focus-outline-width) solid var(--error);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .btn--warning:not([aria-disabled="true"]):hover {
@@ -830,7 +840,7 @@ select:disabled {
 }
 
 .info-box__icon {
-  color: var(--accent-text);
+  color: var(--text-heading);
   flex-shrink: 0;
   margin-top: 0.25em;
 }

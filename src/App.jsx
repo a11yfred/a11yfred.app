@@ -105,7 +105,9 @@ function AppShell() {
   const [showPersonalCorpus, setShowPersonalCorpus] = useState(() => getStorage(LS_SHOW_PERSONAL_CORPUS) !== 'false')
 
   // Parse URL params once for all initial state below
-  const initParams = new URLSearchParams(window.location.search)
+  // Support both ?q=... (query string) and #/?q=... (hash query string)
+  const hashSearch = window.location.hash.includes('?') ? window.location.hash.slice(window.location.hash.indexOf('?') + 1) : ''
+  const initParams = new URLSearchParams(window.location.search || hashSearch)
   const initQ = initParams.get('q') || ''
   const initNarrow = initParams.get('narrow') || ''
 
@@ -797,7 +799,7 @@ function AppContent({
     setSaveCount(0)
     setTheme('auto')
     setLanguage('en')
-    setPlatform('web')
+    setPlatform('all')
     setWcagFilter({ maxVersion: '2.2', maxLevel: 'AA' })
     setLiveSearch(true)
     setShowVoting(true)
@@ -855,6 +857,7 @@ function AppContent({
       else handleCloseSettings()
     },
     onReset: handleResetAll,
+    h1Ref,
     hasPins: pinnedIds.size > 0,
     onClearPins: clearPins,
     hasStarred: Object.values(ratings).some(r => r.starred),
@@ -911,6 +914,7 @@ function AppContent({
         query={query}
         onChange={handleQueryChange}
         onSearch={handleSearch}
+        onExampleSearch={q => { setQuery(q); setSubmittedQuery(q); setSearchKey(k => k + 1); syncSearchUrl(q) }}
         liveSearch={liveSearch}
         inputRef={searchInputRef}
         platform={platform}

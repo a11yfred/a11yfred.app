@@ -421,6 +421,7 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
                 className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
                 aria-label={t('results.clear_results')}
                 title={t('results.clear_results')}
+                disabled={activeFilters.length === 0}
                 onClick={() => { announce(t('announce.filters_cleared')); setClearPending(true) }}
               >
                 {t('results.clear_results')}

@@ -207,7 +207,7 @@
   pointer-events: auto;
 }
 
-.results-clear-btn:not(:disabled):hover {
+.results-clear-btn:not(:disabled, [aria-disabled="true"]):hover {
   color: var(--text-heading);
 }
 

@@ -15,7 +15,8 @@ const RouterContext = createContext(null)
 export function Router({ children, appName = '' }) {
   const getRoute = () => {
     const hash = window.location.hash
-    return hash ? hash.slice(1) : '/'
+    const full = hash ? hash.slice(1) : '/'
+    return full.includes('?') ? full.slice(0, full.indexOf('?')) : full
   }
 
   const [route, setRoute] = useState(getRoute)

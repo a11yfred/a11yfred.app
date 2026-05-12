@@ -328,6 +328,7 @@
   "settings.heading": "Settings",
   "settings.back": "Back to Search",
   "settings.save": "Save Changes",
+  "settings.save_and_close": "Save & Close",
   "settings.saved": "Changes Saved",
   "settings.preserved_announce": "Settings: Preserved",
   "settings.no_changes_heading": "No Changes",

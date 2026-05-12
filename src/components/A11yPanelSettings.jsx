@@ -148,6 +148,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   hasRankings,
   onResetRankings,
   onOpenPrivacy,
+  h1Ref,
 }, ref) {
   const saveButtonRef = useRef(null)
   const privacyButtonRef = useRef(null)
@@ -188,6 +189,8 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   const [rhgPending, setRhgPending] = useState(false)
   const [fiestaConfirmOpen, setFiestaConfirmOpen] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
+  const [resetDisabled, setResetDisabled] = useState(false)
+  const [saveAndClose, setSaveAndClose] = useState(false)
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
   const justResetRef = useRef(false)
@@ -282,7 +285,10 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
       setNoChangesOpen(true)
       return
     }
+    const shouldClose = saveAndClose
     justResetRef.current = false
+    setResetDisabled(false)
+    setSaveAndClose(false)
     setErrors({})
     onUnlock?.()
 
@@ -317,6 +323,12 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
 
     setSaved(true)
     setTimeout(() => setSaved(false), TOAST_HIDE_DURATION)
+    if (shouldClose) {
+      navigate('/onboarding')
+      requestAnimationFrame(() => {
+        h1Ref?.current?.focus()
+      })
+    }
   }
 
   const guardedClose = useCallback(
@@ -642,6 +654,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
             ref={resetButtonRef}
             variant="warning"
             className="settings-reset-btn"
+            disabled={resetDisabled}
             onClick={() => setResetConfirmOpen(true)}
           >
             {t('settings.reset_all')}
@@ -651,13 +664,13 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
             active={saved}
             icon={<Save size={14} aria-hidden="true" />}
             activeIcon={<Check size={14} strokeWidth={2.5} aria-hidden="true" />}
-            label={t('settings.save')}
+            label={saveAndClose ? t('settings.save_and_close') : t('settings.save')}
             activeLabel={t('settings.saved')}
             variant="primary"
             className="settings-save-btn"
             onClick={handleSave}
           >
-            {saved ? t('settings.saved') : t('settings.save')}
+            {saved ? t('settings.saved') : saveAndClose ? t('settings.save_and_close') : t('settings.save')}
           </Button>
         </div>
       </div>
@@ -787,7 +800,8 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
                 onReset?.()
                 justResetRef.current = true
                 announce(t('settings.reset_all_announce'))
-                resetButtonRef.current?.setAttribute('disabled', '')
+                setResetDisabled(true)
+                setSaveAndClose(true)
                 saveButtonRef.current?.focus()
               }}
             >
