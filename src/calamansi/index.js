@@ -1,6 +1,7 @@
 // ─── Module singleton ─────────────────────────────────────────────────────────
 
 let _messages = {}
+let _rtlLocales = new Set()
 let _t = _makeT('en')
 const _listeners = new Set()
 
@@ -18,22 +19,27 @@ function _makeT(locale) {
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 /**
- * Register the app's message catalogue. Call once before setLocale.
- * The messages object is a map of BCP 47 locale codes to key→string dicts.
+ * Register the app's message catalogue and RTL locale set. Call once before setLocale.
  *
- * @param {Record<string, Record<string, string>>} messages
+ * @param {Record<string, Record<string, string>>} messages - BCP 47 locale code → key→string dict
+ * @param {Set<string>} [rtlLocales] - locale codes that use RTL direction
  */
-export function initI18n(messages) {
+export function initI18n(messages, rtlLocales = new Set()) {
   _messages = messages
+  _rtlLocales = rtlLocales
 }
 
 /**
- * Set the active locale. All subscribers are notified.
+ * Set the active locale. Updates html[lang] and html[dir], then notifies all subscribers.
  * Call once at app init and again when the user changes language.
  *
- * @param {string} locale - BCP 47 locale code (e.g. 'en', 'fr', 'tl')
+ * @param {string} locale - BCP 47 locale code (e.g. 'en', 'fr', 'ar-PS')
  */
 export function setLocale(locale) {
+  if (typeof document !== 'undefined') {
+    document.documentElement.lang = locale
+    document.documentElement.dir = _rtlLocales.has(locale) ? 'rtl' : 'ltr'
+  }
   _t = _makeT(locale)
   _listeners.forEach(fn => fn(_t))
 }

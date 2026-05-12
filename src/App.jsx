@@ -37,7 +37,7 @@ import I18N_LOCALES from './i18n-locales.js'
 import { initHalohalo } from './halohalo/index.js'
 import { buildPrompt, AGENTIC_SYSTEM_PROMPT } from './ai-config.js'
 import RTL_LOCALES from './rtl-locales.js'
-initI18n(I18N_LOCALES)
+initI18n(I18N_LOCALES, RTL_LOCALES)
 initHalohalo({ buildPrompt, systemPrompt: AGENTIC_SYSTEM_PROMPT })
 import { useSawsawan } from './sawsawan/react.js'
 import useUserFindings from './hooks/useUserFindings.js'
@@ -558,7 +558,7 @@ function AppContent({
     )
   })
 
-  useSawsawan(language, t, null, RTL_LOCALES)
+  useSawsawan(language, t)
 
   useEffect(() => {
     if (!EASTER_EGG_LOCALES.has(language)) {
