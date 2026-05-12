@@ -24,6 +24,7 @@ export const OVERLAY_SIGNATURES = [
   { name: 'DIGIaccess',         src: 'digiaccess.net',           global: null },
   { name: 'Purple Lens',        src: 'pluro.com',                global: null },
   { name: 'User1st',            src: 'user1st.com',              global: null },
+  { name: 'BrowseAloud',        src: 'browsealoud.com',          global: 'browsealoud' },
 ]
 
 /**
