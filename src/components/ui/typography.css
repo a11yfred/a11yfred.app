@@ -43,5 +43,13 @@ button {
 input[type="text"],
 input[type="password"],
 textarea {
-  margin-bottom: 2em;
+  margin-bottom: 0;
+}
+
+textarea {
+  display: block;
+}
+
+textarea[aria-invalid="true"] {
+  margin-bottom: 0;
 }

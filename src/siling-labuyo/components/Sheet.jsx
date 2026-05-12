@@ -147,6 +147,7 @@ export default function Sheet({
         className={`sheet-backdrop${open && !collapsed ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
+        data-overlay-backdrop
       />
       <div
         ref={panelRef}
@@ -158,6 +159,7 @@ export default function Sheet({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onClick={collapsed ? () => onCollapse?.(false) : undefined}
         inert={!open || undefined}
       >
         <div ref={chromeRef} className="sheet-chrome">
@@ -165,7 +167,7 @@ export default function Sheet({
             <button
               className="btn--icon sheet-handle--btn"
               aria-label={collapsed ? 'Expand sheet' : 'Collapse sheet'}
-              onClick={() => onCollapse?.(!collapsed)}
+              onClick={(e) => { e.stopPropagation(); onCollapse?.(!collapsed) }}
             >
               {collapsed
                 ? <CollapseIcon />
@@ -180,7 +182,7 @@ export default function Sheet({
               <BackChevron />
             </button>
           )}
-          <button onClick={onClose} aria-label={closeLabel} className="btn--icon sheet-close-btn">
+          <button onClick={(e) => { e.stopPropagation(); onClose() }} aria-label={closeLabel} className="btn--icon sheet-close-btn">
             <CloseIcon />
           </button>
         </div>
@@ -193,7 +195,7 @@ export default function Sheet({
                 <div className="sheet-close-bottom">
                   <button
                     onClick={onClose}
-                    className="btn--primary sheet-close-bottom-btn"
+                    className="btn btn--primary sheet-close-bottom-btn"
                     aria-label={heading ? `${closeLabel} ${heading}` : undefined}
                   >
                     {closeLabel}

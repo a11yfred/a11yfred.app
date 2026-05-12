@@ -437,7 +437,7 @@ export default function SheetDetail({ finding, aiEnabled, agenticMode = false, f
         {onClose && (
           <button
             type="button"
-            className={`${isDesktop ? 'btn--secondary' : 'btn--tertiary'} detail-close-btn btn--height-standard`}
+            className={`${isDesktop ? 'btn btn--primary' : 'btn--tertiary'} detail-close-btn btn--height-standard`}
             onClick={onClose}
           >
             {t('common.close')}

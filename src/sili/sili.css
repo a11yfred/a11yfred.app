@@ -109,6 +109,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
   transform: translateX(-50%) translateY(calc(100% - var(--sheet-chrome-height, 60px)));
   border-top: 1px solid var(--border);
   border-inline: 1px solid var(--border);
+  cursor: pointer;
 }
 
 .sheet-panel.is-collapsed:hover {
@@ -152,9 +153,9 @@ body:has(.modal-panel.is-open) .drawer-panel {
   flex-shrink: 0;
 }
 
-.sheet-close-btn,
-.sheet-handle--btn,
-.sheet-back-btn {
+.sheet-close-btn.sheet-close-btn,
+.sheet-handle--btn.sheet-handle--btn,
+.sheet-back-btn.sheet-back-btn {
   color: var(--accent-text);
 }
 
@@ -164,6 +165,7 @@ body:has(.modal-panel.is-open) .drawer-panel {
 }
 
 .sheet-heading {
+  font-family: var(--font-display);
   font-size: var(--fs-heading);
   font-weight: 700;
   color: var(--text-heading);

@@ -9,7 +9,9 @@ const MARKER = 'data-overlay-hidden'
  */
 export function hideBackground(panel) {
   const targets = [...document.body.children].filter(el =>
-    !el.contains(panel) && !el.querySelector('.sheet-panel.is-open')
+    !el.contains(panel) &&
+    !el.querySelector('.sheet-panel.is-open') &&
+    !el.hasAttribute('data-overlay-backdrop')
   )
 
   targets.forEach(el => {

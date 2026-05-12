@@ -129,6 +129,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   aiEnabled,
   liveSearch,
   showVoting,
+  showPersonalCorpus,
   theme,
   language,
   platform,
@@ -146,6 +147,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   onClearArchived,
   hasRankings,
   onResetRankings,
+  onOpenPrivacy,
 }, ref) {
   const saveButtonRef = useRef(null)
   const privacyButtonRef = useRef(null)
@@ -163,6 +165,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   const [pendingPlatform, setPendingPlatform] = useState(platform)
   const [pendingLiveSearch, setPendingLiveSearch] = useState(liveSearch)
   const [pendingShowVoting, setPendingShowVoting] = useState(showVoting)
+  const [pendingShowPersonalCorpus, setPendingShowPersonalCorpus] = useState(showPersonalCorpus)
   const [pendingAiEnabled, setPendingAiEnabled] = useState(aiEnabled)
   const [pendingWcagFilter, setPendingWcagFilter] = useState(wcagFilter ?? DEFAULT_WCAG_FILTER)
   const [pendingAgenticMode, setPendingAgenticMode] = useState(
@@ -187,6 +190,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
+  const justResetRef = useRef(false)
   const [unpinAllDone, setUnpinAllDone] = useState(false)
   const [unstarAllDone, setUnstarAllDone] = useState(false)
   const [unarchiveAllDone, setUnarchiveAllDone] = useState(false)
@@ -199,6 +203,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
     pendingPlatform !== platform ||
     pendingLiveSearch !== liveSearch ||
     pendingShowVoting !== showVoting ||
+    pendingShowPersonalCorpus !== showPersonalCorpus ||
     pendingAiEnabled !== aiEnabled ||
     pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) ||
     pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel) ||
@@ -210,7 +215,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   const isMountedRef = useRef(false)
   useEffect(() => {
     if (!isMountedRef.current) { isMountedRef.current = true; return }
-    if (hasUnsaved) announce(t('settings.pending_save_note'))
+    if (hasUnsaved) announce(t('settings.pending_save_note').replace('{unsaved}', 'Unsaved.').replace('{save}', 'Save'))
   }, [pendingTheme, pendingLanguage, pendingPlatform, pendingLiveSearch, pendingShowVoting, pendingAiEnabled, pendingWcagFilter, pendingAgenticMode, activeProvider]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Sync pending state when props change externally (e.g. Reset All)
@@ -222,9 +227,10 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
     setPendingPlatform(platform)
     setPendingLiveSearch(liveSearch)
     setPendingShowVoting(showVoting)
+    setPendingShowPersonalCorpus(showPersonalCorpus)
     setPendingAiEnabled(aiEnabled)
     setPendingWcagFilter(wcagFilter ?? DEFAULT_WCAG_FILTER)
-  }, [theme, language, platform, liveSearch, showVoting, aiEnabled, wcagFilter])
+  }, [theme, language, platform, liveSearch, showVoting, showPersonalCorpus, aiEnabled, wcagFilter])
 
   // In Electron, load API keys from safeStorage after mount
   useEffect(() => {
@@ -269,13 +275,14 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   const handleSave = () => {
     if (pendingAiEnabled && !keys[activeProvider].trim() && !isLocalhost) {
       setErrors({ apiKey: true })
-      setPendingAiEnabled(false)
+      announce(t('settings.api_key_error'), { priority: 'assertive' })
       return
     }
-    if (!hasUnsaved) {
+    if (!hasUnsaved && !justResetRef.current) {
       setNoChangesOpen(true)
       return
     }
+    justResetRef.current = false
     setErrors({})
     onUnlock?.()
 
@@ -303,6 +310,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
       platform: pendingPlatform,
       liveSearch: pendingLiveSearch,
       showVoting: pendingShowVoting,
+      showPersonalCorpus: pendingShowPersonalCorpus,
       aiEnabled: pendingAiEnabled,
       wcagFilter: pendingWcagFilter,
     })
@@ -340,9 +348,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
         <h3 className="panel-section-heading">{t('settings.appearance')}</h3>
 
         {/* Theme */}
-        {pendingTheme !== theme && (
-          <PendingNote t={t} />
-        )}
+        {pendingTheme !== theme && <PendingNote t={t} />}
         <fieldset>
           <legend className="sr-only">{t('settings.appearance')}</legend>
           <div className="radio-chip-group">
@@ -445,6 +451,12 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
       <PanelRowSetting label={<label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>} description={pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}>
         {pendingLiveSearch !== liveSearch && <PendingNote t={t} />}
         <Toggle id="toggle-live-search" checked={pendingLiveSearch} onChange={() => setPendingLiveSearch(v => !v)} />
+      </PanelRowSetting>
+
+      {/* Personal corpus */}
+      <PanelRowSetting label={<label htmlFor="toggle-personal-corpus">{t('settings.personal_corpus_label')}</label>} description={pendingShowPersonalCorpus ? <>Your custom findings <strong>appear in search results</strong>.</> : <>Your custom findings <strong>are hidden from results</strong>.</>}>
+        {pendingShowPersonalCorpus !== showPersonalCorpus && <PendingNote t={t} />}
+        <Toggle id="toggle-personal-corpus" checked={pendingShowPersonalCorpus} onChange={() => setPendingShowPersonalCorpus(v => !v)} />
       </PanelRowSetting>
 
       {/* WCAG Version + Level Filter */}
@@ -621,7 +633,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
           variant="tertiary"
           icon={<Info size={14} aria-hidden="true" />}
           className="settings-privacy-btn"
-          onClick={() => navigate('/settings/privacy')}
+          onClick={() => onOpenPrivacy ? onOpenPrivacy() : navigate('/settings/privacy')}
         >
           {t('settings.privacy_button')}
         </Button>
@@ -665,6 +677,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
         heading={t('settings.privacy_heading')}
         closeLabel={t('common.close')}
         returnFocusRef={privacyButtonRef}
+        hideCloseBottom
       >
         <h2 className="sheet-heading">{t('settings.privacy_heading')}</h2>
         <h3 className="panel-subheading">{t('settings.privacy_subhead_storage')}</h3>
@@ -672,6 +685,11 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
         <p>{t('settings.privacy_body_2')}</p>
         <h3 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h3>
         <p>{t('settings.privacy_body_translations')}</p>
+        <div className="detail-actions-end">
+          <button className="btn btn--primary detail-close-btn" onClick={() => navigate('/settings')}>
+            {t('common.close')}
+          </button>
+        </div>
       </Sheet>
 
       <Modal
@@ -767,6 +785,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
               onClick={() => {
                 setResetConfirmOpen(false)
                 onReset?.()
+                justResetRef.current = true
                 announce(t('settings.reset_all_announce'))
                 resetButtonRef.current?.setAttribute('disabled', '')
                 saveButtonRef.current?.focus()

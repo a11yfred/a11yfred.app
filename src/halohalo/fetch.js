@@ -72,9 +72,7 @@ export async function callAnthropicWithTools({
 
     const data = await res.json()
 
-    if (import.meta.env.DEV) {
-      console.log(`[halohalo] turn ${turns + 1}, stop_reason: ${data.stop_reason}`)
-    }
+    if (import.meta.env.DEV) console.log(`[halohalo] turn ${turns + 1}, stop_reason: ${data.stop_reason}`)
 
     messages.push({ role: 'assistant', content: data.content })
 

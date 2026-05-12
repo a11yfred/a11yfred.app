@@ -1,5 +1,5 @@
 ﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
-import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
+import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw, Heart, House } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
 import A11yListResult, { A11yListResultSkeleton, DataError, PinnedSection } from './components/A11yListResult.jsx'
 import SheetDetail from './components/SheetDetail.jsx'
@@ -13,7 +13,7 @@ import ThemeEffectFiestaSparkles from './components/ThemeEffectFiestaSparkles.js
 import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPlayer.jsx'
 import useFindingSearch from './hooks/useFindingSearch.js'
 import { useItemSignals, usePinnedItems, useCoSelection } from './hooks/relevance.js'
-import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_FINDINGS, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_FINDINGS, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP } from './utils/constants.js'
+import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_FINDINGS, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_FINDINGS, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson, getSession, setSession, removeSession, clearAllStorage } from './utils/storage.js'
 import { getAiProvider, getProviderLabel, isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from './halohalo/index.js'
 import {
@@ -102,6 +102,7 @@ function AppShell() {
   const fiestaUnlocked = saveCount >= 2 || theme === 'fiesta'
   const [liveSearch, setLiveSearch] = useState(() => getStorage(LS_LIVE_SEARCH) !== 'false')
   const [showVoting, setShowVoting] = useState(() => getStorage(LS_SHOW_RANKING) !== 'false')
+  const [showPersonalCorpus, setShowPersonalCorpus] = useState(() => getStorage(LS_SHOW_PERSONAL_CORPUS) !== 'false')
 
   // Parse URL params once for all initial state below
   const initParams = new URLSearchParams(window.location.search)
@@ -114,6 +115,7 @@ function AppShell() {
   const [selected, setSelected] = useState(null)
   const [sheetCollapsed, setSheetCollapsed] = useState(false)
   const [pendingFinding, setPendingFinding] = useState(null)
+  const [pendingPrivacy, setPendingPrivacy] = useState(false)
   const [platform, setPlatform] = useState(() => initParams.get('platform') || getStorage(LS_PLATFORM, 'all'))
   const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
   const [wcagFilter, setWcagFilter] = useState(() => {
@@ -138,6 +140,7 @@ function AppShell() {
         aiEnabled={aiEnabled} setAiEnabled={setAiEnabled}
         liveSearch={liveSearch} setLiveSearch={setLiveSearch}
         showVoting={showVoting} setShowVoting={setShowVoting}
+        showPersonalCorpus={showPersonalCorpus} setShowPersonalCorpus={setShowPersonalCorpus}
         fiestaUnlocked={fiestaUnlocked} setSaveCount={setSaveCount}
         query={query} setQuery={setQuery}
         submittedQuery={submittedQuery} setSubmittedQuery={setSubmittedQuery}
@@ -145,6 +148,7 @@ function AppShell() {
         selected={selected} setSelected={setSelected}
         sheetCollapsed={sheetCollapsed} setSheetCollapsed={setSheetCollapsed}
         pendingFinding={pendingFinding} setPendingFinding={setPendingFinding}
+        pendingPrivacy={pendingPrivacy} setPendingPrivacy={setPendingPrivacy}
         platform={platform} setPlatform={setPlatform}
         wcagFilter={wcagFilter} setWcagFilter={setWcagFilter}
         panelFocusTrigger={panelFocusTrigger} setPanelFocusTrigger={setPanelFocusTrigger}
@@ -164,6 +168,7 @@ function AppContent({
   aiEnabled, setAiEnabled,
   liveSearch, setLiveSearch,
   showVoting, setShowVoting,
+  showPersonalCorpus, setShowPersonalCorpus,
   fiestaUnlocked, setSaveCount,
   query, setQuery,
   submittedQuery, setSubmittedQuery,
@@ -171,6 +176,7 @@ function AppContent({
   selected, setSelected,
   sheetCollapsed, setSheetCollapsed,
   pendingFinding, setPendingFinding,
+  pendingPrivacy, setPendingPrivacy,
   platform, setPlatform,
   wcagFilter, setWcagFilter,
   panelFocusTrigger, setPanelFocusTrigger,
@@ -194,7 +200,9 @@ function AppContent({
   const findingIdFromRoute = findingMatch?.id ?? null
   const isNotFound = !KNOWN_ROUTES.has(route) && !findingMatch
   const h1Ref = useRef(null)
+  const h1LinkRef = useRef(null)
   const didMount = useRef(false)
+  const wasNotFoundRef = useRef(false)
   const aboutWasOpenRef = useRef(false)
   const settingsTriggerRef = useRef(null)
   const settingsPanelRef = useRef(null)
@@ -268,7 +276,7 @@ function AppContent({
     onboardingTriggerRef.current = document.activeElement
     navigate('/onboarding')
   }
-  const handleCloseOnboarding = () => { navigate('/'); setTimeout(() => returnFocus(h1Ref.current), 0) }
+  const handleCloseOnboarding = () => { navigate('/'); setTimeout(() => returnFocus(h1LinkRef.current ?? h1Ref.current), 0) }
   const handleSelectFinding = (finding, triggerEl) => {
     // If the sheet is collapsed and the user clicks a different finding,
     // warn before discarding the collapsed panel and its unsaved changes.
@@ -305,15 +313,19 @@ function AppContent({
       const returnHash = returnHashRef.current
       returnHashRef.current = null
       const focusCard = () => {
-        if (!triggerId) return
         const isTouch = !window.matchMedia('(hover: hover)').matches
         const focus = (el) => isTouch ? el.focus({ preventScroll: false }) : returnFocus(el)
-        const el = document.querySelector(`[data-finding-id="${triggerId}"]`)
-        if (el) { focus(el); return }
-        requestAnimationFrame(() => {
-          const el2 = document.querySelector(`[data-finding-id="${triggerId}"]`)
-          if (el2) focus(el2)
-        })
+        if (triggerId) {
+          const el = document.querySelector(`[data-finding-id="${triggerId}"]`)
+          if (el) { focus(el); return }
+          requestAnimationFrame(() => {
+            const el2 = document.querySelector(`[data-finding-id="${triggerId}"]`)
+            if (el2) { focus(el2); return }
+            returnFocus(h1LinkRef.current ?? h1Ref.current)
+          })
+          return
+        }
+        returnFocus(h1LinkRef.current ?? h1Ref.current)
       }
       if (shouldReturn) { navigate('/results/all'); setTimeout(focusCard, 0); return }
       if (returnHash && returnHash !== '#/' && !returnHash.startsWith('#/finding/')) {
@@ -373,7 +385,7 @@ function AppContent({
   const { overrides: userOverrides } = userOverridesHook
   const contributionQueueHook = useContributionQueue()
   const activeQuery = liveSearch ? query : submittedQuery
-  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, userFindings, wcagFilter, userOverrides)
+  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, showPersonalCorpus ? userFindings : [], wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
   const [sortBy, setSortBy] = useState(() => new URLSearchParams(window.location.search).get('sort') || 'smart')
 
@@ -608,6 +620,7 @@ function AppContent({
 
   useEffect(() => { setStorage(LS_LIVE_SEARCH, String(liveSearch)) }, [liveSearch])
   useEffect(() => { setStorage(LS_SHOW_RANKING, String(showVoting)) }, [showVoting])
+  useEffect(() => { setStorage(LS_SHOW_PERSONAL_CORPUS, String(showPersonalCorpus)) }, [showPersonalCorpus])
   useEffect(() => { setStorage(LS_PLATFORM, platform) }, [platform])
   useEffect(() => { syncFiltersUrl() }, [platform, sortBy, narrowQuery, wcagFilter]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -639,6 +652,14 @@ function AppContent({
       aboutWasOpenRef.current = false
     }
   }, [aboutOpen, isDesktop])
+
+  useEffect(() => {
+    if (isNotFound) { wasNotFoundRef.current = true; return }
+    if (wasNotFoundRef.current) {
+      wasNotFoundRef.current = false
+      setTimeout(() => returnFocus(h1LinkRef.current ?? h1Ref.current), 0)
+    }
+  }, [isNotFound]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!findingIdFromRoute || dataLoading || allFindings.length === 0) return
@@ -756,6 +777,7 @@ function AppContent({
     setPlatform('all')
     clearNarrowState()
     setSortBy('smart')
+    setWcagFilter(DEFAULT_WCAG_FILTER)
     searchInputRef.current?.focus()
   }
 
@@ -804,7 +826,7 @@ function AppContent({
     })
   }
 
-  const handleSettingsSave = ({ theme: t, language: l, platform: p, liveSearch: ls, showVoting: sv, aiEnabled: ai, wcagFilter: wf }) => {
+  const handleSettingsSave = ({ theme: t, language: l, platform: p, liveSearch: ls, showVoting: sv, aiEnabled: ai, wcagFilter: wf, showPersonalCorpus: spc }) => {
     setTheme(t)
     setLanguage(l)
     setPlatform(p)
@@ -813,12 +835,14 @@ function AppContent({
     setAiEnabled(ai)
     setWcagFilter(wf)
     setStorageJson(LS_WCAG_FILTER, wf)
+    setShowPersonalCorpus(spc)
   }
 
   const settingsProps = {
     aiEnabled,
     liveSearch,
     showVoting,
+    showPersonalCorpus,
     theme,
     language: settingsLanguage,
     platform,
@@ -839,6 +863,10 @@ function AppContent({
     onClearArchived: handleClearArchived,
     hasRankings: Object.values(ratings).some(r => r.score !== 0),
     onResetRankings: resetRankings,
+    onOpenPrivacy: () => {
+      if (sheetCollapsed) { setPendingPrivacy(true); return }
+      navigate('/settings/privacy')
+    },
   }
 
   const adminProps = {
@@ -857,7 +885,19 @@ function AppContent({
 
   const handleCopyLink = useCallback(() => {
     syncSearchUrl(query)
-    navigator.clipboard.writeText(window.location.href)
+    const url = window.location.href
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(url)
+    } else {
+      const el = document.createElement('textarea')
+      el.value = url
+      el.style.position = 'fixed'
+      el.style.opacity = '0'
+      document.body.appendChild(el)
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+    }
   }, [query])
 
   // Provider name for the search hint (read from localStorage; updates on next render after save)
@@ -952,6 +992,9 @@ function AppContent({
                 adFrequency={adFrequency}
                 onClear={handleClearResults}
                 hasPinnedItems={pinnedIds.size > 0}
+                wcagFilter={wcagFilter}
+                defaultWcagFilter={DEFAULT_WCAG_FILTER}
+                onOpenSettings={handleOpenSettings}
               />
             )
             : activeQuery.length >= 2
@@ -1009,6 +1052,9 @@ function AppContent({
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
                     hasPinnedItems={pinnedIds.size > 0}
+                    wcagFilter={wcagFilter}
+                    defaultWcagFilter={DEFAULT_WCAG_FILTER}
+                    onOpenSettings={handleOpenSettings}
                   />
                 </>
               )
@@ -1047,6 +1093,26 @@ function AppContent({
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
                     hasPinnedItems={pinnedIds.size > 0}
+                    wcagFilter={wcagFilter}
+                    defaultWcagFilter={DEFAULT_WCAG_FILTER}
+                    onOpenSettings={handleOpenSettings}
+                  />
+                )
+              : sortedFindings.length === 0
+                ? (
+                  <A11yListResult
+                    key="no-results-home"
+                    results={[]}
+                    selected={null}
+                    onSelect={handleSelectFinding}
+                    query=""
+                    ratings={ratings}
+                    platform={platform}
+                    onPlatformChange={setPlatform}
+                    onClear={handleClearResults}
+                    wcagFilter={wcagFilter}
+                    defaultWcagFilter={DEFAULT_WCAG_FILTER}
+                    onOpenSettings={handleOpenSettings}
                   />
                 )
               : (
@@ -1213,6 +1279,7 @@ function AppContent({
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
         <Header
           h1Ref={h1Ref}
+          h1LinkRef={h1LinkRef}
           settingsOpen={settingsOpen}
           aboutOpen={aboutOpen}
           helpOpen={helpOpen}
@@ -1332,7 +1399,27 @@ function AppContent({
           {
             label: t('detail.discard_confirm_no'),
             onClick: () => setPendingFinding(null),
-            className: 'btn--secondary modal-ok-btn',
+            className: 'btn--tertiary modal-ok-btn',
+          },
+        ]}
+      >
+        <p>{t('detail.discard_confirm_body')}</p>
+      </Modal>
+
+      <Modal
+        open={pendingPrivacy}
+        onClose={() => setPendingPrivacy(false)}
+        heading={t('detail.discard_confirm_heading')}
+        actions={[
+          {
+            label: t('detail.discard_confirm_yes'),
+            onClick: () => { setPendingPrivacy(false); setSheetCollapsed(false); setSelected(null); navigate('/settings/privacy') },
+            className: 'btn--warning modal-ok-btn',
+          },
+          {
+            label: t('detail.discard_confirm_no'),
+            onClick: () => setPendingPrivacy(false),
+            className: 'btn--tertiary modal-ok-btn',
           },
         ]}
       >
@@ -1346,12 +1433,12 @@ function AppTitle({ t }) {
   return <>{t('app.name')}<span className="page-title__icons" aria-hidden="true"><Hand size={28} /><ClipboardPaste size={28} /></span></>
 }
 
-function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop, skipTarget }) {
+function Header({ h1Ref, h1LinkRef, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop, skipTarget }) {
   const t = useT()
   const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
   return (
     <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
-      <LinkSkipTo href={`#${skipTarget}`}>{t('common.skip_to_main')}</LinkSkipTo>
+      <LinkSkipTo onClick={(e) => { e.preventDefault(); document.getElementById(skipTarget)?.focus() }}>{t('common.skip_to_main')}</LinkSkipTo>
       {!compact && (
         <a
           href={URL_GITHUB_REPO}
@@ -1369,7 +1456,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
           >
             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12z" />
           </svg>
-          {t('header.github')}<ExternalLinkIcon /><span className="sr-only"> (opens in new tab)</span>
+          {t('header.github')}<ExternalLinkIcon size="1em" className="inline-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
         </a>
       )}
 
@@ -1411,7 +1498,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
         </h1>
       ) : (
         <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'}>
-          <a href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
+          <a ref={h1LinkRef} href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
             <AppTitle t={t} />
           </a>
         </h1>
@@ -1461,8 +1548,9 @@ function NotFoundPage() {
       <p className="not-found__body">{t('notfound.body')}</p>
       <button
         onClick={() => navigate('/')}
-        className="btn--primary"
+        className="btn btn--primary"
       >
+        <House size="1em" aria-hidden="true" />
         {t('notfound.button')}
       </button>
     </div>
@@ -1491,17 +1579,8 @@ function Footer() {
           className="footer-link"
           title={t('footer.sponsor_title') || 'Support on GitHub Sponsors'}
         >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            className="inline-icon"
-          >
-            <path d="M17.5 1.5a3.5 3.5 0 0 1 3.355 5.007l-4.862 7.293a2 2 0 0 1-3.286 0l-4.862-7.293A3.5 3.5 0 0 1 12 1.5a3.5 3.5 0 0 1 5.5 0Z" />
-          </svg>
-          {t('footer.sponsor')}<ExternalLinkIcon /><span className="sr-only"> (opens in new tab)</span>
+          <Heart aria-hidden="true" className="inline-icon footer-brand-icon" fill="currentColor" strokeWidth={0} />
+          {t('footer.sponsor')}<ExternalLinkIcon size="0.7em" className="inline-icon footer-ext-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
         </a>
         {'  ·  '}
         <a
@@ -1510,17 +1589,8 @@ function Footer() {
           rel="noreferrer"
           className="footer-link"
         >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            className="inline-icon"
-          >
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-          </svg>
-          {t('footer.linkedin')}<ExternalLinkIcon /><span className="sr-only"> (opens in new tab)</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="inline-icon footer-brand-icon"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          {t('footer.linkedin')}<ExternalLinkIcon size="0.7em" className="inline-icon footer-ext-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
         </a>
       </p>
     </footer>

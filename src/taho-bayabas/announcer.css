@@ -41,6 +41,10 @@
   gap: 0.25em;
 }
 
+.announce-toast--hidden {
+  display: none;
+}
+
 .announce-toast--assertive {
   background: rgb(180 0 0 / 0.88);
 }

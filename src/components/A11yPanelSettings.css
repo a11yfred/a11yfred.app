@@ -31,6 +31,10 @@
   align-items: stretch;
 }
 
+.settings-language-row + .panel-pending-note {
+  margin-top: var(--space-3);
+}
+
 .select-wrap--language {
   flex: 1;
   min-width: 0;
@@ -87,6 +91,11 @@
 .settings-key-input:disabled {
   color: var(--text-disabled);
   cursor: not-allowed;
+}
+
+.settings-key-input[aria-invalid="true"] {
+  border-color: var(--error);
+  outline: 1px solid var(--error);
 }
 
 .settings-key-group:has(.panel-field-error) {

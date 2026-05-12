@@ -1,12 +1,18 @@
 import { useEffect } from 'react'
+import { useT } from '../../calamansi/react.js'
 
 export default function NoResults({
   _query,
   ariaLabel = 'No results found',
   heading = 'No results found',
   body = 'Try adjusting your search terms.',
-  onMount
+  onMount,
+  activeFilters = [],
+  onClearFilters,
+  onOpenSettings,
 }) {
+  const t = useT()
+
   useEffect(() => {
     onMount?.()
   }, [onMount])
@@ -34,6 +40,32 @@ export default function NoResults({
       <p className="no-results__body">
         {body}
       </p>
+
+      {activeFilters.length > 0 && (
+        <>
+          <p className="no-results__filters">
+            <span className="no-results__filters-label">{t('results.no_results_filters_active')}</span>
+            {activeFilters.map((f, i) => (
+              <span key={i} className="no-results__filter-tag">{f}</span>
+            ))}
+          </p>
+
+          {onOpenSettings && (
+            <p className="no-results__settings-hint">
+              {t('results.no_results_settings_hint')}{' '}
+              <button className="no-results__settings-link" onClick={onOpenSettings}>
+                {t('results.no_results_settings_link')}
+              </button>.
+            </p>
+          )}
+        </>
+      )}
+
+      {onClearFilters && (
+        <button className="btn btn--primary no-results__clear-btn" onClick={onClearFilters}>
+          {t('results.no_results_clear_filters')}
+        </button>
+      )}
     </section>
   )
 }

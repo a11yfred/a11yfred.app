@@ -3,6 +3,21 @@ import { announce } from '../taho/index.js'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 
 const resetAfterNotification = (setState) => setTimeout(() => setState(false), NOTIFICATION_TIMEOUT)
+
+const writeToClipboard = (text) => {
+  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text)
+  return new Promise((resolve) => {
+    const el = document.createElement('textarea')
+    el.value = text
+    el.style.position = 'fixed'
+    el.style.opacity = '0'
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand('copy')
+    document.body.removeChild(el)
+    resolve()
+  })
+}
 import { isSignificantlyChanged } from '../calamansi/index.js'
 
 /**
@@ -60,7 +75,7 @@ export default function useDetailSheetClipboard({
   const copy = (text, setCopied, label, prefix = null, includePrefix = false, type = null) => {
     if (!text?.trim()) { setNothingToCopy(true); return }
     const textToCopy = prefix && includePrefix ? `${prefix}\n${text}` : text
-    navigator.clipboard.writeText(textToCopy).then(() => {
+    writeToClipboard(textToCopy).then(() => {
       setCopied(true)
       announce(t('detail.copied_announce', { label }))
       resetAfterNotification(setCopied)
@@ -88,7 +103,7 @@ export default function useDetailSheetClipboard({
   const handleCopyAll = () => {
     if (!displayDesc?.trim() && !fixText?.trim()) { setNothingToCopy(true); return }
     const text = `Description:\n${displayDesc}\n\nSuggested Fix:\n${fixText}`
-    navigator.clipboard.writeText(text).then(() => {
+    writeToClipboard(text).then(() => {
       setCopiedAll(true)
       announce(t('detail.copy_all_announce'))
       resetAfterNotification(setCopiedAll)

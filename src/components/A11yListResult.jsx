@@ -58,7 +58,7 @@ export function PinnedSection({ findings, onClearPins, headingRef, showRanking =
   )
 }
 
-export default function A11yListResult({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange }) {
+export default function A11yListResult({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange, wcagFilter = null, defaultWcagFilter = null, onOpenSettings }) {
   const t = useT()
   const platformLabels = {
     all:      t('settings.platform_all'),
@@ -249,6 +249,14 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
     return () => document.removeEventListener('pointerdown', handleOutsideTap)
   }, [swipeOpenId])
 
+  const activeFilters = [
+    platform !== 'all' ? (platformLabels[platform] ?? platform) : null,
+    filterLabel ?? null,
+    wcagFilter && defaultWcagFilter && (wcagFilter.maxVersion !== defaultWcagFilter.maxVersion || wcagFilter.maxLevel !== defaultWcagFilter.maxLevel)
+      ? `WCAG ${wcagFilter.maxVersion}, Level ${wcagFilter.maxLevel}`
+      : null,
+  ].filter(Boolean)
+
   if (results.length === 0 && platform === 'all') {
     return <NoResults
       query={query}
@@ -256,6 +264,9 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
       heading={t('results.no_results_heading', { query })}
       body={t('results.no_results_body')}
       onMount={() => announce(t('results.no_results_announce', { query }))}
+      activeFilters={activeFilters}
+      onClearFilters={activeFilters.length > 0 ? onClear : undefined}
+      onOpenSettings={onOpenSettings}
     />
   }
 
@@ -278,7 +289,7 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
 
   return (
     <div className="result-list-section">
-      {!hideCount && <div className="results-meta">
+      {!hideCount && !platformNoResults && <div className="results-meta">
         <div className="results-count-row">
           <h2
             ref={el => { countHeadingRef.current = el; if (countRef) countRef.current = el }}
@@ -484,6 +495,9 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
             ariaLabel={t('results.no_results_aria')}
             heading={t('results.no_results_heading', { query: narrowNoResults ? narrowQuery : query })}
             body={t('results.no_results_body')}
+            activeFilters={activeFilters}
+            onClearFilters={narrowNoResults || activeFilters.length > 0 ? onClear : undefined}
+            onOpenSettings={onOpenSettings}
           />
         : <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>
           {displayResults.map((finding, index) => {
@@ -576,8 +590,22 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
             if (delta < -SWIPE_THRESHOLD) {
               setSwipeOpenId({ id: finding.id, side: 'left' })
             } else if (onPin && current >= SWIPE_ACTIVATE) {
-              setSwipeOpenId(null)
-              if (!archived) handlePin(e)
+              if (!archived) {
+                const row = e.currentTarget
+                const flashClass = pinned ? 'result-row--unpin-flash' : 'result-row--pin-flash'
+                row.classList.add(flashClass)
+                setTimeout(() => {
+                  row.classList.remove(flashClass)
+                  setSwipeOpenId(null)
+                  onPin?.(finding.id)
+                  announce(pinned
+                    ? t('announce.unpinned', { title: finding.title })
+                    : t('announce.pinned', { title: finding.title })
+                  )
+                }, 300)
+              } else {
+                setSwipeOpenId(null)
+              }
             } else if (delta > SWIPE_THRESHOLD) {
               setSwipeOpenId({ id: finding.id, side: 'right' })
             } else {
@@ -761,14 +789,16 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
               {/* Right action panel: pin (revealed by swiping right) */}
               {/* Mobile: pin button inside swipe-reveal action panel */}
               {onPin && (
-                <div className="result-action-panel result-action-panel--right">
+                <div
+                  className="result-action-panel result-action-panel--right"
+                  onFocus={() => setSwipeOpenId({ id: finding.id, side: 'right' })}
+                  onBlur={() => setSwipeOpenId(null)}
+                >
                   <ButtonIcon
                     variant="tertiary"
                     label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                     disabled={archived}
                     onClick={handlePin}
-                    onFocus={() => setSwipeOpenId({ id: finding.id, side: 'right' })}
-                    onBlur={() => setSwipeOpenId(null)}
                     icon={pinned
                       ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
                       : <Pin size={14} aria-hidden="true" fill="currentColor" />
@@ -811,7 +841,7 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
         })}
         </ul>
       }
-      {results.length > 0 && !hideCount && (
+      {results.length > 0 && !hideCount && !narrowNoResults && !platformNoResults && (
         <p className="results-end-marker">{t('results.end_of_results')}</p>
       )}
       {results.length > RESULTS_VIEW_ALL_THRESHOLD && (
@@ -822,7 +852,7 @@ export default function A11yListResult({ results, selected, onSelect, query, rat
             onClick={() => {
               const drawer = document.querySelector('.drawer-panel.is-open')
               ;(drawer ?? window).scrollTo({ top: 0, behavior: 'smooth' })
-              countHeadingRef.current?.focus()
+              countHeadingRef.current?.focus({ preventScroll: true })
             }}
           >
             <ChevronUp size={16} aria-hidden="true" />

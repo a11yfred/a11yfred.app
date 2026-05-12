@@ -24,6 +24,7 @@ export default function ModalShell({ open, onClose, heading = 'Information', hea
         className={`modal-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
+        data-overlay-backdrop
       />
       { /* eslint-disable-next-line @a11yfred/neighbor/no-dialog-without-close -- action buttons always include a close/OK button */ }
       <div

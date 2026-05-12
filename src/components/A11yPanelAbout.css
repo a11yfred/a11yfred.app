@@ -140,6 +140,7 @@
 
 .help-section--tour + .panel-section {
   border-top: none;
+  padding-top: 0;
 }
 
 .help-section--last {
@@ -153,8 +154,9 @@
   gap: var(--space-3);
   padding: var(--space-4) var(--space-5);
   background: linear-gradient(135deg, var(--accent-bg) 0%, var(--bg-subtle) 100%);
-  border: 1px solid var(--accent-bg);
+  border: 1px solid var(--accent);
   border-radius: var(--radius-lg);
+  margin-top: var(--space-5);
   margin-bottom: var(--space-5);
 }
 

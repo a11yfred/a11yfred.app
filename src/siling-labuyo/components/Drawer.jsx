@@ -21,6 +21,7 @@ export default function DrawerShell({ open, onClose, label = 'Menu', children, p
         className={`overlay-backdrop${open ? ' is-open' : ''}`}
         onClick={onClose}
         aria-hidden="true"
+        data-overlay-backdrop
       />
       { /* eslint-disable-next-line @a11yfred/neighbor/no-dialog-without-close -- close button always provided by children */ }
       <div

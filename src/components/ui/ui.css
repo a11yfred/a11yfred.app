@@ -936,9 +936,15 @@ select:disabled {
 .panel-pending-note {
   font-size: var(--fs-small);
   color: var(--accent-text);
-  margin-top: var(--space-2);
+  margin-top: 0;
   margin-bottom: var(--space-3);
 }
+
+.panel-toggle-row .panel-pending-note {
+  margin-top: var(--space-2);
+  margin-bottom: 0;
+}
+
 
 /* ─── Panel group (labeled section with heading + desc) ────── */
 
@@ -963,12 +969,14 @@ select:disabled {
 /* ─── Panel toggle row (label+desc+toggle layout) ──────────── */
 
 .panel-toggle-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  column-gap: var(--space-4);
   min-height: var(--touch-target);
   margin-bottom: var(--space-5);
 }
+
 
 .panel-toggle-row--sm {
   margin-bottom: var(--space-4);
@@ -1286,6 +1294,15 @@ input[type="radio"].control:not(:checked):hover {
   color: var(--text-heading);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-upper);
+  margin-bottom: var(--space-3);
+}
+
+.panel-section:has(> .panel-pending-note) .panel-section-heading {
+  margin-bottom: 0;
+}
+
+.panel-section > .panel-pending-note {
+  margin-bottom: 0;
 }
 
 /* ─── Badge variants ───────────────────────────────────────── */

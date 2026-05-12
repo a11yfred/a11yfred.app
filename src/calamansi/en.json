@@ -1,6 +1,6 @@
 ﻿{
   "app.name": "A11yFred",
-  "app.tagline": "An AI-second, searchable library of accessibility findings to quickly copy into manual reports",
+  "app.tagline": "Your AI-second helper for manual accessibility auditing and reporting.",
 
   "common.close": "Close",
   "common.cancel": "Cancel",
@@ -146,6 +146,10 @@
   "results.no_results_aria": "No results",
   "results.no_results_heading": "No results for '{query}'",
   "results.no_results_body": "Try a component name (e.g. 'button'), element type (e.g. 'input'), or a different phrase.",
+  "results.no_results_filters_active": "Active filters:",
+  "results.no_results_clear_filters": "Clear filters",
+  "results.no_results_settings_hint": "You can also change filters individually in",
+  "results.no_results_settings_link": "Settings",
   "results.end_of_results": "End of Results",
 
   "announce.sorted": "{count} {result} sorted by {label}.",
@@ -383,6 +387,9 @@
   "settings.live_search_label": "Live Search",
   "settings.live_search_on": "Results appear as you type.",
   "settings.live_search_off": "Results appear on Search / Enter.",
+  "settings.personal_corpus_label": "Personal Findings",
+  "settings.personal_corpus_on": "Your custom findings appear in search results.",
+  "settings.personal_corpus_off": "Your custom findings are hidden from results.",
   "settings.ranking_label": "Ranking Controls",
   "settings.ranking_on": "Ranking controls are visible on each result.",
   "settings.ranking_off": "Ranking controls are hidden.",
@@ -463,8 +470,8 @@
   "error.body": "The finding library could not be loaded. Check your connection and",
   "error.retry": "try again",
 
-  "notfound.heading": "404: Lost at Sea",
-  "notfound.body": "This page does not exist. Head back to the home page.",
+  "notfound.heading": "404 Not Found",
+  "notfound.body": "Often when you think you're at the end of something, you're at the beginning of something else.",
   "notfound.button": "Back to Home",
 
   "party.banner": "~*~ PARTY MODE ENABLED ~*~",

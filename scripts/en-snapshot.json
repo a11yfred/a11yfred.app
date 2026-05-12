@@ -1,6 +1,6 @@
 {
   "app.name": "A11yFred",
-  "app.tagline": "An AI-second, searchable library of accessibility findings to quickly copy into manual reports",
+  "app.tagline": "Your AI-second helper for manual accessibility auditing.",
   "common.close": "Close",
   "common.cancel": "Cancel",
   "common.optional": "(optional)",

@@ -3,21 +3,6 @@ import { getFindings } from '../services/dataService.js'
 import { mergeFindings, filterByPlatform, filterByWcag, sortFindings, searchFindings } from '../services/findingSearchService.js'
 import { SEARCH_LOAD_TIMEOUT_MS, DEBUG_SKELETON_QUERY, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
 
-// REMIX 3 MIGRATION — corpus loading:
-//   Move getFindings() into a Remix 3 loader so data arrives server-side:
-//
-//     export async function loader({ params }) {
-//       const findings = await getFindings(params.locale)
-//       return { findings }
-//     }
-//     export default function SearchRoute() {
-//       const { findings } = useLoaderData()
-//       // pass findings directly to the search components — no useEffect load needed
-//     }
-//
-//   The pure search/filter/sort functions in findingSearchService.js are unchanged
-//   and can be called from either a loader or a client-side effect.
-
 /**
  * Searches the findings corpus with fuzzy matching, filtering, and sorting.
  *
