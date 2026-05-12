@@ -3,6 +3,7 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import react from 'eslint-plugin-react'
+import palaman from './palaman/palaman-eslint.mjs'
 
 export default [
   js.configs.recommended,
@@ -13,6 +14,7 @@ export default [
       react,
       'react-hooks': reactHooks,
       'jsx-a11y': jsxA11y,
+      '@ulam/palaman': palaman,
     },
     languageOptions: {
       globals: {
@@ -35,6 +37,43 @@ export default [
       // autoFocus is intentional on the search input — single-purpose tool where
       // search is always the first action. Downgraded to warn, not suppressed.
       'jsx-a11y/no-autofocus': 'warn',
+
+      // @ulam/palaman — bad ARIA patterns not caught by jsx-a11y recommended
+      // errors — definite breakage or phantom controls
+      '@ulam/palaman/no-aria-label-on-generic': 'error',
+      '@ulam/palaman/no-assertive-live-overuse': 'error',
+      '@ulam/palaman/no-unblocked-aria-disabled': 'error',
+      '@ulam/palaman/no-roles-without-name': 'error',
+      '@ulam/palaman/no-group-without-name': 'error',
+      '@ulam/palaman/no-presentation-on-focusable': 'error',
+      '@ulam/palaman/no-log-with-interactive-children': 'error',
+      '@ulam/palaman/no-aria-hidden-in-link': 'error',
+      '@ulam/palaman/no-redundant-aria-hidden-with-presentation': 'error',
+      '@ulam/palaman/no-aria-owns-on-void': 'error',
+      '@ulam/palaman/no-title-as-label': 'error',
+      // warnings — strong guidance, occasional legitimate overrides
+      '@ulam/palaman/no-tooltip-role-misuse': 'warn',
+      '@ulam/palaman/no-application-role': 'warn',
+      '@ulam/palaman/no-grid-role': 'warn',
+      '@ulam/palaman/no-menu-role-on-nav': 'warn',
+      '@ulam/palaman/no-aria-roledescription': 'warn',
+      '@ulam/palaman/no-aria-readonly': 'warn',
+      '@ulam/palaman/no-href-hash': 'warn',
+      '@ulam/palaman/no-tabs-without-structure': 'error',
+      '@ulam/palaman/no-tab-without-controls': 'warn',
+      '@ulam/palaman/no-positive-tabindex': 'error',
+      '@ulam/palaman/no-autoplay-without-controls': 'error',
+      '@ulam/palaman/no-heading-inside-interactive': 'error',
+      '@ulam/palaman/no-placeholder-only': 'error',
+      '@ulam/palaman/warn-role-alert': 'warn',
+      '@ulam/palaman/prefer-aria-disabled': 'warn',
+      '@ulam/palaman/no-target-blank-without-label': 'warn',
+      '@ulam/palaman/no-empty-button': 'error',
+      '@ulam/palaman/no-image-role-without-name': 'error',
+      '@ulam/palaman/no-spinbutton-without-range': 'error',
+      '@ulam/palaman/no-slider-without-range': 'error',
+      '@ulam/palaman/no-combobox-without-expanded': 'error',
+      '@ulam/palaman/no-mouse-only-events': 'error',
 
       // Allow _-prefixed parameters in stubs and intentionally unused args
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],

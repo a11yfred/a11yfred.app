@@ -1,6 +1,9 @@
 {
   "extends": ["stylelint-config-standard"],
+  "plugins": ["./palaman/palaman-stylelint.mjs"],
   "rules": {
+    "ulam/user-preferences": true,
+    "ulam/no-outline-none": true,
     "custom-property-empty-line-before": null,
     "comment-empty-line-before": null,
     "alpha-value-notation": null,
