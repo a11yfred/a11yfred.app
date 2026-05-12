@@ -23,3 +23,6 @@ export { useRouter, useRouteMatch } from './router/useRouter.js'
 
 // No-op shim — migrate call sites to Remix meta exports, then delete
 export { usePageTitle } from './router/usePageTitle.js'
+
+// Vanilla adapter (no framework dependency)
+export { mountRouteFocus, focusPageHeading } from './routeFocus.js'
