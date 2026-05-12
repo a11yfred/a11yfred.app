@@ -14,7 +14,7 @@ import InputWithClear from './components/ui/InputWithClear.jsx'
 import Panel from './components/ui/Panel.jsx'
 import SearchInput from './components/ui/SearchInput.jsx'
 import { BottomSheet, Modal, Drawer } from './siling-labuyo/index.js'
-import { usePref } from './calamansi/index.jsx'
+import { usePref } from './calamansi/react.js'
 import './UlamMenu.css'
 
 function Section({ title, children }) {

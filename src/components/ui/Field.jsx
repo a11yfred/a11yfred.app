@@ -1,6 +1,6 @@
 import { useRef, useEffect, forwardRef } from 'react'
 import { RotateCcw, Copy, Check } from 'lucide-react'
-import { useT } from '../../calamansi/index.jsx'
+import { useT } from '../../calamansi/react.js'
 
 const Field = forwardRef(function Field({
   id,

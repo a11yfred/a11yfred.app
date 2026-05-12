@@ -1,4 +1,3 @@
-import { createContext, useContext, useMemo } from 'react'
 import en from './en.json'
 import enGB from './en-GB.json'
 import enAU from './en-AU.json'
@@ -83,28 +82,57 @@ const MESSAGES = {
   dov, nds, nws, mnd, csp, sim, ali,
 }
 
-const I18nContext = createContext(null)
+// ─── Module singleton ─────────────────────────────────────────────────────────
 
-export function I18nProvider({ locale, children }) {
-  const t = useMemo(() => {
-    const msgs = MESSAGES[locale] ?? MESSAGES[locale?.split('-')[0]] ?? MESSAGES.en
-    return (key, vars) => {
-      let str = (msgs[key] != null && msgs[key] !== '') ? msgs[key] : (MESSAGES.en[key] ?? key)
-      if (vars) {
-        Object.entries(vars).forEach(([k, v]) => {
-          str = str.replaceAll(`{${k}}`, String(v))
-        })
-      }
-      return str
+let _t = _makeT('en')
+const _listeners = new Set()
+
+function _makeT(locale) {
+  const msgs = MESSAGES[locale] ?? MESSAGES[locale?.split('-')[0]] ?? MESSAGES.en
+  return (key, vars) => {
+    let str = (msgs[key] != null && msgs[key] !== '') ? msgs[key] : (MESSAGES.en[key] ?? key)
+    if (vars) {
+      Object.entries(vars).forEach(([k, v]) => { str = str.replaceAll(`{${k}}`, String(v)) })
     }
-  }, [locale])
-
-  return <I18nContext.Provider value={t}>{children}</I18nContext.Provider>
+    return str
+  }
 }
 
-export function useT() {
-  return useContext(I18nContext)
+// ─── Public API ───────────────────────────────────────────────────────────────
+
+/**
+ * Set the active locale. All subscribers are notified.
+ * Call once at app init and again when the user changes language.
+ *
+ * @param {string} locale - BCP 47 locale code (e.g. 'en', 'fr', 'tl')
+ */
+export function setLocale(locale) {
+  _t = _makeT(locale)
+  _listeners.forEach(fn => fn(_t))
 }
 
-export { usePref } from './usePref.js'
+/**
+ * Returns the current translate function synchronously.
+ * Use outside React — in services, event handlers, vanilla JS.
+ *
+ * @returns {(key: string, vars?: Record<string, string>) => string}
+ */
+export function getT() {
+  return _t
+}
+
+/**
+ * Subscribe to locale changes. Returns an unsubscribe function.
+ * Used internally by the React shim to re-render on locale change.
+ *
+ * @internal
+ * @param {(t: Function) => void} fn
+ * @returns {() => void} unsubscribe
+ */
+export function _subscribe(fn) {
+  _listeners.add(fn)
+  return () => _listeners.delete(fn)
+}
+
+export { getPref, setPref } from './pref.js'
 export { isSignificantlyChanged } from './textComparison.js'

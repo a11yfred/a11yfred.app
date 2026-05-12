@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from '../siling-labuyo/index.js'
 import { startSong2 } from '../utils/fiestaSongs.js'
-import { useT } from '../calamansi/index.jsx'
+import { useT } from '../calamansi/react.js'
 
 function rndPos() {
   return {

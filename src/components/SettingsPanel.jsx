@@ -2,7 +2,7 @@
 import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw, ArrowLeft } from 'lucide-react'
 import { Modal, BottomSheet, useRouter } from '../siling-labuyo/index.js'
 import { announce } from '../taho-bayabas/index.js'
-import { useT } from '../calamansi/index.jsx'
+import { useT } from '../calamansi/react.js'
 import Toggle from './ui/Toggle.jsx'
 import RadioChip from './ui/RadioChip.jsx'
 import Select from './ui/Select.jsx'

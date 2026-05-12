@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { useT } from '../calamansi/index.jsx'
+import { useT } from '../calamansi/react.js'
 import InputWithClear from './ui/InputWithClear.jsx'
 import Button from './ui/Button.jsx'
 import { CYCLE_MS } from '../utils/constants.js'
