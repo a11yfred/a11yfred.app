@@ -1,4 +1,4 @@
-import ExternalLinkIcon from './ExternalLinkIcon.jsx'
+import ExternalLinkIcon from './ui/ExternalLinkIcon.jsx'
 import LinkTitle from './LinkTitle.jsx'
 
 function isExternalLink(url) {

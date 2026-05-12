@@ -834,5 +834,5 @@ export default function ResultList({ results, selected, onSelect, query, ratings
   )
 }
 
-export { default as ResultListSkeleton } from './ui/ResultListSkeleton.jsx'
+export { default as ResultListSkeleton } from './ResultListSkeleton.jsx'
 export { default as DataError } from './ui/DataError.jsx'
