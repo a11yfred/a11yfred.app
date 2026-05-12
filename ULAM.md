@@ -312,7 +312,7 @@ export default [palaman.configs.recommended]
 { "plugins": ["@ulam/palaman"], "rules": { "ulam/user-preferences": true, "ulam/no-outline-none": true } }
 ```
 
-See [palaman/RULES.md](palaman/RULES.md) for the full rule catalog with sources and rationale.
+See [src/palaman/RULES.md](src/palaman/RULES.md) for the full rule catalog with sources and rationale.
 
 ---
 

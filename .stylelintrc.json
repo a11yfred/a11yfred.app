@@ -1,6 +1,6 @@
 {
   "extends": ["stylelint-config-standard"],
-  "plugins": ["./palaman/palaman-stylelint.mjs"],
+  "plugins": ["./src/palaman/palaman-stylelint.mjs"],
   "rules": {
     "ulam/user-preferences": true,
     "ulam/no-outline-none": true,
