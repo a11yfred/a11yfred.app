@@ -1,0 +1,16 @@
+/* @ulam/ube — utility classes */
+
+/* ─── Visually hidden ─────────────────────────────────────── */
+/* Hides content visually while keeping it accessible to screen readers.
+   https://www.a11yproject.com/posts/how-to-hide-content/ */
+
+.sr-only,
+.visually-hidden,
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

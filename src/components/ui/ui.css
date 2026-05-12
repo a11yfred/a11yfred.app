@@ -1,5 +1,6 @@
 @import "../../tokens.css";
 @import "./reset.css";
+@import "./utils.css";
 @import "./typography.css";
 
 /* ─── Button default styling ──────────────────────────────── */
@@ -322,17 +323,6 @@ select:disabled {
   display: inline-block;
   vertical-align: -0.15em;
   margin-right: 0.25em;
-}
-
-/* ─── Visually hidden (screen reader only) ────────────────── */
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
 }
 
 /* ─── Radio chip ──────────────────────────────────────────── */
