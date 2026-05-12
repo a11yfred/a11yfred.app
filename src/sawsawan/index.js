@@ -1,12 +1,12 @@
-// @ulam/sawsawan — integration bridge between ube, calamansi, and adobo
+// @ulam/sawsawan — integration bridge between ube, calamansi, and meryenda
 //
 // Wires cross-package concerns that none of the three packages can own alone:
 //   - locale change → announce() the switch
 //   - locale change → set html[lang]
 //   - locale → dir attribute (RTL detection)
-//   - adobo debug notifications → ube announce channel
+//   - meryenda debug notifications → ube announce channel
 //
-// Dependency direction: sawsawan imports from ube/calamansi/adobo.
+// Dependency direction: sawsawan imports from ube/calamansi/meryenda.
 // None of those three import from sawsawan or from each other.
 
 export { initSawsawan } from './initSawsawan.js'

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Syncs the overlay vendor list in adobo/core/overlays.js against
+ * Syncs the overlay vendor list in meryenda/core/overlays.js against
  * the published vendor list at overlayfactsheet.com.
  *
  * Reports new vendors not yet in our signatures and vendors in our
@@ -15,7 +15,7 @@ import { fileURLToPath } from 'url'
 import { resolve, dirname } from 'path'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const OVERLAYS_PATH = resolve(__dirname, '../plugins/adobo/core/overlays.js')
+const OVERLAYS_PATH = resolve(__dirname, '../meryenda/core/overlays.js')
 
 // --- Parse our current signatures from the JS source ---
 function parseOurVendors() {
@@ -89,7 +89,7 @@ if (!hasChanges) {
   if (newVendors.length > 0) {
     console.log('NEW vendors on factsheet not in our signatures:')
     for (const v of newVendors) console.log(`  + ${v}`)
-    console.log('\nAdd these to tools/adobo/core/overlays.js with their CDN domain and global.\n')
+    console.log('\nAdd these to tools/meryenda/core/overlays.js with their CDN domain and global.\n')
   }
 
   if (removedVendors.length > 0) {

@@ -1,5 +1,5 @@
 {
-  "name": "@ulam/adobo",
+  "name": "@ulam/meryenda",
   "version": "0.0.0",
   "description": "Vanilla-first accessibility debug panel with a thin React wrapper. The savory layer of the ulam framework.",
   "private": true,

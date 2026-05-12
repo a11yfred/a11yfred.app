@@ -28,7 +28,7 @@ import {
 } from './siling-labuyo/index.js'
 import { announce } from './taho/index.js'
 import { Announcer } from './taho-bayabas/react.js'
-import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from '../tools/adobo/react.js'
+import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from '../tools/meryenda/react.js'
 import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
 import { I18nProvider, useT } from './calamansi/react.js'

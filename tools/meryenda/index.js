@@ -1,5 +1,5 @@
-// @ulam/adobo — portable a11y debug tools
-// React shim: import from '@ulam/adobo/react'
+// @ulam/meryenda — portable a11y debug tools
+// React shim: import from '@ulam/meryenda/react'
 
 // Vanilla overlay (no framework dependency)
 export { mountFocusDebugger }      from './overlay/focus.js'

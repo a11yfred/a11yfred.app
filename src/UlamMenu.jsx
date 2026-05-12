@@ -104,7 +104,7 @@ export default function UlamMenu() {
           <span className="ulam-menu-wordmark">ulam</span>
           <span className="ulam-menu-tagline">the menu</span>
         </div>
-        <p className="ulam-menu-desc">Component gallery for the ulam framework — @ulam/ube, @ulam/calamansi, @ulam/adobo, @ulam/sawsawan.</p>
+        <p className="ulam-menu-desc">Component gallery for the ulam framework — @ulam/ube, @ulam/calamansi, @ulam/meryenda, @ulam/sawsawan.</p>
       </header>
 
       <main className="ulam-menu-main">
