@@ -97,7 +97,7 @@ export function DebugHelp({ open, onClose, customCommands = [] }) {
             <h4 className="debug-help-subsection-title">Secret Settings</h4>
             <table className="debug-help-table">
               <tbody>
-                <tr><td><code>party mode off</code></td><td>Restore appearance to Auto</td></tr>
+                <tr><td><code>fiesta mode off</code></td><td>Restore appearance to Auto</td></tr>
               </tbody>
             </table>
           </section>

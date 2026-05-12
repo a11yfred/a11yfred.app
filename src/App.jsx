@@ -8,8 +8,8 @@ import HelpPanel from './components/HelpPanel.jsx'
 import OnboardingPanel from './components/OnboardingPanel.jsx'
 import IconButton from './components/ui/IconButton.jsx'
 import Confetti from './components/Confetti.jsx'
-import PartySparkles from './components/PartySparkles.jsx'
-import PartyMusicPlayer from './components/PartyMusicPlayer.jsx'
+import FiestaSparkles from './components/FiestaSparkles.jsx'
+import FiestaMusicPlayer from './components/FiestaMusicPlayer.jsx'
 import useFindingSearch from './hooks/useFindingSearch.js'
 import { useItemSignals, usePinnedItems, useCoSelection } from './hooks/relevance.js'
 import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_FINDINGS, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_FINDINGS, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP } from './utils/constants.js'
@@ -35,7 +35,7 @@ import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'
 import { SEVERITY_VARS } from './data/severityStyles.js'
 import findingSlug from './utils/findingSlug.js'
-import './components/PartyMode.css'
+import './components/FiestaMode.css'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 const AdminPanel = import.meta.env.DEV
@@ -88,7 +88,7 @@ function AppShell() {
   const [saveCount, setSaveCount] = useState(() =>
     parseInt(getStorage(LS_SAVE_COUNT, '0'), 10)
   )
-  const partyUnlocked = saveCount >= 2 || theme === 'party'
+  const fiestaUnlocked = saveCount >= 2 || theme === 'fiesta'
   const [liveSearch, setLiveSearch] = useState(() => getStorage(LS_LIVE_SEARCH) !== 'false')
   const [showVoting, setShowVoting] = useState(() => getStorage(LS_SHOW_RANKING) !== 'false')
 
@@ -127,7 +127,7 @@ function AppShell() {
         aiEnabled={aiEnabled} setAiEnabled={setAiEnabled}
         liveSearch={liveSearch} setLiveSearch={setLiveSearch}
         showVoting={showVoting} setShowVoting={setShowVoting}
-        partyUnlocked={partyUnlocked} setSaveCount={setSaveCount}
+        fiestaUnlocked={fiestaUnlocked} setSaveCount={setSaveCount}
         query={query} setQuery={setQuery}
         submittedQuery={submittedQuery} setSubmittedQuery={setSubmittedQuery}
         searchKey={searchKey} setSearchKey={setSearchKey}
@@ -153,7 +153,7 @@ function AppContent({
   aiEnabled, setAiEnabled,
   liveSearch, setLiveSearch,
   showVoting, setShowVoting,
-  partyUnlocked, setSaveCount,
+  fiestaUnlocked, setSaveCount,
   query, setQuery,
   submittedQuery, setSubmittedQuery,
   searchKey, setSearchKey,
@@ -673,7 +673,7 @@ function AppContent({
     // Easter egg offs, any "X off" where X is a known egg command
     const eggOffBase = lq.endsWith(' off') ? lq.slice(0, -4) : null
     if (eggOffBase !== null && eggOffBase in EASTER_EGGS) { setLanguage('en'); setQuery(submittedQuery); return true }
-    if (lq === 'party mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
+    if (lq === 'fiesta mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
     // Universal debug commands
     if (lq === 'debug all' || lq === 'debug all on')    { setDevAllEnabled(true);  setNamesEnabled(true);  setQuery(submittedQuery); return true }
     if (lq === 'debug all off')                         { setDevAllEnabled(false); setNamesEnabled(false); setQuery(submittedQuery); return true }
@@ -812,7 +812,7 @@ function AppContent({
     language: settingsLanguage,
     platform,
     wcagFilter,
-    partyUnlocked,
+    fiestaUnlocked,
     onUnlock: unlock,
     onSave: handleSettingsSave,
     onClose: () => {
@@ -1193,10 +1193,10 @@ function AppContent({
           ]}
         />
       </>}
-      <Confetti active={theme === 'party'} />
-      <PartySparkles active={theme === 'party'} />
-      <PartyMusicPlayer active={theme === 'party'} />
-      {theme === 'party' && <PartyBanner />}
+      <Confetti active={theme === 'fiesta'} />
+      <FiestaSparkles active={theme === 'fiesta'} />
+      <FiestaMusicPlayer active={theme === 'fiesta'} />
+      {theme === 'fiesta' && <FiestaBanner />}
 
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
         <Header
@@ -1415,7 +1415,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
   )
 }
 
-function PartyBanner() {
+function FiestaBanner() {
   const t = useT()
   const [animating, setAnimating] = useState(true)
   const timerRef = useRef(null)
@@ -1433,7 +1433,7 @@ function PartyBanner() {
 
   return (
     <div
-      className={`party-banner${animating ? '' : ' party-banner--still'}`}
+      className={`fiesta-banner${animating ? '' : ' fiesta-banner--still'}`}
       aria-live="off"
       aria-hidden="true"
       onMouseEnter={handleMouseEnter}

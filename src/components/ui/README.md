@@ -611,15 +611,15 @@ usePageTitle('Page Name')      // sets document.title = "AppName | Page Name"
 
 ### Theme
 
-Dark, light, auto, and party modes as first-class features.
+Dark, light, auto, and fiesta modes as first-class features.
 
 ```jsx
 import { useThemeManager } from '@ulam/ube'
 
-useThemeManager(theme, onPartyActivated)
+useThemeManager(theme, onFiestaActivated)
 ```
 
-Sets `data-theme` on `<html>` and handles party mode color cycling. All ube components respond to `[data-theme="dark"]` automatically via CSS tokens.
+Sets `data-theme` on `<html>` and handles fiesta mode color cycling. All ube components respond to `[data-theme="dark"]` automatically via CSS tokens.
 
 ---
 

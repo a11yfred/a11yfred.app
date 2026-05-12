@@ -132,7 +132,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
   language,
   platform,
   wcagFilter,
-  partyUnlocked,
+  fiestaUnlocked,
   onUnlock,
   onClose,
   onSave,
@@ -182,7 +182,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
   const privacyOpen = route === '/settings/privacy'
   const [privacyCollapsed, setPrivacyCollapsed] = useState(false)
   const [rhgPending, setRhgPending] = useState(false)
-  const [partyConfirmOpen, setPartyConfirmOpen] = useState(false)
+  const [fiestaConfirmOpen, setFiestaConfirmOpen] = useState(false)
   const [resetConfirmOpen, setResetConfirmOpen] = useState(false)
   const [unsavedOpen, setUnsavedOpen] = useState(false)
   const [noChangesOpen, setNoChangesOpen] = useState(false)
@@ -349,7 +349,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
               { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
               { value: 'auto',  labelKey: 'settings.theme_auto',  announceKey: 'settings.theme_auto_announce'  },
               { value: 'dark',  labelKey: 'settings.theme_dark',  announceKey: 'settings.theme_dark_announce'  },
-              ...(partyUnlocked ? [{ value: 'party', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
+              ...(fiestaUnlocked ? [{ value: 'fiesta', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
             ].map(({ value, labelKey, announceKey }) => (
               <RadioChip
                 key={value}
@@ -358,7 +358,7 @@ const SettingsPanel = forwardRef(function SettingsPanel({
                 label={t(labelKey)}
                 current={pendingTheme}
                 onChange={(val) => {
-                  if (val === 'party') { setPartyConfirmOpen(true); return }
+                  if (val === 'fiesta') { setFiestaConfirmOpen(true); return }
                   setPendingTheme(val); announce(t(announceKey))
                 }}
               />
@@ -831,12 +831,12 @@ const SettingsPanel = forwardRef(function SettingsPanel({
       </Modal>
 
       <Modal
-        open={partyConfirmOpen}
-        onClose={() => setPartyConfirmOpen(false)}
+        open={fiestaConfirmOpen}
+        onClose={() => setFiestaConfirmOpen(false)}
         heading={t('settings.party_confirm_heading')}
         actions={[
-          { label: t('settings.party_confirm_yes'), onClick: () => { setPendingTheme('party'); announce(t('settings.theme_party_announce')); setPartyConfirmOpen(false) }, className: 'btn--primary' },
-          { label: t('settings.party_confirm_no'),  onClick: () => setPartyConfirmOpen(false), className: 'btn--tertiary' },
+          { label: t('settings.party_confirm_yes'), onClick: () => { setPendingTheme('fiesta'); announce(t('settings.theme_party_announce')); setFiestaConfirmOpen(false) }, className: 'btn--primary' },
+          { label: t('settings.party_confirm_no'),  onClick: () => setFiestaConfirmOpen(false), className: 'btn--tertiary' },
         ]}
       >
         <p>{t('settings.party_confirm_body')}</p>

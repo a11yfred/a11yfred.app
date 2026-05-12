@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 
-// ─── Party palette constants ──────────────────────────────────────────────────
+// ─── Fiesta palette constants ─────────────────────────────────────────────────
 
-const PARTY_COMPLEMENT_OFFSET = 180
-const PARTY_TRIAD_OFFSET      = 120
-const PARTY_GRAD_RANGE        = 80
-const PARTY_GRAD_MIN          = 10
+const FIESTA_COMPLEMENT_OFFSET = 180
+const FIESTA_TRIAD_OFFSET      = 120
+const FIESTA_GRAD_RANGE        = 80
+const FIESTA_GRAD_MIN          = 10
 
-const PARTY_CSS_KEYS = [
+const FIESTA_CSS_KEYS = [
   '--bg', '--bg-subtle', '--border', '--border-control',
   '--text-heading', '--text-body', '--text-muted', '--text-disabled',
   '--accent', '--accent-bg', '--accent-text', '--focus', '--success', '--overlay-bg',
@@ -15,13 +15,13 @@ const PARTY_CSS_KEYS = [
   '--severity-high-text',     '--severity-high-bg',
   '--severity-medium-text',   '--severity-medium-bg',
   '--severity-low-text',      '--severity-low-bg',
-  '--party-grad-x', '--party-grad-y',
+  '--fiesta-grad-x', '--fiesta-grad-y',
 ]
 
-function generatePartyPalette() {
+function generateFiestaPalette() {
   const h    = Math.floor(Math.random() * 360)
-  const comp = (h + PARTY_COMPLEMENT_OFFSET) % 360
-  const tri  = (h + PARTY_TRIAD_OFFSET)      % 360
+  const comp = (h + FIESTA_COMPLEMENT_OFFSET) % 360
+  const tri  = (h + FIESTA_TRIAD_OFFSET)      % 360
   return {
     '--bg':             `hsl(${h},    85%, 88%)`,
     '--bg-subtle':      `hsl(${h},    75%, 80%)`,
@@ -45,13 +45,13 @@ function generatePartyPalette() {
     '--severity-medium-bg':     '#e6f1fb',
     '--severity-low-text':      '#3b6d11',
     '--severity-low-bg':        '#eaf3de',
-    '--party-grad-x': `${Math.floor(Math.random() * PARTY_GRAD_RANGE) + PARTY_GRAD_MIN}%`,
-    '--party-grad-y': `${Math.floor(Math.random() * PARTY_GRAD_RANGE) + PARTY_GRAD_MIN}%`,
+    '--fiesta-grad-x': `${Math.floor(Math.random() * FIESTA_GRAD_RANGE) + FIESTA_GRAD_MIN}%`,
+    '--fiesta-grad-y': `${Math.floor(Math.random() * FIESTA_GRAD_RANGE) + FIESTA_GRAD_MIN}%`,
   }
 }
 
-function clearPartyPalette(el = document.documentElement) {
-  PARTY_CSS_KEYS.forEach(k => el.style.removeProperty(k))
+function clearFiestaPalette(el = document.documentElement) {
+  FIESTA_CSS_KEYS.forEach(k => el.style.removeProperty(k))
 }
 
 // ─── applyTheme ───────────────────────────────────────────────────────────────
@@ -59,17 +59,17 @@ function clearPartyPalette(el = document.documentElement) {
 /**
  * Applies a theme to the document root (or a custom element).
  * Sets data-theme; handles 'auto' by reading prefers-color-scheme.
- * For 'party', also generates and applies a random color palette.
+ * For 'fiesta', also generates and applies a random color palette.
  *
- * @param {'auto'|'light'|'dark'|'party'} theme
+ * @param {'auto'|'light'|'dark'|'fiesta'} theme
  * @param {HTMLElement} [el=document.documentElement]
  */
 export function applyTheme(theme, el = document.documentElement) {
-  clearPartyPalette(el)
+  clearFiestaPalette(el)
 
-  if (theme === 'party') {
-    el.setAttribute('data-theme', 'party')
-    const palette = generatePartyPalette()
+  if (theme === 'fiesta') {
+    el.setAttribute('data-theme', 'fiesta')
+    const palette = generateFiestaPalette()
     Object.entries(palette).forEach(([k, v]) => el.style.setProperty(k, v))
     return
   }
@@ -85,27 +85,27 @@ export function applyTheme(theme, el = document.documentElement) {
 const IGNORED_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'Tab', 'CapsLock', 'Escape'])
 
 /**
- * React hook. Applies the theme and wires up party-mode interactive effects.
+ * React hook. Applies the theme and wires up fiesta-mode interactive effects.
  *
- * @param {'auto'|'light'|'dark'|'party'} theme
+ * @param {'auto'|'light'|'dark'|'fiesta'} theme
  * @param {object}   [opts]
- * @param {Function} [opts.onPartyActivated]   - Called when party mode turns on (e.g. to announce it)
- * @param {Function} [opts.onPartyClick]       - Called on any interactive click in party mode (e.g. play a sound)
- * @param {Function} [opts.onPartyKey]         - Called on keydown in party mode; receives the event
- * @param {number}   [opts.keyFrequency=1]     - Call onPartyKey every N keystrokes (e.g. 3 for every 3rd key)
+ * @param {Function} [opts.onFiestaActivated]  - Called when fiesta mode turns on (e.g. to announce it)
+ * @param {Function} [opts.onFiestaClick]      - Called on any interactive click in fiesta mode (e.g. play a sound)
+ * @param {Function} [opts.onFiestaKey]        - Called on keydown in fiesta mode; receives the event
+ * @param {number}   [opts.keyFrequency=1]     - Call onFiestaKey every N keystrokes (e.g. 3 for every 3rd key)
  * @param {string}   [opts.keyTargetId]        - Only count keystrokes on this element id
  */
 export function useThemeManager(theme, {
-  onPartyActivated,
-  onPartyClick,
-  onPartyKey,
+  onFiestaActivated,
+  onFiestaClick,
+  onFiestaKey,
   keyFrequency = 1,
   keyTargetId,
 } = {}) {
-  // Apply theme + party palette
+  // Apply theme + fiesta palette
   useEffect(() => {
     applyTheme(theme)
-    if (theme === 'party') onPartyActivated?.()
+    if (theme === 'fiesta') onFiestaActivated?.()
 
     if (theme === 'auto') {
       const mq = window.matchMedia('(prefers-color-scheme: dark)')
@@ -115,26 +115,26 @@ export function useThemeManager(theme, {
     }
   }, [theme]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Party click sounds
+  // Fiesta click sounds
   useEffect(() => {
-    if (theme !== 'party' || !onPartyClick) return
+    if (theme !== 'fiesta' || !onFiestaClick) return
     const INTERACTIVE = 'button,[role="button"],input[type="submit"],input[type="button"],input[type="checkbox"],input[type="radio"],select'
-    const handler = (e) => { if (e.target.closest(INTERACTIVE)) onPartyClick() }
+    const handler = (e) => { if (e.target.closest(INTERACTIVE)) onFiestaClick() }
     document.addEventListener('click', handler)
     return () => document.removeEventListener('click', handler)
-  }, [theme, onPartyClick])
+  }, [theme, onFiestaClick])
 
-  // Party key sounds
+  // Fiesta key sounds
   useEffect(() => {
-    if (theme !== 'party' || !onPartyKey) return
+    if (theme !== 'fiesta' || !onFiestaKey) return
     let count = 0
     const handler = (e) => {
       if (IGNORED_KEYS.has(e.key)) return
       if (keyTargetId && e.target.id !== keyTargetId) return
       count++
-      if (count % keyFrequency === 0) onPartyKey(e)
+      if (count % keyFrequency === 0) onFiestaKey(e)
     }
     document.addEventListener('keydown', handler)
     return () => document.removeEventListener('keydown', handler)
-  }, [theme, onPartyKey, keyFrequency, keyTargetId])
+  }, [theme, onFiestaKey, keyFrequency, keyTargetId])
 }

@@ -197,9 +197,9 @@
   --platform-bg:   #1e293b;
 }
 
-/* Party Mode — color tokens injected dynamically by generatePartyPalette()
+/* Fiesta Mode — color tokens injected dynamically by generateFiestaPalette()
    in App.jsx. Font and cursor are static CSS overrides. Hotspot at star tip. */
-[data-theme="party"] {
+[data-theme="fiesta"] {
   --font: "Comic Sans MS", "Comic Sans", cursive;
 
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cline x1='54' y1='54' x2='28' y2='24' stroke='%238B6914' stroke-width='6' stroke-linecap='round'/%3E%3Ccircle cx='56' cy='56' r='4' fill='%23654321'/%3E%3Cpolygon fill='%23FFD700' stroke='%23FFFACD' stroke-width='2' points='20,4 22,12 30,12 24,16 26,24 20,18 14,24 16,16 10,12 18,12'/%3E%3Cline x1='6' y1='6' x2='6' y2='12' stroke='%23FFD700' stroke-width='3' stroke-linecap='round'/%3E%3Cline x1='3' y1='9' x2='9' y2='9' stroke='%23FFD700' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") 20 4, auto;

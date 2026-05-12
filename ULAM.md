@@ -76,7 +76,7 @@ Accessible React component library. Every component meets WCAG 2.2 AA. Token-dri
 
 **Tokens:** color, spacing (`--space-1` → `--space-10`), typography, motion, focus
 
-**Theme:** `useThemeManager` — sets `data-theme` on `<html>`, supports dark / light / auto / party
+**Theme:** `useThemeManager` — sets `data-theme` on `<html>`, supports dark / light / auto / fiesta
 
 ```jsx
 import { Button, Toggle, SearchInput } from '@ulam/ube'

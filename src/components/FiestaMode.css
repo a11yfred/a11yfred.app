@@ -1,10 +1,10 @@
 @import "../tokens.css";
 
-/* â"€â"€â"€ Party mode â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ─── Fiesta mode ──────────────────────────────────────────────────────────── */
 
-[data-theme="party"] body {
+[data-theme="fiesta"] body {
   background-image: radial-gradient(
-    ellipse at var(--party-grad-x, 50%) var(--party-grad-y, 50%),
+    ellipse at var(--fiesta-grad-x, 50%) var(--fiesta-grad-y, 50%),
     var(--accent-bg) 0%,
     var(--bg-subtle) 45%,
     var(--bg) 100%
@@ -14,12 +14,12 @@
   background-repeat: no-repeat;
 }
 
-[data-theme="party"] :focus-visible {
+[data-theme="fiesta"] :focus-visible {
   outline-style: dotted;
 }
 
-/* Fixed lower-right badge shown only in party mode */
-.party-banner {
+/* Fixed lower-right badge shown only in fiesta mode */
+.fiesta-banner {
   position: fixed;
   bottom: var(--space-4);
   right: var(--space-4);
@@ -34,14 +34,14 @@
   font-weight: 700;
   white-space: nowrap;
   cursor: default;
-  animation: party-badge-bounce 1.4s ease-in-out infinite;
+  animation: fiesta-badge-bounce 1.4s ease-in-out infinite;
 }
 
-.party-banner--still {
+.fiesta-banner--still {
   animation: none;
 }
 
-@keyframes party-badge-bounce {
+@keyframes fiesta-badge-bounce {
   0%, 100% {
     transform: translateY(0) rotate(-1deg);
   }
@@ -52,12 +52,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .party-banner {
+  .fiesta-banner {
     animation: none;
   }
 }
 
-/* Party mode canvases (confetti + sparkles) */
+/* Fiesta mode canvases (confetti + sparkles) */
 
 .confetti-canvas,
 .sparkles-canvas {
@@ -73,7 +73,7 @@
 
 /* Floating music player */
 
-.party-player {
+.fiesta-player {
   position: fixed;
   z-index: 195;
   width: 2.75rem;
@@ -91,14 +91,13 @@
   translate: -50% -50%;
 }
 
-.party-player:hover {
+.fiesta-player:hover {
   transform: scale(1.18);
   background: var(--accent-text);
   color: var(--accent-bg);
 }
 
-.party-player:focus-visible {
+.fiesta-player:focus-visible {
   outline: 2px dotted var(--focus);
   outline-offset: 3px;
 }
-

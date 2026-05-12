@@ -1,4 +1,4 @@
-import { isSongPlaying } from './partySongs.js'
+import { isSongPlaying } from './fiestaSongs.js'
 
 let audioCtx = null
 let masterGain = null

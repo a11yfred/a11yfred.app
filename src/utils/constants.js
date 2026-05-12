@@ -69,7 +69,7 @@ export const RTL_LOCALES = new Set(['ar-PS', 'ug'])
 export const TYPEWRITER_MIN_CHARS_PER_TICK = 2
 export const TYPEWRITER_CHAR_DIVISOR = 40
 
-export const PARTY_SQUEAK_FREQUENCY = 3
+export const FIESTA_SQUEAK_FREQUENCY = 3
 
 export const ARCHIVE_FOCUS_DELAY_MS = 100
 
@@ -77,10 +77,10 @@ export const SORT_MISSING_ORDER = 99
 
 export const RESULTS_VIEW_ALL_THRESHOLD = 50
 
-export const PARTY_COMPLEMENT_OFFSET = 180
-export const PARTY_TRIAD_OFFSET      = 120
-export const PARTY_GRAD_RANGE        = 80
-export const PARTY_GRAD_MIN          = 10
+export const FIESTA_COMPLEMENT_OFFSET = 180
+export const FIESTA_TRIAD_OFFSET      = 120
+export const FIESTA_GRAD_RANGE        = 80
+export const FIESTA_GRAD_MIN          = 10
 
 export const URL_GITHUB_REPO      = 'https://github.com/mikeyil/A11yHelper'
 export const URL_GITHUB_SPONSORS  = 'https://github.com/sponsors/mikeyil'

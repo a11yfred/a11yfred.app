@@ -399,9 +399,9 @@ select:disabled {
   border: none;
 }
 
-/* ─── Radio chip stars (party mode) ──────────────────────── */
+/* ─── Radio chip stars (fiesta mode) ─────────────────────── */
 
-[data-theme="party"] .radio-chip__indicator {
+[data-theme="fiesta"] .radio-chip__indicator {
   border: none;
   border-radius: 0;
   background: transparent;
@@ -412,15 +412,15 @@ select:disabled {
   color: var(--text-body);
 }
 
-[data-theme="party"] .radio-chip__indicator::before {
+[data-theme="fiesta"] .radio-chip__indicator::before {
   content: '☆';
 }
 
-[data-theme="party"] .radio-chip--active .radio-chip__indicator {
+[data-theme="fiesta"] .radio-chip--active .radio-chip__indicator {
   color: var(--accent-text);
 }
 
-[data-theme="party"] .radio-chip--active .radio-chip__indicator::before {
+[data-theme="fiesta"] .radio-chip--active .radio-chip__indicator::before {
   content: '★';
 }
 

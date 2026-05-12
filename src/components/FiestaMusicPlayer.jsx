@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter } from '../siling-labuyo/index.js'
-import { startSong2 } from '../utils/partySongs.js'
+import { startSong2 } from '../utils/fiestaSongs.js'
 import { useT } from '../calamansi/index.jsx'
 
 function rndPos() {
@@ -10,7 +10,7 @@ function rndPos() {
   }
 }
 
-export default function PartyMusicPlayer({ active }) {
+export default function FiestaMusicPlayer({ active }) {
   const t = useT()
   const [playing, setPlaying] = useState(false)
   const [pos, setPos] = useState(() => rndPos())
@@ -51,7 +51,7 @@ export default function PartyMusicPlayer({ active }) {
 
   return (
     <button
-      className="party-player"
+      className="fiesta-player"
       style={{ top: pos.top, left: pos.left }}
       onClick={handleClick}
       aria-label={playing ? t('party.stop') : t('party.play')}
