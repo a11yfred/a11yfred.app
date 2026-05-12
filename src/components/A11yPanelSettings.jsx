@@ -1,7 +1,7 @@
 ﻿import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw, ArrowLeft } from 'lucide-react'
 import { Modal, Sheet, useRouter } from '../siling-labuyo/index.js'
-import { announce } from '../taho-bayabas/index.js'
+import { announce } from '../taho/index.js'
 import { useT } from '../calamansi/react.js'
 import Toggle from './ui/Toggle.jsx'
 import RadioChip from './ui/RadioChip.jsx'

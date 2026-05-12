@@ -21,6 +21,7 @@ export { default as PanelRowSetting } from './PanelRowSetting.jsx'
 export { default as RadioChipGroup } from './RadioChipGroup.jsx'
 export { default as Radio } from './Radio.jsx'
 export { default as Modal } from '../../siling-labuyo/components/Modal.jsx'
-export { Announcer, announce } from '../../taho-bayabas/index.js'
+export { announce } from '../../taho/index.js'
+export { Announcer } from '../../taho-bayabas/react.js'
 export { applyTheme, useThemeManager } from './theme.js'
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from '../siling-labuyo/index.js'
-import { announce } from '../taho-bayabas/index.js'
+import { announce } from '../taho/index.js'
 import { useT } from '../calamansi/react.js'
 import Button from './ui/Button.jsx'
 import { LS_ONBOARDING_SEEN } from '../utils/constants.js'

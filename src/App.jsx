@@ -26,7 +26,7 @@ import {
   useMediaQuery,
   returnFocus,
 } from './siling-labuyo/index.js'
-import { announce } from './taho-bayabas/index.js'
+import { announce } from './taho/index.js'
 import { Announcer } from './taho-bayabas/react.js'
 import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from './plugins/adobo/react.js'
 import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'

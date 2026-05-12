@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Modal } from '../siling-labuyo/index.js'
-import { announce } from '../taho-bayabas/index.js'
+import { announce } from '../taho/index.js'
 import { useT } from '../calamansi/react.js'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
