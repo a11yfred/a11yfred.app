@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useT } from '../calamansi/index.jsx'
-import { relatedItems } from '../calamansi/relevance.js'
+import { relatedItems } from '../hooks/relevance.js'
 import findingSlug from '../utils/findingSlug.js'
 
 // WCAG AAA/enhanced SC pairings — app-specific, both directions

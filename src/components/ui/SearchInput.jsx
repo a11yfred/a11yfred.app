@@ -66,6 +66,7 @@ export default function SearchInput({
         'search-input-wrap',
         liveSearch ? 'search-input-wrap--live' : '',
       ].filter(Boolean).join(' ')}>
+        {/* eslint-disable @ulam/palaman/no-placeholder-only -- labeled via parent <form role="search" aria-label> */}
         <input
           ref={ref}
           id={id}
@@ -84,6 +85,7 @@ export default function SearchInput({
           ].filter(Boolean).join(' ')}
           {...rest}
         />
+        {/* eslint-enable @ulam/palaman/no-placeholder-only */}
 
         {hasValue && !disabled && (
           <button

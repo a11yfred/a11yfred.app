@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useRouter } from '../plugins/router/index.js'
+import { useRouter } from '../siling-labuyo/index.js'
 import { startSong2 } from '../utils/partySongs.js'
 import { useT } from '../calamansi/index.jsx'
 

@@ -1,4 +1,4 @@
-import { LS_AI_PROVIDER, LS_AI_MODEL_PREFIX, LS_AGENTIC_MODE, LS_FINDING_NOTE_PREFIX, DEFAULT_AI_MODELS, PROVIDER_LABELS } from './constants.js'
+import { LS_FINDING_NOTE_PREFIX } from './constants.js'
 
 export function getStorage(key, fallback = null) {
   try {
@@ -59,22 +59,7 @@ export function setSessionJson(key, value) {
   try { sessionStorage.setItem(key, JSON.stringify(value)) } catch { /* storage unavailable */ }
 }
 
-export function getAiProvider() {
-  return localStorage.getItem(LS_AI_PROVIDER) || 'anthropic'
-}
-
-export function isAgenticModeEnabled() {
-  return localStorage.getItem(LS_AGENTIC_MODE) === 'true'
-}
-
-export function getAiModel(provider) {
-  return localStorage.getItem(`${LS_AI_MODEL_PREFIX}${provider}`) || DEFAULT_AI_MODELS[provider] || ''
-}
-
 export function getFindingNoteKey(id) {
   return `${LS_FINDING_NOTE_PREFIX}${id}`
 }
 
-export function getProviderLabel(provider) {
-  return PROVIDER_LABELS[provider] || provider
-}

@@ -1,4 +1,5 @@
-import { useFocusOnMount } from '../../plugins/router/index.js'
+import { useEffect } from 'react'
+import { useFocusOnMount } from '../../siling-labuyo/index.js'
 import { RotateCcw } from 'lucide-react'
 
 export default function DataError({

@@ -1,4 +1,5 @@
 @import "./tokens.css";
+@import "./components/ui/user-preferences.css";
 
 /* ─── App token overrides ─────────────────────────────────────
    Override ube token defaults for this app here.

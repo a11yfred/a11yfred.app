@@ -11,7 +11,7 @@ export default function Toggle({ id, checked, onChange, disabled }) {
         className="toggle__input"
         disabled={disabled}
       />
-      <span aria-hidden="true" role="presentation" className="toggle__track">
+      <span aria-hidden="true" className="toggle__track">
         <span role="presentation" className="toggle__thumb">
           {checked
             ? <span role="presentation" className="toggle__check" />

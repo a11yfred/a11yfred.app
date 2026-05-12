@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { announce } from '../plugins/announce/index.js'
+import { announce } from '../taho-bayabas/index.js'
 
 // RTL locales — duplicated here so sawsawan has no dependency on app constants.
 // The authoritative list lives in calamansi when the fork happens.

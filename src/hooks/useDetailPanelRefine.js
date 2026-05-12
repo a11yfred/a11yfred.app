@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
-import { getAiRefinement, AiApiError } from '../services/aiService.js'
-import { getAgenticRefinement } from '../services/agenticAiService.js'
-import { announce } from '../plugins/announce/index.js'
-import { TYPEWRITER_TICK_MS, DEBUG_AI_DELAY_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVISOR, DEBUG_COMMANDS } from '../utils/constants.js'
-import { getAiProvider, getProviderLabel } from '../utils/storage.js'
+import { getAiRefinement, AiApiError, getAgenticRefinement, getAiProvider, getProviderLabel, DEBUG_COMMANDS, DEBUG_AI_DELAY_MS } from '../halohalo/index.js'
+import { announce } from '../taho-bayabas/index.js'
+import { TYPEWRITER_TICK_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVISOR } from '../utils/constants.js'
 
 /**
  * Manages AI refinement state and the typewriter animation for DetailPanel.

@@ -213,20 +213,4 @@
   }
 }
 
-/* Increased contrast for users who have requested it (WCAG 1.4.6) */
-@media (prefers-contrast: more) {
-  :root {
-    --text-body:      #383838;
-    --text-muted:     #484848;
-    --border-control: #484848;
-    --border:         #999;
-  }
-
-  [data-theme="dark"] {
-    --text-body:      #ccc;
-    --text-muted:      #bbb;
-    --border-control:  #aaa;
-    --border:          #555;
-  }
-}
 

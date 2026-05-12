@@ -22,6 +22,6 @@ export { default as DataError } from './DataError.jsx'
 export { default as ResultListSkeleton } from './ResultListSkeleton.jsx'
 export { default as InfoBox } from './InfoBox.jsx'
 export { default as Radio } from './Radio.jsx'
-export { default as Modal } from '../../plugins/router/Modal.jsx'
-export { Announcer, announce } from '../../plugins/announce/index.js'
+export { default as Modal } from '../../siling-labuyo/components/Modal.jsx'
+export { Announcer, announce } from '../../taho-bayabas/index.js'
 

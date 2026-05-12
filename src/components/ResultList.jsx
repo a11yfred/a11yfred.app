@@ -1,6 +1,6 @@
 import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ArrowDown, ChevronsLeft, ChevronsRight, ChevronUp, X } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { announce } from '../plugins/announce/index.js'
+import { announce } from '../taho-bayabas/index.js'
 import { useT } from '../calamansi/index.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
@@ -673,10 +673,10 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   </a>
 
                   {showRankingSort && index < displayResults.length - 1 && (
-                    <a
-                      href="#/"
+                    <button
+                      type="button"
                       tabIndex={archived ? -1 : 0}
-                      onClick={(e) => { e.preventDefault(); handleSkipToNext() }}
+                      onClick={handleSkipToNext}
                       onFocus={(e) => {
                         const row = e.currentTarget.closest('li.result-row')
                         if (row) row.classList.add('result-row--skip-focused')
@@ -685,12 +685,11 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                         const row = e.currentTarget.closest('li.result-row')
                         if (row) row.classList.remove('result-row--skip-focused')
                       }}
-                      aria-label={t('results.skip_to_next')}
                       className="skip-link"
                     >
                       {t('results.skip_to_next')}
                       <ArrowDown size={14} aria-hidden="true" />
-                    </a>
+                    </button>
                   )}
                   {onPin && (
                     <IconButton

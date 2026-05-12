@@ -13,8 +13,11 @@ src/plugins/router/     @ulam/ube — router plugin
 src/plugins/adobo/      @ulam/adobo — a11y debug panel
 src/calamansi/          @ulam/calamansi — i18n, hooks, utilities
 src/sawsawan/           @ulam/sawsawan — integration bridge
-src/tokens.css          @ulam/ube — design primitives
-src/app-tokens.css      @ulam/ube — sizing tokens
+src/halohalo/           @ulam/halohalo — AI layer
+src/tokens.css                       @ulam/ube — design primitives
+src/components/ui/user-preferences.css  @ulam/ube — OS/browser user preference overrides
+palaman/                                 @ulam/palaman — Stylelint plugin for user-preference fallback enforcement
+src/app-tokens.css                   @ulam/ube — sizing tokens
 src/typography.css      @ulam/ube — structural baseline
 src/UlamMenu.jsx        ulam — component gallery (the menu)
 src/UlamMenu.css        ulam — component gallery styles
@@ -55,6 +58,6 @@ When a11yhelper is close to webapp launch:
 1. Create `ulam` monorepo at `github.com/mikeyfyi/ulam`
 2. Extract each package folder using git subtree split
 3. Publish to npm under `@ulam/*` (org owned by mikeyil)
-4. A11yhelper replaces local imports with `npm install @ulam/ube @ulam/calamansi @ulam/adobo @ulam/sawsawan`
+4. A11yhelper replaces local imports with `npm install @ulam/ube @ulam/calamansi @ulam/adobo @ulam/sawsawan @ulam/halohalo`
 
 See `src/components/ui/README.md` for full framework documentation.
