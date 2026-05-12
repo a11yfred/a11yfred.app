@@ -26,12 +26,13 @@ import {
   useMediaQuery,
   returnFocus,
 } from './siling-labuyo/index.js'
-import { Announcer, announce } from './taho-bayabas/index.js'
+import { announce } from './taho-bayabas/index.js'
+import { Announcer } from './taho-bayabas/react.js'
 import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from './plugins/adobo/react.js'
 import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
 import { I18nProvider, useT } from './calamansi/react.js'
-import { useSawsawan } from './sawsawan/index.js'
+import { useSawsawan } from './sawsawan/react.js'
 import useUserFindings from './hooks/useUserFindings.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'

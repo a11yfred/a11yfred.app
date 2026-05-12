@@ -9,5 +9,5 @@
 // Dependency direction: sawsawan imports from ube/calamansi/adobo.
 // None of those three import from sawsawan or from each other.
 
-export { useSawsawan } from './useSawsawan.js'
+export { initSawsawan } from './initSawsawan.js'
 export { setPlatformAdapter, getAdapter, makeElectronAdapter } from './platformAdapter.js'

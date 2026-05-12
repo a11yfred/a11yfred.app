@@ -1,8 +1,9 @@
+// vanilla core
 export { AiApiError, httpStatusToErrorType, PROVIDER_CONFIGS } from './providers.js'
 export { callProvider, callAnthropicWithTools } from './fetch.js'
 export { searchItems, makeSearchTool } from './search.js'
-export { useProviderConfig } from './useProviderConfig.js'
-export { useCompletion } from './useCompletion.js'
+export { createProviderConfig } from './createProviderConfig.js'
+export { createCompletion } from './createCompletion.js'
 export { getAiRefinement, parseAiResponse } from './aiService.js'
 export { getAgenticRefinement } from './agenticAiService.js'
 export { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys } from './models.js'

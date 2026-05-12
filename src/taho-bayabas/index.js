@@ -1,6 +1,3 @@
-// vanilla core re-exported for convenience
+// vanilla core
 export { announce, clearAnnouncements } from '../taho/index.js'
-
-// React adapter
-export { Announcer } from './Announcer.jsx'
-export { useAnnounce } from './useAnnounce.js'
+export { mountAnnouncer } from './mountAnnouncer.js'
