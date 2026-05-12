@@ -22,7 +22,7 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Complete ,  106-entry public corpus (ACC prefix), all linters passing (ESLint 9.x + jsx-a11y), UI library complete (2 base button components + 19 additional components), agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
+**Phase 1 (Personal Library)**: Complete ,  106-entry public corpus (ACC prefix), all linters passing (ESLint 9.x + jsx-a11y + @ulam/palaman), ulam framework extracted (taho, sili, calamansi, halohalo, sawsawan), meryenda dev tools and palaman linter moved to tools/, agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
 
 **Phase 2 (AI + Sharing)**: In Progress ,  Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working. Corpus guide page planned.
 
@@ -34,7 +34,7 @@ npm run build      # production build
 
 Key directories:
 
-- `src/data/` ,  106-entry public corpus (ACC prefix), 107-entry legacy corpus (ATH prefix, admin-only)
+- `src/data/` ,  106-entry public corpus (ACC prefix), legacy corpus (ATH prefix, admin-only)
 - `src/services/` ,  Data layer, AI integration, localStorage utilities
 - `src/hooks/` ,  Search, ratings, pinning, user findings, overrides
 - `src/components/` ,  UI components; `ui/` subfolder has 21 reusable components (Button, IconButton, + 19 others)
@@ -60,11 +60,12 @@ Each corpus entry:
   "platform": "web",
   "desc": "Problem description.",
   "fix": "How to fix it.",
-  "sourceCredits": ["Adrian Roselli"],
+  "creditNames": ["Adrian Roselli"],
   "keywords": ["keyboard", "label"],
-  "related": ["1.3.1 Info and Relationships (Level A)"],
-  "scLabel": "2.4.6 Headings and Labels (Level AA)",
-  "links": [{ "text": "Source Title", "url": "https://..." }]
+  "relatedSC": ["1.3.1 Info and Relationships (Level A)"],
+  "primarySC": "2.4.6 Headings and Labels (Level AA)",
+  "creditLinks": [{ "text": "Source Title", "url": "https://..." }],
+  "note": "Optional clarifying note."
 }
 ```
 
