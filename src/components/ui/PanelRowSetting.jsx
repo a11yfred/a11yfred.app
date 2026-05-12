@@ -1,21 +1,21 @@
 /**
- * SettingRow — label + optional description + control (toggle, select, etc.)
+ * PanelRowSetting — label + optional description + control (toggle, select, etc.)
  *
  * Covers both panel-toggle-row (inline control) and panel-group (block content below).
  * The distinction is just layout: inline puts children beside the label,
  * block puts children below.
  *
  * @example — toggle row
- * <SettingRow label={<label htmlFor="tog">Live search</label>} description="Results appear as you type.">
+ * <PanelRowSetting label={<label htmlFor="tog">Live search</label>} description="Results appear as you type.">
  *   <Toggle id="tog" checked={v} onChange={setV} />
- * </SettingRow>
+ * </PanelRowSetting>
  *
  * @example — group (block children)
- * <SettingRow label="Theme" description="Choose your colour scheme." block>
+ * <PanelRowSetting label="Theme" description="Choose your colour scheme." block>
  *   <RadioChipGroup ... />
- * </SettingRow>
+ * </PanelRowSetting>
  */
-export default function SettingRow({ label, description, children, block = false, disabled = false, sm = false }) {
+export default function PanelRowSetting({ label, description, children, block = false, disabled = false, sm = false }) {
   const rowClass = [
     block ? 'panel-group' : 'panel-toggle-row',
     !block && sm ? 'panel-toggle-row--sm' : '',
