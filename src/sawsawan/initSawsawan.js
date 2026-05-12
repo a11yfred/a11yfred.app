@@ -1,7 +1,7 @@
-import { announce } from '../taho-bayabas/index.js'
+import { announce } from '../taho/index.js'
 
 /**
- * Announces a locale change via the taho-bayabas announcer.
+ * Announces a locale change via the taho announcer.
  * html[lang] and html[dir] are handled by calamansi's setLocale.
  *
  * @param {string} locale
