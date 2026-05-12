@@ -345,11 +345,16 @@
   padding: 0.9rem 1rem;
   background: transparent;
   border: none;
-  outline: none;
   color: rgb(200 240 160);
   font-family: monospace;
   font-size: 1.15rem;
   caret-color: rgb(160 220 255);
+}
+.debug-spotlight-input:focus { outline: none; }
+
+.debug-spotlight-input:focus-visible {
+  outline: 2px solid rgb(160 220 255);
+  outline-offset: -2px;
 }
 
 .debug-spotlight-input::placeholder { color: rgb(255 255 255 / 0.2); }
@@ -482,6 +487,54 @@
   flex: 1;
 }
 
+.debug-fab-menu__header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.debug-fab-menu__icon-btn {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: 0.2em 0.35em;
+  border-radius: 4px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.debug-fab-menu__icon-btn:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.debug-fab-menu__input-hint {
+  padding: 0.35rem 0.5rem 0.1rem;
+  font-size: 0.62rem;
+  color: rgb(255 255 255 / 0.25);
+  text-align: center;
+}
+
+.debug-fab-menu__input-hint kbd {
+  font-family: monospace;
+  background: rgb(255 255 255 / 0.08);
+  border-radius: 3px;
+  padding: 0 0.3em;
+  font-size: 0.95em;
+}
+
+/* Input mode — tighter than full spotlight, lives inside the FAB menu */
+.debug-fab-menu--input {
+  padding-bottom: 0.25rem;
+}
+
+.debug-fab-input {
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+}
+
 /* Names tooltip (debug names on/off) */
 .names-tooltip {
   position: fixed;
@@ -511,6 +564,190 @@
 
 .names-tooltip__name {
   color: rgb(200 240 160);
+}
+
+/* ─── Tab Stops Debugger ────────────────────────────────────────────────── */
+.tab-stops-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99990;
+}
+
+/* SVG layer spans the full document height */
+.tab-stops-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.tab-stop-badge {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgb(0 200 230);
+  color: #000;
+  font-family: monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px rgb(0 0 0 / 0.5);
+  line-height: 1;
+}
+
+.tab-stops-hint {
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgb(0 200 230 / 0.12);
+  border: 1px solid rgb(0 200 230 / 0.4);
+  border-radius: 999px;
+  padding: 0.4em 1.25em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgb(0 200 230);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.tab-stops-clear {
+  position: fixed;
+  bottom: 5rem;
+  right: 1.25rem;
+  pointer-events: all;
+  background: rgb(0 200 230 / 0.15);
+  border: 1px solid rgb(0 200 230 / 0.5);
+  border-radius: 6px;
+  color: rgb(0 200 230);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3em 0.75em;
+  cursor: pointer;
+}
+
+.tab-stops-clear:hover {
+  background: rgb(0 200 230 / 0.25);
+  border-color: rgb(0 200 230 / 0.8);
+}
+
+/* ─── Heading Map Debugger ──────────────────────────────────────────────── */
+.heading-map-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99989;
+}
+
+.heading-map-box {
+  position: absolute;
+  border: 2px solid;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
+.heading-map-badge {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  font-family: monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #000;
+  padding: 0 0.3em;
+  border-radius: 2px 0 2px 0;
+  line-height: 1.5;
+}
+
+.heading-map-panel {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  pointer-events: all;
+  background: rgb(10 10 20 / 0.95);
+  border: 1px solid rgb(80 80 100 / 0.6);
+  border-radius: 10px;
+  width: min(280px, 90vw);
+  max-height: min(70vh, 520px);
+  display: flex;
+  flex-direction: column;
+  font-size: 0.78rem;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 0.5);
+}
+
+.heading-map-panel__title {
+  flex-shrink: 0;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgb(80 80 100 / 0.4);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(130 200 255 / 0.7);
+}
+
+.heading-map-panel__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem 0.5rem;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.heading-map-panel__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  line-height: 1.4;
+}
+
+.heading-map-panel__level {
+  font-family: monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  width: 1.8rem;
+}
+
+.heading-map-panel__text {
+  color: rgb(220 220 220 / 0.85);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.heading-map-panel__refresh {
+  flex-shrink: 0;
+  margin: 0.4rem 0.5rem 0.5rem;
+  background: rgb(255 255 255 / 0.05);
+  border: 1px solid rgb(80 80 100 / 0.4);
+  border-radius: 5px;
+  color: rgb(160 200 255 / 0.7);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.3em 0.75em;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.heading-map-panel__refresh:hover {
+  background: rgb(255 255 255 / 0.1);
+  color: rgb(160 200 255);
 }
 
 /* Reduced-motion overrides */

@@ -60,10 +60,8 @@ a:focus-visible {
   border-radius: var(--radius-sm);
 }
 
-/* Toggle: show focus ring on the visual track when the hidden checkbox is focused */
-input[role="switch"] {
-  outline: none;
-}
+/* Toggle: focus ring is redirected to the sibling <span> via :focus-visible + span */
+input[role="switch"]:focus { outline: none; }
 
 input[role="switch"]:focus-visible + span {
   outline: var(--focus-outline-width) solid var(--focus);
@@ -905,8 +903,8 @@ select:disabled {
   line-height: 1em;
   font-weight: 700;
   color: var(--text-heading);
-  outline: none;
 }
+.panel-title:focus:not(:focus-visible) { outline: none; }
 
 .panel-mobile-back {
   display: block;

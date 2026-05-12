@@ -1,5 +1,3 @@
-@import "./tokens.css";
-
 /* ─── Layout ─────────────────────────────────────────────── */
 
 .app-container {
@@ -56,12 +54,6 @@
   left: 0;
 }
 
-.page-header__settings-btn,
-.page-header__about-btn,
-.page-header__help-btn {
-  font-size: 22px;
-}
-
 .header-github-link {
   position: absolute;
   top: 0;
@@ -106,8 +98,12 @@
 .page-title-link:hover,
 .page-title-link:focus-visible {
   text-decoration: underline;
-  text-underline-offset: 4px;
-  outline: none;
+  text-underline-offset: var(--text-underline-offset);
+}
+
+.page-title-link:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .page-title {
@@ -117,8 +113,9 @@
   letter-spacing: -0.02em;
   color: var(--text-heading);
   line-height: 1.15;
-  outline: none;
 }
+/* programmatic skip-link focus target — suppress ring for mouse/script, keep for keyboard */
+.page-title:focus:not(:focus-visible) { outline: none; }
 
 .page-title__icons {
   display: inline-flex;
@@ -164,11 +161,6 @@
   max-width: 36ch;
 }
 
-.not-found__btn {
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius);
-  font-size: var(--fs-body);
-}
 
 /* ─── Footer ─────────────────────────────────────────────── */
 

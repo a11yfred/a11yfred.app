@@ -38,9 +38,9 @@
   font-weight: 800;
   color: var(--text-heading);
   letter-spacing: 0.02em;
-  outline: none;
   margin: 0;
 }
+.onboarding-title:focus:not(:focus-visible) { outline: none; }
 
 .onboarding-content {
   flex: 1;
@@ -60,8 +60,8 @@
   display: flex;
   align-items: center;
   gap: 0.25em;
-  outline: none;
 }
+.onboarding-step-heading:focus:not(:focus-visible) { outline: none; }
 
 .onboarding-step-icon {
   color: var(--accent-text);
