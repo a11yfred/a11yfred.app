@@ -23,6 +23,7 @@ export const OVERLAY_SIGNATURES = [
   { name: 'True Accessibility', src: 'trueaccessibility.com',    global: null },
   { name: 'DIGIaccess',         src: 'digiaccess.net',           global: null },
   { name: 'Purple Lens',        src: 'pluro.com',                global: null },
+  { name: 'User1st',            src: 'user1st.com',              global: null },
 ]
 
 /**
