@@ -16,7 +16,8 @@ import Panel from './components/ui/PanelReact.jsx'
 import InputSearch from './components/ui/InputSearch.jsx'
 import { Sheet, Modal, Drawer } from './siling-labuyo/index.js'
 import { usePref } from './calamansi/react.js'
-import { setLocale, getT } from './calamansi/index.js'
+import { initI18n, setLocale, getT } from './calamansi/index.js'
+import DEMO_MESSAGES from './calamansi/demo-messages.js'
 import './UlamMenu.css'
 
 function Section({ title, children }) {
@@ -33,6 +34,42 @@ function Row({ label, children }) {
     <div className="ulam-row">
       <span className="ulam-row-label">{label}</span>
       <div className="ulam-row-content">{children}</div>
+    </div>
+  )
+}
+
+const DEMO_LOCALES = Object.keys(DEMO_MESSAGES)
+
+function CalamansiDemo() {
+  const [locale, setDemoLocale] = useState('en')
+  const [output, setOutput] = useState(null)
+
+  function switchTo(next) {
+    initI18n(DEMO_MESSAGES)
+    setLocale(next)
+    setDemoLocale(next)
+    const t = getT()
+    setOutput(`${t('greeting')} · ${t('farewell')} (${t('language')})`)
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+        {DEMO_LOCALES.map(l => (
+          <Button
+            key={l}
+            variant={locale === l ? 'primary' : 'secondary'}
+            onClick={() => switchTo(l)}
+          >
+            {DEMO_MESSAGES[l].language}
+          </Button>
+        ))}
+      </div>
+      {output && (
+        <p style={{ fontSize: 'var(--fs-body)', fontStyle: 'italic' }} aria-live="polite">
+          {output}
+        </p>
+      )}
     </div>
   )
 }
@@ -440,16 +477,14 @@ export default function UlamMenu() {
         </Section>
 
         <Section title="calamansi — vanilla API">
-          <Row label="setLocale / getT">
+          <Row label="initI18n / setLocale / getT">
             <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>
-              <code>setLocale('tl')</code> switches the module singleton. <code>getT()</code> returns the current translate function synchronously — no React required.
+              <code>initI18n(messages)</code> registers the app's catalogue.{' '}
+              <code>setLocale(locale)</code> switches the singleton.{' '}
+              <code>getT()</code> returns the current translate function synchronously — no React required.
+              This demo uses <code>DEMO_MESSAGES</code>, a minimal catalogue bundled with calamansi.
             </p>
-            <Button variant="secondary" onClick={() => { setLocale('tl'); alert(getT()('common.skip_to_main')) }}>
-              getT() in Tagalog
-            </Button>
-            <Button variant="secondary" onClick={() => { setLocale('en'); alert(getT()('common.skip_to_main')) }}>
-              getT() in English
-            </Button>
+            <CalamansiDemo />
           </Row>
           <Row label="usePref (React hook)">
             <label htmlFor="live-pref-tog" className="ulam-toggle-label">
