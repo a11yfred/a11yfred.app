@@ -1,13 +1,8 @@
-import { useState, useCallback, useEffect, useRef } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { createProviderConfig } from './createProviderConfig.js'
 
 export function useProviderConfig(storageKeys, providers) {
-  const configRef = useRef(null)
-  if (!configRef.current) {
-    configRef.current = createProviderConfig(storageKeys, providers)
-  }
-  const config = configRef.current
-
+  const [config] = useState(() => createProviderConfig(storageKeys, providers))
   const [, rerender] = useState(0)
   useEffect(() => config.subscribe(() => rerender(n => n + 1)), [config])
 

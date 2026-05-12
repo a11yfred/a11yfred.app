@@ -23,6 +23,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── Adobo plugin styles (debug/admin) ──────────────────────
+/* ─── Meryenda plugin styles (debug/admin) ───────────────────
    Base styles load via tools/meryenda/debug.css, imported
    by the plugin itself. Override here without editing meryenda. */

@@ -552,7 +552,7 @@ function AppContent({
 
   useThemeManager(theme, () => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    announce(
+    announce( // eslint-disable-line @ulam/palaman/no-announce-in-render -- fiesta callback fires on user action, not render
       prefersReduced ? t('party.announce_reduced') : t('party.announce_full'),
       { priority: 'assertive' }
     )

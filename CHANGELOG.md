@@ -4,6 +4,36 @@ All notable changes to A11yHelper are documented here.
 
 ## [Unreleased]
 
+### Lint clean pass — zero JS errors, zero CSS errors, zero MD errors
+
+**JS fixes:**
+
+- `ulam-rules.js`: Added `useCallback` and `useMemo` to `SAFE_PARENT_CALLS` — eliminates false positives on `no-announce-in-render` for callbacks inside `useCallback`
+- `ulam-rules.js`: Fixed traversal logic so nested setState callbacks inside JSX event handlers no longer bail out early
+- `A11yPanelSettings.jsx`: Fixed undefined export — `export default A11yPanelSettings` now resolves correctly via `const A11yPanelSettings = SettingsPanel`
+- `useCompletion.js` / `useProviderConfig.js`: Replaced `useRef` lazy init pattern with `useState` initializer function — eliminates `react-hooks/refs` errors (reading `ref.current` during render)
+- `UlamMenu.jsx`: Escaped `app's` apostrophe as `app&apos;s`
+- `useFindingSearch.js`: Removed stale `eslint-disable react-hooks/exhaustive-deps` comment
+- `findingSearchService.js`: Renamed unused `searchKey` parameter to `_searchKey`
+- `Announcer.jsx`: Added targeted disable comment for intentional mount-once `useEffect`
+- `useRouter.js`: Fixed eslint-disable namespace (`palaman/` to `@ulam/palaman/`)
+- `App.jsx`: Fixed disable namespace for `no-announce-in-render` on fiesta callback
+
+**CSS fixes:**
+
+- `UlamMenu.css`: Updated media query to range notation (`width >= 600px`)
+- `ui.css`: Added comprehensive `@media (prefers-reduced-motion: reduce)` and `@media (prefers-reduced-transparency: reduce)` blocks covering all flagged selectors
+- `InputSearch.css`: Added `prefers-reduced-transparency` block; fixed `no-descending-specificity` by reordering `:focus-visible` and `:disabled` before `:hover:not(:disabled)`
+- `index.css`: Renamed "Adobo plugin styles" comment to "Meryenda plugin styles"
+
+**Stylelint rule improvement:**
+
+- `palaman-stylelint.mjs`: `ulam/user-preferences` rule now scans for existing prefers overrides in the same file and suppresses warnings when a selector is already covered — eliminates false positives when proper fallback blocks exist
+
+**Markdown fixes:**
+
+- `meryenda-scope.md`: Added blank lines around all headings and lists, fixed table separator notation, added `text` language to fenced code block
+
 ### Personal Corpus: Full Normalization Pass (169 Entries)
 
 Completed a comprehensive quality pass on all 169 personal corpus entries across titles, descriptions, and suggested fixes. All automated checks pass.

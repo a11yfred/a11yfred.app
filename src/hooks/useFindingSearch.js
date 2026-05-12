@@ -105,7 +105,7 @@ export default function useFindingSearch(query, platform, locale = 'en', searchK
 
   const results = useMemo(
     () => searchFindings(versionFiltered, query, ratings, searchKey),
-    [versionFiltered, query, ratings, searchKey]  // eslint-disable-line react-hooks/exhaustive-deps
+    [versionFiltered, query, ratings, searchKey]
   )
 
   if (query === DEBUG_SKELETON_QUERY) {

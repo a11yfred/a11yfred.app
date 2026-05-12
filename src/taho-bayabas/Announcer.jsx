@@ -8,7 +8,7 @@ export function Announcer({ devEnabled = true }) {
   useEffect(() => {
     instanceRef.current = mountAnnouncer({ enabled: devEnabled })
     return () => instanceRef.current?.destroy()
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- mount-once; devEnabled changes handled by the effect below
 
   useEffect(() => {
     instanceRef.current?.setEnabled(devEnabled)

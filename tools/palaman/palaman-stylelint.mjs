@@ -58,6 +58,40 @@ const messages = {
 
 const meta = { url: 'https://github.com/mikeyfyi/ulam' };
 
+/**
+ * Collect all selectors that appear inside a prefers-reduced-* or forced-colors
+ * media block anywhere in the file. Used to suppress warnings when an override exists.
+ * Splits comma-separated selector lists so each individual selector is tracked.
+ */
+function collectCoveredSelectors(root) {
+  const covered = new Set();
+  root.walkAtRules('media', (atRule) => {
+    if (!/prefers-|forced-colors/.test(atRule.params)) return;
+    atRule.walkRules((ruleNode) => {
+      // Split comma-separated selector lists
+      for (const part of ruleNode.selector.split(',')) {
+        const sel = part.trim();
+        covered.add(sel);
+        // Also add bare selector without pseudo-classes/pseudo-elements
+        covered.add(sel.replace(/::[^,\s{]+|:[^,\s{(]+(\([^)]*\))?/g, '').trim());
+      }
+    });
+  });
+  return covered;
+}
+
+/** True if the given selector (or its bare form) is in the covered set */
+function isCovered(selector, covered) {
+  // Split comma lists in the base selector too
+  for (const part of selector.split(',')) {
+    const norm = part.trim();
+    if (covered.has(norm)) return true;
+    const bare = norm.replace(/::[^,\s{]+|:[^,\s{(]+(\([^)]*\))?/g, '').trim();
+    if (covered.has(bare)) return true;
+  }
+  return false;
+}
+
 /** @type {import('stylelint').Rule} */
 function rule(primaryOption) {
   return (root, result) => {
@@ -67,8 +101,15 @@ function rule(primaryOption) {
     // Never enforce inside user-preferences.css itself
     if (filePath.includes('user-preferences.css')) return;
 
+    // Pre-scan: collect selectors already covered by prefers overrides in this file
+    const covered = collectCoveredSelectors(root);
+
     root.walkDecls((decl) => {
       if (insidePreferencesMedia(decl)) return;
+
+      // If the containing rule's selector is already overridden in a prefers block, skip
+      const parentSelector = decl.parent?.selector ?? '';
+      if (parentSelector && isCovered(parentSelector, covered)) return;
 
       const prop = decl.prop.toLowerCase();
       const value = decl.value;

@@ -4,6 +4,14 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 12, 2026
+
+### Lint clean pass
+
+All three linters now pass with zero errors. JS errors eliminated: fixed a bad export in `A11yPanelSettings`, refactored two hooks to use `useState` lazy initialization instead of reading refs during render, escaped an unescaped apostrophe in the ulam dev menu, and tightened up the `no-announce-in-render` rule to stop firing on legitimate callback patterns. CSS clean: added reduced-motion and reduced-transparency fallback blocks across all UI components (a real accessibility improvement, not just a lint fix). Markdown clean: fixed heading and list spacing throughout `meryenda-scope.md`. The palaman stylelint rule was also improved to recognize when a selector already has a prefers override elsewhere in the file.
+
+---
+
 ## May 10, 2026
 
 ### Code quality and refactoring passes

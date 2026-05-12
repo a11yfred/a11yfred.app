@@ -114,7 +114,7 @@ export function sortFindings(findings, ratings = {}) {
  *   pass it through for memoisation keys without needing to strip it
  * @returns {Array} up to MAX_SEARCH_RESULTS finding objects
  */
-export function searchFindings(findings, query, ratings = {}, searchKey = 0) {
+export function searchFindings(findings, query, ratings = {}, _searchKey = 0) {
   if (!query || query.trim().length < 2) return []
 
   const { baseQuery, required, excluded } = parseSearchQuery(query)

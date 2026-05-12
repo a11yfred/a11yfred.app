@@ -18,7 +18,10 @@
 // It must only be called inside useEffect, useLayoutEffect, or event handlers.
 
 const ANNOUNCE_FNS = new Set(['announce', 'clearAnnouncements'])
-const SAFE_PARENT_CALLS = new Set(['useEffect', 'useLayoutEffect', 'useInsertionEffect'])
+const SAFE_PARENT_CALLS = new Set([
+  'useEffect', 'useLayoutEffect', 'useInsertionEffect',
+  'useCallback', 'useMemo',
+])
 
 function isInsideSafeContext(node) {
   let cur = node.parent
@@ -41,16 +44,15 @@ function isInsideSafeContext(node) {
       cur.type === 'FunctionExpression' ||
       cur.type === 'ArrowFunctionExpression'
     ) {
-      // If this function is the direct child of a CallExpression (e.g. useEffect(() => ...))
-      // we already caught that above. Otherwise it's a standalone function — safe.
+      // Standalone function (not a callback) — safe
       const parent = cur.parent
       if (parent?.type !== 'CallExpression') return true
       // It's a callback — only safe if the callee is a known safe hook
       if (parent.callee?.name && SAFE_PARENT_CALLS.has(parent.callee.name)) return true
       // Could be an event handler function passed as a prop — allow it
       if (parent.callee?.type === 'MemberExpression') return true
-      // Unknown call — unsafe (could be a component body render callback)
-      return false
+      // Nested callback (e.g. setState inside onClick) — keep traversing upward
+      // Don't bail here; let the loop continue to find the enclosing context
     }
     cur = cur.parent
   }

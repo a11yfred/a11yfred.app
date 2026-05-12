@@ -117,11 +117,6 @@
   transition: background var(--duration-fast);
 }
 
-.search-input-submit:hover:not(:disabled) {
-  background: var(--accent-hover, var(--accent));
-  filter: brightness(1.1);
-}
-
 .search-input-submit:focus-visible {
   outline: var(--focus-width) solid var(--focus);
   outline-offset: -2px;
@@ -132,6 +127,11 @@
   cursor: not-allowed;
 }
 
+.search-input-submit:hover:not(:disabled) {
+  background: var(--accent-hover, var(--accent));
+  filter: brightness(1.1);
+}
+
 /* ── Reduced motion ──────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -139,5 +139,20 @@
   .search-input-clear,
   .search-input-submit {
     transition: none;
+  }
+}
+
+/* ── Reduced transparency ────────────────────────────────── */
+
+@media (prefers-reduced-transparency: reduce) {
+  .search-input-field--disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+
+  .search-input-submit:disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+    background: var(--bg-subtle);
   }
 }

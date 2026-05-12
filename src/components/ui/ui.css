@@ -1347,3 +1347,51 @@ input[type="radio"].control:not(:checked):hover {
     break-inside: avoid;
   }
 }
+
+/* ─── User preference: reduced motion ─────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .skip-link,
+  .btn--icon,
+  .btn--secondary,
+  .btn--primary,
+  .btn--tertiary,
+  .btn--warning,
+  .radio-chip,
+  .radio-chip__indicator,
+  .toggle::before,
+  .toggle__track,
+  .toggle__thumb,
+  [dir="rtl"] .toggle__thumb,
+  .app-checkbox,
+  .field-include-title-label,
+  .select,
+  .control,
+  .control__label {
+    transition: none;
+  }
+
+  .page-panel {
+    animation: none;
+  }
+}
+
+/* ─── User preference: reduced transparency ──────────────────── */
+
+@media (prefers-reduced-transparency: reduce) {
+  .btn--tertiary:disabled,
+  .btn--warning:disabled,
+  .btn--warning:not(:disabled):active,
+  .toggle:has(.toggle__input:disabled),
+  .app-checkbox:disabled,
+  .control:disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+
+  .alert-banner--warning {
+    background: var(--severity-high-bg, #fef3c7);
+    border-color: var(--severity-high-text, #b45309);
+  }
+}

@@ -1,16 +1,11 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { createCompletion } from './createCompletion.js'
 
 export function useCompletion(options = {}) {
-  const instanceRef = useRef(null)
-  if (!instanceRef.current) {
-    instanceRef.current = createCompletion()
-  }
-  const instance = instanceRef.current
-
+  const [instance] = useState(createCompletion)
   const [state, setState] = useState({ loading: false, animating: false })
-  useEffect(() => instance.subscribe(setState), [instance])
 
+  useEffect(() => instance.subscribe(setState), [instance])
   useEffect(() => () => instance.cancel(), [instance])
 
   return {

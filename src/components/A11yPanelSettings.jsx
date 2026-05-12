@@ -820,4 +820,5 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   )
 })
 
+const A11yPanelSettings = SettingsPanel
 export default A11yPanelSettings

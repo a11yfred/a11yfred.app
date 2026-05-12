@@ -479,7 +479,7 @@ export default function UlamMenu() {
         <Section title="calamansi — vanilla API">
           <Row label="initI18n / setLocale / getT">
             <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>
-              <code>initI18n(messages)</code> registers the app's catalogue.{' '}
+              <code>initI18n(messages)</code> registers the app&apos;s catalogue.{' '}
               <code>setLocale(locale)</code> switches the singleton.{' '}
               <code>getT()</code> returns the current translate function synchronously — no React required.
               This demo uses <code>DEMO_MESSAGES</code>, a minimal catalogue bundled with calamansi.
