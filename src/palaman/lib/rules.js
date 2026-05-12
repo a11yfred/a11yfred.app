@@ -1215,6 +1215,567 @@ export function makeNoDialogWithoutClose(h) {
   }
 }
 
+// ═══ Rules that fill jsx-a11y gaps for Vue/Angular consumers ═════════════════
+// These are NOT included in the JSX config — jsx-a11y already covers them there.
+// They are included in palaman-eslint-vue.mjs and palaman-eslint-angular.mjs.
+
+// ─── no-anchor-ambiguous-text ────────────────────────────────────────────────
+// Links with generic text like "click here", "read more" are meaningless out of
+// context for AT users navigating by links. WCAG 2.4.4 Link Purpose (In Context).
+// Ref: WCAG 2.4.4; WebAIM: Links and Hypertext
+
+const AMBIGUOUS_LINK_TEXT = new Set([
+  'click here', 'here', 'read more', 'more', 'learn more', 'this',
+  'link', 'button', 'details', 'info', 'information', 'click', 'tap',
+])
+
+export function makeNoAnchorAmbiguousText(h) {
+  return {
+    meta: {
+      type: 'suggestion',
+      docs: { description: 'Disallow ambiguous link text like "click here" or "read more"' },
+      messages: {
+        ambiguous:
+          'Link text "{{text}}" is ambiguous out of context. AT users navigating by links cannot determine the link destination. Use descriptive text or supplement with aria-label. (WCAG 2.4.4)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (h.getElementName(node) !== 'a') return
+          // If there's an aria-label it overrides visible text — skip
+          if (h.hasAttr(node, 'aria-label') || h.hasAttr(node, 'aria-labelledby')) return
+          // We can only check static className/text at lint time — skip dynamic content
+          const role = h.getRoleValue(node)
+          if (role && role !== 'link') return
+          // Check aria-label value if present
+          const label = (h.getAttrStringValue(h.getAttr(node, 'aria-label')) ?? '').trim().toLowerCase()
+          if (label && AMBIGUOUS_LINK_TEXT.has(label))
+            context.report({ node, messageId: 'ambiguous', data: { text: label } })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-anchor-no-content ─────────────────────────────────────────────────────
+// <a> with no children and no aria-label has no accessible name — phantom link.
+// Ref: WCAG 4.1.2 Name, Role, Value; WCAG 2.4.4
+
+export function makeNoAnchorNoContent(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow <a> elements with no content and no accessible name' },
+      messages: {
+        noContent:
+          'This <a> has no content and no aria-label — AT users encounter a nameless link. Add visible text, aria-label, or a visually-hidden <span>. (WCAG 4.1.2 / 2.4.4)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (h.getElementName(node) !== 'a') return
+          if (h.hasAccessibleName(node)) return
+          // hasOnlyHiddenChildren returns false for truly empty elements too
+          if (!h.hasOnlyHiddenChildren(node)) return
+          context.report({ node, messageId: 'noContent' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-aria-activedescendant-no-tabindex ────────────────────────────────────
+// Elements using aria-activedescendant to manage focus must themselves be
+// focusable (tabIndex >= 0) so AT can reach the composite widget.
+// Ref: ARIA 1.2 §6.6.3; APG Composite Widget Pattern
+
+export function makeNoAriaActivedescendantNoTabindex(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require tabIndex on elements using aria-activedescendant' },
+      messages: {
+        missingTabindex:
+          'Elements using aria-activedescendant must have tabIndex (0 or -1) so they can receive DOM focus and manage keyboard interaction. (ARIA 1.2 §6.6.3)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (!h.hasAttr(node, 'aria-activedescendant')) return
+          if (h.hasAttr(node, 'tabIndex') || h.hasAttr(node, 'tabindex')) return
+          // Native interactive elements are already focusable
+          const el = h.getElementName(node)
+          if (el && INTERACTIVE_ELEMENTS.has(el)) return
+          context.report({ node: h.getAttr(node, 'aria-activedescendant'), messageId: 'missingTabindex' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-invalid-aria-prop-value ───────────────────────────────────────────────
+// ARIA attributes have defined value types. Boolean props must be "true"/"false",
+// tristate props "true"/"false"/"mixed", token props must use valid tokens.
+// Ref: ARIA 1.2 §6.6 State and Property Attribute Processing
+
+const ARIA_BOOLEAN_PROPS = new Set([
+  'aria-atomic', 'aria-busy', 'aria-disabled', 'aria-grabbed',
+  'aria-hidden', 'aria-modal', 'aria-multiline', 'aria-multiselectable',
+  'aria-pressed', 'aria-readonly', 'aria-required', 'aria-selected',
+])
+const ARIA_TRISTATE_PROPS = new Set(['aria-checked', 'aria-pressed'])
+const ARIA_TRISTATE_VALUES = new Set(['true', 'false', 'mixed'])
+const ARIA_BOOLEAN_VALUES = new Set(['true', 'false'])
+
+const ARIA_TOKEN_PROPS = {
+  'aria-autocomplete':  new Set(['inline', 'list', 'both', 'none']),
+  'aria-current':       new Set(['page', 'step', 'location', 'date', 'time', 'true', 'false']),
+  'aria-dropeffect':    new Set(['copy', 'execute', 'link', 'move', 'none', 'popup']),
+  'aria-haspopup':      new Set(['false', 'true', 'menu', 'listbox', 'tree', 'grid', 'dialog']),
+  'aria-invalid':       new Set(['grammar', 'false', 'spelling', 'true']),
+  'aria-live':          new Set(['assertive', 'off', 'polite']),
+  'aria-orientation':   new Set(['horizontal', 'undefined', 'vertical']),
+  'aria-relevant':      new Set(['additions', 'all', 'removals', 'text', 'additions text']),
+  'aria-sort':          new Set(['ascending', 'descending', 'none', 'other']),
+}
+
+export function makeNoInvalidAriaPropValue(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow invalid ARIA attribute values' },
+      messages: {
+        invalidBoolean:
+          '"{{attr}}" must be "true" or "false", got "{{value}}". AT may misinterpret invalid values. (ARIA 1.2)',
+        invalidTristate:
+          '"{{attr}}" must be "true", "false", or "mixed", got "{{value}}". (ARIA 1.2)',
+        invalidToken:
+          '"{{attr}}" must be one of [{{valid}}], got "{{value}}". (ARIA 1.2)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          for (const [prop, validValues] of Object.entries(ARIA_TOKEN_PROPS)) {
+            const attr = h.getAttr(node, prop)
+            if (!attr) continue
+            const val = h.getAttrStringValue(attr)
+            if (val === null) continue
+            if (!validValues.has(val.toLowerCase()))
+              context.report({ node: attr, messageId: 'invalidToken', data: { attr: prop, value: val, valid: [...validValues].join(', ') } })
+          }
+          for (const prop of ARIA_TRISTATE_PROPS) {
+            const attr = h.getAttr(node, prop)
+            if (!attr) continue
+            const val = h.getAttrStringValue(attr)
+            if (val === null) continue
+            if (!ARIA_TRISTATE_VALUES.has(val.toLowerCase()))
+              context.report({ node: attr, messageId: 'invalidTristate', data: { attr: prop, value: val } })
+          }
+          for (const prop of ARIA_BOOLEAN_PROPS) {
+            if (ARIA_TRISTATE_PROPS.has(prop)) continue
+            const attr = h.getAttr(node, prop)
+            if (!attr) continue
+            const val = h.getAttrStringValue(attr)
+            if (val === null) continue
+            if (!ARIA_BOOLEAN_VALUES.has(val.toLowerCase()))
+              context.report({ node: attr, messageId: 'invalidBoolean', data: { attr: prop, value: val } })
+          }
+        },
+      }
+    },
+  }
+}
+
+// ─── no-autocomplete-invalid ──────────────────────────────────────────────────
+// autocomplete must use valid HTML spec token values. Invalid values are ignored
+// by browsers, breaking autofill for AT users. WCAG 1.3.5 Identify Input Purpose.
+// Ref: WCAG 1.3.5; HTML Living Standard autocomplete attribute
+
+const VALID_AUTOCOMPLETE_TOKENS = new Set([
+  'off', 'on', 'name', 'honorific-prefix', 'given-name', 'additional-name',
+  'family-name', 'honorific-suffix', 'nickname', 'email', 'username',
+  'new-password', 'current-password', 'one-time-code', 'organization-title',
+  'organization', 'street-address', 'address-line1', 'address-line2',
+  'address-line3', 'address-level4', 'address-level3', 'address-level2',
+  'address-level1', 'country', 'country-name', 'postal-code',
+  'cc-name', 'cc-given-name', 'cc-additional-name', 'cc-family-name',
+  'cc-number', 'cc-exp', 'cc-exp-month', 'cc-exp-year', 'cc-csc', 'cc-type',
+  'transaction-currency', 'transaction-amount', 'language', 'bday',
+  'bday-day', 'bday-month', 'bday-year', 'sex', 'tel', 'tel-country-code',
+  'tel-national', 'tel-area-code', 'tel-local', 'tel-extension',
+  'impp', 'url', 'photo', 'webauthn',
+])
+
+export function makeNoAutocompleteInvalid(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require valid autocomplete attribute values' },
+      messages: {
+        invalid:
+          '"{{value}}" is not a valid autocomplete token. Invalid values are ignored by browsers, breaking autofill for AT users. (WCAG 1.3.5 / HTML spec)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const el = h.getElementName(node)
+          if (el !== 'input' && el !== 'select' && el !== 'textarea') return
+          const attr = h.getAttr(node, 'autocomplete')
+          if (!attr) return
+          const val = h.getAttrStringValue(attr)
+          if (val === null) return
+          const tokens = val.trim().toLowerCase().split(/\s+/)
+          for (const token of tokens) {
+            if (!VALID_AUTOCOMPLETE_TOKENS.has(token))
+              context.report({ node: attr, messageId: 'invalid', data: { value: token } })
+          }
+        },
+      }
+    },
+  }
+}
+
+// ─── no-heading-no-content ────────────────────────────────────────────────────
+// Headings with no text content are meaningless to AT — they appear in the
+// heading tree but convey nothing. WCAG 2.4.6 Headings and Labels.
+// Ref: WCAG 2.4.6; WebAIM: Headings
+
+export function makeNoHeadingNoContent(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow heading elements with no content' },
+      messages: {
+        noContent:
+          '<{{el}}> has no content — AT users encounter an empty heading in the page outline. Add visible text or aria-label, or remove the heading. (WCAG 2.4.6)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const el = h.getElementName(node)
+          if (!el || !HEADING_ELEMENTS.has(el)) return
+          if (h.hasAccessibleName(node)) return
+          if (h.hasOnlyHiddenChildren(node))
+            context.report({ node, messageId: 'noContent', data: { el } })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-iframe-no-title ───────────────────────────────────────────────────────
+// <iframe> without a title has no accessible name — AT users cannot determine
+// the purpose of the embedded content. WCAG 4.1.2 Name, Role, Value.
+// Ref: WCAG 4.1.2; HTML spec
+
+export function makeNoIframeNoTitle(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Require title attribute on <iframe> elements' },
+      messages: {
+        missingTitle:
+          '<iframe> must have a title attribute describing its content. Without it AT users cannot identify the embedded content. (WCAG 4.1.2)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (h.getElementName(node) !== 'iframe') return
+          const title = h.getAttrStringValue(h.getAttr(node, 'title'))
+          if (!title || title.trim() === '')
+            context.report({ node, messageId: 'missingTitle' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-img-redundant-alt ─────────────────────────────────────────────────────
+// Alt text saying "image of", "photo of", "picture of" is redundant — AT already
+// announces the element is an image. WCAG 1.1.1 Non-text Content.
+// Ref: WCAG 1.1.1; WebAIM: Alternative Text
+
+const REDUNDANT_ALT_PATTERN = /\b(image|photo|photograph|picture|graphic|icon|thumbnail)\b/i
+
+export function makeNoImgRedundantAlt(h) {
+  return {
+    meta: {
+      type: 'suggestion',
+      docs: { description: 'Disallow redundant words like "image" or "photo" in alt text' },
+      messages: {
+        redundant:
+          'Alt text "{{alt}}" contains a redundant word — AT already announces this is an image. Remove "{{word}}" from the alt text. (WCAG 1.1.1)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (h.getElementName(node) !== 'img') return
+          const alt = h.getAttrStringValue(h.getAttr(node, 'alt'))
+          if (!alt) return
+          const match = alt.match(REDUNDANT_ALT_PATTERN)
+          if (match)
+            context.report({ node: h.getAttr(node, 'alt'), messageId: 'redundant', data: { alt, word: match[0] } })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-access-key ────────────────────────────────────────────────────────────
+// accessKey creates keyboard shortcuts that conflict with browser and AT shortcuts.
+// No WCAG SC directly bans it but it causes 2.1.4 Character Key Shortcuts failures
+// and is universally discouraged. Ref: WCAG 2.1.4; WebAIM
+
+export function makeNoAccessKey(h) {
+  return {
+    meta: {
+      type: 'suggestion',
+      docs: { description: 'Disallow accessKey attribute' },
+      messages: {
+        accessKey:
+          'accessKey creates keyboard shortcuts that conflict with browser and AT shortcuts, breaking keyboard navigation for many users. Remove it. (WCAG 2.1.4)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const attr = h.getAttr(node, 'accessKey') ?? h.getAttr(node, 'accesskey')
+          if (attr) context.report({ node: attr, messageId: 'accessKey' })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-noninteractive-to-interactive-role ────────────────────────────────────
+// Adding interactive roles to non-interactive elements (li, div, span, p, etc.)
+// without the required keyboard handlers is a WCAG 4.1.2 failure.
+// Ref: WCAG 4.1.2; ARIA 1.2
+
+const NON_INTERACTIVE_ELEMENTS = new Set([
+  'li', 'ul', 'ol', 'dl', 'dt', 'dd', 'table', 'tr', 'td', 'th',
+  'thead', 'tbody', 'tfoot', 'caption', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'article', 'aside', 'footer', 'header', 'main', 'nav', 'section',
+  'blockquote', 'figure', 'figcaption', 'address', 'p', 'pre',
+])
+
+export function makeNoNoninteractiveToInteractiveRole(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow interactive roles on non-interactive elements without keyboard handlers' },
+      messages: {
+        missingHandlers:
+          '<{{el}} role="{{role}}"> makes a non-interactive element interactive but has no keyboard handler. Add onKeyDown/onKeyPress or use a native interactive element instead. (WCAG 4.1.2 / 2.1.1)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const el = h.getElementName(node)
+          if (!el || !NON_INTERACTIVE_ELEMENTS.has(el)) return
+          const role = h.getRoleValue(node)
+          if (!role || !INTERACTIVE_ROLES.has(role)) return
+          const hasKeyHandler =
+            h.hasAttr(node, 'onKeyDown') || h.hasAttr(node, 'onKeyPress') ||
+            h.hasAttr(node, 'onKeyUp') || h.hasAttr(node, 'tabIndex') ||
+            h.hasAttr(node, 'tabindex') || h.hasAttr(node, '@keydown') ||
+            h.hasAttr(node, '(keydown)') || h.hasAttr(node, '@keyup') ||
+            h.hasAttr(node, '(keyup)')
+          if (!hasKeyHandler)
+            context.report({ node: h.getAttr(node, 'role'), messageId: 'missingHandlers', data: { el, role } })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-noninteractive-tabindex ───────────────────────────────────────────────
+// tabIndex on non-interactive elements without a role puts them in the tab order
+// but AT users have no semantic context for what they are. WCAG 4.1.2.
+// Ref: WCAG 4.1.2; Roselli: Stop Giving Control Hints to Non-Interactive Elements
+
+export function makeNoNoninteractiveTabindex(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow tabIndex >= 0 on non-interactive elements without a role' },
+      messages: {
+        noninteractiveTabindex:
+          'tabIndex on <{{el}}> puts it in the tab order but it has no interactive role — keyboard users reach it but AT cannot identify what it is. Add a role or use a native interactive element. (WCAG 4.1.2)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const el = h.getElementName(node)
+          if (!el || !NON_INTERACTIVE_ELEMENTS.has(el)) return
+          if (h.getRoleValue(node)) return
+          const attr = h.getAttr(node, 'tabIndex') ?? h.getAttr(node, 'tabindex')
+          if (!attr) return
+          const val = h.getAttrStringValue(attr)
+          if (val === null) return
+          const num = Number(val)
+          if (!isNaN(num) && num >= 0)
+            context.report({ node: attr, messageId: 'noninteractiveTabindex', data: { el } })
+        },
+      }
+    },
+  }
+}
+
+// ─── prefer-semantic-element ──────────────────────────────────────────────────
+// When a native HTML element exists for a role, prefer it over role=.
+// Native elements have built-in keyboard handling and better AT support.
+// Ref: WCAG 4.1.2; ARIA in HTML spec "first rule of ARIA"
+
+const ROLE_TO_ELEMENT = {
+  button:      'button',
+  link:        'a',
+  heading:     'h1–h6',
+  checkbox:    'input[type=checkbox]',
+  radio:       'input[type=radio]',
+  textbox:     'input or textarea',
+  searchbox:   'input[type=search]',
+  spinbutton:  'input[type=number]',
+  slider:      'input[type=range]',
+  img:         'img',
+  list:        'ul or ol',
+  listitem:    'li',
+  table:       'table',
+  row:         'tr',
+  cell:        'td',
+  columnheader:'th',
+  rowheader:   'th',
+  form:        'form',
+  navigation:  'nav',
+  main:        'main',
+  banner:      'header',
+  contentinfo: 'footer',
+  complementary: 'aside',
+  region:      'section',
+  article:     'article',
+  separator:   'hr',
+}
+
+export function makePreferSemanticElement(h) {
+  return {
+    meta: {
+      type: 'suggestion',
+      docs: { description: 'Prefer native HTML elements over ARIA role equivalents' },
+      messages: {
+        preferNative:
+          'Use <{{element}}> instead of role="{{role}}" — native elements have built-in keyboard handling and better AT support. (ARIA first rule / WCAG 4.1.2)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const el = h.getElementName(node)
+          const role = h.getRoleValue(node)
+          if (!role) return
+          const native = ROLE_TO_ELEMENT[role]
+          if (!native) return
+          // Don't flag if they're already using a semantic element with a redundant role
+          if (el && el === role) return
+          context.report({ node: h.getAttr(node, 'role'), messageId: 'preferNative', data: { role, element: native } })
+        },
+      }
+    },
+  }
+}
+
+// ─── no-role-supports-aria-props ─────────────────────────────────────────────
+// ARIA attributes must be valid for the element's role. Using unsupported
+// properties on a role is ignored or misread by AT. WCAG 4.1.2.
+// Only catches the most common mismatches statically.
+// Ref: ARIA 1.2 §6.6; ARIA in HTML
+
+const ROLE_FORBIDDEN_PROPS = {
+  // presentation/none — no aria props valid (element is hidden from AT tree)
+  presentation: new Set(['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-hidden']),
+  none:         new Set(['aria-label', 'aria-labelledby', 'aria-describedby', 'aria-hidden']),
+  // separator (non-focusable) — value props don't apply
+  separator:    new Set(['aria-checked', 'aria-selected', 'aria-expanded']),
+}
+
+export function makeNoRoleSupportsAriaProps(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow ARIA attributes that are not supported by the element\'s role' },
+      messages: {
+        unsupported:
+          '"{{attr}}" is not supported on role="{{role}}" and will be ignored or misread by AT. Remove it or change the role. (ARIA 1.2 / WCAG 4.1.2)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          const role = h.getRoleValue(node)
+          if (!role) return
+          const forbidden = ROLE_FORBIDDEN_PROPS[role]
+          if (!forbidden) return
+          for (const prop of forbidden) {
+            const attr = h.getAttr(node, prop)
+            if (attr)
+              context.report({ node: attr, messageId: 'unsupported', data: { attr: prop, role } })
+          }
+        },
+      }
+    },
+  }
+}
+
+// ─── no-scope-on-td ───────────────────────────────────────────────────────────
+// scope attribute is only valid on <th>, not <td>. Using it on <td> is invalid
+// HTML and ignored by browsers. WCAG 1.3.1 Info and Relationships.
+// Ref: WCAG 1.3.1; HTML spec
+
+export function makeNoScopeOnTd(h) {
+  return {
+    meta: {
+      type: 'problem',
+      docs: { description: 'Disallow scope attribute on <td> — only valid on <th>' },
+      messages: {
+        invalidScope:
+          'scope is only valid on <th>, not <td>. Using it on <td> is invalid HTML and is ignored by browsers and AT. (WCAG 1.3.1 / HTML spec)',
+      },
+      schema: [],
+    },
+    create(context) {
+      return {
+        [h.elementVisitor](node) {
+          if (h.getElementName(node) !== 'td') return
+          const attr = h.getAttr(node, 'scope')
+          if (attr) context.report({ node: attr, messageId: 'invalidScope' })
+        },
+      }
+    },
+  }
+}
+
 // ─── All rules map ────────────────────────────────────────────────────────────
 
 export const RULE_FACTORIES = {
@@ -1256,6 +1817,21 @@ export const RULE_FACTORIES = {
   'no-feed-without-article':                    makeNoFeedWithoutArticle,
   'no-aria-activedescendant-without-id':        makeNoAriaActivedescendantWithoutId,
   'no-dialog-without-close':                    makeNoDialogWithoutClose,
+  // jsx-a11y portability rules — included in Vue/Angular configs only
+  'no-anchor-ambiguous-text':                   makeNoAnchorAmbiguousText,
+  'no-anchor-no-content':                       makeNoAnchorNoContent,
+  'no-aria-activedescendant-no-tabindex':       makeNoAriaActivedescendantNoTabindex,
+  'no-invalid-aria-prop-value':                 makeNoInvalidAriaPropValue,
+  'no-autocomplete-invalid':                    makeNoAutocompleteInvalid,
+  'no-heading-no-content':                      makeNoHeadingNoContent,
+  'no-iframe-no-title':                         makeNoIframeNoTitle,
+  'no-img-redundant-alt':                       makeNoImgRedundantAlt,
+  'no-access-key':                              makeNoAccessKey,
+  'no-noninteractive-to-interactive-role':      makeNoNoninteractiveToInteractiveRole,
+  'no-noninteractive-tabindex':                 makeNoNoninteractiveTabindex,
+  'prefer-semantic-element':                    makePreferSemanticElement,
+  'no-role-supports-aria-props':                makeNoRoleSupportsAriaProps,
+  'no-scope-on-td':                             makeNoScopeOnTd,
 }
 
 /** Build the rules map for a plugin by applying helpers to all factories. */
@@ -1310,5 +1886,25 @@ export function buildRecommendedRules(ns) {
     [`${ns}/prefer-aria-disabled`]:                       'warn',
     [`${ns}/no-target-blank-without-label`]:              'warn',
     [`${ns}/no-dialog-without-close`]:                    'warn',
+  }
+}
+
+/** Build portability rules for Vue/Angular configs (jsx-a11y gap rules). */
+export function buildPortabilityRules(ns) {
+  return {
+    [`${ns}/no-anchor-ambiguous-text`]:               'error',
+    [`${ns}/no-anchor-no-content`]:                   'error',
+    [`${ns}/no-aria-activedescendant-no-tabindex`]:   'error',
+    [`${ns}/no-invalid-aria-prop-value`]:             'error',
+    [`${ns}/no-autocomplete-invalid`]:                'error',
+    [`${ns}/no-heading-no-content`]:                  'error',
+    [`${ns}/no-iframe-no-title`]:                     'error',
+    [`${ns}/no-img-redundant-alt`]:                   'warn',
+    [`${ns}/no-access-key`]:                          'warn',
+    [`${ns}/no-noninteractive-to-interactive-role`]:  'error',
+    [`${ns}/no-noninteractive-tabindex`]:             'error',
+    [`${ns}/prefer-semantic-element`]:                'warn',
+    [`${ns}/no-role-supports-aria-props`]:            'error',
+    [`${ns}/no-scope-on-td`]:                         'error',
   }
 }

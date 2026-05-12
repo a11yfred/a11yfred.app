@@ -19,7 +19,7 @@
  */
 
 import { h } from './lib/helpers-vue.js'
-import { buildRules, buildRecommendedRules } from './lib/rules.js'
+import { buildRules, buildRecommendedRules, buildPortabilityRules } from './lib/rules.js'
 
 const NS = '@ulam/palaman'
 const rules = buildRules(h)
@@ -39,6 +39,7 @@ export default {
       rules: {
         ...(vueA11y ? vueA11y.configs['flat/recommended'].rules : {}),
         ...buildRecommendedRules(NS),
+        ...buildPortabilityRules(NS),
       },
     },
   },

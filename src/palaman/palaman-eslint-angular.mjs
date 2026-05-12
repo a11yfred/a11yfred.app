@@ -24,7 +24,7 @@
  */
 
 import { h } from './lib/helpers-angular.js'
-import { buildRules, buildRecommendedRules } from './lib/rules.js'
+import { buildRules, buildRecommendedRules, buildPortabilityRules } from './lib/rules.js'
 
 const NS = '@ulam/palaman'
 const rules = buildRules(h)
@@ -59,6 +59,7 @@ export default {
       rules: {
         ...(angularA11y ? getAngularA11yRules(angularA11y) : {}),
         ...buildRecommendedRules(NS),
+        ...buildPortabilityRules(NS),
       },
     },
   },
