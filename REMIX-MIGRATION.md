@@ -44,24 +44,18 @@ Two separate efforts — do them in order:
 
 ## Part 1 — Framework migration (ulam packages)
 
-### Phase 1 — calamansi (unblocks everything else)
+### Phase 1 — calamansi (unblocks everything else) ✅ DONE
 
 **Goal:** Replace React context with a vanilla module-level singleton.
 
-**Why first:** `t()` already works as a plain function. The context wrapper is
-the only React part. Once calamansi is vanilla, sawsawan and ube can follow
-without a React dependency.
+**Shipped:** `f5a289b`
 
-**Changes:**
-- Replace `I18nProvider` / `useT` context pattern with a module-level `setLocale(locale, messages)` / `getT()` API
-- `t(key, vars)` stays identical — callers don't change
-- `usePref` becomes a plain `getPref(key, default)` / `setPref(key, value)` API backed by sawsawan storage adapter
-- Keep a thin `@ulam/calamansi/react` subpath that re-exports React hooks as a compatibility shim for any React consumers during transition
-
-**Files to change:**
-- `src/calamansi/index.jsx` → `index.js` (remove React, export module API)
-- `src/calamansi/usePref.js` → `pref.js` (plain get/set, no hook)
-- Add `src/calamansi/react.js` (shim: `useT`, `usePref` as React hooks wrapping the new module API)
+- `src/calamansi/index.js` — vanilla core: `setLocale()`, `getT()`, `_subscribe()`, `getPref()`, `setPref()`
+- `src/calamansi/pref.js` — plain `getPref` / `setPref` backed by localStorage
+- `src/calamansi/react.js` — React shim: `I18nProvider`, `useT`, `usePref` wrapping the vanilla API
+- `src/calamansi/usePref.js` — deleted (replaced by pref.js + react.js)
+- All app React consumers updated to import from `calamansi/react.js`
+- Vanilla consumers (services, hooks) import from `calamansi/index.js` directly
 
 ---
 
@@ -237,7 +231,7 @@ Current hash routes → Remix file-based routes:
 
 ```
 Part 1 (framework — do in order):
-  1. calamansi   — 1–2 days   — unblocks everything
+  1. calamansi   ✅ DONE      — vanilla module API + React shim shipped
   2. adobo       — 3–4 days   — self-contained, already designed for this
   3. ube Group A — 1 day      — stateless components
   4. ube Group B — 2–3 days   — simple state

@@ -3,6 +3,7 @@ import {
   Star, Settings, Search, X, Plus, Trash2,
   AlertTriangle, Info, CheckCircle, Copy,
 } from 'lucide-react'
+import SkipLink from './components/ui/SkipLink.jsx'
 import Button from './components/ui/Button.jsx'
 import ButtonLink from './components/ui/ButtonLink.jsx'
 import IconButton from './components/ui/IconButton.jsx'
@@ -15,6 +16,7 @@ import Panel from './components/ui/Panel.jsx'
 import SearchInput from './components/ui/SearchInput.jsx'
 import { BottomSheet, Modal, Drawer } from './siling-labuyo/index.js'
 import { usePref } from './calamansi/react.js'
+import { setLocale, getT } from './calamansi/index.js'
 import './UlamMenu.css'
 
 function Section({ title, children }) {
@@ -421,6 +423,42 @@ export default function UlamMenu() {
                 </Panel>
               </div>
             )}
+          </Row>
+        </Section>
+
+        <Section title="SkipLink">
+          <Row label="Anchor (href)">
+            <p id="ulam-skip-target" tabIndex={-1} style={{ outline: 'none' }}>← focus lands here</p>
+            <SkipLink href="#ulam-skip-target">Skip to target</SkipLink>
+          </Row>
+          <Row label="Button (onClick)">
+            <SkipLink onClick={() => alert('skip action fired')}>Skip (button)</SkipLink>
+          </Row>
+          <Row label="No icon">
+            <SkipLink href="#ulam-skip-target" showIcon={false}>Skip (no icon)</SkipLink>
+          </Row>
+        </Section>
+
+        <Section title="calamansi — vanilla API">
+          <Row label="setLocale / getT">
+            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>
+              <code>setLocale('tl')</code> switches the module singleton. <code>getT()</code> returns the current translate function synchronously — no React required.
+            </p>
+            <Button variant="secondary" onClick={() => { setLocale('tl'); alert(getT()('common.skip_to_main')) }}>
+              getT() in Tagalog
+            </Button>
+            <Button variant="secondary" onClick={() => { setLocale('en'); alert(getT()('common.skip_to_main')) }}>
+              getT() in English
+            </Button>
+          </Row>
+          <Row label="usePref (React hook)">
+            <label htmlFor="live-pref-tog" className="ulam-toggle-label">
+              <Toggle id="live-pref-tog" checked={liveSearch} onChange={setLiveSearch} />
+              Live search persisted: {String(liveSearch)}
+            </label>
+            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>
+              Backed by <code>getPref</code> / <code>setPref</code> in localStorage. Reload the page — the value persists.
+            </p>
           </Row>
         </Section>
 
