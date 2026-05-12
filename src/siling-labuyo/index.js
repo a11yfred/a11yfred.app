@@ -31,7 +31,7 @@ export { default as ModalPrimitive } from './components/Modal.jsx'
 export { default as DrawerPrimitive } from './components/Drawer.jsx'
 export { default as SheetPrimitive } from './components/Sheet.jsx'
 
-// Hash router (move to siling-mahaba when Remix lands)
-export { Router, useRouter, useRouteMatch, matchRoute } from './router/Router.jsx'
-export { default as Route } from './router/Route.jsx'
-export { default as Link } from './router/Link.jsx'
+// Hash router — SPA only, remove when migrating to Remix 3 (see REMIX-MIGRATION.md Part 2 Phase 2)
+export { Router, useRouter, useRouteMatch, matchRoute } from './hashRouter/Router.jsx'
+export { default as Route } from './hashRouter/Route.jsx'
+export { default as Link } from './hashRouter/Link.jsx'

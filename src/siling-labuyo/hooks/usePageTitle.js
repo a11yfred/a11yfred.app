@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useRouter } from '../router/Router.jsx' // hash router — swap for useRouteContext in siling-mahaba
+import { useRouter } from '../hashRouter/Router.jsx' // hash router — swap for meta export per route in Remix 3
 
 /**
  * Sets document.title to "AppName | pageTitle" while mounted, then resets to

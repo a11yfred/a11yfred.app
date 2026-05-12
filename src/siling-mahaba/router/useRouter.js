@@ -1,22 +1,24 @@
-import { useNavigate, useLocation, useMatches } from '@remix-run/react'
-import { matchRoute } from '../../siling-labuyo/router/Router.jsx'
+// TODO: Remix 3 adapter — rewrite this file once the Remix 3 routing API stabilises.
+// As of the beta (April 2026), the routing primitives replacing useNavigate /
+// useLocation / useMatches are not yet documented. This file currently wraps
+// React Router 7 (@remix-run/react) which is NOT available in Remix 3.
+//
+// Contract this file must keep (do not change the return shapes):
+//   useRouter()     → { route: string, navigate: (path: string) => void, appName: string }
+//   useRouteMatch() → params object | null
+//
+// When Remix 3 API is known:
+//   1. Replace the @remix-run/react imports with Remix 3 equivalents
+//   2. Update appName to come from the Remix 3 route handle equivalent
+//   3. Remove this comment block
 
-/**
- * Drop-in replacement for siling-labuyo's useRouter, backed by Remix.
- *
- * Returns the same { route, navigate, appName } shape so all consumers
- * work unchanged when swapping siling-labuyo → siling-mahaba.
- *
- * appName is read from the root route's handle.appName if provided:
- *   // app/root.tsx
- *   export const handle = { appName: 'A11yHelper' }
- *
- * Falls back to the first segment of document.title if handle is absent.
- */
+import { useNavigate, useLocation, useMatches } from '@remix-run/react'
+import { matchRoute } from '../../siling-labuyo/hashRouter/Router.jsx'
+
 export function useRouter() {
-  const navigate   = useNavigate()
-  const location   = useLocation()
-  const matches    = useMatches()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const matches  = useMatches()
 
   const appName = matches[0]?.handle?.appName
     ?? document.title.split(' | ')[0]
@@ -29,11 +31,6 @@ export function useRouter() {
   }
 }
 
-/**
- * Drop-in replacement for siling-labuyo's useRouteMatch.
- * Matches a pattern string (e.g. '/findings/:id') against the current pathname.
- * Returns a params object on match, null otherwise.
- */
 export function useRouteMatch(pattern) {
   const location = useLocation()
   return matchRoute(pattern, location.pathname)
