@@ -8,7 +8,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 1: Complete (17/17 features, 1 pre-launch remaining)
 
-**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All linters passing. UI component library fully portable with 20 components, zero app-specific dependencies.
+**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All three linters passing with zero errors (ESLint, Stylelint, Markdownlint). prefers-reduced-motion and prefers-reduced-transparency fallback blocks added across all UI components. UI component library fully portable with 20 components, zero app-specific dependencies. ulam framework fully structured: taho, sili, calamansi, halohalo, sawsawan (framework), plus meryenda and palaman in tools/.
 
 **Pre-launch remaining (1):**
 
@@ -40,7 +40,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 2: In Progress
 
-**Complete (5):**
+**Complete (8):**
 
 | Feature | Status | % |
 | --- | --- | --- |
@@ -49,6 +49,9 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | How To Use / Onboarding | ✅ | 100 |
 | PWA / Offline | ✅ | 100 |
 | Advanced Search Syntax | ✅ | 100 |
+| ulam framework: taho, sili, calamansi, halohalo, sawsawan | ✅ | 100 |
+| ulam framework: vanilla route announcer + focus manager | ✅ | 100 |
+| ulam framework: palaman lint rules (JSX a11y gaps + 3 ulam-specific) | ✅ | 100 |
 
 **Partial (2):**
 
@@ -236,9 +239,10 @@ Done:
 - `AiDebugToast` ,  AI on/off indicator
 - `DeployBanner` ,  deployment status badge
 - `DebugHelp` ,  full command reference panel
-- `DebugLauncher` ,  FAB + spotlight command input
+- `DebugLauncher` ,  FAB + spotlight command input (runtime-toggled via `debug fab` / `debug fab off` search commands)
 - Unified command dispatcher: `debug all/names/deploy/ai assist/skeleton on|off`, party/language off commands
 - Admin panel restyled with UI library components (Toggle, IconButton, btn--primary/secondary); dataset tabs split into Public (ACC) and Legacy (ATH); bespoke CSS stripped, space tokens used throughout
+- Meryenda (formerly adobo) and palaman moved to `tools/`; adobo renamed to meryenda throughout
 
 ---
 

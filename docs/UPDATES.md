@@ -12,6 +12,16 @@ All three linters now pass with zero errors. JS errors eliminated: fixed a bad e
 
 ---
 
+## May 11, 2026
+
+### ulam framework extraction and platform adapters
+
+Extracted shared logic into dedicated `@ulam` packages alongside the app. `@ulam/halohalo` holds the AI layer (provider config, completions, connectivity check). `@ulam/calamansi/relevance` holds relevance scoring and the finding search service. `@ulam/sawsawan` provides runtime-agnostic storage adapters so the same storage calls work in the browser, Chrome extension, and Electron without any import changes at the call site. `@ulam/palaman` packages the ESLint and Stylelint plugins with all custom accessibility lint rules.
+
+The AdminPanel also picked up two new tools: a live AI connectivity check (pings the configured provider and shows a status indicator) and an overlay detector that flags known accessibility overlay scripts on any page under audit.
+
+---
+
 ## May 10, 2026
 
 ### Code quality and refactoring passes

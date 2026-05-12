@@ -19,6 +19,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 - [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1303 lines. Extract theme manager, search manager, party mode into hooks.
 - [ ] **Standardize locale/language naming** `[code]` `[i18n]` ,  Mixed usage across hooks; standardize throughout.
 - [ ] **Add JSDoc to complex hooks** `[code]` ,  useFindingSearch.js and useContributionQueue.js need parameter/return type docs.
+- [ ] **Address remaining JS warnings** `[code]` ,  41 intentional warnings remain: `prefer-aria-disabled` on all Button/ButtonIcon/Toggle/Radio/Select/InputSearch/SheetDetail/A11yPanelSettings/A11yListResult/A11yTextareaCopyable/UlamMenu/A11yPanelAdmin/A11yInputSearchHero components; `no-target-blank-without-label` on external links in App, A11yLinkSc, A11yLinksSource, A11yPanelAbout, A11yPanelAdmin. These require real code changes (aria-disabled pattern, opens-in-new-tab text), not just lint suppression.
 
 ---
 
@@ -230,4 +231,13 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ Results layout consolidated: sort + actions in one row, rank hint repositioned (May 9)
 - ✅ Footer: Mikey Ilagan linked to mikey.fyi with ref tracking (May 9)
 - ✅ WCAG filter pending note repositioned to sit directly below description (May 9)
+- ✅ ulam framework vanilla route announcer (taho-pandan) and focus manager (siling-mahaba) written (May 11)
+- ✅ Remix 3 adapter imports updated from @remix-run/react to react-router (May 11)
+- ✅ 3 ulam-specific palaman lint rules added: no-announce-in-render, no-hash-router-in-remix, no-use-page-title-in-remix (May 11)
+- ✅ palaman and meryenda moved to tools/; adobo renamed to meryenda throughout (May 11)
+- ✅ All docs updated for framework restructure; five-pass stale reference sweep complete (May 11)
+- ✅ Zero JS errors, zero CSS errors, zero MD errors across all three linters (May 12)
+- ✅ A11yPanelSettings bad export fixed; useCompletion/useProviderConfig refactored to useState lazy init (May 12)
+- ✅ prefers-reduced-motion and prefers-reduced-transparency fallback blocks added to all UI components (May 12)
+- ✅ palaman stylelint rule updated to suppress when selector has existing prefers override (May 12)
 - 💤 Deferred: SCSS migration, corpus pre-translation, Compare mode, Ko-fi donations, Ko-fi a11y patch, GitHub Sponsors
