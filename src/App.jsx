@@ -32,6 +32,9 @@ import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, T
 import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
 import { I18nProvider, useT } from './calamansi/react.js'
+import { initI18n } from './calamansi/index.js'
+import I18N_LOCALES from './i18n-locales.js'
+initI18n(I18N_LOCALES)
 import { useSawsawan } from './sawsawan/react.js'
 import useUserFindings from './hooks/useUserFindings.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
