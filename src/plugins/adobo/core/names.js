@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react'
-
 const IS_DEV = import.meta.env.DEV
 
 const CONTROL_TAGS = new Set(['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'IMG'])
@@ -9,10 +7,7 @@ const INTERACTIVE_ROLES = new Set([
   'switch', 'tab', 'textbox', 'treeitem', 'link', 'searchbox',
 ])
 
-const TOOLTIP_LEFT_OFFSET = 14
-const TOOLTIP_TOP_OFFSET = 20
-
-function isControl(el) {
+export function isControl(el) {
   const tag = el.tagName.toUpperCase()
   if (CONTROL_TAGS.has(tag)) return true
   if (tag === 'A' && el.hasAttribute('href')) return true
@@ -21,7 +16,7 @@ function isControl(el) {
   return false
 }
 
-function getAccessibleName(el) {
+export function getAccessibleName(el) {
   const tag = el.tagName.toUpperCase()
 
   const ariaLabel = el.getAttribute('aria-label')
@@ -74,58 +69,55 @@ function getAccessibleName(el) {
   return { name: '(none)', source: 'none' }
 }
 
+const TOOLTIP_LEFT_OFFSET = 14
+const TOOLTIP_TOP_OFFSET  = 20
+
 /**
- * On hover, shows a tooltip at the cursor with the accessible name of the
- * element under the pointer and the source that provides the name.
- * Dev-only. Renders nothing in production.
+ * Attaches mousemove/mouseover/mouseleave listeners and calls:
+ *   onTooltip({ name, source, x, y }) — element under cursor changed
+ *   onClear()                          — cursor left a control or the document
  *
- * Props:
- *   enabled  boolean , set false to hide (e.g. after "debug names off")
+ * No-ops in production.
+ *
+ * @returns {{ destroy: () => void }}
  */
-export function NamesDebugger({ enabled = true }) {
-  const [tooltip, setTooltip] = useState(null)
-  const [pos, setPos] = useState({ x: 0, y: 0 })
+export function createNamesWatcher(onTooltip, onClear) {
+  if (!IS_DEV) return { destroy() {} }
 
-  useEffect(() => {
-    if (!IS_DEV) return
+  let cursorX = 0
+  let cursorY = 0
 
-    const handleMove = (e) => {
-      setPos({ x: e.clientX, y: e.clientY })
+  const handleMove = (e) => {
+    cursorX = e.clientX
+    cursorY = e.clientY
+  }
+
+  const handleOver = (e) => {
+    const el = e.target
+    if (!el || el === document.body || el === document.documentElement || !isControl(el)) {
+      onClear()
+      return
     }
+    const { name, source } = getAccessibleName(el)
+    onTooltip({
+      name,
+      source,
+      x: cursorX + TOOLTIP_LEFT_OFFSET,
+      y: cursorY + TOOLTIP_TOP_OFFSET,
+    })
+  }
 
-    const handleOver = (e) => {
-      const el = e.target
-      if (!el || el === document.body || el === document.documentElement || !isControl(el)) {
-        setTooltip(null)
-        return
-      }
-      const { name, source } = getAccessibleName(el)
-      setTooltip({ name, source })
-    }
+  const handleOut = () => onClear()
 
-    const handleOut = () => setTooltip(null)
+  document.addEventListener('mousemove', handleMove, { passive: true })
+  document.addEventListener('mouseover', handleOver)
+  document.addEventListener('mouseleave', handleOut)
 
-    document.addEventListener('mousemove', handleMove, { passive: true })
-    document.addEventListener('mouseover', handleOver)
-    document.addEventListener('mouseleave', handleOut)
-    return () => {
+  return {
+    destroy() {
       document.removeEventListener('mousemove', handleMove)
       document.removeEventListener('mouseover', handleOver)
       document.removeEventListener('mouseleave', handleOut)
-    }
-  }, [])
-
-  if (!IS_DEV || !enabled || !tooltip) return null
-
-  const style = {
-    left: pos.x + TOOLTIP_LEFT_OFFSET,
-    top:  pos.y + TOOLTIP_TOP_OFFSET,
+    },
   }
-
-  return (
-    <div className="names-tooltip" style={style} aria-hidden="true">
-      <span className="names-tooltip__source">{tooltip.source}</span>
-      <span className="names-tooltip__name">{tooltip.name}</span>
-    </div>
-  )
 }

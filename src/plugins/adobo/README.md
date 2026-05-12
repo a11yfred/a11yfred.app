@@ -22,22 +22,268 @@ Vanilla-first: core inspection logic has no framework dependency. React is a thi
 
 ```text
 @ulam/adobo
-├── core/       vanilla JS — focus detection, accessible name computation (planned)
-├── overlay/    vanilla JS + HTML/CSS panel UI, self-contained dark styles (planned)
-└── react/      thin React wrapper — useEffect calls init/destroy
+├── core/
+│   ├── focus.js      — formatTarget, getOutlineInfo, flashElement, createFocusWatcher
+│   ├── names.js      — isControl, getAccessibleName, createNamesWatcher
+│   ├── headings.js   — collectHeadings, createHeadingWatcher
+│   └── tabstops.js   — isTabbable, getTabOrder, createTabStopWatcher
+├── react/            — thin React wrappers (useEffect → create*Watcher)
+│   ├── FocusDebugger.jsx
+│   ├── NamesDebugger.jsx
+│   ├── HeadingMapDebugger.jsx
+│   └── TabStopsDebugger.jsx
+├── DeployBanner.jsx  — pure-render React (no DOM watcher)
+├── DebugHelp.jsx     — pure-render React
+├── DebugLauncher.jsx — React FAB + command input
+├── AdminPanel.jsx    — app-specific (a11yhelper)
+└── AiDebugToast.jsx  — app-specific (a11yhelper)
 ```
 
-Current state: React components live here before the vanilla extraction happens. The boundary is documented so the refactor is a move, not a rewrite.
+The `create*Watcher` functions follow a common pattern:
 
-## Exports (portable — part of @ulam/adobo)
+```js
+const watcher = createFocusWatcher(callback)
+// ...later:
+watcher.destroy()
+```
+
+They are dev-only: each function checks `import.meta.env.DEV` and returns a no-op `{ destroy() {} }` in production.
+
+---
+
+## Exports
+
+### React components
 
 | Export | Description |
 | ------ | ----------- |
 | `FocusDebugger` | Keyboard focus toast + element flash on every focus event |
 | `NamesDebugger` | Cursor-following tooltip showing accessible name of hovered element |
+| `TabStopsDebugger` | Numbered overlay + SVG lines recording keyboard tab order |
+| `HeadingMapDebugger` | Heading outline overlay + floating hierarchy panel |
 | `DeployBanner` | Fixed bottom-left banner showing active deployment target |
-| `DebugHelp` | Full command reference panel triggered by `debug help` |
+| `DebugHelp` | Full command reference panel |
 | `DebugLauncher` | FAB + spotlight input for projects without a built-in command field |
+
+### Vanilla core
+
+| Export | Description |
+| ------ | ----------- |
+| `createFocusWatcher(onToast)` | Attaches `focusin` listener; calls `onToast({ label, hasFocusOutline, isFocusVisible })` |
+| `createNamesWatcher(onTooltip, onClear)` | Mouse listeners; calls `onTooltip({ name, source, x, y })` |
+| `createHeadingWatcher(onHeadings)` | ResizeObserver + scroll; calls `onHeadings(headings[])` |
+| `createTabStopWatcher(onStop, onClear)` | `focusin` listener; calls `onStop({ seq, cx, cy, label })` |
+| `formatTarget(el)` | Returns `<tag.class>` string for an element |
+| `getOutlineInfo(el)` | Returns `{ hasFocusOutline, isFocusVisible }` |
+| `flashElement(el)` | Briefly overlays the element with a teal flash |
+| `isControl(el)` | Returns true if element is an interactive control |
+| `getAccessibleName(el)` | Returns `{ name, source }` — the ARIA accessible name + its source |
+| `collectHeadings()` | Returns an array of heading metadata objects |
+| `isTabbable(el)` | Returns true if element is in the natural tab order |
+| `getTabOrder()` | Returns all tabbable elements in tab order |
+
+---
+
+## Framework integration
+
+### React / Remix
+
+Use the pre-built React components. Render them once near the root — they are dev-only and render nothing in production.
+
+```jsx
+// app/root.jsx (Remix) or src/App.jsx (Vite)
+import {
+  FocusDebugger,
+  NamesDebugger,
+  DeployBanner,
+} from '@ulam/adobo'
+
+export default function Root() {
+  const [debugFocus, setDebugFocus] = useState(false)
+  const [debugNames, setDebugNames] = useState(false)
+
+  return (
+    <>
+      <Outlet />
+      <FocusDebugger enabled={debugFocus} />
+      <NamesDebugger enabled={debugNames} />
+      <DeployBanner target="netlify" />
+    </>
+  )
+}
+```
+
+For `DebugLauncher`, wire `onCommand` to your state setters:
+
+```jsx
+<DebugLauncher
+  enabled
+  onCommand={(cmd) => {
+    if (cmd === 'debug names') setDebugNames(true)
+    if (cmd === 'debug names off') setDebugNames(false)
+    if (cmd === 'debug all') { setDebugFocus(true); setDebugNames(true) }
+    if (cmd === 'debug all off') { setDebugFocus(false); setDebugNames(false) }
+  }}
+/>
+```
+
+### Vue
+
+Use the vanilla core directly. Create composables that wrap `create*Watcher`:
+
+```js
+// composables/useAdobo.js
+import { ref, onMounted, onUnmounted } from 'vue'
+import { createFocusWatcher, createNamesWatcher } from '@ulam/adobo'
+
+export function useFocusDebugger(enabled) {
+  const toast = ref(null)
+  let watcher = null
+
+  onMounted(() => {
+    if (!enabled.value) return
+    watcher = createFocusWatcher((data) => { toast.value = data })
+  })
+
+  onUnmounted(() => watcher?.destroy())
+
+  return { toast }
+}
+
+export function useNamesDebugger(enabled) {
+  const tooltip = ref(null)
+  let watcher = null
+
+  onMounted(() => {
+    if (!enabled.value) return
+    watcher = createNamesWatcher(
+      (data) => { tooltip.value = data },
+      () => { tooltip.value = null },
+    )
+  })
+
+  onUnmounted(() => watcher?.destroy())
+
+  return { tooltip }
+}
+```
+
+Then in a component:
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { useFocusDebugger } from './composables/useAdobo'
+
+const enabled = ref(true)
+const { toast } = useFocusDebugger(enabled)
+</script>
+
+<template>
+  <div v-if="toast" class="focus-toast" aria-hidden="true">
+    <code>{{ toast.label }}</code>
+    <span>:focus-visible {{ toast.isFocusVisible ? '✓' : '✗' }}</span>
+  </div>
+</template>
+```
+
+Import `debug.css` once in your app entry:
+
+```js
+import '@ulam/adobo/debug.css'
+```
+
+### Angular
+
+Use the vanilla core in Angular services:
+
+```ts
+// debug.service.ts
+import { Injectable, OnDestroy } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
+import { createFocusWatcher, createNamesWatcher } from '@ulam/adobo'
+
+@Injectable({ providedIn: 'root' })
+export class DebugService implements OnDestroy {
+  toast$ = new BehaviorSubject<{ label: string; hasFocusOutline: boolean; isFocusVisible: boolean } | null>(null)
+  tooltip$ = new BehaviorSubject<{ name: string; source: string; x: number; y: number } | null>(null)
+
+  private focusWatcher: { destroy(): void } | null = null
+  private namesWatcher: { destroy(): void } | null = null
+
+  enableFocus() {
+    this.focusWatcher?.destroy()
+    this.focusWatcher = createFocusWatcher((data) => this.toast$.next(data))
+  }
+
+  enableNames() {
+    this.namesWatcher?.destroy()
+    this.namesWatcher = createNamesWatcher(
+      (data) => this.tooltip$.next(data),
+      () => this.tooltip$.next(null),
+    )
+  }
+
+  disableAll() {
+    this.focusWatcher?.destroy()
+    this.namesWatcher?.destroy()
+    this.focusWatcher = null
+    this.namesWatcher = null
+    this.toast$.next(null)
+    this.tooltip$.next(null)
+  }
+
+  ngOnDestroy() { this.disableAll() }
+}
+```
+
+Use in a component:
+
+```ts
+@Component({
+  selector: 'app-focus-toast',
+  template: `
+    <div *ngIf="debug.toast$ | async as toast" class="focus-toast" aria-hidden="true">
+      <code>{{ toast.label }}</code>
+      <span>:focus-visible {{ toast.isFocusVisible ? '✓' : '✗' }}</span>
+    </div>
+  `,
+})
+export class FocusToastComponent {
+  constructor(public debug: DebugService) {}
+}
+```
+
+Import `debug.css` in `angular.json` styles or your global stylesheet:
+
+```json
+"styles": ["node_modules/@ulam/adobo/debug.css", "src/styles.css"]
+```
+
+### Vanilla JS (script tag / no framework)
+
+Use the watcher factories directly. Wire them to your own DOM or to nothing — just inspect:
+
+```js
+import { createFocusWatcher, createNamesWatcher } from '@ulam/adobo'
+
+// Log focus events to the console
+const focus = createFocusWatcher(({ label, isFocusVisible }) => {
+  console.log(`[focus] ${label} | :focus-visible ${isFocusVisible ? '✓' : '✗'}`)
+})
+
+// Log accessible names on hover
+const names = createNamesWatcher(
+  ({ name, source }) => console.log(`[name] ${name} (${source})`),
+  () => {},
+)
+
+// Clean up when done
+focus.destroy()
+names.destroy()
+```
+
+---
 
 ## App-specific exports (not part of @ulam/adobo)
 
@@ -48,6 +294,8 @@ These live in this folder but are a11yhelper-specific:
 | `AiDebugToast` | Toast for AI assist toggle (wired to a11yhelper AI service) |
 | `useAiDebugToast` | State + timer logic for AiDebugToast |
 | `AdminPanel` | Admin corpus management panel (a11yhelper data wiring) |
+
+---
 
 ## Debug commands
 
@@ -61,66 +309,15 @@ Type in the search bar (live search on) or submit (live search off):
 | `debug names on` | Show accessible name tooltip on hover |
 | `debug names off` | Hide accessible name tooltip |
 
-## Components
-
-### `FocusDebugger`
-
-Shows a blue toast pill on every keyboard focus event. Displays HTML tag + CSS classes of focused element, plus `:focus` and `:focus-visible` status checks.
-
-| Prop | Type | Description |
-| ---- | ---- | ----------- |
-| `enabled` | boolean | Show or suppress the toast |
-
-### `NamesDebugger`
-
-Cursor-following tooltip showing the accessible name of the element under the pointer, plus the source (`aria-label`, `aria-labelledby`, `label[for]`, `alt`, text content, etc.).
-
-| Prop | Type | Description |
-| ---- | ---- | ----------- |
-| `enabled` | boolean | Show or hide the tooltip |
-
-### `DeployBanner`
-
-Fixed bottom-left, pointer-events none. Shows active deployment target.
-
-| Prop | Type | Description |
-| ---- | ---- | ----------- |
-| `target` | `'netlify' \| 'pages' \| 'vercel' \| 'off' \| null` | `null` = hidden |
-
-### `DebugHelp`
-
-Full command reference panel. Pass project-specific sections via `customCommands`.
-
-| Prop | Type | Description |
-| ---- | ---- | ----------- |
-| `open` | boolean | Whether the panel is visible |
-| `onClose` | function | Called when closed |
-| `customCommands` | `[{ heading, rows: [{ cmd, desc }] }]` | Project-specific sections |
-
-### `DebugLauncher`
-
-Floating action button (bottom-right) + spotlight command input for projects without a built-in command field.
-
-| Prop | Type | Default | Description |
-| ---- | ---- | ------- | ----------- |
-| `enabled` | boolean | `false` | Show the FAB |
-| `position` | string | `'bottom-right'` | FAB placement |
-| `onCommand` | function | — | Called with submitted command string |
+---
 
 ## CSS
 
-All styles live in `debug.css`. Mounting `FocusDebugger` activates the stylesheet for all other debug components.
+All styles live in `debug.css`. Import it once — it covers all components.
 
 Adobo CSS is self-contained and opinionated (dark, high contrast). No ube token dependency — looks the same regardless of host app theme.
 
-## Future: Fork to @ulam/adobo
-
-At fork time, the vanilla extraction happens first:
-
-1. Move core DOM inspection logic to `core/` as plain JS
-2. Move overlay panel UI to `overlay/` as vanilla HTML/CSS
-3. React wrapper in `react/` calls `adobo.init()` / `adobo.destroy()`
-4. Ships as both a script tag drop-in and an npm package
+---
 
 ## License
 

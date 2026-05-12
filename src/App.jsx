@@ -27,7 +27,8 @@ import {
   returnFocus,
 } from './siling-labuyo/index.js'
 import { Announcer, announce } from './taho-bayabas/index.js'
-import { FocusDebugger, NamesDebugger, DeployBanner, AiDebugToast, useAiDebugToast, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from './plugins/adobo/index.js'
+import { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } from './plugins/adobo/index.js'
+import { AiDebugToast, useAiDebugToast } from './components/AiDebugToast.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
 import { I18nProvider, useT } from './calamansi/react.js'
 import { useSawsawan } from './sawsawan/index.js'
@@ -40,7 +41,7 @@ import './components/FiestaMode.css'
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'))
 const AdminPanel = import.meta.env.DEV
-  ? lazy(() => import('./plugins/adobo/AdminPanel.jsx'))
+  ? lazy(() => import('./components/AdminPanel.jsx'))
   : () => null
 const UlamMenu = import.meta.env.DEV
   ? lazy(() => import('./UlamMenu.jsx'))

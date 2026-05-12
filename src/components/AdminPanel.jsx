@@ -1,14 +1,14 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './admin-panel.css'
-import publicCorpus from '../../data/corpus.json'
-import legacyCorpus from '../../data/legacy-corpus.json'
-import personalCorpus from '../../data/personal-corpus.json'
-import findingSlug from '../../utils/findingSlug.js'
-import Toggle from '../../components/ui/Toggle.jsx'
-import IconButton from '../../components/ui/IconButton.jsx'
-import { LS_ADMIN_DATASET } from '../../utils/constants.js'
-import { getStorage, setStorage } from '../../utils/storage.js'
+import publicCorpus from '../data/corpus.json'
+import legacyCorpus from '../data/legacy-corpus.json'
+import personalCorpus from '../data/personal-corpus.json'
+import findingSlug from '../utils/findingSlug.js'
+import Toggle from './ui/Toggle.jsx'
+import IconButton from './ui/IconButton.jsx'
+import { LS_ADMIN_DATASET } from '../utils/constants.js'
+import { getStorage, setStorage } from '../utils/storage.js'
 
 const IS_DEV = import.meta.env.DEV
 

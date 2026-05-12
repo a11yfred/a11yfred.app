@@ -1,12 +1,19 @@
 // @ulam/adobo — portable a11y debug tools
-export { FocusDebugger } from './FocusDebugger.jsx'
-export { NamesDebugger } from './NamesDebugger.jsx'
-export { DeployBanner } from './DeployBanner.jsx'
-export { DebugHelp } from './DebugHelp.jsx'
-export { DebugLauncher } from './DebugLauncher.jsx'
-export { TabStopsDebugger } from './TabStopsDebugger.jsx'
-export { HeadingMapDebugger } from './HeadingMapDebugger.jsx'
 
-// app-specific (a11yhelper AI wiring — not part of @ulam/adobo)
-export { AiDebugToast, useAiDebugToast } from './AiDebugToast.jsx'
-export { default as AdminPanel } from './AdminPanel.jsx'
+// React wrappers (thin shells around core/)
+export { FocusDebugger }      from './react/FocusDebugger.jsx'
+export { NamesDebugger }      from './react/NamesDebugger.jsx'
+export { TabStopsDebugger }   from './react/TabStopsDebugger.jsx'
+export { HeadingMapDebugger } from './react/HeadingMapDebugger.jsx'
+
+// Vanilla core (no framework dependency)
+export { createFocusWatcher, formatTarget, getOutlineInfo, flashElement } from './core/focus.js'
+export { createNamesWatcher, isControl, getAccessibleName }               from './core/names.js'
+export { createHeadingWatcher, collectHeadings }                          from './core/headings.js'
+export { createTabStopWatcher, isTabbable, getTabOrder }                  from './core/tabstops.js'
+
+// Pure-render React (no DOM watcher)
+export { DeployBanner }  from './DeployBanner.jsx'
+export { DebugHelp }     from './DebugHelp.jsx'
+export { DebugLauncher } from './DebugLauncher.jsx'
+
