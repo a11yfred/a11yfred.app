@@ -332,13 +332,13 @@ export default function SheetDetail({ finding, aiEnabled, agenticMode = false, f
         />
         <div className="detail-section-controls">
           <button
-            onClick={() => {
+            onClick={findingNote.trim() ? () => {
               setStorage(getFindingNoteKey(finding.id), findingNote)
               setFindingNoteSaved(true)
               announce(t('detail.saved_finding_note_aria'))
               setTimeout(() => setFindingNoteSaved(false), NOTIFICATION_TIMEOUT)
-            }}
-            disabled={!findingNote.trim()}
+            } : undefined}
+            aria-disabled={!findingNote.trim() || undefined}
             className={`btn--primary detail-section-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
             aria-label={findingNoteSaved ? t('detail.saved_finding_note_aria') : t('detail.save_finding_note_aria')}
           >
@@ -383,8 +383,8 @@ export default function SheetDetail({ finding, aiEnabled, agenticMode = false, f
             </div>
             <button
               ref={aiRevisionButtonRef}
-              onClick={handleRefine}
-              disabled={refining || animating || !aiNote.trim()}
+              onClick={(refining || animating || !aiNote.trim()) ? undefined : handleRefine}
+              aria-disabled={(refining || animating || !aiNote.trim()) || undefined}
               aria-busy={refining ? true : undefined}
               className="btn--primary detail-section-btn btn--height-standard"
               aria-label={refining ? t('detail.rewriting_aria') : t('detail.ai_revision_aria')}
@@ -414,9 +414,9 @@ export default function SheetDetail({ finding, aiEnabled, agenticMode = false, f
         <button
           type="button"
           className={`btn--secondary detail-action-btn btn--height-standard${resetAllDone ? ' btn__field--success' : ''}`}
-          onClick={handleResetAllFields}
+          onClick={(descText === finding.desc && fixText === finding.fix) ? undefined : handleResetAllFields}
+          aria-disabled={(descText === finding.desc && fixText === finding.fix) || undefined}
           aria-label={t('detail.reset_all_fields_aria')}
-          disabled={descText === finding.desc && fixText === finding.fix}
         >
           {resetAllDone
             ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.reset_all_done_desktop')}</>

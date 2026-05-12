@@ -140,6 +140,13 @@ select:focus-visible {
   background: var(--border);
 }
 
+.btn--icon[aria-disabled="true"],
+.btn--icon.btn--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* ─── Secondary button (neutral border, outline style) ────── */
 
 .btn--secondary {
@@ -207,46 +214,50 @@ select:focus-visible {
 
 /* ─── Shared disabled state — before hover rules (specificity order) */
 
-.btn--primary:disabled,
-.btn--secondary:disabled,
-.btn--tertiary:disabled {
+.btn--primary[aria-disabled="true"],
+.btn--secondary[aria-disabled="true"],
+.btn--tertiary[aria-disabled="true"],
+.btn--primary.btn--disabled,
+.btn--secondary.btn--disabled,
+.btn--tertiary.btn--disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
-.btn--primary:not(:disabled):hover,
-.btn--secondary:not(:disabled):hover {
+.btn--primary:not([aria-disabled="true"]):hover,
+.btn--secondary:not([aria-disabled="true"]):hover {
   background: var(--accent-text);
   color: var(--accent-bg);
   border-color: var(--accent-text);
 }
 
-.btn--primary:not(:disabled):focus-visible,
-.btn--secondary:not(:disabled):focus-visible {
+.btn--primary:not([aria-disabled="true"]):focus-visible,
+.btn--secondary:not([aria-disabled="true"]):focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
 }
 
-.btn--primary:not(:disabled):active,
-.btn--secondary:not(:disabled):active {
+.btn--primary:not([aria-disabled="true"]):active,
+.btn--secondary:not([aria-disabled="true"]):active {
   background: var(--accent);
   color: var(--bg);
   border-color: var(--accent);
 }
 
-.btn--tertiary:not(:disabled):hover {
+.btn--tertiary:not([aria-disabled="true"]):hover {
   background: var(--bg-subtle);
   color: var(--text-heading);
   text-decoration: none;
 }
 
-.btn--tertiary:not(:disabled):focus-visible {
+.btn--tertiary:not([aria-disabled="true"]):focus-visible {
   outline: 1px solid var(--focus);
   outline-offset: 0;
   text-decoration: none;
 }
 
-.btn--tertiary:not(:disabled):active {
+.btn--tertiary:not([aria-disabled="true"]):active {
   background: var(--border);
   color: var(--text-heading);
 }
@@ -263,22 +274,24 @@ select:focus-visible {
   border-radius: var(--radius);
 }
 
-.btn--warning:disabled {
+.btn--warning[aria-disabled="true"],
+.btn--warning.btn--disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }
 
-.btn--warning:not(:disabled):hover {
+.btn--warning:not([aria-disabled="true"]):hover {
   background: var(--error);
   color: var(--bg);
 }
 
-.btn--warning:not(:disabled):focus-visible {
+.btn--warning:not([aria-disabled="true"]):focus-visible {
   outline: var(--focus-outline-width) solid var(--error);
   outline-offset: var(--focus-outline-offset);
 }
 
-.btn--warning:not(:disabled):active {
+.btn--warning:not([aria-disabled="true"]):active {
   background: var(--error);
   color: var(--bg);
   opacity: 0.85;
@@ -295,8 +308,8 @@ select:focus-visible {
   border-width: 0;
 }
 
-.error-retry-inline:not(:disabled):hover,
-.error-retry-inline:not(:disabled):focus-visible {
+.error-retry-inline:not([aria-disabled="true"]):hover,
+.error-retry-inline:not([aria-disabled="true"]):focus-visible {
   background: transparent;
   color: var(--text-heading);
 }
@@ -1380,9 +1393,17 @@ input[type="radio"].control:not(:checked):hover {
 /* ─── User preference: reduced transparency ──────────────────── */
 
 @media (prefers-reduced-transparency: reduce) {
-  .btn--tertiary:disabled,
-  .btn--warning:disabled,
-  .btn--warning:not(:disabled):active,
+  .btn--tertiary[aria-disabled="true"],
+  .btn--tertiary.btn--disabled,
+  .btn--warning[aria-disabled="true"],
+  .btn--warning.btn--disabled,
+  .btn--warning:not([aria-disabled="true"]):active,
+  .btn--primary[aria-disabled="true"],
+  .btn--primary.btn--disabled,
+  .btn--secondary[aria-disabled="true"],
+  .btn--secondary.btn--disabled,
+  .btn--icon[aria-disabled="true"],
+  .btn--icon.btn--disabled,
   .toggle:has(.toggle__input:disabled),
   .app-checkbox:disabled,
   .control:disabled {

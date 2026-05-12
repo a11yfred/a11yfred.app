@@ -6,7 +6,7 @@ export default function A11yLinkSc({ label }) {
   if (href) {
     return (
       <a href={href} target="_blank" rel="noreferrer" className="detail-sc-link">
-        {label}<IconExternalLink />
+        {label}<IconExternalLink /><span className="sr-only"> (opens in new tab)</span>
       </a>
     )
   }

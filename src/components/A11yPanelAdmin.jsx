@@ -342,8 +342,8 @@ export default function A11yPanelAdmin({
           <h2 className="admin-section__title">AI Connectivity</h2>
           <button
             className="btn--secondary admin-check-btn"
-            onClick={runConnectivityCheck}
-            disabled={connectivityChecking}
+            onClick={connectivityChecking ? undefined : runConnectivityCheck}
+            aria-disabled={connectivityChecking || undefined}
           >
             {connectivityChecking ? 'Checking…' : 'Check providers'}
           </button>
@@ -366,7 +366,7 @@ export default function A11yPanelAdmin({
           <p className="admin-section__desc">
             Checks for known a11y overlay scripts (
             <a href="https://overlayfactsheet.com" target="_blank" rel="noreferrer" className="admin-section__link">
-              overlayfactsheet.com
+              overlayfactsheet.com<span className="sr-only"> (opens in new tab)</span>
             </a>
             ).
           </p>

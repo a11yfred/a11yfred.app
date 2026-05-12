@@ -8,7 +8,7 @@ import findingSlug from '../utils/findingSlug.js'
 import './A11yPanelAbout.css'
 
 function ExtLink({ href, children }) {
-  return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<IconExternalLink /></a>
+  return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<IconExternalLink /><span className="sr-only"> (opens in new tab)</span></a>
 }
 
 export default function A11yPanelAbout({ onClose, allFindings = [] }) {
@@ -96,7 +96,7 @@ export default function A11yPanelAbout({ onClose, allFindings = [] }) {
         <p className="panel-body">{t('about.sources_intro')}</p>
         <ul className="about-sources-list panel-body">
           <li>
-            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="panel-inline-link">WCAG 2.2 Understanding documents<IconExternalLink /></a>
+            <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noreferrer" className="panel-inline-link">WCAG 2.2 Understanding documents<IconExternalLink /><span className="sr-only"> (opens in new tab)</span></a>
             {' '}(W3C / WAI)
           </li>
           <li>

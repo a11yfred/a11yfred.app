@@ -88,20 +88,20 @@ const TextareaCopyable = forwardRef(function TextareaCopyable({
         </div>
         <div className="field__actions">
           <button
-            onClick={handleResetOrUndo}
+            onClick={(animating || (!undoable && !hasChanged)) ? undefined : handleResetOrUndo}
             aria-label={resetBtnLabel}
+            aria-disabled={(animating || (!undoable && !hasChanged)) || undefined}
             className={`btn--secondary btn--field${reset ? ' btn__field--success' : ''}`}
-            disabled={animating || (!undoable && !hasChanged)}
           >
             {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
             <span>{resetBtnText}</span>
           </button>
           <button
             ref={copyBtnRef}
-            onClick={onCopy}
+            onClick={animating ? undefined : onCopy}
             aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
+            aria-disabled={animating || undefined}
             className={`btn--primary btn--field${copied ? ' btn__field--success' : ''}`}
-            disabled={animating}
           >
             {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
             <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>

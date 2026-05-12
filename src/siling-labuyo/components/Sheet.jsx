@@ -105,7 +105,7 @@ export default function Sheet({
     panelRef.current.style.setProperty('--sheet-chrome-height', `${h}px`)
     document.documentElement.style.setProperty('--sheet-chrome-height', `${h}px`)
     return () => { document.documentElement.style.removeProperty('--sheet-chrome-height') }
-  }, [open])
+  }, [open]) // eslint-disable-line react-hooks/exhaustive-deps -- chromeRef and panelRef are stable React refs
 
   const BackChevron = dir === 'rtl' ? BackRtlIcon : BackLtrIcon
 

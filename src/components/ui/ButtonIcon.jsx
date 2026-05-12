@@ -15,8 +15,8 @@ const ButtonIcon = forwardRef(function ButtonIcon({
     <button
       ref={ref}
       type="button"
-      onClick={onClick}
-      disabled={disabled}
+      onClick={disabled ? undefined : onClick}
+      aria-disabled={disabled || undefined}
       aria-label={label}
       className={`btn--icon${variantClass ? ` ${variantClass}` : ''}${className ? ` ${className}` : ''}`}
       {...rest}

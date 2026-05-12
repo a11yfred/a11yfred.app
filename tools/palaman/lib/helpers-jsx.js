@@ -41,7 +41,12 @@ export function getAttr(openingElement, name) {
 
 export function getElementName(openingElement) {
   const n = openingElement.name
-  if (typeof n.name === 'string') return n.name.toLowerCase()
+  if (typeof n.name === 'string') {
+    // Custom React components start with uppercase — return null so rules
+    // that check element names don't treat them as native HTML elements.
+    if (n.name[0] !== n.name[0].toLowerCase()) return null
+    return n.name.toLowerCase()
+  }
   return null
 }
 
@@ -112,6 +117,37 @@ export function getClassName(openingElement) {
   return getAttrStringValue(classAttr)
 }
 
+const NEW_TAB_PATTERN = /new.tab|new.window|opens in/i
+
+/** Recursively collect all text content from a JSX subtree. */
+function collectText(node) {
+  if (!node) return ''
+  if (node.type === 'JSXText') return node.value
+  if (node.type === 'JSXElement') {
+    return (node.children ?? []).map(collectText).join('')
+  }
+  if (node.type === 'JSXExpressionContainer') {
+    const ex = node.expression
+    if (ex.type === 'Literal') return String(ex.value)
+    if (ex.type === 'TemplateLiteral') return ex.quasis.map(q => q.value.raw).join('')
+  }
+  return ''
+}
+
+/**
+ * Returns true if the link communicates "opens in new tab" via:
+ *   - aria-label containing the phrase
+ *   - any descendant text content containing the phrase (e.g. sr-only span)
+ */
+export function hasNewTabWarning(openingElement) {
+  const labelVal = (getAttrStringValue(getAttr(openingElement, 'aria-label')) ?? '').toLowerCase()
+  if (NEW_TAB_PATTERN.test(labelVal)) return true
+  const jsxElement = openingElement.parent
+  if (jsxElement?.type !== 'JSXElement') return false
+  const childText = collectText(jsxElement)
+  return NEW_TAB_PATTERN.test(childText)
+}
+
 /** Wrap all JSX helpers into the standard `h` interface expected by rules. */
 export const h = {
   getAttr,
@@ -125,6 +161,7 @@ export const h = {
     const el = openingElement.parent
     return el?.type === 'JSXElement' ? hasOnlyHiddenChildren(el) : false
   },
+  hasNewTabWarning,
   getParent,
   getAncestors,
   getChildOpeningElements,

@@ -579,6 +579,10 @@ export function makeWarnRoleAlert(h) {
 
 // ─── prefer-aria-disabled ────────────────────────────────────────────────────
 
+// Native form controls that support HTML disabled per spec — aria-disabled is
+// not the right substitute for these; native disabled is correct and expected.
+const NATIVE_DISABLED_ELEMENTS = new Set(['input', 'select', 'textarea', 'option', 'optgroup', 'fieldset'])
+
 export function makePreferAriaDisabled(h) {
   return {
     meta: {
@@ -594,6 +598,9 @@ export function makePreferAriaDisabled(h) {
       return {
         [h.elementVisitor](node) {
           if (!h.isInteractiveElement(node)) return
+          // Native form controls: HTML disabled is correct per spec, not aria-disabled
+          const elName = h.getElementName(node)
+          if (elName && NATIVE_DISABLED_ELEMENTS.has(elName)) return
           const attr = h.getAttr(node, 'disabled')
           if (!attr) return
           // Only flag boolean disabled (not disabled={false})
@@ -746,8 +753,7 @@ export function makeNoTargetBlankWithoutLabel(h) {
           if (h.getElementName(node) !== 'a') return
           const targetVal = h.getAttrStringValue(h.getAttr(node, 'target'))
           if (targetVal !== '_blank') return
-          const labelVal = (h.getAttrStringValue(h.getAttr(node, 'aria-label')) ?? '').toLowerCase()
-          if (/new.tab|new.window|opens in/i.test(labelVal)) return
+          if (h.hasNewTabWarning?.(node)) return
           context.report({ node: h.getAttr(node, 'target'), messageId: 'targetBlank' })
         },
       }
