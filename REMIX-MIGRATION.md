@@ -21,139 +21,110 @@ Two separate efforts — do them in order:
 | `@ulam/taho` | Pure vanilla JS — live region core |
 | `@ulam/palaman` | Pure vanilla JS — linting, dev-only |
 
-### Remix adapters already built (but re-export React components)
+### Remix adapters
 
-| Package | What's done | What's missing |
-|---------|-------------|----------------|
-| `@ulam/siling-mahaba` | `useRouter`, `useRouteMatch`, `usePageTitle` shim | Re-exports React `Modal`, `Drawer`, `BottomSheet` from siling-labuyo — need vanilla replacements |
-| `@ulam/taho-pandan` | `useRouteAnnouncer` | Complete — no changes needed |
+| Package               | Status                                                                             |
+|-----------------------|------------------------------------------------------------------------------------|
+| `@ulam/siling-mahaba` | Complete — re-exports `Modal`, `Drawer`, `Sheet` from siling-labuyo React wrappers |
+| `@ulam/taho-pandan`   | Complete — no changes needed                                                       |
 
 ### React-dependent (needs migration)
 
-| Package | React surface | Effort |
+| Package | React surface | Status |
 |---------|--------------|--------|
-| `@ulam/calamansi` | `I18nProvider` context, `useT`, `usePref` hooks | Small |
-| `@ulam/adobo` | 8 debug components | Medium — already architected for this |
-| `@ulam/ube` | 22 UI components | Large |
-| `@ulam/siling-labuyo` | hooks + `Modal`, `Drawer`, `BottomSheet` components | Medium (hooks stay, components move to vanilla) |
-| `@ulam/taho-bayabas` | `Announcer`, `useAnnounce` | Small |
-| `@ulam/halohalo` | `useCompletion`, `useProviderConfig` hooks | Small |
-| `@ulam/sawsawan` | `useSawsawan` hook | Trivial |
+| `@ulam/calamansi` | `I18nProvider` context, `useT`, `usePref` hooks | ✅ DONE |
+| `@ulam/adobo` | 8 debug components | ✅ DONE |
+| `@ulam/ube` | UI components | ✅ DONE (Groups A–D) |
+| `@ulam/siling-labuyo` | hooks + `Modal`, `Drawer`, `Sheet` components | ✅ DONE |
+| `@ulam/taho-bayabas` | `Announcer`, `useAnnounce` | In progress |
+| `@ulam/halohalo` | `useCompletion`, `useProviderConfig` hooks | In progress |
+| `@ulam/sawsawan` | `useSawsawan` hook | In progress |
 
 ---
 
 ## Part 1 — Framework migration (ulam packages)
 
-### Phase 1 — calamansi (unblocks everything else) ✅ DONE
-
-**Goal:** Replace React context with a vanilla module-level singleton.
+### Phase 1 — calamansi ✅ DONE
 
 **Shipped:** `f5a289b`
 
 - `src/calamansi/index.js` — vanilla core: `setLocale()`, `getT()`, `_subscribe()`, `getPref()`, `setPref()`
 - `src/calamansi/pref.js` — plain `getPref` / `setPref` backed by localStorage
 - `src/calamansi/react.js` — React shim: `I18nProvider`, `useT`, `usePref` wrapping the vanilla API
-- `src/calamansi/usePref.js` — deleted (replaced by pref.js + react.js)
 - All app React consumers updated to import from `calamansi/react.js`
 - Vanilla consumers (services, hooks) import from `calamansi/index.js` directly
 
 ---
 
-### Phase 2 — adobo (already architected for this)
+### Phase 2 — adobo ✅ DONE
 
-**Goal:** Extract DOM inspection logic to vanilla core; make React an optional mount wrapper.
+**Shipped:** `d49d80a`
 
-**Why next:** The adobo README already documents this split. The DOM inspection
-logic never needed React — `getBoundingClientRect`, `focusin` listeners,
-`querySelectorAll` are all plain browser APIs. React is just the mount/unmount
-lifecycle.
-
-**Target architecture:**
+Three-layer architecture:
 ```text
 @ulam/adobo
-├── core/        vanilla JS — focus detection, name computation, heading scan, tab order
-├── overlay/     vanilla JS + HTML/CSS — self-contained panel UI, no framework
-└── react/       thin React wrapper — calls core.init() / core.destroy() in useEffect
+├── core/        vanilla JS — createFocusWatcher, createNamesWatcher, createHeadingWatcher, createTabStopWatcher
+├── overlay/     vanilla JS DOM mounting — mountFocusDebugger, mountNamesDebugger, mountHeadingMapDebugger,
+│                mountTabStopsDebugger, mountDebugLauncher, mountDebugHelp, mountDeployBanner
+└── react.js     thin React shims — FocusDebugger, NamesDebugger, TabStopsDebugger, HeadingMapDebugger,
+                 DebugLauncher, DebugHelp, DeployBanner (all via useOverlay helper)
 ```
 
-**Changes per component:**
-
-| Component | Core logic (→ vanilla) | React wrapper (thin) |
-|-----------|----------------------|---------------------|
-| `FocusDebugger` | `focusin` listener, toast DOM creation | `useEffect` calls `init`/`destroy` |
-| `NamesDebugger` | `mousemove` listener, name computation | `useEffect` calls `init`/`destroy` |
-| `TabStopsDebugger` | `focusin` listener, SVG line drawing | `useEffect` calls `init`/`destroy` |
-| `HeadingMapDebugger` | `querySelectorAll`, `ResizeObserver` | `useEffect` calls `init`/`destroy` |
-| `DebugLauncher` | Command parsing, menu/input DOM | `useEffect` mount, prop → attribute bridge |
-| `DeployBanner` | Static DOM element | Trivial wrapper |
-| `DebugHelp` | Static DOM panel | Trivial wrapper |
-
-**Ships as:**
-- Script tag drop-in: `<script src="adobo.js">` — calls `adobo.init({ commands: [...] })`
-- npm: `import { initAdobo } from '@ulam/adobo'`
-- React optional: `import { FocusDebugger } from '@ulam/adobo/react'`
+- `index.js` exports vanilla only (`core/`, `overlay/`)
+- `react.js` exports React components — `import { FocusDebugger } from '@ulam/adobo/react'`
+- React marked as optional peer dep
 
 ---
 
-### Phase 3 — ube components (largest effort)
+### Phase 3 — ube components ✅ DONE
 
-**Goal:** Rewrite 22 React components as vanilla Web Components or plain JS +
-HTML template functions. CSS stays entirely unchanged.
+**Shipped:** `caf371e` (Groups A–D) + related commits
 
-**Approach — plain JS render functions, not Web Components:**
-Web Components have good browser support but add boilerplate and shadow DOM
-friction. The simpler path is plain JS functions that return DOM nodes, matching
-the existing CSS class names exactly. Framework adapters (React, Remix) wrap
-these in thin components.
+Component naming conventions established:
+- `Panel` / `PanelReact` — primitive shell vs sili-wired React version
+- `ButtonIcon`, `InputSearch`, `InputWithClear` — noun-modifier naming
+- `LinkSkipTo`, `BackButton`, `ButtonLink` — directional naming
 
-**Architecture:**
-```text
-@ulam/ube
-├── core/         plain JS render functions — Button(), Toggle(), SearchInput(), etc.
-├── css/          existing CSS, unchanged
-├── react/        thin React wrappers (forwardRef → core function)
-└── remix/        Remix component exports (server-renderable HTML + progressive enhancement)
+Lucide removed from all ube primitives — icons are inline SVGs with prop injection
+fallbacks (`retryIcon`, `closeIcon`, `backLtrIcon`, `backRtlIcon`, `collapseIcon`).
+
+App-specific components extracted to `src/components/` with `A11y` prefix:
+- `A11yPanelAbout`, `A11yPanelHelp`, `A11yPanelSettings`, `A11yPanelAdmin`
+- `A11yListResult`, `A11yListResultSkeleton`, `A11yListRelated`, `A11yLinksSource`
+- `A11yLinkSc`, `A11yLinkTitle`, `A11yTextareaCopyable`, `A11yInputSearchHero`
+- `A11yToastAiDebug`
+
+Other app components renamed to noun-modifier convention:
+- `SheetDetail`, `CarouselOnboarding`, `TileAd`, `EffectConfetti`, `EffectFiestaSparkles`,
+  `WidgetFiestaMusicPlayer`, `WidgetKofi`, `ThemeFiestaMode.css`
+
+Subpath exports:
+```json
+{ "exports": { ".": "./index.js", "./react": "./react.js" } }
 ```
 
-**Component migration groups:**
+---
 
-**Group A — stateless, trivial (1–2 hours each):**
-`Badge`, `InfoBox`, `BackButton`, `NoResults`, `ButtonLink`, `SourceLinks`, `LinkTitle`, `ResultListSkeleton`
+### Phase 4 — siling-labuyo overlay components ✅ DONE
 
-**Group B — simple state (half day each):**
-`Button`, `IconButton`, `Toggle`, `RadioChip`, `Radio`, `Select`
+**Shipped:** `cd9bb81`
 
-**Group C — refs + event wiring (full day each):**
-`SearchInput`, `InputWithClear`, `Field`, `Panel`, `PanelShell`
+Each overlay now has a primitive/React split:
 
-**Group D — complex / portal-dependent (1–2 days each):**
-`Modal`, `Drawer`, `BottomSheet`, `DataError`
+| Primitive (no sili deps) | React wrapper (sili-wired) | Exported as |
+|---|---|---|
+| `Modal.jsx` | `ModalReact.jsx` | `Modal` |
+| `Drawer.jsx` | `DrawerReact.jsx` | `Drawer` |
+| `Sheet.jsx` | `SheetReact.jsx` | `Sheet` |
 
-**Theme:**
-- `useThemeManager` → plain `setTheme(theme)` function that writes `data-theme` to `<html>`
-- Remix: set via loader data, no client hook needed
+- `BottomSheet` renamed to `Sheet` throughout
+- Primitives exported as `ModalPrimitive`, `DrawerPrimitive`, `SheetPrimitive` from index
+- React wrappers exported as `Modal`, `Drawer`, `Sheet` — same names, `/react` subpath is the signal
+- `siling-mahaba` updated to re-export `Sheet` instead of `BottomSheet`
 
 ---
 
-### Phase 4 — siling-labuyo overlay components
-
-**Goal:** `Modal`, `Drawer`, `BottomSheet` move to vanilla JS using sili
-primitives. React versions become thin wrappers around the vanilla implementation.
-
-**Changes:**
-- `Modal` → vanilla: `sili.focusTrap` + `sili.ariaHide` + `sili.escapeKey` + DOM template
-- `Drawer` → same
-- `BottomSheet` → same
-- `siling-labuyo/components/` becomes thin React wrappers calling the vanilla implementations
-- `siling-mahaba` stops re-exporting from siling-labuyo — imports from vanilla core instead
-
-**Hooks stay React** — `useEscapeKey`, `useFocusTrap`, etc. are already thin
-`useEffect` wrappers around sili. They stay in `siling-labuyo` for React
-consumers. Remix consumers use sili directly or via Remix's server lifecycle.
-
----
-
-### Phase 5 — taho-bayabas, halohalo, sawsawan (cleanup)
+### Phase 5 — taho-bayabas, halohalo, sawsawan
 
 **taho-bayabas:**
 - `Announcer` component → vanilla: plain DOM element created by `taho` core
@@ -164,7 +135,6 @@ consumers. Remix consumers use sili directly or via Remix's server lifecycle.
 - `useCompletion` → plain async `streamCompletion(options)` function
 - `useProviderConfig` → plain `getProviderConfig()` / `setProviderConfig()` module API
 - Add `@ulam/halohalo/react` shim for React consumers during transition
-- Remix: wire to `loader` / `action` patterns for server-side AI calls
 
 **sawsawan:**
 - `useSawsawan` → plain `initSawsawan(locale, t, announceKey)` function
@@ -174,13 +144,12 @@ consumers. Remix consumers use sili directly or via Remix's server lifecycle.
 
 ## Part 2 — App migration (a11yhelper → Remix 3)
 
-Do this after Part 1 is complete. The app migration is straightforward once the
-framework packages are vanilla.
+Do this after Part 1 is complete and Remix 3 is stable.
 
-### Phase 0 — Prerequisites (done)
+### Phase 0 — Prerequisites
 - `siling-mahaba` router hooks implemented ✓
 - `taho-pandan` route announcer implemented ✓
-- Remix 3 released and stable
+- Remix 3 released and stable — **waiting**
 
 ### Phase 1 — Install and configure Remix 3
 - Replace Vite SPA config with Remix 3 Vite plugin
@@ -230,17 +199,14 @@ Current hash routes → Remix file-based routes:
 ## Sequencing summary
 
 ```
-Part 1 (framework — do in order):
-  1. calamansi   ✅ DONE      — vanilla module API + React shim shipped
-  2. adobo       — 3–4 days   — self-contained, already designed for this
-  3. ube Group A — 1 day      — stateless components
-  4. ube Group B — 2–3 days   — simple state
-  5. ube Group C — 3–4 days   — refs + event wiring
-  6. siling-labuyo overlays — 2–3 days — Modal, Drawer, BottomSheet
-  7. ube Group D — 2–3 days   — portals (can use vanilla overlay work from step 6)
-  8. taho-bayabas, halohalo, sawsawan — 1–2 days — cleanup
+Part 1 (framework):
+  1. calamansi              ✅ DONE — f5a289b
+  2. adobo                  ✅ DONE — d49d80a
+  3. ube Groups A–D         ✅ DONE — caf371e + naming commits
+  4. siling-labuyo overlays ✅ DONE — cd9bb81
+  5. taho-bayabas, halohalo, sawsawan — in progress
 
-Part 2 (app — after Part 1):
+Part 2 (app — after Part 1 + Remix 3 stable):
   0. Wait for Remix 3 stable
   1. Install + configure Remix 3     — 1 day
   2. Route file structure            — 1–2 days
@@ -248,9 +214,3 @@ Part 2 (app — after Part 1):
   4. Component migration             — 2–3 days
   5. adobo in Remix                  — half day
 ```
-
-Total framework migration estimate: **~3 weeks** (can be done incrementally —
-each phase ships independently behind the existing `@ulam/*/react` shims).
-
-Total app migration estimate: **~2 weeks** after framework is done and Remix 3
-is stable.
