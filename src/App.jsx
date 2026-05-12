@@ -6,7 +6,7 @@ import DetailSheet from './components/DetailSheet.jsx'
 import AboutPanel from './components/AboutPanel.jsx'
 import HelpPanel from './components/HelpPanel.jsx'
 import OnboardingPanel from './components/OnboardingPanel.jsx'
-import IconButton from './components/ui/IconButton.jsx'
+import ButtonIcon from './components/ui/ButtonIcon.jsx'
 import SkipLink from './components/ui/SkipLink.jsx'
 import Confetti from './components/Confetti.jsx'
 import FiestaSparkles from './components/FiestaSparkles.jsx'
@@ -1361,7 +1361,7 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
 
       <div className="page-header__actions">
         {compact && !onboardingOpen ? (
-          <IconButton
+          <ButtonIcon
             onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : helpOpen ? onCloseHelp : onCloseOnboarding}
             label={t('common.close')}
             icon={<X size={20} strokeWidth={2.5} aria-hidden="true" />}
@@ -1369,19 +1369,19 @@ function Header({ h1Ref, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOp
           />
         ) : !onboardingOpen && (
           <>
-            <IconButton
+            <ButtonIcon
               onClick={onOpenHelp}
               label={t('help.open_help')}
               icon={<HelpCircle size={20} strokeWidth={2} aria-hidden="true" />}
               className="page-header__help-btn"
             />
-            <IconButton
+            <ButtonIcon
               onClick={onOpenAbout}
               label={t('header.open_about')}
               icon={<Info size={20} strokeWidth={2} aria-hidden="true" />}
               className="page-header__about-btn"
             />
-            <IconButton
+            <ButtonIcon
               onClick={onOpenSettings}
               label={t('header.open_settings')}
               icon={<Settings size={20} strokeWidth={2} aria-hidden="true" />}

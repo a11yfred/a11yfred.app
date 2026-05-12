@@ -6,7 +6,7 @@ import legacyCorpus from '../data/legacy-corpus.json'
 import personalCorpus from '../data/personal-corpus.json'
 import findingSlug from '../utils/findingSlug.js'
 import Toggle from './ui/Toggle.jsx'
-import IconButton from './ui/IconButton.jsx'
+import ButtonIcon from './ui/ButtonIcon.jsx'
 import { LS_ADMIN_DATASET } from '../utils/constants.js'
 import { getStorage, setStorage } from '../utils/storage.js'
 
@@ -235,7 +235,7 @@ export default function AdminPanel({
           <span className="admin-dev-badge">DEV</span>
           Admin
         </div>
-        <IconButton
+        <ButtonIcon
           icon={<X size={18} aria-hidden="true" />}
           label="Close admin panel"
           onClick={onClose}

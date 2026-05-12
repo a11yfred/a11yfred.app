@@ -1,5 +1,3 @@
-import { ChevronDown } from 'lucide-react'
-
 export default function Select({ id, value, onChange, disabled, wrapClass, children, ...rest }) {
   return (
     <div className={`select-wrap${wrapClass ? ` ${wrapClass}` : ''}`}>
@@ -13,7 +11,9 @@ export default function Select({ id, value, onChange, disabled, wrapClass, child
       >
         {children}
       </select>
-      <ChevronDown size={14} aria-hidden="true" className="select__chevron" />
+      <svg className="select__chevron" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
     </div>
   )
 }

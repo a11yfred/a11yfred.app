@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-const IconButton = forwardRef(function IconButton({
+const ButtonIcon = forwardRef(function ButtonIcon({
   icon,
   label,
   onClick,
@@ -26,4 +26,4 @@ const IconButton = forwardRef(function IconButton({
   )
 })
 
-export default IconButton
+export default ButtonIcon

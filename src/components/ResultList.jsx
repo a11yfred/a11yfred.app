@@ -6,7 +6,7 @@ import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
 import SkipLink from './ui/SkipLink.jsx'
 import RadioChip from './ui/RadioChip.jsx'
-import IconButton from './ui/IconButton.jsx'
+import ButtonIcon from './ui/ButtonIcon.jsx'
 import Badge from './ui/Badge.jsx'
 import Select from './ui/Select.jsx'
 import InputWithClear from './ui/InputWithClear.jsx'
@@ -691,7 +691,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                     </SkipLink>
                   )}
                   {onPin && (
-                    <IconButton
+                    <ButtonIcon
                       variant="tertiary"
                       label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                       disabled={archived}
@@ -708,7 +708,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                 </div>
 
                 {showRanking && !pinned && <div className="result-rank-col">
-                  <IconButton
+                  <ButtonIcon
                     variant="tertiary"
                     label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
                     disabled={archived}
@@ -718,7 +718,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   />
 
                   {!pinned && <>
-                    <IconButton
+                    <ButtonIcon
                       variant="tertiary"
                       label={t('results.rank_up', { title: shortTitle })}
                       disabled={archived}
@@ -735,7 +735,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                       <span aria-hidden="true">{score}</span>
                     </span>
 
-                    <IconButton
+                    <ButtonIcon
                       variant="tertiary"
                       label={t('results.rank_down', { title: shortTitle })}
                       disabled={archived}
@@ -745,7 +745,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                     />
                   </>}
 
-                  <IconButton
+                  <ButtonIcon
                     variant="tertiary"
                     label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
                     onClick={handleArchive}
@@ -762,7 +762,7 @@ export default function ResultList({ results, selected, onSelect, query, ratings
               {/* Mobile: pin button inside swipe-reveal action panel */}
               {onPin && (
                 <div className="result-action-panel result-action-panel--right">
-                  <IconButton
+                  <ButtonIcon
                     variant="tertiary"
                     label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                     disabled={archived}
@@ -785,20 +785,20 @@ export default function ResultList({ results, selected, onSelect, query, ratings
                   onFocus={() => setSwipeOpenId({ id: finding.id, side: 'left' })}
                   onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setSwipeOpenId(null) }}
                 >
-                  <IconButton variant="tertiary" label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })} onClick={handleStar}
+                  <ButtonIcon variant="tertiary" label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })} onClick={handleStar}
                     icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
                     className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
                   />
-                  <IconButton variant="tertiary" label={t('results.rank_up', { title: shortTitle })} disabled={archived} onClick={handleRankUp}
+                  <ButtonIcon variant="tertiary" label={t('results.rank_up', { title: shortTitle })} disabled={archived} onClick={handleRankUp}
                     icon={<ThumbsUp size={14} aria-hidden="true" />}
                     className="result-rank-btn result-rank-btn--up"
                   />
                   <span className="result-rank-score" aria-hidden="true">{score}</span>
-                  <IconButton variant="tertiary" label={t('results.rank_down', { title: shortTitle })} disabled={archived} onClick={handleRankDown}
+                  <ButtonIcon variant="tertiary" label={t('results.rank_down', { title: shortTitle })} disabled={archived} onClick={handleRankDown}
                     icon={<ThumbsDown size={14} aria-hidden="true" />}
                     className="result-rank-btn result-rank-btn--down"
                   />
-                  <IconButton variant="tertiary" label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })} onClick={handleArchive}
+                  <ButtonIcon variant="tertiary" label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })} onClick={handleArchive}
                     icon={archived ? <ArchiveRestore size={13} aria-hidden="true" /> : <Archive size={13} aria-hidden="true" />}
                     className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
                   />

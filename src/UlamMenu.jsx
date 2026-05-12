@@ -6,7 +6,7 @@ import {
 import SkipLink from './components/ui/SkipLink.jsx'
 import Button from './components/ui/Button.jsx'
 import ButtonLink from './components/ui/ButtonLink.jsx'
-import IconButton from './components/ui/IconButton.jsx'
+import ButtonIcon from './components/ui/ButtonIcon.jsx'
 import Badge from './components/ui/Badge.jsx'
 import RadioChip from './components/ui/RadioChip.jsx'
 import Toggle from './components/ui/Toggle.jsx'
@@ -137,18 +137,18 @@ export default function UlamMenu() {
           </Row>
         </Section>
 
-        <Section title="IconButton">
+        <Section title="ButtonIcon">
           <Row label="Accent">
-            <IconButton icon={<X size={20} />} label="Close" variant="accent" onClick={() => {}} />
-            <IconButton icon={<Settings size={20} />} label="Settings" variant="accent" onClick={() => {}} />
-            <IconButton icon={<Search size={20} />} label="Search" variant="accent" onClick={() => {}} />
+            <ButtonIcon icon={<X size={20} />} label="Close" variant="accent" onClick={() => {}} />
+            <ButtonIcon icon={<Settings size={20} />} label="Settings" variant="accent" onClick={() => {}} />
+            <ButtonIcon icon={<Search size={20} />} label="Search" variant="accent" onClick={() => {}} />
           </Row>
           <Row label="Tertiary">
-            <IconButton icon={<Plus size={20} />} label="Add" variant="tertiary" onClick={() => {}} />
-            <IconButton icon={<AlertTriangle size={20} />} label="Warning" variant="tertiary" onClick={() => {}} />
+            <ButtonIcon icon={<Plus size={20} />} label="Add" variant="tertiary" onClick={() => {}} />
+            <ButtonIcon icon={<AlertTriangle size={20} />} label="Warning" variant="tertiary" onClick={() => {}} />
           </Row>
           <Row label="Disabled">
-            <IconButton icon={<Star size={20} />} label="Star" variant="accent" disabled onClick={() => {}} />
+            <ButtonIcon icon={<Star size={20} />} label="Star" variant="accent" disabled onClick={() => {}} />
           </Row>
         </Section>
 

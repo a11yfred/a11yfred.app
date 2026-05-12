@@ -1,13 +1,20 @@
 {
   "name": "@ulam/ube",
   "version": "0.0.0",
-  "description": "Accessible React UI components, theming, and routing. The sweet layer of the ulam framework.",
+  "description": "Accessible UI components, theming, and routing. The sweet layer of the ulam framework.",
   "private": true,
   "keywords": ["accessibility", "react", "ui", "components", "a11y", "ulam"],
   "license": "MIT",
+  "exports": {
+    ".": "./index.js",
+    "./react": "./react.js"
+  },
   "peerDependencies": {
     "react": ">=18",
-    "react-dom": ">=18",
-    "lucide-react": ">=0.400.0"
+    "react-dom": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true },
+    "react-dom": { "optional": true }
   }
 }
