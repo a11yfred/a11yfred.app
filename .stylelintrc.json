@@ -1,6 +1,6 @@
 {
   "extends": ["stylelint-config-standard"],
-  "plugins": ["./tools/neighbor/neighbor-stylelint.mjs"],
+  "plugins": ["@a11yfred/neighbor"],
   "rules": {
     "ulam/user-preferences": true,
     "ulam/no-outline-none": true,

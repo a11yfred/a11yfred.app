@@ -15,7 +15,7 @@ import { fileURLToPath } from 'url'
 import { resolve, dirname } from 'path'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const OVERLAYS_PATH = resolve(__dirname, '../rogers/core/overlays.js')
+const OVERLAYS_PATH = resolve(__dirname, './rogers/core/overlays.js')
 
 // --- Parse our current signatures from the JS source ---
 function parseOurVendors() {

@@ -2,7 +2,7 @@ import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import react from 'eslint-plugin-react'
-import neighbor from './tools/neighbor/neighbor-eslint.mjs'
+import neighbor from '@a11yfred/neighbor/eslint'
 
 export default [
   js.configs.recommended,
