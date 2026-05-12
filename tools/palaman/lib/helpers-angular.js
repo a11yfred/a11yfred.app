@@ -35,7 +35,12 @@ export function getAttrStringValue(attr) {
 }
 
 export function getElementName(tmplElement) {
-  return (tmplElement.name ?? '').toLowerCase() || null
+  const raw = tmplElement.name ?? ''
+  if (!raw) return null
+  // Angular custom component selectors are typically kebab-case (app-button),
+  // but guard against PascalCase as well to avoid native element name collisions.
+  if (raw[0] !== raw[0].toLowerCase()) return null
+  return raw.toLowerCase()
 }
 
 export function hasAttr(tmplElement, name) {
@@ -69,6 +74,22 @@ export function hasOnlyHiddenChildren(tmplElement) {
   })
 }
 
+const NEW_TAB_PATTERN = /new.tab|new.window|opens in/i
+
+function collectAngularText(node) {
+  if (!node) return ''
+  if (node.constructor?.name === 'TmplAstText') return node.value ?? ''
+  if (node.constructor?.name === 'TmplAstElement') return (node.children ?? []).map(collectAngularText).join('')
+  return ''
+}
+
+export function hasNewTabWarning(tmplElement) {
+  const labelVal = (getAttrStringValue(getAttr(tmplElement, 'aria-label')) ?? '').toLowerCase()
+  if (NEW_TAB_PATTERN.test(labelVal)) return true
+  const childText = (tmplElement.children ?? []).map(collectAngularText).join('')
+  return NEW_TAB_PATTERN.test(childText)
+}
+
 export function getParent(tmplElement) {
   // @angular-eslint/template-parser does not set parent on AST nodes —
   // ancestor walking is not available without tracking the stack ourselves.
@@ -97,6 +118,7 @@ export const h = {
   hasAccessibleName,
   isInteractiveElement,
   hasOnlyHiddenChildren,
+  hasNewTabWarning,
   getParent,
   getAncestors,
   getChildOpeningElements,

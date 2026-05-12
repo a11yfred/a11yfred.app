@@ -32,7 +32,13 @@ export function getAttrStringValue(attr) {
 }
 
 export function getElementName(vElement) {
-  return (vElement.rawName ?? vElement.name ?? '').toLowerCase() || null
+  const raw = vElement.rawName ?? vElement.name ?? ''
+  if (!raw) return null
+  // Vue custom components can be PascalCase (MyButton) or kebab-case (my-button).
+  // PascalCase names would lowercase to a native element name collision (e.g. Button → button).
+  // Return null for PascalCase so rules don't treat custom components as native elements.
+  if (raw[0] !== raw[0].toLowerCase()) return null
+  return raw.toLowerCase()
 }
 
 export function hasAttr(vElement, name) {
@@ -68,6 +74,22 @@ export function hasOnlyHiddenChildren(vElement) {
   })
 }
 
+const NEW_TAB_PATTERN = /new.tab|new.window|opens in/i
+
+function collectVueText(node) {
+  if (!node) return ''
+  if (node.type === 'VText') return node.value ?? ''
+  if (node.type === 'VElement') return (node.children ?? []).map(collectVueText).join('')
+  return ''
+}
+
+export function hasNewTabWarning(vElement) {
+  const labelVal = (getAttrStringValue(getAttr(vElement, 'aria-label')) ?? '').toLowerCase()
+  if (NEW_TAB_PATTERN.test(labelVal)) return true
+  const childText = (vElement.children ?? []).map(collectVueText).join('')
+  return NEW_TAB_PATTERN.test(childText)
+}
+
 /** Parent VElement, or null. */
 export function getParent(vElement) {
   const p = vElement.parent
@@ -101,6 +123,7 @@ export const h = {
   hasAccessibleName,
   isInteractiveElement,
   hasOnlyHiddenChildren,
+  hasNewTabWarning,
   getParent,
   getAncestors,
   getChildOpeningElements,
