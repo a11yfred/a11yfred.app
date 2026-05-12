@@ -1,5 +1,5 @@
-export default function scToWaiUrl(scLabel) {
-  const match = scLabel?.match(/^\d+\.\d+\.\d+\s+(.+?)\s+\(Level/)
+export default function scToWaiUrl(primarySC) {
+  const match = primarySC?.match(/^\d+\.\d+\.\d+\s+(.+?)\s+\(Level/)
   if (!match) return null
   const slug = match[1]
     .toLowerCase()

@@ -64,7 +64,7 @@ export function createUserFinding(fields = {}) {
     platform:  'both',
     desc:      '',
     fix:       '',
-    related:   [],
+    relatedSC: [],
     keywords:  [],
     source:    'user',
     createdAt: now,

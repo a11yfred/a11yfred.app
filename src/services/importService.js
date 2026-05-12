@@ -34,7 +34,7 @@ const FIELD_ALIASES = {
   desc:     ['desc', 'description', 'observation', 'issuedescription', 'details', 'body', 'problemstatement'],
   fix:      ['fix', 'rem', 'remediation', 'recommendation', 'solution', 'howtofix', 'suggestion', 'corrective'],
   keywords: ['keywords', 'tags', 'searchterms', 'labels'],
-  related:  ['related', 'relatedsc', 'relatedcriteria', 'alsofails', 'additionalsc'],
+  relatedSC: ['relatedsc', 'related', 'relatedcriteria', 'alsofails', 'additionalsc'],
   source:   ['source', 'origin', 'credit', 'datasource'],
 }
 
@@ -125,7 +125,7 @@ function normalizeRow(row, genId, defaultSource) {
       platform:  normalizePlatform(pickField(row, 'platform')),
       source:    pickField(row, 'source')    || defaultSource,
       keywords:  splitList(pickField(row, 'keywords')),
-      related:   splitList(pickField(row, 'related')),
+      relatedSC: splitList(pickField(row, 'relatedSC')),
       desc:      pickField(row, 'desc')      || '',
       fix:       pickField(row, 'fix')       || '',
       createdAt: now,
