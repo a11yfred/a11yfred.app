@@ -1,4 +1,4 @@
-﻿# A11yFred
+# A11yFred
 
 > Audit finding descriptions, fast.
 
@@ -10,7 +10,7 @@ Fast, consistent defect descriptions for accessibility findings, the kind that h
 
 ---
 
-## Quick Start
+## Quick start
 
 ```bash
 npm install
@@ -22,30 +22,32 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library)**: Complete ,  106-entry public corpus (ACC prefix), all linters passing (ESLint 9.x + jsx-a11y + @a11yfred/neighbor), ulam framework extracted (taho, sili, calamansi, halohalo, sawsawan), rogers dev tools and neighbor linter moved to tools/, agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
+**Phase 1 (Personal Library):** Complete. 106-entry public corpus (ACC prefix), all linters passing, ulam framework extracted, agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
 
-**Phase 2 (AI + Sharing)**: In Progress ,  Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working. Corpus guide page planned.
+**Phase 2 (AI + Sharing):** In progress. Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working.
 
-**Phase 3 (Public Launch)**: Planning ,  Auth/analytics infrastructure stubbed, ad tiles ready for Phase 3+ delivery.
-
----
-
-## Project Structure
-
-Key directories:
-
-- `src/data/` ,  106-entry public corpus (ACC prefix), legacy corpus (ATH prefix, admin-only)
-- `src/services/` ,  Data layer, AI integration, localStorage utilities
-- `src/hooks/` ,  Search, ratings, pinning, user findings, overrides
-- `src/components/` ,  UI components; `ui/` subfolder has 21 reusable components (Button, IconButton, + 19 others)
-- `src/taho/`, `src/sili/`, `src/calamansi/`, `src/halohalo/`, `src/sawsawan/` ,  ulam framework packages
-- `tools/rogers/` ,  Dev-only a11y diagnostics panel
-- `tools/neighbor/` ,  ESLint and Stylelint a11y rules
-- `docs/` ,  Deployment, maintenance, contributing
+**Phase 3 (Public Launch):** Planning. Auth and analytics infrastructure stubbed, ad tiles ready for Phase 3+ delivery.
 
 ---
 
-## Finding Schema
+## Project structure
+
+```text
+src/
+├── data/          — public corpus (ACC prefix), legacy corpus (ATH prefix, admin-only)
+├── services/      — data layer, AI integration, localStorage utilities
+├── hooks/         — search, ratings, pinning, user findings, overrides
+├── components/    — UI components; ui/ has reusable primitives
+├── taho/          — announce / live region utilities
+├── sili/          — focus management utilities
+├── calamansi/     — i18n, hooks, shared logic
+├── halohalo/      — AI provider abstraction
+└── sawsawan/      — framework wiring
+```
+
+---
+
+## Finding schema
 
 Each corpus entry:
 
@@ -68,6 +70,15 @@ Each corpus entry:
   "note": "Optional clarifying note."
 }
 ```
+
+---
+
+## Tools
+
+| Package | Description |
+| --- | --- |
+| [`@a11yfred/neighbor`](https://github.com/a11yfred/neighbor) | ESLint and Stylelint accessibility linting plugin |
+| [`@a11yfred/rogers`](https://github.com/a11yfred/rogers) | Accessibility debug panel for development |
 
 ---
 
