@@ -1,344 +1,58 @@
-/* ─── Na'vi locale: Papyrus headings ─────────────────────────────────────── */
-:root[lang="nav"] .page-title,
-:root[lang="nav"] .panel-title,
-:root[lang="nav"] .panel-section-heading,
-:root[lang="nav"] .panel-subheading,
-:root[lang="nav"] .detail-title,
-:root[lang="nav"] .detail-related__heading,
-:root[lang="nav"] .sheet-heading,
-:root[lang="nav"] .modal-heading,
-:root[lang="nav"] .no-results__heading,
-:root[lang="nav"] .not-found__heading {
+/* @ulam/calamansi — locale font overrides
+   Styles off the lang attribute already on <html>. Targets semantic
+   heading elements only — no app-specific class names. */
+
+/* ─── Na'vi: Papyrus ─────────────────────────────────────────────────────── */
+:root[lang="nav"] :is(h1, h2, h3, h4, h5, h6) {
   font-family: Papyrus, fantasy;
 }
 
-/* ─── Easter egg locale heading fonts ────────────────────────────────────── */
-
-/* Pig Latin + Simlish: playful */
-:root[lang="pig"] .page-title,
-:root[lang="pig"] .panel-title,
-:root[lang="pig"] .panel-section-heading,
-:root[lang="pig"] .panel-subheading,
-:root[lang="pig"] .panel-group__label,
-:root[lang="pig"] .panel-toggle-label,
-:root[lang="pig"] .panel-field-label,
-:root[lang="pig"] .detail-title,
-:root[lang="pig"] .detail-related__heading,
-:root[lang="pig"] .detail-label,
-:root[lang="pig"] .sheet-heading,
-:root[lang="pig"] .modal-heading,
-:root[lang="pig"] .no-results__heading,
-:root[lang="pig"] .not-found__heading,
-:root[lang="pig"] .search-label,
-:root[lang="pig"] .results-count,
-:root[lang="pig"] .pinned-section__heading,
-:root[lang="sim"] .page-title,
-:root[lang="sim"] .panel-title,
-:root[lang="sim"] .panel-section-heading,
-:root[lang="sim"] .panel-subheading,
-:root[lang="sim"] .panel-group__label,
-:root[lang="sim"] .panel-toggle-label,
-:root[lang="sim"] .panel-field-label,
-:root[lang="sim"] .detail-title,
-:root[lang="sim"] .detail-related__heading,
-:root[lang="sim"] .detail-label,
-:root[lang="sim"] .sheet-heading,
-:root[lang="sim"] .modal-heading,
-:root[lang="sim"] .no-results__heading,
-:root[lang="sim"] .not-found__heading,
-:root[lang="sim"] .search-label,
-:root[lang="sim"] .results-count,
-:root[lang="sim"] .pinned-section__heading {
+/* ─── Pig Latin + Simlish: Comic Sans ───────────────────────────────────── */
+:is(:root[lang="pig"], :root[lang="sim"]) :is(h1, h2, h3, h4, h5, h6) {
   font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
-/* Pirate + High Valyrian: elegant old-world serif */
-:root[lang="pir"] .page-title,
-:root[lang="pir"] .panel-title,
-:root[lang="pir"] .panel-section-heading,
-:root[lang="pir"] .panel-subheading,
-:root[lang="pir"] .panel-group__label,
-:root[lang="pir"] .panel-toggle-label,
-:root[lang="pir"] .panel-field-label,
-:root[lang="pir"] .detail-title,
-:root[lang="pir"] .detail-related__heading,
-:root[lang="pir"] .detail-label,
-:root[lang="pir"] .sheet-heading,
-:root[lang="pir"] .modal-heading,
-:root[lang="pir"] .no-results__heading,
-:root[lang="pir"] .not-found__heading,
-:root[lang="pir"] .search-label,
-:root[lang="pir"] .results-count,
-:root[lang="pir"] .pinned-section__heading,
-:root[lang="val"] .page-title,
-:root[lang="val"] .panel-title,
-:root[lang="val"] .panel-section-heading,
-:root[lang="val"] .panel-subheading,
-:root[lang="val"] .panel-group__label,
-:root[lang="val"] .panel-toggle-label,
-:root[lang="val"] .panel-field-label,
-:root[lang="val"] .detail-title,
-:root[lang="val"] .detail-related__heading,
-:root[lang="val"] .detail-label,
-:root[lang="val"] .sheet-heading,
-:root[lang="val"] .modal-heading,
-:root[lang="val"] .no-results__heading,
-:root[lang="val"] .not-found__heading,
-:root[lang="val"] .search-label,
-:root[lang="val"] .results-count,
-:root[lang="val"] .pinned-section__heading {
+/* ─── Pirate + High Valyrian: old-world serif ───────────────────────────── */
+:is(:root[lang="pir"], :root[lang="val"]) :is(h1, h2, h3, h4, h5, h6) {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
 }
 
-/* Quenya + Sindarin: Tolkien Elvish */
-:root[lang="qya"] .page-title,
-:root[lang="qya"] .panel-title,
-:root[lang="qya"] .panel-section-heading,
-:root[lang="qya"] .panel-subheading,
-:root[lang="qya"] .panel-group__label,
-:root[lang="qya"] .panel-toggle-label,
-:root[lang="qya"] .panel-field-label,
-:root[lang="qya"] .detail-title,
-:root[lang="qya"] .detail-related__heading,
-:root[lang="qya"] .detail-label,
-:root[lang="qya"] .sheet-heading,
-:root[lang="qya"] .modal-heading,
-:root[lang="qya"] .no-results__heading,
-:root[lang="qya"] .not-found__heading,
-:root[lang="qya"] .search-label,
-:root[lang="qya"] .results-count,
-:root[lang="qya"] .pinned-section__heading,
-:root[lang="sjn"] .page-title,
-:root[lang="sjn"] .panel-title,
-:root[lang="sjn"] .panel-section-heading,
-:root[lang="sjn"] .panel-subheading,
-:root[lang="sjn"] .panel-group__label,
-:root[lang="sjn"] .panel-toggle-label,
-:root[lang="sjn"] .panel-field-label,
-:root[lang="sjn"] .detail-title,
-:root[lang="sjn"] .detail-related__heading,
-:root[lang="sjn"] .detail-label,
-:root[lang="sjn"] .sheet-heading,
-:root[lang="sjn"] .modal-heading,
-:root[lang="sjn"] .no-results__heading,
-:root[lang="sjn"] .not-found__heading,
-:root[lang="sjn"] .search-label,
-:root[lang="sjn"] .results-count,
-:root[lang="sjn"] .pinned-section__heading {
+/* ─── Quenya + Sindarin: Tolkien serif ──────────────────────────────────── */
+:is(:root[lang="qya"], :root[lang="sjn"]) :is(h1, h2, h3, h4, h5, h6) {
   font-family: "Book Antiqua", "Palatino Linotype", Palatino, serif;
 }
 
-/* Klingon + Hodor + Newspeak: harsh and blunt */
-:root[lang="tlh"] .page-title,
-:root[lang="tlh"] .panel-title,
-:root[lang="tlh"] .panel-section-heading,
-:root[lang="tlh"] .panel-subheading,
-:root[lang="tlh"] .panel-group__label,
-:root[lang="tlh"] .panel-toggle-label,
-:root[lang="tlh"] .panel-field-label,
-:root[lang="tlh"] .detail-title,
-:root[lang="tlh"] .detail-related__heading,
-:root[lang="tlh"] .detail-label,
-:root[lang="tlh"] .sheet-heading,
-:root[lang="tlh"] .modal-heading,
-:root[lang="tlh"] .no-results__heading,
-:root[lang="tlh"] .not-found__heading,
-:root[lang="tlh"] .search-label,
-:root[lang="tlh"] .results-count,
-:root[lang="tlh"] .pinned-section__heading,
-:root[lang="hod"] .page-title,
-:root[lang="hod"] .panel-title,
-:root[lang="hod"] .panel-section-heading,
-:root[lang="hod"] .panel-subheading,
-:root[lang="hod"] .panel-group__label,
-:root[lang="hod"] .panel-toggle-label,
-:root[lang="hod"] .panel-field-label,
-:root[lang="hod"] .detail-title,
-:root[lang="hod"] .detail-related__heading,
-:root[lang="hod"] .detail-label,
-:root[lang="hod"] .sheet-heading,
-:root[lang="hod"] .modal-heading,
-:root[lang="hod"] .no-results__heading,
-:root[lang="hod"] .not-found__heading,
-:root[lang="hod"] .search-label,
-:root[lang="hod"] .results-count,
-:root[lang="hod"] .pinned-section__heading,
-:root[lang="nws"] .page-title,
-:root[lang="nws"] .panel-title,
-:root[lang="nws"] .panel-section-heading,
-:root[lang="nws"] .panel-subheading,
-:root[lang="nws"] .panel-group__label,
-:root[lang="nws"] .panel-toggle-label,
-:root[lang="nws"] .panel-field-label,
-:root[lang="nws"] .detail-title,
-:root[lang="nws"] .detail-related__heading,
-:root[lang="nws"] .detail-label,
-:root[lang="nws"] .sheet-heading,
-:root[lang="nws"] .modal-heading,
-:root[lang="nws"] .no-results__heading,
-:root[lang="nws"] .not-found__heading,
-:root[lang="nws"] .search-label,
-:root[lang="nws"] .results-count,
-:root[lang="nws"] .pinned-section__heading {
+/* ─── Klingon + Hodor + Newspeak: blunt impact ──────────────────────────── */
+:is(:root[lang="tlh"], :root[lang="hod"], :root[lang="nws"]) :is(h1, h2, h3, h4, h5, h6) {
   font-family: Impact, "Arial Black", sans-serif;
 }
 
-/* Belter + Nadsat + Cityspeak: typewriter / industrial */
-:root[lang="blt"] .page-title,
-:root[lang="blt"] .panel-title,
-:root[lang="blt"] .panel-section-heading,
-:root[lang="blt"] .panel-subheading,
-:root[lang="blt"] .panel-group__label,
-:root[lang="blt"] .panel-toggle-label,
-:root[lang="blt"] .panel-field-label,
-:root[lang="blt"] .detail-title,
-:root[lang="blt"] .detail-related__heading,
-:root[lang="blt"] .detail-label,
-:root[lang="blt"] .sheet-heading,
-:root[lang="blt"] .modal-heading,
-:root[lang="blt"] .no-results__heading,
-:root[lang="blt"] .not-found__heading,
-:root[lang="blt"] .search-label,
-:root[lang="blt"] .results-count,
-:root[lang="blt"] .pinned-section__heading,
-:root[lang="nds"] .page-title,
-:root[lang="nds"] .panel-title,
-:root[lang="nds"] .panel-section-heading,
-:root[lang="nds"] .panel-subheading,
-:root[lang="nds"] .panel-group__label,
-:root[lang="nds"] .panel-toggle-label,
-:root[lang="nds"] .panel-field-label,
-:root[lang="nds"] .detail-title,
-:root[lang="nds"] .detail-related__heading,
-:root[lang="nds"] .detail-label,
-:root[lang="nds"] .sheet-heading,
-:root[lang="nds"] .modal-heading,
-:root[lang="nds"] .no-results__heading,
-:root[lang="nds"] .not-found__heading,
-:root[lang="nds"] .search-label,
-:root[lang="nds"] .results-count,
-:root[lang="nds"] .pinned-section__heading,
-:root[lang="csp"] .page-title,
-:root[lang="csp"] .panel-title,
-:root[lang="csp"] .panel-section-heading,
-:root[lang="csp"] .panel-subheading,
-:root[lang="csp"] .panel-group__label,
-:root[lang="csp"] .panel-toggle-label,
-:root[lang="csp"] .panel-field-label,
-:root[lang="csp"] .detail-title,
-:root[lang="csp"] .detail-related__heading,
-:root[lang="csp"] .detail-label,
-:root[lang="csp"] .sheet-heading,
-:root[lang="csp"] .modal-heading,
-:root[lang="csp"] .no-results__heading,
-:root[lang="csp"] .not-found__heading,
-:root[lang="csp"] .search-label,
-:root[lang="csp"] .results-count,
-:root[lang="csp"] .pinned-section__heading {
+/* ─── Belter + Nadsat + Cityspeak: typewriter ───────────────────────────── */
+:is(:root[lang="blt"], :root[lang="nds"], :root[lang="csp"]) :is(h1, h2, h3, h4, h5, h6) {
   font-family: "Courier New", Courier, monospace;
 }
 
-/* Dothraki: ancient tribal */
-:root[lang="dot"] .page-title,
-:root[lang="dot"] .panel-title,
-:root[lang="dot"] .panel-section-heading,
-:root[lang="dot"] .panel-subheading,
-:root[lang="dot"] .panel-group__label,
-:root[lang="dot"] .panel-toggle-label,
-:root[lang="dot"] .panel-field-label,
-:root[lang="dot"] .detail-title,
-:root[lang="dot"] .detail-related__heading,
-:root[lang="dot"] .detail-label,
-:root[lang="dot"] .sheet-heading,
-:root[lang="dot"] .modal-heading,
-:root[lang="dot"] .no-results__heading,
-:root[lang="dot"] .not-found__heading,
-:root[lang="dot"] .search-label,
-:root[lang="dot"] .results-count,
-:root[lang="dot"] .pinned-section__heading {
+/* ─── Dothraki: tribal serif ────────────────────────────────────────────── */
+:root[lang="dot"] :is(h1, h2, h3, h4, h5, h6) {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-/* Toki Pona: handwritten simplicity */
-:root[lang="tok"] .page-title,
-:root[lang="tok"] .panel-title,
-:root[lang="tok"] .panel-section-heading,
-:root[lang="tok"] .panel-subheading,
-:root[lang="tok"] .panel-group__label,
-:root[lang="tok"] .panel-toggle-label,
-:root[lang="tok"] .panel-field-label,
-:root[lang="tok"] .detail-title,
-:root[lang="tok"] .detail-related__heading,
-:root[lang="tok"] .detail-label,
-:root[lang="tok"] .sheet-heading,
-:root[lang="tok"] .modal-heading,
-:root[lang="tok"] .no-results__heading,
-:root[lang="tok"] .not-found__heading,
-:root[lang="tok"] .search-label,
-:root[lang="tok"] .results-count,
-:root[lang="tok"] .pinned-section__heading {
+/* ─── Toki Pona: handwritten ────────────────────────────────────────────── */
+:root[lang="tok"] :is(h1, h2, h3, h4, h5, h6) {
   font-family: "Segoe Print", "Comic Sans MS", cursive;
 }
 
-/* Dovahzul: Gothic runic */
-:root[lang="dov"] .page-title,
-:root[lang="dov"] .panel-title,
-:root[lang="dov"] .panel-section-heading,
-:root[lang="dov"] .panel-subheading,
-:root[lang="dov"] .panel-group__label,
-:root[lang="dov"] .panel-toggle-label,
-:root[lang="dov"] .panel-field-label,
-:root[lang="dov"] .detail-title,
-:root[lang="dov"] .detail-related__heading,
-:root[lang="dov"] .detail-label,
-:root[lang="dov"] .sheet-heading,
-:root[lang="dov"] .modal-heading,
-:root[lang="dov"] .no-results__heading,
-:root[lang="dov"] .not-found__heading,
-:root[lang="dov"] .search-label,
-:root[lang="dov"] .results-count,
-:root[lang="dov"] .pinned-section__heading {
+/* ─── Dovahzul: Gothic runic ────────────────────────────────────────────── */
+:root[lang="dov"] :is(h1, h2, h3, h4, h5, h6) {
   font-family: "Old English Text MT", "Palatino Linotype", fantasy;
 }
 
-/* Mandoa: sci-fi terminal */
-:root[lang="mnd"] .page-title,
-:root[lang="mnd"] .panel-title,
-:root[lang="mnd"] .panel-section-heading,
-:root[lang="mnd"] .panel-subheading,
-:root[lang="mnd"] .panel-group__label,
-:root[lang="mnd"] .panel-toggle-label,
-:root[lang="mnd"] .panel-field-label,
-:root[lang="mnd"] .detail-title,
-:root[lang="mnd"] .detail-related__heading,
-:root[lang="mnd"] .detail-label,
-:root[lang="mnd"] .sheet-heading,
-:root[lang="mnd"] .modal-heading,
-:root[lang="mnd"] .no-results__heading,
-:root[lang="mnd"] .not-found__heading,
-:root[lang="mnd"] .search-label,
-:root[lang="mnd"] .results-count,
-:root[lang="mnd"] .pinned-section__heading {
+/* ─── Mandoa: sci-fi terminal ───────────────────────────────────────────── */
+:root[lang="mnd"] :is(h1, h2, h3, h4, h5, h6) {
   font-family: "Lucida Console", "Courier New", monospace;
 }
 
-/* Alienese: stark alien */
-:root[lang="ali"] .page-title,
-:root[lang="ali"] .panel-title,
-:root[lang="ali"] .panel-section-heading,
-:root[lang="ali"] .panel-subheading,
-:root[lang="ali"] .panel-group__label,
-:root[lang="ali"] .panel-toggle-label,
-:root[lang="ali"] .panel-field-label,
-:root[lang="ali"] .detail-title,
-:root[lang="ali"] .detail-related__heading,
-:root[lang="ali"] .detail-label,
-:root[lang="ali"] .sheet-heading,
-:root[lang="ali"] .modal-heading,
-:root[lang="ali"] .no-results__heading,
-:root[lang="ali"] .not-found__heading,
-:root[lang="ali"] .search-label,
-:root[lang="ali"] .results-count,
-:root[lang="ali"] .pinned-section__heading {
+/* ─── Alienese: stark alien ─────────────────────────────────────────────── */
+:root[lang="ali"] :is(h1, h2, h3, h4, h5, h6) {
   font-family: "Arial Black", Impact, sans-serif;
 }
