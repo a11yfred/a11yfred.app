@@ -1,0 +1,23 @@
+{
+  "name": "@ulam/palaman",
+  "version": "0.0.0",
+  "description": "Accessibility linting plugin for ulam — Stylelint (user-preference fallbacks) and ESLint (bad ARIA patterns).",
+  "type": "module",
+  "main": "./palaman-stylelint.mjs",
+  "exports": {
+    ".": "./palaman-stylelint.mjs",
+    "./stylelint": "./palaman-stylelint.mjs",
+    "./eslint": "./palaman-eslint.mjs",
+    "./eslint-vue": "./palaman-eslint-vue.mjs",
+    "./eslint-angular": "./palaman-eslint-angular.mjs"
+  },
+  "keywords": ["stylelint", "stylelint-plugin", "eslint", "eslint-plugin", "ulam", "css", "aria", "accessibility", "a11y"],
+  "peerDependencies": {
+    "eslint": ">=8",
+    "stylelint": ">=14"
+  },
+  "peerDependenciesMeta": {
+    "eslint": { "optional": true },
+    "stylelint": { "optional": true }
+  }
+}
