@@ -434,14 +434,14 @@ Same props as `PanelShell`.
 
 ---
 
-### BackButton
+### ButtonBack
 
 RTL-aware back chevron button. Flips direction when `html[dir="rtl"]`.
 
 ```jsx
-import { BackButton } from '@ulam/ube'
+import { ButtonBack } from '@ulam/ube'
 
-<BackButton onClick={onBack} label="Back to results" />
+<ButtonBack onClick={onBack} label="Back to results" />
 ```
 
 | Prop | Type | Description |
@@ -705,7 +705,7 @@ Import order:
 
 **Motion-respectful.** All animations and transitions are suppressed under `prefers-reduced-motion: reduce`.
 
-**RTL-aware.** Direction-sensitive components (BackButton, overlays, layout) respond to `html[dir="rtl"]` automatically.
+**RTL-aware.** Direction-sensitive components (ButtonBack, overlays, layout) respond to `html[dir="rtl"]` automatically.
 
 **Zero opinion on data.** Components accept props and call handlers. No built-in state management, no assumptions about routing libraries (beyond the included router plugin), no opinions about where your data lives.
 

@@ -4,6 +4,16 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## May 13, 2026
+
+### Framework packages published and wired in
+
+The shared focus management, announcer, i18n, and theming code is now published as standalone `@ulam/*` npm packages and the app imports from those instead of local copies. No behavior changes -- same code, cleaner dependency boundary. Removed ~45 files from `src/` that were the local vendor copies.
+
+Also cleaned up: renamed `BackButton` to `ButtonBack` throughout to match the published package convention, and updated all packages to their latest compatible versions.
+
+---
+
 ## May 12, 2026
 
 ### Lint clean pass

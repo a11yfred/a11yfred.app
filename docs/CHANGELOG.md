@@ -4,6 +4,27 @@ All significant changes to A11yFred, newest first.
 
 ---
 
+## 2026-05-13
+
+### Migrate local vendor copies to published @ulam/* packages
+
+- Replaced local `src/taho/`, `src/taho-bayabas/`, `src/taho-pandan/`, `src/sili/`, `src/siling-labuyo/`, `src/siling-mahaba/` (42 files) with published `@ulam/taho`, `@ulam/sili` npm packages
+- Replaced local `src/calamansi/index.js`, `src/calamansi/react.js`, `src/calamansi/pref.js` with `@ulam/calamansi`
+- Added `@ulam/ube` dependency; `useThemeManager` and `applyTheme` now import from the package
+- Renamed `BackButton` to `ButtonBack` everywhere in `src/components/ui/` (matches package naming)
+- Removed dead `src/calamansi/textComparison.js` (migrated to `@ulam/calamansi`)
+- Removed unused `src/components/ui/react.js` re-export barrel
+- Updated `src/main.jsx` sili CSS import to `@ulam/sili/core/sili.css`
+- Fixed `@import "../tokens.css"` in `@ulam/sili/core/sili.css` (bad monorepo-relative path, removed)
+- Published `@ulam/sili@0.1.1` with CSS subpath export and tokens import fix
+
+### Dependency updates
+
+- Updated `@axe-core/react`, `globals`, `lucide-react`, `react`, `react-dom`, `stylelint`, `vite`, `@ulam/taho`, `@ulam/ube` to latest compatible versions
+- Resolved `fast-uri` vulnerability (transitive, via `npm audit fix`)
+
+---
+
 ## 2026-05-10
 
 ### Code quality and refactoring passes

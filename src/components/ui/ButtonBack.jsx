@@ -1,4 +1,4 @@
-export default function BackButton({ onClick, ariaLabel, className = 'btn--icon', dir = 'ltr' }) {
+export default function ButtonBack({ onClick, ariaLabel, className = 'btn--icon', dir = 'ltr' }) {
   return (
     <button onClick={onClick} aria-label={ariaLabel} className={className}>
       {dir === 'rtl' ? (

@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import BackButton from './BackButton.jsx'
+import ButtonBack from './ButtonBack.jsx'
 
 const Panel = forwardRef(function Panel({
   panelClassName,
@@ -16,7 +16,7 @@ const Panel = forwardRef(function Panel({
   return (
     <div ref={ref} className={panelClassName} {...rest}>
       <div className={headerClassName}>
-        <BackButton onClick={onClose} ariaLabel={closeAriaLabel} dir={dir} />
+        <ButtonBack onClick={onClose} ariaLabel={closeAriaLabel} dir={dir} />
         <h2 ref={headingRef} tabIndex={-1} className={titleClassName}>
           {heading}
         </h2>
