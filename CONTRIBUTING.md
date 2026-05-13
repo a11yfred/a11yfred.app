@@ -101,7 +101,7 @@ git commit -m "WIP"
 
 - Use JSX for React components (project is plain JavaScript, no TypeScript)
 - Use CSS custom properties (tokens) — no hardcoded colors/spacing
-- All UI changes must meet WCAG 2.2 Level AA — keyboard operable, screen reader compatible, sufficient contrast, reduced motion respected
+- All UI changes must meet or exceed WCAG 2.2 Level AA — keyboard operable, screen reader compatible, sufficient contrast, reduced motion respected
 
 ## Before Pushing
 
