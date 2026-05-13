@@ -1,4 +1,4 @@
-import { useT } from '../calamansi/react.js'
+import { useT } from '@ulam/calamansi/react'
 
 export default function TileAd() {
   const t = useT()

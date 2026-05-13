@@ -18,7 +18,7 @@ const writeToClipboard = (text) => {
     resolve()
   })
 }
-import { isSignificantlyChanged } from '../calamansi/index.js'
+import { isSignificantlyChanged } from '@ulam/calamansi'
 
 /**
  * Manages clipboard copy state and reset confirmation flow for DetailSheet.
