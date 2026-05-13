@@ -9,10 +9,9 @@
     "preview": "vite preview",
     "lint:js": "eslint src/",
     "lint:css": "stylelint \"src/**/*.css\"",
-    "lint:md": "markdownlint \"docs/**/*.md\" \"src/**/README.md\" \"tools/**/README.md\" \"*.md\"",
+    "lint:md": "markdownlint \"docs/**/*.md\" \"src/**/README.md\" \"*.md\"",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:md",
-    "translate": "node scripts/translate-missing.mjs",
-    "sync-overlays": "node tools/sync-overlays.mjs"
+    "translate": "node scripts/translate-missing.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -27,7 +26,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@a11yfred/neighbor": "^1.0.3",
+    "@a11yfred/neighbor": "^1.0.4",
     "@a11yfred/rogers": "^0.2.0",
     "@axe-core/react": "^4.11.2",
     "@eslint/js": "^9.0.0",

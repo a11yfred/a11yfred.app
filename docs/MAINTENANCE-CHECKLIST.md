@@ -89,11 +89,11 @@ See [i18n-WORKFLOW.md](i18n-WORKFLOW.md) for detailed translation procedures.
 
 ## Plugins
 
-`@a11yfred/neighbor` and `@a11yfred/rogers` are published npm packages in `tools/`. `src/halohalo/` and `src/sawsawan/` are app-local modules. Verify all remain app-agnostic.
+`@a11yfred/neighbor` and `@a11yfred/rogers` are published npm packages (standalone repos). `src/halohalo/` and `src/sawsawan/` are app-local modules. Verify all remain app-agnostic.
 
 - [ ] **Import isolation** ,  `src/halohalo/` and `src/sawsawan/` import only from each other; no imports from `../../App`, `../../hooks`, `../../services`, `../../data`
 - [ ] **External dependencies** ,  list any non-React external packages in the module's README under "Dependencies"
-- [ ] **README accuracy** ,  exports and hook signatures in `src/halohalo/`, `src/sawsawan/`, and `tools/neighbor/`, `tools/rogers/` match current code
+- [ ] **README accuracy** ,  exports and hook signatures in `src/halohalo/` and `src/sawsawan/` match current code
 
 ---
 
@@ -108,7 +108,7 @@ See [i18n-WORKFLOW.md](i18n-WORKFLOW.md) for detailed translation procedures.
 - [ ] **Finding schema** ,  open `src/data/corpus.json`, verify schema block in README accurate
 - [ ] **Corpus count** ,  `node --input-type=module -e "import c from './src/data/corpus.json' with { type: 'json' }; console.log(c.length)"` and update README if changed
 - [ ] **Hooks/services list** ,  verify every file in `src/hooks/` and `src/services/` appears in README
-- [ ] **Package READMEs** ,  verify READMEs in `src/sawsawan/`, `src/halohalo/`, and `tools/neighbor/`, `tools/rogers/` match current exports
+- [ ] **Package READMEs** ,  verify READMEs in `src/sawsawan/` and `src/halohalo/` match current exports
 - [ ] **CONTRIBUTING.md** ,  defect schema example matches `corpus.json` fields exactly
 - [ ] **MAINT-LOG.md** ,  add row after every sweep; keep newest first
 - [ ] **Privacy disclosure** ,  About panel lists all `localStorage` keys accurately

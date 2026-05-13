@@ -8,7 +8,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ## Phase 1: Complete (17/17 features, 1 pre-launch remaining)
 
-**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All three linters passing with zero errors (ESLint, Stylelint, Markdownlint). prefers-reduced-motion and prefers-reduced-transparency fallback blocks added across all UI components. UI component library fully portable with 20 components, zero app-specific dependencies. ulam framework fully structured: taho, sili, calamansi, halohalo, sawsawan (framework), plus rogers and neighbor in tools/.
+**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All three linters passing with zero errors (ESLint, Stylelint, Markdownlint). prefers-reduced-motion and prefers-reduced-transparency fallback blocks added across all UI components. UI component library fully portable with 20 components, zero app-specific dependencies. ulam framework published as `@ulam/*` npm packages; rogers and neighbor published as standalone `@a11yfred/*` packages.
 
 **Pre-launch remaining (1):**
 
@@ -242,7 +242,7 @@ Done:
 - `DebugLauncher` ,  FAB + spotlight command input (runtime-toggled via `debug fab` / `debug fab off` search commands)
 - Unified command dispatcher: `debug all/names/deploy/ai assist/skeleton on|off`, party/language off commands
 - Admin panel restyled with UI library components (Toggle, IconButton, btn--primary/secondary); dataset tabs split into Public (ACC) and Legacy (ATH); bespoke CSS stripped, space tokens used throughout
-- rogers (formerly adobo) and neighbor moved to `tools/`; adobo renamed to rogers throughout
+- rogers (formerly adobo) and neighbor extracted as standalone `@a11yfred/*` packages; adobo renamed to rogers throughout
 
 ---
 

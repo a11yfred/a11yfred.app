@@ -12,7 +12,7 @@ Detailed guidance for maintenance checklist items. Use alongside [MAINTENANCE-CH
 npm run lint   # runs lint:js (ESLint), lint:css (Stylelint), lint:md (Markdownlint) in sequence
 ```
 
-Individual targets: `npm run lint:js`, `npm run lint:css`, `npm run lint:md`. Markdownlint covers `docs/**/*.md`, `src/**/README.md`, `tools/**/README.md`, and `*.md`.
+Individual targets: `npm run lint:js`, `npm run lint:css`, `npm run lint:md`. Markdownlint covers `docs/**/*.md`, `src/**/README.md`, and `*.md`.
 
 Fix all errors and warnings before committing. New rule overrides need justification in a comment.
 
@@ -383,7 +383,7 @@ Apply when adding keys or updating existing ones.
 
 ## Plugin Workflows
 
-App-local modules: `src/halohalo/` (AI layer) and `src/sawsawan/` (integration bridge, storage, platform adapter). Published dev tools: `@a11yfred/rogers` and `@a11yfred/neighbor` (in `tools/`). Published framework packages: `@ulam/taho`, `@ulam/sili`, `@ulam/calamansi`, `@ulam/ube`, `@ulam/sawsawan`, `@ulam/halohalo` (maintained in the separate ulam monorepo).
+App-local modules: `src/halohalo/` (AI layer) and `src/sawsawan/` (integration bridge, storage, platform adapter). Published dev tools: `@a11yfred/rogers` (github.com/a11yfred/rogers) and `@a11yfred/neighbor` (github.com/a11yfred/neighbor) -- consumed via npm, no local copies. Published framework packages: `@ulam/taho`, `@ulam/sili`, `@ulam/calamansi`, `@ulam/ube`, `@ulam/sawsawan`, `@ulam/halohalo` (maintained in the ulam monorepo at github.com/mikeyil/ulam).
 
 ### Import Isolation
 
@@ -402,7 +402,7 @@ List any non-React external packages imported by `src/halohalo/` or `src/sawsawa
 
 ### README Accuracy
 
-Verify READMEs in `src/sawsawan/`, `src/halohalo/`, `tools/neighbor/`, and `tools/rogers/` match current exports. Update if hooks, functions, or components were added, renamed, or removed.
+Verify READMEs in `src/sawsawan/` and `src/halohalo/` match current exports. Update if hooks, functions, or components were added, renamed, or removed. For `@a11yfred/rogers` and `@a11yfred/neighbor`, update READMEs in their own standalone repos.
 
 ---
 
