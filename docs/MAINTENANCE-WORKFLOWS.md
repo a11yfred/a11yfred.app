@@ -8,13 +8,11 @@ Detailed guidance for maintenance checklist items. Use alongside [MAINTENANCE-CH
 
 ### Linters
 
-Run all three:
-
 ```bash
-npm run lint         # ESLint
-npm run lint:css     # Stylelint
-npm run lint:md      # Markdownlint (docs/**/*.md + README.md)
+npm run lint   # runs lint:js (ESLint), lint:css (Stylelint), lint:md (Markdownlint) in sequence
 ```
+
+Individual targets: `npm run lint:js`, `npm run lint:css`, `npm run lint:md`. Markdownlint covers `docs/**/*.md`, `src/**/README.md`, `tools/**/README.md`, and `*.md`.
 
 Fix all errors and warnings before committing. New rule overrides need justification in a comment.
 
@@ -126,23 +124,24 @@ Search codebase for `innerHTML`. All DOM manipulation goes through React JSX.
 
 ### `localStorage` Inventory
 
-Current keys:
+Current keys (from `src/utils/constants.js` and `src/halohalo/constants.js`):
 
-- `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `wcagFilter`
-- `recentFindings`, `userFindings`, `userOverrides`, `pendingContributions`, `pinnedResults`
-- `coSelectionPairs`: co-selection behavioral signal pairs `{ "id1|id2": count }`
-- `apikey_<provider>` (one per configured provider: anthropic, openai, google, azure)
+- `theme`, `language`, `platform`, `liveSearch`, `wcagFilter`
+- `showRanking`, `showPersonalCorpus`, `onboardingSeen`, `settingsSaveCount`, `viewAllSkipConfirm`
+- `recentFindings`, `lastSelectedId` (session-like, persists across tabs)
+- `userFindings`, `userOverrides`, `pendingContributions`
+- `pinnedFindings`, `defect_ratings`, `coSelectionPairs`
+- `finding_note_<id>` (one key per finding with a saved note)
+- `adminDataset`: last-selected admin panel corpus tab
+- `ai_provider`, `agentic_mode`, `apikey_<provider>`, `ai_model_<provider>` (one per configured provider: anthropic, openai, google, gemini)
 
-`sessionStorage`:
+`sessionStorage`: none currently in use (`lastSelectedId` moved to `localStorage`).
 
-- `lastSelectedId`
-- `sessionCopiedIds`: IDs copied in the current session (cleared on tab close)
-
-Verify the count in SettingsPanel privacy disclosure matches reality.
+Verify the full list in SettingsPanel privacy disclosure (`settings.privacy_body_1` in `en.json`) matches reality.
 
 ### Privacy Disclosure
 
-SettingsPanel (About → Privacy & Storage) must list all `localStorage` keys. Update `settings.privacy_body_2` in `src/calamansi/en.json` whenever storage changes. Propagate to all locale files.
+SettingsPanel (About → Privacy & Storage) must list all `localStorage` keys. Update `settings.privacy_body_1` in `src/calamansi/en.json` whenever storage keys are added or removed. Propagate to all locale files via `npm run translate`.
 
 ### No Analytics
 
@@ -230,13 +229,9 @@ Open the admin panel (`debug open admin` or the equivalent search command). Veri
 
 ### Electron Wiring Check
 
-If Electron build is activated:
+Electron is a Phase 3 target. No `electron/` scaffold exists yet.
 
-- Verify `SettingsPanel` writes API keys to `window.electronAPI.keys` (via `safeStorage`), not `localStorage`
-
-If Electron is not yet active:
-
-- Confirm scaffold in `electron/` is intact (`main.js`, `preload.js`, `electron-builder.json`)
+When activated: verify `SettingsPanel` writes API keys to `window.electronAPI.keys` (via `safeStorage`), not `localStorage`. The platform adapter in `src/sawsawan/platformAdapter.js` handles the storage routing -- verify Electron adapter is registered before settings load.
 
 ---
 
@@ -301,16 +296,16 @@ See [i18n-WORKFLOW.md](i18n-WORKFLOW.md) for complete translation procedures inc
 
 ### String Coverage
 
-Any new UI text must use `t('key')` from `src/calamansi/en.json`. Never hardcode English strings in components.
+Any new UI text must use `t('key')` from `src/calamansi/en.json`. Never hardcode English strings in components. After adding keys, run `npm run translate` to fill all 65 locale files.
 
 ### Key Parity
 
-Every key in `en.json` must exist in all 49+ other locale files. Missing keys fall back to the key literal, which is visible to users. Run the parity check after every session that modified `en.json`:
+Every key in `en.json` must exist in all 65 other locale files in `src/calamansi/`. Missing keys fall back to the key literal, which is visible to users. Run the parity check after every session that modified `en.json`:
 
 ```sh
 node -e "
 const fs=require('fs'),path=require('path');
-const dir='src/i18n';
+const dir='src/calamansi';
 const en=JSON.parse(fs.readFileSync(path.join(dir,'en.json'),'utf8'));
 const keys=Object.keys(en);
 fs.readdirSync(dir).filter(f=>f.endsWith('.json')&&f!=='en.json').forEach(f=>{
@@ -340,7 +335,7 @@ Note all `en.json` key additions or changes in `docs/UPDATES.md` under the sessi
 
 Run after deferred translate sessions or following major content changes:
 
-**Step 1: Parity (no API needed).** Compare `es.json` keys against all other locale files. Add missing keys with English value as placeholder. Commit: `i18n: add missing keys as English placeholders`.
+**Step 1: Parity (no API needed).** Compare `en.json` keys against all 65 locale files in `src/calamansi/`. Add missing keys with English value as placeholder. Commit: `i18n: add missing keys as English placeholders`.
 
 **Step 2: Retranslate stale keys.** Find keys whose English source changed since `scripts/en-snapshot.json` was last written. Run:
 
@@ -388,27 +383,26 @@ Apply when adding keys or updating existing ones.
 
 ## Plugin Workflows
 
-Framework packages (`src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, `src/halohalo/`) are designed to be portable. Dev tools (`@a11yfred/rogers`, `@a11yfred/neighbor`) are published npm packages.
+App-local modules: `src/halohalo/` (AI layer) and `src/sawsawan/` (integration bridge, storage, platform adapter). Published dev tools: `@a11yfred/rogers` and `@a11yfred/neighbor` (in `tools/`). Published framework packages: `@ulam/taho`, `@ulam/sili`, `@ulam/calamansi`, `@ulam/ube`, `@ulam/sawsawan`, `@ulam/halohalo` (maintained in the separate ulam monorepo).
 
 ### Import Isolation
 
-Verify no plugin file imports from app-level code:
+Verify no file in `src/halohalo/` or `src/sawsawan/` imports from app-level code:
 
 - `../../App`
 - `../../hooks`
 - `../../services`
-- `../../i18n`
 - `../../data`
 
-Plugins may only import from React, react-dom, and declared external packages.
+These modules may import from each other (`halohalo` imports `sawsawan/platformAdapter`) and from declared npm dependencies only.
 
 ### External Dependencies
 
-List any non-React external packages imported by plugins (currently: `lucide-react` in `router/`). Document in the plugin's `README.md` under a "Dependencies" heading.
+List any non-React external packages imported by `src/halohalo/` or `src/sawsawan/` in their local READMEs under a "Dependencies" heading.
 
 ### README Accuracy
 
-Verify READMEs in `src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, and `src/halohalo/` match current exports. Update if hooks or components were added, renamed, or removed.
+Verify READMEs in `src/sawsawan/`, `src/halohalo/`, `tools/neighbor/`, and `tools/rogers/` match current exports. Update if hooks, functions, or components were added, renamed, or removed.
 
 ---
 
@@ -443,10 +437,10 @@ Review README.md entirely:
 Run:
 
 ```bash
-node -e "console.log(require('./src/data/corpus.json').length)"
+node --input-type=module -e "import c from './src/data/corpus.json' with { type: 'json' }; console.log(c.length)"
 ```
 
-Update README entry count.
+Update README entry count if changed.
 
 ### Hooks and Services List
 

@@ -16,11 +16,11 @@ Add a row to [MAINT-LOG.md](MAINT-LOG.md) after every sweep.
 - [ ] **Dead CSS** ,  remove unreferenced classes and overwritten rules
 - [ ] **DRY pass** ,  move repeated inline style patterns to utility classes
 - [ ] **Unused tokens** ,  remove tokens not referenced in `index.css` or JSX (check TODO for placeholders)
-- [ ] **SCSS evaluation** ,  CSS custom properties still sufficient or migrate?
+- [ ] **SCSS evaluation** ,  CSS custom properties still sufficient for current complexity?
 
 ### Performance & Functionality
 
-- [ ] **CSS minification** ,  `css: { transformer: 'lightningcss' }` in `vite.config.js`
+- [ ] **CSS minification** ,  verify `css: { transformer: 'lightningcss' }` is set in `vite.config.js`
 - [ ] **Bundle size** ,  `npm run build` under 200 kB gzipped
 - [ ] **Cold load** ,  incognito + Slow 3G; search usable within 3 seconds
 - [ ] **No console errors** ,  production build zero errors/warnings
@@ -76,7 +76,7 @@ See [DEPLOYING.md](DEPLOYING.md) for deployment target details.
 See [i18n-WORKFLOW.md](i18n-WORKFLOW.md) for detailed translation procedures.
 
 - [ ] **String coverage** ,  new UI text uses `t('key')`, never hardcoded
-- [ ] **Key parity** ,  every key in `en.json` exists in all 49+ locale files (run parity script)
+- [ ] **Key parity** ,  every key in `en.json` exists in all 65 locale files in `src/calamansi/` (run parity script)
 - [ ] **Translate new keys** ,  after `en.json` changes, run `npm run translate` to fill all locales
 - [ ] **Track edits** ,  note all `en.json` key additions/changes in `docs/UPDATES.md` session entry
 - [ ] **Announce audit** ,  `announce()` strings pulled from `t()` and translated
@@ -89,11 +89,11 @@ See [i18n-WORKFLOW.md](i18n-WORKFLOW.md) for detailed translation procedures.
 
 ## Plugins
 
-Plugins are portable; verify they remain app-agnostic.
+`@a11yfred/neighbor` and `@a11yfred/rogers` are published npm packages in `tools/`. `src/halohalo/` and `src/sawsawan/` are app-local modules. Verify all remain app-agnostic.
 
-- [ ] **Import isolation** ,  no imports from app-level code (../../App, ../../hooks, etc.)
-- [ ] **External dependencies** ,  list in plugin README under "Dependencies" heading
-- [ ] **README accuracy** ,  exports, API docs, and hook signatures match current code
+- [ ] **Import isolation** ,  `src/halohalo/` and `src/sawsawan/` import only from each other; no imports from `../../App`, `../../hooks`, `../../services`, `../../data`
+- [ ] **External dependencies** ,  list any non-React external packages in the module's README under "Dependencies"
+- [ ] **README accuracy** ,  exports and hook signatures in `src/halohalo/`, `src/sawsawan/`, and `tools/neighbor/`, `tools/rogers/` match current code
 
 ---
 
@@ -106,9 +106,9 @@ Plugins are portable; verify they remain app-agnostic.
 - [ ] **Debug commands** ,  open `src/App.jsx`, verify `runCommand()` matches README table
 - [ ] **Easter eggs** ,  open `src/App.jsx`, verify `EASTER_EGGS` object matches README table
 - [ ] **Finding schema** ,  open `src/data/corpus.json`, verify schema block in README accurate
-- [ ] **Corpus count** ,  `node -e "console.log(require('./src/data/corpus.json').length)"` and update README if changed
+- [ ] **Corpus count** ,  `node --input-type=module -e "import c from './src/data/corpus.json' with { type: 'json' }; console.log(c.length)"` and update README if changed
 - [ ] **Hooks/services list** ,  verify every file in `src/hooks/` and `src/services/` appears in README
-- [ ] **Package READMEs** ,  verify READMEs in `src/calamansi/`, `src/sawsawan/`, `src/halohalo/` match current exports (taho and sili are now `@ulam/taho`/`@ulam/sili` -- see their npm READMEs)
+- [ ] **Package READMEs** ,  verify READMEs in `src/sawsawan/`, `src/halohalo/`, and `tools/neighbor/`, `tools/rogers/` match current exports
 - [ ] **CONTRIBUTING.md** ,  defect schema example matches `corpus.json` fields exactly
 - [ ] **MAINT-LOG.md** ,  add row after every sweep; keep newest first
 - [ ] **Privacy disclosure** ,  About panel lists all `localStorage` keys accurately
