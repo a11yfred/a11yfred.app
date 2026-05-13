@@ -1,19 +1,13 @@
 ﻿import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// Uncomment and set to your repo name when deploying to a GitHub Pages subpath.
-// Leave as '/' for Netlify or root-path GitHub Pages.
-//const REPO_NAME = 'a11yfred'
-
 export default defineConfig({
   plugins: [react()],
   base: '/',
-  // Enable rogers debug overlays in dev (globalThis.ROGERS_DEV replaces import.meta.env.DEV in rogers 0.2.0+)
   define: { 'globalThis.ROGERS_DEV': 'import.meta.env.DEV' },
   server: {
     host: true,
   },
-  //base: process.env.NODE_ENV === 'production' ? `/${REPO_NAME}/` : '/',
 
   build: {
     // Enable LightningCSS for faster, smaller CSS output

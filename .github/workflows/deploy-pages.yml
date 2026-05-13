@@ -1,20 +1,8 @@
-# yaml-language-server: $schema=false
-# GitHub Pages deployment
-#
-# Currently set to MANUAL-ONLY (workflow_dispatch).
-# To switch from Netlify to GitHub Pages:
-#   1. Make the repository public (free plan requires it)
-#   2. In GitHub: Settings → Pages → Source → "GitHub Actions"
-#   3. In vite.config.js: uncomment the REPO_NAME lines and set base accordingly
-#   4. In netlify.toml: add `ignore = "exit 0"` under [build] to stop Netlify deploys
-#   5. Uncomment the push trigger below
-
 name: Deploy to GitHub Pages
 
 on:
-  workflow_dispatch: # manual trigger — remove this and uncomment push to enable auto-deploy
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
 
 permissions:
   contents: read
@@ -38,11 +26,7 @@ jobs:
 
       - run: npm ci
 
-      - name: Build
-        run: npm run build
-        # If deploying to a subpath (https://user.github.io/a11yfred/),
-        # first uncomment the REPO_NAME lines in vite.config.js and set the name.
-        # If deploying to a root domain (CNAME), no vite.config change needed.
+      - run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
         with:

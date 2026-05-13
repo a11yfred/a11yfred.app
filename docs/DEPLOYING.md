@@ -1,96 +1,50 @@
-﻿# Deploying A11yFred
+# Deploying A11yFred
 
-Three deployment targets are configured. Only one should be active at a time.
+A11yFred deploys to **GitHub Pages** via GitHub Actions on every push to `main`.
 
 ---
 
-## Netlify (current default)
+## Setup (one-time)
 
-**Config file:** `netlify.toml`
+1. Make the repository public (required for GitHub Pages on the free plan).
+2. In GitHub: **Settings → Pages → Source → GitHub Actions**.
+3. That's it. The workflow at `.github/workflows/deploy-pages.yml` handles everything.
 
-**Deployment strategy:** Auto-deploy on all branches (previews) + tag-based releases (production).
+---
 
-### Setup
+## Deployment workflow
 
-1. Connect your GitHub repository to Netlify via the dashboard
-2. `netlify.toml` is already configured for all contexts
-3. Configure Netlify dashboard:
-   - Site settings → **Build & Deploy → Deploy contexts**
-   - `main` branch: **Not production**
-   - `deploy-preview`: Enabled (auto on branches/PRs)
-   - `branch-deploy`: Enabled (auto on any branch)
-
-### Deployment workflow
+Every push to `main` triggers a build and deploy automatically.
 
 ```bash
-# Development, preview deploy on branch push
-git checkout -b feature/new-search
-git commit -am "Add fuzzy search"
-git push origin feature/new-search
-# → Netlify builds automatically to https://deploy-preview-1--a11yfred.netlify.app
-
-# Test the preview, then merge
-git checkout main
-git merge feature/new-search
 git push origin main
-# → Branch deploy (preview of main)
-
-# Release day, tag and push to production
-git tag v0.1.0
-git push origin v0.1.0
-# → Netlify builds and deploys to https://a11yfred.app (or your domain)
+# → GitHub Actions builds and deploys to https://a11yfred.github.io/a11yfred/
+#   (or your custom domain once configured)
 ```
 
-**Rate limit:** ~20-30 builds/month (2-3 per feature + 1 per release) vs. 300/month limit. Safe.
+---
 
-### To disable auto-deploy
+## Custom domain
 
-If you need to pause Netlify temporarily:
-
-- **Netlify dashboard → Site settings → Danger zone → Pause site publishing**
-
-### To re-enable
-
-Unpause in the Netlify dashboard. Next push will trigger a build.
+1. Add a `CNAME` file to the `public/` directory containing your domain (e.g. `a11yfred.app`).
+2. Configure DNS: add a CNAME record pointing your domain to `a11yfred.github.io`.
+3. In GitHub: **Settings → Pages → Custom domain** — enter your domain and enable HTTPS.
+4. `vite.config.js` `base` stays as `'/'` — no change needed for a root domain.
 
 ---
 
-## Other Targets
+## Security headers
 
-### Vercel
-
-**Config file:** `vercel.json` | Auto-detects Vite, handles SPA fallback and security headers. Enable via [vercel.com](https://vercel.com); disable in dashboard under Project settings. Only one target should be active at a time.
-
-### GitHub Pages
-
-**Config file:** `.github/workflows/deploy-pages.yml` | Configured but currently unused. Can be enabled if needed for static hosting.
-
-Currently set to **manual trigger only**, it will not run on push until you opt in.
-Requires the repository to be **public** (GitHub free plan restriction).
-
-### To enable auto-deploy
-
-1. Make the repository public.
-2. In GitHub: **Settings → Pages → Source → GitHub Actions**.
-3. In `vite.config.js`: uncomment the `REPO_NAME` lines and set the name if deploying
-   to a subpath (`https://user.github.io/a11yfred/`). Leave `base: '/'` for a
-   custom domain at the root.
-4. In `.github/workflows/deploy-pages.yml`: uncomment the `push` trigger block
-   and comment out `workflow_dispatch`.
-5. Disable Netlify (see above).
-
-### To disable
-
-Re-comment the `push` trigger (revert to `workflow_dispatch` only), or disable the
-workflow in GitHub → Actions → the workflow → ⋯ menu → Disable workflow.
+GitHub Pages does not support custom response headers. Security headers are set via
+`<meta http-equiv>` tags in `index.html`. Note: `frame-ancestors` (clickjacking
+protection) cannot be set via meta tag — it requires a response header. This is an
+accepted limitation of GitHub Pages hosting.
 
 ---
 
-## Switching between providers
+## Netlify / Vercel
 
-| Step | Netlify → Vercel | Netlify → GH Pages |
-| ---- | ---------------- | ------------------ |
-| Stop Netlify | Add `ignore = "exit 0"` or pause in dashboard | Same |
-| Enable target | Import repo in Vercel dashboard | Make repo public, enable Pages in GH Settings |
-| Config change | None needed | Uncomment `push` trigger in workflow |
-| Base path | `base: '/'` in vite.config (no change) | Set `REPO_NAME` if using subpath |
+Both were previously configured (`netlify.toml`, `vercel.json`) and have been removed.
+Netlify and Vercel add value for server functions, edge middleware, and branch preview
+deploys — none of which A11yFred currently needs. Deferred indefinitely; revisit if
+those requirements arise.
