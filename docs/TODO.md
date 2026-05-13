@@ -27,6 +27,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 **Day 1 for Phase 1 public release** (ship with these):
 
+- [ ] **Corpus translations incomplete** `[i18n]` `[launch-blocker]` ,  8 language overlays (de, es, fr, ja, ko, pt-BR, tl, zh) cover 54 of 106 corpus entries — 52 entries fall back to English for non-English users. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill the gaps. Requires an Anthropic API key.
 - [ ] **Manual testing before launch** `[qa]` `[manual]` ,  Smoke test core flows: search/select/refine/copy on desktop and mobile (iOS Safari, Android Chrome); test all locales (en, ja, ko, es, fr, de, zh); test keyboard nav (Tab, Enter, Escape); test screen reader (NVDA, JAWS, VoiceOver); verify offline mode works; test on slow network (throttle to 3G).
 - [ ] **Production domain configured** `[infra]` `[manual]` ,  Confirm domain, configure DNS, enable HTTPS, update canonical URL.
 
