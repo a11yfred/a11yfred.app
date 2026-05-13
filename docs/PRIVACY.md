@@ -121,4 +121,4 @@ This document describes current behavior. If data practices change materially, t
 
 ## Contact
 
-For questions about data practices, open an issue on [GitHub](https://github.com/a11yfred/a11yfred) or contact [hello@a11yfred.app](mailto:hello@a11yfred.app).
+For questions about data practices, open an issue on [GitHub](https://github.com/a11yfred/a11yfred), email [privacy@a11yfred.app](mailto:privacy@a11yfred.app), or contact [hello@a11yfred.app](mailto:hello@a11yfred.app).
