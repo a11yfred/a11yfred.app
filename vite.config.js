@@ -8,6 +8,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/',
+  // Enable rogers debug overlays in dev (globalThis.ROGERS_DEV replaces import.meta.env.DEV in rogers 0.2.0+)
+  define: { 'globalThis.ROGERS_DEV': 'import.meta.env.DEV' },
   server: {
     host: true,
   },
