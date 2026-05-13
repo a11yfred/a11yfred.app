@@ -2,7 +2,7 @@
 
 Data-agnostic i18n, hooks, and logic utilities. The sour layer of the [ulam](../../docs/ulam.md) framework.
 
-Named for the iconic Filipino sour citrus — small, essential, full of character.
+Named for the iconic Filipino sour citrus. Small, essential, full of character.
 
 ## Packages
 
@@ -12,13 +12,13 @@ Calamansi is one of four ulam packages:
 ulam
 ├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce
 ├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic  ← you are here
-├── @a11yfred/rogers        savory  — a11y debug panel, vanilla-first
+├── @a11yfred/rogers               : a11y debug panel, vanilla-first
 └── @ulam/sawsawan     bridge  — wires the three together
 ```
 
 ## i18n
 
-The `t()` function accepts any plain JS object as locale data. No opinions about loaders, caches, or source format — just lookup and interpolation.
+The `t()` function accepts any plain JS object as locale data. No opinions about loaders, caches, or source format. Just lookup and interpolation.
 
 ```jsx
 import { I18nProvider, useT } from './calamansi'

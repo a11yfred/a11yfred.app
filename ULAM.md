@@ -31,7 +31,7 @@ ulam
 │   └── @ulam/halohalo              : AI service adapters, model config, prefs
 │
 ├── Debug Layer
-│   └── @a11yfred/rogers        savory : a11y debug panel, dependency-free
+│   └── @a11yfred/rogers               : a11y debug panel, dependency-free
 │
 └── Linting
     └── @a11yfred/neighbor               : ESLint + Stylelint a11y rules
@@ -350,7 +350,7 @@ All packages are named for Filipino food: the framework's origin story.
 | calamansi | Sour citrus: essential accent | i18n + logic |
 | sawsawan | Dipping sauce: brings it all together | Integration bridge |
 | halohalo | Mixed dessert: many layers | AI layer |
-| rogers | Braised dish: savory, goes with everything | Debug panel |
+| rogers | Braised dish: goes with everything | Debug panel |
 | neighbor | Sandwich filling: completes the stack | Linting |
 
 ---

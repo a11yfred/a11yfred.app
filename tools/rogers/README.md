@@ -1,6 +1,6 @@
 # @a11yfred/rogers
 
-Vanilla-first accessibility debug panel with a thin React wrapper. The savory layer of the [ulam](../../../docs/ulam.md) framework.
+Vanilla-first accessibility debug panel with a thin React wrapper.
 
 The React Query DevTools of accessibility. Drop it into any project, see focus, names, and contrast in real time.
 
@@ -12,7 +12,7 @@ rogers is one of four ulam packages:
 ulam
 ├── @ulam/ube          sweet  : UI, components, CSS, theming, router, announce
 ├── @ulam/calamansi    sour   : i18n, hooks, utilities, logic
-├── @a11yfred/rogers        savory : a11y debug panel, vanilla-first  ← you are here
+├── @a11yfred/rogers               : a11y debug panel, vanilla-first  ← you are here
 └── @ulam/sawsawan     bridge : wires the three together
 ```
 

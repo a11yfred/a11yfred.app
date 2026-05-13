@@ -12,7 +12,7 @@ Sawsawan is one of four ulam packages:
 ulam
 ├── @ulam/ube          sweet  : UI, components, CSS, theming, router, announce
 ├── @ulam/calamansi    sour   : i18n, hooks, utilities, logic
-├── @a11yfred/rogers        savory : a11y debug panel, vanilla-first
+├── @a11yfred/rogers               : a11y debug panel, vanilla-first
 └── @ulam/sawsawan     bridge : wires the three together  ← you are here
 ```
 

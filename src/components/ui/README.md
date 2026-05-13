@@ -12,7 +12,7 @@ Ube is one of four ulam packages:
 ulam
 ├── @ulam/ube          sweet  : UI, components, CSS, theming, router, announce  ← you are here
 ├── @ulam/calamansi    sour   : i18n, hooks, utilities, logic
-├── @a11yfred/rogers        savory : a11y debug panel, vanilla-first
+├── @a11yfred/rogers               : a11y debug panel, vanilla-first
 └── @ulam/sawsawan     bridge : wires the three together
 ```
 
@@ -107,15 +107,15 @@ import { Button } from '@ulam/ube'
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary' \| 'danger'` | `'primary'` | Visual style |
-| `onClick` | function |: | Click handler |
+| `onClick` | function | - | Click handler |
 | `disabled` | boolean | `false` | Disabled state |
 | `fullWidth` | boolean | `false` | Stretches to container width |
-| `icon` | ReactNode |: | Decorative icon (left of label) |
-| `activeIcon` | ReactNode |: | Icon shown when `active` is true |
+| `icon` | ReactNode | - | Decorative icon (left of label) |
+| `activeIcon` | ReactNode | - | Icon shown when `active` is true |
 | `active` | boolean | `false` | Active/toggled state |
-| `label` | string |: | `aria-label` override |
-| `activeLabel` | string |: | `aria-label` when active |
-| `className` | string |: | Additional CSS classes |
+| `label` | string | - | `aria-label` override |
+| `activeLabel` | string | - | `aria-label` when active |
+| `className` | string | - | Additional CSS classes |
 
 ---
 
@@ -132,10 +132,10 @@ import { IconButton } from '@ulam/ube'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `icon` | ReactNode |: | Icon element (required) |
-| `label` | string |: | `aria-label` (required) |
+| `icon` | ReactNode | - | Icon element (required) |
+| `label` | string | - | `aria-label` (required) |
 | `variant` | `'accent' \| 'tertiary'` | `'accent'` | Visual style |
-| `onClick` | function |: | Click handler |
+| `onClick` | function | - | Click handler |
 | `disabled` | boolean | `false` | Disabled state |
 
 ---
@@ -153,9 +153,9 @@ import { ButtonLink } from '@ulam/ube'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `href` | string |: | Link destination (required) |
+| `href` | string | - | Link destination (required) |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` | Visual style |
-| `children` | ReactNode |: | Link label |
+| `children` | ReactNode | - | Link label |
 
 ---
 
@@ -174,9 +174,9 @@ import { Toggle } from '@ulam/ube'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `id` | string |: | Input id, must match label's `htmlFor` |
-| `checked` | boolean |: | Controlled value (required) |
-| `onChange` | function |: | `(checked: boolean) => void` |
+| `id` | string | - | Input id, must match label's `htmlFor` |
+| `checked` | boolean | - | Controlled value (required) |
+| `onChange` | function | - | `(checked: boolean) => void` |
 | `disabled` | boolean | `false` | Disabled state |
 
 ---
@@ -285,18 +285,18 @@ const [liveSearch, setLiveSearch] = usePref('liveSearch', true)
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `id` | string |: | Input id |
-| `value` | string |: | Controlled value (required) |
-| `onChange` | function |: | `(value: string) => void` (required) |
-| `onSubmit` | function |: | Called on Enter or submit button click |
-| `onClear` | function |: | Called on clear; defaults to `onChange('')` |
+| `id` | string | - | Input id |
+| `value` | string | - | Controlled value (required) |
+| `onChange` | function | - | `(value: string) => void` (required) |
+| `onSubmit` | function | - | Called on Enter or submit button click |
+| `onClear` | function | - | Called on clear; defaults to `onChange('')` |
 | `liveSearch` | boolean | `false` | Fire `onSubmit` on every keystroke, hide submit button |
 | `placeholder` | string | `'Search…'` | Input placeholder |
 | `disabled` | boolean | `false` | Disabled state |
-| `label` | string |: | `aria-label` on the form (use when no visible label) |
+| `label` | string | - | `aria-label` on the form (use when no visible label) |
 | `submitAriaLabel` | string | `'Search'` | `aria-label` for the submit icon button |
 | `clearAriaLabel` | string | `'Clear'` | `aria-label` for the clear button |
-| `inputRef` | ref |: | Forward ref to the input element |
+| `inputRef` | ref | - | Forward ref to the input element |
 
 ---
 
@@ -320,17 +320,17 @@ import { InputWithClear } from '@ulam/ube'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `id` | string |: | Input id |
+| `id` | string | - | Input id |
 | `type` | string | `'text'` | Input type |
-| `value` | string |: | Controlled value |
-| `onChange` | function |: | `(value: string) => void` |
-| `onClear` | function |: | Override clear behavior |
-| `clearAriaLabel` | string |: | `aria-label` for clear button (required) |
+| `value` | string | - | Controlled value |
+| `onChange` | function | - | `(value: string) => void` |
+| `onClear` | function | - | Override clear behavior |
+| `clearAriaLabel` | string | - | `aria-label` for clear button (required) |
 | `clearIcon` | ReactNode | `'↺'` | Clear button icon |
 | `wrapClassName` | string | `''` | Class on the wrapper div |
 | `inputClassName` | string | `''` | Class on the input |
 | `clearButtonClassName` | string | `''` | Class on the clear button |
-| `inputRef` | ref |: | Forward ref to the input element |
+| `inputRef` | ref | - | Forward ref to the input element |
 
 ---
 
