@@ -158,6 +158,10 @@ Building distributable installers requires `electron-builder` (already a dev dep
 
 - [ ] **Extend agentic AI to remaining providers** `[ai]` `[agent]` `[enhancement]` ,  Keep Claude-only (tool use provider-specific). Standard AI Assist works for all 4 providers without corpus search.
 
+### Remix Migration
+
+- [ ] **Hash URL → Remix route redirect shim** `[infra]` `[ux]` `[phase3]` ,  Current URLs use hash routing (`/#/?q=...&sort=...`). When migrating to Remix, add a client-side shim in the root route that detects `window.location.hash` on load, parses the old hash params (q, sort, platform, level, narrow), and redirects to the equivalent Remix path/query. Ensures shared links from the current app keep working after migration.
+
 ### Authentication
 
 - [ ] **Sign-in UI** `[ux]` `[phase3]` ,  Add SettingsPanel footer section with avatar/name + Google/GitHub buttons + sign-out.
