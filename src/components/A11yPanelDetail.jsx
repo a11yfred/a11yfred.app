@@ -22,7 +22,7 @@ import './A11yPanelDetail.css'
 
 function FieldCheckbox({ label, checked, onChange, disabled }) {
   return (
-    <label className="detail-ai-field-select-item">
+    <label className="panel-detail-ai-field-select-item">
       <input
         type="checkbox"
         className="app-checkbox"
@@ -132,10 +132,10 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
   const aiRevisionLabel = t('detail.ai_revision_label')
 
   return (
-    <div className="detail-sheet">
-      <div className="detail-header">
-        <div className="detail-title-row">
-          <h2 ref={titleRef} tabIndex={-1} className="detail-title">
+    <div className="panel-detail-sheet">
+      <div className="panel-detail-header">
+        <div className="panel-detail-title-row">
+          <h2 ref={titleRef} tabIndex={-1} className="panel-detail-title">
             {finding.title}
           </h2>
           <Button
@@ -145,12 +145,12 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
             activeIcon={<Check size={14} aria-hidden="true" />}
             label={t('detail.copy_title_aria')}
             activeLabel={t('detail.copied_aria')}
-            className="detail-copy-btn"
+            className="panel-detail-copy-btn"
             onClick={copyTitle}
             title={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
           />
         </div>
-        <div className="detail-badges">
+        <div className="panel-detail-badges">
           <Badge
             variant="severity"
             bg={p.bg}
@@ -205,9 +205,9 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
           )}
         </div>
 
-        <div className="detail-sc-group">
-          <p className="detail-sc-row">
-            <span className="detail-sc-label">{t('detail.sc_failed')}</span>{' '}
+        <div className="panel-detail-sc-group">
+          <p className="panel-detail-sc-row">
+            <span className="panel-detail-sc-label">{t('detail.sc_failed')}</span>{' '}
             {finding.primarySC
               ? <>
                   <A11yLinkSc label={finding.primarySC} />
@@ -218,18 +218,18 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
                     activeIcon={<Check size={14} aria-hidden="true" />}
                     label={t('detail.copy_sc_aria')}
                     activeLabel={t('detail.copied_aria')}
-                    className="detail-sc-copy-btn"
+                    className="panel-detail-sc-copy-btn"
                     onClick={copyPrimarySc}
                     title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
                   />
                 </>
-              : <span className="detail-sc-na">{t('common.na')}</span>
+              : <span className="panel-detail-sc-na">{t('common.na')}</span>
             }
           </p>
           {finding.relatedSC.length > 0 && (
-            <p className="detail-sc-row">
-              <span className="detail-sc-label">{t('detail.related_sc')}</span>{' '}
-              <span className="detail-sc-links">
+            <p className="panel-detail-sc-row">
+              <span className="panel-detail-sc-label">{t('detail.related_sc')}</span>{' '}
+              <span className="panel-detail-sc-links">
                 {finding.relatedSC.map((r, i) => (
                   <span key={r}>
                     <A11yLinkSc label={r} />{i < finding.relatedSC.length - 1 && ', '}
@@ -243,7 +243,7 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
                 activeIcon={<Check size={14} aria-hidden="true" />}
                 label={t('detail.copy_sc_aria')}
                 activeLabel={t('detail.copied_aria')}
-                className="detail-sc-copy-btn"
+                className="panel-detail-sc-copy-btn"
                 onClick={copyRelatedSc}
                 title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
               />
@@ -253,15 +253,15 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
       </div>
 
       {finding.note && (
-        <InfoBox label={t('detail.note_label')} className="detail-corpus-note">
+        <InfoBox label={t('detail.note_label')} className="panel-detail-corpus-note">
           {finding.note}
         </InfoBox>
       )}
 
-      <div className="detail-section detail-section--location">
-        <label htmlFor="location-prefix" className="detail-label">
+      <div className="panel-detail-section panel-detail-section--location">
+        <label htmlFor="location-prefix" className="panel-detail-label">
           {t('detail.location_label')}
-          {!location.trim() && <span className="detail-optional">{' '}{t('common.optional')}</span>}
+          {!location.trim() && <span className="panel-detail-optional">{' '}{t('common.optional')}</span>}
         </label>
         <InputWithClear
           id="location-prefix"
@@ -271,9 +271,9 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
           onClear={() => setLocation('')}
           placeholder={t('detail.location_placeholder')}
           clearAriaLabel={t('search.clear_aria')}
-          wrapClassName="detail-location-input-wrap"
-          inputClassName="detail-input"
-          clearButtonClassName="btn--primary detail-location-clear-btn"
+          wrapClassName="panel-detail-location-input-wrap"
+          inputClassName="panel-detail-input"
+          clearButtonClassName="btn--primary panel-detail-location-clear-btn"
           disabled={animating}
         />
       </div>
@@ -320,17 +320,17 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
         includeTitleLabel={t('detail.include_fix_title_when_copied')}
       />
 
-      <div className="detail-section">
-        <label htmlFor="finding-note" className="detail-label">{t('detail.finding_note_label')}</label>
+      <div className="panel-detail-section">
+        <label htmlFor="finding-note" className="panel-detail-label">{t('detail.finding_note_label')}</label>
         <textarea
           id="finding-note"
           value={findingNote}
           onChange={e => setFindingNote(e.target.value)}
           placeholder={t('detail.finding_note_placeholder')}
-          className="detail-input detail-input--textarea"
+          className="panel-detail-input panel-detail-input--textarea"
           rows={3}
         />
-        <div className="detail-section-controls">
+        <div className="panel-detail-section-controls">
           <button
             onClick={findingNote.trim() ? () => {
               setStorage(getFindingNoteKey(finding.id), findingNote)
@@ -339,7 +339,7 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
               setTimeout(() => setFindingNoteSaved(false), NOTIFICATION_TIMEOUT)
             } : undefined}
             aria-disabled={!findingNote.trim() || undefined}
-            className={`btn--primary detail-section-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
+            className={`btn--primary panel-detail-section-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
             aria-label={findingNoteSaved ? t('detail.saved_finding_note_aria') : t('detail.save_finding_note_aria')}
           >
             {findingNoteSaved
@@ -350,25 +350,25 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
       </div>
 
       {aiEnabled && (
-        <div className="detail-section">
-          <label htmlFor="ai-note" className={`detail-label${animating ? ' detail-label--disabled' : ''}`}>{aiRevisionLabel}</label>
-          <p className="detail-ai-revision-hint">
+        <div className="panel-detail-section">
+          <label htmlFor="ai-note" className={`panel-detail-label${animating ? ' panel-detail-label--disabled' : ''}`}>{aiRevisionLabel}</label>
+          <p className="panel-detail-ai-revision-hint">
             {t('detail.ai_revision_hint')}{' '}
-            <a href="#/settings" className="detail-settings-link">{t('common.settings')}</a>.
+            <a href="#/settings" className="panel-detail-settings-link">{t('common.settings')}</a>.
           </p>
           <textarea
             id="ai-note"
             value={aiNote}
             onChange={e => setAiNote(e.target.value)}
             placeholder={t('detail.ai_revision_placeholder')}
-            className="detail-input detail-input--textarea"
+            className="panel-detail-input panel-detail-input--textarea"
             rows={3}
           />
-          <div className="detail-section-controls">
-            <div className="detail-ai-settings-group">
+          <div className="panel-detail-section-controls">
+            <div className="panel-detail-ai-settings-group">
               {getAiProvider() === 'anthropic' && (
-                <label className="detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
-                  <span className="detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
+                <label className="panel-detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
+                  <span className="panel-detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
                   <Toggle
                     id="agentic-mode-toggle"
                     checked={useAgenticMode}
@@ -376,7 +376,7 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
                   />
                 </label>
               )}
-              <div className="detail-ai-field-select">
+              <div className="panel-detail-ai-field-select">
                 <FieldCheckbox label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
                 <FieldCheckbox label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
               </div>
@@ -386,17 +386,17 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
               onClick={(refining || animating || !aiNote.trim()) ? undefined : handleRefine}
               aria-disabled={(refining || animating || !aiNote.trim()) || undefined}
               aria-busy={refining ? true : undefined}
-              className="btn--primary detail-section-btn btn--height-standard"
+              className="btn--primary panel-detail-section-btn btn--height-standard"
               aria-label={refining ? t('detail.rewriting_aria') : t('detail.ai_revision_aria')}
             >
               {refining
-                ? <><span className="btn-icon"><Loader2 size={12} strokeWidth={2} className="detail-revising-spinner" aria-hidden="true" /></span><span>{t('detail.rewriting_text')}</span></>
-                : <><span className="btn-icon"><Sparkles size={12} strokeWidth={2} className="detail-ai-revision-icon" aria-hidden="true" /></span><span>{t('detail.ai_revision_save_text')}</span></>}
+                ? <><span className="btn-icon"><Loader2 size={12} strokeWidth={2} className="panel-detail-revising-spinner" aria-hidden="true" /></span><span>{t('detail.rewriting_text')}</span></>
+                : <><span className="btn-icon"><Sparkles size={12} strokeWidth={2} className="panel-detail-ai-revision-icon" aria-hidden="true" /></span><span>{t('detail.ai_revision_save_text')}</span></>}
             </button>
           </div>
           {(descText !== finding.desc || fixText !== finding.fix) && (
-            <p className="detail-edit-warning" role="status">
-              <AlertCircle size={16} aria-hidden="true" className="detail-edit-warning-icon" />
+            <p className="panel-detail-edit-warning" role="status">
+              <AlertCircle size={16} aria-hidden="true" className="panel-detail-edit-warning-icon" />
               {t('detail.edit_lang_warning')}
             </p>
           )}
@@ -410,10 +410,10 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
         multipleHeading={t('detail.sources_heading')}
       />
 
-      <div className="detail-actions-end">
+      <div className="panel-detail-actions-end">
         <button
           type="button"
-          className={`btn--secondary detail-action-btn btn--height-standard${resetAllDone ? ' btn__field--success' : ''}`}
+          className={`btn--secondary panel-detail-action-btn btn--height-standard${resetAllDone ? ' btn__field--success' : ''}`}
           onClick={(descText === finding.desc && fixText === finding.fix) ? undefined : handleResetAllFields}
           aria-disabled={(descText === finding.desc && fixText === finding.fix) || undefined}
           aria-label={t('detail.reset_all_fields_aria')}
@@ -425,7 +425,7 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
         </button>
         <button
           type="button"
-          className={`btn--primary detail-action-btn btn--height-standard${copiedAll ? ' btn__field--success' : ''}`}
+          className={`btn--primary panel-detail-action-btn btn--height-standard${copiedAll ? ' btn__field--success' : ''}`}
           onClick={handleCopyAll}
           aria-label={t('detail.copy_all_aria')}
         >
@@ -437,7 +437,7 @@ export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = fals
         {onClose && (
           <button
             type="button"
-            className={`${isDesktop ? 'btn btn--primary' : 'btn--tertiary'} detail-close-btn btn--height-standard`}
+            className={`${isDesktop ? 'btn btn--primary' : 'btn--tertiary'} panel-detail-close-btn btn--height-standard`}
             onClick={onClose}
           >
             {t('common.close')}

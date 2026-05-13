@@ -14,7 +14,7 @@ import NoResults from './ui/NoResults.jsx'
 import InfoBox from './ui/InfoBox.jsx'
 import TileAd from './TileAd.jsx'
 import findingSlug from '../utils/findingSlug.js'
-import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
+import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
 import './A11yListResults.css'
 
 function triggerButtonAnimation(btn, id, setAnimating) {
@@ -603,7 +603,7 @@ export default function A11yListResults({ results, selected, onSelect, query, ra
                     ? t('announce.unpinned', { title: finding.title })
                     : t('announce.pinned', { title: finding.title })
                   )
-                }, 300)
+                }, SWIPE_PIN_FLASH_MS)
               } else {
                 setSwipeOpenId(null)
               }

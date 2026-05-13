@@ -699,8 +699,8 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
         <h3 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h3>
         <p>{t('settings.privacy_body_translations')}</p>
         <p><a href={URL_PRIVACY_POLICY} target="_blank" rel="noreferrer">{t('settings.privacy_full_policy')}<span className="sr-only"> (opens in new tab)</span></a></p>
-        <div className="detail-actions-end">
-          <button className="btn btn--primary detail-close-btn" onClick={() => navigate('/settings')}>
+        <div className="panel-detail-actions-end">
+          <button className="btn btn--primary panel-detail-close-btn" onClick={() => navigate('/settings')}>
             {t('common.close')}
           </button>
         </div>
@@ -854,5 +854,4 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   )
 })
 
-const A11yPanelSettings = SettingsPanel
-export default A11yPanelSettings
+export default SettingsPanel

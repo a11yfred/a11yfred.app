@@ -2,9 +2,8 @@
 // This file is a11yfred's thin wrapper that wires in app-specific sounds.
 import { useThemeManager as useThemeManagerLib, applyTheme } from '@ulam/ube'
 import { playPartySound, playSqueak } from '../utils/fiestaSounds.js'
-import { FIESTA_SQUEAK_FREQUENCY } from '../utils/constants.js'
+import { FIESTA_SQUEAK_FREQUENCY, LS_THEME } from '../utils/constants.js'
 import { setStorage } from '../utils/storage.js'
-import { LS_THEME } from '../utils/constants.js'
 
 export { applyTheme }
 

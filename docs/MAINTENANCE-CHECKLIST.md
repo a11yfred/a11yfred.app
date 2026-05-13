@@ -99,8 +99,8 @@ See [i18n-WORKFLOW.md](i18n-WORKFLOW.md) for detailed translation procedures.
 
 ## Documentation
 
-- [ ] **CHANGELOG.md** ,  entry added for meaningful code changes
-- [ ] **UPDATES.md** ,  plain-language entry for user-facing changes
+- [ ] **CHANGELOG.md** ,  entry added for meaningful code changes; no duplicate date headers (one `## YYYY-MM-DD` per day)
+- [ ] **UPDATES.md** ,  plain-language entry for user-facing changes; no duplicate date headers (one `## Month DD, YYYY` per day)
 - [ ] **TODO.md** ,  completed items marked with strikethrough, moved to Resolved
 - [ ] **README.md** ,  feature descriptions, structure, phase table match current state
 - [ ] **Debug commands** ,  open `src/App.jsx`, verify `runCommand()` matches README table

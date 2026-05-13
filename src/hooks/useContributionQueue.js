@@ -10,7 +10,6 @@ import {
   CONTRIBUTION_STATUS,
 } from '../services/contributionService.js'
 
-
 /**
  * Reactive wrapper around contributionService.
  *

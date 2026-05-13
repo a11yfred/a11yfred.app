@@ -65,7 +65,6 @@ export const RANK_ANIM_MS = 400
 export const PLATFORM_ORDER = { web: 0, native: 1, document: 2 }
 
 export const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val', 'blt', 'dot', 'tok', 'nav', 'qya', 'sjn', 'hod', 'dov', 'nds', 'nws', 'mnd', 'csp', 'sim', 'ali'])
-export const RTL_LOCALES = new Set(['ar-PS', 'ug'])
 
 export const TYPEWRITER_MIN_CHARS_PER_TICK = 2
 export const TYPEWRITER_CHAR_DIVISOR = 40
@@ -101,6 +100,7 @@ export const DEBUG_SKELETON_QUERY = 'debug skeleton'
 export const SWIPE_REVEAL = 44
 export const SWIPE_THRESHOLD = 22
 export const SWIPE_ACTIVATE = 120
+export const SWIPE_PIN_FLASH_MS = 300
 
 export const MAX_SEARCH_RESULTS = 8
 export const MAX_SEARCH_ALL = 12

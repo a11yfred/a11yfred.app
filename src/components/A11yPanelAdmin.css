@@ -424,13 +424,13 @@
 }
 
 .admin-section__desc {
-  font-size: var(--font-size-sm);
+  font-size: var(--fs-small);
   color: var(--text-muted);
   margin-bottom: 0.5rem;
 }
 
 .admin-section__link {
-  color: var(--color-link);
+  color: var(--accent-text);
 }
 
 .admin-connectivity-list,
@@ -445,7 +445,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: var(--font-size-sm);
+  font-size: var(--fs-small);
 }
 
 .admin-connectivity-dot {
@@ -453,8 +453,8 @@
   line-height: 1;
 }
 
-.admin-connectivity-item--ok .admin-connectivity-dot { color: var(--color-success, #22c55e); }
-.admin-connectivity-item--fail .admin-connectivity-dot { color: var(--color-error); }
+.admin-connectivity-item--ok .admin-connectivity-dot { color: var(--success, #22c55e); }
+.admin-connectivity-item--fail .admin-connectivity-dot { color: var(--error); }
 
 .admin-connectivity-label {
   font-weight: 600;
@@ -466,12 +466,12 @@
 }
 
 .admin-connectivity-item--fail .admin-connectivity-status {
-  color: var(--color-error);
+  color: var(--error);
 }
 
 .admin-overlay-clear {
-  font-size: var(--font-size-sm);
-  color: var(--color-success, #22c55e);
+  font-size: var(--fs-small);
+  color: var(--success, #22c55e);
   margin-top: 0.25rem;
 }
 
@@ -479,11 +479,11 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: var(--font-size-sm);
-  color: var(--color-error);
+  font-size: var(--fs-small);
+  color: var(--error);
   font-weight: 600;
 }
 
 .admin-overlay-dot {
-  color: var(--color-warning, #f59e0b);
+  color: var(--warning, #f59e0b);
 }

@@ -410,11 +410,11 @@ Verify READMEs in `src/sawsawan/` and `src/halohalo/` match current exports. Upd
 
 ### CHANGELOG
 
-Add entry for meaningful code changes (bug fixes, features, refactors, dependency updates). Use format: `category: description`.
+Add entry for meaningful code changes (bug fixes, features, refactors, dependency updates). Use format: `category: description`. One `## YYYY-MM-DD` header per calendar day -- if a header for today already exists, add new sections under it rather than creating a second header.
 
 ### UPDATES
 
-Plain-language entry for anything user-facing. Explain what changed and why.
+Plain-language entry for anything user-facing. Explain what changed and why. One `## Month DD, YYYY` header per calendar day -- append new sections under the existing header rather than creating a duplicate.
 
 ### TODO
 

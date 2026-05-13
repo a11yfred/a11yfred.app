@@ -6,6 +6,26 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ## May 13, 2026
 
+### Component renames, exceljs migration, BOM cleanup, and PWA icons
+
+**Component and hook renames:** `SheetDetail.jsx` is now `A11yPanelDetail.jsx` (with matching CSS file and hook names updated). `A11yListResult.jsx` is now `A11yListResults.jsx` (plural, matching its rendered output). Two hooks were also renamed for consistency: `useDetailSheetClipboard` to `useSheetDetailClipboard` and `useDetailSheetRefine` to `useSheetDetailRefine`. All imports and usages updated throughout.
+
+**Excel export -- xlsx removed:** The `xlsx` (SheetJS) package had two unfixed high-severity vulnerabilities. It has been removed from both `exportFinding.js` and `importService.js` and replaced with `exceljs`. The export API is unchanged: `exportFinding(finding, format)` still accepts `'text'`, `'markdown'`, `'csv'`, and `'excel'`. `npm audit` now reports 0 vulnerabilities.
+
+**BOM cleanup:** Byte-order marks stripped from 6 locale JSON files (`ali`, `en`, `en-AU`, `en-GB`, `en-IN`, `en-ZA`) and 3 source files. BOMs were causing silent parse inconsistencies in some environments.
+
+**i18n duplicate key removed:** The `search.narrow_clear_aria` key was duplicated in `en.json` with a stale value (`"Clear entry"`). The duplicate has been removed from `en.json` and all 56 locale files. The correct key and value (`"Clear narrow filter and reset"`) remain.
+
+**PWA icons:** `public/icon-192.png` and `public/icon-512.png` added (purple rounded-square with white A). The Vite manifest has been updated to reference them. The app can now be installed to a home screen with a proper icon.
+
+**Settings section naming:** `SectionAiSettings`, `SectionSearchSettings`, etc. are the planned prefixes for SettingsPanel sub-components when that decomposition is implemented. No code change yet -- naming decision recorded in TODO.
+
+**CSS class namespace rename:** All 139 `.detail-*` class references renamed to `.panel-detail-*` across four files. This scopes the panel's styles so they can't conflict with generic utility classes or future components that might use the same prefix.
+
+**JSDoc and naming audit:** Confirmed the two main search hooks already have complete parameter documentation. The `locale`/`language` naming split is intentional and documented.
+
+---
+
 ### Framework packages published and wired in
 
 The shared focus management, announcer, i18n, and theming code is now published as standalone `@ulam/*` npm packages and the app imports from those instead of local copies. No behavior changes -- same code, cleaner dependency boundary. Removed ~45 files from `src/` that were the local vendor copies.
@@ -1175,9 +1195,7 @@ The app's colors, font sizes, spacing, and border radii are now all defined as n
 
 The layout is now properly mobile-first: it works well on a phone and expands gracefully on larger screens. Icon buttons now meet the recommended 44×44px touch target size.
 
----
-
-## April 23, 2026: Initial build
+### Initial build
 
 First working version of A11yHelper. Type a description of a defect, get matching entries from the corpus, pick one, optionally add a location prefix ("Global:", "Cart:", etc.), and copy the text straight into your audit spreadsheet.
 

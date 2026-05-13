@@ -10,17 +10,28 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ## Code Quality & Refactoring
 
-**Identified for future work (lower priority):**
+**Dependency order:** Context API consolidation must come first -- the component splits (Settings sections, App.jsx decomposition) are blocked on it because splitting without shared context only moves prop-drilling deeper, not eliminates it.
 
-- [ ] **Rename "finding" → "entry" throughout** `[code]` `[ux]` `[i18n]` ,  "Entry" better reflects the data model (a corpus entry, not necessarily an observed defect). Scope: all `en.json` keys, JSX labels, localStorage key names (`userFindings`, `pinnedFindings`, etc.), corpus field names, README, CONTRIBUTING, and docs. High-surface rename -- do in a dedicated session with translate run after.
-- [ ] **Break large components into single-responsibility pieces** `[code]` `[refactor]` ,  High-effort refactoring: `A11yPanelDetail` (486 lines) -- clipboard/undo logic already extracted to `useSheetDetailClipboard`, AI refinement to `useSheetDetailRefine`; `A11yListResults` (869 lines) -- extract keyboard nav to `useResultListKeyboard`, narrow mode to sub-component; `A11yPanelSettings` (858 lines) -- split into `SectionAiSettings`, `SectionSearchSettings`, `SectionLanguageSettings`, `SectionResetData`. `App.jsx` (1602 lines) -- see Decompose App.jsx item below.
-- [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  App.jsx AppContent receives 20+ state/setter pairs. Consolidate into context objects (settings context, search context, UI state context) or custom hooks to reduce surface area. Reduces prop count from 30+ to 2-3 per component.
-- [ ] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Modal/drawer state pattern repeated 4+ times (settingsOpen, aboutOpen, etc.); keyboard shortcut handling repeated (App.jsx, A11yListResults.jsx); localStorage try/catch pattern repeated 3+ times. Create `useModalState`, `useKeyboardShortcuts`, `useLocalStorage` custom hooks.
-- [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Codebase is currently untyped JavaScript. Add JSDoc comments to complex functions and hooks (`useFindingSearch.js`, `useContributionQueue.js`, `App.jsx`), or migrate to TypeScript for full type checking. Improves IDE autocomplete and catches type errors at dev time.
-- [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1602 lines. Extract theme manager (done: `useThemeManager`), search manager, party mode, and route handler into dedicated hooks.
-- [ ] **Standardize locale/language naming** `[code]` `[i18n]` ,  Mixed usage across hooks; standardize throughout.
-- [ ] **Add JSDoc to complex hooks** `[code]` ,  `useFindingSearch.js` and `useContributionQueue.js` need parameter/return type docs.
-- [ ] **Rename CSS classes from `detail-sheet-*` prefix** `[code]` `[design]` ,  `A11yPanelDetail.css` still uses `.detail-sheet`, `.detail-header`, etc. from the old `SheetDetail` component name. Cosmetic rename to `.panel-detail-*` for consistency with the component name.
+### Step 1 -- Consolidate state (unblocks everything else)
+
+- [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  `AppContent` receives 20+ state/setter pairs. Consolidate into context objects: `SettingsContext` (AI config, language, theme), `SearchContext` (query, results, active finding), `UIContext` (panel open states, narrow mode). Required before any component split is worth doing.
+- [ ] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Modal/drawer state pattern repeated 4+ times (`settingsOpen`, `aboutOpen`, etc.); keyboard shortcut handling repeated in `App.jsx` and `A11yListResults.jsx`; localStorage try/catch pattern repeated 3+ times. Create `useModalState`, `useKeyboardShortcuts`, `useLocalStorage` custom hooks. Can proceed independently of context work.
+
+### Step 2 -- Split components (blocked on Step 1)
+
+- [ ] **Break large components into single-responsibility pieces** `[code]` `[refactor]` ,  Current line counts: `App.jsx` 1601, `A11yListResults` 869, `A11yPanelSettings` 857, `A11yPanelDetail` 486. Split plan: `A11yListResults` -- extract keyboard nav to `useResultListKeyboard`, narrow mode to sub-component. `A11yPanelSettings` -- split into `SectionAiSettings`, `SectionSearchSettings`, `SectionLanguageSettings`, `SectionResetData` (naming convention already decided -- blocked on context consolidation). `A11yPanelDetail` -- clipboard in `useSheetDetailClipboard` and AI in `useSheetDetailRefine` already extracted; no further split needed until context is wired. **Blocked on Step 1.**
+- [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1601 lines. Extract search manager (`useSearchManager`), party mode (`usePartyMode`), and route handler into dedicated hooks. `useThemeManager` already extracted. **Blocked on Step 1.**
+
+### Step 3 -- Rename (high surface area, dedicated session)
+
+- [ ] **Rename "finding" → "entry" throughout** `[code]` `[ux]` `[i18n]` ,  "Entry" better reflects the data model (a corpus entry, not necessarily an observed defect). Scope: all `en.json` keys, JSX labels, localStorage key names (`userFindings`, `pinnedFindings`, etc.), corpus field names, README, CONTRIBUTING, and docs. Run `npm run translate` after. Do in a dedicated session -- every file in the project is affected.
+
+### Ongoing
+
+- [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Migrate to TypeScript for full type checking, or add JSDoc to `App.jsx` and its major data-flow paths. `useFindingSearch.js` and `useContributionQueue.js` already have complete JSDoc. Start with the new context objects from Step 1 -- type them on creation.
+- [x] **Standardize locale/language naming** `[code]` `[i18n]` ,  Audited May 13: `language` (App state, user-facing) vs `locale` (hook param, BCP 47) is intentional. `findingSearchService.js` and `dataService.js` both use `locale` consistently throughout -- no mixed naming found. No code change needed.
+- [x] **Add JSDoc to complex hooks** `[code]` ,  `useFindingSearch.js` and `useContributionQueue.js` both have complete `@param`/`@returns` JSDoc (verified May 13).
+- [x] **Rename CSS classes from `detail-*` prefix** `[code]` `[design]` ,  Done May 13: all 139 occurrences of `.detail-*` renamed to `.panel-detail-*` across `A11yPanelDetail.css`, `A11yPanelDetail.jsx`, `A11yListResults.css`, and `A11yPanelSettings.jsx`. ESLint and Stylelint clean.
 - [x] **Address remaining JS warnings** `[code]` ,  Resolved in May 2026 lint pass. Zero ESLint warnings. All `prefer-aria-disabled` and `no-target-blank-without-label` violations cleared.
 
 ---
@@ -271,3 +282,5 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ BOM stripped from 6 locale files and 3 source files (App.jsx, A11yPanelAbout.jsx, A11yPanelSettings.jsx) (May 13)
 - ✅ Duplicate search.narrow_clear_aria key removed from en.json and 56 locale files (May 13)
 - ✅ Settings section naming convention established: Section* prefix (SectionAiSettings, SectionSearchSettings, SectionLanguageSettings, SectionResetData) (May 13)
+- ✅ CSS class rename: 139 occurrences of `.detail-*` renamed to `.panel-detail-*` across A11yPanelDetail.css/.jsx, A11yListResults.css, A11yPanelSettings.jsx (May 13)
+- ✅ JSDoc audit: useFindingSearch.js and useContributionQueue.js both have complete @param and @returns docs -- no work needed (May 13)

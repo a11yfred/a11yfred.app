@@ -13,7 +13,7 @@
  * Return shape (both importFromFile and importFromUrl):
  *   { findings: [...NormalizedFinding], skipped: [...{ row, reason }], total: n }
  *
- * SheetJS (xlsx) is lazy-loaded on first spreadsheet import so it does not
+ * ExcelJS is lazy-loaded on first spreadsheet import so it does not
  * affect initial bundle size.
  */
 

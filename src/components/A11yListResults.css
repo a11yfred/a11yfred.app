@@ -838,8 +838,6 @@
   gap: var(--space-1);
 }
 
-
-
 .result-card-wrap .skip-link:focus-visible {
   opacity: 1;
   pointer-events: auto;
@@ -857,8 +855,8 @@
 }
 
 /* Detail copy buttons â€" icon-only with state change */
-.detail-copy-btn,
-.detail-sc-copy-btn {
+.panel-detail-copy-btn,
+.panel-detail-sc-copy-btn {
   min-width: var(--touch-target);
   min-height: var(--touch-target);
   padding: 10px 12px;
@@ -870,12 +868,12 @@
   transition: background var(--duration-fast);
 }
 
-.detail-sc-copy-btn {
+.panel-detail-sc-copy-btn {
   margin-inline-start: auto;
 }
 
-.detail-copy-btn:not(:disabled):hover,
-.detail-sc-copy-btn:not(:disabled):hover {
+.panel-detail-copy-btn:not(:disabled):hover,
+.panel-detail-sc-copy-btn:not(:disabled):hover {
   background: var(--bg-subtle);
   border-radius: var(--radius);
 }
@@ -1055,7 +1053,7 @@
 }
 
 @media (width >= 768px) {
-  .detail-badges .badge-prefix {
+  .panel-detail-badges .badge-prefix {
     display: inline;
   }
 }

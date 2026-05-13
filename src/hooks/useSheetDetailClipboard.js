@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { announce } from '@ulam/taho'
+import { isSignificantlyChanged } from '@ulam/calamansi'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 
 const resetAfterNotification = (setState) => setTimeout(() => setState(false), NOTIFICATION_TIMEOUT)
@@ -18,7 +19,6 @@ const writeToClipboard = (text) => {
     resolve()
   })
 }
-import { isSignificantlyChanged } from '@ulam/calamansi'
 
 /**
  * Manages clipboard copy state and reset confirmation flow for DetailSheet.

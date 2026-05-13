@@ -139,22 +139,6 @@
   border-radius: 50%;
 }
 
-.onboarding-nav-btn {
-  font-size: var(--fs-body);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  padding: 0 var(--space-4);
-  border-radius: var(--radius);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.onboarding-nav-btn--next {
-  margin-inline: auto;
-}
-
 .onboarding-dots {
   list-style: none;
   display: flex;

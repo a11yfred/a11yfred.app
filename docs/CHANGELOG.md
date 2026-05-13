@@ -18,6 +18,21 @@ All significant changes to A11yFred, newest first.
 - Fixed `@import "../tokens.css"` in `@ulam/sili/core/sili.css` (bad monorepo-relative path, removed)
 - Published `@ulam/sili@0.1.1` with CSS subpath export and tokens import fix
 
+### CSS class namespace rename
+
+- Renamed all `.detail-*` CSS classes to `.panel-detail-*` across 4 files (139 occurrences): `A11yPanelDetail.css`, `A11yPanelDetail.jsx`, `A11yListResults.css`, `A11yPanelSettings.jsx`
+- Prevents collision with generic `detail-` utility classes; scopes styles to the panel component
+
+### JSDoc audit
+
+- Confirmed `useFindingSearch.js` and `useContributionQueue.js` already have complete `@param` and `@returns` documentation -- no changes needed
+- Recorded `locale`/`language` split as intentional: `language` in App.jsx (user-facing state name), `locale` in hook params (BCP 47 tag) -- not an inconsistency
+
+### Settings naming convention
+
+- Decided Section* prefix for future SettingsPanel sub-components: `SectionAiSettings`, `SectionSearchSettings`, `SectionLanguageSettings`, `SectionResetData`
+- No code change yet; blocked on Context API consolidation (splitting now would only relocate prop-drilling)
+
 ### Dependency updates
 
 - Updated `@axe-core/react`, `globals`, `lucide-react`, `react`, `react-dom`, `stylelint`, `vite`, `@ulam/taho`, `@ulam/ube` to latest compatible versions
@@ -1859,9 +1874,7 @@ Three feature branches scaffolded for non-web distribution. No existing source f
 
 - `src/main.jsx`: CSS import order: `tokens.css` → `typography.css` → `index.css`
 
----
-
-## 2026-04-23: Project started
+### Project started
 
 - Vite + React 18 + Fuse.js scaffold
 - `src/data/defects.json`: 50 starter defect entries
