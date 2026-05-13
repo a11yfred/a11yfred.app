@@ -194,7 +194,8 @@ Building distributable installers requires `electron-builder` (already a dev dep
 - [ ] **Mobile device testing** `[qa]` `[manual]` `[launch-blocker]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, and portrait/landscape layouts.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  Verify domain ownership in Search Console, submit sitemap.xml, confirm indexing is enabled (remove noindex), monitor for crawl errors post-launch.
 - [ ] **Expert source attribution audit** `[corpus]` `[privacy]` `[manual]` `[launch-blocker]` ,  Review all corpus entries that cite expert blogs (Roselli, O'Hara, Bailey, Eggert, Sutton, Pickering, TPGi, Deque, WebAIM, appt.org, etc.). Omit or anonymize specific expert attribution in any public-facing source fields until written permission is obtained from each author. Verify the About panel sources list reflects only sources with clear public licensing or explicit permission.
-- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  GDPR/privacy/terms, ~~SEO tags~~ (done — flip noindex when domain is live), Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
+- [ ] **OG image** `[seo]` `[infra]` `[launch-blocker]` ,  Create `public/og-image.png` (1200×630). Referenced by `og:image` and `twitter:image` in index.html — returns 404 until this file exists. Create after the production domain is live so the screenshot reflects the real URL.
+- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  GDPR/privacy/terms, ~~SEO tags~~ (done — flip noindex when domain is live), OG image, Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
 - [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
 
 ---
