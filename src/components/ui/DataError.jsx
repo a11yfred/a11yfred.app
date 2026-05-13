@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useFocusOnMount } from '../../siling-labuyo/index.js'
+import { useFocusOnMount } from '@ulam/sili/react'
 
 function DefaultRetryIcon() {
   return (

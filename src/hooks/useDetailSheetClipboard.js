@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { announce } from '../taho/index.js'
+import { announce } from '@ulam/taho'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 
 const resetAfterNotification = (setState) => setTimeout(() => setState(false), NOTIFICATION_TIMEOUT)

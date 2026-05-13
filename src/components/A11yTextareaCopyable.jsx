@@ -1,6 +1,6 @@
 import { useRef, useEffect, forwardRef } from 'react'
 import { RotateCcw, Copy, Check } from 'lucide-react'
-import { useT } from '../calamansi/react.js'
+import { useT } from '@ulam/calamansi/react'
 
 const TextareaCopyable = forwardRef(function TextareaCopyable({
   id,

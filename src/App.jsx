@@ -25,15 +25,15 @@ import {
   Modal,
   useMediaQuery,
   returnFocus,
-} from './siling-labuyo/index.js'
-import { announce } from './taho/index.js'
-import { Announcer } from './taho-bayabas/react.js'
+} from '@ulam/sili/react'
+import { announce } from '@ulam/taho'
+import { Announcer } from '@ulam/taho/react'
 import { createComponents } from '@a11yfred/rogers/react'
 const { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } = createComponents({ useEffect, useRef })
 import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
-import { I18nProvider, useT } from './calamansi/react.js'
-import { initI18n } from './calamansi/index.js'
+import { I18nProvider, useT } from '@ulam/calamansi/react'
+import { initI18n } from '@ulam/calamansi'
 import I18N_LOCALES from './i18n-locales.js'
 import { initHalohalo } from './halohalo/index.js'
 import { buildPrompt, AGENTIC_SYSTEM_PROMPT } from './ai-config.js'

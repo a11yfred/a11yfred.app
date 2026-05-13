@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { useFocusOnMount, usePageTitle } from '../../siling-labuyo/index.js'
+import { useFocusOnMount, usePageTitle } from '@ulam/sili/react'
 import PanelShell from './Panel.jsx'
 
 const Panel = forwardRef(function Panel({

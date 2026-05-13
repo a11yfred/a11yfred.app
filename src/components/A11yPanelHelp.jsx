@@ -1,5 +1,5 @@
 import { PlayCircle, ArrowLeft } from 'lucide-react'
-import { useT } from '../calamansi/react.js'
+import { useT } from '@ulam/calamansi/react'
 import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
 
