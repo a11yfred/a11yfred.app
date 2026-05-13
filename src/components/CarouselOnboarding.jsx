@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
@@ -6,6 +6,7 @@ import { useT } from '@ulam/calamansi/react'
 import Button from './ui/Button.jsx'
 import { LS_ONBOARDING_SEEN } from '../utils/constants.js'
 import { setStorage } from '../utils/storage.js'
+import { useKeydown } from '../hooks/useKeydown.js'
 import './CarouselOnboarding.css'
 
 const randomAngle = () => Math.floor(Math.random() * 360)
@@ -60,16 +61,12 @@ export default function CarouselOnboarding({ onClose }) {
     }
   }
 
-  useEffect(() => {
-    function handleKeyDown(e) {
-      if (e.key !== 'Escape') return
-      if (confirmOpen) return
-      e.stopImmediatePropagation()
-      handleRequestClose()
-    }
-    document.addEventListener('keydown', handleKeyDown, true)
-    return () => document.removeEventListener('keydown', handleKeyDown, true)
-  }, [isLast, confirmOpen]) // eslint-disable-line react-hooks/exhaustive-deps -- handleRequestClose reads isLast
+  useKeydown((e) => {
+    if (e.key !== 'Escape') return
+    if (confirmOpen) return
+    e.stopImmediatePropagation()
+    handleRequestClose()
+  }, { capture: true })
 
   const slide = SLIDES[step]
   const SlideIcon = slide.Icon

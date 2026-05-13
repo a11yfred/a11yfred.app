@@ -15,7 +15,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 ### Step 1 -- Consolidate state (unblocks everything else)
 
 - [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  `AppContent` receives 20+ state/setter pairs. Consolidate into context objects: `SettingsContext` (AI config, language, theme), `SearchContext` (query, results, active finding), `UIContext` (panel open states, narrow mode). Required before any component split is worth doing.
-- [ ] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Modal/drawer state pattern repeated 4+ times (`settingsOpen`, `aboutOpen`, etc.); keyboard shortcut handling repeated in `App.jsx` and `A11yListResults.jsx`; localStorage try/catch pattern repeated 3+ times. Create `useModalState`, `useKeyboardShortcuts`, `useLocalStorage` custom hooks. Can proceed independently of context work.
+- [ ] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Keyboard shortcut handling in `A11yListResults`, `A11yPanelSettings`, `CarouselOnboarding`, `WidgetKofi` all follow the same `useEffect` + `addEventListener('keydown')` + cleanup pattern. Extract to `useKeydown(handler, { target, capture })`. Modal/drawer open states are already router-driven (no `useState` to consolidate). localStorage access is already fully abstracted in `sawsawan/storage.js`. Can proceed independently of context work.
 
 ### Step 2 -- Split components (blocked on Step 1)
 

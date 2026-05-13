@@ -15,6 +15,7 @@ import InfoBox from './ui/InfoBox.jsx'
 import TileAd from './TileAd.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
+import { useKeydown } from '../hooks/useKeydown.js'
 import './A11yListResults.css'
 
 function triggerButtonAnimation(btn, id, setAnimating) {
@@ -231,11 +232,7 @@ export default function A11yListResults({ results, selected, onSelect, query, ra
     }
   }, [displayResults, ratings, onStar, onArchive, onRankUp, onRankDown, t])
 
-  useEffect(() => {
-    const listEl = listRef.current
-    listEl?.addEventListener('keydown', handleKeyDown)
-    return () => listEl?.removeEventListener('keydown', handleKeyDown)
-  }, [handleKeyDown])
+  useKeydown(handleKeyDown, { target: listRef })
 
   // Close swipe drawer on outside tap (iOS Mail behaviour)
   useEffect(() => {

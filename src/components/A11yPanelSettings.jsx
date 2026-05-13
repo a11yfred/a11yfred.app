@@ -13,6 +13,7 @@ import { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys, getAiProvider, isA
 import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER, URL_PRIVACY_POLICY } from '../utils/constants.js'
 import { setStorage, removeStorage } from '../utils/storage.js'
+import { useKeydown } from '../hooks/useKeydown.js'
 import './A11yPanelSettings.css'
 
 function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {
@@ -263,15 +264,11 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   }, [errors])
 
   // Escape key -- Drawer also listens on mobile; harmless double-fire
-  useEffect(() => {
-    const handler = (e) => {
-      if (e.key !== 'Escape') return
-      if (unsavedOpen) return
-      if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() }
-    }
-    document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
-  }, [onClose, hasUnsaved, unsavedOpen])
+  useKeydown((e) => {
+    if (e.key !== 'Escape') return
+    if (unsavedOpen) return
+    if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() }
+  })
 
   const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
 
