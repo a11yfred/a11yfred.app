@@ -347,7 +347,6 @@
   "onboarding.slide_2_body": "Gamitin ang Rank Up/Down para ranggohin ang mga resulta ayon sa kahalagahan. I-star ang isang natuklasan para palaging ipakita ito nang una. I-pin ang isang natuklasan para manatili ito sa itaas sa lahat ng paghahanap.",
   "onboarding.slide_3_heading": "Kopyahin",
   "onboarding.slide_3_body": "Buksan ang isang natuklasang isyu upang makita ang pamagat, pamantayan ng WCAG, paglalarawan, at mungkahing ayos. Magdagdag ng prefix ng lokasyon sa paglalarawan (hal. 'Global:'). Gamitin ang AI Assist upang baguhin ang anumang field gamit ang iyong mga tala, pagkatapos ay kopyahin ang mga field nang isa-isa o gamitin ang Kopyahin Lahat upang makuha ang lahat nang sabay.",
-  "search.narrow_clear_aria": "I-clear ang narrow filter at i-reset",
   "search.narrow_button": "Paliitin",
   "search.hint_platform_native_caveat": "Mas limitado ang saklaw ng native app kumpara sa web.",
   "search.hint_ranking": "Gamitin ang Rank Up/Down para ayusin ang pagkakasunod ng mga resulta. I-star ang isang resulta para palaging ipakita ito nang una.",

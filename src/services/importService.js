@@ -160,14 +160,25 @@ function processRows(rows, options = {}) {
 // ---------------------------------------------------------------------------
 
 async function parseSpreadsheet(file) {
-  const XLSX = await import('xlsx')
+  const { default: ExcelJS } = await import('exceljs')
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
-        const wb = XLSX.read(e.target.result, { type: 'array' })
-        const ws = wb.Sheets[wb.SheetNames[0]]
-        resolve(XLSX.utils.sheet_to_json(ws, { defval: '' }))
+        const wb = new ExcelJS.Workbook()
+        await wb.xlsx.load(e.target.result)
+        const ws = wb.worksheets[0]
+        if (!ws) { resolve([]); return }
+        const headers = []
+        ws.getRow(1).eachCell((cell, col) => { headers[col] = String(cell.value ?? '') })
+        const rows = []
+        ws.eachRow((row, rowNum) => {
+          if (rowNum === 1) return
+          const obj = {}
+          headers.forEach((h, col) => { if (h) obj[h] = row.getCell(col).value ?? '' })
+          rows.push(obj)
+        })
+        resolve(rows)
       } catch (err) {
         reject(new Error(`Failed to parse spreadsheet: ${err.message}`))
       }

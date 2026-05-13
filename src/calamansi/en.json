@@ -1,4 +1,4 @@
-﻿{
+{
   "app.name": "A11yFred",
   "app.tagline": "Your AI-second helper for manual accessibility auditing and reporting.",
 
@@ -40,7 +40,6 @@
   "search.label": "Describe what you observed",
   "search.placeholder": "e.g. modal close button, no accessible name",
   "search.clear_aria": "Clear search",
-  "search.narrow_clear_aria": "Clear entry",
   "search.button": "Search",
   "search.narrow_button": "Narrow",
   "search.typewriter_try": "Try:",

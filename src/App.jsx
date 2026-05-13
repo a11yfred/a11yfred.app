@@ -1,8 +1,8 @@
-﻿import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
 import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw, Heart, House } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
-import A11yListResult, { A11yListResultSkeleton, DataError, PinnedSection } from './components/A11yListResult.jsx'
-import SheetDetail from './components/SheetDetail.jsx'
+import A11yListResults, { A11yListResultSkeleton, DataError, PinnedSection } from './components/A11yListResults.jsx'
+import A11yPanelDetail from './components/A11yPanelDetail.jsx'
 import A11yPanelAbout from './components/A11yPanelAbout.jsx'
 import A11yPanelHelp from './components/A11yPanelHelp.jsx'
 import CarouselOnboarding from './components/CarouselOnboarding.jsx'
@@ -964,7 +964,7 @@ function AppContent({
           ? <A11yListResultSkeleton count={activeQuery === 'debug skeleton' ? sortedFindings.length : undefined} />
           : (viewAll || sheetCollapsed)
             ? (
-              <A11yListResult
+              <A11yListResults
                 key="view-all"
                 results={applySortBy(sortedFindings.filter(f => !pinnedIds.has(f.id)))}
                 sortBy={sortBy}
@@ -1024,7 +1024,7 @@ function AppContent({
                       </ul>
                     </div>
                   )}
-                  <A11yListResult
+                  <A11yListResults
                     key="search"
                     results={unpinnedResults}
                     sortBy={sortBy}
@@ -1064,7 +1064,7 @@ function AppContent({
               )
               : badgeFilter
                 ? (
-                  <A11yListResult
+                  <A11yListResults
                     key="badge"
                     results={applySortBy(badgeResults)}
                     sortBy={sortBy}
@@ -1104,7 +1104,7 @@ function AppContent({
                 )
               : sortedFindings.length === 0
                 ? (
-                  <A11yListResult
+                  <A11yListResults
                     key="no-results-home"
                     results={[]}
                     selected={null}
@@ -1364,7 +1364,7 @@ function AppContent({
         collapseIcon={() => <ChevronsUp size={16} strokeWidth={2} aria-hidden="true" />}
       >
         {selected && (
-          <SheetDetail
+          <A11yPanelDetail
             key={selected.id}
             finding={selected}
             aiEnabled={aiEnabled}

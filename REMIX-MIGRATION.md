@@ -93,13 +93,13 @@ fallbacks (`retryIcon`, `closeIcon`, `backLtrIcon`, `backRtlIcon`, `collapseIcon
 App-specific components extracted to `src/components/` with `A11y` prefix:
 
 - `A11yPanelAbout`, `A11yPanelHelp`, `A11yPanelSettings`, `A11yPanelAdmin`
-- `A11yListResult`, `A11yListResultSkeleton`, `A11yListRelated`, `A11yLinksSource`
+- `A11yListResults`, `A11yListResultSkeleton`, `A11yListRelated`, `A11yLinksSource`
 - `A11yLinkSc`, `A11yLinkTitle`, `A11yTextareaCopyable`, `A11yInputSearchHero`
 - `A11yToastAiDebug`
 
 Other app components renamed to noun-modifier convention:
 
-- `SheetDetail`, `CarouselOnboarding`, `TileAd`, `EffectConfetti`, `EffectFiestaSparkles`,
+- `A11yPanelDetail`, `CarouselOnboarding`, `TileAd`, `EffectConfetti`, `EffectFiestaSparkles`,
 
   `WidgetFiestaMusicPlayer`, `WidgetKofi`, `ThemeFiestaMode.css`
 

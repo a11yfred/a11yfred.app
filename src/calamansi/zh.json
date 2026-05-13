@@ -350,7 +350,6 @@
   "onboarding.slide_1_heading": "查找",
   "onboarding.slide_2_heading": "排名结果",
   "onboarding.slide_3_heading": "复制",
-  "search.narrow_clear_aria": "清除缩小筛选条件并重置",
   "search.narrow_button": "缩小范围",
   "search.hint_platform_native_caveat": "原生应用的覆盖范围比网页更有限。",
   "search.hint_syntax_prefix": "使用 +词语 来要求包含某个词，使用 -词语 来排除某个词（例如",

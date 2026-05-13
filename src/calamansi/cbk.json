@@ -347,7 +347,6 @@
   "onboarding.slide_2_body": "Usa Rank Up/Down para ordenar resultados por importancia. Dale estrella na un finding para siempre mostralo primero. Fija un finding para mantenerlo arriba en todas las busquedas.",
   "onboarding.slide_3_heading": "Copia",
   "onboarding.slide_3_body": "Abri un hallazgo para mira su titulo, criterio WCAG, descripcion, y sugerido arreglo. Añadi un prefijo de lugar na descripcion (ej. 'Global:'). Usa AI Assist para revisa cualquier campo usando tuyo notas, despues copia campos individualmente o usa Copia Todo para agarra todo junto.",
-  "search.narrow_clear_aria": "Limpia el filtro narrow y resetea",
   "search.hint_platform_native_caveat": "La cobertura de native app esta mas limitado que web.",
   "search.hint_ranking": "Usa Rank Up/Down para ajustar como se ordena los resultados. Dale estrella na un resultado para siempre mostrarlo primero.",
   "search.hint_syntax_prefix": "Usa +termino para requerir una palabra y -termino para excluir uno (ej.",

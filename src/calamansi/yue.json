@@ -348,7 +348,6 @@
   "onboarding.slide_2_body": "使用「上移／下移排名」按重要性排列結果。為結果加星號以使其永遠排在首位。釘選結果以在所有搜尋中保持置頂。",
   "onboarding.slide_3_heading": "複製",
   "onboarding.slide_3_body": "開啟一個發現項目，查看其標題、WCAG 準則、描述及建議修正。在描述中加入位置前綴（例如「Global:」）。使用 AI Assist 根據你的備註修改任何欄位，然後逐一複製欄位，或使用「複製全部」一次過取得所有內容。",
-  "search.narrow_clear_aria": "清除縮窄篩選器並重置",
   "search.narrow_button": "縮窄",
   "search.hint_platform_native_caveat": "原生應用程式的覆蓋範圍比網頁版更為有限。",
   "search.hint_ranking": "使用「上移／下移排名」調整結果排序。為結果加星號以使其永遠排在首位。",

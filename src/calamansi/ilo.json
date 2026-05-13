@@ -346,7 +346,6 @@
   "onboarding.slide_2_body": "Gamitten ti Rank Up/Down tapno ma-rank dagiti resulta babaen ti kaipapanan. I-star ti maysa nga finding tapno nalugi nga maipakita iti una. I-pin ti maysa nga finding tapno manatili iti rabaw iti amin nga biruken.",
   "onboarding.slide_3_heading": "Kopiaen",
   "onboarding.slide_3_body": "Ibuksan ti finding tapno makita ti titulo, WCAG criterion, deskripsion, ken isuggested a panagsolbar. Idagdag ti location prefix iti deskripsion (hal. 'Global:'). Gamitten ti AI Assist tapno maibaliw ti aninoman a field babaen ti bukodmo a nota, ket kopiaen ti mga field iti maysa-maysa wenno gamitten ti Copy All tapno makuha ti amin a dagiti.",
-  "search.narrow_clear_aria": "Limpiaen ti narrow filter ken i-reset",
   "search.narrow_button": "I-narrow",
   "search.hint_platform_native_caveat": "Ti coverage ti native app ket nasapsappot ngem web.",
   "search.hint_ranking": "Gamitten ti Rank Up/Down tapno maayos ti pagpapasingkedan dagiti resulta. I-star ti resulta tapno nalugi nga maipakita iti una.",

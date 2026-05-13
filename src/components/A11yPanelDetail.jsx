@@ -16,9 +16,9 @@ import A11yListRelated from './A11yListRelated.jsx'
 import { DEBUG_COMMANDS, DEBUG_AI_DELAY_MS, getAiProvider, getProviderLabel } from '../halohalo/index.js'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 import { getStorage, setStorage, getFindingNoteKey } from '../utils/storage.js'
-import useDetailSheetClipboard from '../hooks/useDetailSheetClipboard.js'
-import useDetailSheetRefine from '../hooks/useDetailSheetRefine.js'
-import './SheetDetail.css'
+import useSheetDetailClipboard from '../hooks/useSheetDetailClipboard.js'
+import useSheetDetailRefine from '../hooks/useSheetDetailRefine.js'
+import './A11yPanelDetail.css'
 
 function FieldCheckbox({ label, checked, onChange, disabled }) {
   return (
@@ -35,7 +35,7 @@ function FieldCheckbox({ label, checked, onChange, disabled }) {
   )
 }
 
-export default function SheetDetail({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
@@ -74,7 +74,7 @@ export default function SheetDetail({ finding, aiEnabled, agenticMode = false, f
     handleCopyAll, handleResetAllFields,
     handleUndoDesc, handleUndoFix,
     copyTitle, copyPrimarySc, copyRelatedSc,
-  } = useDetailSheetClipboard({
+  } = useSheetDetailClipboard({
     finding, descText, fixText, displayDesc,
     setDescText, setFixText, setDescHistory, setFixHistory,
     descHistory, fixHistory, onCopyEvent, t,
@@ -87,7 +87,7 @@ export default function SheetDetail({ finding, aiEnabled, agenticMode = false, f
     aiRevisionButtonRef,
     startTypewriter,
     handleRefine,
-  } = useDetailSheetRefine({
+  } = useSheetDetailRefine({
     finding, descText, fixText,
     aiRevisedDesc, aiRevisedFix, useAgenticMode, aiNote, allFindings,
     setDescText, setFixText, setDescHistory, setFixHistory, t,

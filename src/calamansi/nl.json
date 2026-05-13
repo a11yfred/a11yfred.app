@@ -353,7 +353,6 @@
   "onboarding.slide_2_body": "Gebruik Omhoog/Omlaag rangschikken om resultaten op belangrijkheid te sorteren. Markeer een bevinding met een ster om deze altijd als eerste weer te geven. Vastmaken zorgt ervoor dat een bevinding bovenaan blijft staan bij alle zoekopdrachten.",
   "onboarding.slide_3_heading": "Kopiëren",
   "onboarding.slide_3_body": "Open een bevinding om de titel, het WCAG-criterium, de beschrijving en de voorgestelde oplossing te bekijken. Voeg een locatieprefix toe aan de beschrijving (bijv. 'Globaal:'). Gebruik AI-assistent om een veld te herzien op basis van je notities, en kopieer velden afzonderlijk of gebruik Alles kopiëren om alles in één keer over te nemen.",
-  "search.narrow_clear_aria": "Verfijningsfilter wissen en resetten",
   "search.narrow_button": "Verfijnen",
   "search.hint_platform_native_caveat": "De dekking van native apps is beperkter dan die van web.",
   "search.hint_ranking": "Gebruik Omhoog/Omlaag rangschikken om de sorteervolgorde van resultaten aan te passen. Markeer een resultaat met een ster om het altijd als eerste weer te geven.",

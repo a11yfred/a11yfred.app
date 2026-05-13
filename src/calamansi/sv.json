@@ -352,7 +352,6 @@
   "onboarding.slide_2_body": "Använd Rangordna upp/ned för att rangordna resultat efter betydelse. Stjärnmärk ett fynd för att alltid visa det först. Fäst ett fynd för att behålla det överst i alla sökningar.",
   "onboarding.slide_3_heading": "Kopiera",
   "onboarding.slide_3_body": "Öppna ett fynd för att se dess titel, WCAG-kriterium, beskrivning och föreslagen åtgärd. Lägg till ett platsprefix i beskrivningen (t.ex. 'Global:'). Använd AI-assistenten för att revidera valfritt fält med hjälp av dina anteckningar, kopiera sedan fält individuellt eller använd Kopiera allt för att hämta allt på en gång.",
-  "search.narrow_clear_aria": "Rensa begränsat filter och återställ",
   "search.narrow_button": "Begränsa",
   "search.hint_platform_native_caveat": "Täckningen för native-appar är mer begränsad än för webb.",
   "search.hint_ranking": "Använd Rangordna upp/ned för att justera hur resultat sorteras. Stjärnmärk ett resultat för att alltid visa det först.",

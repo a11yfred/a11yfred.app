@@ -348,7 +348,6 @@
   "onboarding.slide_2_body": "Sử dụng Tăng/Giảm hạng để xếp hạng kết quả theo mức độ quan trọng. Gắn sao cho một phát hiện để luôn hiển thị đầu tiên. Ghim một phát hiện để giữ nó ở đầu trong tất cả các tìm kiếm.",
   "onboarding.slide_3_heading": "Sao chép",
   "onboarding.slide_3_body": "Faça um achado para ver o seu título, critério WCAG, descrição e correção sugerida. Adicione um prefixo de localização à descrição (por ex. 'Global:'). Use o AI Assist para rever qualquer campo com as suas notas, depois copie os campos individualmente ou use Copiar Tudo para copiar tudo de uma vez.",
-  "search.narrow_clear_aria": "Xóa bộ lọc thu hẹp và đặt lại",
   "search.narrow_button": "Thu hẹp",
   "search.hint_platform_native_caveat": "Couverture des applications natives plus limitée que pour le web.",
   "search.hint_ranking": "Utilisez Monter/Descendre pour ajuster le tri des résultats. Mettez une étoile à un résultat pour toujours l'afficher en premier.",

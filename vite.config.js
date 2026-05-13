@@ -40,7 +40,9 @@ export default defineConfig({
         start_url: '/',
         scope: '/',
         icons: [
-          { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any maskable' },
+          { src: '/favicon.svg',   sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+          { src: '/icon-192.png',  sizes: '192x192', type: 'image/png' },
+          { src: '/icon-512.png',  sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
         ],
       },
     }),
@@ -64,7 +66,7 @@ export default defineConfig({
         manualChunks(id) {
           if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) return 'react'
           if (id.includes('node_modules/fuse.js/')) return 'fuse'
-          if (id.includes('node_modules/xlsx/')) return 'xlsx'
+          if (id.includes('node_modules/exceljs/')) return 'exceljs'
         },
       },
     },

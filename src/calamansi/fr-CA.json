@@ -348,7 +348,6 @@
   "onboarding.slide_2_body": "Utilisez Monter/Descendre pour classer les résultats par importance. Marquez un constat d'une étoile pour toujours l'afficher en premier. Épinglez un constat pour le maintenir en haut de toutes les recherches.",
   "onboarding.slide_3_heading": "Copier",
   "onboarding.slide_3_body": "Ouvrez un résultat pour voir son titre, le critère WCAG, la description et la correction suggérée. Ajoutez un préfixe d'emplacement à la description (p. ex. « Global : »). Utilisez l'assistance IA pour réviser n'importe quel champ à l'aide de vos notes, puis copiez les champs individuellement ou utilisez Tout copier pour tout récupérer d'un coup.",
-  "search.narrow_clear_aria": "Effacer le filtre d'affinement et réinitialiser",
   "search.narrow_button": "Affiner",
   "search.hint_platform_native_caveat": "La couverture des applications natives est plus limitée que celle du web.",
   "search.hint_ranking": "Utilisez Monter/Descendre pour ajuster le tri des résultats. Marquez un résultat d'une étoile pour toujours l'afficher en premier.",

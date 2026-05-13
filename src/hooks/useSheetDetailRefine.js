@@ -27,7 +27,7 @@ import { TYPEWRITER_TICK_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVI
  *   handleRefine: Function,
  * }}
  */
-export default function useDetailSheetRefine({
+export default function useSheetDetailRefine({
   finding,
   descText,
   fixText,

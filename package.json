@@ -19,11 +19,11 @@
     "@ulam/sili": "^0.1.0",
     "@ulam/taho": "^0.1.0",
     "@ulam/ube": "^0.1.2",
+    "exceljs": "^4.4.0",
     "fuse.js": "^7.0.0",
     "lucide-react": "^1.11.0",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5",
-    "xlsx": "^0.18.5"
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
     "@a11yfred/neighbor": "^1.0.4",

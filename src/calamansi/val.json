@@ -348,7 +348,6 @@
   "onboarding.slide_2_body": "Utilitza Puja/Baixa rang per ordenar els resultats per importància. Marca una troballa amb estrela perquè aparega sempre en primer lloc. Fixa una troballa perquè es mantinga a dalt en totes les cerques.",
   "onboarding.slide_3_heading": "Copia",
   "onboarding.slide_3_body": "Obri una troballa per veure el títol, el criteri WCAG, la descripció i la correcció suggerida. Afig un prefix de localització a la descripció (p. ex. «Global:»). Utilitza l'Assistent IA per revisar qualsevol camp amb les teues notes, després copia els camps individualment o utilitza Copia-ho tot per obtindre-ho tot d'una vegada.",
-  "search.narrow_clear_aria": "Esborra el filtre restringit i restableix",
   "search.narrow_button": "Restringeix",
   "search.hint_platform_native_caveat": "La cobertura d'aplicacions natives és més limitada que la web.",
   "search.hint_ranking": "Utilitza Puja/Baixa rang per ajustar l'ordenació dels resultats. Marca un resultat amb estrela perquè aparega sempre en primer lloc.",

@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import Panel from './ui/PanelReact.jsx'

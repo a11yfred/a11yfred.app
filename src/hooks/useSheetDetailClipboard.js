@@ -46,7 +46,7 @@ import { isSignificantlyChanged } from '@ulam/calamansi'
  *   copyTitle: Function, copyPrimarySc: Function, copyRelatedSc: Function,
  * }}
  */
-export default function useDetailSheetClipboard({
+export default function useSheetDetailClipboard({
   finding,
   descText,
   fixText,

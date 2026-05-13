@@ -15,7 +15,7 @@ import InfoBox from './ui/InfoBox.jsx'
 import TileAd from './TileAd.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
-import './A11yListResult.css'
+import './A11yListResults.css'
 
 function triggerButtonAnimation(btn, id, setAnimating) {
   btn.classList.remove('animating')
@@ -44,7 +44,7 @@ export function PinnedSection({ findings, onClearPins, headingRef, showRanking =
           </Button>
         )}
       </div>
-      <A11yListResult
+      <A11yListResults
         {...listProps}
         results={findings}
         selected={null}
@@ -58,7 +58,7 @@ export function PinnedSection({ findings, onClearPins, headingRef, showRanking =
   )
 }
 
-export default function A11yListResult({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange, wcagFilter = null, defaultWcagFilter = null, onOpenSettings }) {
+export default function A11yListResults({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange, wcagFilter = null, defaultWcagFilter = null, onOpenSettings }) {
   const t = useT()
   const platformLabels = {
     all:      t('settings.platform_all'),

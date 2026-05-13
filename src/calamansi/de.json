@@ -349,7 +349,6 @@
   "onboarding.slide_2_heading": "Ergebnisse rangieren",
   "onboarding.slide_2_body": "Verwende Rang Hoch/Runter, um Ergebnisse nach Wichtigkeit zu sortieren. Markiere einen Befund mit einem Stern, damit er immer zuerst angezeigt wird. Hefte einen Befund an, um ihn bei allen Suchen ganz oben zu halten.",
   "onboarding.slide_3_heading": "Kopieren",
-  "search.narrow_clear_aria": "Eingrenzungsfilter löschen und zurücksetzen",
   "search.narrow_button": "Einschränken",
   "search.hint_platform_native_caveat": "Die Abdeckung nativer Apps ist eingeschränkter als bei Web-Apps.",
   "search.hint_ranking": "Verwenden Sie Rang erhöhen/senken, um die Sortierung der Ergebnisse anzupassen. Markieren Sie ein Ergebnis mit einem Stern, damit es immer zuerst angezeigt wird.",

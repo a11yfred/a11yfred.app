@@ -348,7 +348,6 @@
   "onboarding.slide_2_body": "Use Subir/Descer Classificação para ordenar os resultados por importância. Marque um achado com estrela para exibi-lo sempre primeiro. Fixe um achado para mantê-lo no topo em todas as buscas.",
   "onboarding.slide_3_heading": "Copiar",
   "onboarding.slide_3_body": "Abra um achado para ver seu título, critério WCAG, descrição e correção sugerida. Adicione um prefixo de localização à descrição (ex.: 'Global:'). Use o AI Assist para revisar qualquer campo com suas anotações, depois copie os campos individualmente ou use Copiar Tudo para pegar tudo de uma vez.",
-  "search.narrow_clear_aria": "Limpar filtro de refinamento e redefinir",
   "search.narrow_button": "Refinar",
   "search.hint_platform_native_caveat": "A cobertura de apps nativos é mais limitada do que a web.",
   "search.hint_ranking": "Use Subir/Descer Classificação para ajustar a ordenação dos resultados. Marque um resultado com estrela para exibi-lo sempre primeiro.",

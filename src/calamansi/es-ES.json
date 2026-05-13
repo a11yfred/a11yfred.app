@@ -348,7 +348,6 @@
   "onboarding.slide_2_body": "Usa Subir/Bajar posición para ordenar los resultados por importancia. Marca un hallazgo con estrella para mostrarlo siempre primero. Fija un hallazgo para mantenerlo en la parte superior en todas las búsquedas.",
   "onboarding.slide_3_heading": "Copiar",
   "onboarding.slide_3_body": "Abre un hallazgo para ver su título, criterio WCAG, descripción y corrección sugerida. Añade un prefijo de ubicación a la descripción (p. ej., 'Global:'). Usa IA Assist para revisar cualquier campo con tus notas y, a continuación, copia los campos individualmente o usa Copiar todo para obtenerlos de una vez.",
-  "search.narrow_clear_aria": "Borrar filtro de acotación y restablecer",
   "search.narrow_button": "Acotar",
   "search.hint_platform_native_caveat": "La cobertura de aplicaciones nativas es más limitada que la web.",
   "search.hint_ranking": "Usa Subir/Bajar posición para ajustar el orden de los resultados. Marca un resultado con estrella para mostrarlo siempre primero.",
