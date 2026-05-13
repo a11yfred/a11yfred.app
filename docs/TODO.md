@@ -50,7 +50,7 @@ Ordered high-value + low-effort first within each section.
 
 ### Data & Content
 
-- [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` ,  Add 4 entries: Dynamic Type sizing, accessibility labels, announcements, custom actions.
+- [x] **Add native-specific corpus entries** `[corpus]` `[phase2]` ,  28 native/both entries in corpus (ACC-017, ACC-028, ACC-031, ACC-044, ACC-065, ACC-068, ACC-070, ACC-090, ACC-100, ACC-105, and 18 more). Covers Dynamic Type, accessibility labels, announcements, and custom actions.
 
 ### Export & Sharing
 
