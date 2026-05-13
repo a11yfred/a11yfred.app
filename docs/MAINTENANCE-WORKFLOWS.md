@@ -36,7 +36,7 @@ All five severity badge pairs must pass 4.5:1 contrast ratio between text and ba
 | Low | `--severity-low-text` on `--severity-low-bg` | 4.5:1+ |
 | Best Practice | `--severity-best-practice-text` on `--severity-best-practice-bg` | 4.5:1+ |
 
-Last verified: May 9, 2026 -- all pass (Critical 6.2:1, High 5.8:1, Medium 5.66:1, Low 5.44:1, Best Practice 5.26:1). Re-verify after any token color changes.
+Last verified May 9, 2026. All pass: Critical 6.2:1, High 5.8:1, Medium 5.66:1, Low 5.44:1, Best Practice 5.26:1. Re-verify after any token color changes.
 
 Also verify `result-item__desc` on sponsored tiles: must use `var(--text-body)` override, not the default muted color, to pass against the purple gradient badge background.
 
@@ -50,7 +50,7 @@ Look for repeated inline style patterns that could move to utility classes. Thre
 
 ### Unused Tokens
 
-Check `src/index.css` (custom properties section) for tokens no longer referenced anywhere in `src/index.css` or JSX. Distinguish between truly dead tokens and tokens reserved for planned features. Check TODO for placeholders like `--duration-slow`, `--ease-in`, `--mono` -- do not remove without verifying the feature is cancelled.
+Check `src/index.css` (custom properties section) for tokens no longer referenced anywhere in `src/index.css` or JSX. Distinguish between truly dead tokens and tokens reserved for planned features. Check TODO for placeholders like `--duration-slow`, `--ease-in`, `--mono`. Do not remove without verifying the feature is cancelled.
 
 ### SCSS Evaluation
 
@@ -130,13 +130,13 @@ Current keys:
 
 - `theme`, `language`, `liveSearch`, `platform`, `ai_provider`, `wcagFilter`
 - `recentFindings`, `userFindings`, `userOverrides`, `pendingContributions`, `pinnedResults`
-- `coSelectionPairs` -- co-selection behavioral signal pairs `{ "id1|id2": count }`
+- `coSelectionPairs`: co-selection behavioral signal pairs `{ "id1|id2": count }`
 - `apikey_<provider>` (one per configured provider: anthropic, openai, google, azure)
 
 `sessionStorage`:
 
 - `lastSelectedId`
-- `sessionCopiedIds` -- IDs copied in the current session (cleared on tab close)
+- `sessionCopiedIds`: IDs copied in the current session (cleared on tab close)
 
 Verify the count in SettingsPanel privacy disclosure matches reality.
 
@@ -340,9 +340,9 @@ Note all `en.json` key additions or changes in `docs/UPDATES.md` under the sessi
 
 Run after deferred translate sessions or following major content changes:
 
-**Step 1 -- Parity (no API needed):** Compare `es.json` keys against all other locale files. Add missing keys with English value as placeholder. Commit: `i18n: add missing keys as English placeholders`.
+**Step 1: Parity (no API needed).** Compare `es.json` keys against all other locale files. Add missing keys with English value as placeholder. Commit: `i18n: add missing keys as English placeholders`.
 
-**Step 2 -- Retranslate stale keys:** Find keys whose English source changed since `scripts/en-snapshot.json` was last written. Run:
+**Step 2: Retranslate stale keys.** Find keys whose English source changed since `scripts/en-snapshot.json` was last written. Run:
 
 ```bash
 ANTHROPIC_API_KEY=... node scripts/translate-missing.mjs
@@ -350,7 +350,7 @@ ANTHROPIC_API_KEY=... node scripts/translate-missing.mjs
 
 Commit: `i18n: retranslate stale keys, English source changed`.
 
-**Step 3 -- Translate placeholders:** Find all values identical to their `en.json` counterpart. Run the same script:
+**Step 3: Translate placeholders.** Find all values identical to their `en.json` counterpart. Run the same script:
 
 ```bash
 ANTHROPIC_API_KEY=... node scripts/translate-missing.mjs

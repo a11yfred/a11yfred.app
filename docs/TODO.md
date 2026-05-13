@@ -27,7 +27,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 **Day 1 for Phase 1 public release** (ship with these):
 
-- [ ] **Corpus translations incomplete** `[i18n]` `[launch-blocker]` ,  8 language overlays (de, es, fr, ja, ko, pt-BR, tl, zh) cover 54 of 106 corpus entries -- 52 entries fall back to English for non-English users. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill the gaps. Requires an Anthropic API key.
+- [ ] **Corpus translations incomplete** `[i18n]` `[launch-blocker]` ,  8 language overlays (de, es, fr, ja, ko, pt-BR, tl, zh) cover 54 of 106 corpus entries. The remaining 52 fall back to English for non-English users. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill the gaps. Requires an Anthropic API key.
 - [ ] **Manual testing before launch** `[qa]` `[manual]` ,  Smoke test core flows: search/select/refine/copy on desktop and mobile (iOS Safari, Android Chrome); test all locales (en, ja, ko, es, fr, de, zh); test keyboard nav (Tab, Enter, Escape); test screen reader (NVDA, JAWS, VoiceOver); verify offline mode works; test on slow network (throttle to 3G).
 - [ ] **Production domain configured** `[infra]` `[manual]` ,  Confirm domain, configure DNS, enable HTTPS, update canonical URL.
 
@@ -193,15 +193,15 @@ Building distributable installers requires `electron-builder` (already a dev dep
 ### Launch Readiness
 
 - [ ] **Content audit** `[qa]` `[manual]` `[launch-blocker]` ,  Full editorial pass: all visible UI strings, corpus entry titles and descriptions, About panel, Help panel, Settings labels. Check for placeholder text, inconsistent terminology, em-dashes, and ESL-unfriendly phrasing.
-- [x] **Code quality audit** `[code]` `[manual]` `[launch-blocker]` ,  ESLint/Stylelint/Markdownlint all clean (May 13). Fixed Sheet.jsx click-without-keyboard lint error; removed stale eslint-disable directive in App.jsx. All console.* calls are DEV-gated. i18n translation TODOs remain in locale files -- not production paths.
-- [x] **Security audit** `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13: all localStorage keys inventoried and documented in PRIVACY.md; no keys logged to console (all console.* are DEV-gated); all 3 outbound `target="_blank"` links have `rel="noreferrer"`; CSP set via `<meta http-equiv>` in index.html (GitHub Pages cannot set response headers; `frame-ancestors` is an accepted omission). `npm audit` has 2 high-severity xlsx advisories (prototype pollution, ReDoS) -- no fix available upstream; xlsx is used only for CSV/Excel export in the admin panel (non-public feature), acceptable risk at launch.
+- [x] **Code quality audit** `[code]` `[manual]` `[launch-blocker]` ,  ESLint/Stylelint/Markdownlint all clean (May 13). Fixed Sheet.jsx click-without-keyboard lint error; removed stale eslint-disable directive in App.jsx. All console.* calls are DEV-gated. i18n translation TODOs remain in locale files, not production paths.
+- [x] **Security audit** `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13: all localStorage keys inventoried and documented in PRIVACY.md; no keys logged to console (all console.* are DEV-gated); all 3 outbound `target="_blank"` links have `rel="noreferrer"`; CSP set via `<meta http-equiv>` in index.html (GitHub Pages cannot set response headers; `frame-ancestors` is an accepted omission). `npm audit` has 2 high-severity xlsx advisories (prototype pollution, ReDoS). No fix available upstream. xlsx is used only for CSV/Excel export in the admin panel (non-public feature), acceptable risk at launch.
 - [ ] **Accessibility audit** `[a11y]` `[manual]` `[launch-blocker]` ,  axe-core zero violations, full keyboard walkthrough, screen reader test (NVDA+Firefox, VoiceOver+Safari), 200%/400% zoom, prefers-reduced-motion, prefers-contrast, text spacing bookmarklet.
 - [ ] **Functional audit** `[qa]` `[manual]` `[launch-blocker]` ,  Test all core flows end-to-end: search, select, copy, refine, reset, settings, platform filter, WCAG filter, language switch, live search toggle, pinning, ranking, narrow results, hash navigation, PWA install.
 - [ ] **Mobile device testing** `[qa]` `[manual]` `[launch-blocker]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, and portrait/landscape layouts.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  Verify domain ownership in Search Console, submit sitemap.xml, confirm indexing is enabled (remove noindex), monitor for crawl errors post-launch.
-- [x] **Expert source attribution audit** `[corpus]` `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13. All credited sources (Roselli, O'Hara, Watson, Lauke, Faulkner, TPGi, Deque, WebAIM, W3C, appt.org) are cited via links to their own published public articles -- standard attribution practice, no permission required. About panel sources list reflects only organizations with public reference material.
-- [ ] **OG image** `[seo]` `[infra]` `[launch-blocker]` ,  Create `public/og-image.png` (1200×630). Referenced by `og:image` and `twitter:image` in index.html -- returns 404 until this file exists. Create after the production domain is live so the screenshot reflects the real URL.
-- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  GDPR/privacy/terms, ~~SEO tags~~ (done -- flip noindex when domain is live), OG image, Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
+- [x] **Expert source attribution audit** `[corpus]` `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13. All credited sources (Roselli, O'Hara, Watson, Lauke, Faulkner, TPGi, Deque, WebAIM, W3C, appt.org) are cited via links to their own published public articles. Standard attribution practice, no permission required. About panel sources list reflects only organizations with public reference material.
+- [ ] **OG image** `[seo]` `[infra]` `[launch-blocker]` ,  Create `public/og-image.png` (1200×630). Referenced by `og:image` and `twitter:image` in index.html. Returns 404 until this file exists. Create after the production domain is live so the screenshot reflects the real URL.
+- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  GDPR/privacy/terms, ~~SEO tags~~ (done, flip noindex when domain is live), OG image, Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
 - [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
 
 ---
@@ -213,7 +213,7 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ Phase 1 complete (May 6)
 - ✅ Public corpus fully sourced and WCAG-mapped
 - ✅ All linters passing (ESLint 9.x, Stylelint, Markdownlint)
-- ✅ Offline-first support (Service Worker, PWA manifest) -- implemented May 13 via vite-plugin-pwa; workbox precaches app shell + all assets; Google Fonts cached at runtime
+- ✅ Offline-first support (Service Worker, PWA manifest). Implemented May 13 via vite-plugin-pwa. Workbox precaches app shell and all assets. Google Fonts cached at runtime.
 - ✅ Accessibility baseline (axe-core, WCAG 2.2 AA, keyboard + screen reader tested)
 - ✅ Documentation (README, CONTRIBUTING, SECURITY, DEPLOYING, CHANGELOG, UPDATES)
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
