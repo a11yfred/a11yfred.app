@@ -6,14 +6,17 @@ The React Query DevTools of accessibility. Drop it into any project, see focus, 
 
 ## Packages
 
-rogers is one of four ulam packages:
+rogers is an @a11yfred tool, complementary to the ulam framework:
 
 ```text
-ulam
-├── @ulam/ube          sweet  : UI, components, CSS, theming, router, announce
-├── @ulam/calamansi    sour   : i18n, hooks, utilities, logic
-├── @a11yfred/rogers               : a11y debug panel, vanilla-first  ← you are here
-└── @ulam/sawsawan     bridge : wires the three together
+@a11yfred
+├── @a11yfred/rogers   : a11y debug panel, vanilla-first  ← you are here
+└── @a11yfred/neighbor : ESLint + Stylelint a11y rules
+
+ulam (separate framework, same author)
+├── @ulam/ube          : UI, components, CSS, theming, router, announce
+├── @ulam/calamansi    : i18n, hooks, utilities, logic
+└── @ulam/sawsawan     : wires the three together
 ```
 
 ## Architecture
