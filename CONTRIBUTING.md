@@ -44,7 +44,7 @@ The `main` branch is protected. Direct pushes are blocked by a pre-push hook. Al
 ### Branch Types
 
 - **main** — Production code (protected, PR-only)
-- **feature/\*** — Active development (ulam, chrome-extension, firefox-extension, electron-app)
+- **feature/\*** — Active development (chrome-extension, firefox-extension, electron-app, etc.)
 
 ### Syncing Feature Branches
 
@@ -55,12 +55,6 @@ git checkout feature/your-feature
 git merge main  # Bring in latest main changes
 git push origin feature/your-feature
 ```
-
-**Special rule for `feature/ulam`:**
-
-The ulam branch tracks the ulam framework boundary — `src/components/ui/`, `src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, `src/halohalo/`, and token CSS files. It stays in sync with main. The branch exists to mark what will become the standalone `ulam` monorepo at fork time. Note: `tools/rogers/` and `tools/neighbor/` are dev tooling, not framework packages, so they are not included in the ulam boundary.
-
-For the full sync workflow, see `ULAM-SYNC.md`.
 
 ## Pre-Push Hook
 
@@ -105,7 +99,7 @@ git commit -m "WIP"
 
 ## Code Style
 
-- Use TypeScript or JSX for React components
+- Use JSX for React components (project is plain JavaScript, no TypeScript)
 - Use CSS custom properties (tokens) — no hardcoded colors/spacing
 - Include accessibility attributes (aria-label, role, etc.)
 - Test keyboard navigation and screen reader support
@@ -122,5 +116,5 @@ git commit -m "WIP"
 ## Questions?
 
 - For UI library questions, see `src/components/ui/README.md`
-- For sync workflow, see `UI-LIBRARY-SYNC.md`
-- For maintenance, see `MAINTENANCE.md` (main branch only)
+- For maintenance, see `MAINTENANCE.md`
+- For deployment, see `docs/DEPLOYING.md`

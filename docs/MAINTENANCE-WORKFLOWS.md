@@ -176,7 +176,7 @@ Check `package.json` against actual `import` statements in `src/`. Remove packag
 
 See [DEPLOYING.md](DEPLOYING.md) for full deployment target setup and switching instructions.
 
-**Current status (2026-04-27):** All auto-deploys suspended. `netlify.toml` has `ignore = "exit 0"`. To re-enable, remove that line.
+**Current host:** GitHub Pages. Auto-deploys on every push to `main` via `.github/workflows/deploy-pages.yml`. See [DEPLOYING.md](DEPLOYING.md) for setup and custom domain instructions.
 
 ### Build Check
 
@@ -388,7 +388,7 @@ Apply when adding keys or updating existing ones.
 
 ## Plugin Workflows
 
-Framework packages (`src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, `src/halohalo/`) and dev tools (`tools/rogers/`, `tools/neighbor/`) are designed to be portable.
+Framework packages (`src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, `src/halohalo/`) are designed to be portable. Dev tools (`@a11yfred/rogers`, `@a11yfred/neighbor`) are published npm packages.
 
 ### Import Isolation
 
@@ -408,7 +408,7 @@ List any non-React external packages imported by plugins (currently: `lucide-rea
 
 ### README Accuracy
 
-Verify READMEs in `src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, `src/halohalo/`, `tools/rogers/`, and `tools/neighbor/` match current exports. Update if hooks or components were added, renamed, or removed.
+Verify READMEs in `src/taho/`, `src/sili/`, `src/calamansi/`, `src/sawsawan/`, and `src/halohalo/` match current exports. Update if hooks or components were added, renamed, or removed.
 
 ---
 
