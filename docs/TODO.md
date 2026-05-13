@@ -146,7 +146,7 @@ Building distributable installers requires `electron-builder` (already a dev dep
 
 ### Privacy & Security
 
-- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[phase3]` `[launch-blocker]` ,  Finalize GDPR-DRAFT.md, move to GDPR.md, publish before launch, cover localStorage/API/tracking/contributions.
+- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[phase3]` `[launch-blocker]` ,  ~~Finalize GDPR-DRAFT.md~~ → published as docs/PRIVACY.md (May 13). Update GitHub repo URL in URL_PRIVACY_POLICY constant once repo is public.
 
 ---
 
@@ -170,7 +170,7 @@ Building distributable installers requires `electron-builder` (already a dev dep
 ### Search & Visibility
 
 - [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain, submit sitemap, monitor indexing.
-- [ ] **Update canonical URL to production domain** `[seo]` `[code]` ,  Confirm domain, update canonical/OG/Twitter URLs.
+- [ ] **Update canonical URL to production domain** `[seo]` `[code]` ,  Confirm domain, update canonical/OG/Twitter URLs in index.html once domain is live; currently placeholder `a11yfred.app`.
 
 ### Analytics & Monitoring
 
@@ -187,14 +187,14 @@ Building distributable installers requires `electron-builder` (already a dev dep
 ### Launch Readiness
 
 - [ ] **Content audit** `[qa]` `[manual]` `[launch-blocker]` ,  Full editorial pass: all visible UI strings, corpus entry titles and descriptions, About panel, Help panel, Settings labels. Check for placeholder text, inconsistent terminology, em-dashes, and ESL-unfriendly phrasing.
-- [ ] **Code quality audit** `[code]` `[manual]` `[launch-blocker]` ,  Full pass: ESLint/Stylelint/Markdownlint all clean, no dead code, no unused imports, no TODO/FIXME left in production paths, bundle size within target.
-- [ ] **Security audit** `[privacy]` `[manual]` `[launch-blocker]` ,  Review all localStorage keys match privacy disclosure, no keys logged to console, all outbound links have `rel="noreferrer"`, CSP headers correct, `npm audit` has no unresolved high/critical.
+- [x] **Code quality audit** `[code]` `[manual]` `[launch-blocker]` ,  ESLint/Stylelint/Markdownlint all clean (May 13). Fixed Sheet.jsx click-without-keyboard lint error; removed stale eslint-disable directive in App.jsx. All console.* calls are DEV-gated. i18n translation TODOs remain in locale files — not production paths.
+- [x] **Security audit** `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13: all localStorage keys inventoried and documented in PRIVACY.md; no keys logged to console (all console.* are DEV-gated); all 3 outbound `target="_blank"` links have `rel="noreferrer"`; CSP in netlify.toml/vercel.json is correct. `npm audit` has 2 high-severity xlsx advisories (prototype pollution, ReDoS) — no fix available upstream; xlsx is used only for CSV/Excel export in the admin panel (non-public feature), acceptable risk at launch.
 - [ ] **Accessibility audit** `[a11y]` `[manual]` `[launch-blocker]` ,  axe-core zero violations, full keyboard walkthrough, screen reader test (NVDA+Firefox, VoiceOver+Safari), 200%/400% zoom, prefers-reduced-motion, prefers-contrast, text spacing bookmarklet.
 - [ ] **Functional audit** `[qa]` `[manual]` `[launch-blocker]` ,  Test all core flows end-to-end: search, select, copy, refine, reset, settings, platform filter, WCAG filter, language switch, live search toggle, pinning, ranking, narrow results, hash navigation, PWA install.
 - [ ] **Mobile device testing** `[qa]` `[manual]` `[launch-blocker]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, and portrait/landscape layouts.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  Verify domain ownership in Search Console, submit sitemap.xml, confirm indexing is enabled (remove noindex), monitor for crawl errors post-launch.
 - [ ] **Expert source attribution audit** `[corpus]` `[privacy]` `[manual]` `[launch-blocker]` ,  Review all corpus entries that cite expert blogs (Roselli, O'Hara, Bailey, Eggert, Sutton, Pickering, TPGi, Deque, WebAIM, appt.org, etc.). Omit or anonymize specific expert attribution in any public-facing source fields until written permission is obtained from each author. Verify the About panel sources list reflects only sources with clear public licensing or explicit permission.
-- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  GDPR/privacy/terms, SEO tags, Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
+- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  GDPR/privacy/terms, ~~SEO tags~~ (done — flip noindex when domain is live), Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
 - [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
 
 ---
@@ -240,4 +240,8 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ A11yPanelSettings bad export fixed; useCompletion/useProviderConfig refactored to useState lazy init (May 12)
 - ✅ prefers-reduced-motion and prefers-reduced-transparency fallback blocks added to all UI components (May 12)
 - ✅ neighbor stylelint rule updated to suppress when selector has existing prefers override (May 12)
+- ✅ SEO meta tags updated: duplicate robots tag removed, description copy refreshed, sitemap lastmod bumped to 2026-05-13 (May 13)
+- ✅ Code quality audit: all three linters clean, Sheet.jsx keyboard handler added, stale eslint-disable removed (May 13)
+- ✅ Security audit: localStorage keys documented, console leaks verified DEV-only, all outbound links have rel="noreferrer", CSP correct, xlsx vulns noted as accepted risk (May 13)
+- ✅ Privacy policy: GDPR-DRAFT.md finalized as docs/PRIVACY.md, linked from in-app Privacy & Storage panel (May 13)
 - 💤 Deferred: SCSS migration, corpus pre-translation, Compare mode, Ko-fi donations, Ko-fi a11y patch, GitHub Sponsors

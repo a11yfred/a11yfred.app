@@ -23,7 +23,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@a11yfred/neighbor": "^0.1.0",
+    "@a11yfred/neighbor": "^1.0.3",
     "@a11yfred/rogers": "^0.1.0",
     "@axe-core/react": "^4.11.2",
     "@eslint/js": "^9.0.0",

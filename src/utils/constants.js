@@ -84,6 +84,7 @@ export const FIESTA_GRAD_RANGE        = 80
 export const FIESTA_GRAD_MIN          = 10
 
 export const URL_GITHUB_REPO      = 'https://github.com/a11yfred/a11yfred'
+export const URL_PRIVACY_POLICY   = 'https://github.com/a11yfred/a11yfred/blob/main/docs/PRIVACY.md'
 export const URL_GITHUB_SPONSORS  = 'https://github.com/sponsors/mikeyil'
 export const URL_LINKEDIN         = 'https://www.linkedin.com/in/mikeyil'
 export const URL_PERSONAL_SITE    = 'https://www.mikey.fyi?ref=a11yfred'

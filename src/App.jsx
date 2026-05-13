@@ -661,7 +661,7 @@ function AppContent({
       wasNotFoundRef.current = false
       setTimeout(() => returnFocus(h1LinkRef.current ?? h1Ref.current), 0)
     }
-  }, [isNotFound]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isNotFound])
 
   useEffect(() => {
     if (!findingIdFromRoute || dataLoading || allFindings.length === 0) return

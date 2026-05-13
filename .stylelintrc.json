@@ -2,8 +2,8 @@
   "extends": ["stylelint-config-standard"],
   "plugins": ["@a11yfred/neighbor"],
   "rules": {
-    "ulam/user-preferences": true,
-    "ulam/no-outline-none": true,
+    "neighbor/user-preferences": true,
+    "neighbor/no-outline-none": true,
     "custom-property-empty-line-before": null,
     "comment-empty-line-before": null,
     "alpha-value-notation": null,

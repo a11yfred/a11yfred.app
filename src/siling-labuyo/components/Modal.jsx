@@ -26,7 +26,6 @@ export default function ModalShell({ open, onClose, heading = 'Information', hea
         aria-hidden="true"
         data-overlay-backdrop
       />
-      { /* eslint-disable-next-line @a11yfred/neighbor/no-dialog-without-close -- action buttons always include a close/OK button */ }
       <div
         ref={panelRef}
         className={`modal-panel${open ? ' is-open' : ''}`}

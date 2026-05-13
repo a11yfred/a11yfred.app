@@ -160,6 +160,7 @@ export default function Sheet({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
         onClick={collapsed ? () => onCollapse?.(false) : undefined}
+        onKeyDown={collapsed ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onCollapse?.(false) } } : undefined}
         inert={!open || undefined}
       >
         <div ref={chromeRef} className="sheet-chrome">

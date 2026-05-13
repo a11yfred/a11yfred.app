@@ -11,7 +11,7 @@ import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
 import { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '../halohalo/index.js'
 import { applyTheme } from '../hooks/useThemeManager.js'
-import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
+import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER, URL_PRIVACY_POLICY } from '../utils/constants.js'
 import { setStorage, removeStorage } from '../utils/storage.js'
 import './A11yPanelSettings.css'
 
@@ -698,6 +698,7 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
         <p>{t('settings.privacy_body_2')}</p>
         <h3 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h3>
         <p>{t('settings.privacy_body_translations')}</p>
+        <p><a href={URL_PRIVACY_POLICY} target="_blank" rel="noreferrer">{t('settings.privacy_full_policy')}<span className="sr-only"> (opens in new tab)</span></a></p>
         <div className="detail-actions-end">
           <button className="btn btn--primary detail-close-btn" onClick={() => navigate('/settings')}>
             {t('common.close')}

@@ -65,7 +65,7 @@ export default function InputSearch({
         'search-input-wrap',
         liveSearch ? 'search-input-wrap--live' : '',
       ].filter(Boolean).join(' ')}>
-        {/* eslint-disable @a11yfred/neighbor/no-placeholder-only -- labeled via parent <form role="search" aria-label> */}
+        {/* eslint-disable @a11yfred/neighbor/no-placeholder-only -- labeled via parent <form role="search" aria-label>; fixed in neighbor, remove after publishing */}
         <input
           ref={ref}
           id={id}
