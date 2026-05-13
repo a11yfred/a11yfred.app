@@ -6,10 +6,10 @@ Recurring checks before releases or on a regular schedule. **See [MAINTENANCE-CH
 
 **Quick Links:**
 
-- [MAINTENANCE-CHECKLIST.md](MAINTENANCE-CHECKLIST.md) — Concise checkbox items only
-- [MAINTENANCE-WORKFLOWS.md](MAINTENANCE-WORKFLOWS.md) — Detailed guidance for each section
-- [i18n-WORKFLOW.md](i18n-WORKFLOW.md) — Complete translation procedures
-- [DEPLOYING.md](DEPLOYING.md) — Deployment target setup and switching
+- [MAINTENANCE-CHECKLIST.md](MAINTENANCE-CHECKLIST.md) -- Concise checkbox items only
+- [MAINTENANCE-WORKFLOWS.md](MAINTENANCE-WORKFLOWS.md) -- Detailed guidance for each section
+- [i18n-WORKFLOW.md](i18n-WORKFLOW.md) -- Complete translation procedures
+- [DEPLOYING.md](DEPLOYING.md) -- Deployment target setup and switching
 
 ---
 

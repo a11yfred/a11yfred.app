@@ -61,7 +61,7 @@ If you choose to use the AI Assist feature:
 - When you request a revision, the current finding's description and/or remediation text is sent directly from your browser to the AI provider's API. No other personal data is included.
 - The text you send is subject to the privacy policy of whichever AI provider you choose.
 
-**A11yFred never sees your API key or the content of your requests.** All API calls go directly from your browser to the provider — there is no intermediate server.
+**A11yFred never sees your API key or the content of your requests.** All API calls go directly from your browser to the provider -- there is no intermediate server.
 
 Relevant provider privacy policies:
 

@@ -28,8 +28,8 @@ git push origin main
 
 1. Add a `CNAME` file to the `public/` directory containing your domain (e.g. `a11yfred.app`).
 2. Configure DNS: add a CNAME record pointing your domain to `a11yfred.github.io`.
-3. In GitHub: **Settings → Pages → Custom domain** — enter your domain and enable HTTPS.
-4. `vite.config.js` `base` stays as `'/'` — no change needed for a root domain.
+3. In GitHub: **Settings → Pages → Custom domain** -- enter your domain and enable HTTPS.
+4. `vite.config.js` `base` stays as `'/'` -- no change needed for a root domain.
 
 ---
 
@@ -37,7 +37,7 @@ git push origin main
 
 GitHub Pages does not support custom response headers. Security headers are set via
 `<meta http-equiv>` tags in `index.html`. Note: `frame-ancestors` (clickjacking
-protection) cannot be set via meta tag — it requires a response header. This is an
+protection) cannot be set via meta tag -- it requires a response header. This is an
 accepted limitation of GitHub Pages hosting.
 
 ---
@@ -46,5 +46,5 @@ accepted limitation of GitHub Pages hosting.
 
 Both were previously configured (`netlify.toml`, `vercel.json`) and have been removed.
 Netlify and Vercel add value for server functions, edge middleware, and branch preview
-deploys — none of which A11yFred currently needs. Deferred indefinitely; revisit if
+deploys -- none of which A11yFred currently needs. Deferred indefinitely; revisit if
 those requirements arise.

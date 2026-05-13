@@ -43,8 +43,8 @@ The `main` branch is protected. Direct pushes are blocked by a pre-push hook. Al
 
 ### Branch Types
 
-- **main** — Production code (protected, PR-only)
-- **feature/\*** — Active development (chrome-extension, firefox-extension, electron-app, etc.)
+- **main** -- Production code (protected, PR-only)
+- **feature/\*** -- Active development (chrome-extension, firefox-extension, electron-app, etc.)
 
 ### Syncing Feature Branches
 
@@ -100,8 +100,8 @@ git commit -m "WIP"
 ## Code Style
 
 - Use JSX for React components (project is plain JavaScript, no TypeScript)
-- Use CSS custom properties (tokens) — no hardcoded colors/spacing
-- All UI changes must meet or exceed WCAG 2.2 Level AA — keyboard operable, screen reader compatible, sufficient contrast, reduced motion respected
+- Use CSS custom properties (tokens) -- no hardcoded colors/spacing
+- All UI changes must meet or exceed WCAG 2.2 Level AA -- keyboard operable, screen reader compatible, sufficient contrast, reduced motion respected
 
 ## Before Pushing
 

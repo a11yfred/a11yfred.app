@@ -34,19 +34,19 @@ npm run build      # production build
 
 ```text
 src/
-├── data/           — public corpus (ACC prefix), legacy corpus (ATH prefix, admin-only)
-├── services/       — data layer, AI integration, localStorage utilities
-├── hooks/          — search, ratings, pinning, user findings, overrides
-├── components/     — UI components; ui/ has reusable primitives
-├── calamansi/      — i18n, hooks, shared logic
-├── halohalo/       — AI provider abstraction
-├── sawsawan/       — framework wiring
-├── sili/           — focus management utilities
-├── siling-labuyo/  — hash router, route focus
-├── siling-mahaba/  — route focus manager
-├── taho/           — live region / announce utilities
-├── taho-bayabas/   — Announcer component
-└── taho-pandan/    — route announcer
+├── data/           -- public corpus (ACC prefix), legacy corpus (ATH prefix, admin-only)
+├── services/       -- data layer, AI integration, localStorage utilities
+├── hooks/          -- search, ratings, pinning, user findings, overrides
+├── components/     -- UI components; ui/ has reusable primitives
+├── calamansi/      -- i18n, hooks, shared logic
+├── halohalo/       -- AI provider abstraction
+├── sawsawan/       -- framework wiring
+├── sili/           -- focus management utilities
+├── siling-labuyo/  -- hash router, route focus
+├── siling-mahaba/  -- route focus manager
+├── taho/           -- live region / announce utilities
+├── taho-bayabas/   -- Announcer component
+└── taho-pandan/    -- route announcer
 ```
 
 ---
