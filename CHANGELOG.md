@@ -4,14 +4,14 @@ All notable changes to A11yFred are documented here.
 
 ## May 12, 2026
 
-### Lint clean pass — zero JS errors, zero CSS errors, zero MD errors
+### Lint clean pass (zero JS errors, zero CSS errors, zero MD errors)
 
 **JS fixes:**
 
-- `ulam-rules.js`: Added `useCallback` and `useMemo` to `SAFE_PARENT_CALLS` — eliminates false positives on `no-announce-in-render` for callbacks inside `useCallback`
+- `ulam-rules.js`: Added `useCallback` and `useMemo` to `SAFE_PARENT_CALLS`; eliminates false positives on `no-announce-in-render` for callbacks inside `useCallback`
 - `ulam-rules.js`: Fixed traversal logic so nested setState callbacks inside JSX event handlers no longer bail out early
-- `A11yPanelSettings.jsx`: Fixed undefined export — `export default A11yPanelSettings` now resolves correctly via `const A11yPanelSettings = SettingsPanel`
-- `useCompletion.js` / `useProviderConfig.js`: Replaced `useRef` lazy init pattern with `useState` initializer function — eliminates `react-hooks/refs` errors (reading `ref.current` during render)
+- `A11yPanelSettings.jsx`: Fixed undefined export (`export default A11yPanelSettings` now resolves correctly via `const A11yPanelSettings = SettingsPanel`)
+- `useCompletion.js` / `useProviderConfig.js`: Replaced `useRef` lazy init pattern with `useState` initializer function; eliminates `react-hooks/refs` errors (reading `ref.current` during render)
 - `UlamMenu.jsx`: Escaped `app's` apostrophe as `app&apos;s`
 - `useFindingSearch.js`: Removed stale `eslint-disable react-hooks/exhaustive-deps` comment
 - `findingSearchService.js`: Renamed unused `searchKey` parameter to `_searchKey`
@@ -28,7 +28,7 @@ All notable changes to A11yFred are documented here.
 
 **Stylelint rule improvement:**
 
-- `neighbor-stylelint.mjs`: `ulam/user-preferences` rule now scans for existing prefers overrides in the same file and suppresses warnings when a selector is already covered — eliminates false positives when proper fallback blocks exist
+- `neighbor-stylelint.mjs`: `ulam/user-preferences` rule now scans for existing prefers overrides in the same file and suppresses warnings when a selector is already covered; eliminates false positives when proper fallback blocks exist
 
 **Markdown fixes:**
 
@@ -42,11 +42,11 @@ All notable changes to A11yFred are documented here.
 
 Extracted and organized the `@ulam` monorepo packages alongside the app:
 
-- `@ulam/halohalo` — AI connectivity layer (provider config, completions, connectivity check)
-- `@ulam/calamansi/relevance` — relevance scoring and finding search logic
-- `@ulam/sawsawan` — runtime-agnostic storage adapters (localStorage, sessionStorage, memory)
-- `@a11yfred/neighbor` — ESLint and Stylelint plugin with custom accessibility lint rules
-- `tools/neighbor/` and `tools/neighbor-stylelint.mjs` — lint rule implementations
+- `@ulam/halohalo`: AI connectivity layer (provider config, completions, connectivity check)
+- `@ulam/calamansi/relevance`: relevance scoring and finding search logic
+- `@ulam/sawsawan`: runtime-agnostic storage adapters (localStorage, sessionStorage, memory)
+- `@a11yfred/neighbor`: ESLint and Stylelint plugin with custom accessibility lint rules
+- `tools/neighbor/` and `tools/neighbor-stylelint.mjs`: lint rule implementations
 
 Platform adapter pattern added to `sawsawan` so storage works across browser, extension, and Electron contexts without import changes.
 
@@ -102,15 +102,15 @@ Completed a structured quality pass on all 169 personal corpus entries covering 
 
 All 6 core UI components in `src/components/ui/` are now completely decoupled from app-specific dependencies:
 
-- **BackButton.jsx** — replaced `useDir()` router hook with `dir` prop (default: 'ltr')
-- **DataError.jsx** — removed `useT` import; all strings now props; added `onMount` callback
-- **NoResults.jsx** — removed `useT` import; all strings now props; added `onMount` callback
-- **Field.jsx** — removed `useT` import; all button labels and ARIA strings now props
-- **InputWithClear.jsx** — added `clearIcon` prop; `clearAriaLabel` now required
-- **SourceLinks.jsx** — removed `useT` import; added `singleHeading` and `multipleHeading` props
-- **PanelShell.jsx** — added `dir` prop for RTL support
+- **BackButton.jsx**: replaced `useDir()` router hook with `dir` prop (default: 'ltr')
+- **DataError.jsx**: removed `useT` import; all strings now props; added `onMount` callback
+- **NoResults.jsx**: removed `useT` import; all strings now props; added `onMount` callback
+- **Field.jsx**: removed `useT` import; all button labels and ARIA strings now props
+- **InputWithClear.jsx**: added `clearIcon` prop; `clearAriaLabel` now required
+- **SourceLinks.jsx**: removed `useT` import; added `singleHeading` and `multipleHeading` props
+- **PanelShell.jsx**: added `dir` prop for RTL support
 
-Created `src/components/ui/Panel.jsx` — unifies panel pattern across HelpPanel, AboutPanel, SettingsPanel, DetailPanel. CSS: merged duplicate `.help-header`/`.about-header`/`.settings-header` into `.panel-header`, same for title classes. Removed ~40 lines of duplicate CSS.
+Created `src/components/ui/Panel.jsx` to unify the panel pattern across HelpPanel, AboutPanel, SettingsPanel, and DetailPanel. Merged duplicate `.help-header`/`.about-header`/`.settings-header` into `.panel-header`, same for title classes. Removed ~40 lines of duplicate CSS.
 
 ### ESL-friendly and plain language content updates
 

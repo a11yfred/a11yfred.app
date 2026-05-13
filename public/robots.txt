@@ -1,4 +1,4 @@
-# A11yFred — Accessibility defect descriptions, fast
+# A11yFred: Accessibility defect descriptions, fast
 # Single-page app (SPA); all content served from root with hash routing
 
 User-agent: *

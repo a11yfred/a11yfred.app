@@ -10,13 +10,13 @@ Ube is one of four ulam packages:
 
 ```text
 ulam
-├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce  ← you are here
-├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic
-├── @a11yfred/rogers        savory  — a11y debug panel, vanilla-first
-└── @ulam/sawsawan     bridge  — wires the three together
+├── @ulam/ube          sweet  : UI, components, CSS, theming, router, announce  ← you are here
+├── @ulam/calamansi    sour   : i18n, hooks, utilities, logic
+├── @a11yfred/rogers        savory : a11y debug panel, vanilla-first
+└── @ulam/sawsawan     bridge : wires the three together
 ```
 
-Use ube independently, or with the full ulam stack. No cross-package dependencies — ube does not import from calamansi, rogers, or sawsawan.
+Use ube independently, or with the full ulam stack. No cross-package dependencies: ube does not import from calamansi, rogers, or sawsawan.
 
 ## Install
 
@@ -28,7 +28,7 @@ Peer dependencies: `react >= 18`, `react-dom >= 18`, `lucide-react` (icons).
 
 ### Optional: import aliases
 
-The package names are Filipino food terms — meaningful to the framework but unfamiliar to most developers. If you prefer shorter or more descriptive import names, npm's built-in alias syntax lets you rename packages at install time without any changes to ube itself.
+The package names are Filipino food terms: meaningful to the framework but unfamiliar to most developers. If you prefer shorter or more descriptive import names, npm's built-in alias syntax lets you rename packages at install time without any changes to ube itself.
 
 Install with aliases:
 
@@ -59,7 +59,7 @@ import { Button, Toggle } from 'ube'
 import { useT, usePref } from 'calamansi'
 ```
 
-Or use any name you like — the alias is yours to choose:
+Or use any name you like: the alias is yours to choose:
 
 ```bash
 npm install ui@npm:@ulam/ube
@@ -107,15 +107,15 @@ import { Button } from '@ulam/ube'
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary' \| 'danger'` | `'primary'` | Visual style |
-| `onClick` | function | — | Click handler |
+| `onClick` | function |: | Click handler |
 | `disabled` | boolean | `false` | Disabled state |
 | `fullWidth` | boolean | `false` | Stretches to container width |
-| `icon` | ReactNode | — | Decorative icon (left of label) |
-| `activeIcon` | ReactNode | — | Icon shown when `active` is true |
+| `icon` | ReactNode |: | Decorative icon (left of label) |
+| `activeIcon` | ReactNode |: | Icon shown when `active` is true |
 | `active` | boolean | `false` | Active/toggled state |
-| `label` | string | — | `aria-label` override |
-| `activeLabel` | string | — | `aria-label` when active |
-| `className` | string | — | Additional CSS classes |
+| `label` | string |: | `aria-label` override |
+| `activeLabel` | string |: | `aria-label` when active |
+| `className` | string |: | Additional CSS classes |
 
 ---
 
@@ -132,10 +132,10 @@ import { IconButton } from '@ulam/ube'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `icon` | ReactNode | — | Icon element (required) |
-| `label` | string | — | `aria-label` (required) |
+| `icon` | ReactNode |: | Icon element (required) |
+| `label` | string |: | `aria-label` (required) |
 | `variant` | `'accent' \| 'tertiary'` | `'accent'` | Visual style |
-| `onClick` | function | — | Click handler |
+| `onClick` | function |: | Click handler |
 | `disabled` | boolean | `false` | Disabled state |
 
 ---
@@ -153,9 +153,9 @@ import { ButtonLink } from '@ulam/ube'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `href` | string | — | Link destination (required) |
+| `href` | string |: | Link destination (required) |
 | `variant` | `'primary' \| 'secondary' \| 'tertiary'` | `'primary'` | Visual style |
-| `children` | ReactNode | — | Link label |
+| `children` | ReactNode |: | Link label |
 
 ---
 
@@ -174,9 +174,9 @@ import { Toggle } from '@ulam/ube'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `id` | string | — | Input id, must match label's `htmlFor` |
-| `checked` | boolean | — | Controlled value (required) |
-| `onChange` | function | — | `(checked: boolean) => void` |
+| `id` | string |: | Input id, must match label's `htmlFor` |
+| `checked` | boolean |: | Controlled value (required) |
+| `onChange` | function |: | `(checked: boolean) => void` |
 | `disabled` | boolean | `false` | Disabled state |
 
 ---
@@ -253,7 +253,7 @@ Self-contained search field with `form[role="search"]` wrapper, live or submit m
 ```jsx
 import { SearchInput } from '@ulam/ube'
 
-// Live search — fires onChange on every keystroke, no submit button
+// Live search: fires onChange on every keystroke, no submit button
 <SearchInput
   id="site-search"
   value={query}
@@ -263,7 +263,7 @@ import { SearchInput } from '@ulam/ube'
   clearAriaLabel="Clear search"
 />
 
-// Submit mode — shows search icon submit button, fires onSubmit on Enter or click
+// Submit mode: shows search icon submit button, fires onSubmit on Enter or click
 <SearchInput
   id="site-search"
   value={query}
@@ -285,18 +285,18 @@ const [liveSearch, setLiveSearch] = usePref('liveSearch', true)
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `id` | string | — | Input id |
-| `value` | string | — | Controlled value (required) |
-| `onChange` | function | — | `(value: string) => void` (required) |
-| `onSubmit` | function | — | Called on Enter or submit button click |
-| `onClear` | function | — | Called on clear; defaults to `onChange('')` |
+| `id` | string |: | Input id |
+| `value` | string |: | Controlled value (required) |
+| `onChange` | function |: | `(value: string) => void` (required) |
+| `onSubmit` | function |: | Called on Enter or submit button click |
+| `onClear` | function |: | Called on clear; defaults to `onChange('')` |
 | `liveSearch` | boolean | `false` | Fire `onSubmit` on every keystroke, hide submit button |
 | `placeholder` | string | `'Search…'` | Input placeholder |
 | `disabled` | boolean | `false` | Disabled state |
-| `label` | string | — | `aria-label` on the form (use when no visible label) |
+| `label` | string |: | `aria-label` on the form (use when no visible label) |
 | `submitAriaLabel` | string | `'Search'` | `aria-label` for the submit icon button |
 | `clearAriaLabel` | string | `'Clear'` | `aria-label` for the clear button |
-| `inputRef` | ref | — | Forward ref to the input element |
+| `inputRef` | ref |: | Forward ref to the input element |
 
 ---
 
@@ -320,17 +320,17 @@ import { InputWithClear } from '@ulam/ube'
 
 | Prop | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| `id` | string | — | Input id |
+| `id` | string |: | Input id |
 | `type` | string | `'text'` | Input type |
-| `value` | string | — | Controlled value |
-| `onChange` | function | — | `(value: string) => void` |
-| `onClear` | function | — | Override clear behavior |
-| `clearAriaLabel` | string | — | `aria-label` for clear button (required) |
+| `value` | string |: | Controlled value |
+| `onChange` | function |: | `(value: string) => void` |
+| `onClear` | function |: | Override clear behavior |
+| `clearAriaLabel` | string |: | `aria-label` for clear button (required) |
 | `clearIcon` | ReactNode | `'↺'` | Clear button icon |
 | `wrapClassName` | string | `''` | Class on the wrapper div |
 | `inputClassName` | string | `''` | Class on the input |
 | `clearButtonClassName` | string | `''` | Class on the clear button |
-| `inputRef` | ref | — | Forward ref to the input element |
+| `inputRef` | ref |: | Forward ref to the input element |
 
 ---
 
@@ -517,7 +517,7 @@ Ube ships three plugins. Import each from its subpath.
 
 ### Announce
 
-ARIA live region system. Call `announce()` from anywhere — no prop drilling, no context wiring.
+ARIA live region system. Call `announce()` from anywhere: no prop drilling, no context wiring.
 
 ```jsx
 import { Announcer, announce, useAnnounce } from '@ulam/ube/announce'
@@ -534,12 +534,12 @@ const announce = useAnnounce()
 announce('Copy: Copied to clipboard')
 ```
 
-**Message format:** prefix with context — `"Settings: Saved"` not `"Saved"`. Bare messages are ambiguous to screen reader users who may miss where the message came from.
+**Message format:** prefix with context: `"Settings: Saved"` not `"Saved"`. Bare messages are ambiguous to screen reader users who may miss where the message came from.
 
 **Priority:**
 
-- `'polite'` (default) — waits for a natural pause. Use for confirmations, results, background changes.
-- `'assertive'` — interrupts immediately. Use only for errors and urgent alerts.
+- `'polite'` (default): waits for a natural pause. Use for confirmations, results, background changes.
+- `'assertive'`: interrupts immediately. Use only for errors and urgent alerts.
 
 **Do not announce:** focus-managed transitions (modals opening, page navigation). Screen readers announce focus targets automatically.
 
@@ -573,10 +573,10 @@ usePageTitle('Page Name')      // sets document.title = "AppName | Page Name"
 
 **Components:**
 
-- **`Router`** — context provider, wraps the app
-- **`Modal`** — centered dialog, focus trap, Escape-to-dismiss, stacks at z-index 301
-- **`Drawer`** — slide-in panel from left, focus management built in
-- **`BottomSheet`** — slide-up sheet from bottom, focus management, desktop collapse
+- **`Router`**: context provider, wraps the app
+- **`Modal`**: centered dialog, focus trap, Escape-to-dismiss, stacks at z-index 301
+- **`Drawer`**: slide-in panel from left, focus management built in
+- **`BottomSheet`**: slide-up sheet from bottom, focus management, desktop collapse
 
 **Focus management hooks:**
 
@@ -593,19 +593,19 @@ usePageTitle('Page Name')      // sets document.title = "AppName | Page Name"
 
 | Hook | Description |
 | ---- | ----------- |
-| `useDir()` | Reactive `document.documentElement.dir` — `'ltr'` or `'rtl'` |
+| `useDir()` | Reactive `document.documentElement.dir`: `'ltr'` or `'rtl'` |
 | `useMediaQuery(query)` | Reactive `window.matchMedia` |
 | `usePageTitle(title)` | Sets `document.title` to `"AppName \| title"` |
 
 **Focus rules (WCAG 2.4.3):**
 
-1. New page — focus the main heading (`tabIndex={-1}`)
-2. Modal open — focus first focusable element (usually close button)
-3. Modal close — restore focus to trigger (`useReturnFocus`)
-4. Overlay open — set background inert (`useAriaHide`, overlays do this automatically)
-5. Escape — each overlay layer handles its own
-6. Paginated content — use `usePaginationFocus` on page change
-7. Accordion — leave focus on trigger, do not use `useFocusOnMount` on content
+1. New page: focus the main heading (`tabIndex={-1}`)
+2. Modal open: focus first focusable element (usually close button)
+3. Modal close: restore focus to trigger (`useReturnFocus`)
+4. Overlay open: set background inert (`useAriaHide`, overlays do this automatically)
+5. Escape: each overlay layer handles its own
+6. Paginated content: use `usePaginationFocus` on page change
+7. Accordion: leave focus on trigger, do not use `useFocusOnMount` on content
 
 ---
 

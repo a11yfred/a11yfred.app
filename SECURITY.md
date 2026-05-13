@@ -24,7 +24,7 @@ You should receive a response within 5 business days. If the report is confirmed
 
 This app:
 
-- Runs entirely in the browser — there is no server-side component, no database, and no user accounts (Phase 2; auth stubs exist but are not active)
+- Runs entirely in the browser. There is no server-side component, no database, and no user accounts (Phase 2; auth stubs exist but are not active)
 - Stores only local preferences and API keys in `localStorage`; API keys are sent directly to the respective AI provider and never to any intermediate server
 - Has no authentication surface in Phase 1
 

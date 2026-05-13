@@ -2,7 +2,7 @@
 
 Integration bridge wiring ube, calamansi, and rogers together. The dipping sauce of the [ulam](../../docs/ulam.md) framework.
 
-Named for sawsawan, the Filipino dipping sauce — no purpose alone, exists only to bring other things together.
+Named for sawsawan, the Filipino dipping sauce: no purpose alone, exists only to bring other things together.
 
 ## Packages
 
@@ -10,10 +10,10 @@ Sawsawan is one of four ulam packages:
 
 ```text
 ulam
-├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce
-├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic
-├── @a11yfred/rogers        savory  — a11y debug panel, vanilla-first
-└── @ulam/sawsawan     bridge  — wires the three together  ← you are here
+├── @ulam/ube          sweet  : UI, components, CSS, theming, router, announce
+├── @ulam/calamansi    sour   : i18n, hooks, utilities, logic
+├── @a11yfred/rogers        savory : a11y debug panel, vanilla-first
+└── @ulam/sawsawan     bridge : wires the three together  ← you are here
 ```
 
 ## Dependency rule
@@ -51,7 +51,7 @@ function App() {
 
 ## Why ube and calamansi do not depend on each other
 
-`announce()` accepts any string — no knowledge of where it came from. `t()` returns any string — no knowledge of where it goes. The app or sawsawan wires them: `announce(t('locale.switched'))`. Neither package knows the other exists. Integration is function composition at the call site, owned by sawsawan.
+`announce()` accepts any string: no knowledge of where it came from. `t()` returns any string: no knowledge of where it goes. The app or sawsawan wires them: `announce(t('locale.switched'))`. Neither package knows the other exists. Integration is function composition at the call site, owned by sawsawan.
 
 ## License
 

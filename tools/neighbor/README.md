@@ -9,7 +9,7 @@ Accessibility linting plugin for ESLint and Stylelint. Catches ARIA anti-pattern
 | `@a11yfred/neighbor/eslint` | React / JSX |
 | `@a11yfred/neighbor/eslint-vue` | Vue SFCs |
 | `@a11yfred/neighbor/eslint-angular` | Angular templates |
-| `@a11yfred/neighbor` (default) | Stylelint — CSS user-preference fallbacks |
+| `@a11yfred/neighbor` (default) | Stylelint: CSS user-preference fallbacks |
 
 ## Coverage gap map
 
@@ -30,8 +30,8 @@ Base: **eslint-plugin-jsx-a11y** (peer, optional)
 | `role="dialog"` strongly recommended to have close button | `no-dialog-without-close` | 2.1.2 |
 | `role="group"` + form controls requires name | `no-group-without-name` | 1.3.1 |
 | `role="tooltip"` requires `id` on the tooltip element | `no-tooltip-role-misuse` | 4.1.2 |
-| `role="application"` disables AT browse mode | `no-application-role` | — |
-| `role="grid"` almost always wrong | `no-grid-role` | — |
+| `role="application"` disables AT browse mode | `no-application-role` |: |
+| `role="grid"` almost always wrong | `no-grid-role` |: |
 | `role="menu"` on nav triggers wrong AT mode | `no-menu-role-on-nav` | 2.1.1 |
 | `role="presentation"` / `none` on focusable element | `no-presentation-on-focusable` | 2.1.1 |
 | `role="log"` must not contain interactive children | `no-log-with-interactive-children` | 4.1.2 |
@@ -44,9 +44,9 @@ Base: **eslint-plugin-jsx-a11y** (peer, optional)
 | `role="listbox"` requires `role="option"` children | `no-listbox-without-option` | 4.1.2 |
 | `role="tree"` requires `role="treeitem"` children | `no-tree-without-treeitem` | 4.1.2 |
 | `role="feed"` requires `role="article"` children | `no-feed-without-article` | 4.1.2 |
-| `aria-hidden="true"` + `role="none"` is redundant | `no-redundant-aria-hidden-with-presentation` | — |
-| `aria-roledescription` does not translate | `no-aria-roledescription` | — |
-| `aria-readonly` has poor AT support | `no-aria-readonly` | — |
+| `aria-hidden="true"` + `role="none"` is redundant | `no-redundant-aria-hidden-with-presentation` |: |
+| `aria-roledescription` does not translate | `no-aria-roledescription` |: |
+| `aria-readonly` has poor AT support | `no-aria-readonly` |: |
 | `aria-owns` on void element | `no-aria-owns-on-void` | 4.1.2 |
 | `aria-activedescendant` requires non-empty static ID | `no-aria-activedescendant-without-id` | 4.1.2 |
 | `aria-required` only valid on form-control roles | `no-aria-required-on-non-form` | 4.1.2 |
@@ -89,7 +89,7 @@ neighbor adds everything in the React table above, adapted for `VElement` AST no
 | ARIA attribute not supported by the element's role | `no-role-supports-aria-props` | 4.1.2 |
 | `scope` attribute on `<td>` (only valid on `<th>`) | `no-scope-on-td` | 1.3.1 |
 
-> **Note:** `no-summary-without-details` and `no-button-type-missing` require parent-node traversal. They work in JSX and Vue. In Angular templates the parser does not attach parent pointers so these rules silently pass — see Angular notes below.
+> **Note:** `no-summary-without-details` and `no-button-type-missing` require parent-node traversal. They work in JSX and Vue. In Angular templates the parser does not attach parent pointers so these rules silently pass: see Angular notes below.
 
 ### Angular templates
 
@@ -99,7 +99,7 @@ neighbor adds the same rule set as Vue (all recommended + portability rules), ad
 
 | Angular-specific limitation | Affected rules |
 |---|---|
-| Parser does not set parent pointers — ancestor walking unavailable | `no-summary-without-details`, `no-button-type-missing`, `no-log-with-interactive-children`, `no-menu-role-on-nav`, `no-heading-inside-interactive` |
+| Parser does not set parent pointers: ancestor walking unavailable | `no-summary-without-details`, `no-button-type-missing`, `no-log-with-interactive-children`, `no-menu-role-on-nav`, `no-heading-inside-interactive` |
 | Bound attributes (`[aria-label]="expr"`) are not statically analyzable | Any rule checking ARIA attribute values |
 
 ### Remix / SSR frameworks
@@ -111,7 +111,7 @@ neighbor adds the same rule set as Vue (all recommended + portability rules), ad
 | Next.js | React | `@a11yfred/neighbor/eslint` + `eslint-plugin-jsx-a11y` |
 | Astro (`.tsx` islands) | React / Preact | `@a11yfred/neighbor/eslint` + `eslint-plugin-jsx-a11y` |
 
-Remix v3 abandons React in favour of a Preact fork with a different component model (no hooks, native DOM events), but template files are still `.jsx`/`.tsx`. ESLint sees the same JSX AST regardless — neighbor and jsx-a11y rules apply identically. Drop `eslint-plugin-react` and `eslint-plugin-react-hooks` from Remix v3 projects; everything else stays the same.
+Remix v3 abandons React in favour of a Preact fork with a different component model (no hooks, native DOM events), but template files are still `.jsx`/`.tsx`. ESLint sees the same JSX AST regardless: neighbor and jsx-a11y rules apply identically. Drop `eslint-plugin-react` and `eslint-plugin-react-hooks` from Remix v3 projects; everything else stays the same.
 
 ### Static sites and vanilla JS
 
@@ -119,14 +119,14 @@ ESLint does not parse plain HTML files natively. For static sites:
 
 - Use **axe-core** via the browser DevTools or CI runner (covers the same rule surface at runtime).
 - Pair with **HTMLHint** or **html-validate** for HTML spec validation (`no-input-type-invalid`, `no-summary-without-details`, `no-button-type-missing` equivalents).
-- neighbor's Stylelint plugin (`@a11yfred/neighbor`) applies to any CSS/SCSS regardless of framework — no JS required.
+- neighbor's Stylelint plugin (`@a11yfred/neighbor`) applies to any CSS/SCSS regardless of framework: no JS required.
 
 ## Peer dependencies
 
 | Peer | Required | Required for |
 | --- | --- | --- |
 | `eslint >= 8` | optional | Any ESLint entry point |
-| `eslint-plugin-jsx-a11y >= 6` | **required** | React / JSX config — neighbor deliberately omits 10+ rules that jsx-a11y covers; without it those checks silently disappear |
+| `eslint-plugin-jsx-a11y >= 6` | **required** | React / JSX config: neighbor deliberately omits 10+ rules that jsx-a11y covers; without it those checks silently disappear |
 | `eslint-plugin-vuejs-accessibility >= 2` | optional | Vue config (bundled into recommended when present) |
 | `@angular-eslint/eslint-plugin-template >= 17` | optional | Angular config (bundled into recommended when present) |
 | `stylelint >= 14` | optional | Stylelint config |
@@ -135,7 +135,7 @@ ESLint does not parse plain HTML files natively. For static sites:
 
 | Severity | Meaning |
 |---|---|
-| `error` | Definite AT breakage or HTML spec violation — fix required |
-| `warn` | Strong guidance with occasional legitimate overrides — review required |
+| `error` | Definite AT breakage or HTML spec violation: fix required |
+| `warn` | Strong guidance with occasional legitimate overrides: review required |
 
 All rules can be individually overridden in your ESLint config.

@@ -1,6 +1,6 @@
 # ulam
 
-Accessible React component framework. Named for the Filipino word for the dish that goes with rice — the meaningful part of the meal.
+Accessible React component framework. Named for the Filipino word for the dish that goes with rice: the meaningful part of the meal.
 
 Purple-first. Keyboard-first. No external dependencies beyond React and your bundler.
 
@@ -13,28 +13,28 @@ Each package is a named Filipino food term. Install with the `@ulam/` scope or u
 ```text
 ulam
 ├── UI Layer
-│   ├── @ulam/ube            sweet   — components, tokens, theming, CSS
-│   ├── @ulam/sili                   — headless focus primitives (vanilla JS)
-│   ├── @ulam/siling-labuyo          — React router + focus hooks
-│   └── @ulam/siling-mahaba          — Preact / vanilla adapter (planned)
+│   ├── @ulam/ube            sweet  : components, tokens, theming, CSS
+│   ├── @ulam/sili                  : headless focus primitives (vanilla JS)
+│   ├── @ulam/siling-labuyo         : React router + focus hooks
+│   └── @ulam/siling-mahaba         : Preact / vanilla adapter (planned)
 │
 ├── Announce Layer
-│   ├── @ulam/taho                   — headless ARIA live region core (vanilla JS)
-│   ├── @ulam/taho-bayabas           — React adapter (Announcer, useAnnounce)
-│   └── @ulam/taho-pandan            — Preact / vanilla adapter (planned)
+│   ├── @ulam/taho                  : headless ARIA live region core (vanilla JS)
+│   ├── @ulam/taho-bayabas          : React adapter (Announcer, useAnnounce)
+│   └── @ulam/taho-pandan           : Preact / vanilla adapter (planned)
 │
 ├── Logic Layer
-│   ├── @ulam/calamansi    sour    — i18n, hooks, utilities
-│   └── @ulam/sawsawan     bridge  — wires all packages together
+│   ├── @ulam/calamansi    sour   : i18n, hooks, utilities
+│   └── @ulam/sawsawan     bridge : wires all packages together
 │
 ├── AI Layer
-│   └── @ulam/halohalo               — AI service adapters, model config, prefs
+│   └── @ulam/halohalo              : AI service adapters, model config, prefs
 │
 ├── Debug Layer
-│   └── @a11yfred/rogers        savory  — a11y debug panel, dependency-free
+│   └── @a11yfred/rogers        savory : a11y debug panel, dependency-free
 │
 └── Linting
-    └── @a11yfred/neighbor                — ESLint + Stylelint a11y rules
+    └── @a11yfred/neighbor               : ESLint + Stylelint a11y rules
 ```
 
 ---
@@ -66,7 +66,7 @@ Neither `ube`, `rogers`, nor `calamansi` import from each other. `sawsawan` is t
 
 ---
 
-## @ulam/ube — UI components
+## @ulam/ube: UI components
 
 `src/components/ui/` · `src/tokens.css` · `src/app-tokens.css`
 
@@ -76,7 +76,7 @@ Accessible React component library. Every component meets WCAG 2.2 AA. Token-dri
 
 **Tokens:** color, spacing (`--space-1` → `--space-10`), typography, motion, focus
 
-**Theme:** `useThemeManager` — sets `data-theme` on `<html>`, supports dark / light / auto / fiesta
+**Theme:** `useThemeManager`: sets `data-theme` on `<html>`, supports dark / light / auto / fiesta
 
 ```jsx
 import { Button, Toggle, SearchInput } from '@ulam/ube'
@@ -88,7 +88,7 @@ See [src/components/ui/README.md](src/components/ui/README.md) for full componen
 
 ---
 
-## @ulam/sili — Headless focus primitives
+## @ulam/sili: Headless focus primitives
 
 `src/sili/`
 
@@ -112,7 +112,7 @@ cleanup()
 
 ---
 
-## @ulam/siling-labuyo — React router + hooks
+## @ulam/siling-labuyo: React router + hooks
 
 `src/siling-labuyo/`
 
@@ -136,7 +136,7 @@ Hash-based router and focus management hooks for React. Wraps `@ulam/sili` primi
 
 | Hook | Description |
 |------|-------------|
-| `useDir()` | Reactive `html[dir]` — `'ltr'` or `'rtl'` |
+| `useDir()` | Reactive `html[dir]`: `'ltr'` or `'rtl'` |
 | `useMediaQuery(query)` | Reactive `window.matchMedia` |
 | `usePageTitle(title)` | Sets `document.title = "App \| title"` |
 
@@ -146,7 +146,7 @@ import { Router, Modal, useFocusTrap } from '@ulam/siling-labuyo'
 
 ---
 
-## @ulam/taho — Headless ARIA live region core
+## @ulam/taho: Headless ARIA live region core
 
 `src/taho/`
 
@@ -161,7 +161,7 @@ announce('Error: invalid key', { priority: 'assertive' })
 
 ---
 
-## @ulam/taho-bayabas — React announce adapter
+## @ulam/taho-bayabas: React announce adapter
 
 `src/taho-bayabas/`
 
@@ -178,17 +178,17 @@ const announce = useAnnounce()
 announce('Copy: Copied to clipboard')
 ```
 
-**Message format:** prefix with context — `"Settings: Saved"` not `"Saved"`. Bare messages are ambiguous to screen reader users.
+**Message format:** prefix with context: `"Settings: Saved"` not `"Saved"`. Bare messages are ambiguous to screen reader users.
 
-**Priority:** `'polite'` (default) waits for a natural pause. `'assertive'` interrupts immediately — use only for errors.
+**Priority:** `'polite'` (default) waits for a natural pause. `'assertive'` interrupts immediately: use only for errors.
 
 ---
 
-## @ulam/calamansi — i18n + utilities
+## @ulam/calamansi: i18n + utilities
 
 `src/calamansi/`
 
-Named for the iconic Filipino sour citrus — small, essential, full of character.
+Named for the iconic Filipino sour citrus: small, essential, full of character.
 
 Data-agnostic i18n: pass any `{ key: value }` object as locale data. No opinions about loaders, caches, or source format.
 
@@ -205,17 +205,17 @@ t('hello', { name: 'Mikey' }) // → "Hello, Mikey"
 
 - Interpolation, fallback to `en`, 59 production locale files included
 - No dependency on `ube` or any other ulam package
-- `usePref` — typed user preference hook backed by `@ulam/sawsawan` storage
+- `usePref`: typed user preference hook backed by `@ulam/sawsawan` storage
 
 See [src/calamansi/README.md](src/calamansi/README.md) for full API.
 
 ---
 
-## @ulam/sawsawan — Integration bridge
+## @ulam/sawsawan: Integration bridge
 
 `src/sawsawan/`
 
-Named for sawsawan, the Filipino dipping sauce — no purpose alone, exists only to bring other things together.
+Named for sawsawan, the Filipino dipping sauce: no purpose alone, exists only to bring other things together.
 
 The only package that imports from the others. Wires locale changes into `announce()`, sets `html[lang]` and `html[dir]`, and provides a runtime-agnostic storage adapter.
 
@@ -225,17 +225,17 @@ import { useSawsawan } from '@ulam/sawsawan'
 useSawsawan(locale, t, 'locale.switched')
 ```
 
-**Storage adapter:** `useSawsawan` exposes a platform-agnostic key/value store. Works with `localStorage`, `sessionStorage`, or any injected backend — no direct storage calls in consumer packages.
+**Storage adapter:** `useSawsawan` exposes a platform-agnostic key/value store. Works with `localStorage`, `sessionStorage`, or any injected backend: no direct storage calls in consumer packages.
 
 See [src/sawsawan/README.md](src/sawsawan/README.md) for full API.
 
 ---
 
-## @ulam/halohalo — AI layer
+## @ulam/halohalo: AI layer
 
 `src/halohalo/`
 
-Named for halo-halo, the layered Filipino dessert — many things mixed together.
+Named for halo-halo, the layered Filipino dessert: many things mixed together.
 
 AI service adapters, model configuration, and user preference management. Zero runtime dependencies outside the host app's AI SDK.
 
@@ -249,13 +249,13 @@ AI service adapters, model configuration, and user preference management. Zero r
 
 ---
 
-## @a11yfred/rogers — A11y debug panel
+## @a11yfred/rogers: A11y debug panel
 
 `tools/rogers/`
 
-Named for the Filipino braised dish — deeply flavored, goes with everything.
+Named for the Filipino braised dish: deeply flavored, goes with everything.
 
-The React Query DevTools of accessibility. Drop it into any project in dev mode. Zero dependencies beyond React — no other ulam packages required.
+The React Query DevTools of accessibility. Drop it into any project in dev mode. Zero dependencies beyond React: no other ulam packages required.
 
 **Portable components (part of `@a11yfred/rogers`):**
 
@@ -263,7 +263,7 @@ The React Query DevTools of accessibility. Drop it into any project in dev mode.
 |-----------|-------------|
 | `FocusDebugger` | Toast + flash overlay on every keyboard focus event. Shows element, `:focus` and `:focus-visible` status. |
 | `NamesDebugger` | Cursor-following tooltip showing the accessible name of the hovered element and its source. |
-| `TabStopsDebugger` | Recording mode — activate, then Tab through the page. Renders numbered circles + SVG connecting lines showing focus order. |
+| `TabStopsDebugger` | Recording mode: activate, then Tab through the page. Renders numbered circles + SVG connecting lines showing focus order. |
 | `HeadingMapDebugger` | Overlays every heading with a color-coded level badge. Floating panel shows the full heading hierarchy. |
 | `DebugLauncher` | FAB + two modes: clickable command menu, or spotlight text input (press `/`). `onCommand` prop hooks into any external input. |
 | `DeployBanner` | Fixed bottom-left banner showing active deployment target. |
@@ -281,27 +281,27 @@ import { FocusDebugger, TabStopsDebugger, HeadingMapDebugger, DebugLauncher } fr
 </>}
 ```
 
-All styles live in `debug.css` — self-contained, high-contrast dark, no ube token dependency.
+All styles live in `debug.css`: self-contained, high-contrast dark, no ube token dependency.
 
 See [tools/rogers/README.md](tools/rogers/README.md) for full API.
 
 ---
 
-## @a11yfred/neighbor — Linting
+## @a11yfred/neighbor: Linting
 
 `neighbor/`
 
-ESLint and Stylelint plugins enforcing the accessibility patterns that ulam components implement. Dev-only — no runtime footprint.
+ESLint and Stylelint plugins enforcing the accessibility patterns that ulam components implement. Dev-only: no runtime footprint.
 
-**ESLint — 31 rules across 3 adapters (JSX, Vue, Angular):**
+**ESLint: 31 rules across 3 adapters (JSX, Vue, Angular):**
 
 - 22 errors: phantom controls, missing accessible names, broken ARIA patterns, mouse-only events, keyboard gaps
 - 9 warnings: discouraged patterns with legitimate overrides (`role="application"`, `aria-roledescription`, `prefer-aria-disabled`, etc.)
 
-**Stylelint — 2 rules:**
+**Stylelint: 2 rules:**
 
-- `ulam/user-preferences` — motion, transparency, or alpha-channel colors without `@media (prefers-*)` fallbacks
-- `ulam/no-outline-none` — bare `outline: none` outside `:focus` selectors
+- `ulam/user-preferences`: motion, transparency, or alpha-channel colors without `@media (prefers-*)` fallbacks
+- `ulam/no-outline-none`: bare `outline: none` outside `:focus` selectors
 
 ```js
 // eslint.config.js
@@ -320,7 +320,7 @@ See [tools/neighbor/RULES.md](tools/neighbor/RULES.md) for the full rule catalog
 
 **Accessible by default.** Every component meets WCAG 2.2 AA. Keyboard navigation, focus management, and screen reader semantics are built in, not bolted on.
 
-**Headless core, thin React wrapper.** `sili` and `taho` are vanilla JS. React packages are lifecycle wrappers — the logic is portable.
+**Headless core, thin React wrapper.** `sili` and `taho` are vanilla JS. React packages are lifecycle wrappers: the logic is portable.
 
 **Token-driven.** No hardcoded colors, sizes, or spacing in component code. Override a token, retheme everything.
 
@@ -336,22 +336,22 @@ See [tools/neighbor/RULES.md](tools/neighbor/RULES.md) for the full rule catalog
 
 ## Naming
 
-All packages are named for Filipino food — the framework's origin story.
+All packages are named for Filipino food: the framework's origin story.
 
 | Package | Food | Role |
 |---------|------|------|
-| ube | Purple yam — sweet, foundational | UI components |
-| sili | Chili — small, sharp, essential | Focus primitives |
-| siling labuyo | Bird's eye chili — tiny but powerful | React hooks |
-| siling mahaba | Long green chili — mild adapter | Preact adapter |
-| taho | Silken tofu — soft, structured | Live region core |
-| taho-bayabas | Taho with guava — React flavored | React announce |
-| taho-pandan | Taho with pandan — alternate flavor | Preact announce |
-| calamansi | Sour citrus — essential accent | i18n + logic |
-| sawsawan | Dipping sauce — brings it all together | Integration bridge |
-| halohalo | Mixed dessert — many layers | AI layer |
-| rogers | Braised dish — savory, goes with everything | Debug panel |
-| neighbor | Sandwich filling — completes the stack | Linting |
+| ube | Purple yam: sweet, foundational | UI components |
+| sili | Chili: small, sharp, essential | Focus primitives |
+| siling labuyo | Bird's eye chili: tiny but powerful | React hooks |
+| siling mahaba | Long green chili: mild adapter | Preact adapter |
+| taho | Silken tofu: soft, structured | Live region core |
+| taho-bayabas | Taho with guava: React flavored | React announce |
+| taho-pandan | Taho with pandan: alternate flavor | Preact announce |
+| calamansi | Sour citrus: essential accent | i18n + logic |
+| sawsawan | Dipping sauce: brings it all together | Integration bridge |
+| halohalo | Mixed dessert: many layers | AI layer |
+| rogers | Braised dish: savory, goes with everything | Debug panel |
+| neighbor | Sandwich filling: completes the stack | Linting |
 
 ---
 

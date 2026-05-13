@@ -183,7 +183,7 @@ Do not write: "Severity ranges from X to Y depending on..."
 - **"focus order" not "tab order"** in contexts not specifically about `tabindex` values.
 - **"focus indicator" not "focus ring".**
 - **"the user" only in scenario-specific context** (when the user, after the user, if the user).
-  Do not use "the user" to refer to the general population of users -- use "users" or restructure.
+  Do not use "the user" to refer to the general population of users. Use "users" or restructure.
 - **No "note that".** Convert to a direct statement.
 - **SC citations:** "SC X.X.X" not "WCAG X.X.X" when citing inline.
 - Platform sections in fix use "iOS:" and "Android:" as section headers for implementation steps.
@@ -246,7 +246,7 @@ When advising about `aria-label` vs. visible `<label>`:
 - Append `(Native App)` when the entry is native-only.
 - Avoid "Interactive Control" as a phrase; use "Control" or the specific element type.
 - "Contrast Ratio" and "Alt Text" are acceptable in titles.
-- Qualifier vocabulary -- use these canonical forms:
+- Qualifier vocabulary. Use these canonical forms:
   - "Missing" not "Lacks", "Has No", or "Exposes No"
   - "Not Programmatically Determined" for state and value failures (SC 4.1.2)
   - "Not Programmatically Associated" for label relationship failures (SC 1.3.1, 3.3.2)

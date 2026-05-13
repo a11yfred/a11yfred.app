@@ -10,10 +10,10 @@ rogers is one of four ulam packages:
 
 ```text
 ulam
-├── @ulam/ube          sweet   — UI, components, CSS, theming, router, announce
-├── @ulam/calamansi    sour    — i18n, hooks, utilities, logic
-├── @a11yfred/rogers        savory  — a11y debug panel, vanilla-first  ← you are here
-└── @ulam/sawsawan     bridge  — wires the three together
+├── @ulam/ube          sweet  : UI, components, CSS, theming, router, announce
+├── @ulam/calamansi    sour   : i18n, hooks, utilities, logic
+├── @a11yfred/rogers        savory : a11y debug panel, vanilla-first  ← you are here
+└── @ulam/sawsawan     bridge : wires the three together
 ```
 
 ## Architecture
@@ -23,20 +23,20 @@ Vanilla-first: core inspection logic has no framework dependency. React is a thi
 ```text
 @a11yfred/rogers
 ├── core/
-│   ├── focus.js      — formatTarget, getOutlineInfo, flashElement, createFocusWatcher
-│   ├── names.js      — isControl, getAccessibleName, createNamesWatcher
-│   ├── headings.js   — collectHeadings, createHeadingWatcher
-│   └── tabstops.js   — isTabbable, getTabOrder, createTabStopWatcher
-├── react/            — thin React wrappers (useEffect → create*Watcher)
+│   ├── focus.js     : formatTarget, getOutlineInfo, flashElement, createFocusWatcher
+│   ├── names.js     : isControl, getAccessibleName, createNamesWatcher
+│   ├── headings.js  : collectHeadings, createHeadingWatcher
+│   └── tabstops.js  : isTabbable, getTabOrder, createTabStopWatcher
+├── react/           : thin React wrappers (useEffect → create*Watcher)
 │   ├── FocusDebugger.jsx
 │   ├── NamesDebugger.jsx
 │   ├── HeadingMapDebugger.jsx
 │   └── TabStopsDebugger.jsx
-├── DeployBanner.jsx  — pure-render React (no DOM watcher)
-├── DebugHelp.jsx     — pure-render React
-├── DebugLauncher.jsx — React FAB + command input
-├── AdminPanel.jsx    — app-specific (a11yfred)
-└── AiDebugToast.jsx  — app-specific (a11yfred)
+├── DeployBanner.jsx : pure-render React (no DOM watcher)
+├── DebugHelp.jsx    : pure-render React
+├── DebugLauncher.jsx: React FAB + command input
+├── AdminPanel.jsx   : app-specific (a11yfred)
+└── AiDebugToast.jsx : app-specific (a11yfred)
 ```
 
 The `create*Watcher` functions follow a common pattern:
@@ -77,7 +77,7 @@ They are dev-only: each function checks `import.meta.env.DEV` and returns a no-o
 | `getOutlineInfo(el)` | Returns `{ hasFocusOutline, isFocusVisible }` |
 | `flashElement(el)` | Briefly overlays the element with a teal flash |
 | `isControl(el)` | Returns true if element is an interactive control |
-| `getAccessibleName(el)` | Returns `{ name, source }` — the ARIA accessible name + its source |
+| `getAccessibleName(el)` | Returns `{ name, source }`: the ARIA accessible name + its source |
 | `collectHeadings()` | Returns an array of heading metadata objects |
 | `isTabbable(el)` | Returns true if element is in the natural tab order |
 | `getTabOrder()` | Returns all tabbable elements in tab order |
@@ -88,7 +88,7 @@ They are dev-only: each function checks `import.meta.env.DEV` and returns a no-o
 
 ### React / Remix
 
-Use the pre-built React components. Render them once near the root — they are dev-only and render nothing in production.
+Use the pre-built React components. Render them once near the root: they are dev-only and render nothing in production.
 
 ```jsx
 // app/root.jsx (Remix) or src/App.jsx (Vite)
@@ -262,7 +262,7 @@ Import `debug.css` in `angular.json` styles or your global stylesheet:
 
 ### Vanilla JS (script tag / no framework)
 
-Use the watcher factories directly. Wire them to your own DOM or to nothing — just inspect:
+Use the watcher factories directly. Wire them to your own DOM or to nothing: just inspect:
 
 ```js
 import { createFocusWatcher, createNamesWatcher } from '@a11yfred/rogers'
@@ -313,9 +313,9 @@ Type in the search bar (live search on) or submit (live search off):
 
 ## CSS
 
-All styles live in `debug.css`. Import it once — it covers all components.
+All styles live in `debug.css`. Import it once: it covers all components.
 
-rogers CSS is self-contained and opinionated (dark, high contrast). No ube token dependency — looks the same regardless of host app theme.
+rogers CSS is self-contained and opinionated (dark, high contrast). No ube token dependency: looks the same regardless of host app theme.
 
 ---
 

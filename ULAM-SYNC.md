@@ -4,26 +4,26 @@ The `feature/ulam` branch tracks the ulam framework boundary inside a11yfred. It
 
 ## Framework boundary
 
-These paths are ulam — they will move to the ulam repo at fork time:
+These paths are ulam: they will move to the ulam repo at fork time:
 
 ```text
-src/components/ui/      @ulam/ube — components, CSS, theme
-src/taho/               @ulam/taho — vanilla live region announcer
-src/taho-bayabas/       @ulam/taho-bayabas — React wrapper for taho
-src/taho-pandan/        @ulam/taho-pandan — Remix adapter for taho
-src/sili/               @ulam/sili — vanilla focus management core
-src/siling-labuyo/      @ulam/siling-labuyo — React hooks for sili
-src/siling-mahaba/      @ulam/siling-mahaba — Remix adapter for sili
-src/calamansi/          @ulam/calamansi — i18n, hooks, utilities
-src/sawsawan/           @ulam/sawsawan — integration bridge
-src/halohalo/           @ulam/halohalo — AI layer
-src/sawsawan/           @ulam/sawsawan — integration bridge
-src/tokens.css                       @ulam/ube — design primitives
-src/components/ui/user-preferences.css  @ulam/ube — OS/browser user preference overrides
-src/app-tokens.css                   @ulam/ube — sizing tokens
-src/typography.css      @ulam/ube — structural baseline
-src/UlamMenu.jsx        ulam — component gallery (the menu)
-src/UlamMenu.css        ulam — component gallery styles
+src/components/ui/      @ulam/ube: components, CSS, theme
+src/taho/               @ulam/taho: vanilla live region announcer
+src/taho-bayabas/       @ulam/taho-bayabas: React wrapper for taho
+src/taho-pandan/        @ulam/taho-pandan: Remix adapter for taho
+src/sili/               @ulam/sili: vanilla focus management core
+src/siling-labuyo/      @ulam/siling-labuyo: React hooks for sili
+src/siling-mahaba/      @ulam/siling-mahaba: Remix adapter for sili
+src/calamansi/          @ulam/calamansi: i18n, hooks, utilities
+src/sawsawan/           @ulam/sawsawan: integration bridge
+src/halohalo/           @ulam/halohalo: AI layer
+src/sawsawan/           @ulam/sawsawan: integration bridge
+src/tokens.css                       @ulam/ube: design primitives
+src/components/ui/user-preferences.css  @ulam/ube: OS/browser user preference overrides
+src/app-tokens.css                   @ulam/ube: sizing tokens
+src/typography.css      @ulam/ube: structural baseline
+src/UlamMenu.jsx        ulam: component gallery (the menu)
+src/UlamMenu.css        ulam: component gallery styles
 ```
 
 Note: `tools/rogers/` and `tools/neighbor/` are dev tooling, not framework packages. They are not extracted at fork time.
@@ -51,10 +51,10 @@ No file moves until the fork. The boundary is maintained by:
 
 These files live near the boundary but are a11yfred-specific:
 
-- `src/components/A11yLinkSc.jsx` — WCAG success criterion link
-- `src/components/A11yListRelated.jsx` — related findings list
-- `src/components/A11yPanelAdmin.jsx` — corpus admin panel
-- `src/components/A11yToastAiDebug.jsx` — AI assist toggle toast
+- `src/components/A11yLinkSc.jsx`: WCAG success criterion link
+- `src/components/A11yListRelated.jsx`: related findings list
+- `src/components/A11yPanelAdmin.jsx`: corpus admin panel
+- `src/components/A11yToastAiDebug.jsx`: AI assist toggle toast
 
 ## Future fork
 

@@ -1252,7 +1252,7 @@ function AppContent({
               heading: 'Custom, A11yFred',
               note: <>Append <code>off</code> to disable (e.g. <code>debug ai assist off</code>).</>,
               rows: [
-                { cmd: 'debug tab stops',    desc: 'Tab order overlay — records focus sequence as you Tab through the page' },
+                { cmd: 'debug tab stops',    desc: 'Tab order overlay, records focus sequence as you Tab through the page' },
                 { cmd: 'debug heading map',  desc: 'Heading hierarchy overlay + floating outline panel' },
                 { cmd: 'debug skeleton',     desc: 'Skeleton loading state' },
                 { cmd: 'debug ai assist',    desc: 'AI Assist + debug toast' },

@@ -1,4 +1,4 @@
-# rogers Browser Extension — Scope
+# rogers Browser Extension: Scope
 
 ## What it is
 
@@ -12,29 +12,29 @@ A Chrome extension that combines three things no single tool does together today
 
 | Capability | axe DevTools | Accessibility Insights | WAVE | ARC Toolkit | AccessiByeBye | **rogers** |
 | --- | --- | --- | --- | --- | --- | --- |
-| Automated rules (axe-core) | ✓ | ✓ | partial | ✓ | — | ✓ |
-| Visual focus debugger | — | partial | — | — | — | ✓ |
-| Accessible names debugger | — | — | — | — | — | ✓ |
-| Heading map debugger | — | partial | ✓ | — | — | ✓ |
-| Tab stops debugger | partial | ✓ | — | — | — | ✓ |
-| WCAG SC reference | — | — | — | — | — | ✓ |
-| Overlay detection | — | — | — | — | ✓ | ✓ |
-| Overlay blocking (network) | — | — | — | — | ✓ (7) | ✓ (23+) |
-| Free | Partial | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Automated rules (axe-core) | Yes | Yes | partial | Yes | No | Yes |
+| Visual focus debugger | No | partial | No | No | No | Yes |
+| Accessible names debugger | No | No | No | No | No | Yes |
+| Heading map debugger | No | partial | Yes | No | No | Yes |
+| Tab stops debugger | partial | Yes | No | No | No | Yes |
+| WCAG SC reference | No | No | No | No | No | Yes |
+| Overlay detection | No | No | No | No | Yes | Yes |
+| Overlay blocking (network) | No | No | No | No | Yes (7) | Yes (23+) |
+| Free | Partial | Yes | Yes | Yes | Yes | Yes |
 
 ## Architecture
 
 ```text
 extension/
   manifest.json         # MV3, declarativeNetRequest, content_scripts
-  background.js         # service worker — rule updates, message routing
+  background.js         # service worker: rule updates, message routing
   content.js            # injects rogers debuggers into inspected page
   popup/
     popup.html
     popup.js
     popup.css
   rules/
-    rules.json           # generated from OVERLAY_SIGNATURES — do not edit manually
+    rules.json           # generated from OVERLAY_SIGNATURES, do not edit manually
   vendor/
     axe.min.js           # axe-core, bundled
 ```
@@ -49,26 +49,26 @@ extension/
 ### Background service worker
 
 - Manages `declarativeNetRequest` dynamic rules
-- No persistent state — stateless rule application
+- No persistent state. Stateless rule application.
 
 ### Popup
 
 - Vanilla HTML/CSS/JS, no framework
 - Sections:
-  - **Audit** — run axe, show violations grouped by impact (critical → best practice)
-  - **Debuggers** — toggle focus, names, headings, tabstops per tab
-  - **Overlays** — scan results from `detectOverlays()`, block status per vendor
-  - **WCAG** — filterable SC list from `WCAG_CRITERIA` (level, version, coverage)
-  - **Settings** — which debuggers auto-run on page load, block list on/off
+  - **Audit:** run axe, show violations grouped by impact (critical to best practice)
+  - **Debuggers:** toggle focus, names, headings, tabstops per tab
+  - **Overlays:** scan results from `detectOverlays()`, block status per vendor
+  - **WCAG:** filterable SC list from `WCAG_CRITERIA` (level, version, coverage)
+  - **Settings:** which debuggers auto-run on page load, block list on/off
 
 ## What needs to be built
 
 ### 1. Extension shell
 
-- `manifest.json` — MV3, permissions: `activeTab`, `scripting`, `declarativeNetRequest`, `storage`
-- `background.js` — service worker, message routing
-- `content.js` — rogers injector + axe runner
-- `popup/` — vanilla UI
+- `manifest.json`: MV3, permissions: `activeTab`, `scripting`, `declarativeNetRequest`, `storage`
+- `background.js`: service worker, message routing
+- `content.js`: rogers injector + axe runner
+- `popup/`: vanilla UI
 
 ### 2. Overlay blocker
 
@@ -92,26 +92,26 @@ extension/
 ### 5. IS_DEV guard removal in rogers
 
 - All rogers overlay mounts currently check `import.meta.env.DEV`
-- Extension needs them in production — replace env guard with an `enabled` option
+- Extension needs them in production. Replace env guard with an `enabled` option.
 - Keep IS_DEV behavior in the app by passing `enabled: import.meta.env.DEV`
 
 ## What's out of scope (v1)
 
-- Guided manual test flows (Accessibility Insights style) — v2
-- DevTools panel — popup is sufficient for v1
-- Firefox — MV3 differences, v2
-- CI/CD integration — separate tool
+- Guided manual test flows (Accessibility Insights style): v2
+- DevTools panel: popup is sufficient for v1
+- Firefox: MV3 differences, v2
+- CI/CD integration: separate tool
 
 ## Open questions
 
-1. **Repo** — lives here alongside rogers, or separate repo?
-2. **Name** — "rogers DevTools"? "rogers"? Something else entirely?
-3. **Auto-blocking default** — block overlays by default (opt-out) or off by default (opt-in)?
+1. **Repo:** lives here alongside rogers, or separate repo?
+2. **Name:** "rogers DevTools"? "rogers"? Something else entirely?
+3. **Auto-blocking default:** block overlays by default (opt-out) or off by default (opt-in)?
 
 ## Dependencies
 
-- `axe-core` — MPL 2.0, free to embed
-- `rogers` (this repo) — vanilla, no framework
+- `axe-core`: MPL 2.0, free to embed
+- `rogers` (this repo): vanilla, no framework
 - No other runtime dependencies
 
 ## Maintenance
