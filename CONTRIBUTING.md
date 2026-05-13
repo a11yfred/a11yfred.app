@@ -101,9 +101,7 @@ git commit -m "WIP"
 
 - Use JSX for React components (project is plain JavaScript, no TypeScript)
 - Use CSS custom properties (tokens) — no hardcoded colors/spacing
-- Include accessibility attributes (aria-label, role, etc.)
-- Test keyboard navigation and screen reader support
-- Respect `prefers-reduced-motion` for animations
+- All UI changes must meet WCAG 2.2 Level AA — keyboard operable, screen reader compatible, sufficient contrast, reduced motion respected
 
 ## Before Pushing
 
