@@ -109,7 +109,7 @@ A11yFred is a professional tool for accessibility auditors. It is not directed a
 
 ## GDPR (EU/EEA users)
 
-Because A11yFred collects no personal data and processes all data locally in your browser, it does not act as a data controller or data processor under the GDPR. No data is transferred to Anthropic servers. No data is shared with third parties unless you explicitly use AI Assist, in which case the relevant provider's data practices apply.
+Because A11yFred collects no personal data and processes all data locally in your browser, it does not act as a data controller or data processor under the GDPR. No data is transferred to any third-party servers. No data is shared with third parties unless you explicitly use AI Assist, in which case the relevant provider's data practices apply.
 
 ---
 

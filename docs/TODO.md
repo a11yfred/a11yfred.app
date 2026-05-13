@@ -146,7 +146,7 @@ Building distributable installers requires `electron-builder` (already a dev dep
 
 ### Privacy & Security
 
-- [ ] **GDPR disclosure for Phase 3** `[privacy]` `[phase3]` `[launch-blocker]` ,  ~~Finalize GDPR-DRAFT.md~~ → published as docs/PRIVACY.md (May 13). Update GitHub repo URL in URL_PRIVACY_POLICY constant once repo is public.
+- [x] **GDPR disclosure for Phase 3** `[privacy]` `[phase3]` `[launch-blocker]` ,  Published as docs/PRIVACY.md (May 13). URL_PRIVACY_POLICY points to a11yfred/a11yfred (repo is public).
 
 ---
 

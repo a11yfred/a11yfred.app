@@ -264,7 +264,7 @@
   "detail.agentic_mode_help": "Only available with Claude (Anthropic). The AI searches past revision examples to match the tone and depth you have already established.",
   "detail.agentic_mode_hint": "Claude will search past examples from this corpus to match your established tone and technical depth.",
   "detail.ai_revision_error_heading": "AI Revision Failed",
-  "detail.ai_revision_error_body": "Something went wrong while revising. Press Save & Revise Selected to try again.",
+  "detail.ai_revision_error_body": "Something went wrong while revising. Press Rewrite to try again.",
   "detail.ai_revision_error_invalid_key": "Invalid or expired API key ({provider}). Double-check your key in Settings.",
   "detail.ai_revision_error_rate_limit": "Rate limit reached ({provider}). Wait a moment and try again.",
   "detail.ai_revision_error_service_error": "{provider} service error ({status}). Try again in a few seconds.",
