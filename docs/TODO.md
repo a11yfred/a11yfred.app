@@ -100,6 +100,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Infrastructure
 
+- [ ] **PWA icons** `[infra]` `[ux]` ,  Add PNG icons for better PWA install experience: `public/icon-192.png` and `public/icon-512.png`. Update vite.config.js manifest icons array to include them. SVG icon works but some browsers/OS prefer PNG for home screen icons.
 - [ ] **Version tagging** `[infra]` ,  Decide corpus threshold, create `v0.1.0` tag, push to GitHub releases.
 - [ ] **Chrome extension ,  validate and merge** `[infra]` ,  Add PNG icons, load unpacked, smoke-test at ~400px, merge.
 - [ ] **Firefox extension ,  validate and merge** `[infra]` ,  Add PNG icons, load via about:debugging, confirm sidebar, merge.
@@ -208,7 +209,7 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ Phase 1 complete (May 6)
 - ✅ Public corpus fully sourced and WCAG-mapped
 - ✅ All linters passing (ESLint 9.x, Stylelint, Markdownlint)
-- ✅ Offline-first support (Service Worker, PWA manifest)
+- ✅ Offline-first support (Service Worker, PWA manifest) — implemented May 13 via vite-plugin-pwa; workbox precaches app shell + all assets; Google Fonts cached at runtime
 - ✅ Accessibility baseline (axe-core, WCAG 2.2 AA, keyboard + screen reader tested)
 - ✅ Documentation (README, CONTRIBUTING, SECURITY, DEPLOYING, CHANGELOG, UPDATES)
 - ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)

@@ -1,8 +1,50 @@
 ﻿import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      workbox: {
+        // Cache app shell, corpus JSON, locale JSONs, and all assets
+        globPatterns: ['**/*.{js,css,html,svg,png,ico,json}'],
+        // Corpus + locale JSONs can be large; raise the size warning limit
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        runtimeCaching: [
+          {
+            // Google Fonts stylesheet
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'google-fonts-stylesheets' },
+          },
+          {
+            // Google Fonts files
+            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-webfonts',
+              expiration: { maxAgeSeconds: 60 * 60 * 24 * 365 },
+            },
+          },
+        ],
+      },
+      manifest: {
+        name: 'A11yFred',
+        short_name: 'A11yFred',
+        description: 'Search and copy professional WCAG defect descriptions in seconds. Free tool for accessibility auditors.',
+        theme_color: '#111111',
+        background_color: '#111111',
+        display: 'standalone',
+        start_url: '/',
+        scope: '/',
+        icons: [
+          { src: '/favicon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any maskable' },
+        ],
+      },
+    }),
+  ],
   base: '/',
   define: { 'globalThis.ROGERS_DEV': 'import.meta.env.DEV' },
   server: {
