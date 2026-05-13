@@ -95,7 +95,7 @@ See [src/components/ui/README.md](src/components/ui/README.md) for full componen
 Vanilla JS. Zero dependencies. The low-level layer everything else builds on.
 
 | Module | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `escapeKey` | Register / unregister an Escape keydown handler |
 | `focusTrap` | Constrain Tab to a container while active |
 | `ariaHide` | Set `inert` on background content while an overlay is open |
@@ -123,7 +123,7 @@ Hash-based router and focus management hooks for React. Wraps `@ulam/sili` primi
 **Focus hooks:**
 
 | Hook | Description |
-|------|-------------|
+| ------ | ------------- |
 | `useEscapeKey(active, handler)` | Escape handler, cleans up automatically |
 | `useFocusTrap(ref, active)` | Restrict Tab to container |
 | `useFocusOnMount(ref?)` | Move focus on mount (headings, modal open) |
@@ -135,7 +135,7 @@ Hash-based router and focus management hooks for React. Wraps `@ulam/sili` primi
 **Utility hooks:**
 
 | Hook | Description |
-|------|-------------|
+| ------ | ------------- |
 | `useDir()` | Reactive `html[dir]`: `'ltr'` or `'rtl'` |
 | `useMediaQuery(query)` | Reactive `window.matchMedia` |
 | `usePageTitle(title)` | Sets `document.title = "App \| title"` |
@@ -240,7 +240,7 @@ Named for halo-halo, the layered Filipino dessert: many things mixed together.
 AI service adapters, model configuration, and user preference management. Zero runtime dependencies outside the host app's AI SDK.
 
 | Module | Description |
-|--------|-------------|
+| -------- | ------------- |
 | `aiService` | Standard request/response AI calls |
 | `agenticAiService` | Multi-step agentic AI calls |
 | `models` | Model catalog and capability flags |
@@ -260,7 +260,7 @@ The React Query DevTools of accessibility. Drop it into any project in dev mode.
 **Portable components (part of `@a11yfred/rogers`):**
 
 | Component | Description |
-|-----------|-------------|
+| ----------- | ------------- |
 | `FocusDebugger` | Toast + flash overlay on every keyboard focus event. Shows element, `:focus` and `:focus-visible` status. |
 | `NamesDebugger` | Cursor-following tooltip showing the accessible name of the hovered element and its source. |
 | `TabStopsDebugger` | Recording mode: activate, then Tab through the page. Renders numbered circles + SVG connecting lines showing focus order. |
@@ -339,7 +339,7 @@ See [tools/neighbor/RULES.md](tools/neighbor/RULES.md) for the full rule catalog
 All packages are named for Filipino food: the framework's origin story.
 
 | Package | Food | Role |
-|---------|------|------|
+| --------- | ------ | ------ |
 | ube | Purple yam: sweet, foundational | UI components |
 | sili | Chili: small, sharp, essential | Focus primitives |
 | siling labuyo | Bird's eye chili: tiny but powerful | React hooks |

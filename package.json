@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint:js": "eslint src/",
     "lint:css": "stylelint \"src/**/*.css\"",
-    "lint:md": "markdownlint \"docs/**/*.md\" README.md",
+    "lint:md": "markdownlint \"docs/**/*.md\" \"src/**/README.md\" \"tools/**/README.md\" \"*.md\"",
     "lint": "npm run lint:js && npm run lint:css && npm run lint:md",
     "translate": "node scripts/translate-missing.mjs",
     "sync-overlays": "node tools/sync-overlays.mjs"

@@ -5,7 +5,7 @@ Accessibility linting plugin for ESLint and Stylelint. Catches ARIA anti-pattern
 ## Packages
 
 | Entry point | Covers |
-|---|---|
+| --- | --- |
 | `@a11yfred/neighbor/eslint` | React / JSX |
 | `@a11yfred/neighbor/eslint-vue` | Vue SFCs |
 | `@a11yfred/neighbor/eslint-angular` | Angular templates |
@@ -20,7 +20,7 @@ The table below shows how neighbor fills gaps across frameworks. Each ecosystem 
 Base: **eslint-plugin-jsx-a11y** (peer, optional)
 
 | What neighbor adds | Rule | SC |
-|---|---|---|
+| --- | --- | --- |
 | `aria-disabled` keeps element reachable | `prefer-aria-disabled` | 2.1.1 |
 | `aria-disabled` must block click handler | `no-unblocked-aria-disabled` | 2.1.1 |
 | `aria-label` on generic element with no role | `no-aria-label-on-generic` | 1.3.1 |
@@ -30,8 +30,8 @@ Base: **eslint-plugin-jsx-a11y** (peer, optional)
 | `role="dialog"` strongly recommended to have close button | `no-dialog-without-close` | 2.1.2 |
 | `role="group"` + form controls requires name | `no-group-without-name` | 1.3.1 |
 | `role="tooltip"` requires `id` on the tooltip element | `no-tooltip-role-misuse` | 4.1.2 |
-| `role="application"` disables AT browse mode | `no-application-role` |: |
-| `role="grid"` almost always wrong | `no-grid-role` |: |
+| `role="application"` disables AT browse mode | `no-application-role` | - |
+| `role="grid"` almost always wrong | `no-grid-role` | - |
 | `role="menu"` on nav triggers wrong AT mode | `no-menu-role-on-nav` | 2.1.1 |
 | `role="presentation"` / `none` on focusable element | `no-presentation-on-focusable` | 2.1.1 |
 | `role="log"` must not contain interactive children | `no-log-with-interactive-children` | 4.1.2 |
@@ -44,9 +44,9 @@ Base: **eslint-plugin-jsx-a11y** (peer, optional)
 | `role="listbox"` requires `role="option"` children | `no-listbox-without-option` | 4.1.2 |
 | `role="tree"` requires `role="treeitem"` children | `no-tree-without-treeitem` | 4.1.2 |
 | `role="feed"` requires `role="article"` children | `no-feed-without-article` | 4.1.2 |
-| `aria-hidden="true"` + `role="none"` is redundant | `no-redundant-aria-hidden-with-presentation` |: |
-| `aria-roledescription` does not translate | `no-aria-roledescription` |: |
-| `aria-readonly` has poor AT support | `no-aria-readonly` |: |
+| `aria-hidden="true"` + `role="none"` is redundant | `no-redundant-aria-hidden-with-presentation` | - |
+| `aria-roledescription` does not translate | `no-aria-roledescription` | - |
+| `aria-readonly` has poor AT support | `no-aria-readonly` | - |
 | `aria-owns` on void element | `no-aria-owns-on-void` | 4.1.2 |
 | `aria-activedescendant` requires non-empty static ID | `no-aria-activedescendant-without-id` | 4.1.2 |
 | `aria-required` only valid on form-control roles | `no-aria-required-on-non-form` | 4.1.2 |
@@ -73,7 +73,7 @@ Base: **eslint-plugin-vuejs-accessibility** (peer, optional)
 neighbor adds everything in the React table above, adapted for `VElement` AST nodes, plus the portability rules below that fill gaps vuejs-accessibility does not cover.
 
 | What neighbor adds | Rule | SC |
-|---|---|---|
+| --- | --- | --- |
 | Ambiguous link text ("click here", "read more") | `no-anchor-ambiguous-text` | 2.4.4 |
 | `<a>` with no content and no accessible name | `no-anchor-no-content` | 4.1.2 |
 | `aria-activedescendant` element must have `tabIndex` | `no-aria-activedescendant-no-tabindex` | 4.1.2 |
@@ -98,7 +98,7 @@ Base: **@angular-eslint/eslint-plugin-template** (peer, optional)
 neighbor adds the same rule set as Vue (all recommended + portability rules), adapted for `TmplAstElement` nodes.
 
 | Angular-specific limitation | Affected rules |
-|---|---|
+| --- | --- |
 | Parser does not set parent pointers: ancestor walking unavailable | `no-summary-without-details`, `no-button-type-missing`, `no-log-with-interactive-children`, `no-menu-role-on-nav`, `no-heading-inside-interactive` |
 | Bound attributes (`[aria-label]="expr"`) are not statically analyzable | Any rule checking ARIA attribute values |
 
@@ -134,7 +134,7 @@ ESLint does not parse plain HTML files natively. For static sites:
 ## Rule severity defaults
 
 | Severity | Meaning |
-|---|---|
+| --- | --- |
 | `error` | Definite AT breakage or HTML spec violation: fix required |
 | `warn` | Strong guidance with occasional legitimate overrides: review required |
 
