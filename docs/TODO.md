@@ -25,7 +25,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ## Phase 1 ,  Launch Day Essentials
 
-**Day 1 for Phase 1 public release** (ship with these):
+**Can be done now** (no domain required):
 
 - [ ] **Corpus translations incomplete** `[i18n]` `[launch-blocker]` ,  8 language overlays (de, es, fr, ja, ko, pt-BR, tl, zh) cover 54 of 106 corpus entries. The remaining 52 fall back to English for non-English users. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill the gaps. Requires an Anthropic API key.
 - [ ] **Manual testing before launch** `[qa]` `[manual]` ,  Smoke test core flows: search/select/refine/copy on desktop and mobile (iOS Safari, Android Chrome); test all locales (en, ja, ko, es, fr, de, zh); test keyboard nav (Tab, Enter, Escape); test screen reader (NVDA, JAWS, VoiceOver); verify offline mode works; test on slow network (throttle to 3G).
@@ -33,16 +33,43 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ---
 
+## Phase 1.5 ,  Post-Domain / Pre-Launch
+
+**Gated on production domain being live:**
+
+- [ ] **Update canonical URL** `[seo]` `[code]` ,  Update `og:url`, `og:image`, `twitter:*`, and JSON-LD URLs in `index.html` from placeholder `a11yfred.app` to confirmed production domain.
+- [ ] **Remove `noindex`** `[seo]` `[infra]` ,  Replace `<meta name="robots" content="noindex">` with `index, follow` once domain is live and content is ready to be crawled.
+- [ ] **OG image** `[seo]` `[infra]` `[launch-blocker]` ,  Create `public/og-image.png` (1200×630). Screenshot should reflect the real production URL. Referenced by `og:image` and `twitter:image` in index.html; returns 404 until this file exists.
+- [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain ownership, submit sitemap.xml, confirm indexing is enabled, monitor for crawl errors post-launch.
+
+---
+
 ## Phase 2 ,  In Progress
+
+Ordered high-value + low-effort first within each section.
+
+### Data & Content
+
+- [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` ,  Add 4 entries: Dynamic Type sizing, accessibility labels, announcements, custom actions.
+
+### Export & Sharing
+
+- [ ] **Export findings** `[ux]` ,  Multi-select UI (checkboxes or shift-click in result list), format picker (Markdown, plain text, CSV, Excel), file download.
+- [ ] **Email results** `[ux]` `[enhancement]` ,  Add Email delivery to Export: mailto: compose option or SendGrid/Resend API, test end-to-end.
+- [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` ,  Implement Jira/Linear URL generation, test deep links, document format.
+
+### Related Entry Ranking
+
+- [ ] **Wire related-entry ranking into SheetDetail** `[ux]` `[corpus]` `[phase2]` ,  `relatedItems()` and `useCoSelection` are fully implemented in `src/hooks/relevance.js` but never called. Wire a `rankFn` and call `relatedItems()` in SheetDetail to replace the static `finding.relatedSC` list with dynamically ranked related findings (7-tier: same SC, AAA counterpart, reverse-related, shared SC overlap, keyword similarity, platform/severity match, Best Practice last). Co-selection pairs are already tracked in localStorage.
 
 ### AI Assist & Agent
 
-- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` ,  Add `refinementHistory` state, pass full history to `getAgenticRefinement`, display turn history, add "Clear conversation" button, test corpus search per turn.
 - [ ] **System prompt tuning** `[ai]` `[claude]` `[phase2]` ,  Test across 20+ corpus entries, verify tone/length/format, adjust `buildPrompt()`, document final prompt, iterate on feedback.
+- [ ] **Multi-turn refinement conversation** `[agent]` `[ux]` `[claude]` ,  Add `refinementHistory` state, pass full history to `getAgenticRefinement`, display turn history, add "Clear conversation" button, test corpus search per turn.
 
 ### User Findings & Editing
 
-- [ ] **Copy / add / edit / delete findings** `[ux]` `[phase2]` ,  Data layer wired locally. Phase 1: UI forms. Phase 2: Supabase backend, cloud sync.
+- [ ] **Copy / add / edit / delete findings** `[ux]` `[phase2]` ,  Data layer wired locally. Needs UI forms. Phase 2: Supabase backend, cloud sync.
 - [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` `[manual]` ,  Works via debug command. Add Settings UI toggle, document behavior.
 
 ### Multilingual Edit Flow
@@ -56,23 +83,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [ ] **Personal override indicator in DetailPanel** `[ux]` `[design]` ,  Show badge near title with timestamp when `_hasOverride` is true.
 - [ ] **Contributions review panel (maintainer)** `[ux]` `[manual]` ,  Add section in SettingsPanel for pending contributions with approve/reject/export.
 - [ ] **Reset All excludes personal overrides and contributions** `[ux]` `[privacy]` `[design]` ,  Separate overrides/contributions from Reset All, require explicit user action to clear.
-
-### Export & Sharing
-
-- [ ] **Export findings** `[ux]` ,  Multi-select UI (checkboxes or shift-click in result list), format picker (Markdown, plain text, CSV, Excel), file download.
-- [ ] **Email results** `[ux]` `[enhancement]` ,  Add Email delivery to Export: mailto: compose option or SendGrid/Resend API, test end-to-end.
-- [ ] **Google Drive export** `[ux]` `[infra]` `[phase3]` ,  After Google OAuth active, add "Save to Drive" option in export format picker; upload exported file directly to user's Drive.
-- [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` ,  Implement Jira/Linear URL generation, test deep links, document format.
-
-### Data & Content
-
-- [ ] **Add native-specific corpus entries** `[corpus]` `[phase2]` ,  Add 4 entries: Dynamic Type sizing, accessibility labels, announcements, custom actions.
-- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` `[phase2]` ,  Settings UI for URL input/load, activate Supabase backend.
-
-### Related Entry Ranking
-
-- [ ] **Implement tiered related-entry ranking** `[ux]` `[corpus]` `[phase2]` ,  Surface related entries using 7-tier order: (1) same SC, (2) AAA/enhanced counterpart, (3) entries where current SC appears in their related array, (4) shared related SC overlap, (5) keyword similarity, (6) discoverability (same platform/severity/section), (7) Best Practice entries last. See memory: related_sc_ranking.md.
-- [ ] **User co-selection behavioral signal** `[ux]` `[data]` `[phase2]` ,  Track when a user copies one entry then navigates to and copies another in the same session. Persist co-selection pairs as `{ a, b, count }` in `localStorage` key `coSelectionPairs`. Weak signal: view-then-view (sessionStorage only). Strong signal: copy-then-copy (persisted). Use pair counts to boost ranking of frequently co-used entries above keyword tier. Wire copy events in `DetailPanel.jsx` and selection events in `App.jsx`.
 
 ### Design & Polish
 
@@ -93,10 +103,6 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 ---
 
 ## DevOps
-
-### Code Quality
-
-- [ ] **UI component library extraction (npm publishing)** `[code]` `[enhancement]` `[deferred]` ,  Accessible SPA primitives fully built and in production (router, announcer, focus/names debuggers, BottomSheet, Drawer, Modal, form controls, button system). **Rationale for deferral**: (1) extraction requires monorepo setup and package management complexity, (2) component APIs are stable but not yet battle-tested in multiple projects, (3) publishing adds maintenance burden for minimal v1.0 gain. **Recommendation**: Defer to v1.1 or later (post-launch). If extraction becomes important, (1) confirm button unification complete, (2) audit component APIs for cross-project reusability, (3) scaffold monorepo structure, (4) publish to npm
 
 ### Infrastructure
 
@@ -154,41 +160,44 @@ Building distributable installers requires `electron-builder` (already a dev dep
 
 ## Phase 3 ,  Planned
 
-### AI Assist & Agent
-
-- [ ] **Extend agentic AI to remaining providers** `[ai]` `[agent]` `[enhancement]` ,  Keep Claude-only (tool use provider-specific). Standard AI Assist works for all 4 providers without corpus search.
-
-### Remix Migration
-
-- [ ] **Hash URL → Remix route redirect shim** `[infra]` `[ux]` `[phase3]` ,  Current URLs use hash routing (`/#/?q=...&sort=...`). When migrating to Remix, add a client-side shim in the root route that detects `window.location.hash` on load, parses the old hash params (q, sort, platform, level, narrow), and redirects to the equivalent Remix path/query. Ensures shared links from the current app keep working after migration.
-
-### Authentication
+### Authentication & Cloud
 
 - [ ] **Sign-in UI** `[ux]` `[phase3]` ,  Add SettingsPanel footer section with avatar/name + Google/GitHub buttons + sign-out.
-- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` `[launch-blocker]` ,  Install Supabase JS, set env vars, uncomment, verify OAuth slugs and RLS policies.
-
-### Cloud Data Sync
-
+- [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` ,  Install Supabase JS, set env vars, uncomment, verify OAuth slugs and RLS policies.
 - [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` ,  Activate `syncSettings()` and `getRemoteSettings()`, merge on sign-in, push on change.
 - [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` ,  Activate CRUD stubs via Supabase, verify schema.
 - [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` ,  Wire rank up/rank down sync, merge on sign-in.
+- [ ] **Google Drive export** `[ux]` `[infra]` `[phase3]` ,  After Google OAuth active, add "Save to Drive" option in export format picker.
 
-### Search & Visibility
+### Remix Migration
 
-- [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain, submit sitemap, monitor indexing.
-- [ ] **Update canonical URL to production domain** `[seo]` `[code]` ,  Confirm domain, update canonical/OG/Twitter URLs in index.html once domain is live; currently placeholder `a11yfred.app`.
+- [ ] **Hash URL → Remix route redirect shim** `[infra]` `[ux]` `[phase3]` ,  When migrating to Remix, add a shim in the root route that detects `window.location.hash` on load, parses old hash params (q, sort, platform, level, narrow), and redirects to the equivalent Remix path/query. Ensures shared links keep working after migration.
 
 ### Analytics & Monitoring
 
 - [ ] **Error tracking / crash reporting** `[infra]` `[monitoring]` ,  Evaluate Sentry, add error boundary, capture unhandled rejections.
 - [ ] **GitHub releases page** `[infra]` `[manual]` ,  Create v0.1.0 release, add notes, attach artifacts.
-
-### Monetization & Growth
-
-- [ ] **Monetization strategy** `[phase3]` `[manual]` ,  Decide free/premium/ad-supported, define limits, rate limiting for AI.
-- [ ] **Ad network integration** `[infra]` `[manual]` ,  Research Carbon/EthicalAds/Splitrocket, evaluate CPM/CPC/placement.
 - [ ] **Social proof & community** `[growth]` `[manual]` ,  Submit to Product Hunt, post to a11y communities, reach out to influencers.
 - [ ] **Feedback collection** `[growth]` `[ux]` ,  Add feedback widget, monitor GitHub Issues, establish feedback loop.
+
+### Search & Visibility
+
+- [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` ,  See Phase 1.5 -- gated on domain.
+- [ ] **Update canonical URL to production domain** `[seo]` `[code]` ,  See Phase 1.5 -- gated on domain.
+
+---
+
+## Deferred
+
+No timeline. Revisit post-launch based on usage and demand.
+
+- [ ] **Extend agentic AI to remaining providers** `[ai]` `[agent]` ,  Tool use is Claude-only (provider-specific). Standard AI Assist works for all 4 providers without corpus search. Revisit if non-Anthropic providers add tool use APIs.
+- [ ] **Monetization strategy** `[phase3]` `[manual]` ,  Decide free/premium/ad-supported, define limits, rate limiting for AI.
+- [ ] **Ad network integration** `[infra]` `[manual]` ,  Research Carbon/EthicalAds/Splitrocket, evaluate CPM/CPC/placement.
+- [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` ,  Settings UI for URL input/load, activate Supabase backend. Gated on auth.
+- [ ] **UI component library extraction (npm publishing)** `[code]` `[enhancement]` ,  Accessible SPA primitives fully built and in production. Defer to v1.1 post-launch: (1) confirm button unification complete, (2) audit component APIs for cross-project reusability, (3) scaffold monorepo structure, (4) publish to npm.
+- [ ] **Easter egg locale bundle** `[code]` `[i18n]` ,  18 locales built and functional. Remaining: extract to `src/calamansi/easter-eggs/`, implement lazy-loading, document in calamansi package.
+- 💤 SCSS migration, corpus pre-translation, Compare mode, Ko-fi donations, Ko-fi a11y patch, GitHub Sponsors
 
 ### Launch Readiness
 
@@ -198,10 +207,9 @@ Building distributable installers requires `electron-builder` (already a dev dep
 - [ ] **Accessibility audit** `[a11y]` `[manual]` `[launch-blocker]` ,  axe-core zero violations, full keyboard walkthrough, screen reader test (NVDA+Firefox, VoiceOver+Safari), 200%/400% zoom, prefers-reduced-motion, prefers-contrast, text spacing bookmarklet.
 - [ ] **Functional audit** `[qa]` `[manual]` `[launch-blocker]` ,  Test all core flows end-to-end: search, select, copy, refine, reset, settings, platform filter, WCAG filter, language switch, live search toggle, pinning, ranking, narrow results, hash navigation, PWA install.
 - [ ] **Mobile device testing** `[qa]` `[manual]` `[launch-blocker]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, and portrait/landscape layouts.
-- [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  Verify domain ownership in Search Console, submit sitemap.xml, confirm indexing is enabled (remove noindex), monitor for crawl errors post-launch.
+- [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  See Phase 1.5 -- gated on domain.
 - [x] **Expert source attribution audit** `[corpus]` `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13. All credited sources (Roselli, O'Hara, Watson, Lauke, Faulkner, TPGi, Deque, WebAIM, W3C, appt.org) are cited via links to their own published public articles. Standard attribution practice, no permission required. About panel sources list reflects only organizations with public reference material.
-- [ ] **OG image** `[seo]` `[infra]` `[launch-blocker]` ,  Create `public/og-image.png` (1200×630). Referenced by `og:image` and `twitter:image` in index.html. Returns 404 until this file exists. Create after the production domain is live so the screenshot reflects the real URL.
-- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  GDPR/privacy/terms, ~~SEO tags~~ (done, flip noindex when domain is live), OG image, Umami/error tracking, GitHub releases, social prep, domain/DNS, CDN, backup.
+- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  OG image (see Phase 1.5), flip noindex when domain is live, Umami/error tracking, GitHub releases, social prep, CDN, backup.
 - [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
 
 ---
@@ -251,4 +259,3 @@ All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and
 - ✅ Code quality audit: all three linters clean, Sheet.jsx keyboard handler added, stale eslint-disable removed (May 13)
 - ✅ Security audit: localStorage keys documented, console leaks verified DEV-only, all outbound links have rel="noreferrer", CSP correct, xlsx vulns noted as accepted risk (May 13)
 - ✅ Privacy policy: GDPR-DRAFT.md finalized as docs/PRIVACY.md, linked from in-app Privacy & Storage panel (May 13)
-- 💤 Deferred: SCSS migration, corpus pre-translation, Compare mode, Ko-fi donations, Ko-fi a11y patch, GitHub Sponsors
