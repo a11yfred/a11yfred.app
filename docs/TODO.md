@@ -101,6 +101,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Design & Polish
 
+- [ ] **Update color theme to be more neighborly** `[design]` ,  Align the a11yfred color palette more closely with the neighbor framework's visual style.
 - [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` ,  Audit layout consistency, empty states, keyboard nav, spacing.
 
 ---
@@ -199,6 +200,14 @@ Building distributable installers requires `electron-builder` (already a dev dep
 
 - [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` ,  See Phase 1.5 -- gated on domain.
 - [ ] **Update canonical URL to production domain** `[seo]` `[code]` ,  See Phase 1.5 -- gated on domain.
+
+---
+
+## mikey.fyi
+
+- [ ] **Update mikey.fyi content to feature Laura's site** `[manual]` ,  Full accessible rebuild -- highlight it prominently.
+- [ ] **Hide rogers from mikey.fyi** `[manual]` ,  Not ready to show publicly yet.
+- [ ] **Add Laura's site under ulam on mikey.fyi** `[manual]`
 
 ---
 
