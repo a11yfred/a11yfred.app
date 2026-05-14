@@ -16,6 +16,9 @@ import TileAd from './TileAd.jsx'
 import findingSlug from '../utils/findingSlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
 import { useKeydown } from '../hooks/useKeydown.js'
+import { useSettings } from '../context/SettingsContext.js'
+import { useSearch } from '../context/SearchContext.js'
+import { useRatings } from '../context/RatingsContext.js'
 import './A11yListResults.css'
 
 function triggerButtonAnimation(btn, id, setAnimating) {
@@ -29,8 +32,9 @@ function triggerButtonAnimation(btn, id, setAnimating) {
   }, RANK_ANIM_MS)
 }
 
-export function PinnedSection({ findings, onClearPins, headingRef, showRanking = true, ...listProps }) {
+export function PinnedSection({ findings, onSelect, onClearPins, headingRef }) {
   const t = useT()
+  const { showVoting: showRanking } = useSettings()
   if (!findings.length) return null
   return (
     <div className="pinned-section pinned-results">
@@ -46,11 +50,10 @@ export function PinnedSection({ findings, onClearPins, headingRef, showRanking =
         )}
       </div>
       <A11yListResults
-        {...listProps}
         results={findings}
+        onSelect={onSelect}
         selected={null}
         query=""
-        showRanking={showRanking}
         showRankingSort={showRanking}
         hideCount
         hasPinnedItems={false}
@@ -59,7 +62,14 @@ export function PinnedSection({ findings, onClearPins, headingRef, showRanking =
   )
 }
 
-export default function A11yListResults({ results, selected, onSelect, query, ratings = {}, onRankUp, onRankDown, onStar, onArchive, showRanking = true, countRef, onCopyLink, pinnedIds = new Set(), onPin, hideCount = false, filterLabel, narrowMode = false, narrowQuery = '', narrowResults = null, onNarrow, onNarrowExit, onNarrowChange, liveSearch = true, onNarrowSearch, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, sortBy = 'relevance', onSortChange, platform = 'all', onPlatformChange, wcagFilter = null, defaultWcagFilter = null, onOpenSettings }) {
+export default function A11yListResults({ results, selected, onSelect, query, countRef, onCopyLink, hideCount = false, filterLabel, narrowResults = null, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings }) {
+  const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter } = useSettings()
+  const { narrowMode, narrowQuery, sortBy, setSortBy: onSortChange, setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery } = useSearch()
+  const onNarrow = () => setNarrowMode(true)
+  const onNarrowExit = () => { setNarrowMode(false); setNarrowQuery(''); setSubmittedNarrowQuery('') }
+  const onNarrowChange = setNarrowQuery
+  const onNarrowSearch = () => setSubmittedNarrowQuery(narrowQuery)
+  const { ratings, rankUp: onRankUp, rankDown: onRankDown, toggleStar: onStar, toggleArchive: onArchive, pinnedIds, togglePin: onPin } = useRatings()
   const t = useT()
   const platformLabels = {
     all:      t('settings.platform_all'),

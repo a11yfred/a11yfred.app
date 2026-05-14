@@ -11,9 +11,11 @@ import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
 import { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '../halohalo/index.js'
 import { applyTheme } from '../hooks/useThemeManager.js'
-import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER, URL_PRIVACY_POLICY } from '../utils/constants.js'
+import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER, URL_PRIVACY_POLICY, EASTER_EGG_LOCALES } from '../utils/constants.js'
 import { setStorage, removeStorage } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
+import { useSettings } from '../context/SettingsContext.js'
+import { useRatings } from '../context/RatingsContext.js'
 import './A11yPanelSettings.css'
 
 function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {
@@ -127,30 +129,24 @@ const LANGUAGES = [
 ]
 
 const SettingsPanel = forwardRef(function A11yPanelSettings({
-  aiEnabled,
-  liveSearch,
-  showVoting,
-  showPersonalCorpus,
-  theme,
-  language,
-  platform,
-  wcagFilter,
-  fiestaUnlocked,
   onUnlock,
   onClose,
   onSave,
   onReset,
-  hasPins,
   onClearPins,
-  hasStarred,
   onClearStarred,
-  hasArchived,
   onClearArchived,
-  hasRankings,
   onResetRankings,
   onOpenPrivacy,
   h1Ref,
 }, ref) {
+  const { aiEnabled, liveSearch, showVoting, showPersonalCorpus, theme, language: rawLanguage, platform, wcagFilter, fiestaUnlocked } = useSettings()
+  const language = EASTER_EGG_LOCALES.has(rawLanguage) ? 'en' : rawLanguage
+  const { ratings, pinnedIds } = useRatings()
+  const hasPins = pinnedIds.size > 0
+  const hasStarred = Object.values(ratings).some(r => r.starred)
+  const hasArchived = Object.values(ratings).some(r => r.archived)
+  const hasRankings = Object.values(ratings).some(r => r.score !== 0)
   const saveButtonRef = useRef(null)
   const privacyButtonRef = useRef(null)
   const resetButtonRef = useRef(null)

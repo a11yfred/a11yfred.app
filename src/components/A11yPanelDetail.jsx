@@ -18,6 +18,8 @@ import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 import { getStorage, setStorage, getFindingNoteKey } from '../utils/storage.js'
 import useSheetDetailClipboard from '../hooks/useSheetDetailClipboard.js'
 import useSheetDetailRefine from '../hooks/useSheetDetailRefine.js'
+import { useSettings } from '../context/SettingsContext.js'
+import { useRatings } from '../context/RatingsContext.js'
 import './A11yPanelDetail.css'
 
 function FieldCheckbox({ label, checked, onChange, disabled }) {
@@ -35,7 +37,9 @@ function FieldCheckbox({ label, checked, onChange, disabled }) {
   )
 }
 
-export default function A11yPanelDetail({ finding, aiEnabled, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, getPairsFor, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function A11yPanelDetail({ finding, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+  const { aiEnabled } = useSettings()
+  const { getPairsFor } = useRatings()
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()

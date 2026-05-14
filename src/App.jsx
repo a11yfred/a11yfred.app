@@ -32,6 +32,9 @@ import { createComponents } from '@a11yfred/rogers/react'
 const { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } = createComponents({ useEffect, useRef })
 import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
+import { SettingsContext, useSettings } from './context/SettingsContext.js'
+import { SearchContext, useSearch } from './context/SearchContext.js'
+import { RatingsContext, useRatings } from './context/RatingsContext.js'
 import { I18nProvider, useT } from '@ulam/calamansi/react'
 import { initI18n } from '@ulam/calamansi'
 import I18N_LOCALES from './i18n-locales.js'
@@ -58,6 +61,8 @@ const UlamMenu = import.meta.env.DEV
 
 const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify', 'debug deploy netlify': 'netlify', 'debug deploy pages': 'pages', 'debug deploy vercel': 'vercel' }
+
+const COPY_FIELD = { title: 'lifetimeCopiedTitle', primarySc: 'lifetimeCopiedPrimarySc', relatedSc: 'lifetimeCopiedRelatedSc', desc: 'lifetimeCopiedDesc', fix: 'lifetimeCopiedFix', all: 'lifetimeCopiedAll' }
 
 function recordRecentFinding(id) {
   const recent = getStorageJson(LS_RECENT_FINDINGS, [])
@@ -133,58 +138,68 @@ function AppShell() {
   const [narrowQuery, setNarrowQuery] = useState(initNarrow)
   const [submittedNarrowQuery, setSubmittedNarrowQuery] = useState(initNarrow)
 
+  const { signals: ratings, rankUp, rankDown, toggleStar, toggleArchive, resetScores: resetRankings, clearAll: clearAllRatings, recordPin, recordOpen, recordCopy: _recordCopy } = useItemSignals('defect_ratings', { starBonus: 2, unstarPenalty: 1, archivePenalty: 1, openBoost: 0.5, copyBoost: 0.25 })
+  const recordCopy = useCallback((id, type) => _recordCopy(id, COPY_FIELD[type]), [_recordCopy]) // eslint-disable-line react-hooks/exhaustive-deps -- COPY_FIELD is module-stable
+  const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedItems('pinnedFindings')
+  const togglePin = useCallback((id) => {
+    const isPinning = !pinnedIds.has(id)
+    if (isPinning && ratings[id]?.archived) toggleArchive(id)
+    if (isPinning) recordPin(id)
+    _togglePin(id)
+  }, [pinnedIds, ratings, toggleArchive, recordPin, _togglePin])
+  const { getPairsFor } = useCoSelection('coSelectionPairs', 'sessionCopiedIds')
+
+  const ratingsValue = {
+    ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings,
+    pinnedIds, togglePin, clearPins,
+    getPairsFor, recordCopy, recordOpen, recordPin,
+  }
+
+  const settingsValue = {
+    theme, setTheme,
+    language, setLanguage,
+    aiEnabled, setAiEnabled,
+    liveSearch, setLiveSearch,
+    showVoting, setShowVoting,
+    showPersonalCorpus, setShowPersonalCorpus,
+    fiestaUnlocked, setSaveCount,
+    platform, setPlatform,
+    wcagFilter, setWcagFilter,
+  }
+
+  const searchValue = {
+    query, setQuery,
+    submittedQuery, setSubmittedQuery,
+    searchKey, setSearchKey,
+    selected, setSelected,
+    sheetCollapsed, setSheetCollapsed,
+    pendingFinding, setPendingFinding,
+    pendingPrivacy, setPendingPrivacy,
+    panelFocusTrigger, setPanelFocusTrigger,
+    narrowMode, setNarrowMode,
+    narrowQuery, setNarrowQuery,
+    submittedNarrowQuery, setSubmittedNarrowQuery,
+  }
+
   return (
     <I18nProvider locale={language}>
-      <AppContent
-        theme={theme} setTheme={setTheme}
-        language={language} setLanguage={setLanguage}
-        aiEnabled={aiEnabled} setAiEnabled={setAiEnabled}
-        liveSearch={liveSearch} setLiveSearch={setLiveSearch}
-        showVoting={showVoting} setShowVoting={setShowVoting}
-        showPersonalCorpus={showPersonalCorpus} setShowPersonalCorpus={setShowPersonalCorpus}
-        fiestaUnlocked={fiestaUnlocked} setSaveCount={setSaveCount}
-        query={query} setQuery={setQuery}
-        submittedQuery={submittedQuery} setSubmittedQuery={setSubmittedQuery}
-        searchKey={searchKey} setSearchKey={setSearchKey}
-        selected={selected} setSelected={setSelected}
-        sheetCollapsed={sheetCollapsed} setSheetCollapsed={setSheetCollapsed}
-        pendingFinding={pendingFinding} setPendingFinding={setPendingFinding}
-        pendingPrivacy={pendingPrivacy} setPendingPrivacy={setPendingPrivacy}
-        platform={platform} setPlatform={setPlatform}
-        wcagFilter={wcagFilter} setWcagFilter={setWcagFilter}
-        panelFocusTrigger={panelFocusTrigger} setPanelFocusTrigger={setPanelFocusTrigger}
-        narrowMode={narrowMode} setNarrowMode={setNarrowMode}
-        narrowQuery={narrowQuery} setNarrowQuery={setNarrowQuery}
-        submittedNarrowQuery={submittedNarrowQuery} setSubmittedNarrowQuery={setSubmittedNarrowQuery}
-      />
+      <SettingsContext.Provider value={settingsValue}>
+        <SearchContext.Provider value={searchValue}>
+          <RatingsContext.Provider value={ratingsValue}>
+            <AppContent />
+          </RatingsContext.Provider>
+        </SearchContext.Provider>
+      </SettingsContext.Provider>
     </I18nProvider>
   )
 }
 
 const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/help', '/onboarding', '/results/all', '/admin', '/ulam'])
 
-function AppContent({
-  theme, setTheme,
-  language, setLanguage,
-  aiEnabled, setAiEnabled,
-  liveSearch, setLiveSearch,
-  showVoting, setShowVoting,
-  showPersonalCorpus, setShowPersonalCorpus,
-  fiestaUnlocked, setSaveCount,
-  query, setQuery,
-  submittedQuery, setSubmittedQuery,
-  searchKey, setSearchKey,
-  selected, setSelected,
-  sheetCollapsed, setSheetCollapsed,
-  pendingFinding, setPendingFinding,
-  pendingPrivacy, setPendingPrivacy,
-  platform, setPlatform,
-  wcagFilter, setWcagFilter,
-  panelFocusTrigger, setPanelFocusTrigger,
-  narrowMode, setNarrowMode,
-  narrowQuery, setNarrowQuery,
-  submittedNarrowQuery, setSubmittedNarrowQuery,
-}) {
+function AppContent() {
+  const { theme, setTheme, language, setLanguage, aiEnabled, setAiEnabled, liveSearch, setLiveSearch, showVoting, setShowVoting, showPersonalCorpus, setShowPersonalCorpus, fiestaUnlocked, setSaveCount, platform, setPlatform, wcagFilter, setWcagFilter } = useSettings()
+  const { query, setQuery, submittedQuery, setSubmittedQuery, searchKey, setSearchKey, selected, setSelected, sheetCollapsed, setSheetCollapsed, pendingFinding, setPendingFinding, pendingPrivacy, setPendingPrivacy, panelFocusTrigger, setPanelFocusTrigger, narrowMode, setNarrowMode, narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery } = useSearch()
+  const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings, pinnedIds, togglePin, clearPins, getPairsFor, recordCopy, recordOpen } = useRatings()
   const { route, navigate, appName } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
@@ -369,17 +384,6 @@ function AppContent({
   const [findingHistory, setFindingHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
-  const COPY_FIELD = { title: 'lifetimeCopiedTitle', primarySc: 'lifetimeCopiedPrimarySc', relatedSc: 'lifetimeCopiedRelatedSc', desc: 'lifetimeCopiedDesc', fix: 'lifetimeCopiedFix', all: 'lifetimeCopiedAll' }
-  const { signals: ratings, rankUp, rankDown, toggleStar, toggleArchive, resetScores: resetRankings, clearAll: clearAllRatings, recordPin, recordOpen, recordCopy: _recordCopy } = useItemSignals('defect_ratings', { starBonus: 2, unstarPenalty: 1, archivePenalty: 1, openBoost: 0.5, copyBoost: 0.25 })
-  const recordCopy = useCallback((id, type) => _recordCopy(id, COPY_FIELD[type]), [_recordCopy]) // eslint-disable-line react-hooks/exhaustive-deps -- COPY_FIELD is module-stable
-  const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedItems('pinnedFindings')
-  const togglePin = useCallback((id) => {
-    const isPinning = !pinnedIds.has(id)
-    if (isPinning && ratings[id]?.archived) toggleArchive(id)
-    if (isPinning) recordPin(id)
-    _togglePin(id)
-  }, [pinnedIds, ratings, toggleArchive, recordPin, _togglePin])
-  const { getPairsFor } = useCoSelection('coSelectionPairs', 'sessionCopiedIds')
   const userFindingsHook = useUserFindings()
   const { userFindings } = userFindingsHook
   const userOverridesHook = useUserOverrides()
@@ -791,8 +795,6 @@ function AppContent({
     // Do NOT clear selected here, keepMounted preserves the panel state
   }
 
-  const settingsLanguage = EASTER_EGG_LOCALES.has(language) ? 'en' : language
-
   const handleResetAll = () => {
     clearAllStorage()
     setSaveCount(0)
@@ -840,15 +842,6 @@ function AppContent({
   }
 
   const settingsProps = {
-    aiEnabled,
-    liveSearch,
-    showVoting,
-    showPersonalCorpus,
-    theme,
-    language: settingsLanguage,
-    platform,
-    wcagFilter,
-    fiestaUnlocked,
     onUnlock: unlock,
     onSave: handleSettingsSave,
     onClose: () => {
@@ -857,13 +850,9 @@ function AppContent({
     },
     onReset: handleResetAll,
     h1Ref,
-    hasPins: pinnedIds.size > 0,
     onClearPins: clearPins,
-    hasStarred: Object.values(ratings).some(r => r.starred),
     onClearStarred: handleClearStarred,
-    hasArchived: Object.values(ratings).some(r => r.archived),
     onClearArchived: handleClearArchived,
-    hasRankings: Object.values(ratings).some(r => r.score !== 0),
     onResetRankings: resetRankings,
     onOpenPrivacy: () => {
       if (sheetCollapsed) { setPendingPrivacy(true); return }
@@ -937,14 +926,6 @@ function AppContent({
         <PinnedSection
           findings={pinnedResults}
           onSelect={handleSelectFinding}
-          ratings={ratings}
-          onRankUp={rankUp}
-          onRankDown={rankDown}
-          onStar={toggleStar}
-          onArchive={toggleArchive}
-          showRanking={showVoting}
-          pinnedIds={pinnedIds}
-          onPin={togglePin}
           onClearPins={() => { clearPins(); setTimeout(() => resultsCountRef.current?.focus(), 0) }}
           headingRef={pinnedHeadingRef}
         />
@@ -971,31 +952,13 @@ function AppContent({
                 selected={sheetCollapsed ? null : selected}
                 onSelect={handleSelectFinding}
                 query=""
-                ratings={ratings}
-                onRankUp={rankUp}
-                onRankDown={rankDown}
-                onStar={toggleStar}
-                onArchive={toggleArchive}
-                showRanking={showVoting}
                 showRankingSort={showVoting}
                 onCopyLink={handleCopyLink}
-                pinnedIds={pinnedIds}
-                onPin={togglePin}
-                narrowMode={narrowMode}
-                narrowQuery={narrowQuery}
                 narrowResults={narrowedResults}
-                onNarrow={handleNarrow}
-                onNarrowExit={clearNarrowState}
-                onNarrowChange={setNarrowQuery}
-                liveSearch={liveSearch}
-                onNarrowSearch={handleNarrowSearch}
-                platform={platform}
-                onPlatformChange={setPlatform}
                 showAds={showAds}
                 adFrequency={adFrequency}
                 onClear={handleClearResults}
                 hasPinnedItems={pinnedIds.size > 0}
-                wcagFilter={wcagFilter}
                 defaultWcagFilter={DEFAULT_WCAG_FILTER}
                 onOpenSettings={handleOpenSettings}
               />
@@ -1026,36 +989,16 @@ function AppContent({
                   <A11yListResults
                     key="search"
                     results={unpinnedResults}
-                    sortBy={sortBy}
-                    onSortChange={setSortBy}
                     selected={sheetCollapsed ? null : selected}
                     onSelect={handleSelectFinding}
                     query={activeQuery}
-                    ratings={ratings}
-                    onRankUp={rankUp}
-                    onRankDown={rankDown}
-                    onStar={toggleStar}
-                    onArchive={toggleArchive}
-                    showRanking={showVoting}
                     showRankingSort={showVoting}
                     onCopyLink={handleCopyLink}
-                    pinnedIds={pinnedIds}
-                    onPin={togglePin}
-                    narrowMode={narrowMode}
-                    narrowQuery={narrowQuery}
                     narrowResults={narrowedResults}
-                    onNarrow={handleNarrow}
-                    onNarrowExit={clearNarrowState}
-                    onNarrowChange={setNarrowQuery}
-                    liveSearch={liveSearch}
-                    onNarrowSearch={handleNarrowSearch}
-                    platform={platform}
-                    onPlatformChange={setPlatform}
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
                     hasPinnedItems={pinnedIds.size > 0}
-                    wcagFilter={wcagFilter}
                     defaultWcagFilter={DEFAULT_WCAG_FILTER}
                     onOpenSettings={handleOpenSettings}
                   />
@@ -1066,37 +1009,17 @@ function AppContent({
                   <A11yListResults
                     key="badge"
                     results={applySortBy(badgeResults)}
-                    sortBy={sortBy}
-                    onSortChange={setSortBy}
                     selected={sheetCollapsed ? null : selected}
                     onSelect={handleSelectFinding}
                     query=""
-                    ratings={ratings}
-                    onRankUp={rankUp}
-                    onRankDown={rankDown}
-                    onStar={toggleStar}
-                    onArchive={toggleArchive}
-                    showRanking={showVoting}
                     showRankingSort={showVoting}
                     countRef={resultsCountRef}
-                    pinnedIds={pinnedIds}
-                    onPin={(id) => { const wasPin = !pinnedIds.has(id); togglePin(id); if (wasPin) setTimeout(() => pinnedHeadingRef.current?.focus(), 0) }}
                     filterLabel={badgeFilterLabel}
-                    narrowMode={narrowMode}
-                    narrowQuery={narrowQuery}
                     narrowResults={narrowedResults}
-                    onNarrow={handleNarrow}
-                    onNarrowExit={clearNarrowState}
-                    onNarrowChange={setNarrowQuery}
-                    liveSearch={liveSearch}
-                    onNarrowSearch={handleNarrowSearch}
-                    platform={platform}
-                    onPlatformChange={setPlatform}
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
                     hasPinnedItems={pinnedIds.size > 0}
-                    wcagFilter={wcagFilter}
                     defaultWcagFilter={DEFAULT_WCAG_FILTER}
                     onOpenSettings={handleOpenSettings}
                   />
@@ -1109,11 +1032,7 @@ function AppContent({
                     selected={null}
                     onSelect={handleSelectFinding}
                     query=""
-                    ratings={ratings}
-                    platform={platform}
-                    onPlatformChange={setPlatform}
                     onClear={handleClearResults}
-                    wcagFilter={wcagFilter}
                     defaultWcagFilter={DEFAULT_WCAG_FILTER}
                     onOpenSettings={handleOpenSettings}
                   />
@@ -1366,7 +1285,6 @@ function AppContent({
           <A11yPanelDetail
             key={selected.id}
             finding={selected}
-            aiEnabled={aiEnabled}
             agenticMode={isAgenticModeEnabled()}
             focusTrigger={panelFocusTrigger}
             allFindings={allFindings}
@@ -1375,7 +1293,6 @@ function AppContent({
             onClose={() => { applySelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
             onBadgeClick={handleBadgeClick}
             onCopyEvent={recordCopy}
-            getPairsFor={getPairsFor}
             locale={language}
             userOverridesHook={userOverridesHook}
             contributionQueueHook={contributionQueueHook}
