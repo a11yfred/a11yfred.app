@@ -12,23 +12,7 @@ export default defineConfig(({ mode }) => ({
         globPatterns: ['**/*.{js,css,html,svg,png,ico,json}'],
         // Corpus + locale JSONs can be large; raise the size warning limit
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-        runtimeCaching: [
-          {
-            // Google Fonts stylesheet
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'StaleWhileRevalidate',
-            options: { cacheName: 'google-fonts-stylesheets' },
-          },
-          {
-            // Google Fonts files
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-webfonts',
-              expiration: { maxAgeSeconds: 60 * 60 * 24 * 365 },
-            },
-          },
-        ],
+        runtimeCaching: [],
       },
       manifest: {
         name: 'A11yFred',

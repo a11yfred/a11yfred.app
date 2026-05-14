@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { getStorage, getStorageJson } from '../utils/storage.js'
 import { LS_THEME, LS_LANGUAGE, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_SAVE_COUNT, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
+import LANGUAGES from '../data/languages.js'
+
+const SUPPORTED_LOCALES = LANGUAGES.map(l => l.value)
 
 export default function useAppSettings() {
   const [theme, setTheme] = useState(() => getStorage(LS_THEME, 'auto'))
@@ -8,16 +11,9 @@ export default function useAppSettings() {
     const saved = getStorage(LS_LANGUAGE)
     if (saved) return saved
     const lang = navigator.language || 'en'
-    const supported = [
-      'af','ar-PS','eu','yue','ceb','cbk','zh','cr','crh','nl',
-      'en-AU','en-GB','en-IN','en-ZA','en','eo','tl','fr','fr-CA',
-      'de','gn','ht','haw','hi','ilo','iu','ja','ko','mi','nah',
-      'nv','oj','pjt','pt','pt-BR','qu','rhg','es','es-PH','es-ES',
-      'sv','zgh','ta','bo','ug','vi',
-    ]
-    return supported.includes(lang)
+    return SUPPORTED_LOCALES.includes(lang)
       ? lang
-      : (supported.find(s => s === lang.split('-')[0]) || 'en')
+      : (SUPPORTED_LOCALES.find(s => s === lang.split('-')[0]) || 'en')
   })
   const [aiEnabled, setAiEnabled] = useState(false)
   const [saveCount, setSaveCount] = useState(() => parseInt(getStorage(LS_SAVE_COUNT, '0'), 10))

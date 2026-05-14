@@ -17,7 +17,7 @@ import useEntrySearch from './hooks/useEntrySearch.js'
 import useAppSettings from './hooks/useAppSettings.js'
 import useAppSearch from './hooks/useAppSearch.js'
 import useAppRatings from './hooks/useAppRatings.js'
-import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_ENTRIES, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_ENTRIES, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
+import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, MS_PER_DAY, MAX_RECENT_ENTRIES, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_ENTRIES, LS_LAST_SELECTED, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson, getSession, setSession, removeSession, clearAllStorage } from './utils/storage.js'
 import { getAiProvider, getProviderLabel, isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from '@ulam/halohalo'
 import {
@@ -50,7 +50,6 @@ initHalohalo({ buildPrompt, systemPrompt: AGENTIC_SYSTEM_PROMPT })
 import { useSawsawan } from './sawsawan/react.js'
 import useUserEntries from './hooks/useUserEntries.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
-import useContributionQueue from './hooks/useContributionQueue.js'
 import { SEVERITY_VARS } from './data/severityStyles.js'
 import entrySlug from './utils/entrySlug.js'
 import './components/ThemeFiestaMode.css'
@@ -296,11 +295,8 @@ function AppContent() {
   const [entryHistory, setEntryHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
-  const userEntriesHook = useUserEntries()
-  const { userEntries } = userEntriesHook
-  const userOverridesHook = useUserOverrides()
-  const { overrides: userOverrides } = userOverridesHook
-  const contributionQueueHook = useContributionQueue()
+  const { userEntries } = useUserEntries()
+  const { overrides: userOverrides } = useUserOverrides()
   const activeQuery = liveSearch ? query : submittedQuery
   const { results, allEntries, sortedEntries, dataLoading, dataError, retryData } = useEntrySearch(activeQuery, platform, language, searchKey, ratings, showPersonalCorpus ? userEntries : [], wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
@@ -859,8 +855,6 @@ function AppContent() {
               <A11yListResults
                 key="view-all"
                 results={applySortBy(sortedEntries.filter(f => !pinnedIds.has(f.id)))}
-                sortBy={sortBy}
-                onSortChange={setSortBy}
                 selected={sheetCollapsed ? null : selected}
                 onSelect={handleSelectEntry}
                 query=""
