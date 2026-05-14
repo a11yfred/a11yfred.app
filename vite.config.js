@@ -2,7 +2,7 @@
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     react(),
     VitePWA({
@@ -48,7 +48,10 @@ export default defineConfig({
     }),
   ],
   base: '/',
-  define: { 'globalThis.ROGERS_DEV': 'import.meta.env.DEV' },
+  define: {
+    'globalThis.ROGERS_DEV': mode === 'production' ? 'false' : 'true',
+    ...(mode === 'production' ? { 'import.meta.env.DEV': 'false', 'import.meta.env.PROD': 'true' } : {}),
+  },
   server: {
     host: true,
   },
@@ -71,4 +74,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))
