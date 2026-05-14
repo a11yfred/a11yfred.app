@@ -23,7 +23,7 @@ const writeToClipboard = (text) => {
 /**
  * Manages clipboard copy state and reset confirmation flow for DetailSheet.
  *
- * @param {object} finding - the active finding object
+ * @param {object} entry - the active entry object
  * @param {string} descText - current description text
  * @param {string} fixText - current suggested fix text
  * @param {string} displayDesc - description with optional location prefix applied
@@ -31,7 +31,7 @@ const writeToClipboard = (text) => {
  * @param {Function} setFixText
  * @param {Function} setDescHistory
  * @param {Function} setFixHistory
- * @param {Function|null} onCopyEvent - optional callback (findingId, type) => void
+ * @param {Function|null} onCopyEvent - optional callback (entryId, type) => void
  * @param {Function} t - i18n translate function
  * @returns {{
  *   copiedTitle: boolean, copiedPrimarySc: boolean, copiedRelatedSc: boolean,
@@ -47,7 +47,7 @@ const writeToClipboard = (text) => {
  * }}
  */
 export default function useSheetDetailClipboard({
-  finding,
+  entry,
   descText,
   fixText,
   displayDesc,
@@ -79,7 +79,7 @@ export default function useSheetDetailClipboard({
       setCopied(true)
       announce(t('detail.copied_announce', { label }))
       resetAfterNotification(setCopied)
-      onCopyEvent?.(finding.id, type)
+      onCopyEvent?.(entry.id, type)
     })
   }
 
@@ -107,16 +107,16 @@ export default function useSheetDetailClipboard({
       setCopiedAll(true)
       announce(t('detail.copy_all_announce'))
       resetAfterNotification(setCopiedAll)
-      onCopyEvent?.(finding.id, 'all')
+      onCopyEvent?.(entry.id, 'all')
     })
   }
 
   const handleResetAllFields = () => {
-    const descChanged = isSignificantlyChanged(finding.desc, descText)
-    const fixChanged = isSignificantlyChanged(finding.fix, fixText)
+    const descChanged = isSignificantlyChanged(entry.desc, descText)
+    const fixChanged = isSignificantlyChanged(entry.fix, fixText)
     const doReset = () => {
-      setDescText(finding.desc)
-      setFixText(finding.fix)
+      setDescText(entry.desc)
+      setFixText(entry.fix)
       setDescHistory([])
       setFixHistory([])
       announce(t('detail.reset_all_content_announce'))
@@ -146,11 +146,11 @@ export default function useSheetDetailClipboard({
     announce(t('detail.undo_last_announce'))
   }
 
-  const copyTitle = () => copy(finding.title, setCopiedTitle, t('detail.title_label'), null, false, 'title')
-  const copyPrimarySc = () => copy(finding.primarySC, setCopiedPrimarySc, t('detail.sc_label'), null, false, 'primarySc')
+  const copyTitle = () => copy(entry.title, setCopiedTitle, t('detail.title_label'), null, false, 'title')
+  const copyPrimarySc = () => copy(entry.primarySC, setCopiedPrimarySc, t('detail.sc_label'), null, false, 'primarySc')
   const copyRelatedSc = () => {
-    if (!finding.relatedSC.length) return
-    copy(finding.relatedSC.join(', '), setCopiedRelatedSc, t('detail.sc_label'), null, false, 'relatedSc')
+    if (!entry.relatedSC.length) return
+    copy(entry.relatedSC.join(', '), setCopiedRelatedSc, t('detail.sc_label'), null, false, 'relatedSc')
   }
 
   return {

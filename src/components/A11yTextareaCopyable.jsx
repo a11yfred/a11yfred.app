@@ -2,7 +2,7 @@ import { useRef, useEffect, forwardRef } from 'react'
 import { RotateCcw, Copy, Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 
-const TextareaCopyable = forwardRef(function TextareaCopyable({
+const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
   id,
   label,
   value,
@@ -112,4 +112,4 @@ const TextareaCopyable = forwardRef(function TextareaCopyable({
   )
 })
 
-export default TextareaCopyable
+export default A11yTextareaCopyable

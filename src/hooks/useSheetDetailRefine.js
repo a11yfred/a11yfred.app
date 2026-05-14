@@ -6,7 +6,7 @@ import { TYPEWRITER_TICK_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVI
 /**
  * Manages AI refinement state and the typewriter animation for DetailSheet.
  *
- * @param {object} finding - the active finding object
+ * @param {object} entry - the active entry object
  * @param {string} descText - current description text
  * @param {string} fixText - current suggested fix text
  * @param {boolean} aiRevisedDesc - whether desc field is selected for AI revision
@@ -28,7 +28,7 @@ import { TYPEWRITER_TICK_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVI
  * }}
  */
 export default function useSheetDetailRefine({
-  finding,
+  entry,
   descText,
   fixText,
   aiRevisedDesc,
@@ -132,8 +132,8 @@ export default function useSheetDetailRefine({
 
     try {
       const result = useAgenticMode && getAiProvider() === 'anthropic'
-        ? await getAgenticRefinement({ finding, descText, fixText, note: aiNote, corpus: allEntries })
-        : await getAiRefinement({ finding, descText, fixText, note: aiNote })
+        ? await getAgenticRefinement({ entry, descText, fixText, note: aiNote, corpus: allEntries })
+        : await getAiRefinement({ entry, descText, fixText, note: aiNote })
       const newDesc = aiRevisedDesc && result.desc ? result.desc : null
       const newFix = aiRevisedFix && result.fix ? result.fix : null
 

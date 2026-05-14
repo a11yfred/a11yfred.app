@@ -60,7 +60,7 @@ function PendingNote({ t }) {
 
 import LANGUAGES from '../data/languages.js'
 
-const SettingsPanel = forwardRef(function A11yPanelSettings({
+const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   onUnlock,
   onClose,
   onSave,
@@ -779,4 +779,4 @@ const SettingsPanel = forwardRef(function A11yPanelSettings({
   )
 })
 
-export default SettingsPanel
+export default A11yPanelSettings

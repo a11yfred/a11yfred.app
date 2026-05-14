@@ -183,26 +183,6 @@ export function useCoSelection(coKey, sessionKey, maxPairs = 500) {
   return { recordSelection, getPairsFor }
 }
 
-// ─── rankItems ───────────────────────────────────────────────────────────────
-// Pure function. Sorts items by relevance using user signals.
-// items       — array of items with an `id` field
-// getSignals  — (id) => { score, starred, archived, popularity }
-// getSeverity — optional (item) => number, lower = more severe (default: no-op)
-
-export function rankItems(items, getSignals, getSeverity) {
-  return [...items].sort((a, b) => {
-    const sa = getSignals(a.id)
-    const sb = getSignals(b.id)
-    if (sa.archived !== sb.archived) return sa.archived ? 1 : -1
-    if (sa.starred  !== sb.starred)  return sa.starred  ? -1 : 1
-    if (getSeverity) {
-      const sev = getSeverity(a) - getSeverity(b)
-      if (sev !== 0) return sev
-    }
-    return 0
-  })
-}
-
 // ─── relatedItems ────────────────────────────────────────────────────────────
 // Pure function. Returns the top N most relevant items from corpus relative to
 // a focal item, using a caller-supplied ranking function.

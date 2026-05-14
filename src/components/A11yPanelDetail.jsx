@@ -79,7 +79,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
     handleUndoDesc, handleUndoFix,
     copyTitle, copyPrimarySc, copyRelatedSc,
   } = useSheetDetailClipboard({
-    finding: entry, descText, fixText, displayDesc,
+    entry, descText, fixText, displayDesc,
     setDescText, setFixText, setDescHistory, setFixHistory,
     descHistory, fixHistory, onCopyEvent, t,
   })
@@ -92,7 +92,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
     startTypewriter,
     handleRefine,
   } = useSheetDetailRefine({
-    finding: entry, descText, fixText,
+    entry, descText, fixText,
     aiRevisedDesc, aiRevisedFix, useAgenticMode, aiNote, allEntries,
     setDescText, setFixText, setDescHistory, setFixHistory, t,
   })
