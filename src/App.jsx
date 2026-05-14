@@ -1533,7 +1533,6 @@ function FiestaBanner() {
   return (
     <div
       className={`fiesta-banner${animating ? '' : ' fiesta-banner--still'}`}
-      aria-live="off"
       aria-hidden="true"
       onMouseEnter={handleMouseEnter}
     >

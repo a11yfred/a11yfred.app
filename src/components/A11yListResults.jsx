@@ -717,19 +717,19 @@ export default function A11yListResults({ results, selected, onSelect, query, ra
                     </LinkSkipTo>
                   )}
                   {onPin && (
-                    <ButtonIcon
-                      variant="tertiary"
-                      label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
-                      disabled={archived}
-                      onClick={handlePin}
-                      icon={pinned
-                        ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
-                        : <Pin size={14} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} />
-                      }
-                      className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
-                      aria-hidden={true}
-                      tabIndex={-1}
-                    />
+                    <span inert aria-hidden="true">
+                      <ButtonIcon
+                        variant="tertiary"
+                        label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
+                        disabled={archived}
+                        onClick={handlePin}
+                        icon={pinned
+                          ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
+                          : <Pin size={14} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} />
+                        }
+                        className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                      />
+                    </span>
                   )}
                 </div>
 
