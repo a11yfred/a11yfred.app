@@ -1,0 +1,103 @@
+<!--
+  A11yFred Open Graph image, 1200×630.
+  Leans on the same two icons that appear in the product H1 (Hand + Clipboard with arrow),
+  using real Lucide icon paths (ISC licensed).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#F5F5F7"/>
+      <stop offset="100%" stop-color="#EEEEF2"/>
+    </linearGradient>
+    <linearGradient id="iconBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#7A6BEC"/>
+      <stop offset="55%" stop-color="#5445D6"/>
+      <stop offset="100%" stop-color="#3D2FB3"/>
+    </linearGradient>
+    <linearGradient id="iconTopShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="iconBottomGlow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="85%"  stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.18"/>
+    </linearGradient>
+    <filter id="innerShadowHard" x="-10%" y="-10%" width="120%" height="120%">
+      <feMorphology in="SourceAlpha" operator="erode" radius="2.5" result="eroded"/>
+      <feOffset in="eroded" dx="0" dy="5.12" result="offsetEroded"/>
+      <feComposite in="SourceAlpha" in2="offsetEroded" operator="out" result="cutoutShadow"/>
+      <feFlood flood-color="#000000" flood-opacity="0.66" result="black"/>
+      <feComposite in="black" in2="cutoutShadow" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="shadow"/></feMerge>
+    </filter>
+    <filter id="iconDropShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feOffset dx="0" dy="14"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.30"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="iconSquircle"><rect x="0" y="0" width="300" height="300" rx="66" ry="66"/></clipPath>
+    <symbol id="letterA" viewBox="0 0 698.5 706" preserveAspectRatio="xMidYMid meet">
+      <g transform="translate(-15, 706) scale(1, -1)">
+        <path fill="#FFFFFF" fill-rule="nonzero"
+              d="M15 0 294.5 706H436.5L713.5 0H547.5L336 586H393L178 0ZM174 127.5V255.5H558.5V127.5Z"/>
+      </g>
+    </symbol>
+    <symbol id="lucideHand" viewBox="0 0 24 24">
+      <g fill="none" stroke="#5445D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/>
+        <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/>
+        <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/>
+        <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/>
+      </g>
+    </symbol>
+    <symbol id="lucideClipboardCopy" viewBox="0 0 24 24">
+      <g fill="none" stroke="#5445D6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
+        <path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
+        <path d="M16 4h2a2 2 0 0 1 2 2v4"/>
+        <path d="M21 14H11"/>
+        <path d="m15 10-4 4 4 4"/>
+      </g>
+    </symbol>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#paper)"/>
+
+  <g transform="translate(40, 40)" opacity="0.55">
+    <path fill="#1A1A1A" d="M16 0C7.16 0 0 7.16 0 16c0 7.07 4.58 13.06 10.94 15.18.8.15 1.09-.35 1.09-.77 0-.38-.01-1.39-.02-2.73-4.45.97-5.39-2.14-5.39-2.14-.73-1.85-1.78-2.34-1.78-2.34-1.45-.99.11-.97.11-.97 1.61.11 2.46 1.65 2.46 1.65 1.43 2.45 3.75 1.74 4.66 1.33.14-1.04.56-1.74 1.02-2.14-3.55-.4-7.29-1.77-7.29-7.88 0-1.74.62-3.16 1.65-4.28-.17-.4-.72-2.03.15-4.24 0 0 1.34-.43 4.4 1.64 1.28-.35 2.65-.53 4.01-.54 1.36.01 2.74.19 4.02.54 3.06-2.07 4.39-1.64 4.39-1.64.87 2.21.32 3.84.16 4.24 1.03 1.12 1.65 2.54 1.65 4.28 0 6.13-3.74 7.48-7.3 7.87.57.49 1.08 1.47 1.08 2.96 0 2.14-.02 3.87-.02 4.39 0 .43.29.93 1.1.77C27.43 29.06 32 23.07 32 16c0-8.84-7.16-16-16-16z"/>
+    <text x="42" y="22" font-family="Outfit, system-ui, sans-serif" font-weight="500" font-size="18" fill="#1A1A1A">Open source on GitHub</text>
+  </g>
+
+  <g transform="translate(90, 165) rotate(-6, 150, 150)">
+    <g filter="url(#iconDropShadow)">
+      <g clip-path="url(#iconSquircle)">
+        <rect x="0" y="0" width="300" height="300" fill="url(#iconBg)"/>
+        <rect x="0" y="0" width="300" height="300" fill="url(#iconTopShine)"/>
+        <rect x="0" y="0" width="300" height="300" fill="url(#iconBottomGlow)"/>
+        <use href="#letterA" x="54.3" y="53.3" width="191.4" height="193.4" filter="url(#innerShadowHard)"/>
+      </g>
+      <rect x="0.5" y="0.5" width="299" height="299" rx="65.5" ry="65.5"
+            fill="none" stroke="#2A1E8A" stroke-opacity="0.35" stroke-width="1"/>
+    </g>
+  </g>
+
+  <g transform="translate(460, 0)">
+    <text x="0" y="245" font-family="Outfit, system-ui, sans-serif" font-weight="800" font-size="96"
+          fill="#1A1A1A">A11yFred</text>
+    <!--
+      Icons placed at SVG x = 1009 and 1089 (so x relative to the translated group = 549 and 629).
+      Hand 64×64, clipboard 64×64, with 16px gap between them. 40px gap from wordmark.
+      Vertically centered with the cap height: text top is ~y=170, cap height ~75, so center ~207.
+      Icon center at y=195 (visual balance with the text).
+    -->
+    <use href="#lucideHand"          x="549" y="163" width="64" height="64"/>
+    <use href="#lucideClipboardCopy" x="629" y="163" width="64" height="64"/>
+    <text x="0" y="310" font-family="Outfit, system-ui, sans-serif" font-style="italic"
+          font-weight="400" font-size="30" fill="#4A4A55">Your AI-second helper for manual</text>
+    <text x="0" y="348" font-family="Outfit, system-ui, sans-serif" font-style="italic"
+          font-weight="400" font-size="30" fill="#4A4A55">accessibility auditing and reporting.</text>
+  </g>
+</svg>

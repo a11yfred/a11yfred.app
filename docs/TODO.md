@@ -52,7 +52,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 - [ ] **Update canonical URL** `[seo]` `[code]` ,  Update `og:url`, `og:image`, `twitter:*`, and JSON-LD URLs in `index.html` from placeholder `a11yfred.app` to confirmed production domain.
 - [ ] **Remove `noindex`** `[seo]` `[infra]` ,  Replace `<meta name="robots" content="noindex">` with `index, follow` once domain is live and content is ready to be crawled.
-- [ ] **OG image** `[seo]` `[infra]` `[launch-blocker]` ,  Create `public/og-image.png` (1200×630). Screenshot should reflect the real production URL. Referenced by `og:image` and `twitter:image` in index.html; returns 404 until this file exists.
+- [x] **OG image** `[seo]` `[infra]` ,  `public/og-image.png`, `public/og-image.svg`, and `public/og-image@2x.png` added May 13. 1200×630, branded with icon, wordmark, Lucide Hand + ClipboardCopy icons, and tagline.
 - [ ] **i18n translate run** `[i18n]` ,  Moved from Phase 1. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill 465 missing keys across 64 locale files. Falls back to English gracefully until done.
 - [ ] **Umami analytics activation** `[infra]` `[manual]` ,  Moved from DevOps. Sign up at umami.is (~$9/mo cloud, no self-hosting), create site, replace WEBSITE_ID placeholder in `index.html`, verify zero cookies. Preferred over GA -- privacy-respecting, no consent banner needed, right fit for an a11y audience.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain ownership, submit sitemap.xml, confirm indexing is enabled, monitor for crawl errors post-launch.
@@ -121,7 +121,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Infrastructure
 
-- [x] **PWA icons** `[infra]` `[ux]` ,  `public/icon-192.png` and `public/icon-512.png` generated (purple rounded-square, white A). `vite.config.js` manifest updated to include all three icon entries (SVG + 192 + 512).
+- [x] **PWA icons** `[infra]` `[ux]` ,  Full icon set replaced May 13 with new branded bundle: `icon.svg` (master), `favicon.ico`, `apple-touch-icon.png` (180px), `android-chrome-192x192.png`, `android-chrome-512x512.png`, plus `icon-16` through `icon-1024` raster exports. `vite.config.js` manifest updated. `index.html` updated with ico/png/apple-touch-icon link tags. Old `favicon.svg` removed.
 - [x] **xlsx vulnerability** `[infra]` `[privacy]` ,  `xlsx` (SheetJS) removed. Replaced with `exceljs` in both `exportFinding.js` and `importService.js`. `npm audit` clean (0 vulnerabilities). `vite.config.js` manual chunk updated to `exceljs`.
 - [ ] **Version tagging** `[infra]` ,  Decide corpus threshold, create `v0.1.0` tag, push to GitHub releases.
 - [ ] **Chrome extension -- validate and merge** `[infra]` ,  Icons generated (16/48/128px, May 13). Manifest at `extension-static/manifest.json`. Remaining: add separate Vite config (`vite.config.extension.js`) targeting `dist-extension/`, load unpacked at `chrome://extensions`, smoke-test at ~400px, merge.
@@ -224,7 +224,7 @@ No timeline. Revisit post-launch based on usage and demand.
 - [ ] **Mobile device testing** `[qa]` `[manual]` `[launch-blocker]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, and portrait/landscape layouts.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  See Phase 1.5 -- gated on domain.
 - [x] **Expert source attribution audit** `[corpus]` `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13. All credited sources (Roselli, O'Hara, Watson, Lauke, Faulkner, TPGi, Deque, WebAIM, W3C, appt.org) are cited via links to their own published public articles. Standard attribution practice, no permission required. About panel sources list reflects only organizations with public reference material.
-- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  OG image (see Phase 1.5), flip noindex when domain is live, Umami/error tracking, GitHub releases, social prep, CDN, backup.
+- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  flip noindex when domain is live, Umami/error tracking, GitHub releases, social prep, CDN, backup.
 - [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
 
 ---

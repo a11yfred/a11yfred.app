@@ -8,12 +8,12 @@
     <!-- Core SEO meta tags -->
     <meta name="description" content="Search and copy professional WCAG defect descriptions in seconds. Free tool for accessibility auditors." />
     <meta name="author" content="Mikey Ilagan" />
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content="index, follow" />
 
     <!-- Security headers via meta (GitHub Pages does not support response headers) -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com https://api.cognitive.microsoft.com; img-src 'self' data: https://avatars.githubusercontent.com https://lh3.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.anthropic.com https://api.openai.com https://generativelanguage.googleapis.com https://api.cognitive.microsoft.com; img-src 'self' data: https://avatars.githubusercontent.com https://lh3.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self';" />
 
     <link rel="canonical" href="https://a11yfred.app/" />
 
@@ -66,7 +66,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&display=swap" rel="stylesheet" />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <!-- Color scheme preference for all browsers (Firefox, Safari, Chrome, Edge) -->
     <meta name="color-scheme" content="light dark" />

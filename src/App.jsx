@@ -1440,7 +1440,7 @@ function Header({ h1Ref, h1LinkRef, settingsOpen, aboutOpen, helpOpen, onboardin
   const t = useT()
   const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
   return (
-    <header className={`page-header${compact ? ' page-header--compact' : ''}`}>
+    <header className={`page-header${compact ? ' page-header--compact' : ''}`} inert={isDesktop && onboardingOpen ? true : undefined}>
       <LinkSkipTo onClick={(e) => { e.preventDefault(); document.getElementById(skipTarget)?.focus() }}>{t('common.skip_to_main')}</LinkSkipTo>
       {!compact && (
         <a
@@ -1496,7 +1496,7 @@ function Header({ h1Ref, h1LinkRef, settingsOpen, aboutOpen, helpOpen, onboardin
       </div>
 
       {(onboardingOpen || settingsOpen || aboutOpen || helpOpen) ? (
-        <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'} aria-hidden={onboardingOpen ? 'true' : undefined}>
+        <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'}>
           <AppTitle t={t} />
         </h1>
       ) : (

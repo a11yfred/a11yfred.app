@@ -6,7 +6,7 @@ import App from './App.jsx'
 if (import.meta.env.DEV) {
   Promise.all([import('@axe-core/react'), import('react-dom')]).then(
     ([{ default: axe }, { default: ReactDOMCompat }]) => {
-      axe(React, ReactDOMCompat, 1000)
+      axe(React, ReactDOMCompat, 1000, { preload: false })
     }
   )
 }
