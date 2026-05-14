@@ -224,7 +224,7 @@ No timeline. Revisit post-launch based on usage and demand.
 - [ ] **Mobile device testing** `[qa]` `[manual]` `[launch-blocker]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, and portrait/landscape layouts.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  See Phase 1.5 -- gated on domain.
 - [x] **Expert source attribution audit** `[corpus]` `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13. All credited sources (Roselli, O'Hara, Watson, Lauke, Faulkner, TPGi, Deque, WebAIM, W3C, appt.org) are cited via links to their own published public articles. Standard attribution practice, no permission required. About panel sources list reflects only organizations with public reference material.
-- [ ] **Pre-launch checklist** `[infra]` `[manual]` `[launch-blocker]` ,  flip noindex when domain is live, Umami/error tracking, GitHub releases, social prep, CDN, backup.
+- [x] **Pre-launch checklist** `[infra]` `[manual]` ,  Done May 14. noindex flipped, Umami active, domain live at a11yfred.app. GitHub releases + social prep still pending.
 - [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
 
 ---
