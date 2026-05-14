@@ -13,7 +13,7 @@ A11yFred is a single-page web application that helps accessibility auditors look
 
 ## Data we collect
 
-A11yFred collects no personal data. There is no analytics, no telemetry, no crash reporting, and no usage tracking.
+A11yFred collects no personal data and does not track individual users. Page view analytics are collected anonymously via [Umami](https://umami.is/) (see [Analytics](#analytics) below). There is no telemetry, no crash reporting, and no behavioral tracking.
 
 ---
 
@@ -89,9 +89,17 @@ A11yFred uses no cookies.
 
 ---
 
+## Analytics
+
+A11yFred uses [Umami](https://umami.is/), a privacy-first analytics platform, to collect anonymous aggregate statistics. Umami sets no cookies, collects no personal data, and cannot identify individual visitors. Data collected includes page views, referrer, browser type, device type, and country -- all aggregated and never linked to a person.
+
+Umami data is hosted on Umami Cloud and is not shared with any third party. To opt out, set `localStorage.setItem('umami.disabled', '1')` in your browser's developer console.
+
+---
+
 ## No third-party tracking
 
-No analytics, advertising, or tracking scripts are loaded.
+No advertising or behavioral tracking scripts are loaded. The only third-party script is Umami analytics (see [Analytics](#analytics) above).
 
 ---
 
@@ -109,7 +117,7 @@ A11yFred is a professional tool for accessibility auditors. It is not directed a
 
 ## GDPR (EU/EEA users)
 
-Because A11yFred collects no personal data and processes all data locally in your browser, it does not act as a data controller or data processor under the GDPR. No data is transferred to any third-party servers. No data is shared with third parties unless you explicitly use AI Assist, in which case the relevant provider's data practices apply.
+Because A11yFred collects no personal data and processes all data locally in your browser, it does not act as a data controller or data processor under the GDPR. Anonymous, non-identifiable analytics data (page views, device type, country) is sent to Umami Cloud; this data cannot be linked to an individual. No personal data is shared with third parties unless you explicitly use AI Assist, in which case the relevant provider's data practices apply.
 
 ---
 
