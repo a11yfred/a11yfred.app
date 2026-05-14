@@ -27,6 +27,11 @@
   flex-shrink: 0;
 }
 
+.btn .btn-icon {
+  width: auto;
+  height: auto;
+}
+
 .btn svg {
   flex-shrink: 0;
   vertical-align: middle;
@@ -768,7 +773,7 @@ select:disabled {
 }
 
 .field-include-title-icon {
-  color: var(--accent-text);
+  color: var(--text-heading);
   flex-shrink: 0;
   margin-top: 0.25rem;
 }
@@ -1264,12 +1269,12 @@ input[type="radio"].control:not(:checked):hover {
   text-decoration: none;
 }
 
-/* ─── Page panel (full-page panel view) ───────────────────── */
+/* ─── Fade transition (reusable cross-fade wrapper) ─────────── */
 
-@keyframes page-panel-in {
+@keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
 
   to {
@@ -1277,6 +1282,115 @@ input[type="radio"].control:not(:checked):hover {
     transform: translateY(0);
   }
 }
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Directional slide variants for carousel-style transitions */
+@keyframes slide-in-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(48px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slide-out-to-left {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-48px) scale(0.97);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-48px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slide-out-to-right {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(48px) scale(0.97);
+  }
+}
+
+.fade-transition {
+  display: contents;
+}
+
+.fade-transition--in {
+  animation: fade-in 200ms var(--ease-out) both;
+}
+
+.fade-transition--out {
+  animation: fade-out 200ms var(--ease-out) both;
+  pointer-events: none;
+}
+
+/* ltr: advancing forward (next slide comes from right) */
+.fade-transition--in.fade-transition--ltr {
+  display: block;
+  animation: slide-in-from-right 240ms var(--ease-out) both;
+}
+
+.fade-transition--out.fade-transition--ltr {
+  display: block;
+  animation: slide-out-to-left 240ms var(--ease-out) both;
+}
+
+/* rtl: going back (prev slide comes from left) */
+.fade-transition--in.fade-transition--rtl {
+  display: block;
+  animation: slide-in-from-left 240ms var(--ease-out) both;
+}
+
+.fade-transition--out.fade-transition--rtl {
+  display: block;
+  animation: slide-out-to-right 240ms var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-transition--in,
+  .fade-transition--out,
+  .fade-transition--in.fade-transition--ltr,
+  .fade-transition--out.fade-transition--ltr,
+  .fade-transition--in.fade-transition--rtl,
+  .fade-transition--out.fade-transition--rtl {
+    animation: none;
+  }
+}
+
+/* ─── Page panel (full-page panel view) ───────────────────── */
 
 .page-panel {
   display: flex;
@@ -1286,7 +1400,7 @@ input[type="radio"].control:not(:checked):hover {
 @media (width >= 768px) {
   .page-panel {
     padding-top: calc(var(--space-8) + var(--space-6));
-    animation: page-panel-in var(--duration-base) var(--ease-out) both;
+    animation: fade-in var(--duration-base) var(--ease-out) both;
   }
 }
 
@@ -1326,6 +1440,7 @@ input[type="radio"].control:not(:checked):hover {
 .badge--severity,
 .badge--source,
 .badge--wcag,
+.badge--wcag-level,
 .badge--platform {
   font-size: var(--fs-small);
   font-family: var(--mono);
@@ -1348,6 +1463,11 @@ input[type="radio"].control:not(:checked):hover {
 .badge--wcag {
   background: var(--wcag-bg);
   color: var(--wcag-text);
+}
+
+.badge--wcag-level {
+  background: var(--wcag-level-bg);
+  color: var(--wcag-level-text);
 }
 
 .badge--platform {

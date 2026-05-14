@@ -21,6 +21,15 @@ body, #root {
 body {
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
+  background-color: var(--bg);
+  color: var(--text-body);
+  transition: background-color 300ms var(--ease-in-out), color 300ms var(--ease-in-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: none;
+  }
 }
 
 /* ─── Rogers plugin styles (debug/admin) ────────────────────

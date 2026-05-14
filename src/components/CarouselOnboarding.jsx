@@ -4,6 +4,7 @@ import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import Button from './ui/Button.jsx'
+import FadeTransition from './ui/FadeTransition.jsx'
 import { LS_ONBOARDING_SEEN } from '../utils/constants.js'
 import { setStorage } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
@@ -36,6 +37,7 @@ export default function CarouselOnboarding({ onClose }) {
   const BackArrow = dir === 'rtl' ? CircleArrowRight : CircleArrowLeft
 
   const [step, setStep] = useState(0)
+  const [slideDir, setSlideDir] = useState('ltr')
   const [gradAngle, setGradAngle] = useState(() => randomAngle())
   const [confirmOpen, setConfirmOpen] = useState(false)
   const titleRef = useFocusOnMount()
@@ -85,13 +87,15 @@ export default function CarouselOnboarding({ onClose }) {
       </div>
 
       <div className="onboarding-content">
-        <h2 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
-          <SlideIcon size={36} strokeWidth={1.5} className="onboarding-step-icon" aria-hidden="true" />
-          {t(slide.headingKey)}
-        </h2>
-        <p className="onboarding-step-body">
-          {t(slide.bodyKey)}
-        </p>
+        <FadeTransition watchKey={step} className="onboarding-slide" direction={slideDir}>
+          <h2 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
+            <SlideIcon size={36} strokeWidth={1.5} className="onboarding-step-icon" aria-hidden="true" />
+            {t(slide.headingKey)}
+          </h2>
+          <p className="onboarding-step-body">
+            {t(slide.bodyKey)}
+          </p>
+        </FadeTransition>
       </div>
 
       <div className="onboarding-nav">
@@ -101,7 +105,7 @@ export default function CarouselOnboarding({ onClose }) {
             <button
               type="button"
               className="onboarding-arrow-btn"
-              onClick={() => { setGradAngle(randomAngle()); setStep(s => { const next = s - 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }) }}
+              onClick={() => { setGradAngle(randomAngle()); setSlideDir('rtl'); setStep(s => { const next = s - 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }) }}
               aria-label={t('onboarding.prev_aria')}
             >
               <BackArrow size={36} aria-hidden="true" />
@@ -118,7 +122,7 @@ export default function CarouselOnboarding({ onClose }) {
         <button
           type="button"
           className="onboarding-arrow-btn"
-          onClick={() => isLast ? commitClose() : (setGradAngle(randomAngle()), setStep(s => { const next = s + 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }))}
+          onClick={() => isLast ? commitClose() : (setGradAngle(randomAngle()), setSlideDir('ltr'), setStep(s => { const next = s + 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }))}
           aria-label={isLast ? t('onboarding.done_aria') : t('onboarding.next_aria')}
         >
           <FwdArrow size={36} aria-hidden="true" />

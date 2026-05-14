@@ -1,50 +1,58 @@
 # Deploying A11yFred
 
-A11yFred deploys to **GitHub Pages** via GitHub Actions on every push to `main`.
+A11yFred is live at **[a11yfred.app](https://a11yfred.app)** and deploys to GitHub Pages via GitHub Actions on every push to `main`.
 
 ---
 
-## Setup (one-time)
-
-1. Make the repository public (required for GitHub Pages on the free plan).
-2. In GitHub: **Settings → Pages → Source → GitHub Actions**.
-3. That's it. The workflow at `.github/workflows/deploy-pages.yml` handles everything.
-
----
-
-## Deployment workflow
+## Workflow
 
 Every push to `main` triggers a build and deploy automatically.
 
 ```bash
 git push origin main
-# → GitHub Actions builds and deploys to https://a11yfred.github.io/a11yfred/
-#   (or your custom domain once configured)
+# -> GitHub Actions builds and deploys to https://a11yfred.app
+```
+
+The workflow is at `.github/workflows/deploy-pages.yml`.
+
+---
+
+## Versioning
+
+Releases follow [Semantic Versioning](https://semver.org/). Before pushing to `main`:
+
+1. Update the version in `package.json`.
+2. Update the version badge in `README.md`.
+3. Add a version entry to `docs/CHANGELOG.md` and `docs/UPDATES.md`.
+
+At most one release per day. Batch changes rather than pushing repeatedly.
+
+There is no separate release branch. `main` is the production branch. Version tags are applied after each release push:
+
+```bash
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
 ---
 
-## Custom domain
+## Setup (one-time, already done)
 
-1. Add a `CNAME` file to the `public/` directory containing your domain (e.g. `a11yfred.app`).
-2. Configure DNS: add a CNAME record pointing your domain to `a11yfred.github.io`.
-3. In GitHub: **Settings → Pages → Custom domain**, enter your domain and enable HTTPS.
-4. `vite.config.js` `base` stays as `'/'`. No change needed for a root domain.
+1. Repository is public (required for GitHub Pages on the free plan).
+2. GitHub: **Settings > Pages > Source > GitHub Actions**.
+3. `CNAME` file in `public/` contains `a11yfred.app`.
+4. DNS: CNAME record pointing `a11yfred.app` to `a11yfred.github.io`.
+5. GitHub: **Settings > Pages > Custom domain** set to `a11yfred.app`, HTTPS enabled.
+6. `vite.config.js` `base` is `'/'`.
 
 ---
 
 ## Security headers
 
-GitHub Pages does not support custom response headers. Security headers are set via
-`<meta http-equiv>` tags in `index.html`. Note: `frame-ancestors` (clickjacking
-protection) cannot be set via meta tag. It requires a response header. This is an
-accepted limitation of GitHub Pages hosting.
+GitHub Pages does not support custom response headers. Security headers are set via `<meta http-equiv>` tags in `index.html`. Note: `frame-ancestors` (clickjacking protection) cannot be set via a meta tag -- it requires a response header. This is an accepted limitation of GitHub Pages hosting.
 
 ---
 
 ## Netlify / Vercel
 
-Both were previously configured (`netlify.toml`, `vercel.json`) and have been removed.
-Netlify and Vercel add value for server functions, edge middleware, and branch preview
-deploys, none of which A11yFred currently needs. Deferred indefinitely; revisit if
-those requirements arise.
+Both were previously configured and have been removed. Neither is needed while the app has no server functions or edge middleware. Revisit if those requirements arise.

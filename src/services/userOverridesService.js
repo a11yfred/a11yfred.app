@@ -78,13 +78,3 @@ export function applyOverride(entry, locale, overrides = {}) {
   }
 }
 
-/** How many individual locale overrides exist (for privacy disclosures). */
-export function countOverrides() {
-  const all = load()
-  return Object.values(all).reduce((sum, locales) => sum + Object.keys(locales).length, 0)
-}
-
-/** Returns all entry IDs that have at least one override. */
-export function overriddenEntryIds() {
-  return Object.keys(load())
-}

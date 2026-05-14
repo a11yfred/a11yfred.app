@@ -77,11 +77,15 @@ export function useItemSignals(storageKey, popWeights = {}) {
         popularity:      (s.popularity ?? 0) + (nowStarring ? w.starBonus : -w.unstarPenalty),
       }
     }),
-    toggleArchive: (id) => update(id, s => ({
-      ...s,
-      archived:   !s.archived,
-      popularity: (s.popularity ?? 0) + (s.archived ? w.archivePenalty : -w.archivePenalty),
-    })),
+    toggleArchive: (id) => update(id, s => {
+      const nowArchiving = !s.archived
+      return {
+        ...s,
+        archived:   nowArchiving,
+        archivedAt: nowArchiving ? Date.now() : null,
+        popularity: (s.popularity ?? 0) + (s.archived ? w.archivePenalty : -w.archivePenalty),
+      }
+    }),
     recordPin:  (id) => update(id, s => ({
       ...s,
       lifetimePinned: (s.lifetimePinned ?? 0) + 1,

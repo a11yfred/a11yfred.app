@@ -55,6 +55,10 @@
   --wcag-text: #155e75;  /* cyan-800 ~6.8:1 on --wcag-bg */
   --wcag-bg:   #ecfeff;
 
+  /* Color — WCAG level badge (light mode) */
+  --wcag-level-text: #065f46;  /* emerald-800 ~7.2:1 on --wcag-level-bg */
+  --wcag-level-bg:   #d1fae5;
+
   /* Color — platform badge (light mode) */
   --platform-text: #3c4558;  /* slate-700 ~7.8:1 on --platform-bg */
   --platform-bg:   #e8eef5;
@@ -191,6 +195,10 @@
   /* Color — WCAG badge (dark mode) */
   --wcag-text: #67e8f9;  /* ~12.9:1 on --wcag-bg */
   --wcag-bg:   #0a2733;
+
+  /* Color — WCAG level badge (dark mode) */
+  --wcag-level-text: #6ee7b7;  /* ~9.1:1 on --wcag-level-bg */
+  --wcag-level-bg:   #022c22;
 
   /* Color — platform badge (dark mode) */
   --platform-text: #cbd5e1;  /* slate-300 ~8.2:1 on --platform-bg */

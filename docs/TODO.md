@@ -4,7 +4,7 @@ Personal backlog for A11yFred. Active items only. Remaining scope is listed expl
 
 Items are ordered **high value + low effort first** within each section.
 
-Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[manual]` `[phase3]`  `[launch-blocker]`
+Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]` `[manual]` `[phase3]`
 
 ---
 
@@ -15,7 +15,6 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 ### Step 1 -- Consolidate state (unblocks everything else)
 
 - [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  Audited May 13. `AppShell→AppContent` boundary: ~48 prop slots. Plan: two contexts only (no UIContext needed -- those 4 props don't drill past AppContent). `SettingsContext`: theme, language, aiEnabled, liveSearch, showVoting, showPersonalCorpus, wcagFilter, platform, fiestaUnlocked -- consumed by Settings panel, ListResults (x4), InputSearchHero, PanelDetail. `SearchContext`: query/submittedQuery/searchKey, selected, results/allFindings/sortedFindings, sortBy, ratings, pins, narrow state -- consumed by ListResults (22 props x4 = 88 slots, biggest win), PanelDetail, PanelAbout, PinnedSection. **Estimated total: ~140 prop slots removed.** Bonus: `locale`, `userOverridesHook`, `contributionQueueHook` are passed to `A11yPanelDetail` but not destructured -- dead props, remove when implementing context.
-- [x] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Done May 13: `useKeydown(handler, { target, capture })` created and wired into `A11yListResults`, `A11yPanelSettings`, `CarouselOnboarding`. Modal/drawer open states are already router-driven. localStorage access already in `sawsawan/storage.js`. Pattern extraction complete.
 
 ### Step 2 -- Split components (blocked on Step 1)
 
@@ -29,33 +28,20 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 ### Ongoing
 
 - [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Migrate to TypeScript for full type checking, or add JSDoc to `App.jsx` and its major data-flow paths. `useFindingSearch.js` and `useContributionQueue.js` already have complete JSDoc. Start with the new context objects from Step 1 -- type them on creation.
-- [x] **Standardize locale/language naming** `[code]` `[i18n]` ,  Audited May 13: `language` (App state, user-facing) vs `locale` (hook param, BCP 47) is intentional. `findingSearchService.js` and `dataService.js` both use `locale` consistently throughout -- no mixed naming found. No code change needed.
-- [x] **Add JSDoc to complex hooks** `[code]` ,  `useFindingSearch.js` and `useContributionQueue.js` both have complete `@param`/`@returns` JSDoc (verified May 13).
-- [x] **Rename CSS classes from `detail-*` prefix** `[code]` `[design]` ,  Done May 13: all 139 occurrences of `.detail-*` renamed to `.panel-detail-*` across `A11yPanelDetail.css`, `A11yPanelDetail.jsx`, `A11yListResults.css`, and `A11yPanelSettings.jsx`. ESLint and Stylelint clean.
-- [x] **Address remaining JS warnings** `[code]` ,  Resolved in May 2026 lint pass. Zero ESLint warnings. All `prefer-aria-disabled` and `no-target-blank-without-label` violations cleared.
 
 ---
 
-## Phase 1 ,  Launch Day Essentials
+## Post-Launch
 
-**Can be done now** (no domain required):
-
-- [ ] **i18n translate run** `[i18n]` ,  64 of 65 non-English locale files have missing keys (465 unique keys added since last translate run). Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill all gaps. Moved to Phase 1.5 -- app is fully usable in English without this; untranslated keys fall back to English gracefully.
-- [ ] **Manual testing before launch** `[qa]` `[manual]` ,  Smoke test core flows: search/select/refine/copy on desktop and mobile (iOS Safari, Android Chrome); test all locales (en, ja, ko, es, fr, de, zh); test keyboard nav (Tab, Enter, Escape); test screen reader (NVDA, JAWS, VoiceOver); verify offline mode works; test on slow network (throttle to 3G).
-- [ ] **Production domain configured** `[infra]` `[manual]` ,  Confirm domain, configure DNS, enable HTTPS, update canonical URL.
-
----
-
-## Phase 1.5 ,  Post-Domain / Pre-Launch
-
-**Gated on production domain being live:**
-
-- [x] **Update canonical URL** `[seo]` `[code]` ,  Done -- URLs were already set to a11yfred.app in index.html.
-- [x] **Remove `noindex`** `[seo]` `[infra]` ,  Done May 14. Flipped to `index, follow` now that a11yfred.app is live.
-- [x] **OG image** `[seo]` `[infra]` ,  `public/og-image.png`, `public/og-image.svg`, and `public/og-image@2x.png` added May 13. 1200×630, branded with icon, wordmark, Lucide Hand + ClipboardCopy icons, and tagline.
-- [ ] **i18n translate run** `[i18n]` ,  Moved from Phase 1. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill 465 missing keys across 64 locale files. Falls back to English gracefully until done.
-- [x] **Umami analytics activation** `[infra]` `[manual]` ,  Done May 14. Script tag active in index.html with site ID. CSP updated (script-src + connect-src). Zero cookies, GDPR-compliant.
-- [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain ownership, submit sitemap.xml, confirm indexing is enabled, monitor for crawl errors post-launch.
+- [ ] **i18n translate run** `[i18n]` ,  64 of 65 non-English locale files have missing keys (more added since v0.2.0). Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill all gaps. Untranslated keys fall back to English gracefully.
+- [ ] **GitHub releases page** `[infra]` `[manual]` ,  Create v0.1.0 and v0.2.0 releases on GitHub, add notes.
+- [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain ownership, submit sitemap.xml, confirm indexing, monitor for crawl errors.
+- [ ] **Content audit** `[qa]` `[manual]` ,  Editorial pass: corpus entry titles and descriptions, About panel, Help panel, Settings labels. Check for placeholder text, inconsistent terminology, ESL-unfriendly phrasing.
+- [ ] **Accessibility audit** `[a11y]` `[manual]` ,  axe-core zero violations, full keyboard walkthrough, screen reader test (NVDA+Firefox, VoiceOver+Safari), 200%/400% zoom, prefers-reduced-motion, prefers-contrast, text spacing bookmarklet.
+- [ ] **Functional audit** `[qa]` `[manual]` ,  Test all core flows end-to-end: search, select, copy, refine, reset, settings, platform filter, WCAG filter, language switch, live search toggle, pinning, ranking, narrow results, hash navigation, PWA install.
+- [ ] **Mobile device testing** `[qa]` `[manual]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, portrait/landscape layouts.
+- [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
+- [ ] **Manual testing** `[qa]` `[manual]` ,  Smoke test core flows on desktop and mobile (iOS Safari, Android Chrome); test key locales (en, ja, ko, es, fr, de, zh); keyboard nav and screen reader; offline mode; slow network.
 
 ---
 
@@ -63,19 +49,11 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 Ordered high-value + low-effort first within each section.
 
-### Data & Content
-
-- [x] **Add native-specific corpus entries** `[corpus]` `[phase2]` ,  28 native/both entries in corpus (ACC-017, ACC-028, ACC-031, ACC-044, ACC-065, ACC-068, ACC-070, ACC-090, ACC-100, ACC-105, and 18 more). Covers Dynamic Type, accessibility labels, announcements, and custom actions.
-
 ### Export & Sharing
 
-- [ ] **Export findings -- UI** `[ux]` ,  Backend done: `exportFinding(finding, format)` in `src/utils/exportFinding.js` supports `'text'`, `'markdown'`, `'csv'`, `'excel'` (dynamic `exceljs` import, `xlsx` removed). Needs UI: multi-select (checkboxes or shift-click in result list) and format picker to call it.
+- [ ] **Export findings -- UI** `[ux]` ,  Backend done: `exportFinding(finding, format)` in `src/utils/exportFinding.js` supports `'text'`, `'markdown'`, `'csv'`, `'excel'` (dynamic `exceljs` import). Needs UI: multi-select (checkboxes or shift-click in result list) and format picker to call it.
 - [ ] **Email results** `[ux]` `[enhancement]` ,  Add Email delivery to Export: mailto: compose option or SendGrid/Resend API, test end-to-end.
 - [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` ,  Implement Jira/Linear URL generation, test deep links, document format.
-
-### Related Entry Ranking
-
-- [x] **Wire related-entry ranking** `[ux]` `[corpus]` `[phase2]` ,  Fully wired. `relatedItems()` called in `A11yListRelated.jsx` with `wcagRankTier` rankFn (7-tier: same SC, AAA pair, reverse-related, shared SC overlap, keyword overlap, co-selection boost). `A11yPanelDetail` renders `<A11yListRelated>` with `getPairsFor` from `useCoSelection`. UI decision on replacing vs. supplementing `relatedSC` display: deferred to Design & Polish.
 
 ### AI Assist & Agent
 
@@ -114,7 +92,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ## Plugins
 
-- [ ] **Easter egg locale bundle** `[code]` `[i18n]` ,  18 locales built and functional; extraction to standalone package pending. **Remaining**: (1) extract locale JSONs and `EASTER_EGG_LOCALES` map to `src/calamansi/easter-eggs/`, (2) implement lazy-loading for locale files to avoid bloating main bundle, (3) document in calamansi package for drop-in usage in other React projects
+- [ ] **Easter egg locale bundle** `[code]` `[i18n]` ,  18 locales built and functional; extraction to standalone package pending. **Remaining**: (1) extract locale JSONs and `EASTER_EGG_LOCALES` map to `src/calamansi/easter-eggs/`, (2) implement lazy-loading to avoid bloating main bundle, (3) document in calamansi package for drop-in usage in other React projects.
 
 ---
 
@@ -122,12 +100,9 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 
 ### Infrastructure
 
-- [x] **PWA icons** `[infra]` `[ux]` ,  Full icon set replaced May 13 with new branded bundle: `icon.svg` (master), `favicon.ico`, `apple-touch-icon.png` (180px), `android-chrome-192x192.png`, `android-chrome-512x512.png`, plus `icon-16` through `icon-1024` raster exports. `vite.config.js` manifest updated. `index.html` updated with ico/png/apple-touch-icon link tags. Old `favicon.svg` removed.
-- [x] **xlsx vulnerability** `[infra]` `[privacy]` ,  `xlsx` (SheetJS) removed. Replaced with `exceljs` in both `exportFinding.js` and `importService.js`. `npm audit` clean (0 vulnerabilities). `vite.config.js` manual chunk updated to `exceljs`.
-- [ ] **Version tagging** `[infra]` ,  Decide corpus threshold, create `v0.1.0` tag, push to GitHub releases.
 - [ ] **Chrome extension -- validate and merge** `[infra]` ,  Icons generated (16/48/128px, May 13). Manifest at `extension-static/manifest.json`. Remaining: add separate Vite config (`vite.config.extension.js`) targeting `dist-extension/`, load unpacked at `chrome://extensions`, smoke-test at ~400px, merge.
 - [ ] **Firefox extension -- validate and merge** `[infra]` ,  Icons generated (16/48/96px, May 13). Manifest at `extension-firefox-static/manifest.json`. Remaining: same Vite config work, load via `about:debugging`, add AMO extension ID to `gecko.id`, confirm sidebar, merge.
-- [ ] **Electron desktop app -- icons, test, merge** `[infra]` ,  Add `build/icon.png` (512×512), `build/icon.icns` (macOS), `build/icon.ico` (Windows). Test on macOS/Windows, code-sign macOS, merge.
+- [ ] **Electron desktop app -- icons, test, merge** `[infra]` ,  Add `build/icon.png` (512x512), `build/icon.icns` (macOS), `build/icon.ico` (Windows). Test on macOS/Windows, code-sign macOS, merge.
 
 ### Extension and Electron distribution
 
@@ -168,10 +143,6 @@ Building distributable installers requires `electron-builder` (already a dev dep
    - Windows Store (MSIX): possible via electron-builder `--win appx` target. Requires a Microsoft Partner Center account. Optional.
    - Snapcraft / Flathub: Linux packaging for wider distribution. `electron-builder` can produce Snap packages. Flathub requires a separate manifest PR.
 
-### Privacy & Security
-
-- [x] **GDPR disclosure for Phase 3** `[privacy]` `[phase3]` `[launch-blocker]` ,  Published as docs/PRIVACY.md (May 13). URL_PRIVACY_POLICY points to a11yfred/a11yfred (repo is public).
-
 ---
 
 ## Phase 3 ,  Planned
@@ -192,14 +163,8 @@ Building distributable installers requires `electron-builder` (already a dev dep
 ### Analytics & Monitoring
 
 - [ ] **Error tracking / crash reporting** `[infra]` `[monitoring]` ,  Evaluate Sentry, add error boundary, capture unhandled rejections.
-- [ ] **GitHub releases page** `[infra]` `[manual]` ,  Create v0.1.0 release, add notes, attach artifacts.
 - [ ] **Social proof & community** `[growth]` `[manual]` ,  Submit to Product Hunt, post to a11y communities, reach out to influencers.
 - [ ] **Feedback collection** `[growth]` `[ux]` ,  Add feedback widget, monitor GitHub Issues, establish feedback loop.
-
-### Search & Visibility
-
-- [ ] **Search Console setup** `[infra]` `[seo]` `[manual]` ,  See Phase 1.5 -- gated on domain.
-- [ ] **Update canonical URL to production domain** `[seo]` `[code]` ,  See Phase 1.5 -- gated on domain.
 
 ---
 
@@ -222,75 +187,3 @@ No timeline. Revisit post-launch based on usage and demand.
 - [ ] **UI component library extraction (npm publishing)** `[code]` `[enhancement]` ,  Accessible SPA primitives fully built and in production. Defer to v1.1 post-launch: (1) confirm button unification complete, (2) audit component APIs for cross-project reusability, (3) scaffold monorepo structure, (4) publish to npm.
 - [ ] **Easter egg locale bundle** `[code]` `[i18n]` ,  18 locales built and functional. Remaining: extract to `src/calamansi/easter-eggs/`, implement lazy-loading, document in calamansi package.
 - 💤 SCSS migration, corpus pre-translation, Compare mode, Ko-fi donations, Ko-fi a11y patch, GitHub Sponsors
-
-### Launch Readiness
-
-- [ ] **Content audit** `[qa]` `[manual]` `[launch-blocker]` ,  Full editorial pass: all visible UI strings, corpus entry titles and descriptions, About panel, Help panel, Settings labels. Check for placeholder text, inconsistent terminology, and ESL-unfriendly phrasing. Known issues resolved May 13: 7 dead `en.json` keys removed; `about.feature_languages_label` updated to "65 Languages"; `settings.privacy_body_1` updated with all localStorage keys. Remaining: editorial pass on corpus entry copy and UI strings not yet done.
-- [x] **Code quality audit** `[code]` `[manual]` `[launch-blocker]` ,  ESLint/Stylelint/Markdownlint all clean (May 13). Fixed Sheet.jsx click-without-keyboard lint error; removed stale eslint-disable directive in App.jsx. All console.* calls are DEV-gated. i18n translation TODOs remain in locale files, not production paths.
-- [x] **Security audit** `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13 (updated May 13): all localStorage keys inventoried and documented in PRIVACY.md; no keys logged to console; all outbound `target="_blank"` links have `rel="noreferrer"` and sr-only text; CSP set via `<meta http-equiv>` in index.html. `xlsx` removed and replaced with `exceljs` -- `npm audit` now reports 0 vulnerabilities.
-- [ ] **Accessibility audit** `[a11y]` `[manual]` `[launch-blocker]` ,  axe-core zero violations, full keyboard walkthrough, screen reader test (NVDA+Firefox, VoiceOver+Safari), 200%/400% zoom, prefers-reduced-motion, prefers-contrast, text spacing bookmarklet.
-- [ ] **Functional audit** `[qa]` `[manual]` `[launch-blocker]` ,  Test all core flows end-to-end: search, select, copy, refine, reset, settings, platform filter, WCAG filter, language switch, live search toggle, pinning, ranking, narrow results, hash navigation, PWA install.
-- [ ] **Mobile device testing** `[qa]` `[manual]` `[launch-blocker]` ,  Test on physical iOS Safari (iPhone SE and current model) and Android Chrome; verify touch targets, BottomSheet swipe, keyboard dismiss, and portrait/landscape layouts.
-- [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` `[launch-blocker]` ,  See Phase 1.5 -- gated on domain.
-- [x] **Expert source attribution audit** `[corpus]` `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13. All credited sources (Roselli, O'Hara, Watson, Lauke, Faulkner, TPGi, Deque, WebAIM, W3C, appt.org) are cited via links to their own published public articles. Standard attribution practice, no permission required. About panel sources list reflects only organizations with public reference material.
-- [x] **Pre-launch checklist** `[infra]` `[manual]` ,  Done May 14. noindex flipped, Umami active, domain live at a11yfred.app. GitHub releases + social prep still pending.
-- [ ] **Post-launch monitoring** `[infra]` `[manual]` ,  Daily error logs, Search Console, Umami, respond to feedback <24h, weekly status, collect features.
-
----
-
-## Resolved
-
-All Phase 1 items, major milestones, and obsolete features. See CHANGELOG.md and UPDATES.md for technical details.
-
-- ✅ Phase 1 complete (May 6)
-- ✅ Public corpus fully sourced and WCAG-mapped
-- ✅ All linters passing (ESLint 9.x, Stylelint, Markdownlint)
-- ✅ Offline-first support (Service Worker, PWA manifest). Implemented May 13 via vite-plugin-pwa. Workbox precaches app shell and all assets. Google Fonts cached at runtime.
-- ✅ Accessibility baseline (axe-core, WCAG 2.2 AA, keyboard + screen reader tested)
-- ✅ Documentation (README, CONTRIBUTING, SECURITY, DEPLOYING, CHANGELOG, UPDATES)
-- ✅ SEO infrastructure (robots.txt, sitemap.xml, meta tags, structured data)
-- ✅ Agentic AI wired (A11yPanelDetail toggle, A11yPanelSettings config, corpus search)
-- ✅ AI provider privacy comparison table (README)
-- ✅ Button consolidation (70+ instances → 2 base components)
-- ✅ CSS tokenization (all outline/spacing/motion values to tokens)
-- ✅ UI component library extracted and portable
-- ✅ Zero dead code and unused imports
-- ✅ Comprehensive code review and refactoring (May 5)
-- ✅ Code cleanup and dead code removal (May 6)
-- ✅ UI library decoupling and panel unification (May 6)
-- ✅ Extract inline UI primitives to src/components/ui/ (Toggle, RadioChip, Select)
-- ✅ Complete UI component library extraction for boilerplate (StateButton, InputWithClear, Badge, Field, PanelShell, ButtonBack, Modal, Announcer)
-- ✅ Wire agentic AI in A11yPanelDetail (agent toggle, settings config, corpus search)
-- ✅ Document AI provider privacy comparison in README
-- ✅ Advanced search syntax (query parser for +term and -term operators)
-- ✅ Phase 2 stubs review (verified against Supabase JS v2 SDK docs)
-- ✅ GitHub README badges (License, Version, Node.js)
-- ✅ Admin panel corpus split into Public (ACC) and Legacy (ATH) dataset tabs (May 9)
-- ✅ Admin panel restyled with UI library components (May 9)
-- ✅ Results layout consolidated: sort + actions in one row, rank hint repositioned (May 9)
-- ✅ Footer: Mikey Ilagan linked to mikey.fyi with ref tracking (May 9)
-- ✅ WCAG filter pending note repositioned to sit directly below description (May 9)
-- ✅ ulam framework vanilla route announcer (taho-pandan) and focus manager (siling-mahaba) written (May 11)
-- ✅ Remix 3 adapter imports updated from @remix-run/react to react-router (May 11)
-- ✅ 3 ulam-specific neighbor lint rules added: no-announce-in-render, no-hash-router-in-remix, no-use-page-title-in-remix (May 11)
-- ✅ neighbor and rogers moved to tools/; adobo renamed to rogers throughout (May 11)
-- ✅ All docs updated for framework restructure; five-pass stale reference sweep complete (May 11)
-- ✅ Zero JS errors, zero CSS errors, zero MD errors across all three linters (May 12)
-- ✅ A11yPanelSettings bad export fixed; useCompletion/useProviderConfig refactored to useState lazy init (May 12)
-- ✅ prefers-reduced-motion and prefers-reduced-transparency fallback blocks added to all UI components (May 12)
-- ✅ neighbor stylelint rule updated to suppress when selector has existing prefers override (May 12)
-- ✅ SEO meta tags updated: duplicate robots tag removed, description copy refreshed, sitemap lastmod bumped to 2026-05-13 (May 13)
-- ✅ Code quality audit: all three linters clean, Sheet.jsx keyboard handler added, stale eslint-disable removed (May 13)
-- ✅ Security audit: localStorage keys documented, console leaks verified DEV-only, all outbound links have rel="noreferrer", CSP correct (May 13)
-- ✅ xlsx removed, replaced with exceljs (0 npm audit vulnerabilities) (May 13)
-- ✅ Privacy policy: GDPR-DRAFT.md finalized as docs/PRIVACY.md, linked from in-app Privacy & Storage panel (May 13)
-- ✅ SheetDetail → A11yPanelDetail, A11yListResult → A11yListResults renamed throughout (May 13)
-- ✅ useDetailSheetClipboard/useDetailSheetRefine renamed to useSheetDetailClipboard/useSheetDetailRefine (May 13)
-- ✅ relatedItems() fully wired via A11yListRelated with wcagRankTier rankFn (May 13)
-- ✅ PWA icons: icon-192.png and icon-512.png regenerated with Outfit ExtraBold-style A letterform matching site H1 typeface (May 13)
-- ✅ exportFinding() extended: csv, excel formats added (exceljs for xlsx output) (May 13)
-- ✅ BOM stripped from 6 locale files and 3 source files (App.jsx, A11yPanelAbout.jsx, A11yPanelSettings.jsx) (May 13)
-- ✅ Duplicate search.narrow_clear_aria key removed from en.json and 56 locale files (May 13)
-- ✅ Settings section naming convention established: Section* prefix (SectionAiSettings, SectionSearchSettings, SectionLanguageSettings, SectionResetData) (May 13)
-- ✅ CSS class rename: 139 occurrences of `.detail-*` renamed to `.panel-detail-*` across A11yPanelDetail.css/.jsx, A11yListResults.css, A11yPanelSettings.jsx (May 13)
-- ✅ JSDoc audit: useFindingSearch.js and useContributionQueue.js both have complete @param and @returns docs -- no work needed (May 13)

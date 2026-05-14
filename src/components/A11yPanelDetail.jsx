@@ -22,6 +22,9 @@ import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
 import './A11yPanelDetail.css'
 
+const WCAG_BADGE_STYLE = { '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }
+const WCAG_LEVEL_BADGE_STYLE = { '--badge-bg': 'var(--wcag-level-bg)', '--badge-text': 'var(--wcag-level-text)' }
+
 function FieldCheckbox({ label, checked, onChange, disabled }) {
   return (
     <label className="panel-detail-ai-field-select-item">
@@ -97,8 +100,8 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
     setDescText, setFixText, setDescHistory, setFixHistory, t,
   })
 
+  useEffect(() => { titleRef.current?.focus() }, [])
   useFocusOnChange(titleRef, focusTrigger)
-  useFocusOnChange(titleRef, entry.id)
 
   useEffect(() => {
     setEntryNote(getStorage(getEntryNoteKey(entry.id), '')) // eslint-disable-line react-hooks/set-state-in-effect
@@ -193,18 +196,26 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
               </Badge>
             )
           })()}
-          {entry.wcagVersion && entry.wcagLevel && (
+          {entry.wcagVersion && (
             <button
               type="button"
               className="badge--wcag"
-              style={{ '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }}
-              onClick={() => onBadgeClick?.({ type: 'wcag', value: entry.wcagVersion, level: entry.wcagLevel })}
-              aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
+              style={WCAG_BADGE_STYLE}
+              onClick={() => onBadgeClick?.({ type: 'wcag', value: entry.wcagVersion })}
+              aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria')}`}
             >
-              <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
-              {entry.wcagVersion},{' '}
-              <span className="badge-prefix">{t('badge.level_prefix')}</span>
-              {entry.wcagLevel}
+              {t('badge.wcag_version_label')}{entry.wcagVersion}
+            </button>
+          )}
+          {entry.wcagLevel && (
+            <button
+              type="button"
+              className="badge--wcag-level"
+              style={WCAG_LEVEL_BADGE_STYLE}
+              onClick={() => onBadgeClick?.({ type: 'wcag-level', value: entry.wcagLevel })}
+              aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
+            >
+              {t('badge.level_label')}{entry.wcagLevel}
             </button>
           )}
         </div>

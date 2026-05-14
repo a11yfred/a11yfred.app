@@ -6,7 +6,6 @@ const COPY_FIELD = { title: 'lifetimeCopiedTitle', primarySc: 'lifetimeCopiedPri
 
 export default function useAppRatings() {
   const { signals: ratings, rankUp, rankDown, toggleStar, toggleArchive, resetScores: resetRankings, clearAll: clearAllRatings, recordPin, recordOpen, recordCopy: _recordCopy } = useItemSignals(LS_DEFECT_RATINGS, { starBonus: POP_STAR_BONUS, unstarPenalty: POP_UNSTAR_PENALTY, archivePenalty: POP_ARCHIVE_PENALTY, openBoost: POP_OPEN_BOOST, copyBoost: POP_COPY_BOOST })
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- COPY_FIELD is module-stable
   const recordCopy = useCallback((id, type) => _recordCopy(id, COPY_FIELD[type]), [_recordCopy])
   const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedItems(LS_PINNED_ENTRIES)
   const togglePin = useCallback((id) => {

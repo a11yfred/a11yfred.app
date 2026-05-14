@@ -10,6 +10,7 @@ import A11yPanelDetail from './components/A11yPanelDetail.jsx'
 import A11yPanelAbout from './components/A11yPanelAbout.jsx'
 import A11yPanelHelp from './components/A11yPanelHelp.jsx'
 import CarouselOnboarding from './components/CarouselOnboarding.jsx'
+import FadeTransition from './components/ui/FadeTransition.jsx'
 import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
 import ThemeEffectFiestaSparkles from './components/ThemeEffectFiestaSparkles.jsx'
 import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPlayer.jsx'
@@ -19,7 +20,7 @@ import useAppSearch from './hooks/useAppSearch.js'
 import useAppRatings from './hooks/useAppRatings.js'
 import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, MS_PER_DAY, MAX_RECENT_ENTRIES, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_ENTRIES, LS_LAST_SELECTED, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson, getSession, setSession, removeSession, clearAllStorage } from './utils/storage.js'
-import { getAiProvider, getProviderLabel, isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from '@ulam/halohalo'
+import { isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from '@ulam/halohalo'
 import {
   Router,
   useRouter,
@@ -107,10 +108,29 @@ function AppShell() {
 
 const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '/help', '/onboarding', '/results/all', '/admin', '/ulam'])
 
+const WORD_NUMBERS = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
+
+// Formats a count: 1-9 → "One (1)", "Two (2)", …; 10+ → "10", "11", …
+function formatCount(n) {
+  if (n >= 1 && n <= 9) return `${WORD_NUMBERS[n - 1]} (${n})`
+  return String(n)
+}
+
+// Substitutes {count} in a stat string with the formatted count,
+// then bolds the leading phrase up to " and ".
+// e.g. (n=3, str="{count} results are pinned and always shown.")
+//   => <strong>Three (3) results are pinned</strong> and always shown.
+function boldStatPhrase(str, n) {
+  const filled = str.replace('{count}', formatCount(n))
+  const andIdx = filled.indexOf(' and ')
+  if (andIdx === -1) return <strong>{filled}</strong>
+  return <><strong>{filled.slice(0, andIdx)}</strong>{filled.slice(andIdx)}</>
+}
+
 function AppContent() {
-  const { theme, setTheme, language, setLanguage, aiEnabled, setAiEnabled, liveSearch, setLiveSearch, showVoting, setShowVoting, showPersonalCorpus, setShowPersonalCorpus, fiestaUnlocked, setSaveCount, platform, setPlatform, wcagFilter, setWcagFilter } = useSettings()
-  const { query, setQuery, submittedQuery, setSubmittedQuery, searchKey, setSearchKey, selected, setSelected, sheetCollapsed, setSheetCollapsed, pendingEntry, setPendingEntry, pendingPrivacy, setPendingPrivacy, panelFocusTrigger, setPanelFocusTrigger, narrowMode, setNarrowMode, narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery } = useSearch()
-  const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings, pinnedIds, togglePin, clearPins, getPairsFor, recordCopy, recordOpen } = useRatings()
+  const { theme, setTheme, language, setLanguage, aiEnabled, setAiEnabled, liveSearch, setLiveSearch, showVoting, setShowVoting, showPersonalCorpus, setShowPersonalCorpus, setSaveCount, platform, setPlatform, wcagFilter, setWcagFilter } = useSettings()
+  const { query, setQuery, submittedQuery, setSubmittedQuery, searchKey, setSearchKey, selected, setSelected, sheetCollapsed, setSheetCollapsed, pendingEntry, setPendingEntry, pendingPrivacy, setPendingPrivacy, panelFocusTrigger, setPanelFocusTrigger, narrowMode, setNarrowMode, narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery, sortBy, setSortBy } = useSearch()
+  const { ratings, toggleStar, toggleArchive, resetRankings, clearAllRatings, pinnedIds, togglePin, clearPins, recordCopy, recordOpen } = useRatings()
   const { route, navigate, appName } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
@@ -151,11 +171,7 @@ function AppContent() {
     if (colonIdx < 0) return null
     const type = badge.slice(0, colonIdx)
     const rest = badge.slice(colonIdx + 1)
-    if (!['severity', 'source', 'wcag'].includes(type) || !rest) return null
-    if (type === 'wcag' && rest.includes('|')) {
-      const [value, level] = rest.split('|')
-      return { type, value, level }
-    }
+    if (!['severity', 'source', 'wcag', 'wcag-level'].includes(type) || !rest) return null
     return { type, value: rest }
   })
   const resultsCountRef = useRef(null)
@@ -297,10 +313,23 @@ function AppContent() {
 
   const { userEntries } = useUserEntries()
   const { overrides: userOverrides } = useUserOverrides()
-  const activeQuery = liveSearch ? query : submittedQuery
+  const [searchFocused, setSearchFocused] = useState(false)
+  const searchBlurTimerRef = useRef(null)
+  const activeQuery = liveSearch ? (searchFocused ? query : submittedQuery) : submittedQuery
   const { results, allEntries, sortedEntries, dataLoading, dataError, retryData } = useEntrySearch(activeQuery, platform, language, searchKey, ratings, showPersonalCorpus ? userEntries : [], wcagFilter, userOverrides)
+
+  function handleSearchFocus() {
+    clearTimeout(searchBlurTimerRef.current)
+    setSearchFocused(true)
+  }
+
+  function handleSearchBlur() {
+    searchBlurTimerRef.current = setTimeout(() => {
+      setSearchFocused(false)
+      setSubmittedQuery(query)
+    }, 500)
+  }
   const [viewAllLoading, setViewAllLoading] = useState(false)
-  const [sortBy, setSortBy] = useState(() => new URLSearchParams(window.location.search).get('sort') || 'smart')
 
   const smartScore = useCallback((f, index) => {
     const r = ratings[f.id]
@@ -320,27 +349,50 @@ function AppContent() {
   }, [ratings])
 
   const applySortBy = useCallback((arr) => {
-    if (sortBy === 'smart') {
-      const scores = new Map(arr.map((f, i) => [f.id, smartScore(f, i)]))
-      return [...arr].sort((a, b) => scores.get(b.id) - scores.get(a.id))
-    }
-    if (sortBy === 'severity-desc') return [...arr].sort((a, b) => (SEVERITY_SORT_ORDER[a.severity] ?? SORT_MISSING_ORDER) - (SEVERITY_SORT_ORDER[b.severity] ?? SORT_MISSING_ORDER))
-    if (sortBy === 'severity-asc')  return [...arr].sort((a, b) => (SEVERITY_SORT_ORDER[b.severity] ?? SORT_MISSING_ORDER) - (SEVERITY_SORT_ORDER[a.severity] ?? SORT_MISSING_ORDER))
-    if (sortBy === 'title-az') return [...arr].sort((a, b) => a.title.localeCompare(b.title))
-    if (sortBy === 'title-za') return [...arr].sort((a, b) => b.title.localeCompare(a.title))
-    if (sortBy === 'sc')           return [...arr].sort((a, b) => (a.primarySC ?? '').localeCompare(b.primarySC ?? ''))
-    if (sortBy === 'wcag-version') return [...arr].sort((a, b) => (WCAG_VERSION_ORDER[a.wcagVersion] ?? SORT_MISSING_ORDER) - (WCAG_VERSION_ORDER[b.wcagVersion] ?? SORT_MISSING_ORDER))
-    if (sortBy === 'wcag-level')   return [...arr].sort((a, b) => (WCAG_LEVEL_ORDER[a.wcagLevel] ?? SORT_MISSING_ORDER) - (WCAG_LEVEL_ORDER[b.wcagLevel] ?? SORT_MISSING_ORDER))
-    if (sortBy === 'platform')     return [...arr].sort((a, b) => (PLATFORM_ORDER[a.platform] ?? SORT_MISSING_ORDER) - (PLATFORM_ORDER[b.platform] ?? SORT_MISSING_ORDER))
-    if (sortBy === 'popularity')   return [...arr].sort((a, b) => ((ratings[b.id]?.popularity ?? 0) - (ratings[a.id]?.popularity ?? 0)))
-    if (sortBy === 'relevance')    return arr
-    return arr
+    const ra = (f) => ratings[f.id]
+    const isArchived = (f) => ra(f)?.archived ?? false
+    const isStarred  = (f) => ra(f)?.starred  ?? false
+    const rankScore  = (f) => ra(f)?.score     ?? 0
+
+    // Pure sort-mode comparator -- applied only when rank is equal
+    const sortComparator = (() => {
+      if (sortBy === 'smart') {
+        const scores = new Map(arr.map((f, i) => [f.id, smartScore(f, i)]))
+        return (a, b) => scores.get(b.id) - scores.get(a.id)
+      }
+      if (sortBy === 'severity-desc') return (a, b) => (SEVERITY_SORT_ORDER[a.severity] ?? SORT_MISSING_ORDER) - (SEVERITY_SORT_ORDER[b.severity] ?? SORT_MISSING_ORDER)
+      if (sortBy === 'severity-asc')  return (a, b) => (SEVERITY_SORT_ORDER[b.severity] ?? SORT_MISSING_ORDER) - (SEVERITY_SORT_ORDER[a.severity] ?? SORT_MISSING_ORDER)
+      if (sortBy === 'title-az')      return (a, b) => a.title.localeCompare(b.title)
+      if (sortBy === 'title-za')      return (a, b) => b.title.localeCompare(a.title)
+      if (sortBy === 'sc')            return (a, b) => (a.primarySC ?? '').localeCompare(b.primarySC ?? '')
+      if (sortBy === 'wcag-version')  return (a, b) => (WCAG_VERSION_ORDER[a.wcagVersion] ?? SORT_MISSING_ORDER) - (WCAG_VERSION_ORDER[b.wcagVersion] ?? SORT_MISSING_ORDER)
+      if (sortBy === 'wcag-level')    return (a, b) => (WCAG_LEVEL_ORDER[a.wcagLevel] ?? SORT_MISSING_ORDER) - (WCAG_LEVEL_ORDER[b.wcagLevel] ?? SORT_MISSING_ORDER)
+      if (sortBy === 'platform')      return (a, b) => (PLATFORM_ORDER[a.platform] ?? SORT_MISSING_ORDER) - (PLATFORM_ORDER[b.platform] ?? SORT_MISSING_ORDER)
+      if (sortBy === 'popularity')    return (a, b) => (ra(b)?.popularity ?? 0) - (ra(a)?.popularity ?? 0)
+      return null
+    })()
+
+    return [...arr].sort((a, b) => {
+      // 1. Archived always last
+      if (isArchived(a) !== isArchived(b)) return isArchived(a) ? 1 : -1
+      // 2. Within archived: newest archived first (oldest at very bottom)
+      if (isArchived(a) && isArchived(b)) return (ra(b)?.archivedAt ?? 0) - (ra(a)?.archivedAt ?? 0)
+      // 3. Starred always above non-starred (within non-archived)
+      if (isStarred(a) !== isStarred(b)) return isStarred(a) ? -1 : 1
+      // 4. Rank always above sort mode
+      const rd = rankScore(b) - rankScore(a)
+      if (rd !== 0) return rd
+      // 5. Sort mode as final tiebreaker
+      return sortComparator ? sortComparator(a, b) : 0
+    })
   }, [sortBy, ratings, smartScore])
 
-  const pinnedResults = useMemo(() =>
-    allEntries.filter(f => pinnedIds.has(f.id)),
-    [allEntries, pinnedIds]
-  )
+  const pinnedResults = useMemo(() => {
+    const order = [...pinnedIds]
+    return allEntries
+      .filter(f => pinnedIds.has(f.id))
+      .sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))
+  }, [allEntries, pinnedIds])
 
   const unpinnedResults = useMemo(() =>
     applySortBy(results.filter(f => !pinnedIds.has(f.id))),
@@ -358,7 +410,8 @@ function AppContent() {
       const p = SEVERITY_VARS[badgeFilter.value]
       return p ? t(p.key) : badgeFilter.value
     }
-    if (badgeFilter.type === 'wcag') return badgeFilter.level ? `WCAG ${badgeFilter.value}, Level ${badgeFilter.level}` : `WCAG ${badgeFilter.value}`
+    if (badgeFilter.type === 'wcag') return null
+    if (badgeFilter.type === 'wcag-level') return null
     return badgeFilter.value
   }, [badgeFilter, t])
 
@@ -369,12 +422,10 @@ function AppContent() {
       if (badgeFilter.type === 'severity') return f.severity === badgeFilter.value
       if (badgeFilter.type === 'source')   return f.creditNames?.includes(badgeFilter.value)
       if (badgeFilter.type === 'wcag') {
-        if (badgeFilter.value === 'N/A') {
-          return !f.wcagVersion || f.wcagVersion === ''
-        }
-        const versionMatch = f.wcagVersion === badgeFilter.value
-        return badgeFilter.level ? versionMatch && f.wcagLevel === badgeFilter.level : versionMatch
+        if (badgeFilter.value === 'N/A') return !f.wcagVersion || f.wcagVersion === ''
+        return f.wcagVersion === badgeFilter.value
       }
+      if (badgeFilter.type === 'wcag-level') return f.wcagLevel === badgeFilter.value
       return false
     })
   }, [sortedEntries, badgeFilter, pinnedIds])
@@ -406,10 +457,24 @@ function AppContent() {
   }
 
   const handleBadgeClick = (filter) => {
+    let searchQuery = ''
+    if (filter) {
+      if (filter.type === 'severity') {
+        const p = SEVERITY_VARS[filter.value]
+        searchQuery = p ? t(p.key) : filter.value
+      } else if (filter.type === 'wcag') {
+        searchQuery = `WCAG ${filter.value}`
+      } else if (filter.type === 'wcag-level') {
+        searchQuery = `Level ${filter.value}`
+      } else {
+        searchQuery = filter.value
+      }
+    }
     setBadgeFilter(filter)
-    setQuery('')
-    setSubmittedQuery('')
+    setQuery(searchQuery)
+    setSubmittedQuery(searchQuery)
     syncBadgeUrl(filter)
+    syncSearchUrl(searchQuery)
     setSelected(null)
     navigate('/')
     setTimeout(() => resultsCountRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
@@ -502,10 +567,7 @@ function AppContent() {
   const syncBadgeUrl = (filter) => {
     const url = new URL(window.location.href)
     if (filter) {
-      const badgeValue = filter.type === 'wcag' && filter.level
-        ? `${filter.type}:${filter.value}|${filter.level}`
-        : `${filter.type}:${filter.value}`
-      url.searchParams.set('badge', badgeValue)
+      url.searchParams.set('badge', `${filter.type}:${filter.value}`)
       url.searchParams.delete('q')
     } else {
       url.searchParams.delete('badge')
@@ -683,14 +745,23 @@ function AppContent() {
     setSubmittedNarrowQuery('')
   }
 
-  const handleNarrow = () => setNarrowMode(true)
-  const handleNarrowSearch = () => setSubmittedNarrowQuery(narrowQuery)
-
   const handleClearResults = () => {
     setPlatform('all')
-    clearNarrowState()
+    setNarrowMode(false)
     setSortBy('smart')
     setWcagFilter(DEFAULT_WCAG_FILTER)
+    setBadgeFilter(null)
+    syncBadgeUrl(null)
+    searchInputRef.current?.focus()
+  }
+
+  const handleClearQuery = () => {
+    setQuery('')
+    setSubmittedQuery('')
+    setSearchKey(k => k + 1)
+    clearNarrowState()
+    setWcagFilter(DEFAULT_WCAG_FILTER)
+    syncSearchUrl('')
     searchInputRef.current?.focus()
   }
 
@@ -799,10 +870,6 @@ function AppContent() {
     }
   }, [query])
 
-  // Provider name for the search hint (read from localStorage; updates on next render after save)
-  const providerName = aiEnabled
-    ? getProviderLabel(getAiProvider())
-    : null
 
   const searchView = (
     <>
@@ -811,24 +878,12 @@ function AppContent() {
         onChange={handleQueryChange}
         onSearch={handleSearch}
         onExampleSearch={q => { setQuery(q); setSubmittedQuery(q); setSearchKey(k => k + 1); syncSearchUrl(q) }}
+        onFocus={handleSearchFocus}
+        onBlur={handleSearchBlur}
         liveSearch={liveSearch}
         inputRef={searchInputRef}
-        platform={platform}
-        aiEnabled={aiEnabled}
-        providerName={providerName}
-        showRanking={showVoting}
-        hasPins={pinnedIds.size > 0}
         narrowMode={narrowMode}
-        narrowQuery={narrowQuery}
-        onNarrowChange={setNarrowQuery}
-        onNarrowToggle={() => {
-          setNarrowMode(false)
-          setNarrowQuery('')
-          setQuery('')
-          setSubmittedQuery('')
-          syncSearchUrl('')
-        }}
-        resultsCount={narrowMode ? results.length : null}
+        onOpenSettings={handleOpenSettings}
       />
       {!dataError && !dataLoading && !viewAllLoading && pinnedIds.size > 0 && (
         <PinnedSection
@@ -867,6 +922,7 @@ function AppContent() {
                 hasPinnedItems={pinnedIds.size > 0}
                 defaultWcagFilter={DEFAULT_WCAG_FILTER}
                 onOpenSettings={handleOpenSettings}
+                onBadgeClick={handleBadgeClick}
               />
             )
             : activeQuery.length >= 2
@@ -904,9 +960,11 @@ function AppContent() {
                     showAds={showAds}
                     adFrequency={adFrequency}
                     onClear={handleClearResults}
+                    onClearQuery={handleClearQuery}
                     hasPinnedItems={pinnedIds.size > 0}
                     defaultWcagFilter={DEFAULT_WCAG_FILTER}
                     onOpenSettings={handleOpenSettings}
+                    onBadgeClick={handleBadgeClick}
                   />
                 </>
               )
@@ -928,6 +986,7 @@ function AppContent() {
                     hasPinnedItems={pinnedIds.size > 0}
                     defaultWcagFilter={DEFAULT_WCAG_FILTER}
                     onOpenSettings={handleOpenSettings}
+                    onBadgeClick={handleBadgeClick}
                   />
                 )
               : sortedEntries.length === 0
@@ -1007,13 +1066,21 @@ function AppContent() {
           if (!pinnedCount && !starredCount && !archivedCount) return null
           return (
             <ul className="view-all-confirm-stat-list">
-              {pinnedCount > 0 && <li className="view-all-confirm-stat">{pinnedCount === 1 ? t('search.view_all_confirm_pinned_one') : t('search.view_all_confirm_pinned', { count: pinnedCount })}</li>}
-              {starredCount > 0 && <li className="view-all-confirm-stat">{starredCount === 1 ? t('search.view_all_confirm_starred_one') : t('search.view_all_confirm_starred', { count: starredCount })}</li>}
-              {archivedCount > 0 && <li className="view-all-confirm-stat">{archivedCount === 1 ? t('search.view_all_confirm_archived_one') : t('search.view_all_confirm_archived', { count: archivedCount })}</li>}
+              {pinnedCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(pinnedCount === 1 ? t('search.view_all_confirm_pinned_one') : t('search.view_all_confirm_pinned'), pinnedCount)}</li>}
+              {starredCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(starredCount === 1 ? t('search.view_all_confirm_starred_one') : t('search.view_all_confirm_starred'), starredCount)}</li>}
+              {archivedCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(archivedCount === 1 ? t('search.view_all_confirm_archived_one') : t('search.view_all_confirm_archived'), archivedCount)}</li>}
             </ul>
           )
         })()}
-        <p className="view-all-confirm-body"><strong>{sortedEntries.length === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body', { count: sortedEntries.length })}</strong></p>
+        <p className="view-all-confirm-body">{(() => {
+          const n = sortedEntries.length
+          const tmpl = n === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body')
+          const [before, after] = tmpl.split('{count}')
+          const spaceIdx = after.indexOf(' ', 1) // end of " result(s)"
+          const boldTail = spaceIdx === -1 ? after : after.slice(0, spaceIdx)
+          const rest = spaceIdx === -1 ? '' : after.slice(spaceIdx)
+          return <>{before}<strong style={{ color: 'var(--text-heading)' }}>{formatCount(n)}{boldTail}</strong>{rest}</>
+        })()}</p>
         <label className="view-all-dont-ask-label">
           <input
             type="checkbox"
@@ -1124,23 +1191,25 @@ function AppContent() {
         />
         <main className="app-main">
           <Announcer devEnabled={devAllEnabled} />
-          <Suspense fallback={null}>
-            {isNotFound
-              ? <NotFoundPage />
-              : ulamOpen
-                ? <UlamMenu />
-                : adminOpen
-                ? <A11yPanelAdmin {...adminProps} />
-                : isDesktop && settingsOpen
-                  ? <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
-                  : isDesktop && aboutOpen
-                    ? <A11yPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
-                    : isDesktop && helpOpen
-                      ? <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
-                      : isDesktop && onboardingOpen
-                        ? <CarouselOnboarding onClose={handleCloseOnboarding} />
-                        : searchView}
-          </Suspense>
+          <FadeTransition watchKey={isNotFound ? 'notfound' : ulamOpen ? 'ulam' : adminOpen ? 'admin' : settingsOpen ? 'settings' : aboutOpen ? 'about' : helpOpen ? 'help' : onboardingOpen ? 'onboarding' : 'search'}>
+            <Suspense fallback={null}>
+              {isNotFound
+                ? <NotFoundPage />
+                : ulamOpen
+                  ? <UlamMenu />
+                  : adminOpen
+                  ? <A11yPanelAdmin {...adminProps} />
+                  : isDesktop && settingsOpen
+                    ? <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
+                    : isDesktop && aboutOpen
+                      ? <A11yPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+                      : isDesktop && helpOpen
+                        ? <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+                        : isDesktop && onboardingOpen
+                          ? <CarouselOnboarding onClose={handleCloseOnboarding} />
+                          : searchView}
+            </Suspense>
+          </FadeTransition>
         </main>
         <PageFooter />
       </div>
@@ -1235,18 +1304,18 @@ function AppContent() {
         heading={t('detail.discard_confirm_heading')}
         actions={[
           {
-            label: t('detail.discard_confirm_yes'),
+            label: t('detail.discard_nav_yes'),
             onClick: () => { setPendingPrivacy(false); setSheetCollapsed(false); setSelected(null); navigate('/settings/privacy') },
             className: 'btn--warning modal-ok-btn',
           },
           {
-            label: t('detail.discard_confirm_no'),
+            label: t('detail.discard_nav_no'),
             onClick: () => setPendingPrivacy(false),
             className: 'btn--tertiary modal-ok-btn',
           },
         ]}
       >
-        <p>{t('detail.discard_confirm_body')}</p>
+        <p>{t('detail.discard_nav_body')}</p>
       </Modal>
     </div>
   )

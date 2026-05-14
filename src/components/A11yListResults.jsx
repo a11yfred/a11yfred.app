@@ -1,10 +1,10 @@
-import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ChevronsLeft, ChevronsRight, ChevronUp, X } from 'lucide-react'
+import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Link, Check, Pin, PinOff, Filter, ChevronsLeft, ChevronsRight, ArrowUp, OctagonX, Trash2 } from 'lucide-react'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import Button from './ui/Button.jsx'
-import LinkSkipTo from './ui/SkipLink.jsx'
+import LinkSkipTo from './ui/LinkSkipTo.jsx'
 import RadioChip from './ui/RadioChip.jsx'
 import ButtonIcon from './ui/ButtonIcon.jsx'
 import Badge from './ui/Badge.jsx'
@@ -14,13 +14,23 @@ import NoResults from './ui/NoResults.jsx'
 import InfoBox from './ui/InfoBox.jsx'
 import TileAd from './TileAd.jsx'
 import entrySlug from '../utils/entrySlug.js'
-import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_THRESHOLD, SWIPE_PIN_FLASH_MS, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
+import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_THRESHOLD, SWIPE_REVEAL, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD, PIN_FLY_MS, UNPIN_FLY_MS, ARCHIVE_FLY_MS, UNARCHIVE_FLY_MS } from '../utils/constants.js'
 import { useKeydown } from '../hooks/useKeydown.js'
 import useSwipeReveal from '../hooks/useSwipeReveal.js'
+import { useFlipList } from '../hooks/useFlipList.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useSearch } from '../context/ContextSearch.js'
 import { useRatings } from '../context/ContextRatings.js'
 import './A11yListResults.css'
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+function truncateAtWord(text, maxLength) {
+  if (text.length <= maxLength) return text
+  const cut = text.slice(0, maxLength)
+  const lastSpace = cut.lastIndexOf(' ')
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + '…'
+}
 
 function triggerButtonAnimation(btn, id, setAnimating) {
   btn.classList.remove('animating')
@@ -36,16 +46,24 @@ function triggerButtonAnimation(btn, id, setAnimating) {
 export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   const t = useT()
   const { showVoting: showRanking } = useSettings()
+  const [clearingAll, setClearingAll] = useState(false)
   if (!entries.length) return null
+
+  const handleClearAll = () => {
+    if (prefersReducedMotion || !onClearPins) { onClearPins?.(); return }
+    setClearingAll(true)
+    setTimeout(() => { onClearPins(); setClearingAll(false) }, UNPIN_FLY_MS + 80)
+  }
+
   return (
-    <div className="pinned-section pinned-results">
+    <div className={`pinned-section pinned-results${clearingAll ? ' pinned-section--clearing' : ''}`}>
       <div className="pinned-section__header">
         <h2 ref={headingRef} tabIndex={-1} className="pinned-section__heading">
           {t('results.pinned_heading')}
           <span className="pinned-section__count">{entries.length}</span>
         </h2>
         {onClearPins && (
-          <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={onClearPins} icon={<PinOff size={14} aria-hidden="true" />}>
+          <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={handleClearAll} icon={<PinOff size={14} aria-hidden="true" />}>
             {t('results.unpin_all')}
           </Button>
         )}
@@ -57,14 +75,15 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
         query=""
         showRankingSort={showRanking}
         hideCount
+        hideFilters
         hasPinnedItems={false}
       />
     </div>
   )
 }
 
-export default function A11yListResults({ results, selected, onSelect, query, countRef, onCopyLink, hideCount = false, filterLabel, narrowResults = null, showRankingSort = false, showAds = false, adFrequency = 8, onClear, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings }) {
-  const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter } = useSettings()
+export default function A11yListResults({ results, selected, onSelect, query, countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick }) {
+  const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter, setWcagFilter } = useSettings()
   const { narrowMode, narrowQuery, sortBy, setSortBy: onSortChange, setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery } = useSearch()
   const onNarrow = () => setNarrowMode(true)
   const onNarrowExit = () => { setNarrowMode(false); setNarrowQuery(''); setSubmittedNarrowQuery('') }
@@ -86,11 +105,15 @@ export default function A11yListResults({ results, selected, onSelect, query, co
   const [sortToCommit, setSortToCommit] = useState(null)
   const [clearPending, setClearPending] = useState(false)
   const [sortFlash, setSortFlash] = useState(false)
-  const listRef = useRef(null)
+  const { listRef, snapshotPositions } = useFlipList()
   const [animatingUp, setAnimatingUp] = useState(() => new Set())
   const [animatingDown, setAnimatingDown] = useState(() => new Set())
+  const [pinningIds, setPinningIds] = useState(() => new Set())
+  const [unpinningIds, setUnpinningIds] = useState(() => new Set())
+  const [archivingIds, setArchivingIds] = useState(() => new Set())
+  const [unarchivingIds, setUnarchivingIds] = useState(() => new Set())
   const prevNarrowResultsRef = useRef(undefined)
-  const { swipeOpenId, setSwipeOpenId, swipeTouchRef, swipeStateRef } = useSwipeReveal({ listRef, showRanking, onPin, pinnedIds })
+  const { swipeOpenId, setSwipeOpenId, swipeTouchRef } = useSwipeReveal({ listRef, showRanking, onPin, pinnedIds })
 
   // Keep pendingSort in sync when sortBy changes externally
   useEffect(() => { setPendingSort(sortBy) }, [sortBy]) // eslint-disable-line react-hooks/set-state-in-effect -- intentional sync from parent prop
@@ -201,7 +224,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
           announce(t('announce.ranked_down', { title: currentEntry.title, score: newRating.score - 1 }))
         }
     }
-  }, [displayResults, ratings, onStar, onArchive, onRankUp, onRankDown, t])
+  }, [displayResults, ratings, onStar, onArchive, onRankUp, onRankDown, t]) // eslint-disable-line react-hooks/exhaustive-deps -- listRef is a stable ref
 
   useKeydown(handleKeyDown, { target: listRef })
 
@@ -215,13 +238,23 @@ export default function A11yListResults({ results, selected, onSelect, query, co
     }
     document.addEventListener('pointerdown', handleOutsideTap)
     return () => document.removeEventListener('pointerdown', handleOutsideTap)
-  }, [swipeOpenId])
+  }, [swipeOpenId]) // eslint-disable-line react-hooks/exhaustive-deps -- setSwipeOpenId is stable
 
   const activeFilters = [
-    platform !== 'all' ? (platformLabels[platform] ?? platform) : null,
-    filterLabel ?? null,
-    wcagFilter && defaultWcagFilter && (wcagFilter.maxVersion !== defaultWcagFilter.maxVersion || wcagFilter.maxLevel !== defaultWcagFilter.maxLevel)
-      ? `WCAG ${wcagFilter.maxVersion}, Level ${wcagFilter.maxLevel}`
+    query && onClearQuery
+      ? { label: `"${query}"`, onRemove: onClearQuery }
+      : null,
+    narrowMode && narrowQuery
+      ? { label: t('results.filter_narrow', { query: narrowQuery }), onRemove: onNarrowExit }
+      : null,
+    onPlatformChange && platform !== 'all'
+      ? { label: platformLabels[platform] ?? platform, onRemove: () => onPlatformChange('all') }
+      : null,
+    !filterLabel && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
+      ? { label: `WCAG ${wcagFilter.maxVersion}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxVersion: defaultWcagFilter.maxVersion }) }
+      : null,
+    !filterLabel && wcagFilter && defaultWcagFilter && wcagFilter.maxLevel !== defaultWcagFilter.maxLevel
+      ? { label: `Level ${wcagFilter.maxLevel}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxLevel: defaultWcagFilter.maxLevel }) }
       : null,
   ].filter(Boolean)
 
@@ -287,20 +320,6 @@ export default function A11yListResults({ results, selected, onSelect, query, co
           )}
         </div>
         {onSortChange && results.length > 0 && (() => {
-          const hasQuery = !!query
-          const hasNarrow = narrowMode && !!narrowQuery
-          let summaryKey
-          if (hasQuery && hasNarrow) summaryKey = 'results.summary_query'
-          else if (hasQuery) summaryKey = 'results.summary_no_narrow'
-          else if (hasNarrow) summaryKey = 'results.summary_no_query'
-          else summaryKey = 'results.summary_no_query_no_narrow'
-          return (
-            <p className="results-summary">
-              {t(summaryKey, { query, sort: sortLabels[sortBy] ?? sortBy, narrow: narrowQuery, platform: platformLabels[platform] ?? platform })}
-            </p>
-          )
-        })()}
-        {onSortChange && results.length > 0 && (() => {
           const infoLabel = t('detail.note_label')
           if (sortBy === 'smart') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_smart_info')}</InfoBox>
           if (sortBy === 'wcag-level') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_wcag_level_info')}</InfoBox>
@@ -309,12 +328,38 @@ export default function A11yListResults({ results, selected, onSelect, query, co
         })()}
         {onSortChange && results.length > 0 && (showRanking || liveSearch) && (
           <p className="results-rank-hint">
-            {showRanking && t('results.rank_hint')}
+            {showRanking && <>
+              {'Pin '}
+              <Pin size={13} aria-hidden="true" className="rank-hint-icon" />
+              {' to show on every page. Star '}
+              <Star size={13} aria-hidden="true" className="rank-hint-icon" />
+              {' to always show first. Archive '}
+              <Archive size={13} aria-hidden="true" className="rank-hint-icon" />
+              {' to always show last. Rank up '}
+              <ThumbsUp size={13} aria-hidden="true" className="rank-hint-icon" />
+              {' or rank down '}
+              <ThumbsDown size={13} aria-hidden="true" className="rank-hint-icon" />
+              {' to fine-tune the rest. Sort order is applied last. All actions can be '}
+              <a href="#/settings" className="rank-hint-link">{t('results.rank_hint_undone')}</a>
+              {'.'}
+            </>}
             {showRanking && liveSearch && ' '}
-            {liveSearch && <span className="results-sort-live-hint"><strong>{t('results.sort_live_hint')}</strong></span>}
+            {liveSearch && <span className="results-sort-live-hint">
+              <strong>{'Live Search is '}
+                <button
+                  type="button"
+                  className="rank-hint-link rank-hint-link--inline"
+                  onClick={() => {
+                    onOpenSettings?.()
+                    setTimeout(() => document.getElementById('toggle-live-search')?.focus(), 300)
+                  }}
+                >ON</button>
+                {': Results will sort immediately after entering or making a selection change.'}
+              </strong>
+            </span>}
           </p>
         )}
-        <div className="results-actions-row">
+<div className="results-actions-row">
           {onSortChange && (
             <div className={`results-sort-group${results.length > 0 ? ' results-sort-group--visible' : ''}`}>
               <div className="results-sort-controls">
@@ -372,7 +417,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
               >
                 {narrowMode ? (
                   <>
-                    <X size={16} aria-hidden="true" />
+                    <OctagonX size={16} aria-hidden="true" />
                     <span>{t('search.exit_narrow')}</span>
                   </>
                 ) : (
@@ -387,12 +432,12 @@ export default function A11yListResults({ results, selected, onSelect, query, co
               <Button
                 variant="tertiary"
                 className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
-                aria-label={t('results.clear_results')}
-                title={t('results.clear_results')}
+                title={t('results.clear_all_results')}
+                icon={<Trash2 size={14} aria-hidden="true" />}
                 disabled={activeFilters.length === 0}
                 onClick={() => { announce(t('announce.filters_cleared')); setClearPending(true) }}
               >
-                {t('results.clear_results')}
+                {t('results.clear_all_results')}
               </Button>
             )}
           </div>
@@ -458,6 +503,51 @@ export default function A11yListResults({ results, selected, onSelect, query, co
         {onPlatformChange && narrowMode && <hr className="results-narrow-divider" aria-hidden="true" />}
       </div>}
 
+      {!hideFilters && results.length > 0 && !platformNoResults && !narrowNoResults && (() => {
+        const sortLabel = sortLabels[sortBy] ?? sortBy
+        const sortIsDefault = sortBy === 'smart'
+        const sortTag = !sortIsDefault && onSortChange
+          ? { label: sortLabel, prefix: t('results.filter_sort_prefix'), onRemove: () => onSortChange('smart') }
+          : null
+        if (activeFilters.length === 0 && !sortTag) return null
+        const renderTag = (f, i) => (
+          <span key={i} className="active-bar__group">
+            {f.prefix && <span className="active-bar__label">{f.prefix}</span>}
+            <span // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- mouse-only convenience; keyboard path is the × button inside
+              className={`active-bar__tag${f.onRemove ? ' active-bar__tag--removable' : ''}`}
+              onClick={f.onRemove ? (e => { if (e.detail > 0) f.onRemove() }) : undefined}
+            >
+              {f.label}
+              {f.onRemove && (
+                <button
+                  type="button"
+                  className="active-bar__remove"
+                  aria-label={t('results.filter_remove_aria', { filter: f.label })}
+                  onClick={e => { e.stopPropagation(); f.onRemove() }}
+                >
+                  ×
+                </button>
+              )}
+            </span>
+          </span>
+        )
+        return (
+          <>
+            {activeFilters.length > 0 && (
+              <p className="active-bar results-active-filters">
+                <span className="active-bar__label">{t('results.no_results_filters_active')}</span>
+                {activeFilters.map(renderTag)}
+              </p>
+            )}
+            {sortTag && (
+              <p className="active-bar results-active-filters results-active-filters--sort">
+                {renderTag(sortTag, 0)}
+              </p>
+            )}
+          </>
+        )
+      })()}
+
       {(narrowNoResults || platformNoResults)
         ? <NoResults
             query={narrowNoResults ? narrowQuery : query}
@@ -484,16 +574,11 @@ export default function A11yListResults({ results, selected, onSelect, query, co
             ? t('results.archived_label', { title: entry.title })
             : `${entry.title}, ${t(p.key)}, ${entry.primarySC}, ${truncDesc}`
 
-          // Truncate title used in vote-button labels only, full title used in announce() calls
-          const shortTitle = (() => {
-            if (entry.title.length <= TITLE_TRUNCATE_LENGTH) return entry.title
-            const cut = entry.title.slice(0, TITLE_TRUNCATE_LENGTH)
-            const lastSpace = cut.lastIndexOf(' ')
-            return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + '…'
-          })()
+          const shortTitle = truncateAtWord(entry.title, TITLE_TRUNCATE_LENGTH)
 
           function handleRankUp(e) {
             e.stopPropagation()
+            if (!prefersReducedMotion) snapshotPositions()
             triggerButtonAnimation(e.currentTarget, entry.id, setAnimatingUp)
             onRankUp?.(entry.id)
             announce(t('announce.ranked_up', { title: entry.title, score: score + 1 }))
@@ -501,6 +586,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
 
           function handleRankDown(e) {
             e.stopPropagation()
+            if (!prefersReducedMotion) snapshotPositions()
             triggerButtonAnimation(e.currentTarget, entry.id, setAnimatingDown)
             onRankDown?.(entry.id)
             announce(t('announce.ranked_down', { title: entry.title, score: score - 1 }))
@@ -513,25 +599,59 @@ export default function A11yListResults({ results, selected, onSelect, query, co
 
           function handleArchive(e) {
             e.stopPropagation()
-            announce(t('announce.archived'), { priority: 'assertive' })
             const idx = displayResults.indexOf(entry)
             const next = displayResults[idx + 1] || displayResults[idx - 1]
             const nextId = next?.id
-            setTimeout(() => {
-              onArchive?.(entry.id)
-              if (nextId) requestAnimationFrame(() => itemRefs.current[nextId]?.focus())
-            }, ARCHIVE_FOCUS_DELAY_MS)
+            if (!archived) {
+              announce(t('announce.archived'), { priority: 'assertive' })
+              if (prefersReducedMotion || displayResults.length === 1) {
+                onArchive?.(entry.id)
+                if (nextId) requestAnimationFrame(() => itemRefs.current[nextId]?.focus())
+              } else {
+                setArchivingIds(s => new Set(s).add(entry.id))
+                setTimeout(() => {
+                  onArchive?.(entry.id)
+                  setArchivingIds(s => { const n = new Set(s); n.delete(entry.id); return n })
+                  if (nextId) requestAnimationFrame(() => itemRefs.current[nextId]?.focus())
+                }, ARCHIVE_FLY_MS)
+              }
+            } else {
+              announce(t('announce.unarchived'), { priority: 'assertive' })
+              if (prefersReducedMotion || displayResults.length === 1) {
+                onArchive?.(entry.id)
+              } else {
+                setUnarchivingIds(s => new Set(s).add(entry.id))
+                setTimeout(() => {
+                  onArchive?.(entry.id)
+                  setUnarchivingIds(s => { const n = new Set(s); n.delete(entry.id); return n })
+                }, UNARCHIVE_FLY_MS)
+              }
+            }
           }
 
           const pinned = pinnedIds.has(entry.id)
 
           function handlePin(e) {
             e.stopPropagation()
-            onPin?.(entry.id)
             announce(pinned
               ? t('announce.unpinned', { title: entry.title })
               : t('announce.pinned', { title: entry.title })
             )
+            if (prefersReducedMotion) {
+              onPin?.(entry.id)
+            } else if (!pinned) {
+              setPinningIds(s => new Set(s).add(entry.id))
+              setTimeout(() => {
+                onPin?.(entry.id)
+                setPinningIds(s => { const n = new Set(s); n.delete(entry.id); return n })
+              }, PIN_FLY_MS)
+            } else {
+              setUnpinningIds(s => new Set(s).add(entry.id))
+              setTimeout(() => {
+                onPin?.(entry.id)
+                setUnpinningIds(s => { const n = new Set(s); n.delete(entry.id); return n })
+              }, UNPIN_FLY_MS)
+            }
           }
 
           const swipeIsOpen = swipeOpenId?.id === entry.id
@@ -566,11 +686,25 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                 setTimeout(() => {
                   row.classList.remove(flashClass)
                   setSwipeOpenId(null)
-                  onPin?.(entry.id)
                   announce(pinned
                     ? t('announce.unpinned', { title: entry.title })
                     : t('announce.pinned', { title: entry.title })
                   )
+                  if (prefersReducedMotion) {
+                    onPin?.(entry.id)
+                  } else if (!pinned) {
+                    setPinningIds(s => new Set(s).add(entry.id))
+                    setTimeout(() => {
+                      onPin?.(entry.id)
+                      setPinningIds(s => { const n = new Set(s); n.delete(entry.id); return n })
+                    }, PIN_FLY_MS)
+                  } else {
+                    setUnpinningIds(s => new Set(s).add(entry.id))
+                    setTimeout(() => {
+                      onPin?.(entry.id)
+                      setUnpinningIds(s => { const n = new Set(s); n.delete(entry.id); return n })
+                    }, UNPIN_FLY_MS)
+                  }
                 }, SWIPE_PIN_FLASH_MS)
               } else {
                 setSwipeOpenId(null)
@@ -598,7 +732,8 @@ export default function A11yListResults({ results, selected, onSelect, query, co
             <li
               id={`result-${entry.id}`}
               data-swipe-id={entry.id}
-              className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}`}
+              data-flip-id={entry.id}
+              className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}${pinningIds.has(entry.id) ? ' result-row--pinning' : ''}${unpinningIds.has(entry.id) ? ' result-row--unpinning' : ''}${archivingIds.has(entry.id) ? ' result-row--archiving' : ''}${unarchivingIds.has(entry.id) ? ' result-row--unarchiving' : ''}`}
               style={{ '--result-i': index }}
               onTouchStart={(showRanking || onPin) ? handleSwipeTouchStart : undefined}
               onTouchEnd={(showRanking || onPin) ? handleSwipeTouchEnd : undefined}
@@ -626,7 +761,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                       if (e.key === 'ArrowDown') { e.preventDefault(); itemRefs.current[results[index + 1]?.id]?.focus() }
                       if (e.key === 'ArrowUp')   { e.preventDefault(); itemRefs.current[results[index - 1]?.id]?.focus() }
                     }}
-                    className={`result-item${isSelected ? ' result-item--selected' : ''}${onPin ? ' result-item--pinnable' : ''}`}
+                    className={`result-item${isSelected ? ' result-item--selected' : ''}${starred ? ' result-item--starred' : ''}${pinned ? ' result-item--pinned' : ''}${onPin ? ' result-item--pinnable' : ''}`}
                   >
                     <div className="result-item__header">
                       <span className="result-item__title">
@@ -651,14 +786,23 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                             {src}
                           </Badge>
                         ))}
-                        {entry.wcagVersion && entry.wcagLevel && (
+                        {entry.wcagVersion && (
                           <Badge
                             variant="wcag"
-                            title={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('badge.level_prefix')}${entry.wcagLevel}`}
+                            title={`${t('badge.wcag_prefix')}${entry.wcagVersion}`}
+                            aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria')}`}
+                            onClick={() => onBadgeClick?.({ type: 'wcag', value: entry.wcagVersion })}
                           >
-                            <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
-                            {entry.wcagVersion},{' '}
-                            <span className="badge-prefix">{t('badge.level_prefix')}</span>
+                            {entry.wcagVersion}
+                          </Badge>
+                        )}
+                        {entry.wcagLevel && (
+                          <Badge
+                            variant="wcag-level"
+                            title={`${t('badge.level_prefix')}${entry.wcagLevel}`}
+                            aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
+                            onClick={() => onBadgeClick?.({ type: 'wcag-level', value: entry.wcagLevel })}
+                          >
                             {entry.wcagLevel}
                           </Badge>
                         )}
@@ -822,7 +966,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
               countHeadingRef.current?.focus({ preventScroll: true })
             }}
           >
-            <ChevronUp size={16} aria-hidden="true" />
+            <ArrowUp size={16} aria-hidden="true" />
             {t('results.back_to_top')}
           </Button>
         </div>

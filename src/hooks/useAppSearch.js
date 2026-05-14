@@ -5,6 +5,7 @@ export default function useAppSearch() {
   const initParams = new URLSearchParams(window.location.search || hashSearch)
   const initQ = initParams.get('q') || ''
   const initNarrow = initParams.get('narrow') || ''
+  const initSort = initParams.get('sort') || 'smart'
 
   const [query, setQuery] = useState(initQ)
   const [submittedQuery, setSubmittedQuery] = useState(initQ)
@@ -17,6 +18,7 @@ export default function useAppSearch() {
   const [narrowMode, setNarrowMode] = useState(!!initNarrow)
   const [narrowQuery, setNarrowQuery] = useState(initNarrow)
   const [submittedNarrowQuery, setSubmittedNarrowQuery] = useState(initNarrow)
+  const [sortBy, setSortBy] = useState(initSort)
 
   return {
     query, setQuery,
@@ -30,5 +32,6 @@ export default function useAppSearch() {
     narrowMode, setNarrowMode,
     narrowQuery, setNarrowQuery,
     submittedNarrowQuery, setSubmittedNarrowQuery,
+    sortBy, setSortBy,
   }
 }

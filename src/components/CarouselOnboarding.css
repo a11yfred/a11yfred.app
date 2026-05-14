@@ -48,6 +48,7 @@
   justify-content: center;
   gap: var(--space-4);
   min-height: 10rem;
+  overflow: hidden;
 }
 
 .onboarding-step-heading {

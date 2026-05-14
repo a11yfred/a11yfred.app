@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
-import { Check, Info, PinOff, Star, ArchiveRestore, AlertTriangle, Save, RotateCcw, ArrowLeft } from 'lucide-react'
+import { Check, Info, PinOff, OctagonX, AlertTriangle, Save, ArrowLeft } from 'lucide-react'
 import { Modal, Sheet, useRouter } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
@@ -466,13 +466,13 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
       </PanelRowSetting>
 
       {/* Starred Results */}
-      <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={Star} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" />
+      <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={OctagonX} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" />
 
       {/* Ranking Data */}
-      <ClearDataRow t={t} labelKey="settings.rankings_label" hasData={hasRankings} descKey="settings.rankings_desc" emptyKey="settings.rankings_empty" isDone={resetRankingsDone} setIsDone={setResetRankingsDone} onClear={onResetRankings} labelActionKey="settings.reset_rankings" labelDoneKey="settings.reset_rankings_done" Icon={RotateCcw} className="settings-reset-rankings-btn" announceKey="settings.reset_rankings_done" />
+      <ClearDataRow t={t} labelKey="settings.rankings_label" hasData={hasRankings} descKey="settings.rankings_desc" emptyKey="settings.rankings_empty" isDone={resetRankingsDone} setIsDone={setResetRankingsDone} onClear={onResetRankings} labelActionKey="settings.reset_rankings" labelDoneKey="settings.reset_rankings_done" Icon={OctagonX} className="settings-reset-rankings-btn" announceKey="settings.reset_rankings_done" />
 
       {/* Archived Results */}
-      <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={ArchiveRestore} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" />
+      <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={OctagonX} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" />
       </section>
 
       {/* ── AI Assist ───────────────────────────────── */}

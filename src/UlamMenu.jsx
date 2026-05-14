@@ -3,7 +3,7 @@ import {
   Star, Settings, Search, X, Plus, Trash2,
   AlertTriangle, Info, CheckCircle, Copy,
 } from 'lucide-react'
-import LinkSkipTo from './components/ui/SkipLink.jsx'
+import LinkSkipTo from './components/ui/LinkSkipTo.jsx'
 import Button from './components/ui/Button.jsx'
 import ButtonLink from './components/ui/ButtonLink.jsx'
 import ButtonIcon from './components/ui/ButtonIcon.jsx'

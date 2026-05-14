@@ -22,7 +22,7 @@ export const VIEW_ALL_SKIP_FLAG = '1'
 export const FOOTER_CREDIT_NAME = 'Mikey Ilagan'
 
 export const SMART_SCORE_STAR_BONUS    = 50
-export const SMART_SCORE_RANK_WEIGHT   = 10
+export const SMART_SCORE_RANK_WEIGHT   = 50
 export const SMART_SCORE_POP_WEIGHT    = 2
 export const SMART_SCORE_ARCHIVE_PENALTY = 100
 export const SMART_SCORE_INDEX_PENALTY  = 0.1
@@ -105,6 +105,10 @@ export const SWIPE_REVEAL = 44
 export const SWIPE_THRESHOLD = 22
 export const SWIPE_ACTIVATE = 120
 export const SWIPE_PIN_FLASH_MS = 300
+export const PIN_FLY_MS = 420
+export const UNPIN_FLY_MS = 420
+export const ARCHIVE_FLY_MS = 420
+export const UNARCHIVE_FLY_MS = 420
 
 export const MAX_SEARCH_RESULTS = 8
 export const MAX_SEARCH_ALL = 12

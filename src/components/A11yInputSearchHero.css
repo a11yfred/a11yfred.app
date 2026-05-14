@@ -4,7 +4,7 @@
 
 .search-bar {
   display: block;
-  margin-bottom: var(--space-4);
+  margin-bottom: 0;
 }
 
 .search-label {
@@ -73,7 +73,8 @@ input.search-input--disabled {
   opacity: 0.6;
   cursor: not-allowed;
   color: var(--text-body);
-  border-color: var(--border-control);
+  border-color: var(--border);
+  box-shadow: none;
 }
 
 
@@ -95,6 +96,10 @@ input.search-input--disabled {
 
 .search-hint-link:hover {
   color: var(--text-heading);
+}
+
+.search-hint-link--inline {
+  font: inherit;
 }
 
 /* â"€â"€â"€ Search typewriter â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
@@ -204,11 +209,21 @@ input.search-input--disabled {
 .view-all-confirm-stat-list {
   margin: 0 0 var(--space-2);
   padding-left: var(--space-5);
+  list-style-type: disc;
 }
 
 .view-all-confirm-stat {
   margin-bottom: var(--space-1);
   font-size: var(--fs-body);
+}
+
+.view-all-confirm-stat strong {
+  color: var(--text-heading);
+}
+
+.view-all-confirm-stat:only-child {
+  list-style: none;
+  margin-left: calc(-1 * var(--space-5));
 }
 
 .view-all-confirm-body {

@@ -20,7 +20,7 @@ const FUSE_OPTIONS = {
 }
 
 // Parse boolean search operators: +term (required), -term (excluded)
-export function parseSearchQuery(query) {
+function parseSearchQuery(query) {
   const trimmed = query.trim()
   const required = []
   const excluded = []

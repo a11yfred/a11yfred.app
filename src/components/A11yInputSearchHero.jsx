@@ -20,7 +20,7 @@ const TYPEWRITER_PHRASES = [
   { text: 'error' },
 ]
 
-export default function A11yInputSearchHero({ query, onChange, onSearch, onExampleSearch, liveSearch, platform, aiEnabled, providerName, showRanking, hasPins, narrowMode = false, inputRef: externalRef }) {
+export default function A11yInputSearchHero({ query, onChange, onSearch, onExampleSearch, onFocus, onBlur, liveSearch, narrowMode = false, inputRef: externalRef, onOpenSettings }) {
   const t = useT()
   const internalRef = useRef(null)
   const inputRef = externalRef || internalRef
@@ -39,7 +39,6 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
     inputRef.current?.focus()
   }
 
-  const platformLabel = { web: t('settings.platform_web'), native: t('settings.platform_native'), document: t('settings.platform_document') }[platform] ?? t('settings.platform_web')
   const currentPhrase = TYPEWRITER_PHRASES[phraseIdx]
 
   return (
@@ -69,6 +68,8 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
           value={query}
           onChange={onChange}
           onKeyDown={(e) => { if (e.key === 'Enter') onSearch() }}
+          onFocus={onFocus}
+          onBlur={onBlur}
           onClear={() => onChange('')}
           placeholder={t('search.placeholder')}
           autoComplete="off"
@@ -93,14 +94,17 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
       </div>
       {query.length === 0 && !narrowMode && (
         <p className="search-hint">
-          {liveSearch ? t('search.hint_live') : t('search.hint_submit')}
-          {' '}
-          {t('search.hint_platform', { platform: platformLabel })}
-          {platform === 'native' ? ` ${t('search.hint_platform_native_caveat')}` : ''}
-          {aiEnabled && providerName ? ` ${t('search.hint_ai', { provider: providerName })}` : ''}
-          {showRanking ? ` ${t('search.hint_ranking')}` : ''}
-          {hasPins ? ` ${t('search.hint_pin')}` : ''}
-          {' '}
+          {liveSearch ? <>{'Live Search is '}
+            <button
+              type="button"
+              className="search-hint-link search-hint-link--inline"
+              onClick={() => {
+                onOpenSettings?.()
+                setTimeout(() => document.getElementById('toggle-live-search')?.focus(), 300)
+              }}
+            >ON</button>
+            {': Results appear as you type. '}
+          </> : ''}
           {t('search.hint_syntax_prefix')}{' '}
           <a
             href="#/?q=focus+-missing"
@@ -109,6 +113,7 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
           >focus -missing</a>
           {t('search.hint_syntax_suffix')}
           {' '}
+          {t('search.hint_filter_sort')}{' '}
           {t('search.hint_change_in')}{' '}
           <a href="#/settings" className="search-hint-link">
             {t('common.settings')}

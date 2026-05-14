@@ -3,7 +3,7 @@
 > Audit finding descriptions, fast.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
 
 Fast, consistent defect descriptions for accessibility findings, the kind that hold up in a ticket, a report, or a handoff. Search a library built on real audits, fact-checked against WCAG and accessibility practitioners, copy the text, paste it in. Built for auditors, testers, specialists and anyone doing manual accessibility testing and reviews.
@@ -22,11 +22,13 @@ npm run build      # production build
 
 ## Status
 
-**Phase 1 (Personal Library):** Complete. 106-entry public corpus (ACC prefix), all linters passing, ulam framework extracted, agentic AI wired, full component consolidation done, CSS tokens, zero dead code.
+**Launched.** Live at [a11yfred.app](https://a11yfred.app).
 
-**Phase 2 (AI + Sharing):** In progress. Agentic AI working, user overrides done, multilingual editing UI deferred, PWA/offline complete, frequent findings signal working.
+**Phase 1 (Personal Library):** Complete. 106-entry public corpus (ACC prefix), all linters passing, ulam framework published as `@ulam/*` npm packages, agentic AI, full component consolidation, CSS tokens, zero dead code.
 
-**Phase 3 (Public Launch):** Planning. Auth and analytics infrastructure stubbed, ad tiles ready for Phase 3+ delivery.
+**Phase 2 (AI + Sharing):** In progress. Narrow results mode, frequent findings signal, PWA/offline, and agentic AI complete. User contributions UI, multilingual editing UI, and context API consolidation in progress.
+
+**Phase 3 (Public Launch):** Partially started. Analytics (Umami) stubbed. Auth and cloud sync not started.
 
 ---
 
@@ -83,6 +85,12 @@ Each corpus entry:
 | --- | --- |
 | [`@a11yfred/neighbor`](https://github.com/a11yfred/neighbor) | ESLint and Stylelint accessibility linting plugin |
 | [`@a11yfred/rogers`](https://github.com/a11yfred/rogers) | Accessibility debug panel for development |
+
+---
+
+## Changelog
+
+See [docs/CHANGELOG.md](docs/CHANGELOG.md).
 
 ---
 

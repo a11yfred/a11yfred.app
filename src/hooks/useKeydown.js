@@ -14,5 +14,5 @@ export function useKeydown(handler, { target, capture = false } = {}) {
     if (!el) return
     el.addEventListener('keydown', handler, capture)
     return () => el.removeEventListener('keydown', handler, capture)
-  })
+  }, [handler, target, capture])
 }

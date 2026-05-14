@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Trash2 } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 
 export default function NoResults({
@@ -43,11 +44,31 @@ export default function NoResults({
 
       {activeFilters.length > 0 && (
         <>
-          <p className="no-results__filters">
-            <span className="no-results__filters-label">{t('results.no_results_filters_active')}</span>
-            {activeFilters.map((f, i) => (
-              <span key={i} className="no-results__filter-tag">{f}</span>
-            ))}
+          <p className="active-bar no-results__filters">
+            <span className="active-bar__label">{t('results.no_results_filters_active')}</span>
+            {activeFilters.map((f, i) => {
+              const label = typeof f === 'string' ? f : f.label
+              const onRemove = typeof f === 'object' ? f.onRemove : undefined
+              return (
+                <span // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- mouse-only convenience; keyboard path is the × button inside
+                  key={i}
+                  className={`active-bar__tag${onRemove ? ' active-bar__tag--removable' : ''}`}
+                  onClick={onRemove ? (e => { if (e.detail > 0) onRemove() }) : undefined}
+                >
+                  {label}
+                  {onRemove && (
+                    <button
+                      type="button"
+                      className="active-bar__remove"
+                      aria-label={t('results.filter_remove_aria', { filter: label })}
+                      onClick={e => { e.stopPropagation(); onRemove() }}
+                    >
+                      ×
+                    </button>
+                  )}
+                </span>
+              )
+            })}
           </p>
 
           {onOpenSettings && (
@@ -63,7 +84,8 @@ export default function NoResults({
 
       {onClearFilters && (
         <button className="btn btn--primary no-results__clear-btn" onClick={onClearFilters}>
-          {t('results.no_results_clear_filters')}
+          <span className="btn-icon"><Trash2 size={14} aria-hidden="true" /></span>
+          {t('results.clear_all_results')}
         </button>
       )}
     </section>
