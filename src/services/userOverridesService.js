@@ -24,14 +24,6 @@ export function loadAllOverrides() {
   return load()
 }
 
-export function loadOverridesForEntry(entryId) {
-  return load()[entryId] || {}
-}
-
-export function loadOverride(entryId, locale) {
-  return load()[entryId]?.[locale] ?? null
-}
-
 export function saveOverride(entryId, locale, fields) {
   const all = load()
   if (!all[entryId]) all[entryId] = {}
@@ -65,7 +57,7 @@ export function clearAllOverrides() {
 }
 
 /**
- * Pure function, applies a personal override to a finding for the given locale.
+ * Pure function, applies a personal override to an entry for the given locale.
  * Takes the overrides map from useUserOverrides (avoids re-reading localStorage
  * on every call from a useMemo). Returns original finding unchanged if no
  * override exists.
