@@ -50,11 +50,11 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 **Gated on production domain being live:**
 
-- [ ] **Update canonical URL** `[seo]` `[code]` ,  Update `og:url`, `og:image`, `twitter:*`, and JSON-LD URLs in `index.html` from placeholder `a11yfred.app` to confirmed production domain.
-- [ ] **Remove `noindex`** `[seo]` `[infra]` ,  Replace `<meta name="robots" content="noindex">` with `index, follow` once domain is live and content is ready to be crawled.
+- [x] **Update canonical URL** `[seo]` `[code]` ,  Done -- URLs were already set to a11yfred.app in index.html.
+- [x] **Remove `noindex`** `[seo]` `[infra]` ,  Done May 14. Flipped to `index, follow` now that a11yfred.app is live.
 - [x] **OG image** `[seo]` `[infra]` ,  `public/og-image.png`, `public/og-image.svg`, and `public/og-image@2x.png` added May 13. 1200×630, branded with icon, wordmark, Lucide Hand + ClipboardCopy icons, and tagline.
 - [ ] **i18n translate run** `[i18n]` ,  Moved from Phase 1. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill 465 missing keys across 64 locale files. Falls back to English gracefully until done.
-- [ ] **Umami analytics activation** `[infra]` `[manual]` ,  Moved from DevOps. Sign up at umami.is (~$9/mo cloud, no self-hosting), create site, replace WEBSITE_ID placeholder in `index.html`, verify zero cookies. Preferred over GA -- privacy-respecting, no consent banner needed, right fit for an a11y audience.
+- [x] **Umami analytics activation** `[infra]` `[manual]` ,  Done May 14. Script tag active in index.html with site ID. CSP updated (script-src + connect-src). Zero cookies, GDPR-compliant.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain ownership, submit sitemap.xml, confirm indexing is enabled, monitor for crawl errors post-launch.
 
 ---
