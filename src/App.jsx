@@ -14,10 +14,12 @@ import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
 import ThemeEffectFiestaSparkles from './components/ThemeEffectFiestaSparkles.jsx'
 import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPlayer.jsx'
 import useEntrySearch from './hooks/useEntrySearch.js'
-import { useItemSignals, usePinnedItems, useCoSelection } from './hooks/relevance.js'
+import useAppSettings from './hooks/useAppSettings.js'
+import useAppSearch from './hooks/useAppSearch.js'
+import useAppRatings from './hooks/useAppRatings.js'
 import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_ENTRIES, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_ENTRIES, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson, getSession, setSession, removeSession, clearAllStorage } from './utils/storage.js'
-import { getAiProvider, getProviderLabel, isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from './halohalo/index.js'
+import { getAiProvider, getProviderLabel, isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from '@ulam/halohalo'
 import {
   Router,
   useRouter,
@@ -40,7 +42,7 @@ import { ContextRatings, useRatings } from './context/ContextRatings.js'
 import { I18nProvider, useT } from '@ulam/calamansi/react'
 import { initI18n } from '@ulam/calamansi'
 import I18N_LOCALES from './i18n-locales.js'
-import { initHalohalo } from './halohalo/index.js'
+import { initHalohalo } from '@ulam/halohalo'
 import { buildPrompt, AGENTIC_SYSTEM_PROMPT } from './ai-config.js'
 import RTL_LOCALES from './rtl-locales.js'
 initI18n(I18N_LOCALES, RTL_LOCALES)
@@ -63,8 +65,6 @@ const UlamMenu = import.meta.env.DEV
 
 const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify', 'debug deploy netlify': 'netlify', 'debug deploy pages': 'pages', 'debug deploy vercel': 'vercel' }
-
-const COPY_FIELD = { title: 'lifetimeCopiedTitle', primarySc: 'lifetimeCopiedPrimarySc', relatedSc: 'lifetimeCopiedRelatedSc', desc: 'lifetimeCopiedDesc', fix: 'lifetimeCopiedFix', all: 'lifetimeCopiedAll' }
 
 // Redirect legacy /finding/ routes to /entry/ for backwards compatibility
 if (window.location.hash.startsWith('#/finding/')) {
@@ -89,107 +89,12 @@ export default function App() {
 // AppShell manages state and provides the i18n context.
 // AppContent is the inner component that consumes it.
 function AppShell() {
-  const [theme, setTheme] = useState(() => getStorage(LS_THEME, 'auto'))
-  const [language, setLanguage] = useState(() => {
-    const saved = getStorage(LS_LANGUAGE)
-    if (saved) return saved
-    const lang = navigator.language || 'en'
-    // Supported locale values, try exact match, then language prefix, then 'en'
-    const supported = [
-      'af','ar-PS','eu','yue','ceb','cbk','zh','cr','crh','nl',
-      'en-AU','en-GB','en-IN','en-ZA','en','eo','tl','fr','fr-CA',
-      'de','gn','ht','haw','hi','ilo','iu','ja','ko','mi','nah',
-      'nv','oj','pjt','pt','pt-BR','qu','rhg','es','es-PH','es-ES',
-      'sv','zgh','ta','bo','ug','vi',
-    ]
-    return supported.includes(lang)
-      ? lang
-      : (supported.find(s => s === lang.split('-')[0]) || 'en')
-  })
-  const [aiEnabled, setAiEnabled] = useState(false)
-  const [saveCount, setSaveCount] = useState(() =>
-    parseInt(getStorage(LS_SAVE_COUNT, '0'), 10)
-  )
-  const fiestaUnlocked = saveCount >= 2 || theme === 'fiesta'
-  const [liveSearch, setLiveSearch] = useState(() => getStorage(LS_LIVE_SEARCH) !== 'false')
-  const [showVoting, setShowVoting] = useState(() => getStorage(LS_SHOW_RANKING) !== 'false')
-  const [showPersonalCorpus, setShowPersonalCorpus] = useState(() => getStorage(LS_SHOW_PERSONAL_CORPUS) !== 'false')
-
-  // Parse URL params once for all initial state below
-  // Support both ?q=... (query string) and #/?q=... (hash query string)
-  const hashSearch = window.location.hash.includes('?') ? window.location.hash.slice(window.location.hash.indexOf('?') + 1) : ''
-  const initParams = new URLSearchParams(window.location.search || hashSearch)
-  const initQ = initParams.get('q') || ''
-  const initNarrow = initParams.get('narrow') || ''
-
-  const [query, setQuery] = useState(initQ)
-  const [submittedQuery, setSubmittedQuery] = useState(initQ)
-  const [searchKey, setSearchKey] = useState(0)
-  const [selected, setSelected] = useState(null)
-  const [sheetCollapsed, setSheetCollapsed] = useState(false)
-  const [pendingEntry, setPendingEntry] = useState(null)
-  const [pendingPrivacy, setPendingPrivacy] = useState(false)
-  const [platform, setPlatform] = useState(() => initParams.get('platform') || getStorage(LS_PLATFORM, 'all'))
-  const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
-  const [wcagFilter, setWcagFilter] = useState(() => {
-    const urlWcag = initParams.get('wcag')
-    if (urlWcag) {
-      const [version, level] = urlWcag.split('|')
-      if (version && level) return { maxVersion: version, maxLevel: level }
-    }
-    const saved = getStorageJson(LS_WCAG_FILTER, null)
-    if (!saved || 'show20' in saved) return { maxVersion: '2.2', maxLevel: 'AA' }
-    return saved
-  })
-  const [narrowMode, setNarrowMode] = useState(!!initNarrow)
-  const [narrowQuery, setNarrowQuery] = useState(initNarrow)
-  const [submittedNarrowQuery, setSubmittedNarrowQuery] = useState(initNarrow)
-
-  const { signals: ratings, rankUp, rankDown, toggleStar, toggleArchive, resetScores: resetRankings, clearAll: clearAllRatings, recordPin, recordOpen, recordCopy: _recordCopy } = useItemSignals('defect_ratings', { starBonus: 2, unstarPenalty: 1, archivePenalty: 1, openBoost: 0.5, copyBoost: 0.25 })
-  const recordCopy = useCallback((id, type) => _recordCopy(id, COPY_FIELD[type]), [_recordCopy]) // eslint-disable-line react-hooks/exhaustive-deps -- COPY_FIELD is module-stable
-  const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedItems('pinnedEntries')
-  const togglePin = useCallback((id) => {
-    const isPinning = !pinnedIds.has(id)
-    if (isPinning && ratings[id]?.archived) toggleArchive(id)
-    if (isPinning) recordPin(id)
-    _togglePin(id)
-  }, [pinnedIds, ratings, toggleArchive, recordPin, _togglePin])
-  const { getPairsFor } = useCoSelection('coSelectionPairs', 'sessionCopiedIds')
-
-  const ratingsValue = {
-    ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings,
-    pinnedIds, togglePin, clearPins,
-    getPairsFor, recordCopy, recordOpen, recordPin,
-  }
-
-  const settingsValue = {
-    theme, setTheme,
-    language, setLanguage,
-    aiEnabled, setAiEnabled,
-    liveSearch, setLiveSearch,
-    showVoting, setShowVoting,
-    showPersonalCorpus, setShowPersonalCorpus,
-    fiestaUnlocked, setSaveCount,
-    platform, setPlatform,
-    wcagFilter, setWcagFilter,
-  }
-
-  const searchValue = {
-    query, setQuery,
-    submittedQuery, setSubmittedQuery,
-    searchKey, setSearchKey,
-    selected, setSelected,
-    sheetCollapsed, setSheetCollapsed,
-    pendingEntry, setPendingEntry,
-    pendingPrivacy, setPendingPrivacy,
-    panelFocusTrigger, setPanelFocusTrigger,
-    narrowMode, setNarrowMode,
-    narrowQuery, setNarrowQuery,
-    submittedNarrowQuery, setSubmittedNarrowQuery,
-  }
+  const settingsValue = useAppSettings()
+  const searchValue = useAppSearch()
+  const ratingsValue = useAppRatings()
 
   return (
-    <I18nProvider locale={language}>
+    <I18nProvider locale={settingsValue.language}>
       <ContextSettings.Provider value={settingsValue}>
         <ContextSearch.Provider value={searchValue}>
           <ContextRatings.Provider value={ratingsValue}>
