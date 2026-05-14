@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { getAiRefinement, AiApiError, getAgenticRefinement, getAiProvider, getProviderLabel, DEBUG_COMMANDS, DEBUG_AI_DELAY_MS } from '../halohalo/index.js'
+import { getAiRefinement, AiApiError, getAgenticRefinement, getAiProvider, getProviderLabel, DEBUG_COMMANDS, DEBUG_AI_DELAY_MS } from '@ulam/halohalo'
 import { announce } from '@ulam/taho'
 import { TYPEWRITER_TICK_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVISOR } from '../utils/constants.js'
 

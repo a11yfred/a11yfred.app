@@ -10,7 +10,7 @@ import ButtonIcon from './ui/ButtonIcon.jsx'
 import { LS_ADMIN_DATASET } from '../utils/constants.js'
 import { getStorage, setStorage } from '../utils/storage.js'
 import { detectOverlays, WCAG_CRITERIA } from '@a11yfred/rogers'
-import { checkConnectivity } from '../halohalo/index.js'
+import { checkConnectivity } from '@ulam/halohalo'
 
 const IS_DEV = import.meta.env.DEV
 

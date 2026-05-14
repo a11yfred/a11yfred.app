@@ -48,6 +48,11 @@ export default defineConfig(({ mode }) => ({
     }),
   ],
   base: '/',
+  resolve: {
+    alias: {
+      '@ulam/sawsawan': new URL('./src/sawsawan/index.js', import.meta.url).pathname,
+    },
+  },
   define: {
     'globalThis.ROGERS_DEV': mode === 'production' ? 'false' : 'true',
     ...(mode === 'production' ? { 'import.meta.env.DEV': 'false', 'import.meta.env.PROD': 'true' } : {}),
