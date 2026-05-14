@@ -63,8 +63,10 @@ export default function A11yPanelAbout({ onClose, allFindings = [] }) {
             <h4 className="about-feature-label">{t('about.feature_ai_label')}</h4>
             <p className="about-feature-body">
               {t('about.feature_ai_body')}{' '}
-              <a href="#/settings" className="panel-inline-link">{t('common.settings')}</a>.{' '}
-              {t('about.feature_agentic_body')}
+              <a href="#/settings" className="panel-inline-link">{t('common.settings')}</a>.
+            </p>
+            <p className="about-feature-body about-feature-body--sub">
+              <strong>{t('about.feature_agentic_label')}: </strong>{t('about.feature_agentic_body')}
             </p>
           </li>
           <li className="about-feature">

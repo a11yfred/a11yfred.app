@@ -14,8 +14,8 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ### Step 1 -- Consolidate state (unblocks everything else)
 
-- [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  `AppContent` receives 20+ state/setter pairs. Consolidate into context objects: `SettingsContext` (AI config, language, theme), `SearchContext` (query, results, active finding), `UIContext` (panel open states, narrow mode). Required before any component split is worth doing.
-- [ ] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Keyboard shortcut handling in `A11yListResults`, `A11yPanelSettings`, `CarouselOnboarding`, `WidgetKofi` all follow the same `useEffect` + `addEventListener('keydown')` + cleanup pattern. Extract to `useKeydown(handler, { target, capture })`. Modal/drawer open states are already router-driven (no `useState` to consolidate). localStorage access is already fully abstracted in `sawsawan/storage.js`. Can proceed independently of context work.
+- [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  Audited May 13. `AppShell→AppContent` boundary: ~48 prop slots. Plan: two contexts only (no UIContext needed -- those 4 props don't drill past AppContent). `SettingsContext`: theme, language, aiEnabled, liveSearch, showVoting, showPersonalCorpus, wcagFilter, platform, fiestaUnlocked -- consumed by Settings panel, ListResults (x4), InputSearchHero, PanelDetail. `SearchContext`: query/submittedQuery/searchKey, selected, results/allFindings/sortedFindings, sortBy, ratings, pins, narrow state -- consumed by ListResults (22 props x4 = 88 slots, biggest win), PanelDetail, PanelAbout, PinnedSection. **Estimated total: ~140 prop slots removed.** Bonus: `locale`, `userOverridesHook`, `contributionQueueHook` are passed to `A11yPanelDetail` but not destructured -- dead props, remove when implementing context.
+- [x] **Extract reused patterns into utilities** `[code]` `[refactor]` ,  Done May 13: `useKeydown(handler, { target, capture })` created and wired into `A11yListResults`, `A11yPanelSettings`, `CarouselOnboarding`. Modal/drawer open states are already router-driven. localStorage access already in `sawsawan/storage.js`. Pattern extraction complete.
 
 ### Step 2 -- Split components (blocked on Step 1)
 
@@ -40,7 +40,7 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 **Can be done now** (no domain required):
 
-- [ ] **i18n translate run** `[i18n]` `[launch-blocker]` ,  64 of 65 non-English locale files have missing keys (465 unique keys added since last translate run). BOM stripped from 6 locale files (`en`, `ali`, `en-AU`, `en-GB`, `en-IN`, `en-ZA`) and 3 source files (`App.jsx`, `A11yPanelAbout.jsx`, `A11yPanelSettings.jsx`). Duplicate `search.narrow_clear_aria` key removed from `en.json` and 56 locale files. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill all gaps. Also covers corpus translation gaps (8 overlays, ~52 entries fall back to English).
+- [ ] **i18n translate run** `[i18n]` ,  64 of 65 non-English locale files have missing keys (465 unique keys added since last translate run). Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill all gaps. Moved to Phase 1.5 -- app is fully usable in English without this; untranslated keys fall back to English gracefully.
 - [ ] **Manual testing before launch** `[qa]` `[manual]` ,  Smoke test core flows: search/select/refine/copy on desktop and mobile (iOS Safari, Android Chrome); test all locales (en, ja, ko, es, fr, de, zh); test keyboard nav (Tab, Enter, Escape); test screen reader (NVDA, JAWS, VoiceOver); verify offline mode works; test on slow network (throttle to 3G).
 - [ ] **Production domain configured** `[infra]` `[manual]` ,  Confirm domain, configure DNS, enable HTTPS, update canonical URL.
 
@@ -53,6 +53,8 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 - [ ] **Update canonical URL** `[seo]` `[code]` ,  Update `og:url`, `og:image`, `twitter:*`, and JSON-LD URLs in `index.html` from placeholder `a11yfred.app` to confirmed production domain.
 - [ ] **Remove `noindex`** `[seo]` `[infra]` ,  Replace `<meta name="robots" content="noindex">` with `index, follow` once domain is live and content is ready to be crawled.
 - [ ] **OG image** `[seo]` `[infra]` `[launch-blocker]` ,  Create `public/og-image.png` (1200×630). Screenshot should reflect the real production URL. Referenced by `og:image` and `twitter:image` in index.html; returns 404 until this file exists.
+- [ ] **i18n translate run** `[i18n]` ,  Moved from Phase 1. Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill 465 missing keys across 64 locale files. Falls back to English gracefully until done.
+- [ ] **Umami analytics activation** `[infra]` `[manual]` ,  Moved from DevOps. Sign up at umami.is (~$9/mo cloud, no self-hosting), create site, replace WEBSITE_ID placeholder in `index.html`, verify zero cookies. Preferred over GA -- privacy-respecting, no consent banner needed, right fit for an a11y audience.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain ownership, submit sitemap.xml, confirm indexing is enabled, monitor for crawl errors post-launch.
 
 ---
@@ -122,10 +124,9 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 - [x] **PWA icons** `[infra]` `[ux]` ,  `public/icon-192.png` and `public/icon-512.png` generated (purple rounded-square, white A). `vite.config.js` manifest updated to include all three icon entries (SVG + 192 + 512).
 - [x] **xlsx vulnerability** `[infra]` `[privacy]` ,  `xlsx` (SheetJS) removed. Replaced with `exceljs` in both `exportFinding.js` and `importService.js`. `npm audit` clean (0 vulnerabilities). `vite.config.js` manual chunk updated to `exceljs`.
 - [ ] **Version tagging** `[infra]` ,  Decide corpus threshold, create `v0.1.0` tag, push to GitHub releases.
-- [ ] **Chrome extension ,  validate and merge** `[infra]` ,  Add PNG icons, load unpacked, smoke-test at ~400px, merge.
-- [ ] **Firefox extension ,  validate and merge** `[infra]` ,  Add PNG icons, load via about:debugging, confirm sidebar, merge.
-- [ ] **Electron desktop app ,  icons, test, merge** `[infra]` ,  Add icons, test on macOS/Windows, code-sign macOS, merge.
-- [ ] **Umami analytics activation** `[infra]` `[manual]` ,  Create account, add site, replace WEBSITE_ID, verify zero cookies, enable at launch.
+- [ ] **Chrome extension -- validate and merge** `[infra]` ,  Icons generated (16/48/128px, May 13). Manifest at `extension-static/manifest.json`. Remaining: add separate Vite config (`vite.config.extension.js`) targeting `dist-extension/`, load unpacked at `chrome://extensions`, smoke-test at ~400px, merge.
+- [ ] **Firefox extension -- validate and merge** `[infra]` ,  Icons generated (16/48/96px, May 13). Manifest at `extension-firefox-static/manifest.json`. Remaining: same Vite config work, load via `about:debugging`, add AMO extension ID to `gecko.id`, confirm sidebar, merge.
+- [ ] **Electron desktop app -- icons, test, merge** `[infra]` ,  Add `build/icon.png` (512×512), `build/icon.icns` (macOS), `build/icon.ico` (Windows). Test on macOS/Windows, code-sign macOS, merge.
 
 ### Extension and Electron distribution
 
@@ -215,7 +216,7 @@ No timeline. Revisit post-launch based on usage and demand.
 
 ### Launch Readiness
 
-- [ ] **Content audit** `[qa]` `[manual]` `[launch-blocker]` ,  Full editorial pass: all visible UI strings, corpus entry titles and descriptions, About panel, Help panel, Settings labels. Check for placeholder text, inconsistent terminology, and ESL-unfriendly phrasing. Known issues from last audit: 7 dead `en.json` keys (`detail.ai_revision_text`, `detail.ai_revised_desc_checkbox`, `detail.ai_revised_fix_checkbox`, `detail.finding_note_hint`, `detail.finding_note_hint_suffix`, `detail.agentic_mode_help`, `detail.agentic_mode_hint`); `about.feature_languages_label` says "50+ Languages" but there are 65 locales; `settings.privacy_body_1` missing several localStorage keys.
+- [ ] **Content audit** `[qa]` `[manual]` `[launch-blocker]` ,  Full editorial pass: all visible UI strings, corpus entry titles and descriptions, About panel, Help panel, Settings labels. Check for placeholder text, inconsistent terminology, and ESL-unfriendly phrasing. Known issues resolved May 13: 7 dead `en.json` keys removed; `about.feature_languages_label` updated to "65 Languages"; `settings.privacy_body_1` updated with all localStorage keys. Remaining: editorial pass on corpus entry copy and UI strings not yet done.
 - [x] **Code quality audit** `[code]` `[manual]` `[launch-blocker]` ,  ESLint/Stylelint/Markdownlint all clean (May 13). Fixed Sheet.jsx click-without-keyboard lint error; removed stale eslint-disable directive in App.jsx. All console.* calls are DEV-gated. i18n translation TODOs remain in locale files, not production paths.
 - [x] **Security audit** `[privacy]` `[manual]` `[launch-blocker]` ,  Completed May 13 (updated May 13): all localStorage keys inventoried and documented in PRIVACY.md; no keys logged to console; all outbound `target="_blank"` links have `rel="noreferrer"` and sr-only text; CSP set via `<meta http-equiv>` in index.html. `xlsx` removed and replaced with `exceljs` -- `npm audit` now reports 0 vulnerabilities.
 - [ ] **Accessibility audit** `[a11y]` `[manual]` `[launch-blocker]` ,  axe-core zero violations, full keyboard walkthrough, screen reader test (NVDA+Firefox, VoiceOver+Safari), 200%/400% zoom, prefers-reduced-motion, prefers-contrast, text spacing bookmarklet.
