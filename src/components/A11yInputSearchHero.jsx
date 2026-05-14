@@ -45,7 +45,7 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
   return (
     <search className="search-bar">
       <div className="search-label-row">
-        <label htmlFor="finding-search" className={`search-label${narrowMode ? ' search-label--disabled' : ''}`}>
+        <label htmlFor="entry-search" className={`search-label${narrowMode ? ' search-label--disabled' : ''}`}>
           {t('search.label')}
         </label>
         {query.length === 0 && !narrowMode && !prefersReducedMotion && (
@@ -64,7 +64,7 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
       </div>
       <div className="search-row">
         <InputWithClear
-          id="finding-search"
+          id="entry-search"
           type="text"
           value={query}
           onChange={onChange}

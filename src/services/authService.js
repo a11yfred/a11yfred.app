@@ -2,7 +2,7 @@
  * authService.js, Phase 2 stub
  *
  * Auth is optional, the app is fully functional without signing in.
- * Signing in enables settings sync and personal finding storage across devices.
+ * Signing in enables settings sync and personal entry storage across devices.
  *
  * To activate: wire the stub functions to Supabase Auth calls.
  * See supabaseClient.js for setup instructions.

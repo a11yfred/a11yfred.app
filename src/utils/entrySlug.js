@@ -1,4 +1,4 @@
-export default function findingSlug(title) {
+export default function entrySlug(title) {
   return title
     .toLowerCase()
     .replace(/[^\w\s-]/g, '')

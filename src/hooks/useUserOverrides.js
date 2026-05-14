@@ -3,7 +3,7 @@ import {
   loadAllOverrides,
   saveOverride as _saveOverride,
   deleteOverride as _deleteOverride,
-  deleteAllOverridesForFinding as _deleteAllForFinding,
+  deleteAllOverridesForEntry as _deleteAllForEntry,
   clearAllOverrides as _clearAll,
 } from '../services/userOverridesService.js'
 
@@ -11,34 +11,34 @@ import {
  * useUserOverrides
  *
  * Reactive wrapper around userOverridesService. Exposes the full overrides
- * map as reactive state so useFindingSearch can re-run its useMemo when
+ * map as reactive state so useEntrySearch can re-run its useMemo when
  * overrides change without re-fetching corpus data.
  *
  * Returns:
- *   overrides           , { [findingId]: { [locale]: { desc, fix, editedAt } } }
- *   saveOverride        , (findingId, locale, { desc, fix }) → void
- *   deleteOverride      , (findingId, locale) → void
- *   deleteAllForFinding , (findingId) → void
+ *   overrides           , { [entryId]: { [locale]: { desc, fix, editedAt } } }
+ *   saveOverride        , (entryId, locale, { desc, fix }) → void
+ *   deleteOverride      , (entryId, locale) → void
+ *   deleteAllForEntry   , (entryId) → void
  *   clearAllOverrides   , () → void
- *   hasOverride         , (findingId, locale) → boolean
+ *   hasOverride         , (entryId, locale) → boolean
  */
 export default function useUserOverrides() {
   const [overrides, setOverrides] = useState(() => loadAllOverrides())
 
   const refresh = () => setOverrides(loadAllOverrides())
 
-  const saveOverride = useCallback((findingId, locale, fields) => {
-    _saveOverride(findingId, locale, fields)
+  const saveOverride = useCallback((entryId, locale, fields) => {
+    _saveOverride(entryId, locale, fields)
     refresh()
   }, [])
 
-  const deleteOverride = useCallback((findingId, locale) => {
-    _deleteOverride(findingId, locale)
+  const deleteOverride = useCallback((entryId, locale) => {
+    _deleteOverride(entryId, locale)
     refresh()
   }, [])
 
-  const deleteAllForFinding = useCallback((findingId) => {
-    _deleteAllForFinding(findingId)
+  const deleteAllForEntry = useCallback((entryId) => {
+    _deleteAllForEntry(entryId)
     refresh()
   }, [])
 
@@ -47,9 +47,9 @@ export default function useUserOverrides() {
     refresh()
   }, [])
 
-  const hasOverride = useCallback((findingId, locale) => {
-    return Boolean(overrides[findingId]?.[locale])
+  const hasOverride = useCallback((entryId, locale) => {
+    return Boolean(overrides[entryId]?.[locale])
   }, [overrides])
 
-  return { overrides, saveOverride, deleteOverride, deleteAllForFinding, clearAllOverrides, hasOverride }
+  return { overrides, saveOverride, deleteOverride, deleteAllForEntry, clearAllOverrides, hasOverride }
 }

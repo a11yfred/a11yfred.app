@@ -15,11 +15,11 @@ import A11yLinksSource from './A11yLinksSource.jsx'
 import A11yListRelated from './A11yListRelated.jsx'
 import { DEBUG_COMMANDS, DEBUG_AI_DELAY_MS, getAiProvider, getProviderLabel } from '../halohalo/index.js'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
-import { getStorage, setStorage, getFindingNoteKey } from '../utils/storage.js'
+import { getStorage, setStorage, getEntryNoteKey } from '../utils/storage.js'
 import useSheetDetailClipboard from '../hooks/useSheetDetailClipboard.js'
 import useSheetDetailRefine from '../hooks/useSheetDetailRefine.js'
-import { useSettings } from '../context/SettingsContext.js'
-import { useRatings } from '../context/RatingsContext.js'
+import { useSettings } from '../context/ContextSettings.js'
+import { useRatings } from '../context/ContextRatings.js'
 import './A11yPanelDetail.css'
 
 function FieldCheckbox({ label, checked, onChange, disabled }) {
@@ -37,7 +37,7 @@ function FieldCheckbox({ label, checked, onChange, disabled }) {
   )
 }
 
-export default function A11yPanelDetail({ finding, agenticMode = false, focusTrigger = 0, allFindings = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigger = 0, allEntries = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const { aiEnabled } = useSettings()
   const { getPairsFor } = useRatings()
   const titleRef = useRef(null)
@@ -45,12 +45,12 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
   const t = useT()
 
   const [location, setLocation] = useState('')
-  const [descText, setDescText] = useState(finding.desc)
-  const [fixText, setFixText] = useState(finding.fix)
+  const [descText, setDescText] = useState(entry.desc)
+  const [fixText, setFixText] = useState(entry.fix)
   const [aiNote, setAiNote] = useState('')
-  const [findingNote, setFindingNote] = useState(() => getStorage(getFindingNoteKey(finding.id), ''))
+  const [entryNote, setEntryNote] = useState(() => getStorage(getEntryNoteKey(entry.id), ''))
   const [useAgenticMode, setUseAgenticMode] = useState(agenticMode)
-  const [findingNoteSaved, setFindingNoteSaved] = useState(false)
+  const [entryNoteSaved, setEntryNoteSaved] = useState(false)
   const [descHistory, setDescHistory] = useState([])
   const [fixHistory, setFixHistory] = useState([])
   const [aiRevisedDesc, setAiRevisedDesc] = useState(false)
@@ -61,7 +61,7 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
   const fixCopyBtnRef = useRef(null)
 
   const displayDesc = location.trim()
-    ? `${location.trim().replace(/:?\s*$/, ':')} ${finding.desc}`
+    ? `${location.trim().replace(/:?\s*$/, ':')} ${entry.desc}`
     : descText
 
   const {
@@ -79,7 +79,7 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
     handleUndoDesc, handleUndoFix,
     copyTitle, copyPrimarySc, copyRelatedSc,
   } = useSheetDetailClipboard({
-    finding, descText, fixText, displayDesc,
+    finding: entry, descText, fixText, displayDesc,
     setDescText, setFixText, setDescHistory, setFixHistory,
     descHistory, fixHistory, onCopyEvent, t,
   })
@@ -92,18 +92,18 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
     startTypewriter,
     handleRefine,
   } = useSheetDetailRefine({
-    finding, descText, fixText,
-    aiRevisedDesc, aiRevisedFix, useAgenticMode, aiNote, allFindings,
+    finding: entry, descText, fixText,
+    aiRevisedDesc, aiRevisedFix, useAgenticMode, aiNote, allEntries,
     setDescText, setFixText, setDescHistory, setFixHistory, t,
   })
 
   useFocusOnChange(titleRef, focusTrigger)
-  useFocusOnChange(titleRef, finding.id)
+  useFocusOnChange(titleRef, entry.id)
 
   useEffect(() => {
-    setFindingNote(getStorage(getFindingNoteKey(finding.id), '')) // eslint-disable-line react-hooks/set-state-in-effect
+    setEntryNote(getStorage(getEntryNoteKey(entry.id), '')) // eslint-disable-line react-hooks/set-state-in-effect
     setAiNote('')
-  }, [finding.id])
+  }, [entry.id])
 
   useEffect(() => {
     if (!debugPanelCmd) return
@@ -130,7 +130,7 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
     }
   }, [debugPanelCmd]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const p = SEVERITY_VARS[finding.severity] || SEVERITY_VARS['Best Practice']
+  const p = SEVERITY_VARS[entry.severity] || SEVERITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
   const fixLabel = t('detail.fix_label')
   const aiRevisionLabel = t('detail.ai_revision_label')
@@ -140,7 +140,7 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
       <div className="panel-detail-header">
         <div className="panel-detail-title-row">
           <h2 ref={titleRef} tabIndex={-1} className="panel-detail-title">
-            {finding.title}
+            {entry.title}
           </h2>
           <Button
             variant="tertiary"
@@ -159,14 +159,14 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
             variant="severity"
             bg={p.bg}
             color={p.color}
-            prefix={finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
-            onClick={() => onBadgeClick?.({ type: 'severity', value: finding.severity })}
-            aria-label={`${finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria')}`}
+            prefix={entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
+            onClick={() => onBadgeClick?.({ type: 'severity', value: entry.severity })}
+            aria-label={`${entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria')}`}
           >
             {t(p.key)}
           </Badge>
           {(() => {
-            const sources = finding.creditNames || []
+            const sources = entry.creditNames || []
             if (sources.length === 0) return null
             if (sources.length === 1) {
               const src = sources[0]
@@ -193,18 +193,18 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
               </Badge>
             )
           })()}
-          {finding.wcagVersion && finding.wcagLevel && (
+          {entry.wcagVersion && entry.wcagLevel && (
             <button
               type="button"
               className="badge--wcag"
               style={{ '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }}
-              onClick={() => onBadgeClick?.({ type: 'wcag', value: finding.wcagVersion, level: finding.wcagLevel })}
-              aria-label={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel}, ${t('results.badge_filter_aria')}`}
+              onClick={() => onBadgeClick?.({ type: 'wcag', value: entry.wcagVersion, level: entry.wcagLevel })}
+              aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
             >
               <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
-              {finding.wcagVersion},{' '}
+              {entry.wcagVersion},{' '}
               <span className="badge-prefix">{t('badge.level_prefix')}</span>
-              {finding.wcagLevel}
+              {entry.wcagLevel}
             </button>
           )}
         </div>
@@ -212,9 +212,9 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
         <div className="panel-detail-sc-group">
           <p className="panel-detail-sc-row">
             <span className="panel-detail-sc-label">{t('detail.sc_failed')}</span>{' '}
-            {finding.primarySC
+            {entry.primarySC
               ? <>
-                  <A11yLinkSc label={finding.primarySC} />
+                  <A11yLinkSc label={entry.primarySC} />
                   <Button
                     variant="tertiary"
                     active={copiedPrimarySc}
@@ -230,13 +230,13 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
               : <span className="panel-detail-sc-na">{t('common.na')}</span>
             }
           </p>
-          {finding.relatedSC.length > 0 && (
+          {entry.relatedSC.length > 0 && (
             <p className="panel-detail-sc-row">
               <span className="panel-detail-sc-label">{t('detail.related_sc')}</span>{' '}
               <span className="panel-detail-sc-links">
-                {finding.relatedSC.map((r, i) => (
+                {entry.relatedSC.map((r, i) => (
                   <span key={r}>
-                    <A11yLinkSc label={r} />{i < finding.relatedSC.length - 1 && ', '}
+                    <A11yLinkSc label={r} />{i < entry.relatedSC.length - 1 && ', '}
                   </span>
                 ))}
               </span>
@@ -256,9 +256,9 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
         </div>
       </div>
 
-      {finding.note && (
+      {entry.note && (
         <InfoBox label={t('detail.note_label')} className="panel-detail-corpus-note">
-          {finding.note}
+          {entry.note}
         </InfoBox>
       )}
 
@@ -284,20 +284,20 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
 
       <A11yTextareaCopyable
         ref={descCopyBtnRef}
-        id="finding-desc"
+        id="entry-desc"
         label={descLabel}
         value={location.trim() ? displayDesc : descText}
         onChange={setDescText}
         copied={copiedDesc}
         onCopy={() => copy(location.trim() ? displayDesc : descText, setCopiedDesc, descLabel, t('detail.desc_prefix'), includeDescTitle, 'desc')}
         reset={resetDesc}
-        onReset={() => handleReset(finding.desc, descText, setDescText, setResetDesc, descLabel, descCopyBtnRef)}
+        onReset={() => handleReset(entry.desc, descText, setDescText, setResetDesc, descLabel, descCopyBtnRef)}
         undoable={descHistory.length > 1}
         onUndo={handleUndoDesc}
         animating={animating}
         wasUpdated={descHistory.length > 0}
         isDesktop={isDesktop}
-        hasChanged={descText !== finding.desc}
+        hasChanged={descText !== entry.desc}
         includeTitle={includeDescTitle}
         onIncludeTitleChange={setIncludeDescTitle}
         includeTitleLabel={t('detail.include_desc_title_when_copied')}
@@ -305,48 +305,48 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
 
       <A11yTextareaCopyable
         ref={fixCopyBtnRef}
-        id="finding-fix"
+        id="entry-fix"
         label={fixLabel}
         value={fixText}
         onChange={setFixText}
         copied={copiedFix}
         onCopy={() => copy(fixText, setCopiedFix, fixLabel, t('detail.fix_prefix'), includeFixTitle, 'fix')}
         reset={resetFix}
-        onReset={() => handleReset(finding.fix, fixText, setFixText, setResetFix, fixLabel, fixCopyBtnRef)}
+        onReset={() => handleReset(entry.fix, fixText, setFixText, setResetFix, fixLabel, fixCopyBtnRef)}
         undoable={fixHistory.length > 1}
         onUndo={handleUndoFix}
         animating={animating}
         wasUpdated={fixHistory.length > 0}
         isDesktop={isDesktop}
-        hasChanged={fixText !== finding.fix}
+        hasChanged={fixText !== entry.fix}
         includeTitle={includeFixTitle}
         onIncludeTitleChange={setIncludeFixTitle}
         includeTitleLabel={t('detail.include_fix_title_when_copied')}
       />
 
       <div className="panel-detail-section">
-        <label htmlFor="finding-note" className="panel-detail-label">{t('detail.finding_note_label')}</label>
+        <label htmlFor="entry-note" className="panel-detail-label">{t('detail.finding_note_label')}</label>
         <textarea
-          id="finding-note"
-          value={findingNote}
-          onChange={e => setFindingNote(e.target.value)}
+          id="entry-note"
+          value={entryNote}
+          onChange={e => setEntryNote(e.target.value)}
           placeholder={t('detail.finding_note_placeholder')}
           className="panel-detail-input panel-detail-input--textarea"
           rows={3}
         />
         <div className="panel-detail-section-controls">
           <button
-            onClick={findingNote.trim() ? () => {
-              setStorage(getFindingNoteKey(finding.id), findingNote)
-              setFindingNoteSaved(true)
+            onClick={entryNote.trim() ? () => {
+              setStorage(getEntryNoteKey(entry.id), entryNote)
+              setEntryNoteSaved(true)
               announce(t('detail.saved_finding_note_aria'))
-              setTimeout(() => setFindingNoteSaved(false), NOTIFICATION_TIMEOUT)
+              setTimeout(() => setEntryNoteSaved(false), NOTIFICATION_TIMEOUT)
             } : undefined}
-            aria-disabled={!findingNote.trim() || undefined}
-            className={`btn--primary panel-detail-section-btn btn--height-standard${findingNoteSaved ? ' btn__field--success' : ''}`}
-            aria-label={findingNoteSaved ? t('detail.saved_finding_note_aria') : t('detail.save_finding_note_aria')}
+            aria-disabled={!entryNote.trim() || undefined}
+            className={`btn--primary panel-detail-section-btn btn--height-standard${entryNoteSaved ? ' btn__field--success' : ''}`}
+            aria-label={entryNoteSaved ? t('detail.saved_finding_note_aria') : t('detail.save_finding_note_aria')}
           >
-            {findingNoteSaved
+            {entryNoteSaved
               ? <><Check size={14} aria-hidden="true" /><span>{t('detail.saved_finding_note_text')}</span></>
               : <><Save size={14} aria-hidden="true" /><span>{t('detail.save_finding_note_text')}</span></>}
           </button>
@@ -398,7 +398,7 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
                 : <><span className="btn-icon"><Sparkles size={12} strokeWidth={2} className="panel-detail-ai-revision-icon" aria-hidden="true" /></span><span>{t('detail.ai_revision_save_text')}</span></>}
             </button>
           </div>
-          {(descText !== finding.desc || fixText !== finding.fix) && (
+          {(descText !== entry.desc || fixText !== entry.fix) && (
             <p className="panel-detail-edit-warning" role="status">
               <AlertCircle size={16} aria-hidden="true" className="panel-detail-edit-warning-icon" />
               {t('detail.edit_lang_warning')}
@@ -407,9 +407,9 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
         </div>
       )}
 
-      <A11yListRelated finding={finding} allFindings={allFindings} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
+      <A11yListRelated entry={entry} allEntries={allEntries} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
       <A11yLinksSource
-        links={finding.creditLinks}
+        links={entry.creditLinks}
         singleHeading={t('detail.source_heading')}
         multipleHeading={t('detail.sources_heading')}
       />
@@ -418,8 +418,8 @@ export default function A11yPanelDetail({ finding, agenticMode = false, focusTri
         <button
           type="button"
           className={`btn--secondary panel-detail-action-btn btn--height-standard${resetAllDone ? ' btn__field--success' : ''}`}
-          onClick={(descText === finding.desc && fixText === finding.fix) ? undefined : handleResetAllFields}
-          aria-disabled={(descText === finding.desc && fixText === finding.fix) || undefined}
+          onClick={(descText === entry.desc && fixText === entry.fix) ? undefined : handleResetAllFields}
+          aria-disabled={(descText === entry.desc && fixText === entry.fix) || undefined}
           aria-label={t('detail.reset_all_fields_aria')}
         >
           {resetAllDone

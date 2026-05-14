@@ -6,8 +6,8 @@
  * merged record so cross-language search works (e.g. typing "button" in the
  * Japanese locale still finds ACC-001).
  *
- * Phase 2 (Supabase): replace the body of getFindings() with a Supabase query.
- * Add getUserFindings() to load the user's custom entries from Supabase.
+ * Phase 2 (Supabase): replace the body of getEntries() with a Supabase query.
+ * Add getUserEntries() to load the user's custom entries from Supabase.
  * No other file needs to change.
  */
 
@@ -38,7 +38,7 @@ async function loadOverlay(locale) {
   }
 }
 
-export async function getFindings(locale = 'en') {
+export async function getEntries(locale = 'en') {
   // All English variants use the corpus directly, no overlay needed
   if (!locale || locale.startsWith('en')) return corpusData
 
@@ -70,55 +70,55 @@ export async function getFindings(locale = 'en') {
 }
 
 /**
- * Phase 2 stub, returns the signed-in user's custom finding entries.
+ * Phase 2 stub, returns the signed-in user's custom entries.
  *
  * Custom entries use the same schema as corpus.json but with IDs like "USR-001".
- * They are stored in the Supabase `user_findings` table with RLS so only the
+ * They are stored in the Supabase `user_entries` table with RLS so only the
  * owner can read/write them.
  *
  * To activate:
  *   import { supabase } from './supabaseClient'
  *   const { data, error } = await supabase
- *     .from('user_findings')
+ *     .from('user_entries')
  *     .select('*')
  *     .order('created_at', { ascending: false })
  *   if (error) throw error
  *   return data
  *
- * Usage, combine with getFindings() for a merged search set:
- *   const [public, custom] = await Promise.all([getFindings(locale), getUserFindings(userId)])
+ * Usage, combine with getEntries() for a merged search set:
+ *   const [public, custom] = await Promise.all([getEntries(locale), getUserEntries(userId)])
  *   const all = [...public, ...custom]
  */
-export async function getUserFindings(_userId) {
+export async function getUserEntries(_userId) {
   return []
 }
 
 /**
- * Phase 2 stub, saves or updates a user's custom finding entry.
+ * Phase 2 stub, saves or updates a user's custom entry.
  *
  * To activate:
  *   const { error } = await supabase
- *     .from('user_findings')
- *     .upsert({ ...finding, user_id: userId, updated_at: new Date().toISOString() })
+ *     .from('user_entries')
+ *     .upsert({ ...entry, user_id: userId, updated_at: new Date().toISOString() })
  *   if (error) throw error
  */
-export async function saveUserFinding(_userId, _finding) {
-  throw new Error('User findings not yet implemented, see dataService.js Phase 2 comments')
+export async function saveUserEntry(_userId, _entry) {
+  throw new Error('User entries not yet implemented, see dataService.js Phase 2 comments')
 }
 
 /**
- * Phase 2 stub, deletes a user's custom finding entry.
+ * Phase 2 stub, deletes a user's custom entry.
  *
  * To activate:
  *   const { error } = await supabase
- *     .from('user_findings')
+ *     .from('user_entries')
  *     .delete()
- *     .eq('id', findingId)
+ *     .eq('id', entryId)
  *     .eq('user_id', userId)
  *   if (error) throw error
  */
-export async function deleteUserFinding(_userId, _findingId) {
-  throw new Error('User findings not yet implemented, see dataService.js Phase 2 comments')
+export async function deleteUserEntry(_userId, _entryId) {
+  throw new Error('User entries not yet implemented, see dataService.js Phase 2 comments')
 }
 
 /**

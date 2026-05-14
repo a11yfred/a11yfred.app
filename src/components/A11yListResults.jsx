@@ -13,12 +13,12 @@ import InputWithClear from './ui/InputWithClear.jsx'
 import NoResults from './ui/NoResults.jsx'
 import InfoBox from './ui/InfoBox.jsx'
 import TileAd from './TileAd.jsx'
-import findingSlug from '../utils/findingSlug.js'
+import entrySlug from '../utils/entrySlug.js'
 import { DEFAULT_RATING, CLIPBOARD_TIMEOUT, pluralResult, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_REVEAL, SWIPE_THRESHOLD, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, SORT_FLASH_MS, RANK_ANIM_MS, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD } from '../utils/constants.js'
 import { useKeydown } from '../hooks/useKeydown.js'
-import { useSettings } from '../context/SettingsContext.js'
-import { useSearch } from '../context/SearchContext.js'
-import { useRatings } from '../context/RatingsContext.js'
+import { useSettings } from '../context/ContextSettings.js'
+import { useSearch } from '../context/ContextSearch.js'
+import { useRatings } from '../context/ContextRatings.js'
 import './A11yListResults.css'
 
 function triggerButtonAnimation(btn, id, setAnimating) {
@@ -32,16 +32,16 @@ function triggerButtonAnimation(btn, id, setAnimating) {
   }, RANK_ANIM_MS)
 }
 
-export function PinnedSection({ findings, onSelect, onClearPins, headingRef }) {
+export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   const t = useT()
   const { showVoting: showRanking } = useSettings()
-  if (!findings.length) return null
+  if (!entries.length) return null
   return (
     <div className="pinned-section pinned-results">
       <div className="pinned-section__header">
         <h2 ref={headingRef} tabIndex={-1} className="pinned-section__heading">
           {t('results.pinned_heading')}
-          <span className="pinned-section__count">{findings.length}</span>
+          <span className="pinned-section__count">{entries.length}</span>
         </h2>
         {onClearPins && (
           <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={onClearPins} icon={<PinOff size={14} aria-hidden="true" />}>
@@ -50,7 +50,7 @@ export function PinnedSection({ findings, onSelect, onClearPins, headingRef }) {
         )}
       </div>
       <A11yListResults
-        results={findings}
+        results={entries}
         onSelect={onSelect}
         selected={null}
         query=""
@@ -189,8 +189,8 @@ export default function A11yListResults({ results, selected, onSelect, query, co
     const currentIndex = displayResults.findIndex(r => itemRefs.current[r.id] === document.activeElement)
     if (currentIndex === -1) return
 
-    const currentFinding = displayResults[currentIndex]
-    const rating = ratings[currentFinding.id] || DEFAULT_RATING
+    const currentEntry = displayResults[currentIndex]
+    const rating = ratings[currentEntry.id] || DEFAULT_RATING
     const { starred, archived } = rating
     const searchInput = document.querySelector('input[type="search"]')
     const isTyping = searchInput === document.activeElement
@@ -212,32 +212,32 @@ export default function A11yListResults({ results, selected, onSelect, query, co
         break
       case 's':
         e.preventDefault()
-        onStar?.(currentFinding.id)
+        onStar?.(currentEntry.id)
         announce(starred ? t('announce.unstarred') : t('announce.starred'))
         break
       case 'e':
         e.preventDefault()
         announce(archived ? t('announce.unarchived') : t('announce.archived'), { priority: 'assertive' })
-        setTimeout(() => onArchive?.(currentFinding.id), ARCHIVE_FOCUS_DELAY_MS)
+        setTimeout(() => onArchive?.(currentEntry.id), ARCHIVE_FOCUS_DELAY_MS)
         break
       case 'u':
         e.preventDefault()
         if (archived) {
-          onArchive?.(currentFinding.id)
+          onArchive?.(currentEntry.id)
           announce(t('announce.unarchived'))
         }
         break
       default:
         if (e.shiftKey && (e.key === 'ArrowUp' || e.key === '↑')) {
           e.preventDefault()
-          onRankUp?.(currentFinding.id)
-          const newRating = ratings[currentFinding.id] || DEFAULT_RATING
-          announce(t('announce.ranked_up', { title: currentFinding.title, score: newRating.score + 1 }))
+          onRankUp?.(currentEntry.id)
+          const newRating = ratings[currentEntry.id] || DEFAULT_RATING
+          announce(t('announce.ranked_up', { title: currentEntry.title, score: newRating.score + 1 }))
         } else if (e.shiftKey && (e.key === 'ArrowDown' || e.key === '↓')) {
           e.preventDefault()
-          onRankDown?.(currentFinding.id)
-          const newRating = ratings[currentFinding.id] || DEFAULT_RATING
-          announce(t('announce.ranked_down', { title: currentFinding.title, score: newRating.score - 1 }))
+          onRankDown?.(currentEntry.id)
+          const newRating = ratings[currentEntry.id] || DEFAULT_RATING
+          announce(t('announce.ranked_down', { title: currentEntry.title, score: newRating.score - 1 }))
         }
     }
   }, [displayResults, ratings, onStar, onArchive, onRankUp, onRankDown, t])
@@ -508,82 +508,82 @@ export default function A11yListResults({ results, selected, onSelect, query, co
             onOpenSettings={onOpenSettings}
           />
         : <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>
-          {displayResults.map((finding, index) => {
+          {displayResults.map((entry, index) => {
           const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
-          const isSelected = selected?.id === finding.id
-          const p = SEVERITY_VARS[finding.severity] || SEVERITY_VARS['Best Practice']
-          const rating = ratings[finding.id] || DEFAULT_RATING
+          const isSelected = selected?.id === entry.id
+          const p = SEVERITY_VARS[entry.severity] || SEVERITY_VARS['Best Practice']
+          const rating = ratings[entry.id] || DEFAULT_RATING
           const { score, starred, archived } = rating
 
-          const truncDesc = finding.desc.length > DESC_PREVIEW_LENGTH
-            ? finding.desc.slice(0, DESC_PREVIEW_LENGTH).trimEnd() + '…'
-            : finding.desc
+          const truncDesc = entry.desc.length > DESC_PREVIEW_LENGTH
+            ? entry.desc.slice(0, DESC_PREVIEW_LENGTH).trimEnd() + '…'
+            : entry.desc
 
           const cardLabel = archived
-            ? t('results.archived_label', { title: finding.title })
-            : `${finding.title}, ${t(p.key)}, ${finding.primarySC}, ${truncDesc}`
+            ? t('results.archived_label', { title: entry.title })
+            : `${entry.title}, ${t(p.key)}, ${entry.primarySC}, ${truncDesc}`
 
           // Truncate title used in vote-button labels only, full title used in announce() calls
           const shortTitle = (() => {
-            if (finding.title.length <= TITLE_TRUNCATE_LENGTH) return finding.title
-            const cut = finding.title.slice(0, TITLE_TRUNCATE_LENGTH)
+            if (entry.title.length <= TITLE_TRUNCATE_LENGTH) return entry.title
+            const cut = entry.title.slice(0, TITLE_TRUNCATE_LENGTH)
             const lastSpace = cut.lastIndexOf(' ')
             return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut) + '…'
           })()
 
           function handleRankUp(e) {
             e.stopPropagation()
-            triggerButtonAnimation(e.currentTarget, finding.id, setAnimatingUp)
-            onRankUp?.(finding.id)
-            announce(t('announce.ranked_up', { title: finding.title, score: score + 1 }))
+            triggerButtonAnimation(e.currentTarget, entry.id, setAnimatingUp)
+            onRankUp?.(entry.id)
+            announce(t('announce.ranked_up', { title: entry.title, score: score + 1 }))
           }
 
           function handleRankDown(e) {
             e.stopPropagation()
-            triggerButtonAnimation(e.currentTarget, finding.id, setAnimatingDown)
-            onRankDown?.(finding.id)
-            announce(t('announce.ranked_down', { title: finding.title, score: score - 1 }))
+            triggerButtonAnimation(e.currentTarget, entry.id, setAnimatingDown)
+            onRankDown?.(entry.id)
+            announce(t('announce.ranked_down', { title: entry.title, score: score - 1 }))
           }
 
           function handleStar(e) {
             e.stopPropagation()
-            onStar?.(finding.id)
+            onStar?.(entry.id)
           }
 
           function handleArchive(e) {
             e.stopPropagation()
             announce(t('announce.archived'), { priority: 'assertive' })
-            const idx = displayResults.indexOf(finding)
+            const idx = displayResults.indexOf(entry)
             const next = displayResults[idx + 1] || displayResults[idx - 1]
             const nextId = next?.id
             setTimeout(() => {
-              onArchive?.(finding.id)
+              onArchive?.(entry.id)
               if (nextId) requestAnimationFrame(() => itemRefs.current[nextId]?.focus())
             }, ARCHIVE_FOCUS_DELAY_MS)
           }
 
-          const pinned = pinnedIds.has(finding.id)
+          const pinned = pinnedIds.has(entry.id)
 
           function handlePin(e) {
             e.stopPropagation()
-            onPin?.(finding.id)
+            onPin?.(entry.id)
             announce(pinned
-              ? t('announce.unpinned', { title: finding.title })
-              : t('announce.pinned', { title: finding.title })
+              ? t('announce.unpinned', { title: entry.title })
+              : t('announce.pinned', { title: entry.title })
             )
           }
 
-          const swipeIsOpen = swipeOpenId?.id === finding.id
+          const swipeIsOpen = swipeOpenId?.id === entry.id
           const swipeSide = swipeIsOpen ? swipeOpenId.side : null
 
           function handleSwipeTouchStart(e) {
             const t = e.touches[0]
-            swipeTouchRef.current = { startX: t.clientX, startY: t.clientY, id: finding.id, moved: false }
+            swipeTouchRef.current = { startX: t.clientX, startY: t.clientY, id: entry.id, moved: false }
           }
 
           function handleSwipeTouchEnd(e) {
             const touch = swipeTouchRef.current
-            if (!touch || touch.id !== finding.id) return
+            if (!touch || touch.id !== entry.id) return
             swipeTouchRef.current = null
             const el = e.currentTarget.querySelector('.result-swipe-wrap')
             if (!el) return
@@ -596,7 +596,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
             const base = swipeIsOpen ? (swipeSide === 'left' ? -SWIPE_REVEAL : SWIPE_REVEAL) : 0
             const delta = current - base
             if (delta < -SWIPE_THRESHOLD) {
-              setSwipeOpenId({ id: finding.id, side: 'left' })
+              setSwipeOpenId({ id: entry.id, side: 'left' })
             } else if (onPin && current >= SWIPE_ACTIVATE) {
               if (!archived) {
                 const row = e.currentTarget
@@ -605,38 +605,38 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                 setTimeout(() => {
                   row.classList.remove(flashClass)
                   setSwipeOpenId(null)
-                  onPin?.(finding.id)
+                  onPin?.(entry.id)
                   announce(pinned
-                    ? t('announce.unpinned', { title: finding.title })
-                    : t('announce.pinned', { title: finding.title })
+                    ? t('announce.unpinned', { title: entry.title })
+                    : t('announce.pinned', { title: entry.title })
                   )
                 }, SWIPE_PIN_FLASH_MS)
               } else {
                 setSwipeOpenId(null)
               }
             } else if (delta > SWIPE_THRESHOLD) {
-              setSwipeOpenId({ id: finding.id, side: 'right' })
+              setSwipeOpenId({ id: entry.id, side: 'right' })
             } else {
               setSwipeOpenId(null)
             }
             el.style.transform = ''
           }
 
-          const nextFinding = displayResults[index + 1] ?? displayResults[0]
-          const skipHref = `#result-${nextFinding.id}`
+          const nextEntry = displayResults[index + 1] ?? displayResults[0]
+          const skipHref = `#result-${nextEntry.id}`
 
           function handleSkipToNext(e) {
             e.preventDefault()
-            itemRefs.current[nextFinding.id]?.focus()
+            itemRefs.current[nextEntry.id]?.focus()
           }
 
           const swipeClass = swipeIsOpen ? ` result-row--swipe-${swipeSide}` : ''
 
           return (
-            <Fragment key={finding.id}>
+            <Fragment key={entry.id}>
             <li
-              id={`result-${finding.id}`}
-              data-swipe-id={finding.id}
+              id={`result-${entry.id}`}
+              data-swipe-id={entry.id}
               className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}`}
               style={{ '--result-i': index }}
               onTouchStart={(showRanking || onPin) ? handleSwipeTouchStart : undefined}
@@ -652,14 +652,14 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                     </div>
                   )}
                   <a
-                    ref={el => { itemRefs.current[finding.id] = el }}
-                    data-finding-id={finding.id}
-                    href={`#/finding/${finding.id}/${findingSlug(finding.title)}`}
+                    ref={el => { itemRefs.current[entry.id] = el }}
+                    data-entry-id={entry.id}
+                    href={`#/entry/${entry.id}/${entrySlug(entry.title)}`}
                     aria-label={cardLabel}
                     onClick={e => {
                       e.preventDefault()
                       if (swipeIsOpen) { setSwipeOpenId(null); return }
-                      if (!archived) onSelect?.(finding, e.currentTarget)
+                      if (!archived) onSelect?.(entry, e.currentTarget)
                     }}
                     onKeyDown={e => {
                       if (e.key === 'ArrowDown') { e.preventDefault(); itemRefs.current[results[index + 1]?.id]?.focus() }
@@ -669,18 +669,18 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                   >
                     <div className="result-item__header">
                       <span className="result-item__title">
-                        {finding.title}
+                        {entry.title}
                       </span>
                       <span className="result-item__badges">
                         <Badge
                           variant="severity"
                           bg={archived ? undefined : p.bg}
                           color={archived ? undefined : p.color}
-                          prefix={finding.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
+                          prefix={entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
                         >
                           {t(p.key)}
                         </Badge>
-                        {finding.creditNames?.map(src => (
+                        {entry.creditNames?.map(src => (
                           <Badge
                             key={src}
                             variant="source"
@@ -690,23 +690,23 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                             {src}
                           </Badge>
                         ))}
-                        {finding.wcagVersion && finding.wcagLevel && (
+                        {entry.wcagVersion && entry.wcagLevel && (
                           <Badge
                             variant="wcag"
-                            title={`${t('badge.wcag_prefix')}${finding.wcagVersion}, ${t('badge.level_prefix')}${finding.wcagLevel}`}
+                            title={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('badge.level_prefix')}${entry.wcagLevel}`}
                           >
                             <span className="badge-prefix">{t('badge.wcag_prefix')}</span>
-                            {finding.wcagVersion},{' '}
+                            {entry.wcagVersion},{' '}
                             <span className="badge-prefix">{t('badge.level_prefix')}</span>
-                            {finding.wcagLevel}
+                            {entry.wcagLevel}
                           </Badge>
                         )}
                       </span>
                     </div>
 
-                    <div className="result-item__sc">{finding.primarySC}</div>
+                    <div className="result-item__sc">{entry.primarySC}</div>
 
-                    <div className="result-item__desc">{finding.desc}</div>
+                    <div className="result-item__desc">{entry.desc}</div>
                   </a>
 
                   {showRankingSort && index < displayResults.length - 1 && (
@@ -759,7 +759,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                       label={t('results.rank_up', { title: shortTitle })}
                       disabled={archived}
                       onClick={handleRankUp}
-                      icon={<ThumbsUp size={14} aria-hidden="true" fill={animatingUp.has(finding.id) ? 'currentColor' : 'none'} />}
+                      icon={<ThumbsUp size={14} aria-hidden="true" fill={animatingUp.has(entry.id) ? 'currentColor' : 'none'} />}
                       className="result-rank-btn result-rank-btn--up"
                     />
 
@@ -776,7 +776,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                       label={t('results.rank_down', { title: shortTitle })}
                       disabled={archived}
                       onClick={handleRankDown}
-                      icon={<ThumbsDown size={14} aria-hidden="true" fill={animatingDown.has(finding.id) ? 'currentColor' : 'none'} />}
+                      icon={<ThumbsDown size={14} aria-hidden="true" fill={animatingDown.has(entry.id) ? 'currentColor' : 'none'} />}
                       className="result-rank-btn result-rank-btn--down"
                     />
                   </>}
@@ -799,7 +799,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
               {onPin && (
                 <div
                   className="result-action-panel result-action-panel--right"
-                  onFocus={() => setSwipeOpenId({ id: finding.id, side: 'right' })}
+                  onFocus={() => setSwipeOpenId({ id: entry.id, side: 'right' })}
                   onBlur={() => setSwipeOpenId(null)}
                 >
                   <ButtonIcon
@@ -820,7 +820,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
               {showRanking && !pinned && (
                 <div
                   className="result-action-panel result-action-panel--left"
-                  onFocus={() => setSwipeOpenId({ id: finding.id, side: 'left' })}
+                  onFocus={() => setSwipeOpenId({ id: entry.id, side: 'left' })}
                   onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setSwipeOpenId(null) }}
                 >
                   <ButtonIcon variant="tertiary" label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })} onClick={handleStar}

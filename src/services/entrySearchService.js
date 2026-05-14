@@ -35,47 +35,47 @@ export function parseSearchQuery(query) {
 }
 
 /**
- * Merges corpus findings with user overrides and user-created findings.
+ * Merges corpus entries with user overrides and user-created entries.
  *
- * @param {Array} corpusFindings
+ * @param {Array} corpusEntries
  * @param {string} locale
  * @param {Object} userOverrides
- * @param {Array} userFindings
+ * @param {Array} userEntries
  * @returns {Array}
  */
-export function mergeFindings(corpusFindings, locale, userOverrides = {}, userFindings = []) {
+export function mergeEntries(corpusEntries, locale, userOverrides = {}, userEntries = []) {
   const hasOverrides = Object.keys(userOverrides).length > 0
   const corpus = hasOverrides
-    ? corpusFindings.map(f => applyOverride(f, locale, userOverrides))
-    : corpusFindings
-  return userFindings.length ? [...corpus, ...userFindings] : corpus
+    ? corpusEntries.map(f => applyOverride(f, locale, userOverrides))
+    : corpusEntries
+  return userEntries.length ? [...corpus, ...userEntries] : corpus
 }
 
 /**
- * Filters findings by platform.
+ * Filters entries by platform.
  *
- * @param {Array} findings
+ * @param {Array} entries
  * @param {string} platform - 'all' | 'web' | 'native' | 'document'
  * @returns {Array}
  */
-export function filterByPlatform(findings, platform) {
-  if (!platform || platform === 'all') return findings
-  return findings.filter(d => !d.platform || d.platform === platform)
+export function filterByPlatform(entries, platform) {
+  if (!platform || platform === 'all') return entries
+  return entries.filter(d => !d.platform || d.platform === platform)
 }
 
 /**
- * Filters findings by WCAG version and level ceiling.
+ * Filters entries by WCAG version and level ceiling.
  *
- * @param {Array} findings
+ * @param {Array} entries
  * @param {{ maxVersion: string, maxLevel: string }} wcagFilter
  * @returns {Array}
  */
-export function filterByWcag(findings, wcagFilter = DEFAULT_WCAG_FILTER) {
+export function filterByWcag(entries, wcagFilter = DEFAULT_WCAG_FILTER) {
   const { maxVersion = '2.2', maxLevel = 'AA' } = wcagFilter ?? {}
   const vMax = WCAG_VERSION_ORDER[maxVersion] ?? 2
   const lMax = WCAG_LEVEL_ORDER[maxLevel] ?? 1
-  if (vMax === 2 && lMax >= 1) return findings
-  return findings.filter(f => {
+  if (vMax === 2 && lMax >= 1) return entries
+  return entries.filter(f => {
     if (f.wcagVersion && (WCAG_VERSION_ORDER[f.wcagVersion] ?? 0) > vMax) return false
     if (f.wcagLevel  && (WCAG_LEVEL_ORDER[f.wcagLevel]   ?? 0) > lMax) return false
     return true
@@ -83,15 +83,15 @@ export function filterByWcag(findings, wcagFilter = DEFAULT_WCAG_FILTER) {
 }
 
 /**
- * Sorts findings by archived → starred → severity → primarySC,
+ * Sorts entries by archived → starred → severity → primarySC,
  * weighted by user ratings.
  *
- * @param {Array} findings
- * @param {Object} ratings - map of finding id → { score, starred, archived }
+ * @param {Array} entries
+ * @param {Object} ratings - map of entry id → { score, starred, archived }
  * @returns {Array} new sorted array
  */
-export function sortFindings(findings, ratings = {}) {
-  return [...findings].sort((a, b) => {
+export function sortEntries(entries, ratings = {}) {
+  return [...entries].sort((a, b) => {
     const ra = ratings[a.id] || DEFAULT_RATING
     const rb = ratings[b.id] || DEFAULT_RATING
     if (ra.archived !== rb.archived) return ra.archived ? 1 : -1
@@ -105,27 +105,27 @@ export function sortFindings(findings, ratings = {}) {
 
 /**
  * Runs fuzzy search + boolean filtering + rating-weighted sort over a
- * pre-filtered findings array.
+ * pre-filtered entries array.
  *
- * @param {Array} findings - already platform/WCAG filtered
+ * @param {Array} entries - already platform/WCAG filtered
  * @param {string} query
  * @param {Object} ratings
  * @param {number} [searchKey=0] - unused at this layer; kept so callers can
  *   pass it through for memoisation keys without needing to strip it
- * @returns {Array} up to MAX_SEARCH_RESULTS finding objects
+ * @returns {Array} up to MAX_SEARCH_RESULTS entry objects
  */
-export function searchFindings(findings, query, ratings = {}, _searchKey = 0) {
+export function searchEntries(entries, query, ratings = {}, _searchKey = 0) {
   if (!query || query.trim().length < 2) return []
 
   const { baseQuery, required, excluded } = parseSearchQuery(query)
-  const fuse = new Fuse(findings, FUSE_OPTIONS)
+  const fuse = new Fuse(entries, FUSE_OPTIONS)
 
   const t0 = performance.now()
   const searchTerm = baseQuery || query.trim()
   const raw = fuse.search(searchTerm).slice(0, MAX_SEARCH_ALL)
   const elapsed = performance.now() - t0
   if (import.meta.env.DEV && elapsed > SEARCH_PERF_WARN_MS) {
-    console.warn(`[searchFindings] search took ${elapsed.toFixed(1)}ms for "${query}" over ${findings.length} entries`)
+    console.warn(`[searchEntries] search took ${elapsed.toFixed(1)}ms for "${query}" over ${entries.length} entries`)
   }
 
   return raw

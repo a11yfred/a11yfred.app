@@ -15,7 +15,7 @@ export function parseAiResponse(text) {
   }
 }
 
-export async function getAiRefinement({ finding, descText, fixText, note }) {
+export async function getAiRefinement({ entry, descText, fixText, note }) {
   const buildPrompt = getBuildPrompt()
   if (!buildPrompt) throw new Error('halohalo: call initHalohalo({ buildPrompt }) before getAiRefinement')
 
@@ -25,7 +25,7 @@ export async function getAiRefinement({ finding, descText, fixText, note }) {
   if (!key) throw new Error(`No API key found for ${provider}. Add one in Settings.`)
 
   const model = getAiModel(provider)
-  const prompt = buildPrompt({ finding, descText, fixText, note })
+  const prompt = buildPrompt({ entry, descText, fixText, note })
   const text = await callProvider({ provider, model, key, prompt, maxTokens: AI_MAX_TOKENS })
   return parseAiResponse(text)
 }

@@ -205,10 +205,16 @@ select:focus-visible {
   padding: 0;
 }
 
-/* ─── Button sizing modifier ───────────────────────────────── */
+/* ─── Button sizing modifiers ──────────────────────────────── */
 
 .btn--height-standard {
   height: var(--btn-height-standard);
+}
+
+/* Matches button height to the standard input field height.
+   Used by hero search submit and narrow results submit. */
+.btn--input-height {
+  height: var(--input-height);
 }
 
 /* ─── Shared disabled state — before hover rules (specificity order) */

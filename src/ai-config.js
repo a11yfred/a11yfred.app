@@ -1,13 +1,13 @@
 // App-specific AI configuration injected into @ulam/halohalo at init time.
 // Keeps accessibility domain knowledge out of the library.
 
-export function buildPrompt({ finding, descText, fixText, note }) {
+export function buildPrompt({ entry, descText, fixText, note }) {
   return `You are helping an accessibility auditor write finding descriptions in their established voice and methodology.
 
 The auditor has this existing finding:
 
-Title: ${finding.title}
-WCAG SC: ${finding.primarySC}
+Title: ${entry.title}
+WCAG SC: ${entry.primarySC}
 Current description: ${descText}
 Current suggested fix: ${fixText}
 

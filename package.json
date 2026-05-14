@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
+    "@fontsource/outfit": "^5.2.8",
     "@ulam/calamansi": "^0.1.0",
     "@ulam/sili": "^0.1.2",
     "@ulam/taho": "^0.1.3",

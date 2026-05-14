@@ -1,12 +1,12 @@
 /**
- * exportFinding(finding, format)
+ * exportEntry(entry, format)
  *
- * Triggers a browser download of the finding in the requested format.
+ * Triggers a browser download of the entry in the requested format.
  * Formats: 'text' (default) | 'markdown' | 'csv' | 'excel'
  *
- * No UI required, call from any button or action that has a Finding object.
+ * No UI required, call from any button or action that has an Entry object.
  */
-export function exportFinding(finding, format = 'text') {
+export function exportEntry(entry, format = 'text') {
   let content, filename, mimeType
 
   switch (format) {
@@ -15,41 +15,41 @@ export function exportFinding(finding, format = 'text') {
       const esc = v => `"${String(v ?? '').replace(/"/g, '""')}"`
       const header = ['id', 'title', 'sc', 'primarySC', 'severity', 'platform', 'desc', 'fix'].join(',')
       const row = [
-        finding.id,
-        finding.title,
-        finding.sc,
-        finding.primarySC,
-        finding.severity,
-        finding.platform,
-        finding.desc,
-        finding.fix,
+        entry.id,
+        entry.title,
+        entry.sc,
+        entry.primarySC,
+        entry.severity,
+        entry.platform,
+        entry.desc,
+        entry.fix,
       ].map(esc).join(',')
       content  = `${header}\n${row}`
-      filename = `${finding.id}.csv`
+      filename = `${entry.id}.csv`
       mimeType = 'text/csv;charset=utf-8;'
       break
     }
 
     case 'markdown': {
-      const related = finding.relatedSC?.length
-        ? `\n\n**Related SC:** ${finding.relatedSC.join(', ')}`
+      const related = entry.relatedSC?.length
+        ? `\n\n**Related SC:** ${entry.relatedSC.join(', ')}`
         : ''
       content = [
-        `# ${finding.title}`,
+        `# ${entry.title}`,
         '',
-        `**SC:** ${finding.primarySC}  `,
-        `**Severity:** ${finding.severity}  `,
-        `**Platform:** ${finding.platform}${related}`,
+        `**SC:** ${entry.primarySC}  `,
+        `**Severity:** ${entry.severity}  `,
+        `**Platform:** ${entry.platform}${related}`,
         '',
         '## Description',
         '',
-        finding.desc,
+        entry.desc,
         '',
         '## Suggested Fix',
         '',
-        finding.fix,
+        entry.fix,
       ].join('\n')
-      filename = `${finding.id}.md`
+      filename = `${entry.id}.md`
       mimeType = 'text/markdown;charset=utf-8;'
       break
     }
@@ -58,15 +58,15 @@ export function exportFinding(finding, format = 'text') {
       const fields = ['id', 'title', 'sc', 'primarySC', 'severity', 'platform', 'desc', 'fix']
       import('exceljs').then(({ default: ExcelJS }) => {
         const wb = new ExcelJS.Workbook()
-        const ws = wb.addWorksheet('Finding')
+        const ws = wb.addWorksheet('Entry')
         ws.columns = fields.map(f => ({ header: f, key: f }))
-        ws.addRow(Object.fromEntries(fields.map(f => [f, finding[f] ?? ''])))
+        ws.addRow(Object.fromEntries(fields.map(f => [f, entry[f] ?? ''])))
         wb.xlsx.writeBuffer().then(buf => {
           const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
           const url = URL.createObjectURL(blob)
           const a = document.createElement('a')
           a.href = url
-          a.download = `${finding.id}.xlsx`
+          a.download = `${entry.id}.xlsx`
           a.style.display = 'none'
           document.body.appendChild(a)
           a.click()
@@ -79,22 +79,22 @@ export function exportFinding(finding, format = 'text') {
 
     case 'text':
     default: {
-      const bar = '─'.repeat(Math.min(finding.title.length, 60))
+      const bar = '─'.repeat(Math.min(entry.title.length, 60))
       content = [
-        finding.title,
+        entry.title,
         bar,
         '',
-        `SC: ${finding.primarySC}`,
-        `Severity: ${finding.severity}`,
-        `Platform: ${finding.platform}`,
+        `SC: ${entry.primarySC}`,
+        `Severity: ${entry.severity}`,
+        `Platform: ${entry.platform}`,
         '',
         'Description:',
-        finding.desc,
+        entry.desc,
         '',
         'Suggested Fix:',
-        finding.fix,
+        entry.fix,
       ].join('\n')
-      filename = `${finding.id}.txt`
+      filename = `${entry.id}.txt`
       mimeType = 'text/plain;charset=utf-8;'
       break
     }

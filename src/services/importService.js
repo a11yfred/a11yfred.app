@@ -2,8 +2,8 @@
  * importService.js
  *
  * Parses user-supplied files (CSV, Excel, JSON) or a remote JSON URL into the
- * corpus finding schema, then returns normalized findings ready for
- * userFindingsService.saveUserFinding().
+ * corpus entry schema, then returns normalized entries ready for
+ * userEntriesService.saveUserEntry().
  *
  * Supported input formats:
  *   File upload: .csv, .xlsx, .xls, .json
@@ -11,13 +11,13 @@
  *                Phase 2 auth-gated sources (Supabase) are handled in dataService.js
  *
  * Return shape (both importFromFile and importFromUrl):
- *   { findings: [...NormalizedFinding], skipped: [...{ row, reason }], total: n }
+ *   { entries: [...NormalizedEntry], skipped: [...{ row, reason }], total: n }
  *
  * ExcelJS is lazy-loaded on first spreadsheet import so it does not
  * affect initial bundle size.
  */
 
-import { loadUserFindings } from './userFindingsService.js'
+import { loadUserEntries } from './userEntriesService.js'
 
 // ---------------------------------------------------------------------------
 // Column name aliases, matched case-insensitively with spaces/underscores/
@@ -92,9 +92,9 @@ function splitList(raw) {
   return String(raw).split(/[,;|]/).map(s => s.trim()).filter(Boolean)
 }
 
-// Stateful ID generator, call make() for each new finding in a batch
-function makeIdGenerator(existingFindings) {
-  const nums = existingFindings
+// Stateful ID generator, call make() for each new entry in a batch
+function makeIdGenerator(existingEntries) {
+  const nums = existingEntries
     .map(f => { const m = f.id?.match(/^USR-(\d+)$/); return m ? parseInt(m[1], 10) : 0 })
     .filter(n => n > 0)
   let counter = nums.length ? Math.max(...nums) : 0
@@ -116,7 +116,7 @@ function normalizeRow(row, genId, defaultSource) {
   const now = new Date().toISOString()
   return {
     ok: true,
-    finding: {
+    entry: {
       id,
       title,
       sc:        pickField(row, 'sc')        || '',
@@ -140,19 +140,19 @@ function normalizeRow(row, genId, defaultSource) {
 
 function processRows(rows, options = {}) {
   const { source = 'import' } = options
-  const existing = loadUserFindings()
+  const existing = loadUserEntries()
   const genId = makeIdGenerator(existing)
 
-  const findings = []
+  const entries = []
   const skipped = []
 
   for (const row of rows) {
     const result = normalizeRow(row, genId, source)
-    if (result.ok) findings.push(result.finding)
+    if (result.ok) entries.push(result.entry)
     else skipped.push({ row, reason: result.reason })
   }
 
-  return { findings, skipped, total: rows.length }
+  return { entries, skipped, total: rows.length }
 }
 
 // ---------------------------------------------------------------------------
@@ -214,7 +214,7 @@ async function parseJsonFile(file) {
  *
  * @param {File} file
  * @param {{ source?: string }} options
- * @returns {Promise<{ findings, skipped, total }>}
+ * @returns {Promise<{ entries, skipped, total }>}
  */
 export async function importFromFile(file, options = {}) {
   const ext = file.name.split('.').pop().toLowerCase()
@@ -233,11 +233,11 @@ export async function importFromFile(file, options = {}) {
 
 /**
  * Fetch a public JSON URL and normalize its contents.
- * For auth-gated Supabase sources use dataService.getUserFindings() instead.
+ * For auth-gated Supabase sources use dataService.getUserEntries() instead.
  *
  * @param {string} url
  * @param {{ source?: string }} options
- * @returns {Promise<{ findings, skipped, total }>}
+ * @returns {Promise<{ entries, skipped, total }>}
  */
 export async function importFromUrl(url, options = {}) {
   let res

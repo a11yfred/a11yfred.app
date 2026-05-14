@@ -23,7 +23,7 @@ const CORPUS_SEARCH_FIELDS = [
 
 const CORPUS_PICK = ['id', 'title', 'primarySC', 'severity', 'desc', 'fix']
 
-export async function getAgenticRefinement({ finding, descText, fixText, note, corpus }) {
+export async function getAgenticRefinement({ entry, descText, fixText, note, corpus }) {
   const key = await getAdapter().getKey(`${LS_APIKEY_PREFIX}anthropic`)
 
   if (!key) throw new Error('Anthropic API key required for agentic mode. Add one in Settings → AI Assist.')
@@ -44,10 +44,10 @@ export async function getAgenticRefinement({ finding, descText, fixText, note, c
 
   const userPrompt = `Refine this accessibility finding based on the auditor's note.
 
-Title: ${finding.title}
-WCAG SC: ${finding.primarySC}
-Severity: ${finding.severity}
-Platform: ${finding.platform}
+Title: ${entry.title}
+WCAG SC: ${entry.primarySC}
+Severity: ${entry.severity}
+Platform: ${entry.platform}
 
 Current description:
 ${descText}

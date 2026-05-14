@@ -1,19 +1,21 @@
 import { useState, useEffect, useRef, useMemo, useCallback, lazy, Suspense } from 'react'
-import { Settings, X, Info, HelpCircle, ClipboardPaste, Hand, ExternalLink as ExternalLinkIcon, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw, Heart, House } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
+import PageHeader from './components/PageHeader.jsx'
+import PageFooter from './components/PageFooter.jsx'
+import FiestaBanner from './components/FiestaBanner.jsx'
+import NotFoundPage from './components/NotFoundPage.jsx'
 import A11yListResults, { A11yListResultSkeleton, DataError, PinnedSection } from './components/A11yListResults.jsx'
 import A11yPanelDetail from './components/A11yPanelDetail.jsx'
 import A11yPanelAbout from './components/A11yPanelAbout.jsx'
 import A11yPanelHelp from './components/A11yPanelHelp.jsx'
 import CarouselOnboarding from './components/CarouselOnboarding.jsx'
-import ButtonIcon from './components/ui/ButtonIcon.jsx'
-import LinkSkipTo from './components/ui/SkipLink.jsx'
 import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
 import ThemeEffectFiestaSparkles from './components/ThemeEffectFiestaSparkles.jsx'
 import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPlayer.jsx'
-import useFindingSearch from './hooks/useFindingSearch.js'
+import useEntrySearch from './hooks/useEntrySearch.js'
 import { useItemSignals, usePinnedItems, useCoSelection } from './hooks/relevance.js'
-import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_FINDINGS, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_FINDINGS, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
+import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, ANIMATION_COMPLETE_DELAY, MS_PER_DAY, MAX_RECENT_ENTRIES, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_ENTRIES, LS_LAST_SELECTED, LS_THEME, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, URL_GITHUB_REPO, URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, VIEW_ALL_SKIP_FLAG, FOOTER_CREDIT_NAME, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson, getSession, setSession, removeSession, clearAllStorage } from './utils/storage.js'
 import { getAiProvider, getProviderLabel, isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from './halohalo/index.js'
 import {
@@ -32,9 +34,9 @@ import { createComponents } from '@a11yfred/rogers/react'
 const { FocusDebugger, NamesDebugger, DeployBanner, DebugHelp, DebugLauncher, TabStopsDebugger, HeadingMapDebugger } = createComponents({ useEffect, useRef })
 import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug.jsx'
 import useThemeManager from './hooks/useThemeManager.js'
-import { SettingsContext, useSettings } from './context/SettingsContext.js'
-import { SearchContext, useSearch } from './context/SearchContext.js'
-import { RatingsContext, useRatings } from './context/RatingsContext.js'
+import { ContextSettings, useSettings } from './context/ContextSettings.js'
+import { ContextSearch, useSearch } from './context/ContextSearch.js'
+import { ContextRatings, useRatings } from './context/ContextRatings.js'
 import { I18nProvider, useT } from '@ulam/calamansi/react'
 import { initI18n } from '@ulam/calamansi'
 import I18N_LOCALES from './i18n-locales.js'
@@ -44,11 +46,11 @@ import RTL_LOCALES from './rtl-locales.js'
 initI18n(I18N_LOCALES, RTL_LOCALES)
 initHalohalo({ buildPrompt, systemPrompt: AGENTIC_SYSTEM_PROMPT })
 import { useSawsawan } from './sawsawan/react.js'
-import useUserFindings from './hooks/useUserFindings.js'
+import useUserEntries from './hooks/useUserEntries.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import useContributionQueue from './hooks/useContributionQueue.js'
 import { SEVERITY_VARS } from './data/severityStyles.js'
-import findingSlug from './utils/findingSlug.js'
+import entrySlug from './utils/entrySlug.js'
 import './components/ThemeFiestaMode.css'
 
 const A11yPanelSettings = lazy(() => import('./components/A11yPanelSettings.jsx'))
@@ -64,11 +66,16 @@ const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify'
 
 const COPY_FIELD = { title: 'lifetimeCopiedTitle', primarySc: 'lifetimeCopiedPrimarySc', relatedSc: 'lifetimeCopiedRelatedSc', desc: 'lifetimeCopiedDesc', fix: 'lifetimeCopiedFix', all: 'lifetimeCopiedAll' }
 
-function recordRecentFinding(id) {
-  const recent = getStorageJson(LS_RECENT_FINDINGS, [])
+// Redirect legacy /finding/ routes to /entry/ for backwards compatibility
+if (window.location.hash.startsWith('#/finding/')) {
+  window.location.replace(window.location.href.replace('#/finding/', '#/entry/'))
+}
+
+function recordRecentEntry(id) {
+  const recent = getStorageJson(LS_RECENT_ENTRIES, [])
   const deduped = recent.filter(r => r !== id)
   deduped.unshift(id)
-  setStorageJson(LS_RECENT_FINDINGS, deduped.slice(0, MAX_RECENT_FINDINGS))
+  setStorageJson(LS_RECENT_ENTRIES, deduped.slice(0, MAX_RECENT_ENTRIES))
 }
 
 export default function App() {
@@ -120,7 +127,7 @@ function AppShell() {
   const [searchKey, setSearchKey] = useState(0)
   const [selected, setSelected] = useState(null)
   const [sheetCollapsed, setSheetCollapsed] = useState(false)
-  const [pendingFinding, setPendingFinding] = useState(null)
+  const [pendingEntry, setPendingEntry] = useState(null)
   const [pendingPrivacy, setPendingPrivacy] = useState(false)
   const [platform, setPlatform] = useState(() => initParams.get('platform') || getStorage(LS_PLATFORM, 'all'))
   const [panelFocusTrigger, setPanelFocusTrigger] = useState(0)
@@ -140,7 +147,7 @@ function AppShell() {
 
   const { signals: ratings, rankUp, rankDown, toggleStar, toggleArchive, resetScores: resetRankings, clearAll: clearAllRatings, recordPin, recordOpen, recordCopy: _recordCopy } = useItemSignals('defect_ratings', { starBonus: 2, unstarPenalty: 1, archivePenalty: 1, openBoost: 0.5, copyBoost: 0.25 })
   const recordCopy = useCallback((id, type) => _recordCopy(id, COPY_FIELD[type]), [_recordCopy]) // eslint-disable-line react-hooks/exhaustive-deps -- COPY_FIELD is module-stable
-  const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedItems('pinnedFindings')
+  const { pinnedIds, togglePin: _togglePin, clearPins } = usePinnedItems('pinnedEntries')
   const togglePin = useCallback((id) => {
     const isPinning = !pinnedIds.has(id)
     if (isPinning && ratings[id]?.archived) toggleArchive(id)
@@ -173,7 +180,7 @@ function AppShell() {
     searchKey, setSearchKey,
     selected, setSelected,
     sheetCollapsed, setSheetCollapsed,
-    pendingFinding, setPendingFinding,
+    pendingEntry, setPendingEntry,
     pendingPrivacy, setPendingPrivacy,
     panelFocusTrigger, setPanelFocusTrigger,
     narrowMode, setNarrowMode,
@@ -183,13 +190,13 @@ function AppShell() {
 
   return (
     <I18nProvider locale={language}>
-      <SettingsContext.Provider value={settingsValue}>
-        <SearchContext.Provider value={searchValue}>
-          <RatingsContext.Provider value={ratingsValue}>
+      <ContextSettings.Provider value={settingsValue}>
+        <ContextSearch.Provider value={searchValue}>
+          <ContextRatings.Provider value={ratingsValue}>
             <AppContent />
-          </RatingsContext.Provider>
-        </SearchContext.Provider>
-      </SettingsContext.Provider>
+          </ContextRatings.Provider>
+        </ContextSearch.Provider>
+      </ContextSettings.Provider>
     </I18nProvider>
   )
 }
@@ -198,7 +205,7 @@ const KNOWN_ROUTES = new Set(['/', '/settings', '/settings/privacy', '/about', '
 
 function AppContent() {
   const { theme, setTheme, language, setLanguage, aiEnabled, setAiEnabled, liveSearch, setLiveSearch, showVoting, setShowVoting, showPersonalCorpus, setShowPersonalCorpus, fiestaUnlocked, setSaveCount, platform, setPlatform, wcagFilter, setWcagFilter } = useSettings()
-  const { query, setQuery, submittedQuery, setSubmittedQuery, searchKey, setSearchKey, selected, setSelected, sheetCollapsed, setSheetCollapsed, pendingFinding, setPendingFinding, pendingPrivacy, setPendingPrivacy, panelFocusTrigger, setPanelFocusTrigger, narrowMode, setNarrowMode, narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery } = useSearch()
+  const { query, setQuery, submittedQuery, setSubmittedQuery, searchKey, setSearchKey, selected, setSelected, sheetCollapsed, setSheetCollapsed, pendingEntry, setPendingEntry, pendingPrivacy, setPendingPrivacy, panelFocusTrigger, setPanelFocusTrigger, narrowMode, setNarrowMode, narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery } = useSearch()
   const { ratings, rankUp, rankDown, toggleStar, toggleArchive, resetRankings, clearAllRatings, pinnedIds, togglePin, clearPins, getPairsFor, recordCopy, recordOpen } = useRatings()
   const { route, navigate, appName } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
@@ -210,11 +217,11 @@ function AppContent() {
   const adminOpen = route === '/admin'
   const ulamOpen = import.meta.env.DEV && route === '/ulam'
   const viewAll = route === '/results/all'
-  const findingMatchSlug = useRouteMatch('/finding/:id/:slug')
-  const findingMatchBare = useRouteMatch('/finding/:id')
-  const findingMatch = findingMatchSlug ?? findingMatchBare
-  const findingIdFromRoute = findingMatch?.id ?? null
-  const isNotFound = !KNOWN_ROUTES.has(route) && !findingMatch
+  const entryMatchSlug = useRouteMatch('/entry/:id/:slug')
+  const entryMatchBare = useRouteMatch('/entry/:id')
+  const entryMatch = entryMatchSlug ?? entryMatchBare
+  const entryIdFromRoute = entryMatch?.id ?? null
+  const isNotFound = !KNOWN_ROUTES.has(route) && !entryMatch
   const h1Ref = useRef(null)
   const h1LinkRef = useRef(null)
   const didMount = useRef(false)
@@ -275,7 +282,7 @@ function AppContent() {
   }
   const handleCloseOverlay = () => {
     if (selected) {
-      navigate(`/finding/${selected.id}/${findingSlug(selected.title)}`)
+      navigate(`/entry/${selected.id}/${entrySlug(selected.title)}`)
     } else if (returnViewAllRef.current) {
       returnViewAllRef.current = false
       navigate('/results/all')
@@ -293,33 +300,33 @@ function AppContent() {
     navigate('/onboarding')
   }
   const handleCloseOnboarding = () => { navigate('/'); setTimeout(() => returnFocus(h1LinkRef.current ?? h1Ref.current), 0) }
-  const handleSelectFinding = (finding, triggerEl) => {
-    // If the sheet is collapsed and the user clicks a different finding,
+  const handleSelectEntry = (entry, triggerEl) => {
+    // If the sheet is collapsed and the user clicks a different entry,
     // warn before discarding the collapsed panel and its unsaved changes.
-    if (finding && finding.id !== selected?.id && sheetCollapsed) {
-      setPendingFinding(finding)
+    if (entry && entry.id !== selected?.id && sheetCollapsed) {
+      setPendingEntry(entry)
       return
     }
-    applySelectFinding(finding, triggerEl)
+    applySelectEntry(entry, triggerEl)
   }
 
-  const applySelectFinding = (finding, triggerEl) => {
-    if (finding) {
+  const applySelectEntry = (entry, triggerEl) => {
+    if (entry) {
       if (!selected) {
-        findingTriggerRef.current = triggerEl ?? document.activeElement
-        findingTriggerIdRef.current = triggerEl?.dataset?.findingId ?? null
+        entryTriggerRef.current = triggerEl ?? document.activeElement
+        entryTriggerIdRef.current = triggerEl?.dataset?.entryId ?? null
         returnHashRef.current = window.location.hash || '#/'
       }
       if (viewAll) returnViewAllRef.current = true
-      setSession(LS_LAST_SELECTED, finding.id)
-      recordOpen(finding.id)
-      recordRecentFinding(finding.id)
+      setSession(LS_LAST_SELECTED, entry.id)
+      recordOpen(entry.id)
+      recordRecentEntry(entry.id)
     } else {
       removeSession(LS_LAST_SELECTED)
-      setFindingHistory([])
+      setEntryHistory([])
       setSheetCollapsed(false)
       setSelected(null)
-      const triggerId = findingTriggerIdRef.current
+      const triggerId = entryTriggerIdRef.current
       // If a panel is open on desktop, stay on it — don't navigate or steal focus.
       // Leave returnViewAllRef and returnHashRef intact so the panel's own close
       // handler can navigate back to the right results view.
@@ -332,10 +339,10 @@ function AppContent() {
         const isTouch = !window.matchMedia('(hover: hover)').matches
         const focus = (el) => isTouch ? el.focus({ preventScroll: false }) : returnFocus(el)
         if (triggerId) {
-          const el = document.querySelector(`[data-finding-id="${triggerId}"]`)
+          const el = document.querySelector(`[data-entry-id="${triggerId}"]`)
           if (el) { focus(el); return }
           requestAnimationFrame(() => {
-            const el2 = document.querySelector(`[data-finding-id="${triggerId}"]`)
+            const el2 = document.querySelector(`[data-entry-id="${triggerId}"]`)
             if (el2) { focus(el2); return }
             returnFocus(h1LinkRef.current ?? h1Ref.current)
           })
@@ -344,7 +351,7 @@ function AppContent() {
         returnFocus(h1LinkRef.current ?? h1Ref.current)
       }
       if (shouldReturn) { navigate('/results/all'); setTimeout(focusCard, 0); return }
-      if (returnHash && returnHash !== '#/' && !returnHash.startsWith('#/finding/')) {
+      if (returnHash && returnHash !== '#/' && !returnHash.startsWith('#/entry/')) {
         navigate(returnHash.slice(1)); setTimeout(focusCard, 0); return
       }
       navigate('/')
@@ -352,45 +359,45 @@ function AppContent() {
       return
     }
     setSheetCollapsed(false)
-    setSelected(finding)
-    navigate(`/finding/${finding.id}/${findingSlug(finding.title)}`)
+    setSelected(entry)
+    navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`)
   }
-  const handleSelectRelated = (finding) => {
-    if (!finding) return
-    setFindingHistory(h => selected ? [...h, selected] : h)
-    setSession(LS_LAST_SELECTED, finding.id)
-    recordOpen(finding.id)
-    recordRecentFinding(finding.id)
+  const handleSelectRelated = (entry) => {
+    if (!entry) return
+    setEntryHistory(h => selected ? [...h, selected] : h)
+    setSession(LS_LAST_SELECTED, entry.id)
+    recordOpen(entry.id)
+    recordRecentEntry(entry.id)
     setSheetCollapsed(false)
-    setSelected(finding)
-    navigate(`/finding/${finding.id}/${findingSlug(finding.title)}`)
+    setSelected(entry)
+    navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`)
     setPanelFocusTrigger(n => n + 1)
   }
   const handleBack = () => {
-    const prev = findingHistory[findingHistory.length - 1]
+    const prev = entryHistory[entryHistory.length - 1]
     if (!prev) return
-    setFindingHistory(h => h.slice(0, -1))
+    setEntryHistory(h => h.slice(0, -1))
     setSelected(prev)
-    navigate(`/finding/${prev.id}/${findingSlug(prev.title)}`)
+    navigate(`/entry/${prev.id}/${entrySlug(prev.title)}`)
     setPanelFocusTrigger(n => n + 1)
   }
-  // Tracks whether settings was opened while a finding panel was selected,
+  // Tracks whether settings was opened while an entry panel was selected,
   // so the panel is restored (with edits) when settings closes.
   const returnToPanelRef = useRef(false)
-  const findingTriggerRef = useRef(null)
-  const findingTriggerIdRef = useRef(null)
+  const entryTriggerRef = useRef(null)
+  const entryTriggerIdRef = useRef(null)
   const returnViewAllRef = useRef(false)
   const returnHashRef = useRef(null)
-  const [findingHistory, setFindingHistory] = useState([])
+  const [entryHistory, setEntryHistory] = useState([])
   const sessionRestoredRef = useRef(false)
 
-  const userFindingsHook = useUserFindings()
-  const { userFindings } = userFindingsHook
+  const userEntriesHook = useUserEntries()
+  const { userEntries } = userEntriesHook
   const userOverridesHook = useUserOverrides()
   const { overrides: userOverrides } = userOverridesHook
   const contributionQueueHook = useContributionQueue()
   const activeQuery = liveSearch ? query : submittedQuery
-  const { results, allFindings, sortedFindings, dataLoading, dataError, retryData } = useFindingSearch(activeQuery, platform, language, searchKey, ratings, showPersonalCorpus ? userFindings : [], wcagFilter, userOverrides)
+  const { results, allEntries, sortedEntries, dataLoading, dataError, retryData } = useEntrySearch(activeQuery, platform, language, searchKey, ratings, showPersonalCorpus ? userEntries : [], wcagFilter, userOverrides)
   const [viewAllLoading, setViewAllLoading] = useState(false)
   const [sortBy, setSortBy] = useState(() => new URLSearchParams(window.location.search).get('sort') || 'smart')
 
@@ -430,8 +437,8 @@ function AppContent() {
   }, [sortBy, ratings, smartScore])
 
   const pinnedResults = useMemo(() =>
-    allFindings.filter(f => pinnedIds.has(f.id)),
-    [allFindings, pinnedIds]
+    allEntries.filter(f => pinnedIds.has(f.id)),
+    [allEntries, pinnedIds]
   )
 
   const unpinnedResults = useMemo(() =>
@@ -456,7 +463,7 @@ function AppContent() {
 
   const badgeResults = useMemo(() => {
     if (!badgeFilter) return []
-    return sortedFindings.filter(f => {
+    return sortedEntries.filter(f => {
       if (pinnedIds.has(f.id)) return false
       if (badgeFilter.type === 'severity') return f.severity === badgeFilter.value
       if (badgeFilter.type === 'source')   return f.creditNames?.includes(badgeFilter.value)
@@ -469,13 +476,13 @@ function AppContent() {
       }
       return false
     })
-  }, [sortedFindings, badgeFilter, pinnedIds])
+  }, [sortedEntries, badgeFilter, pinnedIds])
 
   // Narrow results filter: applies narrowQuery as a secondary filter within current results
   const activeNarrowQuery = liveSearch ? narrowQuery : submittedNarrowQuery
   const narrowedResults = useMemo(() => {
     if (!narrowMode || !activeNarrowQuery) return null
-    const base = activeQuery.length >= 2 ? results : sortedFindings
+    const base = activeQuery.length >= 2 ? results : sortedEntries
     if (!base || base.length === 0) return null
     const lowerNarrow = activeNarrowQuery.toLowerCase()
     const narrowFiltered = base.filter(f =>
@@ -487,7 +494,7 @@ function AppContent() {
     const pinnedMatches = narrowFiltered.filter(f => pinnedIds.has(f.id))
     const unpinnedMatches = narrowFiltered.filter(f => !pinnedIds.has(f.id))
     return [...pinnedMatches, ...unpinnedMatches]
-  }, [narrowMode, activeNarrowQuery, activeQuery, results, sortedFindings, pinnedIds])
+  }, [narrowMode, activeNarrowQuery, activeQuery, results, sortedEntries, pinnedIds])
 
   const handleAdminSearch = (q) => {
     setQuery(q)
@@ -529,8 +536,8 @@ function AppContent() {
   useEffect(() => {
     if (platform === lastAnnouncedPlatformRef.current) return
     lastAnnouncedPlatformRef.current = platform
-    if (!dataLoading && allFindings.length > 0) {
-      const base = activeQuery.length >= 2 ? results.length : sortedFindings.length
+    if (!dataLoading && allEntries.length > 0) {
+      const base = activeQuery.length >= 2 ? results.length : sortedEntries.length
       const platformLabel = { all: t('settings.platform_all'), web: t('settings.platform_web'), native: t('settings.platform_native'), document: t('settings.platform_document') }[platform] ?? t('settings.platform_all')
       if (narrowedResults !== null) {
         const count = narrowedResults.length
@@ -549,7 +556,7 @@ function AppContent() {
         }
       }
     }
-  }, [platform, results, sortedFindings, narrowedResults]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [platform, results, sortedEntries, narrowedResults]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setNarrowMode(false)
@@ -667,27 +674,27 @@ function AppContent() {
   }, [isNotFound])
 
   useEffect(() => {
-    if (!findingIdFromRoute || dataLoading || allFindings.length === 0) return
+    if (!entryIdFromRoute || dataLoading || allEntries.length === 0) return
     if (sheetCollapsed) return
-    if (selected?.id === findingIdFromRoute) return
-    const found = allFindings.find(d => d.id === findingIdFromRoute)
+    if (selected?.id === entryIdFromRoute) return
+    const found = allEntries.find(d => d.id === entryIdFromRoute)
     if (found) setSelected(found)
-  }, [findingIdFromRoute, dataLoading, sheetCollapsed]) // eslint-disable-line react-hooks/exhaustive-deps -- allFindings populated when dataLoading flips false
+  }, [entryIdFromRoute, dataLoading, sheetCollapsed]) // eslint-disable-line react-hooks/exhaustive-deps -- allEntries populated when dataLoading flips false
 
-  // Restore last-selected finding from sessionStorage when the URL is bare (no finding in path).
+  // Restore last-selected entry from sessionStorage when the URL is bare (no entry in path).
   // Fires once per page load; URL-based routing always takes precedence.
   useEffect(() => {
-    if (sessionRestoredRef.current || dataLoading || allFindings.length === 0) return
+    if (sessionRestoredRef.current || dataLoading || allEntries.length === 0) return
     sessionRestoredRef.current = true
-    if (findingIdFromRoute) return
+    if (entryIdFromRoute) return
     const lastId = getSession(LS_LAST_SELECTED)
     if (!lastId) return
-    const found = allFindings.find(d => d.id === lastId)
+    const found = allEntries.find(d => d.id === lastId)
     if (found) {
       setSelected(found)
-      navigate(`/finding/${found.id}/${findingSlug(found.title)}`)
+      navigate(`/entry/${found.id}/${entrySlug(found.title)}`)
     }
-  }, [dataLoading, allFindings]) // eslint-disable-line react-hooks/exhaustive-deps -- fires once; findingIdFromRoute checked inline
+  }, [dataLoading, allEntries]) // eslint-disable-line react-hooks/exhaustive-deps -- fires once; entryIdFromRoute checked inline
 
   useEffect(() => {
     if (!selected || settingsOpen || aboutOpen || adminOpen) return
@@ -748,7 +755,7 @@ function AppContent() {
     if (q && viewAll) navigate('/')
     setQuery(q)
     if (q === '') {
-      handleSelectFinding(null)
+      handleSelectEntry(null)
       returnToPanelRef.current = false // eslint-disable-line react-hooks/immutability
       setSubmittedQuery('')
       syncSearchUrl('')
@@ -764,7 +771,7 @@ function AppContent() {
     if (viewAll) navigate('/')
     setSubmittedQuery(query)
     setSearchKey(k => k + 1)
-    handleSelectFinding(null)
+    handleSelectEntry(null)
     syncSearchUrl(query)
     setTimeout(() => resultsCountRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
   }
@@ -845,7 +852,7 @@ function AppContent() {
     onUnlock: unlock,
     onSave: handleSettingsSave,
     onClose: () => {
-      if (selected) navigate(`/finding/${selected.id}/${findingSlug(selected.title)}`)
+      if (selected) navigate(`/entry/${selected.id}/${entrySlug(selected.title)}`)
       else handleCloseSettings()
     },
     onReset: handleResetAll,
@@ -924,8 +931,8 @@ function AppContent() {
       />
       {!dataError && !dataLoading && !viewAllLoading && pinnedIds.size > 0 && (
         <PinnedSection
-          findings={pinnedResults}
-          onSelect={handleSelectFinding}
+          entries={pinnedResults}
+          onSelect={handleSelectEntry}
           onClearPins={() => { clearPins(); setTimeout(() => resultsCountRef.current?.focus(), 0) }}
           headingRef={pinnedHeadingRef}
         />
@@ -941,16 +948,16 @@ function AppContent() {
             onMount={() => announce(t('error.announce'), { priority: 'assertive' })}
           />
         : dataLoading || viewAllLoading
-          ? <A11yListResultSkeleton count={activeQuery === 'debug skeleton' ? sortedFindings.length : undefined} />
+          ? <A11yListResultSkeleton count={activeQuery === 'debug skeleton' ? sortedEntries.length : undefined} />
           : (viewAll || sheetCollapsed)
             ? (
               <A11yListResults
                 key="view-all"
-                results={applySortBy(sortedFindings.filter(f => !pinnedIds.has(f.id)))}
+                results={applySortBy(sortedEntries.filter(f => !pinnedIds.has(f.id)))}
                 sortBy={sortBy}
                 onSortChange={setSortBy}
                 selected={sheetCollapsed ? null : selected}
-                onSelect={handleSelectFinding}
+                onSelect={handleSelectEntry}
                 query=""
                 showRankingSort={showVoting}
                 onCopyLink={handleCopyLink}
@@ -970,14 +977,14 @@ function AppContent() {
                     <div className="pinned-search-matches">
                       <h3 className="pinned-search-matches__heading">{t('results.pinned_in_search_heading')}</h3>
                       <ul className="pinned-search-matches__list">
-                        {pinnedSearchMatches.map(finding => (
-                          <li key={finding.id} className="pinned-search-match-item">
-                            <span className="pinned-search-match-title">{finding.title}</span>
+                        {pinnedSearchMatches.map(entry => (
+                          <li key={entry.id} className="pinned-search-match-item">
+                            <span className="pinned-search-match-title">{entry.title}</span>
                             <button
                               type="button"
                               className="btn--secondary pinned-search-match-unpin"
-                              onClick={() => togglePin(finding.id)}
-                              aria-label={t('results.unpin_from_search', { title: finding.title })}
+                              onClick={() => togglePin(entry.id)}
+                              aria-label={t('results.unpin_from_search', { title: entry.title })}
                             >
                               {t('results.unpin_from_search_btn')}
                             </button>
@@ -990,7 +997,7 @@ function AppContent() {
                     key="search"
                     results={unpinnedResults}
                     selected={sheetCollapsed ? null : selected}
-                    onSelect={handleSelectFinding}
+                    onSelect={handleSelectEntry}
                     query={activeQuery}
                     showRankingSort={showVoting}
                     onCopyLink={handleCopyLink}
@@ -1010,7 +1017,7 @@ function AppContent() {
                     key="badge"
                     results={applySortBy(badgeResults)}
                     selected={sheetCollapsed ? null : selected}
-                    onSelect={handleSelectFinding}
+                    onSelect={handleSelectEntry}
                     query=""
                     showRankingSort={showVoting}
                     countRef={resultsCountRef}
@@ -1024,13 +1031,13 @@ function AppContent() {
                     onOpenSettings={handleOpenSettings}
                   />
                 )
-              : sortedFindings.length === 0
+              : sortedEntries.length === 0
                 ? (
                   <A11yListResults
                     key="no-results-home"
                     results={[]}
                     selected={null}
-                    onSelect={handleSelectFinding}
+                    onSelect={handleSelectEntry}
                     query=""
                     onClear={handleClearResults}
                     defaultWcagFilter={DEFAULT_WCAG_FILTER}
@@ -1107,7 +1114,7 @@ function AppContent() {
             </ul>
           )
         })()}
-        <p className="view-all-confirm-body"><strong>{sortedFindings.length === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body', { count: sortedFindings.length })}</strong></p>
+        <p className="view-all-confirm-body"><strong>{sortedEntries.length === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body', { count: sortedEntries.length })}</strong></p>
         <label className="view-all-dont-ask-label">
           <input
             type="checkbox"
@@ -1199,7 +1206,7 @@ function AppContent() {
       {theme === 'fiesta' && <FiestaBanner />}
 
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
-        <Header
+        <PageHeader
           h1Ref={h1Ref}
           h1LinkRef={h1LinkRef}
           settingsOpen={settingsOpen}
@@ -1214,7 +1221,7 @@ function AppContent() {
           onCloseHelp={handleCloseOverlay}
           onCloseOnboarding={handleCloseOnboarding}
           isDesktop={isDesktop}
-          skipTarget={onboardingOpen ? 'onboarding-title' : 'finding-search'}
+          skipTarget={onboardingOpen ? 'onboarding-title' : 'entry-search'}
         />
         <main className="app-main">
           <Announcer devEnabled={devAllEnabled} />
@@ -1228,7 +1235,7 @@ function AppContent() {
                 : isDesktop && settingsOpen
                   ? <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
                   : isDesktop && aboutOpen
-                    ? <A11yPanelAbout onClose={handleCloseOverlay} allFindings={allFindings} />
+                    ? <A11yPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
                     : isDesktop && helpOpen
                       ? <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
                       : isDesktop && onboardingOpen
@@ -1236,7 +1243,7 @@ function AppContent() {
                         : searchView}
           </Suspense>
         </main>
-        <Footer />
+        <PageFooter />
       </div>
 
       {!isDesktop && (
@@ -1249,7 +1256,7 @@ function AppContent() {
 
       {!isDesktop && (
         <Drawer open={aboutOpen} onClose={handleCloseOverlay} label={t('about.sheet_label')} focusOnClose={aboutTriggerRef}>
-          <A11yPanelAbout onClose={handleCloseOverlay} allFindings={allFindings} />
+          <A11yPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
         </Drawer>
       )}
 
@@ -1267,13 +1274,13 @@ function AppContent() {
 
       <Sheet
         open={!!selected && (isDesktop || (!settingsOpen && !aboutOpen && !helpOpen && !onboardingOpen && !adminOpen))}
-        onClose={() => { applySelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
+        onClose={() => { applySelectEntry(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
         collapsed={sheetCollapsed}
         onCollapse={setSheetCollapsed}
         keepMounted={(settingsOpen || aboutOpen || helpOpen || onboardingOpen || adminOpen) && !!selected}
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
-        onBack={findingHistory.length > 0 ? handleBack : undefined}
+        onBack={entryHistory.length > 0 ? handleBack : undefined}
         backLabel={t('detail.back_aria')}
         hideCloseBottom
         closeIcon={() => <X size={20} strokeWidth={2.5} aria-hidden="true" />}
@@ -1284,18 +1291,15 @@ function AppContent() {
         {selected && (
           <A11yPanelDetail
             key={selected.id}
-            finding={selected}
+            entry={selected}
             agenticMode={isAgenticModeEnabled()}
             focusTrigger={panelFocusTrigger}
-            allFindings={allFindings}
-            onSelect={handleSelectFinding}
+            allEntries={allEntries}
+            onSelect={handleSelectEntry}
             onSelectRelated={handleSelectRelated}
-            onClose={() => { applySelectFinding(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
+            onClose={() => { applySelectEntry(null); returnToPanelRef.current = false }} // eslint-disable-line react-hooks/immutability
             onBadgeClick={handleBadgeClick}
             onCopyEvent={recordCopy}
-            locale={language}
-            userOverridesHook={userOverridesHook}
-            contributionQueueHook={contributionQueueHook}
             debugPanelCmd={debugPanelCmd}
             onDebugPanelCmdHandled={() => setDebugPanelCmd(null)}
           />
@@ -1303,22 +1307,22 @@ function AppContent() {
       </Sheet>
 
       <Modal
-        open={!!pendingFinding}
-        onClose={() => setPendingFinding(null)}
+        open={!!pendingEntry}
+        onClose={() => setPendingEntry(null)}
         heading={t('detail.discard_confirm_heading')}
         actions={[
           {
             label: t('detail.discard_confirm_yes'),
             onClick: () => {
-              const f = pendingFinding
-              setPendingFinding(null)
-              applySelectFinding(f)
+              const f = pendingEntry
+              setPendingEntry(null)
+              applySelectEntry(f)
             },
             className: 'btn--warning modal-ok-btn',
           },
           {
             label: t('detail.discard_confirm_no'),
-            onClick: () => setPendingFinding(null),
+            onClick: () => setPendingEntry(null),
             className: 'btn--tertiary modal-ok-btn',
           },
         ]}
@@ -1349,169 +1353,3 @@ function AppContent() {
   )
 }
 
-function AppTitle({ t }) {
-  return <>{t('app.name')}<span className="page-title__icons" aria-hidden="true"><Hand size={28} /><ClipboardPaste size={28} /></span></>
-}
-
-function Header({ h1Ref, h1LinkRef, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop, skipTarget }) {
-  const t = useT()
-  const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
-  return (
-    <header className={`page-header${compact ? ' page-header--compact' : ''}`} inert={isDesktop && onboardingOpen ? true : undefined}>
-      <LinkSkipTo onClick={(e) => { e.preventDefault(); document.getElementById(skipTarget)?.focus() }}>{t('common.skip_to_main')}</LinkSkipTo>
-      {!compact && (
-        <a
-          href={URL_GITHUB_REPO}
-          target="_blank"
-          rel="noreferrer"
-          className="header-github-link"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            width="1em"
-            height="1em"
-            fill="currentColor"
-            className="inline-icon"
-          >
-            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12z" />
-          </svg>
-          {t('header.github')}<ExternalLinkIcon size="1em" className="inline-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
-        </a>
-      )}
-
-      <div className="page-header__actions">
-        {compact && !onboardingOpen ? (
-          <ButtonIcon
-            onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : helpOpen ? onCloseHelp : onCloseOnboarding}
-            label={t('common.close')}
-            icon={<X size={20} strokeWidth={2.5} aria-hidden="true" />}
-            className="page-header__close-btn"
-          />
-        ) : !onboardingOpen && (
-          <>
-            <ButtonIcon
-              onClick={onOpenHelp}
-              label={t('help.open_help')}
-              icon={<HelpCircle size={20} strokeWidth={2} aria-hidden="true" />}
-              className="page-header__help-btn"
-            />
-            <ButtonIcon
-              onClick={onOpenAbout}
-              label={t('header.open_about')}
-              icon={<Info size={20} strokeWidth={2} aria-hidden="true" />}
-              className="page-header__about-btn"
-            />
-            <ButtonIcon
-              onClick={onOpenSettings}
-              label={t('header.open_settings')}
-              icon={<Settings size={20} strokeWidth={2} aria-hidden="true" />}
-              className="page-header__settings-btn"
-            />
-          </>
-        )}
-      </div>
-
-      {(onboardingOpen || settingsOpen || aboutOpen || helpOpen) ? (
-        <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'}>
-          <AppTitle t={t} />
-        </h1>
-      ) : (
-        <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'}>
-          <a ref={h1LinkRef} href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
-            <AppTitle t={t} />
-          </a>
-        </h1>
-      )}
-
-      {!compact && (
-        <p className="page-tagline"><em>{t('app.tagline')}</em></p>
-      )}
-    </header>
-  )
-}
-
-function FiestaBanner() {
-  const t = useT()
-  const [animating, setAnimating] = useState(true)
-  const timerRef = useRef(null)
-
-  useEffect(() => {
-    timerRef.current = setTimeout(() => setAnimating(false), ANIMATION_COMPLETE_DELAY)
-    return () => clearTimeout(timerRef.current)
-  }, [])
-
-  function handleMouseEnter() {
-    clearTimeout(timerRef.current)
-    setAnimating(true)
-    timerRef.current = setTimeout(() => setAnimating(false), ANIMATION_COMPLETE_DELAY)
-  }
-
-  return (
-    <div
-      className={`fiesta-banner${animating ? '' : ' fiesta-banner--still'}`}
-      aria-hidden="true"
-      onMouseEnter={handleMouseEnter}
-    >
-      {t('party.banner')}
-    </div>
-  )
-}
-
-function NotFoundPage() {
-  const t = useT()
-  const { navigate } = useRouter()
-  return (
-    <div className="not-found">
-      <h2 className="not-found__heading">{t('notfound.heading')}</h2>
-      <p className="not-found__body">{t('notfound.body')}</p>
-      <button
-        onClick={() => navigate('/')}
-        className="btn btn--primary"
-      >
-        <House size="1em" aria-hidden="true" />
-        {t('notfound.button')}
-      </button>
-    </div>
-  )
-}
-
-function Footer() {
-  const t = useT()
-  const credit = t('footer.credit')
-  const nameIdx = credit.indexOf(FOOTER_CREDIT_NAME)
-  return (
-    <footer className="page-footer">
-      <p className="footer-credit">
-        {nameIdx >= 0 ? (
-          <>
-            {credit.slice(0, nameIdx)}
-            <a href={URL_PERSONAL_SITE} target="_blank" rel="noreferrer" className="footer-link"><strong className="footer-credit__name">Mikey Ilagan</strong><span className="sr-only"> (opens in new tab)</span></a>
-            {credit.slice(nameIdx + FOOTER_CREDIT_NAME.length)}
-          </>
-        ) : credit}
-        <br />
-        <a
-          href={URL_GITHUB_SPONSORS}
-          target="_blank"
-          rel="noreferrer"
-          className="footer-link"
-          title={t('footer.sponsor_title') || 'Support on GitHub Sponsors'}
-        >
-          <Heart aria-hidden="true" className="inline-icon footer-brand-icon" fill="currentColor" strokeWidth={0} />
-          {t('footer.sponsor')}<ExternalLinkIcon size="0.7em" className="inline-icon footer-ext-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
-        </a>
-        {'  ·  '}
-        <a
-          href={URL_LINKEDIN}
-          target="_blank"
-          rel="noreferrer"
-          className="footer-link"
-        >
-          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="inline-icon footer-brand-icon"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          {t('footer.linkedin')}<ExternalLinkIcon size="0.7em" className="inline-icon footer-ext-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
-        </a>
-      </p>
-    </footer>
-  )
-}

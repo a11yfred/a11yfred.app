@@ -13,15 +13,12 @@
     margin-inline: 0;
   }
 
-  .results-meta {
-    padding-inline: 0;
-  }
+
 }
 
 .results-meta {
   margin-top: 2em;
   margin-bottom: var(--space-3);
-  padding-inline: var(--space-4);
 }
 
 .results-count-row {
@@ -271,10 +268,6 @@
   font-size: var(--fs-sub);
   border-radius: var(--radius);
   white-space: nowrap;
-  height: var(--input-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .search-submit-btn--disabled {
@@ -285,12 +278,6 @@
   pointer-events: none;
 }
 
-.btn--input-height {
-  height: var(--input-height);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 .results-rank-hint {
   font-size: var(--fs-body);

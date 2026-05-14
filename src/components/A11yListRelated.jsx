@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useT } from '@ulam/calamansi/react'
 import { relatedItems } from '../hooks/relevance.js'
-import findingSlug from '../utils/findingSlug.js'
+import entrySlug from '../utils/entrySlug.js'
 
 // WCAG AAA/enhanced SC pairings — app-specific, both directions
 const AAA_PAIRS = {
@@ -33,13 +33,13 @@ function wcagRankTier(candidate, current, coSelectionPairs) {
   return                                  { tier: 6, boost: coBoost }
 }
 
-export default function A11yListRelated({ finding, allFindings, onSelect, getPairsFor }) {
+export default function A11yListRelated({ entry, allEntries, onSelect, getPairsFor }) {
   const t = useT()
 
   const related = useMemo(() => {
-    if (!allFindings?.length) return []
-    return relatedItems(finding, allFindings, wcagRankTier, getPairsFor)
-  }, [allFindings, finding, getPairsFor])
+    if (!allEntries?.length) return []
+    return relatedItems(entry, allEntries, wcagRankTier, getPairsFor)
+  }, [allEntries, entry, getPairsFor])
 
   if (!related.length || !onSelect) return null
 
@@ -51,7 +51,7 @@ export default function A11yListRelated({ finding, allFindings, onSelect, getPai
         <p className="panel-detail-related__heading panel-detail-related__heading--single">
           {t(headingKey)}{' '}
           <a
-            href={`#/finding/${related[0].id}/${findingSlug(related[0].title)}`}
+            href={`#/entry/${related[0].id}/${entrySlug(related[0].title)}`}
             className="panel-detail-related__btn"
           >
             {related[0].title}
@@ -64,7 +64,7 @@ export default function A11yListRelated({ finding, allFindings, onSelect, getPai
             {related.map(d => (
               <li key={d.id}>
                 <a
-                  href={`#/finding/${d.id}/${findingSlug(d.title)}`}
+                  href={`#/entry/${d.id}/${entrySlug(d.title)}`}
                   className="panel-detail-related__btn"
                 >
                   {d.title}

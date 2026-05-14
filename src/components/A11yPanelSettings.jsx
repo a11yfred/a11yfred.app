@@ -14,8 +14,8 @@ import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER, URL_PRIVACY_POLICY, EASTER_EGG_LOCALES } from '../utils/constants.js'
 import { setStorage, removeStorage } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
-import { useSettings } from '../context/SettingsContext.js'
-import { useRatings } from '../context/RatingsContext.js'
+import { useSettings } from '../context/ContextSettings.js'
+import { useRatings } from '../context/ContextRatings.js'
 import './A11yPanelSettings.css'
 
 function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {

@@ -66,18 +66,18 @@ function loadPendingContributions() {
 /**
  * Submit a new contribution to the local queue.
  *
- * @param {string} findingId   - corpus entry ID, e.g. "ACC-001"
+ * @param {string} entryId     - corpus entry ID, e.g. "ACC-001"
  * @param {string} locale      - BCP-47 locale being edited, e.g. "es"
  * @param {'lang_only'|'lang_and_en'|'all_langs'} scope
  * @param {{ desc?: string, rem?: string }} localeFields  - edited locale copy
  * @param {{ desc?: string, rem?: string }} [enFields]    - edited English copy
  *                                                          (required when scope is lang_and_en)
  */
-export function submitContribution(findingId, locale, scope, localeFields, enFields = null) {
+export function submitContribution(entryId, locale, scope, localeFields, enFields = null) {
   const all = load()
   const contribution = {
     id:          nextId(all),
-    findingId,
+    entryId,
     locale,
     scope,
     localeFields,

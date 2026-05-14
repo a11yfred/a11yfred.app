@@ -17,7 +17,7 @@ import {
  *   contributions: Array,            full list across all statuses
  *   pendingContributions: Array,     filtered to status "pending"
  *   pendingCount: number,
- *   submitContribution: (findingId: string, locale: string, scope: string, localeFields: object, enFields?: object) => object,
+ *   submitContribution: (entryId: string, locale: string, scope: string, localeFields: object, enFields?: object) => object,
  *   approveContribution: (id: string) => object|null,
  *   rejectContribution:  (id: string) => object|null,
  *   deleteContribution:  (id: string) => void,
@@ -30,8 +30,8 @@ export default function useContributionQueue() {
 
   const refresh = useCallback(() => setContributions(loadContributions()), [])
 
-  const submitContribution = useCallback((findingId, locale, scope, localeFields, enFields = null) => {
-    const c = _submit(findingId, locale, scope, localeFields, enFields)
+  const submitContribution = useCallback((entryId, locale, scope, localeFields, enFields = null) => {
+    const c = _submit(entryId, locale, scope, localeFields, enFields)
     refresh()
     return c
   }, [refresh])

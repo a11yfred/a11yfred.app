@@ -4,19 +4,19 @@ import { useT } from '@ulam/calamansi/react'
 import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
 import IconExternalLink from './ui/IconExternalLink.jsx'
-import findingSlug from '../utils/findingSlug.js'
+import entrySlug from '../utils/entrySlug.js'
 import './A11yPanelAbout.css'
 
 function ExtLink({ href, children }) {
   return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<IconExternalLink /><span className="sr-only"> (opens in new tab)</span></a>
 }
 
-export default function A11yPanelAbout({ onClose, allFindings = [] }) {
+export default function A11yPanelAbout({ onClose, allEntries = [] }) {
   const t = useT()
 
-  const [exampleFindings] = useState(() => {
-    if (allFindings.length === 0) return []
-    const shuffled = [...allFindings].sort(() => Math.random() - 0.5)
+  const [exampleEntries] = useState(() => {
+    if (allEntries.length === 0) return []
+    const shuffled = [...allEntries].sort(() => Math.random() - 0.5)
     return shuffled.slice(0, 3)
   })
 
@@ -38,13 +38,13 @@ export default function A11yPanelAbout({ onClose, allFindings = [] }) {
           {t('about.what_body_2_suffix')}
         </p>
         <p className="panel-body">{t('about.what_wcag')}</p>
-        {exampleFindings.length > 0 && (
+        {exampleEntries.length > 0 && (
           <>
             <p className="panel-body">{t('about.examples_intro')}</p>
             <ul className="about-coming">
-              {exampleFindings.map(f => (
+              {exampleEntries.map(f => (
                 <li key={f.id}>
-                  <a href={`#/finding/${f.id}/${findingSlug(f.title)}`} className="panel-inline-link">{f.title}</a>
+                  <a href={`#/entry/${f.id}/${entrySlug(f.title)}`} className="panel-inline-link">{f.title}</a>
                 </li>
               ))}
             </ul>

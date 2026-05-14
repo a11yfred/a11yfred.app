@@ -13,7 +13,7 @@ import { TYPEWRITER_TICK_MS, TYPEWRITER_MIN_CHARS_PER_TICK, TYPEWRITER_CHAR_DIVI
  * @param {boolean} aiRevisedFix - whether fix field is selected for AI revision
  * @param {boolean} useAgenticMode - whether agentic mode is active
  * @param {string} aiNote - the AI instruction text
- * @param {Array} allFindings - full corpus (used by agentic mode)
+ * @param {Array} allEntries - full corpus (used by agentic mode)
  * @param {Function} setDescText
  * @param {Function} setFixText
  * @param {Function} setDescHistory
@@ -35,7 +35,7 @@ export default function useSheetDetailRefine({
   aiRevisedFix,
   useAgenticMode,
   aiNote,
-  allFindings,
+  allEntries,
   setDescText,
   setFixText,
   setDescHistory,
@@ -132,7 +132,7 @@ export default function useSheetDetailRefine({
 
     try {
       const result = useAgenticMode && getAiProvider() === 'anthropic'
-        ? await getAgenticRefinement({ finding, descText, fixText, note: aiNote, corpus: allFindings })
+        ? await getAgenticRefinement({ finding, descText, fixText, note: aiNote, corpus: allEntries })
         : await getAiRefinement({ finding, descText, fixText, note: aiNote })
       const newDesc = aiRevisedDesc && result.desc ? result.desc : null
       const newFix = aiRevisedFix && result.fix ? result.fix : null

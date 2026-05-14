@@ -16,6 +16,6 @@ export default function useThemeManager(theme, announceFiesta) {
     onFiestaClick:     playPartySound,
     onFiestaKey:       playSqueak,
     keyFrequency:      FIESTA_SQUEAK_FREQUENCY,
-    keyTargetId:       'finding-search',
+    keyTargetId:       'entry-search',
   })
 }

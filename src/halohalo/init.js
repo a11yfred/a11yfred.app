@@ -13,7 +13,7 @@ let _systemPrompt = null
  *   systemPrompt?: string,
  * }} config
  *
- * buildPrompt receives { finding, descText, fixText, note } and must return
+ * buildPrompt receives { entry, descText, fixText, note } and must return
  * the user-turn prompt string for single-turn refinement.
  *
  * systemPrompt is used for agentic (tool-use) mode. If omitted, agentic mode

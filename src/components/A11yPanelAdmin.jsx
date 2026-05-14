@@ -4,7 +4,7 @@ import './A11yPanelAdmin.css'
 import publicCorpus from '../data/corpus.json'
 import legacyCorpus from '../data/legacy-corpus.json'
 import personalCorpus from '../data/personal-corpus.json'
-import findingSlug from '../utils/findingSlug.js'
+import entrySlug from '../utils/entrySlug.js'
 import Toggle from './ui/Toggle.jsx'
 import ButtonIcon from './ui/ButtonIcon.jsx'
 import { LS_ADMIN_DATASET } from '../utils/constants.js'
@@ -396,7 +396,7 @@ export default function A11yPanelAdmin({
             {corpus.map(entry => (
               <li key={entry.id}>
                 <a
-                  href={`#/finding/${entry.id}/${findingSlug(entry.title)}`}
+                  href={`#/entry/${entry.id}/${entrySlug(entry.title)}`}
                   className="admin-entry-link"
                   title={entry.title}
                 >
