@@ -46,26 +46,26 @@ export default function A11yListRelated({ finding, allFindings, onSelect, getPai
   const headingKey = related.length === 1 ? 'detail.related_issue_heading' : 'detail.related_heading'
 
   return (
-    <div className="detail-related">
+    <div className="panel-detail-related">
       {related.length === 1 ? (
-        <p className="detail-related__heading detail-related__heading--single">
+        <p className="panel-detail-related__heading panel-detail-related__heading--single">
           {t(headingKey)}{' '}
           <a
             href={`#/finding/${related[0].id}/${findingSlug(related[0].title)}`}
-            className="detail-related__btn"
+            className="panel-detail-related__btn"
           >
             {related[0].title}
           </a>
         </p>
       ) : (
         <>
-          <p className="detail-related__heading">{t(headingKey)}</p>
-          <ul className="detail-related__list">
+          <p className="panel-detail-related__heading">{t(headingKey)}</p>
+          <ul className="panel-detail-related__list">
             {related.map(d => (
               <li key={d.id}>
                 <a
                   href={`#/finding/${d.id}/${findingSlug(d.title)}`}
-                  className="detail-related__btn"
+                  className="panel-detail-related__btn"
                 >
                   {d.title}
                 </a>
