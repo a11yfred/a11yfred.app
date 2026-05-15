@@ -258,6 +258,9 @@ export default function A11yListResults({ results, selected, onSelect, query, co
       : null,
   ].filter(Boolean)
 
+  const hasNonDefaultSort = sortBy !== 'smart'
+  const hasAnyActiveFilter = activeFilters.length > 0 || hasNonDefaultSort
+
   if (results.length === 0 && platform === 'all') {
     return <NoResults
       query={query}
@@ -266,7 +269,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
       body={t('results.no_results_body')}
       onMount={() => announce(t('results.no_results_announce', { query }))}
       activeFilters={activeFilters}
-      onClearFilters={activeFilters.length > 0 ? onClear : undefined}
+      onClearFilters={hasAnyActiveFilter ? onClear : undefined}
       onOpenSettings={onOpenSettings}
     />
   }
@@ -434,7 +437,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                 className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
                 title={t('results.clear_all_results')}
                 icon={<Trash2 size={14} aria-hidden="true" />}
-                disabled={activeFilters.length === 0}
+                disabled={!hasAnyActiveFilter}
                 onClick={() => { announce(t('announce.filters_cleared')); setClearPending(true) }}
               >
                 {t('results.clear_all_results')}
@@ -449,10 +452,13 @@ export default function A11yListResults({ results, selected, onSelect, query, co
             aria-hidden={!narrowMode || undefined}
             inert={!narrowMode || undefined}
           >
-            <label htmlFor="narrow-filter" className="results-narrow-label">
+            <label
+              htmlFor="narrow-filter"
+              className={`results-narrow-label${!query && !narrowQuery ? ' results-narrow-label--dimmed' : ''}`}
+            >
               {t('search.narrowing_results')}
             </label>
-            <div className="results-narrow-row">
+            <div className={`results-narrow-row${!query && !narrowQuery ? ' results-narrow-row--dimmed' : ''}`}>
               <InputWithClear
                 id="narrow-filter"
                 type="text"
@@ -464,16 +470,17 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                   }
                 }}
                 onClear={() => onNarrowChange('')}
-                placeholder={narrowResults ? t('search.narrow_placeholder', { count: results.length }) : 'Filter results…'}
+                placeholder={!query && !narrowQuery ? t('search.narrow_placeholder_needs_query') : narrowResults ? t('search.narrow_placeholder', { count: results.length }) : t('search.narrow_placeholder_default')}
                 clearAriaLabel={t('search.narrow_clear_aria')}
                 wrapClassName="results-narrow-input-wrap"
                 inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
                 clearButtonClassName="btn--primary input-clear-btn"
+                disabled={!query && !narrowQuery}
               />
               {!liveSearch && (
                 <Button
                   onClick={onNarrowSearch}
-                  disabled={narrowQuery.length < 2}
+                  disabled={narrowQuery.length < 2 || (!query && !narrowQuery)}
                   variant="primary"
                   className="results-narrow-submit-btn btn--input-height"
                 >
@@ -485,7 +492,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
         )}
         {onPlatformChange && narrowMode && (
           <fieldset className="results-narrow-platform-group">
-            <legend className="sr-only">{t('settings.platform_label')}</legend>
+            <legend className="results-narrow-platform-legend">{t('results.narrow_platform_label')}</legend>
             <div className="radio-chip-group">
               {Object.entries(platformLabels).map(([value, label]) => (
                 <RadioChip
@@ -493,8 +500,16 @@ export default function A11yListResults({ results, selected, onSelect, query, co
                   name="narrow-platform"
                   value={value}
                   label={label}
-                  current={platform}
-                  onChange={onPlatformChange}
+                  current={sortBy === 'platform' ? 'all' : platform}
+                  onChange={(val) => {
+                    if (val === 'all') {
+                      onPlatformChange('all')
+                      if (sortBy === 'platform') onSortChange('smart')
+                    } else {
+                      onPlatformChange('all')
+                      onSortChange('platform')
+                    }
+                  }}
                 />
               ))}
             </div>
@@ -504,12 +519,10 @@ export default function A11yListResults({ results, selected, onSelect, query, co
       </div>}
 
       {!hideFilters && results.length > 0 && !platformNoResults && !narrowNoResults && (() => {
-        const sortLabel = sortLabels[sortBy] ?? sortBy
-        const sortIsDefault = sortBy === 'smart'
-        const sortTag = !sortIsDefault && onSortChange
-          ? { label: sortLabel, prefix: t('results.filter_sort_prefix'), onRemove: () => onSortChange('smart') }
+        const sortTag = hasNonDefaultSort && onSortChange
+          ? { label: sortLabels[sortBy] ?? sortBy, prefix: t('results.filter_sort_prefix'), onRemove: () => onSortChange('smart') }
           : null
-        if (activeFilters.length === 0 && !sortTag) return null
+        if (!hasAnyActiveFilter) return null
         const renderTag = (f, i) => (
           <span key={i} className="active-bar__group">
             {f.prefix && <span className="active-bar__label">{f.prefix}</span>}
@@ -555,7 +568,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
             heading={t('results.no_results_heading', { query: narrowNoResults ? narrowQuery : query })}
             body={t('results.no_results_body')}
             activeFilters={activeFilters}
-            onClearFilters={narrowNoResults || activeFilters.length > 0 ? onClear : undefined}
+            onClearFilters={narrowNoResults || hasAnyActiveFilter ? onClear : undefined}
             onOpenSettings={onOpenSettings}
           />
         : <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>

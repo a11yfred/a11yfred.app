@@ -19,6 +19,7 @@ import useAppSettings from './hooks/useAppSettings.js'
 import useAppSearch from './hooks/useAppSearch.js'
 import useAppRatings from './hooks/useAppRatings.js'
 import { RESULTS_COUNT_FOCUS_DELAY, VIEW_ALL_LOADING_DELAY, MS_PER_DAY, MAX_RECENT_ENTRIES, pluralResult, SMART_SCORE_STAR_BONUS, SMART_SCORE_RANK_WEIGHT, SMART_SCORE_POP_WEIGHT, SMART_SCORE_ARCHIVE_PENALTY, SMART_SCORE_INDEX_PENALTY, SEVERITY_SORT_ORDER, SEVERITY_SCORE, WCAG_VERSION_ORDER, WCAG_LEVEL_ORDER, LS_RECENT_ENTRIES, LS_LAST_SELECTED, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, LS_ONBOARDING_SEEN, PLATFORM_ORDER, EASTER_EGG_LOCALES, SORT_MISSING_ORDER, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
+import { getPlatformLabel, getViewAllPlatformLabel } from './utils/labelFormatters.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson, getSession, setSession, removeSession, clearAllStorage } from './utils/storage.js'
 import { isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from '@ulam/halohalo'
 import {
@@ -504,7 +505,7 @@ function AppContent() {
     lastAnnouncedPlatformRef.current = platform
     if (!dataLoading && allEntries.length > 0) {
       const base = activeQuery.length >= 2 ? results.length : sortedEntries.length
-      const platformLabel = { all: t('settings.platform_all'), web: t('settings.platform_web'), native: t('settings.platform_native'), document: t('settings.platform_document') }[platform] ?? t('settings.platform_all')
+      const platformLabel = getPlatformLabel(platform, t)
       if (narrowedResults !== null) {
         const count = narrowedResults.length
         const result = pluralResult(count)
@@ -854,13 +855,25 @@ function AppContent() {
   }
 
   const handleCopyLink = useCallback(() => {
-    syncSearchUrl(query)
-    const url = window.location.href
+    const url = new URL(window.location.origin + window.location.pathname)
+    if (query) url.searchParams.set('q', query)
+    const current = new URL(window.location.href)
+    const badge = current.searchParams.get('badge')
+    if (badge) url.searchParams.set('badge', badge)
+    const platformParam = current.searchParams.get('platform')
+    if (platformParam) url.searchParams.set('platform', platformParam)
+    const sort = current.searchParams.get('sort')
+    if (sort) url.searchParams.set('sort', sort)
+    const wcag = current.searchParams.get('wcag')
+    if (wcag) url.searchParams.set('wcag', wcag)
+    const narrow = current.searchParams.get('narrow')
+    if (narrow) url.searchParams.set('narrow', narrow)
+    const shareUrl = url.toString()
     if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(url)
+      navigator.clipboard.writeText(shareUrl)
     } else {
       const el = document.createElement('textarea')
-      el.value = url
+      el.value = shareUrl
       el.style.position = 'fixed'
       el.style.opacity = '0'
       document.body.appendChild(el)
@@ -1051,7 +1064,7 @@ function AppContent() {
         <p className="view-all-confirm-filters">
           {t('search.view_all_confirm_filters_label')}
           {' '}
-          {t('search.view_all_confirm_filters', { platform: platform === 'web' ? t('search.view_all_platform_web') : platform === 'native' ? t('search.view_all_platform_native') : platform === 'document' ? t('search.view_all_platform_document') : t('search.view_all_platform_all'), version: wcagFilter.maxVersion, level: wcagFilter.maxLevel })}
+          {t('search.view_all_confirm_filters', { platform: getViewAllPlatformLabel(platform, t), version: wcagFilter.maxVersion, level: wcagFilter.maxLevel })}
           {'. '}
           {t('search.view_all_confirm_filters_change')}
           {' '}

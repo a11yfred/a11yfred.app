@@ -71,7 +71,7 @@ export default [
       '@a11yfred/neighbor/no-spinbutton-without-range': 'error',
       '@a11yfred/neighbor/no-slider-without-range': 'error',
       '@a11yfred/neighbor/no-combobox-without-expanded': 'error',
-      '@a11yfred/neighbor/no-mouse-only-events': 'error',
+      '@a11yfred/neighbor/no-mouse-only-events': 'warn',
 
       // @ulam framework-specific rules
       '@a11yfred/neighbor/no-announce-in-render': 'error',

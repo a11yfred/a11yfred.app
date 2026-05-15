@@ -14,16 +14,21 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ### Step 1 -- Consolidate state (unblocks everything else)
 
-- [ ] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  Audited May 13. `AppShell→AppContent` boundary: ~48 prop slots. Plan: two contexts only (no UIContext needed -- those 4 props don't drill past AppContent). `SettingsContext`: theme, language, aiEnabled, liveSearch, showVoting, showPersonalCorpus, wcagFilter, platform, fiestaUnlocked -- consumed by Settings panel, ListResults (x4), InputSearchHero, PanelDetail. `SearchContext`: query/submittedQuery/searchKey, selected, results/allFindings/sortedFindings, sortBy, ratings, pins, narrow state -- consumed by ListResults (22 props x4 = 88 slots, biggest win), PanelDetail, PanelAbout, PinnedSection. **Estimated total: ~140 prop slots removed.** Bonus: `locale`, `userOverridesHook`, `contributionQueueHook` are passed to `A11yPanelDetail` but not destructured -- dead props, remove when implementing context.
+- [x] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  Done May 14. SettingsContext, SearchContext, RatingsContext wired; ~140 prop slots removed; custom hooks useAppSettings, useAppSearch, useAppRatings extracted.
 
-### Step 2 -- Split components (blocked on Step 1)
+### Step 2 -- Split components (unblocked, in progress)
 
-- [ ] **Break large components into single-responsibility pieces** `[code]` `[refactor]` ,  Current line counts: `App.jsx` 1601, `A11yListResults` 869, `A11yPanelSettings` 857, `A11yPanelDetail` 486. Split plan: `A11yListResults` -- extract keyboard nav to `useResultListKeyboard`, narrow mode to sub-component. `A11yPanelSettings` -- split into `SectionAiSettings`, `SectionSearchSettings`, `SectionLanguageSettings`, `SectionResetData` (naming convention already decided -- blocked on context consolidation). `A11yPanelDetail` -- clipboard in `useSheetDetailClipboard` and AI in `useSheetDetailRefine` already extracted; no further split needed until context is wired. **Blocked on Step 1.**
-- [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1601 lines. Extract search manager (`useSearchManager`), party mode (`usePartyMode`), and route handler into dedicated hooks. `useThemeManager` already extracted. **Blocked on Step 1.**
+- [ ] **Break large components into single-responsibility pieces** `[code]` `[refactor]` ,  Current line counts: `App.jsx` 1601, `A11yListResults` 869, `A11yPanelSettings` 857, `A11yPanelDetail` 486. Split plan: `A11yListResults` -- extract keyboard nav to `useResultListKeyboard`, narrow mode to sub-component. `A11yPanelSettings` -- split into `SectionAiSettings`, `SectionSearchSettings`, `SectionLanguageSettings`, `SectionResetData`. `A11yPanelDetail` -- clipboard in `useSheetDetailClipboard` and AI in `useSheetDetailRefine` already extracted; no further split needed.
+- [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1601 lines. Extract search manager (`useSearchManager`), party mode (`usePartyMode`), and route handler into dedicated hooks. `useThemeManager` already extracted.
 
 ### Step 3 -- Rename (high surface area, dedicated session)
 
 - [ ] **Rename "finding" → "entry" throughout** `[code]` `[ux]` `[i18n]` ,  "Entry" better reflects the data model (a corpus entry, not necessarily an observed defect). Scope: all `en.json` keys, JSX labels, localStorage key names (`userFindings`, `pinnedFindings`, etc.), corpus field names, README, CONTRIBUTING, and docs. Run `npm run translate` after. Do in a dedicated session -- every file in the project is affected.
+
+### Step 3 -- Refactoring optimizations
+
+- [x] **Extract repeated label formatters** `[code]` `[refactor]` ,  Done May 14. Created `src/utils/labelFormatters.js` with `getPlatformLabel()` and `getViewAllPlatformLabel()`. Replaced inline ternary chains in App.jsx.
+- [ ] **Clean up naming conventions** `[code]` `[refactor]` ,  Renamed `platform_` to `platformParam`. Review PanelReact naming.
 
 ### Ongoing
 

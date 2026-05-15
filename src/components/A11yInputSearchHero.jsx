@@ -44,7 +44,7 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
   return (
     <search className="search-bar">
       <div className="search-label-row">
-        <label htmlFor="entry-search" className={`search-label${narrowMode ? ' search-label--disabled' : ''}`}>
+        <label htmlFor="entry-search" className="search-label">
           {t('search.label')}
         </label>
         {query.length === 0 && !narrowMode && !prefersReducedMotion && (
@@ -76,17 +76,16 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
           spellCheck={false}
           clearAriaLabel={t('search.clear_aria')}
           wrapClassName="search-input-wrap"
-          inputClassName={`search-input${query.length ? ' search-input--has-value' : ''}${narrowMode ? ' search-input--disabled' : ''}`}
+          inputClassName={`search-input${query.length ? ' search-input--has-value' : ''}`}
           clearButtonClassName="btn--primary input-clear-btn"
           inputRef={inputRef}
-          disabled={narrowMode}
         />
         {!liveSearch && (
           <Button
             onClick={onSearch}
             disabled={query.length < 2}
             variant="primary"
-            className={`search-submit-btn btn--input-height${narrowMode ? ' search-submit-btn--disabled' : ''}`}
+            className="search-submit-btn btn--input-height"
           >
             {t('search.button')}
           </Button>
