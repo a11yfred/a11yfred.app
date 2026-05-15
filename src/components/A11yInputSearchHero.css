@@ -16,9 +16,6 @@
   white-space: nowrap;
 }
 
-.search-label--disabled {
-  color: var(--text-disabled);
-}
 
 .search-row,
 .results-narrow-row {
@@ -66,15 +63,6 @@ input.results-narrow-input--has-value {
 input.search-input:focus,
 input.results-narrow-input:focus {
   border-color: var(--focus);
-}
-
-input.search-input--disabled {
-  background-color: var(--bg-subtle);
-  opacity: 0.6;
-  cursor: not-allowed;
-  color: var(--text-body);
-  border-color: var(--border);
-  box-shadow: none;
 }
 
 

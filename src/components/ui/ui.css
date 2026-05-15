@@ -75,6 +75,18 @@ input[role="switch"]:focus-visible + span {
   border-radius: var(--toggle-radius);
 }
 
+/* ─── Disabled inputs ────────────────────────────────────────── */
+
+input:disabled,
+textarea:disabled {
+  background-color: var(--bg-subtle);
+  color: var(--text-disabled);
+  border-color: var(--border);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 1; /* override browser default so --text-disabled controls the visual */
+}
+
 /* Suppress the default outline only on elements that supply
    their own visible focus treatment via border-color change. */
 input:focus-visible,

@@ -2,6 +2,22 @@
 
 All notable changes to A11yFred are documented here.
 
+## May 14, 2026 (Session 4)
+
+### Refactoring: Platform label extraction
+
+**Code organization:**
+
+- Created `src/utils/labelFormatters.js` with extracted label formatters
+- Extracted `getPlatformLabel()` and `getViewAllPlatformLabel()` utility functions
+- Replaced inline ternary chains with centralized label formatting
+
+**Naming improvements:**
+
+- Renamed `platform_` to `platformParam` in `App.jsx` for clarity
+
+---
+
 ## May 12, 2026
 
 ### Lint clean pass (zero JS errors, zero CSS errors, zero MD errors)

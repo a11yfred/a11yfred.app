@@ -65,7 +65,7 @@ export const SEVERITY_SCORE = { Critical: 40, High: 30, Medium: 20, Low: 10, 'Be
 
 export const RANK_ANIM_MS = 400
 
-export const PLATFORM_ORDER = { web: 0, native: 1, document: 2 }
+export const PLATFORM_ORDER = { all: 0, web: 1, native: 2, document: 3 }
 
 export const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val', 'blt', 'dot', 'tok', 'nav', 'qya', 'sjn', 'hod', 'dov', 'nds', 'nws', 'mnd', 'csp', 'sim', 'ali'])
 
