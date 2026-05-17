@@ -47,6 +47,11 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
 
+  const handleBadgeClickAndClose = (filter) => {
+    onBadgeClick?.(filter)
+    onClose?.()
+  }
+
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(entry.desc)
   const [fixText, setFixText] = useState(entry.fix)
@@ -163,7 +168,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
             bg={p.bg}
             color={p.color}
             prefix={entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
-            onClick={() => onBadgeClick?.({ type: 'severity', value: entry.severity })}
+            onClick={() => handleBadgeClickAndClose({ type: 'severity', value: entry.severity })}
             aria-label={`${entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria')}`}
           >
             {t(p.key)}
@@ -178,7 +183,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                   key={src}
                   variant="source"
                   prefix={t('detail.sources_badge_single_prefix')}
-                  onClick={() => onBadgeClick?.({ type: 'source', value: src })}
+                  onClick={() => handleBadgeClickAndClose({ type: 'source', value: src })}
                   aria-label={`${t('detail.sources_badge_single_prefix')} ${src}, ${t('results.badge_filter_aria')}`}
                 >
                   {src}
@@ -196,6 +201,10 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                     if (panelBody) {
                       panelBody.scrollTop = sourceLinksEl.offsetTop - 100
                     }
+                    const heading = sourceLinksEl.querySelector('.source-links__heading')
+                    if (heading) {
+                      setTimeout(() => heading.focus(), 100)
+                    }
                   }
                 }}
                 aria-label={t('detail.sources_badge_multiple_aria')}
@@ -209,7 +218,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
               type="button"
               className="badge--wcag"
               style={WCAG_BADGE_STYLE}
-              onClick={() => onBadgeClick?.({ type: 'wcag', value: entry.wcagVersion })}
+              onClick={() => handleBadgeClickAndClose({ type: 'wcag', value: entry.wcagVersion })}
               aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria')}`}
             >
               {t('badge.wcag_version_label')}{entry.wcagVersion}
@@ -220,7 +229,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
               type="button"
               className="badge--wcag-level"
               style={WCAG_LEVEL_BADGE_STYLE}
-              onClick={() => onBadgeClick?.({ type: 'wcag-level', value: entry.wcagLevel })}
+              onClick={() => handleBadgeClickAndClose({ type: 'wcag-level', value: entry.wcagLevel })}
               aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
             >
               {t('badge.level_label')}{entry.wcagLevel}
