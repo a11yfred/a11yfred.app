@@ -2,8 +2,6 @@
 
 Plain-language record of what changed and why. For technical details see `CHANGELOG.md`.
 
-Full pre-launch history is in [docs/archive/prelaunch/UPDATES-prelaunch.md](archive/prelaunch/UPDATES-prelaunch.md). A summary is at the bottom of this file.
-
 ---
 
 ## 2026-05-16 -- Post-Launch Cleanup

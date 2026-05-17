@@ -1,6 +1,6 @@
 # Changelog
 
-All significant changes to A11yFred, newest first. Pre-launch history is in [docs/archive/prelaunch/CHANGELOG-prelaunch.md](archive/prelaunch/CHANGELOG-prelaunch.md).
+All significant changes to A11yFred, newest first.
 
 Versions follow [Semantic Versioning](https://semver.org/). Each production deploy gets a version tag. Releases are batched -- at most one per day.
 
