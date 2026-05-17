@@ -199,7 +199,19 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                   if (sourceLinksEl) {
                     const heading = sourceLinksEl.querySelector('.source-links__heading')
                     if (heading) {
-                      heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      // Find the scrollable panel parent and scroll it
+                      let scrollParent = sourceLinksEl.parentElement
+                      while (scrollParent && scrollParent !== document.body) {
+                        const style = window.getComputedStyle(scrollParent)
+                        if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+                          const rect = heading.getBoundingClientRect()
+                          const parentRect = scrollParent.getBoundingClientRect()
+                          const offset = rect.top - parentRect.top
+                          scrollParent.scrollTop += offset - 50
+                          break
+                        }
+                        scrollParent = scrollParent.parentElement
+                      }
                       setTimeout(() => heading.focus(), 100)
                     }
                   }
