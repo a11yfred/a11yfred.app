@@ -4,13 +4,13 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## 2026-05-17 -- Form Controls Accessibility & Keyboard Prevention (Session 6)
+## 2026-05-17 -- Phase 2A Complete: Code Quality, Hooks, Accessibility (Sessions 4-6)
 
-### aria-disabled Accessibility Pattern with Keyboard Prevention
+### Session 6: Form Controls Accessibility & Keyboard Prevention
 
 Refactored all form controls (select, textarea, toggle) to use the `aria-disabled` attribute instead of the HTML `disabled` attribute. This keeps disabled controls in the tab order and keyboard-focusable, while preventing unwanted interaction via JavaScript handlers.
 
-**What changed:**
+**Form controls refactoring:**
 
 - Extracted keyboard prevention logic into reusable `useAriaDisabledKeydown` hook (prevents Space/Enter key activation)
 - Select and Toggle components now use `aria-disabled` with `onMouseDown` and `onKeyDown` handlers
@@ -25,12 +25,15 @@ Refactored all form controls (select, textarea, toggle) to use the `aria-disable
 - Fixed API key validation to use optional chaining (`?.trim()`)
 - Improved model select logic: shows "N/A" when provider has no available models
 - Provider and API key error messages display below their respective fields
+- Full validation chain working (provider required → model auto-populated or N/A → API key required)
 
 **Accessibility benefit:**
 
 Disabled elements remain keyboard-focusable and in tab order, following WCAG recommendations for `aria-disabled`. Users can tab to disabled fields and see the focus indicator, but cannot activate them via keyboard (Space/Enter only) or mouse (preventDefault handlers).
 
-This pattern is now ready to contribute back to the @ulam/ube library as a reusable accessibility pattern for form controls.
+**Ready for ULAM contribution:**
+
+This pattern extracted to reusable hook, CSS rules, and reference implementations (Select, Toggle). Ready for @ulam/ube inclusion.
 
 ---
 

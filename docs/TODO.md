@@ -10,10 +10,9 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ## Code Quality & Refactoring
 
-Pending work after post-launch cleanup (May 13-16) is documented in UPDATES.md and CHANGELOG.md.
+Phase 2 refactoring complete (May 17). See UPDATES.md and CHANGELOG.md for details.
 
-- [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1601 lines. Extract search manager (`useSearchManager`), party mode (`usePartyMode`), and route handler into dedicated hooks. `useThemeManager` already extracted.
-- [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Migrate to TypeScript for full type checking, or add JSDoc to `App.jsx` and its major data-flow paths. `useFindingSearch.js` and `useContributionQueue.js` already have complete JSDoc. Start with the new context objects -- type them on creation.
+- [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Migrate to TypeScript for full type checking, or add JSDoc to major data-flow paths. `useFindingSearch.js` and `useContributionQueue.js` already have complete JSDoc.
 
 ---
 
@@ -31,6 +30,15 @@ Pending work after post-launch cleanup (May 13-16) is documented in UPDATES.md a
 ---
 
 ## Phase 2 ,  In Progress
+
+### Phase 2A: Code Quality (COMPLETE -- May 17)
+
+- App.jsx refactoring: DONE (useRouteHandler, useSearchManager integrated)
+- Component splits: DONE (A11yListResults, A11yPanelSettings split into sub-components)
+- Form controls accessibility: DONE (aria-disabled pattern with keyboard prevention)
+- Documentation: DONE (CHANGELOG, UPDATES updated)
+
+### Phase 2B: Remaining Features
 
 Ordered high-value + low-effort first within each section.
 
