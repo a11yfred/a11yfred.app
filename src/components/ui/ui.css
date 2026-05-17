@@ -636,8 +636,16 @@ select:disabled {
 }
 
 .toggle:has(.toggle__input:disabled) {
-  opacity: 0.5;
+  opacity: 1;
   pointer-events: none;
+}
+
+.toggle:has(.toggle__input:disabled) .toggle__track {
+  opacity: 0.5;
+}
+
+.toggle:has(.toggle__input:disabled) .toggle__thumb {
+  opacity: 0.5;
 }
 
 /* ─── Field ───────────────────────────────────────────────── */
