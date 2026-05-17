@@ -168,9 +168,9 @@ function AppContent() {
     narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery,
     narrowMode, setNarrowMode,
     ratings, pinnedIds, togglePin, recordOpen,
-    platform, language, wcagFilter,
+    platform, setPlatform, language, setLanguage, wcagFilter, setWcagFilter,
     liveSearch, showPersonalCorpus, userEntries, userOverrides,
-    t, navigate, setLanguage,
+    t, navigate,
   })
 
   const {
