@@ -637,8 +637,14 @@ select:disabled {
 }
 
 .toggle:has(.toggle__input:disabled) {
-  opacity: 0.5;
+  opacity: 1;
   pointer-events: none;
+}
+
+.toggle:has(.toggle__input:disabled) .toggle__track {
+  background: var(--bg-subtle);
+  border-color: var(--border);
+  opacity: 0.6;
 }
 
 /* ─── Field ───────────────────────────────────────────────── */
