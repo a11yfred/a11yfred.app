@@ -42,7 +42,6 @@ export default function A11yListResultCard({
   onRankDown,
   onStar,
   onArchive,
-  onBadgeClick,
   ratings,
   pinnedIds,
   animatingUp,
@@ -291,9 +290,6 @@ export default function A11yListResultCard({
                     <Badge
                       variant="wcag"
                       title={`${t('badge.wcag_prefix')}${entry.wcagVersion}`}
-                      aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria')}`}
-                      onClick={() => onBadgeClick?.({ type: 'wcag', value: entry.wcagVersion })}
-                      tabIndex={-1}
                     >
                       {entry.wcagVersion}
                     </Badge>
@@ -302,9 +298,6 @@ export default function A11yListResultCard({
                     <Badge
                       variant="wcag-level"
                       title={`${t('badge.level_prefix')}${entry.wcagLevel}`}
-                      aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
-                      onClick={() => onBadgeClick?.({ type: 'wcag-level', value: entry.wcagLevel })}
-                      tabIndex={-1}
                     >
                       {entry.wcagLevel}
                     </Badge>
