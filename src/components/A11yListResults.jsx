@@ -215,6 +215,9 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
     onPlatformChange && platform !== 'all'
       ? { label: platformLabels[platform] ?? platform, onRemove: () => onPlatformChange('all') }
       : null,
+    isBadgeFiltered && filterLabel && onClear
+      ? { label: filterLabel, onRemove: onClear }
+      : null,
     !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
       ? { label: `WCAG ${wcagFilter.maxVersion}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxVersion: defaultWcagFilter.maxVersion }) }
       : null,
