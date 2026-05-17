@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import useEntrySearch from './useEntrySearch'
 import {
-  EASTER_EGGS,
-  SEVERITY_VARS,
   SEVERITY_SCORE,
   SMART_SCORE_STAR_BONUS,
   SMART_SCORE_RANK_WEIGHT,
@@ -17,8 +15,11 @@ import {
   MS_PER_DAY,
   RESULTS_COUNT_FOCUS_DELAY,
   DEFAULT_WCAG_FILTER,
-} from '../constants'
+} from '../utils/constants.js'
+import { SEVERITY_VARS } from '../data/severityStyles.js'
 import { announce } from '@ulam/taho'
+
+const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 
 /**
  * Manages search state, filtering, sorting, and URL synchronization.
@@ -95,7 +96,7 @@ import { announce } from '@ulam/taho'
  *   resultsCountRef: React.MutableRefObject<HTMLElement | null>,
  * }}
  */
-export function useSearchManager({
+export default function useSearchManager({
   query,
   setQuery,
   submittedQuery,

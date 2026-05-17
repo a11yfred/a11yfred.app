@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { entrySlug } from '../utils/entrySlug'
-import { returnFocus } from '../utils/a11yUtils'
-import { getSession, removeSession, setSession } from '../utils/storage'
+import entrySlug from '../utils/entrySlug.js'
+import { getSession, removeSession, setSession } from '../utils/storage.js'
+import { returnFocus } from '@ulam/sili/react'
 
 const LS_LAST_SELECTED = 'lastSelectedId'
 
@@ -65,7 +65,7 @@ const LS_LAST_SELECTED = 'lastSelectedId'
  *   aboutWasOpenRef: React.MutableRefObject<boolean>,
  * }}
  */
-export function useRouteHandler({
+export default function useRouteHandler({
   route,
   navigate,
   isDesktop,
@@ -212,7 +212,7 @@ export function useRouteHandler({
     }
     setSheetCollapsed(false)
     setSelected(entry)
-    navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`) // eslint-disable-line react-hooks/immutability
+    navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`)
   }
 
   const handleSelectRelated = (entry) => {
@@ -239,7 +239,6 @@ export function useRouteHandler({
   const handleOpenSettings = () => {
     settingsTriggerRef.current = document.activeElement
     aboutWasOpenRef.current = false
-    // eslint-disable-next-line react-hooks/immutability
     returnToPanelRef.current = !!selected
     if (viewAll && !selected) returnViewAllRef.current = true
     navigate('/settings')
