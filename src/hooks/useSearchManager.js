@@ -451,19 +451,9 @@ export default function useSearchManager({
   }
 
   const handleCopyLink = useCallback(() => {
-    const url = new URL(window.location.origin + window.location.pathname)
-    if (query) url.searchParams.set('q', query)
-    const current = new URL(window.location.href)
-    const badge = current.searchParams.get('badge')
-    if (badge) url.searchParams.set('badge', badge)
-    const platformParam = current.searchParams.get('platform')
-    if (platformParam) url.searchParams.set('platform', platformParam)
-    const sort = current.searchParams.get('sort')
-    if (sort) url.searchParams.set('sort', sort)
-    const wcag = current.searchParams.get('wcag')
-    if (wcag) url.searchParams.set('wcag', wcag)
-    const narrow = current.searchParams.get('narrow')
-    if (narrow) url.searchParams.set('narrow', narrow)
+    const url = new URL(window.location.href)
+    url.hash = ''
+
     const shareUrl = url.toString()
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(shareUrl)
@@ -477,7 +467,7 @@ export default function useSearchManager({
       document.execCommand('copy')
       document.body.removeChild(el)
     }
-  }, [query])
+  }, [])
 
   return {
     query,
