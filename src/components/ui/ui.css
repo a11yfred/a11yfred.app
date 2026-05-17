@@ -107,12 +107,6 @@ select[aria-disabled="true"] {
   cursor: not-allowed;
 }
 
-input[aria-disabled="true"]:focus-visible,
-textarea[aria-disabled="true"]:focus-visible,
-select[aria-disabled="true"]:focus-visible {
-  outline: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   input[aria-disabled="true"]:not([role="switch"]),
   textarea[aria-disabled="true"],
