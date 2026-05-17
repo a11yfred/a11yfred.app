@@ -487,6 +487,7 @@ function AppContent() {
                     query=""
                     countRef={resultsCountRef}
                     filterLabel={badgeFilterLabel}
+                    isBadgeFiltered={true}
                   />
                 )
               : sortedEntries.length === 0

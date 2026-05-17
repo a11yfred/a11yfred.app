@@ -58,7 +58,7 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   )
 }
 
-export default function A11yListResults({ results, selected, onSelect, query, _countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick }) {
+export default function A11yListResults({ results, selected, onSelect, query, _countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick, isBadgeFiltered = false }) {
   const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter, setWcagFilter } = useSettings()
   const { narrowMode, narrowQuery, sortBy, setSortBy: onSortChange, setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery } = useSearch()
   const onNarrow = () => setNarrowMode(true)
@@ -213,10 +213,10 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
     onPlatformChange && platform !== 'all'
       ? { label: platformLabels[platform] ?? platform, onRemove: () => onPlatformChange('all') }
       : null,
-    !filterLabel && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
+    !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
       ? { label: `WCAG ${wcagFilter.maxVersion}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxVersion: defaultWcagFilter.maxVersion }) }
       : null,
-    !filterLabel && wcagFilter && defaultWcagFilter && wcagFilter.maxLevel !== defaultWcagFilter.maxLevel
+    !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxLevel !== defaultWcagFilter.maxLevel
       ? { label: `Level ${wcagFilter.maxLevel}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxLevel: defaultWcagFilter.maxLevel }) }
       : null,
   ].filter(Boolean)

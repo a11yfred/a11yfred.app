@@ -257,7 +257,7 @@
   "settings.unsaved_body": "You have unsaved AI settings. What do you want to do about it?",
   "settings.unsaved_save_close": "Save & Close",
   "settings.unsaved_discard": "Discard & Close",
-  "settings.unsaved_cancel": "Cancel",
+  "settings.unsaved_cancel": "Nevermind",
   "settings.save": "Save",
   "settings.saved": "Saved!",
   "settings.reduced_motion_note": "You have reduced motion turned on, and we respect that. Animations like confetti will be skipped until you change it in your OS accessibility settings. Very sensible.",
