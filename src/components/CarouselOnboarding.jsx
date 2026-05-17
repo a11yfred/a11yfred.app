@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
-import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from '@ulam/sili/react'
+import { useFocusOnMount, usePaginationFocus, useDir, Modal } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import Button from './ui/Button.jsx'

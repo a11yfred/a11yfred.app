@@ -15,6 +15,7 @@ import {
   MS_PER_DAY,
   RESULTS_COUNT_FOCUS_DELAY,
   DEFAULT_WCAG_FILTER,
+  EASTER_EGGS,
 } from '../utils/constants.js'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import { getPinnedEntries, getUnpinnedEntries } from '../utils/entryFilters.js'
@@ -22,8 +23,6 @@ import { getViewAllPlatformLabel } from '../utils/labelFormatters.js'
 import { announce } from '@ulam/taho'
 
 const pluralResult = (n) => n === 1 ? 'result' : 'results'
-
-const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 
 /**
  * Manages search state, filtering, sorting, and URL synchronization.

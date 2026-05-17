@@ -69,6 +69,27 @@ export const PLATFORM_ORDER = { all: 0, web: 1, native: 2, document: 3 }
 
 export const EASTER_EGG_LOCALES = new Set(['pig', 'pir', 'tlh', 'val', 'blt', 'dot', 'tok', 'nav', 'qya', 'sjn', 'hod', 'dov', 'nds', 'nws', 'mnd', 'csp', 'sim', 'ali'])
 
+export const EASTER_EGGS = {
+  'pig latin': 'pig',
+  pirate: 'pir',
+  klingon: 'tlh',
+  valyrian: 'val',
+  belter: 'blt',
+  dothraki: 'dot',
+  'toki pona': 'tok',
+  navi: 'nav',
+  quenya: 'qya',
+  sindarin: 'sjn',
+  hodor: 'hod',
+  dovahzul: 'dov',
+  nadsat: 'nds',
+  newspeak: 'nws',
+  mandoa: 'mnd',
+  cityspeak: 'csp',
+  simlish: 'sim',
+  alienese: 'ali',
+}
+
 export const TYPEWRITER_MIN_CHARS_PER_TICK = 2
 export const TYPEWRITER_CHAR_DIVISOR = 40
 

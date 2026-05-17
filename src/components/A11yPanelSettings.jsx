@@ -155,8 +155,6 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
     if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() }
   })
 
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-
   const handleSave = () => {
     if (pendingAiEnabled) {
       if (!activeProvider) {

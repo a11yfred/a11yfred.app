@@ -353,7 +353,7 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
                   itemRefs={itemRefs}
                   snapshotPositions={snapshotPositions}
                 />
-                {showAdAfter && <li role="presentation"><TileAd /></li>}
+                {showAdAfter && <li key={`ad-${entry.id}`} role="presentation"><TileAd /></li>}
               </React.Fragment>
             )
           })}
