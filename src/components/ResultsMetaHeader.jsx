@@ -268,7 +268,7 @@ export default function ResultsMetaHeader({
                         onPlatformChange('all')
                         if (sortBy === 'platform') onSortChange('smart')
                       } else {
-                        onPlatformChange('all')
+                        onPlatformChange(val)
                         onSortChange('platform')
                       }
                     }}
