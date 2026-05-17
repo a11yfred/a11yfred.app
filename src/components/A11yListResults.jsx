@@ -1,5 +1,5 @@
 import { ArrowUp, PinOff } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import Button from './ui/Button.jsx'
@@ -317,7 +317,7 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
           {displayResults.map((entry, index) => {
             const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
             return (
-              <>
+              <React.Fragment key={entry.id}>
                 <A11yListResultCard
                   key={entry.id}
                   entry={entry}
@@ -354,7 +354,7 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
                   snapshotPositions={snapshotPositions}
                 />
                 {showAdAfter && <li role="presentation"><TileAd /></li>}
-              </>
+              </React.Fragment>
             )
           })}
         </ul>
