@@ -17,6 +17,7 @@ import {
   DEFAULT_WCAG_FILTER,
 } from '../utils/constants.js'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
+import { getPinnedEntries, getUnpinnedEntries } from '../utils/entryFilters.js'
 import { announce } from '@ulam/taho'
 
 const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
@@ -211,18 +212,17 @@ export default function useSearchManager({
 
   const pinnedResults = useMemo(() => {
     const order = [...pinnedIds]
-    return allEntries
-      .filter(f => pinnedIds.has(f.id))
+    return getPinnedEntries(allEntries, pinnedIds)
       .sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id))
   }, [allEntries, pinnedIds])
 
   const unpinnedResults = useMemo(() =>
-    applySortBy(results.filter(f => !pinnedIds.has(f.id))),
+    applySortBy(getUnpinnedEntries(results, pinnedIds)),
     [results, pinnedIds, applySortBy]
   )
 
   const pinnedSearchMatches = useMemo(() =>
-    activeQuery.length >= 2 ? results.filter(f => pinnedIds.has(f.id)) : [],
+    activeQuery.length >= 2 ? getPinnedEntries(results, pinnedIds) : [],
     [results, pinnedIds, activeQuery]
   )
 
@@ -264,9 +264,7 @@ export default function useSearchManager({
       f.keywords?.some(k => k.toLowerCase().includes(lowerNarrow)) ||
       f.creditNames?.some(s => s.toLowerCase().includes(lowerNarrow))
     )
-    const pinnedMatches = narrowFiltered.filter(f => pinnedIds.has(f.id))
-    const unpinnedMatches = narrowFiltered.filter(f => !pinnedIds.has(f.id))
-    return [...pinnedMatches, ...unpinnedMatches]
+    return [...getPinnedEntries(narrowFiltered, pinnedIds), ...getUnpinnedEntries(narrowFiltered, pinnedIds)]
   }, [narrowMode, activeNarrowQuery, activeQuery, results, sortedEntries, pinnedIds])
 
   // Result count announcement

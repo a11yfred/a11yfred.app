@@ -20,6 +20,7 @@ import useAppRatings from './hooks/useAppRatings.js'
 import { MAX_RECENT_ENTRIES, LS_RECENT_ENTRIES, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, EASTER_EGG_LOCALES, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getViewAllPlatformLabel } from './utils/labelFormatters.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson } from './utils/storage.js'
+import { getUnpinnedEntries } from './utils/entryFilters.js'
 import { isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from '@ulam/halohalo'
 import {
   Router,
@@ -38,6 +39,7 @@ import { A11yToastAiDebug, useAiDebugToast } from './components/A11yToastAiDebug
 import useThemeManager from './hooks/useThemeManager.js'
 import useRouteHandler from './hooks/useRouteHandler.js'
 import useSearchManager from './hooks/useSearchManager.js'
+import useStorageSync from './hooks/useStorageSync.js'
 import { ContextSettings, useSettings } from './context/ContextSettings.js'
 import { ContextSearch, useSearch } from './context/ContextSearch.js'
 import { ContextRatings, useRatings } from './context/ContextRatings.js'
@@ -232,11 +234,10 @@ function AppContent() {
     }
   }, [language])
 
-  // Storage sync effects (not extracted to hooks)
-  useEffect(() => { setStorage(LS_LIVE_SEARCH, String(liveSearch)) }, [liveSearch])
-  useEffect(() => { setStorage(LS_SHOW_RANKING, String(showVoting)) }, [showVoting])
-  useEffect(() => { setStorage(LS_SHOW_PERSONAL_CORPUS, String(showPersonalCorpus)) }, [showPersonalCorpus])
-  useEffect(() => { setStorage(LS_PLATFORM, platform) }, [platform])
+  useStorageSync(liveSearch, LS_LIVE_SEARCH)
+  useStorageSync(showVoting, LS_SHOW_RANKING)
+  useStorageSync(showPersonalCorpus, LS_SHOW_PERSONAL_CORPUS)
+  useStorageSync(platform, LS_PLATFORM)
 
   const runCommand = (q) => {
     const lq = q.trim().toLowerCase()
@@ -385,7 +386,7 @@ function AppContent() {
             ? (
               <A11yListResults
                 key="view-all"
-                results={applySortBy(sortedEntries.filter(f => !pinnedIds.has(f.id)))}
+                results={applySortBy(getUnpinnedEntries(sortedEntries, pinnedIds))}
                 selected={sheetCollapsed ? null : selected}
                 onSelect={handleSelectEntry}
                 query=""
