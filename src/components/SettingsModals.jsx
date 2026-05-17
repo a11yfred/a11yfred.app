@@ -3,7 +3,7 @@ import { Modal, Sheet } from '@ulam/sili/react'
 import Button from './ui/Button.jsx'
 import { URL_PRIVACY_POLICY } from '../utils/constants.js'
 
-function PrivacySheet({
+function SheetPrivacy({
   t,
   open,
   onClose,
@@ -39,7 +39,7 @@ function PrivacySheet({
   )
 }
 
-function RhgWarningModal({
+function ModalWarningRhg({
   t,
   open,
   onClose,
@@ -61,7 +61,7 @@ function RhgWarningModal({
   )
 }
 
-function UnsavedChangesModal({
+function ModalChangesUnsaved({
   t,
   open,
   onClose,
@@ -96,7 +96,7 @@ function UnsavedChangesModal({
   )
 }
 
-function ResetConfirmSheet({
+function SheetConfirmReset({
   t,
   open,
   onClose,
@@ -171,7 +171,7 @@ function ResetConfirmSheet({
   )
 }
 
-function NoChangesModal({
+function ModalChangesNone({
   t,
   open,
   onClose,
@@ -189,7 +189,7 @@ function NoChangesModal({
   )
 }
 
-function FiestaConfirmModal({
+function ModalConfirmFiesta({
   t,
   open,
   onClose,
@@ -218,7 +218,7 @@ function FiestaConfirmModal({
   )
 }
 
-export default function SettingsModals({
+export default function ManagerModalsSheets({
   t,
   privacyOpen,
   privacyCollapsed,
@@ -244,7 +244,7 @@ export default function SettingsModals({
 }) {
   return (
     <>
-      <PrivacySheet
+      <SheetPrivacy
         t={t}
         open={privacyOpen}
         onClose={onPrivacyClose}
@@ -253,14 +253,14 @@ export default function SettingsModals({
         privacyButtonRef={privacyButtonRef}
       />
 
-      <RhgWarningModal
+      <ModalWarningRhg
         t={t}
         open={rhgPending}
         onClose={onRhgClose}
         onUseAnyway={onRhgUseAnyway}
       />
 
-      <UnsavedChangesModal
+      <ModalChangesUnsaved
         t={t}
         open={unsavedOpen}
         onClose={onUnsavedClose}
@@ -268,21 +268,21 @@ export default function SettingsModals({
         onDiscard={onUnsavedDiscard}
       />
 
-      <ResetConfirmSheet
+      <SheetConfirmReset
         t={t}
         open={resetConfirmOpen}
         onClose={onResetClose}
         onConfirm={onResetConfirm}
       />
 
-      <NoChangesModal
+      <ModalChangesNone
         t={t}
         open={noChangesOpen}
         onClose={onNoChangesClose}
         saveButtonRef={saveButtonRef}
       />
 
-      <FiestaConfirmModal
+      <ModalConfirmFiesta
         t={t}
         open={fiestaConfirmOpen}
         onClose={onFiestaClose}
