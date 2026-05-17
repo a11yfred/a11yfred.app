@@ -14,6 +14,12 @@ const randomAngle = () => Math.floor(Math.random() * 360)
 
 const SLIDES = [
   {
+    Icon: null,
+    headingKey: 'onboarding.welcome_heading',
+    bodyKey: 'onboarding.welcome_body',
+    isWelcome: true,
+  },
+  {
     Icon: Search,
     headingKey: 'onboarding.slide_1_heading',
     bodyKey: 'onboarding.slide_1_body',
@@ -46,7 +52,7 @@ export default function CarouselOnboarding({ onClose }) {
 
   const total = SLIDES.length
   const currentSlide = SLIDES[step]
-  const pageTitle = `${t('onboarding.heading')} | ${t(currentSlide.headingKey)}`
+  const pageTitle = currentSlide.isWelcome ? t('onboarding.welcome_heading') : t('onboarding.welcome_heading')
   usePageTitle(pageTitle)
   const isFirst = step === 0
   const isLast = step === total - 1
@@ -82,17 +88,23 @@ export default function CarouselOnboarding({ onClose }) {
       </div>
 
       <div className="onboarding-header">
-        <h1 id="onboarding-title" ref={titleRef} tabIndex={-1} className="onboarding-title">
+        <h1 id="onboarding-title" ref={titleRef} tabIndex={-1} className="onboarding-title" style={step === 0 ? { visibility: 'hidden', height: 0, margin: 0 } : {}}>
           {t('onboarding.heading')}
         </h1>
       </div>
 
       <div className="onboarding-content">
         <FadeTransition watchKey={step} className="onboarding-slide" direction={slideDir}>
-          <h2 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
-            <SlideIcon size={36} strokeWidth={1.5} className="onboarding-step-icon" aria-hidden="true" />
-            {t(slide.headingKey)}
-          </h2>
+          {slide.isWelcome ? (
+            <h1 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
+              {t(slide.headingKey)}
+            </h1>
+          ) : (
+            <h2 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
+              <SlideIcon size={36} strokeWidth={1.5} className="onboarding-step-icon" aria-hidden="true" />
+              {t(slide.headingKey)}
+            </h2>
+          )}
           <p className="onboarding-step-body">
             {t(slide.bodyKey)}
           </p>

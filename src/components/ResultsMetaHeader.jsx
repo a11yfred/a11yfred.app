@@ -1,4 +1,4 @@
-import { Link, Check, Filter, OctagonX, Trash2 } from 'lucide-react'
+import { Link, Check, Filter, OctagonX, Trash2, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import Button from './ui/Button.jsx'
 import Select from './ui/Select.jsx'
@@ -94,15 +94,15 @@ export default function ResultsMetaHeader({
             <p className="results-rank-hint">
               {showRankingSort && <>
                 {'Pin '}
-                <span className="rank-hint-icon" aria-hidden="true">📌</span>
+                <Pin size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' to show on every page. Star '}
-                <span className="rank-hint-icon" aria-hidden="true">⭐</span>
+                <Star size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' to always show first. Archive '}
-                <span className="rank-hint-icon" aria-hidden="true">📁</span>
+                <Archive size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' to always show last. Rank up '}
-                <span className="rank-hint-icon" aria-hidden="true">👍</span>
+                <ThumbsUp size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' or rank down '}
-                <span className="rank-hint-icon" aria-hidden="true">👎</span>
+                <ThumbsDown size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' to fine-tune the rest. Sort order is applied last. All actions can be '}
                 <a href="#/settings" className="rank-hint-link">{t('results.rank_hint_undone')}</a>
                 {'.'}
