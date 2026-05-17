@@ -4,6 +4,12 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## 2026-05-17 -- Phase 2 Hooks Integration Complete
+
+The AppContent refactor is finished. The two custom hooks extracted in Phase 1 (useRouteHandler and useSearchManager) are now fully integrated, eliminating all duplicate code from the original AppContent. The component went from 1336 lines down to approximately 730 lines by removing 602 lines of state declarations, handlers, and effects that are now owned by the hooks. This makes the code much easier to maintain and reason about -- each hook encapsulates a complete subsystem (routing + focus management, or search + filtering), and App.jsx orchestrates them together. Both lint and build pass; ready for browser testing.
+
+---
+
 ## 2026-05-16 -- Post-Launch Cleanup
 
 Large component refactoring pass completed: `A11yListResults` (869 lines) split into `A11yListResultCard`, `ResultsMetaHeader`, and `ResultsActiveFilterBar`; `A11yPanelSettings` (857 lines) split into `SettingsSectionAppearance`, `SettingsSectionSearch`, `SettingsSectionAi`, and `SettingsModals`. Label formatters extracted to `src/utils/labelFormatters.js`. Entry terminology standardized throughout codebase. Neighborly theme (warm Mr. Rogers/Daniel Tiger palette) completed on feature/neighborly-theme branch with full WCAG AA contrast compliance. feature/ulam branch deleted; all @ulam packages now imported from npm only. v0.1.0 GitHub release created with release notes.

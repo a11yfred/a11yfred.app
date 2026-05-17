@@ -6,6 +6,18 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 
 ---
 
+## 2026-05-17 -- Phase 2 Hooks Integration
+
+### App refactoring
+
+- `AppContent` refactored to integrate `useRouteHandler` and `useSearchManager` hooks (Phase 2)
+- Removed 602 lines of duplicate code (state declarations, handlers, useEffect blocks) from App.jsx
+- App component reduced from 1336 to ~730 lines with cleaner separation of concerns
+- Route management, entry history, focus restoration now fully encapsulated in useRouteHandler
+- Search state, filtering, sorting, URL sync now fully encapsulated in useSearchManager
+
+---
+
 ## 2026-05-16 -- Post-Launch Cleanup
 
 ### Component refactoring
