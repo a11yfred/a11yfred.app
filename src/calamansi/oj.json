@@ -384,6 +384,7 @@
   "results.platform_document": "Mazina'iganan eta",
   "results.sort_label": "Bimaajina'an",
   "results.sort_apply": "Bimaajina'an Odapinaaganan",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart_info": "Smart bimaajina'igewin ozhaawashkozi Severity niigaan, mii dash giin gechi-pi-izhi-ozhitooyan bimaajina'igewin. Waawaabiganed-ojiins apii niigaan waabandaagozid; Archived apii ishkweyaang waabandaagozid. Mii dash gaa-pi-izhiwebak bimaajina'igewin.",
   "results.sort_relevance": "Gichi-pi-inendaagwak",
   "results.sort_severity_desc": "Severity: Gichi-mamaajiiwin ishkwaa Mino-izhichigewin",

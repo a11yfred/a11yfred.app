@@ -386,6 +386,7 @@
   "results.platform_document": "Nur Dokumente",
   "results.sort_label": "Sortieren nach",
   "results.sort_apply": "Ergebnisse sortieren",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart_info": "Die intelligente Sortierung ordnet zuerst nach Schweregrad, dann nach Ihrer persönlichen Bewertungspunktzahl. Mit Stern markierte Einträge erscheinen immer oben; archivierte Einträge erscheinen immer unten. Dies ist die Standardsortierreihenfolge.",
   "results.sort_relevance": "Relevanz",
   "results.sort_severity_desc": "Schweregrad: Hoch bis Best Practice",

@@ -385,6 +385,7 @@
   "results.platform_document": "Mga Dokumento lamang",
   "results.sort_label": "I-sort pinaagi sa",
   "results.sort_apply": "I-sort ang mga Resulta",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart_info": "Ang Smart sorting nag-order pinaagi sa Severity una, dayon sa imong personal nga ranking score. Ang mga naka-star kanunay makita sa ibabaw; ang mga naka-archive kanunay makita sa ubos. Kini ang default nga sort order.",
   "results.sort_relevance": "Kalabotan",
   "results.sort_severity_desc": "Severity: Taas hangtod Best Practice",

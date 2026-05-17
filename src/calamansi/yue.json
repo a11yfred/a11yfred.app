@@ -389,6 +389,7 @@
   "results.platform_document": "僅限文件",
   "results.sort_label": "排序方式",
   "results.sort_apply": "套用排序",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "智能排序*",
   "results.sort_smart_info": "智能排序優先按嚴重程度排列，其次依據個人評分排序。已加星號的項目始終顯示於頂部；已封存的項目始終顯示於底部。此為預設排序方式。",
   "results.sort_relevance": "關聯性",

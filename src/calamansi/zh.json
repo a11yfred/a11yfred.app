@@ -385,6 +385,7 @@
   "results.platform_document": "仅文档",
   "results.sort_label": "排序方式",
   "results.sort_apply": "排序结果",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "智能*",
   "results.sort_smart_info": "智能排序按严重程度优先排列，然后按您的个人排名分数排列。已加星标的条目始终显示在顶部；已归档的条目始终显示在底部。这是默认排序顺序。",
   "results.sort_relevance": "相关性",

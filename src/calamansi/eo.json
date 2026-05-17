@@ -387,6 +387,7 @@
   "results.platform_document": "Nur dokumentoj",
   "results.sort_label": "Ordigi laŭ",
   "results.sort_apply": "Ordigi rezultojn",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Inteligenta*",
   "results.sort_smart_info": "Inteligenta ordigado ordigas unue laŭ graveco, poste laŭ via persona rangotaksado. Stelumitaj eroj ĉiam aperas supre; arkivitaj eroj ĉiam aperas malsupre. Ĉi tiu estas la defaŭlta ordigado.",
   "results.sort_relevance": "Relevanteco",

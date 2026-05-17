@@ -427,6 +427,7 @@
   "results.platform_web": "Web waters only",
   "results.platform_document": "Documents only, ye scallywag",
   "results.sort_apply": "Sort yer Results",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_severity_desc": "Severity: High Seas to Best Practice",
   "results.sort_severity_asc": "Severity: Best Practice to High Seas",
   "results.sort_platform": "Platform (All waters or Specific)",

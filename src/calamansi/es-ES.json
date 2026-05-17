@@ -387,6 +387,7 @@
   "results.platform_document": "Solo documentos",
   "results.sort_label": "Ordenar por",
   "results.sort_apply": "Ordenar resultados",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Inteligente*",
   "results.sort_smart_info": "La ordenación inteligente prioriza por gravedad y, a continuación, por tu puntuación de clasificación personal. Los elementos destacados siempre aparecen al principio; los archivados, siempre al final. Este es el orden de clasificación predeterminado.",
   "results.sort_relevance": "Relevancia",

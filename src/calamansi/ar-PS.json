@@ -388,6 +388,7 @@
   "results.platform_document": "المستندات بس",
   "results.sort_label": "رتّب حسب",
   "results.sort_apply": "رتّب النتايج",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "ذكي*",
   "results.sort_smart_info": "الترتيب الذكي بيرتّب حسب الخطورة أولًا، ثم حسب تقييمك الشخصي. العناصر المنجّمة بتظهر دايمًا في الأعلى؛ والمؤرشفة بتظهر دايمًا في الأسفل. هاد هو ترتيب الفرز الافتراضي.",
   "results.sort_relevance": "الصلة",

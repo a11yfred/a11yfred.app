@@ -387,6 +387,7 @@
   "results.platform_document": "Somente Documentos",
   "results.sort_label": "Ordenar por",
   "results.sort_apply": "Aplicar Ordenação",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Inteligente*",
   "results.sort_smart_info": "A ordenação inteligente prioriza por Gravidade e, em seguida, pela sua pontuação de classificação pessoal. Itens marcados com estrela sempre aparecem no topo; itens arquivados sempre aparecem no final. Esta é a ordenação padrão.",
   "results.sort_relevance": "Relevância",

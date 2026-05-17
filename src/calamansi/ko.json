@@ -387,6 +387,7 @@
   "results.platform_document": "문서 전용",
   "results.sort_label": "정렬 기준",
   "results.sort_apply": "결과 정렬",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "스마트*",
   "results.sort_smart_info": "스마트 정렬은 심각도를 우선으로, 그다음 개인 순위 점수를 기준으로 정렬합니다. 별표 항목은 항상 맨 위에, 보관된 항목은 항상 맨 아래에 표시됩니다. 이것이 기본 정렬 순서입니다.",
   "results.sort_relevance": "관련성",

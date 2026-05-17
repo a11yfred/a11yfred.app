@@ -392,6 +392,7 @@
   "results.platform_document": "ドキュメントのみ",
   "results.sort_label": "並び替え",
   "results.sort_apply": "結果を並び替える",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "スマート*",
   "results.sort_smart_info": "スマート並び替えは、まず重大度順、次にユーザーの個人ランキングスコア順に表示します。スター付きのアイテムは常に先頭に、アーカイブ済みのアイテムは常に末尾に表示されます。これがデフォルトの並び順です。",
   "results.sort_relevance": "関連度",

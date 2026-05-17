@@ -379,6 +379,7 @@
   "results.platform_document": "Tài liệu thôi",
   "results.sort_label": "Sắp theo",
   "results.sort_apply": "Sắp kết quả",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Thông minh*",
   "results.sort_smart_info": "Sắp xếp thông minh ưu tiên theo Mức độ nghiêm trọng trước, rồi theo điểm xếp hạng cá nhân của mày. Mục đánh dấu sao luôn hiện trên cùng; Mục lưu trữ luôn hiện dưới cùng. Đây là thứ tự sắp xếp mặc định.",
   "results.sort_relevance": "Độ liên quan",

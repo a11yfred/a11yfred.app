@@ -103,6 +103,7 @@
   "results.platform_document": "Documents only",
   "results.sort_label": "Sort by:",
   "results.sort_apply": "Sort Results",
+  "results.sorted_confirm": "Results Sorted",
   "results.sort_smart": "Default",
   "results.sort_smart_info": "Default sorting orders by Severity first, then by your personal ranking score. Starred items always appear at the top; Archived items always appear at the bottom.",
   "results.sort_relevance": "Relevance",

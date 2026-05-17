@@ -385,6 +385,7 @@
   "results.platform_document": "lipu taso",
   "results.sort_label": "o nanpa kepeken",
   "results.sort_apply": "o nanpa e awen",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "pona~*~",
   "results.sort_smart_info": "nasin nanpa pona li nanpa lon wan pi suli ike, la nanpa sina li kama. mute pi sitelen sewi li kama lon sewi a; mute pi pana tawa monsi li kama lon anpa a. ni li nasin nanpa sin.",
   "results.sort_relevance": "lon",

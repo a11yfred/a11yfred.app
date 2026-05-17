@@ -385,6 +385,7 @@
   "results.platform_document": "Documents dí kɛ",
   "results.sort_label": "Pɛ bɔɔ",
   "results.sort_apply": "Taari Pɛ",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart_info": "Smart sorting pɛ Severity bɔɔ tɔɔ, ní ŋmàn yɛɛ ranking score pú. Starred items nyí baa dɔɔ guu; Archived items nyí baa bɔŋ sɔɔ. Dís ní sort order bɔŋ-ŋ.",
   "results.sort_severity_desc": "Severity: High daa Best Practice",
   "results.sort_severity_asc": "Severity: Best Practice daa High",

@@ -385,6 +385,7 @@
   "results.platform_document": "केवल दस्तावेज़",
   "results.sort_label": "इसके अनुसार क्रमबद्ध करें",
   "results.sort_apply": "परिणाम क्रमबद्ध करें",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "स्मार्ट*",
   "results.sort_smart_info": "स्मार्ट क्रमबद्धता पहले गंभीरता के अनुसार, फिर आपके व्यक्तिगत रैंकिंग स्कोर के अनुसार क्रम निर्धारित करती है। तारांकित आइटम हमेशा शीर्ष पर दिखते हैं; संग्रहीत आइटम हमेशा अंत में दिखते हैं। यह डिफ़ॉल्ट क्रमबद्धता है।",
   "results.sort_relevance": "प्रासंगिकता",

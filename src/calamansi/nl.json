@@ -392,6 +392,7 @@
   "results.platform_document": "Alleen documenten",
   "results.sort_label": "Sorteren op",
   "results.sort_apply": "Resultaten sorteren",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Slim*",
   "results.sort_smart_info": "Slim sorteren ordent eerst op ernst, daarna op uw persoonlijke rangschikkingsscore. Gemarkeerde items verschijnen altijd bovenaan; gearchiveerde items verschijnen altijd onderaan. Dit is de standaard sorteervolgorde.",
   "results.sort_relevance": "Relevantie",

@@ -386,6 +386,7 @@
   "results.platform_document": "Només documents",
   "results.sort_label": "Ordena per",
   "results.sort_apply": "Aplica l'ordre",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Intel·ligent*",
   "results.sort_smart_info": "L'ordenació intel·ligent ordena primer per gravetat i després per la vostra puntuació personal. Els elements destacats sempre apareixen al principi; els elements arxivats sempre apareixen al final. Aquest és l'ordre d'ordenació predeterminat.",
   "results.sort_relevance": "Rellevància",

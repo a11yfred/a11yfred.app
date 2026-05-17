@@ -387,6 +387,7 @@
   "results.platform_document": "Dokumentuak soilik",
   "results.sort_label": "Ordenatu honen arabera",
   "results.sort_apply": "Ordenatu emaitzak",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Adimentsua*",
   "results.sort_smart_info": "Ordenaketa adimendunak larritasunaren arabera ordenatzen du lehenik, eta ondoren zure puntuazio pertsonalaren arabera. Izardunek beti agertzen dira goialdean; artxibatutako elementuak beti agertzen dira behealdean. Hau da lehenetsitako ordenaketa.",
   "results.sort_relevance": "Garrantzia",

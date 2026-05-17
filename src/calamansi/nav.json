@@ -386,6 +386,7 @@
   "results.platform_document": "Mga Dokumento la",
   "results.sort_label": "I-sort ha",
   "results.sort_apply": "I-sort an mga Resulta",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart_info": "An Smart sorting nag-aayos ha Severity anay, dayon ha imo personal nga ranking score. An mga naka-star pirme nagatunganga; an mga Archived pirme naabot ha ubos. Amo ini an default nga sort order.",
   "results.sort_severity_desc": "Severity: Taas ngadto ha Best Practice",
   "results.sort_severity_asc": "Severity: Best Practice ngadto ha Taas",

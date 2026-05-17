@@ -377,6 +377,7 @@
   "results.platform_document": "Hanífa Documents",
   "results.sort_label": "Sort gorí diyá",
   "results.sort_apply": "Results Sort Gorí",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart_info": "Smart sorting awalé Severity diyá order gorê, tarpor tuáñar nijja ranking score diyá. Starred item hamesha upore ásê; Archived item hamesha niche ásê. Iá default sort order.",
   "results.sort_severity_desc": "Severity: High tuñí Best Practice",
   "results.sort_severity_asc": "Severity: Best Practice tuñí High",

@@ -151,8 +151,9 @@ export default function ResultsMetaHeader({
                         setSortFlash(true)
                         setTimeout(() => setSortFlash(false), SORT_FLASH_MS)
                       }}
+                      icon={sortFlash ? <Check size={16} aria-hidden="true" /> : undefined}
                     >
-                      {t('results.sort_apply')}
+                      {sortFlash ? t('results.sorted_confirm') : t('results.sort_apply')}
                     </Button>
                   )}
                 </div>

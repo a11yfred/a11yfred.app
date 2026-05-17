@@ -386,6 +386,7 @@
   "results.platform_document": "Documents seulement",
   "results.sort_label": "Trier par",
   "results.sort_apply": "Trier les résultats",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Intelligent*",
   "results.sort_smart_info": "Le tri intelligent classe les résultats par gravité en premier, puis selon votre score de classement personnel. Les éléments marqués d'une étoile apparaissent toujours en tête; les éléments archivés apparaissent toujours en bas. Il s'agit de l'ordre de tri par défaut.",
   "results.sort_relevance": "Pertinence",

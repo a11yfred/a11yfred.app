@@ -392,6 +392,7 @@
   "results.platform_document": "Endast dokument",
   "results.sort_label": "Sortera efter",
   "results.sort_apply": "Sortera resultat",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart_info": "Smart sortering ordnar efter allvarlighetsgrad först, sedan efter ditt personliga rankningspoäng. Stjärnmarkerade objekt visas alltid överst; arkiverade objekt visas alltid underst. Detta är standardsorteringsordningen.",
   "results.sort_relevance": "Relevans",
   "results.sort_severity_desc": "Allvarlighetsgrad: Hög till bästa praxis",

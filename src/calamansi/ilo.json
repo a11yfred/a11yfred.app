@@ -382,6 +382,7 @@
   "results.platform_document": "Dagiti Dokumento laeng",
   "results.sort_label": "Isortear basar iti",
   "results.sort_apply": "Isortear Dagiti Resulta",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart_info": "Nagsortear ti Smart basar iti Severity iti umuna, kalpasanna basar iti personal a ranking score mo. Nagimon lagi dagiti starred a banag iti ngato; nagimon lagi dagiti archived a banag iti rikus. Daytoy ti default a sort order.",
   "results.sort_severity_desc": "Severity: Nakalawa agingga iti Best Practice",
   "results.sort_severity_asc": "Severity: Best Practice agingga iti Nakalawa",

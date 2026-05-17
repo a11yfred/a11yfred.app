@@ -385,6 +385,7 @@
   "results.platform_document": "Mga Dokumento lamang",
   "results.sort_label": "Uriin ayon sa",
   "results.sort_apply": "Uriin ang mga Resulta",
+  "results.sorted_confirm": "Results sorted",
   "results.sort_smart": "Matalino*",
   "results.sort_smart_info": "Inuuri ng Smart sorting ayon sa Severity muna, pagkatapos ay ayon sa iyong personal na ranking score. Ang mga may bituin ay laging nasa itaas; ang mga naka-archive ay laging nasa ibaba. Ito ang default na pagkakasunod ng pag-uuri.",
   "results.sort_relevance": "Kaugnayan",
