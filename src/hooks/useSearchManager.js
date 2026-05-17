@@ -405,24 +405,11 @@ export default function useSearchManager({
   }
 
   function handleBadgeClick(filter) {
-    let searchQuery = ''
-    if (filter) {
-      if (filter.type === 'severity') {
-        const p = SEVERITY_VARS[filter.value]
-        searchQuery = p ? t(p.key) : filter.value
-      } else if (filter.type === 'wcag') {
-        searchQuery = `WCAG ${filter.value}`
-      } else if (filter.type === 'wcag-level') {
-        searchQuery = `Level ${filter.value}`
-      } else {
-        searchQuery = filter.value
-      }
-    }
     setBadgeFilter(filter)
-    setQuery(searchQuery)
-    setSubmittedQuery(searchQuery)
+    setQuery('')
+    setSubmittedQuery('')
     syncBadgeUrl(filter)
-    syncSearchUrl(searchQuery)
+    syncSearchUrl('')
     navigate('/')
     setTimeout(() => searchInputRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
   }
