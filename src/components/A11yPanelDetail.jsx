@@ -197,10 +197,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                 onClick={() => {
                   const heading = document.querySelector('.source-links__heading')
                   if (heading) {
-                    setTimeout(() => {
-                      heading.focus()
-                      heading.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                    }, 50)
+                    heading.focus()
                   }
                 }}
                 aria-label={t('detail.sources_badge_multiple_aria')}
