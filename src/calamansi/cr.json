@@ -424,7 +424,7 @@
   "detail.copy_title_aria": "Masinipayihtâ isiyîhkâsowin",
   "detail.sc_label": "Kâ-Pîkiskâtamihk Tâpwêwin",
   "detail.copy_sc_aria": "Masinipayihtâ kâ-pîkiskâtamihk tâpwêwin",
-  "detail.sources_badge_single_prefix": "Ohci:",
+  "detail.sources_badge_single_prefix": "Ohci: ",
   "detail.sources_badge_multiple": "Ohcihiwêwina: Mihcêt (Nôhcihk Wâpamêk)",
   "detail.sources_badge_multiple_aria": "Ohcihiwêwina: Mihcêt. Nôhcihk wâpamêk masinahikanisa.",
   "detail.sc_failed": "SC Kâ-Wanisihk:",

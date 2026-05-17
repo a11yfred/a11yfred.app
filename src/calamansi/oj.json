@@ -421,7 +421,7 @@
   "detail.copy_title_aria": "Adoopinan izhinikaazwin",
   "detail.sc_label": "Minochigewin Odaapinigan",
   "detail.copy_sc_aria": "Adoopinan minochigewin odaapinigan",
-  "detail.sources_badge_single_prefix": "Mazinaakizan:",
+  "detail.sources_badge_single_prefix": "Mazinaakizan: ",
   "detail.sources_badge_multiple": "Mazinaakizanag: Misi'aawiziwin (Waabamaag Aaniin)",
   "detail.sources_badge_multiple_aria": "Mazinaakizanag: Misi'aawiziwin. Waabamaag aabiding mazinaakizanag.",
   "detail.sc_failed": "SC Gagiibiinizi:",

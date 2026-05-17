@@ -428,7 +428,7 @@
   "detail.copy_title_aria": "Kopii titolon",
   "detail.sc_label": "Sukceskritero",
   "detail.copy_sc_aria": "Kopii sukcesriteron",
-  "detail.sources_badge_single_prefix": "Fonto:",
+  "detail.sources_badge_single_prefix": "Fonto: ",
   "detail.sources_badge_multiple": "Fontoj: Multoblaj (Vidu Sube)",
   "detail.sources_badge_multiple_aria": "Fontoj: Multoblaj. Vidu referencojn sube.",
   "detail.sc_failed": "SC Malsukcesis:",

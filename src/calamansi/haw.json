@@ -426,7 +426,7 @@
   "detail.copy_title_aria": "E kope i ka inoa",
   "detail.sc_label": "Criterion o ka Holomua",
   "detail.copy_sc_aria": "E kope i ke criterion o ka holomua",
-  "detail.sources_badge_single_prefix": "Kumu:",
+  "detail.sources_badge_single_prefix": "Kumu: ",
   "detail.sources_badge_multiple": "Nā Kumu: Lehulehu (E ʻike ma lalo)",
   "detail.sources_badge_multiple_aria": "Nā Kumu: Lehulehu. E ʻike i nā kūmole ma lalo.",
   "detail.sc_failed": "SC Hāʻule:",

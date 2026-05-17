@@ -420,7 +420,7 @@
   "detail.copy_title_aria": "Tana kopina",
   "detail.sc_label": "Pakala Timangkati",
   "detail.copy_sc_aria": "Pakala timangkati kopina",
-  "detail.sources_badge_single_prefix": "Mina:",
+  "detail.sources_badge_single_prefix": "Mina: ",
   "detail.sources_badge_multiple": "Minayna: Larapuna (Makalayi)",
   "detail.sources_badge_multiple_aria": "Minayna: Larapuna. Makalayi timangkatiti.",
   "detail.sc_failed": "SC Palawa:",

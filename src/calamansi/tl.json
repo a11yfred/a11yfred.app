@@ -422,7 +422,7 @@
   "detail.title_label": "Pamagat",
   "detail.copy_title_aria": "Kopyahin ang pamagat",
   "detail.copy_sc_aria": "Kopyahin ang success criterion",
-  "detail.sources_badge_single_prefix": "Pinagmulan:",
+  "detail.sources_badge_single_prefix": "Pinagmulan: ",
   "detail.sources_badge_multiple": "Mga Pinagmulan: Marami (Tingnan sa Ibaba)",
   "detail.sources_badge_multiple_aria": "Mga Pinagmulan: Marami. Tingnan ang mga sanggunian sa ibaba.",
   "detail.related_sc": "Kaugnay na SC:",

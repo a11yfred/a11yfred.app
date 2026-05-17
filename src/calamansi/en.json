@@ -206,7 +206,7 @@
   "detail.copy_title_aria": "Copy title",
   "detail.sc_label": "Success Criterion",
   "detail.copy_sc_aria": "Copy success criterion",
-  "detail.sources_badge_single_prefix": "Source:",
+  "detail.sources_badge_single_prefix": "Source:  ",
   "detail.sources_badge_multiple": "Sources: Multiple (See Below)",
   "detail.sources_badge_multiple_aria": "Sources: Multiple. See references below.",
   "detail.sc_failed": "SC Failed:",

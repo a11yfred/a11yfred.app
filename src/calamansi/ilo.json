@@ -417,7 +417,7 @@
   "detail.copy_title_aria": "Kopyaen ti titulo",
   "detail.sc_label": "Pamantayan ti Tagumpay",
   "detail.copy_sc_aria": "Kopyaen ti pamantayan ti tagumpay",
-  "detail.sources_badge_single_prefix": "Pinagmulaan:",
+  "detail.sources_badge_single_prefix": "Pinagmulaan: ",
   "detail.sources_badge_multiple": "Pinagmulaan: Adu (Kitaen ti Baba)",
   "detail.sources_badge_multiple_aria": "Pinagmulaan: Adu. Kitaen ti mga reperensya ti baba.",
   "detail.sc_failed": "SC Nabigo:",

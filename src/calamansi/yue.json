@@ -428,7 +428,7 @@
   "detail.copy_title_aria": "複製標題",
   "detail.sc_label": "成功標準",
   "detail.copy_sc_aria": "複製成功標準",
-  "detail.sources_badge_single_prefix": "來源：",
+  "detail.sources_badge_single_prefix": "來源： ",
   "detail.sources_badge_multiple": "來源：多項（見下方）",
   "detail.sources_badge_multiple_aria": "來源：多項。請參閱下方參考資料。",
   "detail.sc_failed": "SC 未達標：",

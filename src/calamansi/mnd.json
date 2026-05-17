@@ -427,7 +427,7 @@
   "detail.copy_title_aria": "शीर्षक कॉपी करें",
   "detail.sc_label": "सफलता मापदंड",
   "detail.copy_sc_aria": "सफलता मापदंड कॉपी करें",
-  "detail.sources_badge_single_prefix": "स्रोत:",
+  "detail.sources_badge_single_prefix": "स्रोत: ",
   "detail.sources_badge_multiple": "स्रोत: एकाधिक (नीचे देखें)",
   "detail.sources_badge_multiple_aria": "स्रोत: एकाधिक। नीचे संदर्भ देखें।",
   "detail.sc_failed": "SC विफल:",

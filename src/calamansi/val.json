@@ -426,7 +426,7 @@
   "detail.copy_title_aria": "Copiar títol",
   "detail.sc_label": "Criteri d'èxit",
   "detail.copy_sc_aria": "Copiar criteri d'èxit",
-  "detail.sources_badge_single_prefix": "Font:",
+  "detail.sources_badge_single_prefix": "Font: ",
   "detail.sources_badge_multiple": "Fonts: Múltiples (vegeu a baix)",
   "detail.sources_badge_multiple_aria": "Fonts: Múltiples. Vegeu les referències a baix.",
   "detail.sc_failed": "SC fallat:",

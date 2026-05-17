@@ -428,7 +428,7 @@
   "detail.copy_title_aria": "Tāruarua taitara",
   "detail.sc_label": "Paearu Angitu",
   "detail.copy_sc_aria": "Tāruarua paearu angitu",
-  "detail.sources_badge_single_prefix": "Puna:",
+  "detail.sources_badge_single_prefix": "Puna: ",
   "detail.sources_badge_multiple": "Puna: Maha (Tirohia ki Raro)",
   "detail.sources_badge_multiple_aria": "Puna: Maha. Tirohia ngā tohutoro ki raro.",
   "detail.sc_failed": "SC I Hapa:",

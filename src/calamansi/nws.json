@@ -418,7 +418,7 @@
   "detail.copy_title_aria": "Kopi titel",
   "detail.sc_label": "Suksess Kriterion",
   "detail.copy_sc_aria": "Kopi suksess kriterion",
-  "detail.sources_badge_single_prefix": "Sors:",
+  "detail.sources_badge_single_prefix": "Sors: ",
   "detail.sources_badge_multiple": "Sorsez: Multpl (Si Belo)",
   "detail.sources_badge_multiple_aria": "Sorsez: Multpl. Si referensez belo.",
   "detail.sc_failed": "SC Feild:",

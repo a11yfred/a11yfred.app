@@ -426,7 +426,7 @@
   "detail.copy_title_aria": "Kopi taitel",
   "detail.sc_label": "Sakes Kraiterion",
   "detail.copy_sc_aria": "Kopi sakes kraiterion",
-  "detail.sources_badge_single_prefix": "Sos:",
+  "detail.sources_badge_single_prefix": "Sos: ",
   "detail.sources_badge_multiple": "Sos: Meni (Luk Bilo)",
   "detail.sources_badge_multiple_aria": "Sos: Meni. Luk referens bilo.",
   "detail.sc_failed": "SC Feil:",

@@ -422,7 +422,7 @@
   "detail.copy_title_aria": "Kopyaha ang titulo",
   "detail.sc_label": "Sukdanan sa Kalampusan",
   "detail.copy_sc_aria": "Kopyaha ang sukdanan sa kalampusan",
-  "detail.sources_badge_single_prefix": "Tinubdan:",
+  "detail.sources_badge_single_prefix": "Tinubdan: ",
   "detail.sources_badge_multiple": "Mga Tinubdan: Daghana (Tan-awa sa Ubos)",
   "detail.sources_badge_multiple_aria": "Mga Tinubdan: Daghana. Tan-awa ang mga reperensya sa ubos.",
   "detail.sc_failed": "SC Napakyas:",

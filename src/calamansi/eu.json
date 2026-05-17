@@ -426,7 +426,7 @@
   "detail.copy_title_aria": "Kopiatu izenburua",
   "detail.sc_label": "Arrakasta-irizpidea",
   "detail.copy_sc_aria": "Kopiatu arrakasta-irizpidea",
-  "detail.sources_badge_single_prefix": "Iturria:",
+  "detail.sources_badge_single_prefix": "Iturria: ",
   "detail.sources_badge_multiple": "Iturriak: Anitzak (ikusi behean)",
   "detail.sources_badge_multiple_aria": "Iturriak: Anitzak. Ikusi beheko erreferentziak.",
   "detail.sc_failed": "SC huts eginda:",

@@ -427,7 +427,7 @@
   "detail.copy_title_aria": "Copiar título",
   "detail.sc_label": "Criterio de éxito",
   "detail.copy_sc_aria": "Copiar criterio de éxito",
-  "detail.sources_badge_single_prefix": "Fuente:",
+  "detail.sources_badge_single_prefix": "Fuente: ",
   "detail.sources_badge_multiple": "Fuentes: Múltiples (ver más abajo)",
   "detail.sources_badge_multiple_aria": "Fuentes: Múltiples. Ver referencias más abajo.",
   "detail.sc_failed": "SC fallido:",

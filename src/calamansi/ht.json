@@ -427,7 +427,7 @@
   "detail.copy_title_aria": "Kopye tit la",
   "detail.sc_label": "Kritè Siksè",
   "detail.copy_sc_aria": "Kopye kritè siksè a",
-  "detail.sources_badge_single_prefix": "Sous:",
+  "detail.sources_badge_single_prefix": "Sous: ",
   "detail.sources_badge_multiple": "Sous: Plizyè (Gade Pi Ba)",
   "detail.sources_badge_multiple_aria": "Sous: Plizyè. Gade referans yo pi ba.",
   "detail.sc_failed": "SC Ki Echwe:",

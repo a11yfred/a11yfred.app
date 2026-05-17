@@ -430,7 +430,7 @@
   "detail.copy_title_aria": "タイトルをコピー",
   "detail.sc_label": "達成基準",
   "detail.copy_sc_aria": "達成基準をコピー",
-  "detail.sources_badge_single_prefix": "出典：",
+  "detail.sources_badge_single_prefix": "出典： ",
   "detail.sources_badge_multiple": "出典：複数（以下を参照）",
   "detail.sources_badge_multiple_aria": "出典：複数。以下の参考文献を参照してください。",
   "detail.sc_failed": "不適合SC：",

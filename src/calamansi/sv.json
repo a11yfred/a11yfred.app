@@ -429,7 +429,7 @@
   "detail.copy_title_aria": "Kopiera titel",
   "detail.sc_label": "Framgångskriterium",
   "detail.copy_sc_aria": "Kopiera framgångskriterium",
-  "detail.sources_badge_single_prefix": "Källa:",
+  "detail.sources_badge_single_prefix": "Källa: ",
   "detail.sources_badge_multiple": "Källor: Flera (se nedan)",
   "detail.sources_badge_multiple_aria": "Källor: Flera. Se referenser nedan.",
   "detail.sc_failed": "SC misslyckat:",

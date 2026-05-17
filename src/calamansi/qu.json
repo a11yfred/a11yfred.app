@@ -423,7 +423,7 @@
   "detail.copy_title_aria": "Sut'ita copiaray",
   "detail.sc_label": "Allin Kanampaq Takiy",
   "detail.copy_sc_aria": "Allin kanampaq takiyta copiaray",
-  "detail.sources_badge_single_prefix": "Puqyu:",
+  "detail.sources_badge_single_prefix": "Puqyu: ",
   "detail.sources_badge_multiple": "Puqyukuna: Achkha (Uraypi Qhawaray)",
   "detail.sources_badge_multiple_aria": "Puqyukuna: Achkha. Uraypi referenciakuna qhawaray.",
   "detail.sc_failed": "SC Mana Atisqa:",

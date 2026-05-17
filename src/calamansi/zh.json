@@ -423,7 +423,7 @@
   "detail.copy_title_aria": "复制标题",
   "detail.sc_label": "成功标准",
   "detail.copy_sc_aria": "复制成功标准",
-  "detail.sources_badge_single_prefix": "来源：",
+  "detail.sources_badge_single_prefix": "来源： ",
   "detail.sources_badge_multiple": "来源：多个（见下方）",
   "detail.sources_badge_multiple_aria": "来源：多个。请参阅下方参考资料。",
   "detail.sc_failed": "SC 未通过：",

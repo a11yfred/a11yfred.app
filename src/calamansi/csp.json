@@ -425,7 +425,7 @@
   "detail.copy_title_aria": "Kopiraj naslov",
   "detail.sc_label": "Kriterij Uspjeha",
   "detail.copy_sc_aria": "Kopiraj kriterij uspjeha",
-  "detail.sources_badge_single_prefix": "Izvor:",
+  "detail.sources_badge_single_prefix": "Izvor: ",
   "detail.sources_badge_multiple": "Izvori: Više (Vidi Ispod)",
   "detail.sources_badge_multiple_aria": "Izvori: Više. Vidi reference ispod.",
   "detail.sc_failed": "SC Nije Zadovoljen:",

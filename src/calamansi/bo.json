@@ -428,7 +428,7 @@
   "detail.copy_title_aria": "མིང་བྱང་མཐུན་སྦྱར་བྱེད།",
   "detail.sc_label": "གྲུབ་འབྲས་ཚད་གཞི།",
   "detail.copy_sc_aria": "གྲུབ་འབྲས་ཚད་གཞི་མཐུན་སྦྱར་བྱེད།",
-  "detail.sources_badge_single_prefix": "འབྱུང་ཁུངས།:",
+  "detail.sources_badge_single_prefix": "འབྱུང་ཁུངས།: ",
   "detail.sources_badge_multiple": "འབྱུང་ཁུངས།: མང་པོ་ (གཤམ་གྱི་སྔར་ལྟ།)",
   "detail.sources_badge_multiple_aria": "འབྱུང་ཁུངས།: མང་པོ། གཤམ་གྱི་གཞིར་བྱས་ཀྱི་ཡིག་ཆ་ལྟོས།",
   "detail.sc_failed": "SC ཕམ་ཉེས།:",

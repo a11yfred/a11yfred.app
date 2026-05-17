@@ -426,7 +426,7 @@
   "detail.copy_title_aria": "ماۋزۇنى كۆچۈر",
   "detail.sc_label": "مۇۋەففەقىيەت ئۆلچىمى",
   "detail.copy_sc_aria": "مۇۋەففەقىيەت ئۆلچىمىنى كۆچۈر",
-  "detail.sources_badge_single_prefix": "مەنبە:",
+  "detail.sources_badge_single_prefix": "مەنبە: ",
   "detail.sources_badge_multiple": "مەنبەلەر: كۆپ خىل (تۆۋەندە كۆرۈڭ)",
   "detail.sources_badge_multiple_aria": "مەنبەلەر: كۆپ خىل. تۆۋەندىكى پايدىلانمىلارغا قاراڭ.",
   "detail.sc_failed": "SC مەغلۇپ بولدى:",

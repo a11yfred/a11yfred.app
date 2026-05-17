@@ -423,7 +423,7 @@
   "detail.copy_title_aria": "Titel koperen",
   "detail.sc_label": "Erfolgskriterium",
   "detail.copy_sc_aria": "Erfolgskriterium koperen",
-  "detail.sources_badge_single_prefix": "Bron:",
+  "detail.sources_badge_single_prefix": "Bron: ",
   "detail.sources_badge_multiple": "Bronnen: Mehrere (Süh Nerrn)",
   "detail.sources_badge_multiple_aria": "Bronnen: Mehrere. Süh Referenzen nerrn.",
   "detail.sc_failed": "SC Faolt:",

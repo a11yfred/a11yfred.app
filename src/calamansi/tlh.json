@@ -424,7 +424,7 @@
   "detail.copy_title_aria": "pong tIngDaq yIchegh",
   "detail.sc_label": "Qapbogh mu'tlhegh",
   "detail.copy_sc_aria": "Qapbogh mu'tlhegh tIngDaq yIchegh",
-  "detail.sources_badge_single_prefix": "pagh:",
+  "detail.sources_badge_single_prefix": "pagh: ",
   "detail.sources_badge_multiple": "paghmey: law' (tlhab bIngDaq legh)",
   "detail.sources_badge_multiple_aria": "paghmey: law'. bIngDaq Dochmeymey yIlegh.",
   "detail.sc_failed": "SC Qapbe'pu':",

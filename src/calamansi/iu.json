@@ -424,7 +424,7 @@
   "detail.copy_title_aria": "ᐊᑎᖓ ᑐᒃᓯᕋᕈᑎᒃ",
   "detail.sc_label": "ᐱᕚᓪᓕᖅᑎᑦᑎᔪᖅ ᐊᖏᖅᑕᐅᓯᒪᔪᖅ",
   "detail.copy_sc_aria": "ᐱᕚᓪᓕᖅᑎᑦᑎᔪᖅ ᐊᖏᖅᑕᐅᓯᒪᔪᖅ ᑐᒃᓯᕋᕈᑎᒃ",
-  "detail.sources_badge_single_prefix": "ᐊᑐᖅᑕᐅᔪᖅ:",
+  "detail.sources_badge_single_prefix": "ᐊᑐᖅᑕᐅᔪᖅ: ",
   "detail.sources_badge_multiple": "ᐊᑐᖅᑕᐅᔪᑦ: ᐊᒥᓱᑦ (ᐅᕗᖓ ᑕᑯᒍᓐᓇᖅᑐᑦ)",
   "detail.sources_badge_multiple_aria": "ᐊᑐᖅᑕᐅᔪᑦ: ᐊᒥᓱᑦ. ᐊᑐᖅᑕᐅᔪᑦ ᐅᕗᙵᓗᒋᑦ ᑕᑯᒍᓐᓇᖅᑐᑦ.",
   "detail.sc_failed": "SC ᐊᔪᖅᓯᒪᔪᖅ:",

@@ -425,7 +425,7 @@
   "detail.copy_title_aria": "Sao chép tiêu đề",
   "detail.sc_label": "Tiêu chí thành công",
   "detail.copy_sc_aria": "Sao chép tiêu chí thành công",
-  "detail.sources_badge_single_prefix": "Nguồn:",
+  "detail.sources_badge_single_prefix": "Nguồn: ",
   "detail.sources_badge_multiple": "Nguồn: Nhiều nguồn (Xem bên dưới)",
   "detail.sources_badge_multiple_aria": "Nguồn: Nhiều nguồn. Xem tài liệu tham khảo bên dưới.",
   "detail.sc_failed": "SC không đạt:",

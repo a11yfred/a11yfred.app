@@ -425,7 +425,7 @@
   "detail.copy_title_aria": "Gonathra eneth",
   "detail.sc_label": "Thavron Maed",
   "detail.copy_sc_aria": "Gonathra thavron maed",
-  "detail.sources_badge_single_prefix": "Cân:",
+  "detail.sources_badge_single_prefix": "Cân: ",
   "detail.sources_badge_multiple": "Câni: Nîdh (Ceno Teitho)",
   "detail.sources_badge_multiple_aria": "Câni: Nîdh. Ceno i nîdh teitho.",
   "detail.sc_failed": "SC Dannen:",

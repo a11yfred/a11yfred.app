@@ -420,7 +420,7 @@
   "detail.title_label": "ခေါင်ꩻစဥ်ႏ",
   "detail.copy_title_aria": "ခေါင်ꩻစဥ်ႏ ကူꩻ",
   "detail.copy_sc_aria": "Success criterion ကူꩻ",
-  "detail.sources_badge_single_prefix": "ရပ်ကွက်ႏ:",
+  "detail.sources_badge_single_prefix": "ရပ်ကွက်ႏ: ",
   "detail.sources_badge_multiple": "ရပ်ကွက်ႏတန်ꩻ: တခြောင်ꩻ (အောက်မꩻ ကြည့်ꩻ)",
   "detail.sources_badge_multiple_aria": "ရပ်ကွက်ႏတန်ꩻ: တခြောင်ꩻ။ အောက်မꩻ ကိုးကားꩻ ကြည့်ꩻ။",
   "detail.sc_failed": "SC မထောင်ꩻ:",

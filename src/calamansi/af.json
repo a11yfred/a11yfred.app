@@ -426,7 +426,7 @@
   "detail.copy_title_aria": "Kopieer titel",
   "detail.sc_label": "Sukseskriterium",
   "detail.copy_sc_aria": "Kopieer sukseskriterium",
-  "detail.sources_badge_single_prefix": "Bron:",
+  "detail.sources_badge_single_prefix": "Bron: ",
   "detail.sources_badge_multiple": "Bronne: Meervoudig (Sien Onder)",
   "detail.sources_badge_multiple_aria": "Bronne: Meervoudig. Sien verwysings hieronder.",
   "detail.sc_failed": "SK Misluk:",

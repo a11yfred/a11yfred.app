@@ -423,7 +423,7 @@
   "detail.copy_title_aria": "Titel kopieren",
   "detail.sc_label": "Erfolgskriterium",
   "detail.copy_sc_aria": "Erfolgskriterium kopieren",
-  "detail.sources_badge_single_prefix": "Quelle:",
+  "detail.sources_badge_single_prefix": "Quelle: ",
   "detail.sources_badge_multiple": "Quellen: Mehrere (siehe unten)",
   "detail.sources_badge_multiple_aria": "Quellen: Mehrere. Siehe Referenzen unten.",
   "detail.sc_failed": "SC nicht bestanden:",

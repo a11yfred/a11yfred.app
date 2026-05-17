@@ -426,7 +426,7 @@
   "detail.copy_title_aria": "o pana e nimi",
   "detail.sc_label": "Lawa pi Pona Lon",
   "detail.copy_sc_aria": "o pana e lawa pi pona lon",
-  "detail.sources_badge_single_prefix": "Tan:",
+  "detail.sources_badge_single_prefix": "Tan: ",
   "detail.sources_badge_multiple": "Tan: Mute (lukin lon anpa)",
   "detail.sources_badge_multiple_aria": "Tan: Mute. o lukin e ijo tan lon anpa.",
   "detail.sc_failed": "SC li pakala:",
