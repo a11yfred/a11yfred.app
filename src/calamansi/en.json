@@ -412,6 +412,7 @@
   "settings.model_label": "Model",
   "settings.api_key_label_prefix": "API Key",
   "settings.api_key_required": "(required)",
+  "settings.provider_error": "Error: Provider is required when AI Assist is enabled.",
   "settings.api_key_error": "Error: API key is required when AI Assist is enabled.",
   "settings.api_placeholder_anthropic": "sk-ant-…",
   "settings.api_placeholder_openai": "sk-…",

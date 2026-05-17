@@ -141,7 +141,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
 
   // Scroll to and focus the first invalid field when errors change
   useEffect(() => {
-    if (!errors.apiKey) return
+    if (!errors.provider && !errors.apiKey) return
     const el = settingsPanelRef.current?.querySelector('[aria-invalid="true"]')
     if (!el) return
     el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -158,7 +158,12 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
 
   const handleSave = () => {
-    if (pendingAiEnabled && !keys[activeProvider].trim() && !isLocalhost) {
+    if (pendingAiEnabled && !activeProvider) {
+      setErrors({ provider: true })
+      announce(t('settings.provider_error'), { priority: 'assertive' })
+      return
+    }
+    if (pendingAiEnabled && activeProvider && !keys[activeProvider]?.trim() && !isLocalhost) {
       setErrors({ apiKey: true })
       announce(t('settings.api_key_error'), { priority: 'assertive' })
       return

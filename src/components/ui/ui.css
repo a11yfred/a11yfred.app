@@ -97,6 +97,31 @@ select:focus-visible {
   border-radius: var(--radius-sm);
 }
 
+/* ─── aria-disabled state for form controls ──────────────────────────────── */
+
+input[aria-disabled="true"]:not([role="switch"]),
+textarea[aria-disabled="true"],
+select[aria-disabled="true"] {
+  color: var(--text-disabled);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input[aria-disabled="true"]:focus-visible,
+textarea[aria-disabled="true"]:focus-visible,
+select[aria-disabled="true"]:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input[aria-disabled="true"]:not([role="switch"]),
+  textarea[aria-disabled="true"],
+  select[aria-disabled="true"] {
+    opacity: 1;
+    background: var(--bg-subtle);
+  }
+}
+
 /* ─── Skip link ───────────────────────────────────────────── */
 
 .skip-link {
@@ -521,7 +546,7 @@ select:disabled {
   pointer-events: none;
 }
 
-.toggle:hover::before {
+.toggle:not([aria-disabled="true"]):hover::before {
   background: var(--bg-subtle);
 }
 
@@ -531,6 +556,10 @@ select:disabled {
   opacity: 0;
   cursor: pointer;
   z-index: 1;
+}
+
+.toggle[aria-disabled="true"] .toggle__input {
+  cursor: not-allowed;
 }
 
 .toggle__track {
@@ -549,9 +578,17 @@ select:disabled {
   border-color: var(--accent);
 }
 
-.toggle:hover:has(.toggle__input:checked) .toggle__track {
+[data-theme="dark"] .toggle:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--bg-subtle);
+}
+
+.toggle:not([aria-disabled="true"]):hover:has(.toggle__input:checked) .toggle__track {
   background: var(--accent-text);
   border-color: var(--accent-text);
+}
+
+[data-theme="dark"] .toggle:not([aria-disabled="true"]):hover:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--bg);
 }
 
 .toggle__thumb {
@@ -610,18 +647,6 @@ select:disabled {
   background: var(--text-heading);
 }
 
-.toggle:hover:not(:has(.toggle__input:checked)) .toggle__track {
-  background: var(--bg-subtle);
-}
-
-[data-theme="dark"] .toggle:not(:has(.toggle__input:checked)) .toggle__track {
-  background: var(--bg-subtle);
-}
-
-[data-theme="dark"] .toggle:hover:not(:has(.toggle__input:checked)) .toggle__track {
-  background: var(--bg);
-}
-
 .toggle__ring {
   display: block;
   width: 8px;
@@ -637,7 +662,7 @@ select:disabled {
 
 .toggle[aria-disabled="true"] {
   opacity: 0.5;
-  pointer-events: none;
+  cursor: not-allowed;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1140,20 +1165,6 @@ select:disabled {
   display: flex;
   align-items: center;
   transition: background-color var(--duration-fast);
-}
-
-.select--disabled {
-  color: var(--text-disabled);
-  cursor: not-allowed;
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .select--disabled {
-    opacity: 1;
-    background: var(--bg-subtle);
-  }
 }
 
 .select:focus-visible {
