@@ -44,6 +44,20 @@ export default function ResultsMetaHeader({
 
   if (hideCount && hideFilters) return null
 
+  const getSortInfo = () => {
+    const infoLabel = t('detail.note_label')
+    switch (sortBy) {
+      case 'smart':
+        return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_smart_info')}</InfoBox>
+      case 'wcag-level':
+        return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_wcag_level_info')}</InfoBox>
+      case 'popularity':
+        return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_popularity_info')}</InfoBox>
+      default:
+        return null
+    }
+  }
+
   return (
     <div className="results-meta">
       <>
@@ -75,13 +89,7 @@ export default function ResultsMetaHeader({
               </Button>
             )}
           </div>
-          {onSortChange && results.length > 0 && (() => {
-            const infoLabel = t('detail.note_label')
-            if (sortBy === 'smart') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_smart_info')}</InfoBox>
-            if (sortBy === 'wcag-level') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_wcag_level_info')}</InfoBox>
-            if (sortBy === 'popularity') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_popularity_info')}</InfoBox>
-            return null
-          })()}
+          {onSortChange && results.length > 0 && getSortInfo()}
           {onSortChange && results.length > 0 && (showRankingSort || liveSearch) && (
             <p className="results-rank-hint">
               {showRankingSort && <>

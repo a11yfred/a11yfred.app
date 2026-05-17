@@ -31,8 +31,10 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
     setTimeout(() => { onClearPins(); setClearingAll(false) }, UNPIN_FLY_MS + 80)
   }
 
+  const pinnedSectionClass = `pinned-section pinned-results${clearingAll ? ' pinned-section--clearing' : ''}`
+
   return (
-    <div className={`pinned-section pinned-results${clearingAll ? ' pinned-section--clearing' : ''}`}>
+    <div className={pinnedSectionClass}>
       <div className="pinned-section__header">
         <h2 ref={headingRef} tabIndex={-1} className="pinned-section__heading">
           {t('results.pinned_heading')}
