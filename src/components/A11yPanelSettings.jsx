@@ -221,7 +221,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   }
 
   const guardedClose = useCallback(
-    () => { if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() } },
+    () => { if (hasUnsaved && !justResetRef.current) { setUnsavedOpen(true) } else { onClose() } },
     [hasUnsaved, onClose]
   )
 
