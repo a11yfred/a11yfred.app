@@ -37,8 +37,12 @@ export default function ResultsMetaHeader({
   onClear,
   countHeadingRef,
   hasAnyActiveFilter,
+  hideCount = false,
+  hideFilters = false,
 }) {
   const t = useT()
+
+  if (hideCount && hideFilters) return null
 
   return (
     <div className="results-meta">
