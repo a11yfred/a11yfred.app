@@ -55,29 +55,28 @@ export default function SettingsSectionAi({
           onChange={e => setActiveProvider(e.target.value)}
           disabled={!pendingAiEnabled}
         >
+          <option value="">Select one</option>
           {PROVIDERS.map(p => (
             <option key={p.id} value={p.id}>{p.label}</option>
           ))}
         </Select>
       </div>
 
-      {activeProvider && PROVIDER_MODELS[activeProvider]?.length > 0 && (
-        <div className="settings-provider-group">
-          <label htmlFor="active-model" className="panel-field-label">
-            {t('settings.model_label')}
-          </label>
-          <Select
-            id="active-model"
-            value={models[activeProvider]}
-            onChange={e => setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
-            disabled={!pendingAiEnabled || !activeProvider}
-          >
-            {PROVIDER_MODELS[activeProvider].map(m => (
-              <option key={m.id} value={m.id}>{m.label}</option>
-            ))}
-          </Select>
-        </div>
-      )}
+      <div className="settings-provider-group">
+        <label htmlFor="active-model" className="panel-field-label">
+          {t('settings.model_label')}
+        </label>
+        <Select
+          id="active-model"
+          value={activeProvider ? models[activeProvider] : ''}
+          onChange={e => activeProvider && setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
+          disabled={!pendingAiEnabled || !activeProvider}
+        >
+          {activeProvider && PROVIDER_MODELS[activeProvider]?.map(m => (
+            <option key={m.id} value={m.id}>{m.label}</option>
+          ))}
+        </Select>
+      </div>
 
       {PROVIDERS.filter(p => p.id === activeProvider).map(p => (
         <div key={p.id} className="settings-key-group">
