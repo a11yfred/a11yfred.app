@@ -57,9 +57,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   const [pendingShowPersonalCorpus, setPendingShowPersonalCorpus] = useState(showPersonalCorpus)
   const [pendingAiEnabled, setPendingAiEnabled] = useState(aiEnabled)
   const [pendingWcagFilter, setPendingWcagFilter] = useState(wcagFilter ?? DEFAULT_WCAG_FILTER)
-  const [pendingAgenticMode, setPendingAgenticMode] = useState(
-    () => isAgenticModeEnabled()
-  )
+  const [pendingAgenticMode, setPendingAgenticMode] = useState(false)
 
   // ── AI provider / key / model state ────────────────────────────────────────
   const [keys, setKeys] = useState(initApiKeys)
