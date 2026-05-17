@@ -198,6 +198,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                   const heading = document.querySelector('.source-links__heading')
                   if (heading) {
                     heading.focus()
+                    heading.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
                   }
                 }}
                 aria-label={t('detail.sources_badge_multiple_aria')}
