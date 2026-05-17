@@ -531,7 +531,6 @@ select:disabled {
   opacity: 0;
   cursor: pointer;
   z-index: 1;
-  appearance: none;
 }
 
 .toggle__track {
@@ -637,14 +636,8 @@ select:disabled {
 }
 
 .toggle:has(.toggle__input:disabled) {
-  opacity: 1;
+  opacity: 0.5;
   pointer-events: none;
-}
-
-.toggle:has(.toggle__input:disabled) .toggle__track {
-  background: var(--bg-subtle);
-  border-color: var(--border);
-  opacity: 0.6;
 }
 
 /* ─── Field ───────────────────────────────────────────────── */
