@@ -221,3 +221,17 @@
   line-height: 1.5;
   margin-bottom: 0;
 }
+
+.settings-footer {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.settings-version {
+  display: inline-block;
+  font-size: var(--fs-small);
+  color: var(--text-body);
+  opacity: 0.7;
+}
