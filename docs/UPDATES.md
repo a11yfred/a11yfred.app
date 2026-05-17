@@ -4,19 +4,36 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## 2026-05-17 -- Phase 2 Hooks Integration & Quality Improvements
+## 2026-05-17 -- Phase 2 Hooks Integration & Code Quality Pass
 
-The AppContent refactor is finished. The two custom hooks extracted in Phase 1 (useRouteHandler and useSearchManager) are now fully integrated, eliminating all duplicate code from the original AppContent. The component went from 1336 lines down to approximately 730 lines by removing 602 lines of state declarations, handlers, and effects that are now owned by the hooks.
+### Phase 2 Hooks Integration (Complete)
 
-Beyond hook integration, three quality improvements were completed:
+- AppContent refactored from 1336 to ~730 lines by integrating `useRouteHandler` and `useSearchManager` hooks
+- Removed 602 lines of duplicate state declarations, handlers, and useEffect blocks
+- Route management, entry history, focus restoration now fully owned by useRouteHandler
+- Search state, filtering, sorting, URL sync now fully owned by useSearchManager
+- All duplicate handler code eliminated (handleQueryChange, handleSearch, handleOpenSettings, handleBack, etc.)
 
-**useStorageSync hook** — A new custom hook consolidates four repeated useEffect patterns that sync state to localStorage. Reduces boilerplate and creates a single pattern for this common operation.
+### Code Quality & DRY Improvements (Second Pass)
 
-**Entry filter utilities** — New helper functions (`getPinnedEntries()` and `getUnpinnedEntries()`) replace 7+ instances of manual filter patterns across the codebase, making the filtering logic easier to find and modify.
+- `runCommand()` refactored: debug toggle logic moved to COMMANDS map (eliminated 18 repetitive if-statements)
+- Rating clear handlers: `clearRatingField()` factory replaced with `makeClearRatingHandler()` helper
+- Search example handler: extracted `handleExampleSearch()` (consolidates 4-line inline pattern)
+- A11yListResults props: created `baseListProps` object, removed ~100 lines of prop repetition across 4 component instances
+- Background inert logic: simplified to `mobileOverlayOpen` variable, removed 4-condition OR chain to 2-condition logic
 
-**Documentation accuracy** — PRIVACY.md and SECURITY.md updated to match current storage key names and terminology (pinnedFindings → pinnedEntries, finding_note_ → entry_note_, etc).
+### Documentation Improvements
 
-**UX polish** — Related Entries and Sources lists improved with semantic HTML (sections, proper heading elements) and consistent layout for single vs. multiple item states, better keyboard navigation structure.
+- README.md updated: status section now reflects Phase 2 completion, version 0.1.0, and Phase 3 direction
+- PRIVACY.md and SECURITY.md: terminology and storage key names verified for accuracy
+- CHANGELOG.md expanded with detailed hook integration and quality improvement notes
+
+### UX Polish (Phase 1)
+
+- Related Entries and Sources lists: upgraded to semantic HTML (`<section>`, `<h3>` headings)
+- Added wrapper divs for consistent layout control (single vs. multiple item states)
+- Improved keyboard navigation structure with explicit heading elements
+- CSS rules consolidated for spacing consistency and visual hierarchy
 
 All work passes lint and build. Ready for browser testing.
 

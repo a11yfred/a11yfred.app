@@ -16,17 +16,30 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 - Route management, entry history, focus restoration now fully encapsulated in useRouteHandler
 - Search state, filtering, sorting, URL sync now fully encapsulated in useSearchManager
 
-### Code quality improvements
+### Code quality improvements (Phase 2, Pass 1)
 
 - `useStorageSync` hook extracted: consolidates 4 repeated localStorage sync patterns
 - `entryFilters` utilities created: `getPinnedEntries()` and `getUnpinnedEntries()` replace 7+ filter instances
 - Documentation updated: PRIVACY.md and SECURITY.md accuracy pass (storage key names, terminology, version info)
+
+### Code quality improvements (Phase 2, Pass 2 -- DRY refactoring)
+
+- `runCommand()` refactored: debug toggle logic moved to COMMANDS map, eliminated 18 repetitive if-statements
+- Rating handlers consolidated: `clearRatingField()` replaced with `makeClearRatingHandler()` factory
+- Search handler extracted: `handleExampleSearch()` consolidates 4-line inline pattern (used in onExampleSearch)
+- Component props deduplicated: `baseListProps` object eliminates 100+ lines of repetition across 4 A11yListResults instances
+- Inert logic simplified: `mobileOverlayOpen` variable replaces 4-condition OR chain with 2-condition logic
 
 ### UX polish
 
 - Related Entries and Sources lists improved: semantic HTML (`<section>`, `<h3>` headings), consistent layout wrapper classes
 - Better keyboard navigation structure with explicit heading elements
 - Improved spacing consistency and visual hierarchy
+
+### Documentation
+
+- README.md updated: status section reflects Phase 2 completion, v0.1.0 version, and Phase 3 direction
+- UPDATES.md consolidated: plain-language summary of all Phase 2 work
 
 ---
 

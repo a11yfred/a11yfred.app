@@ -213,10 +213,8 @@ function AppContent() {
   const [tabStopsEnabled, setTabStopsEnabled] = useState(false)
   const [headingMapEnabled, setHeadingMapEnabled] = useState(false)
 
-  // Background is inert when an overlay panel is active.
-  // When selected AND settings is open (mobile), the background is inert due
-  // to the settings drawer, exclude the panel from triggering it separately.
-  const backgroundInert = (!isDesktop && settingsOpen) || (!isDesktop && aboutOpen) || (!isDesktop && onboardingOpen) || (!!selected && !sheetCollapsed && !settingsOpen && !aboutOpen && !adminOpen)
+  const mobileOverlayOpen = !isDesktop && (settingsOpen || aboutOpen || onboardingOpen)
+  const backgroundInert = mobileOverlayOpen || (!!selected && !sheetCollapsed && !settingsOpen && !aboutOpen && !adminOpen)
 
   useThemeManager(theme, () => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -241,41 +239,46 @@ function AppContent() {
 
   const runCommand = (q) => {
     const lq = q.trim().toLowerCase()
-    // Easter egg offs, any "X off" where X is a known egg command
     const eggOffBase = lq.endsWith(' off') ? lq.slice(0, -4) : null
     if (eggOffBase !== null && eggOffBase in EASTER_EGGS) { setLanguage('en'); setQuery(submittedQuery); return true }
     if (lq === 'fiesta mode off') { setTheme('auto'); setQuery(submittedQuery); return true }
-    // Universal debug commands
-    if (lq === 'debug all' || lq === 'debug all on')    { setDevAllEnabled(true);  setNamesEnabled(true);  setQuery(submittedQuery); return true }
-    if (lq === 'debug all off')                         { setDevAllEnabled(false); setNamesEnabled(false); setQuery(submittedQuery); return true }
-    if (lq === 'debug names' || lq === 'debug names on')  { setNamesEnabled(true);  setQuery(''); return true }
-    if (lq === 'debug names off')                         { setNamesEnabled(false); setQuery(''); return true }
+
+    const COMMANDS = {
+      'debug all': () => { setDevAllEnabled(true); setNamesEnabled(true); setQuery(submittedQuery) },
+      'debug all on': () => { setDevAllEnabled(true); setNamesEnabled(true); setQuery(submittedQuery) },
+      'debug all off': () => { setDevAllEnabled(false); setNamesEnabled(false); setQuery(submittedQuery) },
+      'debug names': () => { setNamesEnabled(true); setQuery('') },
+      'debug names on': () => { setNamesEnabled(true); setQuery('') },
+      'debug names off': () => { setNamesEnabled(false); setQuery('') },
+      'debug help': () => { setDebugHelpOpen(true); setQuery('') },
+      'debug ai assist': () => { setAiEnabled(true); fireAiDebugToast('on'); setQuery('') },
+      [DEBUG_COMMANDS.AI_ASSIST_ON]: () => { setAiEnabled(true); fireAiDebugToast('on'); setQuery('') },
+      [DEBUG_COMMANDS.AI_ASSIST_OFF]: () => { setAiEnabled(false); fireAiDebugToast('off'); setQuery('') },
+      'debug fab': () => { setFabEnabled(true); setQuery('') },
+      'debug fab on': () => { setFabEnabled(true); setQuery('') },
+      'debug fab off': () => { setFabEnabled(false); setQuery('') },
+      'debug admin': () => { navigate('/admin'); setQuery('') },
+      'debug tab stops': () => { setTabStopsEnabled(true); setQuery('') },
+      'debug tab stops on': () => { setTabStopsEnabled(true); setQuery('') },
+      'debug tab stops off': () => { setTabStopsEnabled(false); setQuery('') },
+      'debug heading map': () => { setHeadingMapEnabled(true); setQuery('') },
+      'debug heading map on': () => { setHeadingMapEnabled(true); setQuery('') },
+      'debug heading map off': () => { setHeadingMapEnabled(false); setQuery('') },
+    }
+
+    if (COMMANDS[lq]) { COMMANDS[lq](); return true }
     const dt = DEPLOY_TARGETS[lq]
     if (dt !== undefined) { setDeployTarget(dt); setQuery(submittedQuery); return true }
-    if (lq === 'debug help') { setDebugHelpOpen(true); setQuery(''); return true }
-    // Custom debug commands
-    if (lq === 'debug ai assist' || lq === DEBUG_COMMANDS.AI_ASSIST_ON)  { setAiEnabled(true);  fireAiDebugToast('on');  setQuery(''); return true }
-    if (lq === DEBUG_COMMANDS.AI_ASSIST_OFF)                             { setAiEnabled(false); fireAiDebugToast('off'); setQuery(''); return true }
-    if (lq === 'debug fab' || lq === 'debug fab on')  { setFabEnabled(true);  setQuery(''); return true }
-    if (lq === 'debug fab off')                       { setFabEnabled(false); setQuery(''); return true }
-    if (lq === 'debug admin')                         { navigate('/admin');   setQuery(''); return true }
-    if (lq === 'debug tab stops' || lq === 'debug tab stops on')  { setTabStopsEnabled(true);  setQuery(''); return true }
-    if (lq === 'debug tab stops off')                             { setTabStopsEnabled(false); setQuery(''); return true }
-    if (lq === 'debug heading map' || lq === 'debug heading map on')  { setHeadingMapEnabled(true);  setQuery(''); return true }
-    if (lq === 'debug heading map off')                               { setHeadingMapEnabled(false); setQuery(''); return true }
-    // Detail Panel debug triggers, routed via prop; require a finding to be selected
-    if (DEBUG_COMMAND_VALUES.includes(lq)) {
-      setDebugPanelCmd(lq); setQuery(submittedQuery); return true
-    }
+    if (DEBUG_COMMAND_VALUES.includes(lq)) { setDebugPanelCmd(lq); setQuery(submittedQuery); return true }
     return false
   }
 
 
-  const clearRatingField = (field, toggle) => {
+  const makeClearRatingHandler = (field, toggle) => () => {
     Object.keys(ratings).forEach(id => { if (ratings[id]?.[field]) toggle(id) })
   }
-  const handleClearStarred  = () => clearRatingField('starred',  toggleStar)
-  const handleClearArchived = () => clearRatingField('archived', toggleArchive)
+  const handleClearStarred  = makeClearRatingHandler('starred',  toggleStar)
+  const handleClearArchived = makeClearRatingHandler('archived', toggleArchive)
 
   const handleResetAll = () => {
     setTheme('auto')
@@ -313,6 +316,13 @@ function AppContent() {
     setShowPersonalCorpus(spc)
   }
 
+  const handleExampleSearch = (q) => {
+    setQuery(q)
+    setSubmittedQuery(q)
+    setSearchKey(k => k + 1)
+    syncSearchUrl(q)
+  }
+
   const settingsProps = {
     onUnlock: unlock,
     onSave: handleSettingsSave,
@@ -348,13 +358,28 @@ function AppContent() {
 
 
 
+  const baseListProps = {
+    showRankingSort: showVoting,
+    onCopyLink: handleCopyLink,
+    narrowResults: narrowedResults,
+    showAds: showAds,
+    adFrequency: adFrequency,
+    onClear: handleClearResults,
+    hasPinnedItems: pinnedIds.size > 0,
+    defaultWcagFilter: DEFAULT_WCAG_FILTER,
+    onOpenSettings: handleOpenSettings,
+    onBadgeClick: handleBadgeClick,
+    onSelect: handleSelectEntry,
+    selected: sheetCollapsed ? null : selected,
+  }
+
   const searchView = (
     <>
       <A11yInputSearchHero
         query={query}
         onChange={handleQueryChange}
         onSearch={handleSearch}
-        onExampleSearch={q => { setQuery(q); setSubmittedQuery(q); setSearchKey(k => k + 1); syncSearchUrl(q) }}
+        onExampleSearch={handleExampleSearch}
         onFocus={handleSearchFocus}
         onBlur={handleSearchBlur}
         liveSearch={liveSearch}
@@ -386,20 +411,9 @@ function AppContent() {
             ? (
               <A11yListResults
                 key="view-all"
+                {...baseListProps}
                 results={applySortBy(getUnpinnedEntries(sortedEntries, pinnedIds))}
-                selected={sheetCollapsed ? null : selected}
-                onSelect={handleSelectEntry}
                 query=""
-                showRankingSort={showVoting}
-                onCopyLink={handleCopyLink}
-                narrowResults={narrowedResults}
-                showAds={showAds}
-                adFrequency={adFrequency}
-                onClear={handleClearResults}
-                hasPinnedItems={pinnedIds.size > 0}
-                defaultWcagFilter={DEFAULT_WCAG_FILTER}
-                onOpenSettings={handleOpenSettings}
-                onBadgeClick={handleBadgeClick}
               />
             )
             : activeQuery.length >= 2
@@ -427,21 +441,10 @@ function AppContent() {
                   )}
                   <A11yListResults
                     key="search"
+                    {...baseListProps}
                     results={unpinnedResults}
-                    selected={sheetCollapsed ? null : selected}
-                    onSelect={handleSelectEntry}
                     query={activeQuery}
-                    showRankingSort={showVoting}
-                    onCopyLink={handleCopyLink}
-                    narrowResults={narrowedResults}
-                    showAds={showAds}
-                    adFrequency={adFrequency}
-                    onClear={handleClearResults}
                     onClearQuery={handleClearQuery}
-                    hasPinnedItems={pinnedIds.size > 0}
-                    defaultWcagFilter={DEFAULT_WCAG_FILTER}
-                    onOpenSettings={handleOpenSettings}
-                    onBadgeClick={handleBadgeClick}
                   />
                 </>
               )
@@ -449,34 +452,21 @@ function AppContent() {
                 ? (
                   <A11yListResults
                     key="badge"
+                    {...baseListProps}
                     results={applySortBy(badgeResults)}
-                    selected={sheetCollapsed ? null : selected}
-                    onSelect={handleSelectEntry}
                     query=""
-                    showRankingSort={showVoting}
                     countRef={resultsCountRef}
                     filterLabel={badgeFilterLabel}
-                    narrowResults={narrowedResults}
-                    showAds={showAds}
-                    adFrequency={adFrequency}
-                    onClear={handleClearResults}
-                    hasPinnedItems={pinnedIds.size > 0}
-                    defaultWcagFilter={DEFAULT_WCAG_FILTER}
-                    onOpenSettings={handleOpenSettings}
-                    onBadgeClick={handleBadgeClick}
                   />
                 )
               : sortedEntries.length === 0
                 ? (
                   <A11yListResults
                     key="no-results-home"
+                    {...baseListProps}
                     results={[]}
                     selected={null}
-                    onSelect={handleSelectEntry}
                     query=""
-                    onClear={handleClearResults}
-                    defaultWcagFilter={DEFAULT_WCAG_FILTER}
-                    onOpenSettings={handleOpenSettings}
                   />
                 )
               : (
