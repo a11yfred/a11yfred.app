@@ -276,16 +276,15 @@ export default function A11yListResultCard({
                   >
                     {t(p.key)}
                   </Badge>
-                  {entry.creditNames?.map(src => (
+                  {entry.creditNames && entry.creditNames.length > 0 && (
                     <Badge
-                      key={src}
                       variant="source"
                       prefix={t('badge.source_prefix')}
-                      title={`Source: ${src}`}
+                      title={entry.creditNames.length === 1 ? `Source: ${entry.creditNames[0]}` : `Sources: ${entry.creditNames.join(', ')}`}
                     >
-                      {src}
+                      {entry.creditNames.length === 1 ? entry.creditNames[0] : `${entry.creditNames.length} sources`}
                     </Badge>
-                  ))}
+                  )}
                   {entry.wcagVersion && (
                     <Badge
                       variant="wcag"
