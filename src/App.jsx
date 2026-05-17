@@ -339,6 +339,7 @@ function AppContent() {
     if (getStorage(LS_VIEW_ALL_SKIP) === VIEW_ALL_SKIP_FLAG) {
       announce(t('results.loading_announce'))
       setViewAllLoading(true)
+      setWcagFilter({ maxVersion: '2.2', maxLevel: 'AAA' })
       navigate('/results/all')
     } else {
       setViewAllDontAsk(false)
@@ -350,6 +351,7 @@ function AppContent() {
     if (viewAllDontAsk) setStorage(LS_VIEW_ALL_SKIP, VIEW_ALL_SKIP_FLAG)
     announce(t('results.loading_announce'))
     setViewAllLoading(true)
+    setWcagFilter({ maxVersion: '2.2', maxLevel: 'AAA' })
     navigate('/results/all')
     setViewAllConfirmOpen(false)
   }
