@@ -52,7 +52,8 @@ export default function CarouselOnboarding({ onClose }) {
 
   const total = SLIDES.length
   const currentSlide = SLIDES[step]
-  const pageTitle = currentSlide.isWelcome ? t('onboarding.welcome_heading') : `${t('onboarding.welcome_heading')} | ${t(currentSlide.headingKey)}`
+  const slideHeading = currentSlide.isWelcome ? null : t(currentSlide.headingKey)
+  const pageTitle = slideHeading ? `${t('onboarding.welcome_heading')} | ${slideHeading}` : t('onboarding.welcome_heading')
   usePageTitle(pageTitle)
   const isFirst = step === 0
   const isLast = step === total - 1
