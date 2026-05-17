@@ -10,36 +10,16 @@ Category tags: `[corpus]` `[data]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `
 
 ## Code Quality & Refactoring
 
-**Dependency order:** Context API consolidation must come first -- the component splits (Settings sections, App.jsx decomposition) are blocked on it because splitting without shared context only moves prop-drilling deeper, not eliminates it.
+Pending work after post-launch cleanup (May 13-16) is documented in UPDATES.md and CHANGELOG.md.
 
-### Step 1 -- Consolidate state (unblocks everything else)
-
-- [x] **Consolidate prop drilling using Context API or custom hooks** `[code]` `[refactor]` ,  Done May 14. SettingsContext, SearchContext, RatingsContext wired; ~140 prop slots removed; custom hooks useAppSettings, useAppSearch, useAppRatings extracted.
-
-### Step 2 -- Split components (unblocked, in progress)
-
-- [ ] **Break large components into single-responsibility pieces** `[code]` `[refactor]` ,  Current line counts: `App.jsx` 1601, `A11yListResults` 869, `A11yPanelSettings` 857, `A11yPanelDetail` 486. Split plan: `A11yListResults` -- extract keyboard nav to `useResultListKeyboard`, narrow mode to sub-component. `A11yPanelSettings` -- split into `SectionAiSettings`, `SectionSearchSettings`, `SectionLanguageSettings`, `SectionResetData`. `A11yPanelDetail` -- clipboard in `useSheetDetailClipboard` and AI in `useSheetDetailRefine` already extracted; no further split needed.
 - [ ] **Decompose App.jsx** `[code]` `[refactor]` ,  1601 lines. Extract search manager (`useSearchManager`), party mode (`usePartyMode`), and route handler into dedicated hooks. `useThemeManager` already extracted.
-
-### Step 3 -- Rename (high surface area, dedicated session)
-
-- [ ] **Rename "finding" → "entry" throughout** `[code]` `[ux]` `[i18n]` ,  "Entry" better reflects the data model (a corpus entry, not necessarily an observed defect). Scope: all `en.json` keys, JSX labels, localStorage key names (`userFindings`, `pinnedFindings`, etc.), corpus field names, README, CONTRIBUTING, and docs. Run `npm run translate` after. Do in a dedicated session -- every file in the project is affected.
-
-### Step 3 -- Refactoring optimizations
-
-- [x] **Extract repeated label formatters** `[code]` `[refactor]` ,  Done May 14. Created `src/utils/labelFormatters.js` with `getPlatformLabel()` and `getViewAllPlatformLabel()`. Replaced inline ternary chains in App.jsx.
-- [ ] **Clean up naming conventions** `[code]` `[refactor]` ,  Renamed `platform_` to `platformParam`. Review PanelReact naming.
-
-### Ongoing
-
-- [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Migrate to TypeScript for full type checking, or add JSDoc to `App.jsx` and its major data-flow paths. `useFindingSearch.js` and `useContributionQueue.js` already have complete JSDoc. Start with the new context objects from Step 1 -- type them on creation.
+- [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Migrate to TypeScript for full type checking, or add JSDoc to `App.jsx` and its major data-flow paths. `useFindingSearch.js` and `useContributionQueue.js` already have complete JSDoc. Start with the new context objects -- type them on creation.
 
 ---
 
 ## Post-Launch
 
 - [ ] **i18n translate run** `[i18n]` ,  64 of 65 non-English locale files have missing keys (more added since v0.2.0). Run `ANTHROPIC_API_KEY=sk-ant-... npm run translate` to fill all gaps. Untranslated keys fall back to English gracefully.
-- [ ] **GitHub releases page** `[infra]` `[manual]` ,  Create v0.1.0 and v0.2.0 releases on GitHub, add notes.
 - [ ] **Google Search Console setup** `[infra]` `[seo]` `[manual]` ,  Verify domain ownership, submit sitemap.xml, confirm indexing, monitor for crawl errors.
 - [ ] **Content audit** `[qa]` `[manual]` ,  Editorial pass: corpus entry titles and descriptions, About panel, Help panel, Settings labels. Check for placeholder text, inconsistent terminology, ESL-unfriendly phrasing.
 - [ ] **Accessibility audit** `[a11y]` `[manual]` ,  axe-core zero violations, full keyboard walkthrough, screen reader test (NVDA+Firefox, VoiceOver+Safari), 200%/400% zoom, prefers-reduced-motion, prefers-contrast, text spacing bookmarklet.
@@ -56,7 +36,7 @@ Ordered high-value + low-effort first within each section.
 
 ### Export & Sharing
 
-- [ ] **Export findings -- UI** `[ux]` ,  Backend done: `exportFinding(finding, format)` in `src/utils/exportFinding.js` supports `'text'`, `'markdown'`, `'csv'`, `'excel'` (dynamic `exceljs` import). Needs UI: multi-select (checkboxes or shift-click in result list) and format picker to call it.
+- [ ] **Export entries -- UI** `[ux]` ,  Backend done: `exportFinding(finding, format)` in `src/utils/exportFinding.js` supports `'text'`, `'markdown'`, `'csv'`, `'excel'` (dynamic `exceljs` import). Needs UI: multi-select (checkboxes or shift-click in result list) and format picker to call it.
 - [ ] **Email results** `[ux]` `[enhancement]` ,  Add Email delivery to Export: mailto: compose option or SendGrid/Resend API, test end-to-end.
 - [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` ,  Implement Jira/Linear URL generation, test deep links, document format.
 
@@ -67,7 +47,7 @@ Ordered high-value + low-effort first within each section.
 
 ### User Findings & Editing
 
-- [ ] **Copy / add / edit / delete findings** `[ux]` `[phase2]` ,  Data layer wired locally. Needs UI forms. Phase 2: Supabase backend, cloud sync.
+- [ ] **Copy / add / edit / delete entries** `[ux]` `[phase2]` ,  Data layer wired locally. Needs UI forms. Phase 2: Supabase backend, cloud sync.
 - [ ] **Personal vs. public corpus toggle** `[corpus]` `[ux]` `[manual]` ,  Works via debug command. Add Settings UI toggle, document behavior.
 
 ### Multilingual Edit Flow
@@ -85,7 +65,7 @@ Backend complete. UI dialogs pending. All i18n keys are in `en.json`; hooks and 
 ### Design & Polish
 
 - [ ] **Update color theme to be more neighborly** `[design]` ,  Align the a11yfred color palette more closely with the neighbor framework's visual style.
-- [ ] **Polish "Similar findings", "Related findings", and "Sources" lists** `[ux]` `[design]` ,  Audit layout consistency, empty states, keyboard nav, spacing.
+- [ ] **Polish "Similar entries", "Related entries", and "Sources" lists** `[ux]` `[design]` ,  Audit layout consistency, empty states, keyboard nav, spacing.
 
 ---
 
@@ -157,7 +137,7 @@ Building distributable installers requires `electron-builder` (already a dev dep
 - [ ] **Sign-in UI** `[ux]` `[phase3]` ,  Add SettingsPanel footer section with avatar/name + Google/GitHub buttons + sign-out.
 - [ ] **Google / GitHub OAuth via Supabase** `[infra]` `[privacy]` `[phase3]` ,  Install Supabase JS, set env vars, uncomment, verify OAuth slugs and RLS policies.
 - [ ] **Settings sync** `[infra]` `[ux]` `[phase3]` ,  Activate `syncSettings()` and `getRemoteSettings()`, merge on sign-in, push on change.
-- [ ] **User-owned custom findings (cloud)** `[corpus]` `[ux]` `[phase3]` ,  Activate CRUD stubs via Supabase, verify schema.
+- [ ] **User-owned custom entries (cloud)** `[corpus]` `[ux]` `[phase3]` ,  Activate CRUD stubs via Supabase, verify schema.
 - [ ] **Persist ratings to Supabase** `[ux]` `[infra]` `[phase3]` ,  Wire rank up/rank down sync, merge on sign-in.
 - [ ] **Google Drive export** `[ux]` `[infra]` `[phase3]` ,  After Google OAuth active, add "Save to Drive" option in export format picker.
 
@@ -173,14 +153,6 @@ Building distributable installers requires `electron-builder` (already a dev dep
 
 ---
 
-## mikey.fyi
-
-- [ ] **Update mikey.fyi content to feature Laura's site** `[manual]` ,  Full accessible rebuild -- highlight it prominently.
-- [ ] **Hide rogers from mikey.fyi** `[manual]` ,  Not ready to show publicly yet.
-- [ ] **Add Laura's site under ulam on mikey.fyi** `[manual]`
-
----
-
 ## Deferred
 
 No timeline. Revisit post-launch based on usage and demand.
@@ -189,6 +161,5 @@ No timeline. Revisit post-launch based on usage and demand.
 - [ ] **Monetization strategy** `[phase3]` `[manual]` ,  Decide free/premium/ad-supported, define limits, rate limiting for AI.
 - [ ] **Ad network integration** `[infra]` `[manual]` ,  Research Carbon/EthicalAds/Splitrocket, evaluate CPM/CPC/placement.
 - [ ] **Custom data source / remote corpus** `[corpus]` `[ux]` `[infra]` ,  Settings UI for URL input/load, activate Supabase backend. Gated on auth.
-- [ ] **UI component library extraction (npm publishing)** `[code]` `[enhancement]` ,  Accessible SPA primitives fully built and in production. Defer to v1.1 post-launch: (1) confirm button unification complete, (2) audit component APIs for cross-project reusability, (3) scaffold monorepo structure, (4) publish to npm.
 - [ ] **Easter egg locale bundle** `[code]` `[i18n]` ,  18 locales built and functional. Remaining: extract to `src/calamansi/easter-eggs/`, implement lazy-loading, document in calamansi package.
 - 💤 SCSS migration, corpus pre-translation, Compare mode, Ko-fi donations, Ko-fi a11y patch, GitHub Sponsors
