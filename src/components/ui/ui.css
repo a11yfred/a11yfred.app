@@ -635,7 +635,7 @@ select:disabled {
   border-color: var(--text-heading);
 }
 
-.toggle:has(.toggle__input:disabled) {
+.toggle[aria-disabled="true"] {
   opacity: 0.5;
   pointer-events: none;
 }
