@@ -145,6 +145,7 @@ export default function ResultsMetaHeader({
                     <Button
                       variant="primary"
                       active={sortFlash}
+                      disabled={pendingSort === sortBy}
                       className="results-sort-btn"
                       onClick={() => {
                         setSortToCommit(pendingSort)
