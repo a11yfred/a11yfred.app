@@ -247,9 +247,19 @@ export default function useSearchManager({
       if (badgeFilter.type === 'source') return f.creditNames?.includes(badgeFilter.value)
       if (badgeFilter.type === 'wcag') {
         if (badgeFilter.value === 'N/A') return !f.wcagVersion || f.wcagVersion === ''
-        return f.wcagVersion === badgeFilter.value
+        // WCAG 2.1 includes 2.0; WCAG 2.2 includes 2.1 and 2.0
+        const versionOrder = { '2.0': 0, '2.1': 1, '2.2': 2 }
+        const filterVersion = versionOrder[badgeFilter.value] ?? -1
+        const entryVersion = versionOrder[f.wcagVersion] ?? -1
+        return entryVersion >= 0 && entryVersion <= filterVersion
       }
-      if (badgeFilter.type === 'wcag-level') return f.wcagLevel === badgeFilter.value
+      if (badgeFilter.type === 'wcag-level') {
+        // Level AA includes A; Level AAA includes AA and A
+        const levelOrder = { 'A': 0, 'AA': 1, 'AAA': 2 }
+        const filterLevel = levelOrder[badgeFilter.value] ?? -1
+        const entryLevel = levelOrder[f.wcagLevel] ?? -1
+        return entryLevel >= 0 && entryLevel <= filterLevel
+      }
       return false
     })
   }, [sortedEntries, badgeFilter, pinnedIds])
