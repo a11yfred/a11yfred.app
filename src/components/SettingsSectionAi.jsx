@@ -109,6 +109,7 @@ export default function SettingsSectionAi({
 
       <PanelRowSetting
         sm
+        disabled={!pendingAiEnabled || activeProvider !== 'anthropic'}
         label={<label htmlFor="toggle-agentic">{t('settings.agentic_mode_label')}</label>}
         description={t('settings.agentic_mode_desc')}
       >
