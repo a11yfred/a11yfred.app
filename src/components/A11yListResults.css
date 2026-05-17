@@ -17,8 +17,12 @@
 }
 
 .results-meta {
-  margin-top: 0;
+  margin-top: 2em;
   margin-bottom: var(--space-3);
+}
+
+.pinned-section ~ .results-meta {
+  margin-top: 0;
 }
 
 .results-meta:has(+ .results-active-filters) {
