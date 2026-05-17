@@ -5,9 +5,7 @@ export default function Select({ id, value, onChange, disabled, wrapClass, child
         id={id}
         value={value}
         onChange={e => !disabled && onChange(e)}
-        aria-disabled={disabled}
-        tabIndex={disabled ? -1 : undefined}
-        className="select"
+        className={`select${disabled ? ' select--disabled' : ''}`}
         {...rest}
       >
         {children}

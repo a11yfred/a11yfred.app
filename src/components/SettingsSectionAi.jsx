@@ -95,9 +95,7 @@ export default function SettingsSectionAi({
               if (errors.apiKey) setErrors({})
             }}
             placeholder={t(p.placeholderKey)}
-            aria-disabled={!pendingAiEnabled}
-            tabIndex={!pendingAiEnabled ? -1 : undefined}
-            className="settings-key-input"
+            className={`settings-key-input${!pendingAiEnabled ? ' settings-key-input--disabled' : ''}`}
             aria-invalid={errors.apiKey && pendingAiEnabled ? 'true' : undefined}
             aria-describedby={errors.apiKey && pendingAiEnabled ? 'api-key-error' : undefined}
           />

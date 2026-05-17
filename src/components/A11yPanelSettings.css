@@ -88,7 +88,7 @@
   line-height: 1.5;
 }
 
-.settings-key-input[aria-disabled="true"] {
+.settings-key-input--disabled {
   color: var(--text-disabled);
   border-color: var(--border-control);
   cursor: not-allowed;
@@ -97,7 +97,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .settings-key-input[aria-disabled="true"] {
+  .settings-key-input--disabled {
     opacity: 1;
     background: var(--bg-subtle);
   }

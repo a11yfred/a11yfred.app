@@ -1142,7 +1142,7 @@ select:disabled {
   transition: background-color var(--duration-fast);
 }
 
-.select[aria-disabled="true"] {
+.select--disabled {
   color: var(--text-disabled);
   cursor: not-allowed;
   opacity: 0.5;
@@ -1150,7 +1150,7 @@ select:disabled {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .select[aria-disabled="true"] {
+  .select--disabled {
     opacity: 1;
     background: var(--bg-subtle);
   }
