@@ -40,6 +40,7 @@ import useThemeManager from './hooks/useThemeManager.js'
 import useRouteHandler from './hooks/useRouteHandler.js'
 import useSearchManager from './hooks/useSearchManager.js'
 import useStorageSync from './hooks/useStorageSync.js'
+import usePrefersReducedMotion from './hooks/usePrefersReducedMotion.js'
 import { ContextSettings, useSettings } from './context/ContextSettings.js'
 import { ContextSearch, useSearch } from './context/ContextSearch.js'
 import { ContextRatings, useRatings } from './context/ContextRatings.js'
@@ -225,10 +226,11 @@ function AppContent() {
   const mobileOverlayOpen = !isDesktop && (settingsOpen || aboutOpen || onboardingOpen)
   const backgroundInert = mobileOverlayOpen || (!!selected && !sheetCollapsed && !settingsOpen && !aboutOpen && !adminOpen)
 
+  const prefersReducedMotion = usePrefersReducedMotion()
+
   useThemeManager(theme, () => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     announce(
-      prefersReduced ? t('party.announce_reduced') : t('party.announce_full'),
+      prefersReducedMotion ? t('party.announce_reduced') : t('party.announce_full'),
       { priority: 'assertive' }
     )
   })
