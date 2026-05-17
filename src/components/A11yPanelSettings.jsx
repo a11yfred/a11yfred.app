@@ -17,6 +17,7 @@ import { useKeydown } from '../hooks/useKeydown.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
+import { version } from '../../package.json'
 import './A11yPanelSettings.css'
 
 
@@ -378,7 +379,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
 
       <div className="settings-footer">
         <small className="settings-version">
-          A11yFred v0.1.0
+          A11yFred v{version}
         </small>
       </div>
 

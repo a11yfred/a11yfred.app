@@ -5,6 +5,7 @@ import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
 import IconExternalLink from './ui/IconExternalLink.jsx'
 import entrySlug from '../utils/entrySlug.js'
+import { version } from '../../package.json'
 import './A11yPanelAbout.css'
 
 function ExtLink({ href, children }) {
@@ -120,7 +121,7 @@ export default function A11yPanelAbout({ onClose, allEntries = [] }) {
 
       <div className="about-footer">
         <small className="about-version">
-          A11yFred v0.1.0
+          A11yFred v{version}
         </small>
       </div>
 
