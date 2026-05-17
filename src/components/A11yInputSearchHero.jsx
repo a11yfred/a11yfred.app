@@ -3,6 +3,7 @@ import { useT } from '@ulam/calamansi/react'
 import InputWithClear from './ui/InputWithClear.jsx'
 import Button from './ui/Button.jsx'
 import { CYCLE_MS } from '../utils/constants.js'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import './A11yInputSearchHero.css'
 
 // Each phrase has a display label and an optional accessible expansion.
@@ -25,8 +26,7 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
   const internalRef = useRef(null)
   const inputRef = externalRef || internalRef
   const [phraseIdx, setPhraseIdx] = useState(0)
-  const prefersReducedMotion = typeof window !== 'undefined'
-    && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     if (prefersReducedMotion || query.length > 0) return

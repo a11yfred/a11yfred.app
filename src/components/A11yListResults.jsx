@@ -1,5 +1,5 @@
 import { ArrowUp, PinOff } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import Button from './ui/Button.jsx'
@@ -15,13 +15,13 @@ import { useFlipList } from '../hooks/useFlipList.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useSearch } from '../context/ContextSearch.js'
 import { useRatings } from '../context/ContextRatings.js'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import './A11yListResults.css'
-
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   const t = useT()
   const { showVoting: showRanking } = useSettings()
+  const prefersReducedMotion = usePrefersReducedMotion()
   const [clearingAll, setClearingAll] = useState(false)
   if (!entries.length) return null
 
@@ -31,8 +31,10 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
     setTimeout(() => { onClearPins(); setClearingAll(false) }, UNPIN_FLY_MS + 80)
   }
 
+  const pinnedSectionClass = `pinned-section pinned-results${clearingAll ? ' pinned-section--clearing' : ''}`
+
   return (
-    <div className={`pinned-section pinned-results${clearingAll ? ' pinned-section--clearing' : ''}`}>
+    <div className={pinnedSectionClass}>
       <div className="pinned-section__header">
         <h2 ref={headingRef} tabIndex={-1} className="pinned-section__heading">
           {t('results.pinned_heading')}
@@ -58,7 +60,7 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   )
 }
 
-export default function A11yListResults({ results, selected, onSelect, query, _countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick }) {
+export default function A11yListResults({ results, selected, onSelect, query, _countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick, isBadgeFiltered = false }) {
   const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter, setWcagFilter } = useSettings()
   const { narrowMode, narrowQuery, sortBy, setSortBy: onSortChange, setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery } = useSearch()
   const onNarrow = () => setNarrowMode(true)
@@ -213,10 +215,13 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
     onPlatformChange && platform !== 'all'
       ? { label: platformLabels[platform] ?? platform, onRemove: () => onPlatformChange('all') }
       : null,
-    !filterLabel && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
+    isBadgeFiltered && filterLabel && onClear
+      ? { label: filterLabel, onRemove: onClear }
+      : null,
+    !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
       ? { label: `WCAG ${wcagFilter.maxVersion}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxVersion: defaultWcagFilter.maxVersion }) }
       : null,
-    !filterLabel && wcagFilter && defaultWcagFilter && wcagFilter.maxLevel !== defaultWcagFilter.maxLevel
+    !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxLevel !== defaultWcagFilter.maxLevel
       ? { label: `Level ${wcagFilter.maxLevel}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxLevel: defaultWcagFilter.maxLevel }) }
       : null,
   ].filter(Boolean)
@@ -315,8 +320,9 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
           {displayResults.map((entry, index) => {
             const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
             return (
-              <div key={entry.id}>
+              <React.Fragment key={entry.id}>
                 <A11yListResultCard
+                  key={entry.id}
                   entry={entry}
                   index={index}
                   selected={selected}
@@ -350,8 +356,8 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
                   itemRefs={itemRefs}
                   snapshotPositions={snapshotPositions}
                 />
-                {showAdAfter && <TileAd />}
-              </div>
+                {showAdAfter && <li key={`ad-${entry.id}`} role="presentation"><TileAd /></li>}
+              </React.Fragment>
             )
           })}
         </ul>

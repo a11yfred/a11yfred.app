@@ -198,7 +198,13 @@ export default function ManagerModalsSheets({
           },
         ]
       case 'noChanges':
-        return []
+        return [
+          {
+            label: t('common.ok'),
+            onClick: handleClose,
+            className: 'btn--primary',
+          },
+        ]
       case 'fiesta':
         return [
           {
@@ -251,7 +257,7 @@ export default function ManagerModalsSheets({
           heading={activeModal === 'privacy' ? t('settings.privacy_heading') : t('settings.confirm_reset_all_heading')}
           closeLabel={t('common.close')}
           returnFocusRef={activeModal === 'privacy' ? privacyButtonRef : null}
-          hideCloseBottom={activeModal === 'reset'}
+          hideCloseBottom={activeModal === 'privacy' || activeModal === 'reset'}
         >
           {renderSheetContent()}
         </Sheet>

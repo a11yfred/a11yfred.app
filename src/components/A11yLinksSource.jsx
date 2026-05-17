@@ -21,7 +21,7 @@ export default function A11yLinksSource({
     <section className="source-links" aria-label={singleHeading && multipleHeading ? (links.length === 1 ? singleHeading : multipleHeading) : undefined}>
       {links.length === 1 ? (
         <div className="source-links__single">
-          <h3 className="source-links__heading">{singleHeading}</h3>
+          <h3 className="source-links__heading" tabIndex={-1}>{singleHeading}</h3>
           {links[0].url ? (
             <a href={links[0].url} target="_blank" rel="noreferrer" className="source-links__link">
               <A11yLinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <IconExternalLink />}<span className="sr-only"> (opens in new tab)</span>
@@ -32,7 +32,7 @@ export default function A11yLinksSource({
         </div>
       ) : (
         <div className="source-links__multiple">
-          <h3 className="source-links__heading">{multipleHeading}</h3>
+          <h3 className="source-links__heading" tabIndex={-1}>{multipleHeading}</h3>
           <ul className="source-links__list">
             {links.map(link => (
               <li key={link.url || link.text}>

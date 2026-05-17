@@ -21,6 +21,10 @@
   margin-bottom: var(--space-3);
 }
 
+.pinned-section ~ .results-meta {
+  margin-top: 0;
+}
+
 .results-meta:has(+ .results-active-filters) {
   margin-bottom: 0;
 }
@@ -311,7 +315,7 @@
   vertical-align: middle;
   position: relative;
   top: -1px;
-  color: currentcolor;
+  color: var(--accent);
 }
 
 .rank-hint-link {
@@ -1007,6 +1011,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
+  margin-top: 2em;
   margin-bottom: var(--space-2);
 }
 
@@ -1158,10 +1163,6 @@
 
 .result-item--selected .result-item__title {
   color: var(--accent-text);
-}
-
-.result-item .badge--source {
-  display: none;
 }
 
 .result-row--archived .badge--severity,

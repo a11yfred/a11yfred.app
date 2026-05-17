@@ -32,8 +32,8 @@ const Button = forwardRef(function Button({
     <button
       ref={ref}
       type="button"
+      disabled={disabled}
       onClick={disabled ? undefined : onClick}
-      aria-disabled={disabled || undefined}
       aria-label={displayLabel}
       title={title}
       className={finalClassName}

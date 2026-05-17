@@ -45,6 +45,20 @@
   line-height: 1.5;
 }
 
+.about-footer,
+.help-footer {
+  margin-top: var(--space-5);
+  text-align: center;
+}
+
+.about-version,
+.help-version {
+  display: inline-block;
+  font-size: var(--fs-small);
+  color: var(--text-body);
+  opacity: 0.7;
+}
+
 /* ─── Help panel ──────────────────────────────────────────── */
 
 .help-steps {

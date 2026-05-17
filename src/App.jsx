@@ -17,7 +17,7 @@ import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPla
 import useAppSettings from './hooks/useAppSettings.js'
 import useAppSearch from './hooks/useAppSearch.js'
 import useAppRatings from './hooks/useAppRatings.js'
-import { MAX_RECENT_ENTRIES, LS_RECENT_ENTRIES, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, EASTER_EGG_LOCALES, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
+import { MAX_RECENT_ENTRIES, LS_RECENT_ENTRIES, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, EASTER_EGG_LOCALES, EASTER_EGGS, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getViewAllPlatformLabel } from './utils/labelFormatters.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson } from './utils/storage.js'
 import { getUnpinnedEntries, countRatingsByField } from './utils/entryFilters.js'
@@ -40,6 +40,7 @@ import useThemeManager from './hooks/useThemeManager.js'
 import useRouteHandler from './hooks/useRouteHandler.js'
 import useSearchManager from './hooks/useSearchManager.js'
 import useStorageSync from './hooks/useStorageSync.js'
+import usePrefersReducedMotion from './hooks/usePrefersReducedMotion.js'
 import { ContextSettings, useSettings } from './context/ContextSettings.js'
 import { ContextSearch, useSearch } from './context/ContextSearch.js'
 import { ContextRatings, useRatings } from './context/ContextRatings.js'
@@ -65,7 +66,6 @@ const UlamMenu = import.meta.env.DEV
   ? lazy(() => import('./UlamMenu.jsx'))
   : () => null
 
-const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify', 'debug deploy netlify': 'netlify', 'debug deploy pages': 'pages', 'debug deploy vercel': 'vercel' }
 
 // Redirect legacy /finding/ routes to /entry/ for backwards compatibility
@@ -168,9 +168,9 @@ function AppContent() {
     narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery,
     narrowMode, setNarrowMode,
     ratings, pinnedIds, togglePin, recordOpen,
-    platform, language, wcagFilter,
+    platform, setPlatform, language, setLanguage, wcagFilter, setWcagFilter,
     liveSearch, showPersonalCorpus, userEntries, userOverrides,
-    t, navigate, setLanguage,
+    t, navigate,
   })
 
   const {
@@ -226,10 +226,11 @@ function AppContent() {
   const mobileOverlayOpen = !isDesktop && (settingsOpen || aboutOpen || onboardingOpen)
   const backgroundInert = mobileOverlayOpen || (!!selected && !sheetCollapsed && !settingsOpen && !aboutOpen && !adminOpen)
 
+  const prefersReducedMotion = usePrefersReducedMotion()
+
   useThemeManager(theme, () => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     announce(
-      prefersReduced ? t('party.announce_reduced') : t('party.announce_full'),
+      prefersReducedMotion ? t('party.announce_reduced') : t('party.announce_full'),
       { priority: 'assertive' }
     )
   })
@@ -487,6 +488,7 @@ function AppContent() {
                     query=""
                     countRef={resultsCountRef}
                     filterLabel={badgeFilterLabel}
+                    isBadgeFiltered={true}
                   />
                 )
               : sortedEntries.length === 0

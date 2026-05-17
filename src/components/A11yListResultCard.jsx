@@ -8,8 +8,7 @@ import Badge from './ui/Badge.jsx'
 import LinkSkipTo from './ui/LinkSkipTo.jsx'
 import entrySlug from '../utils/entrySlug.js'
 import { DEFAULT_RATING, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_THRESHOLD, SWIPE_REVEAL, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, PIN_FLY_MS, UNPIN_FLY_MS, ARCHIVE_FLY_MS, UNARCHIVE_FLY_MS, RANK_ANIM_MS } from '../utils/constants.js'
-
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 
 function truncateAtWord(text, maxLength) {
   if (text.length <= maxLength) return text
@@ -42,7 +41,6 @@ export default function A11yListResultCard({
   onRankDown,
   onStar,
   onArchive,
-  onBadgeClick,
   ratings,
   pinnedIds,
   animatingUp,
@@ -64,6 +62,7 @@ export default function A11yListResultCard({
   snapshotPositions,
 }) {
   const t = useT()
+  const prefersReducedMotion = usePrefersReducedMotion()
   const { score, starred, archived } = ratings[entry.id] || DEFAULT_RATING
   const p = SEVERITY_VARS[entry.severity] || SEVERITY_VARS['Best Practice']
   const pinned = pinnedIds.has(entry.id)
@@ -277,22 +276,10 @@ export default function A11yListResultCard({
                   >
                     {t(p.key)}
                   </Badge>
-                  {entry.creditNames?.map(src => (
-                    <Badge
-                      key={src}
-                      variant="source"
-                      prefix={t('badge.source_prefix')}
-                      title={`Source: ${src}`}
-                    >
-                      {src}
-                    </Badge>
-                  ))}
                   {entry.wcagVersion && (
                     <Badge
                       variant="wcag"
                       title={`${t('badge.wcag_prefix')}${entry.wcagVersion}`}
-                      aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria')}`}
-                      onClick={() => onBadgeClick?.({ type: 'wcag', value: entry.wcagVersion })}
                     >
                       {entry.wcagVersion}
                     </Badge>
@@ -301,8 +288,6 @@ export default function A11yListResultCard({
                     <Badge
                       variant="wcag-level"
                       title={`${t('badge.level_prefix')}${entry.wcagLevel}`}
-                      aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
-                      onClick={() => onBadgeClick?.({ type: 'wcag-level', value: entry.wcagLevel })}
                     >
                       {entry.wcagLevel}
                     </Badge>

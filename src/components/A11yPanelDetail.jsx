@@ -25,10 +25,11 @@ import './A11yPanelDetail.css'
 const WCAG_BADGE_STYLE = { '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }
 const WCAG_LEVEL_BADGE_STYLE = { '--badge-bg': 'var(--wcag-level-bg)', '--badge-text': 'var(--wcag-level-text)' }
 
-function FieldCheckbox({ label, checked, onChange, disabled }) {
+function FieldCheckbox({ label, checked, onChange, disabled, id }) {
   return (
-    <label className="panel-detail-ai-field-select-item">
+    <label className="panel-detail-ai-field-select-item" htmlFor={id}>
       <input
+        id={id}
         type="checkbox"
         className="app-checkbox"
         checked={checked}
@@ -46,6 +47,11 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
   const titleRef = useRef(null)
   const isDesktop = useMediaQuery('(width >= 768px)')
   const t = useT()
+
+  const handleBadgeClickAndClose = (filter) => {
+    onBadgeClick?.(filter)
+    onClose?.()
+  }
 
   const [location, setLocation] = useState('')
   const [descText, setDescText] = useState(entry.desc)
@@ -163,7 +169,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
             bg={p.bg}
             color={p.color}
             prefix={entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
-            onClick={() => onBadgeClick?.({ type: 'severity', value: entry.severity })}
+            onClick={() => handleBadgeClickAndClose({ type: 'severity', value: entry.severity })}
             aria-label={`${entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria')}`}
           >
             {t(p.key)}
@@ -178,7 +184,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                   key={src}
                   variant="source"
                   prefix={t('detail.sources_badge_single_prefix')}
-                  onClick={() => onBadgeClick?.({ type: 'source', value: src })}
+                  onClick={() => handleBadgeClickAndClose({ type: 'source', value: src })}
                   aria-label={`${t('detail.sources_badge_single_prefix')} ${src}, ${t('results.badge_filter_aria')}`}
                 >
                   {src}
@@ -189,7 +195,13 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
               <Badge
                 key="sources-badge"
                 variant="source"
-                onClick={() => document.querySelector('.source-links')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                onClick={() => {
+                  const heading = document.querySelector('.source-links__heading')
+                  if (heading) {
+                    heading.focus()
+                    heading.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+                  }
+                }}
                 aria-label={t('detail.sources_badge_multiple_aria')}
               >
                 {t('detail.sources_badge_multiple')}
@@ -201,7 +213,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
               type="button"
               className="badge--wcag"
               style={WCAG_BADGE_STYLE}
-              onClick={() => onBadgeClick?.({ type: 'wcag', value: entry.wcagVersion })}
+              onClick={() => handleBadgeClickAndClose({ type: 'wcag', value: entry.wcagVersion })}
               aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria')}`}
             >
               {t('badge.wcag_version_label')}{entry.wcagVersion}
@@ -212,7 +224,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
               type="button"
               className="badge--wcag-level"
               style={WCAG_LEVEL_BADGE_STYLE}
-              onClick={() => onBadgeClick?.({ type: 'wcag-level', value: entry.wcagLevel })}
+              onClick={() => handleBadgeClickAndClose({ type: 'wcag-level', value: entry.wcagLevel })}
               aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
             >
               {t('badge.level_label')}{entry.wcagLevel}
@@ -392,8 +404,8 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                 </label>
               )}
               <div className="panel-detail-ai-field-select">
-                <FieldCheckbox label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
-                <FieldCheckbox label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
+                <FieldCheckbox id="field-desc-checkbox" label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
+                <FieldCheckbox id="field-fix-checkbox" label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
               </div>
             </div>
             <button

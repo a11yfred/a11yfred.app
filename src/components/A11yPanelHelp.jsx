@@ -64,6 +64,12 @@ export default function A11yPanelHelp({ onClose, onStartTour }) {
         </ul>
       </section>
 
+      <div className="help-footer">
+        <small className="help-version">
+          A11yFred v0.1.0
+        </small>
+      </div>
+
       <div className="panel-mobile-back">
         <Button
           variant="primary"

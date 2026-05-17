@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import usePrefersReducedMotion from '../../hooks/usePrefersReducedMotion.js'
 
 const DURATION_MS = 200
 
@@ -18,12 +19,13 @@ export default function FadeTransition({ children, watchKey, className, directio
   const [activeDirection, setActiveDirection] = useState(null)
   const prevKeyRef = useRef(watchKey)
   const timerRef = useRef(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     if (prevKeyRef.current === watchKey) return
     prevKeyRef.current = watchKey
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (prefersReducedMotion) return
 
     setActiveDirection(direction ?? null) // eslint-disable-line react-hooks/set-state-in-effect
     setOutgoing(children)

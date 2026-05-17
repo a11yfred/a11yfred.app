@@ -170,7 +170,7 @@
   "settings.unsaved_body": "You have unsaved changes to your AI settings. What would you like to do?",
   "settings.unsaved_save_close": "Save & Close",
   "settings.unsaved_discard": "Discard & Close",
-  "settings.unsaved_cancel": "Cancel",
+  "settings.unsaved_cancel": "Nevermind",
   "settings.language_change": "Change",
   "settings.language_changed": "Changed",
   "settings.language_changed_announce": "Language: Changed, press Save button to confirm",

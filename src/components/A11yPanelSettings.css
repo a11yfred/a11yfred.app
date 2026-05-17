@@ -64,8 +64,8 @@
   margin-bottom: 2em;
 }
 
-.settings-provider-group:has(:disabled) .panel-field-label,
-.settings-key-group:has(:disabled) .panel-field-label {
+.settings-provider-group:has([aria-disabled="true"]) .panel-field-label,
+.settings-key-group:has([aria-disabled="true"]) .panel-field-label {
   color: var(--text-body);
 }
 
@@ -88,9 +88,8 @@
   line-height: 1.5;
 }
 
-.settings-key-input:disabled {
-  color: var(--text-disabled);
-  cursor: not-allowed;
+textarea[aria-disabled="true"].settings-key-input {
+  border-color: var(--border-control);
 }
 
 .settings-key-input[aria-invalid="true"] {

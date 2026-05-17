@@ -1,4 +1,4 @@
-import { Link, Check, Filter, OctagonX, Trash2 } from 'lucide-react'
+import { Link, Check, Filter, OctagonX, Trash2, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import Button from './ui/Button.jsx'
 import Select from './ui/Select.jsx'
@@ -37,8 +37,26 @@ export default function ResultsMetaHeader({
   onClear,
   countHeadingRef,
   hasAnyActiveFilter,
+  hideCount = false,
+  hideFilters = false,
 }) {
   const t = useT()
+
+  if (hideCount && hideFilters) return null
+
+  const getSortInfo = () => {
+    const infoLabel = t('detail.note_label')
+    switch (sortBy) {
+      case 'smart':
+        return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_smart_info')}</InfoBox>
+      case 'wcag-level':
+        return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_wcag_level_info')}</InfoBox>
+      case 'popularity':
+        return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_popularity_info')}</InfoBox>
+      default:
+        return null
+    }
+  }
 
   return (
     <div className="results-meta">
@@ -71,26 +89,20 @@ export default function ResultsMetaHeader({
               </Button>
             )}
           </div>
-          {onSortChange && results.length > 0 && (() => {
-            const infoLabel = t('detail.note_label')
-            if (sortBy === 'smart') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_smart_info')}</InfoBox>
-            if (sortBy === 'wcag-level') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_wcag_level_info')}</InfoBox>
-            if (sortBy === 'popularity') return <InfoBox label={infoLabel} className="results-sort-info">{t('results.sort_popularity_info')}</InfoBox>
-            return null
-          })()}
+          {onSortChange && results.length > 0 && getSortInfo()}
           {onSortChange && results.length > 0 && (showRankingSort || liveSearch) && (
             <p className="results-rank-hint">
               {showRankingSort && <>
                 {'Pin '}
-                <span className="rank-hint-icon" aria-hidden="true">📌</span>
+                <Pin size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' to show on every page. Star '}
-                <span className="rank-hint-icon" aria-hidden="true">⭐</span>
+                <Star size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' to always show first. Archive '}
-                <span className="rank-hint-icon" aria-hidden="true">📁</span>
+                <Archive size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' to always show last. Rank up '}
-                <span className="rank-hint-icon" aria-hidden="true">👍</span>
+                <ThumbsUp size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' or rank down '}
-                <span className="rank-hint-icon" aria-hidden="true">👎</span>
+                <ThumbsDown size={14} className="rank-hint-icon" aria-hidden="true" />
                 {' to fine-tune the rest. Sort order is applied last. All actions can be '}
                 <a href="#/settings" className="rank-hint-link">{t('results.rank_hint_undone')}</a>
                 {'.'}
@@ -145,6 +157,7 @@ export default function ResultsMetaHeader({
                     <Button
                       variant="primary"
                       active={sortFlash}
+                      disabled={pendingSort === sortBy}
                       className="results-sort-btn"
                       onClick={() => {
                         setSortToCommit(pendingSort)
@@ -152,7 +165,8 @@ export default function ResultsMetaHeader({
                         setTimeout(() => setSortFlash(false), SORT_FLASH_MS)
                       }}
                     >
-                      {t('results.sort_apply')}
+                      {sortFlash && <Check size={16} aria-hidden="true" />}
+                      <span>{sortFlash ? t('results.sorted_confirm') : t('results.sort_apply')}</span>
                     </Button>
                   )}
                 </div>

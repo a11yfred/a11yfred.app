@@ -299,24 +299,20 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
 }
 
 .panel-detail-ai-agentic-row {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  column-gap: var(--space-4);
   min-height: var(--touch-target);
-  padding: 0;
-  border-radius: var(--radius);
-  transition: background var(--duration-fast);
-}
-
-.panel-detail-ai-agentic-row:hover,
-.panel-detail-ai-agentic-row:has(:focus-visible) {
-  background: var(--bg-subtle);
+  margin-bottom: var(--space-5);
 }
 
 .panel-detail-ai-agentic-label {
-  font-size: var(--fs-body);
+  font-size: var(--fs-sub);
+  font-weight: 500;
   color: var(--text-heading);
+  margin: 0;
+  display: block;
 }
 
 .panel-detail-ai-revision-icon {

@@ -12,25 +12,21 @@ export default function ResultsActiveFilterBar({ activeFilters, sortBy, sortLabe
   const renderTag = (f, i) => (
     <span key={i} className="active-bar__group">
       {f.prefix && <span className="active-bar__label">{f.prefix}</span>}
-      <span
-        className={`active-bar__tag${f.onRemove ? ' active-bar__tag--removable' : ''}`}
-        onClick={f.onRemove ? (e => { if (e.detail > 0) f.onRemove() }) : undefined}
-        onKeyDown={f.onRemove ? (e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); f.onRemove() } }) : undefined}
-        role={f.onRemove ? 'button' : undefined}
-        tabIndex={f.onRemove ? 0 : undefined}
-      >
-        {f.label}
-        {f.onRemove && (
-          <button
-            type="button"
-            className="active-bar__remove"
-            aria-label={t('results.filter_remove_aria', { filter: f.label })}
-            onClick={e => { e.stopPropagation(); f.onRemove() }}
-          >
-            ×
-          </button>
-        )}
-      </span>
+      {f.onRemove ? (
+        <button
+          type="button"
+          className={`active-bar__tag active-bar__tag--removable`}
+          aria-label={t('results.filter_remove_aria', { filter: f.label })}
+          onClick={f.onRemove}
+        >
+          {f.label}
+          <span className="active-bar__remove" aria-hidden="true">×</span>
+        </button>
+      ) : (
+        <span className="active-bar__tag">
+          {f.label}
+        </span>
+      )}
     </span>
   )
 

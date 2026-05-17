@@ -14,6 +14,7 @@ import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES } from '../utils/constants.js'
 import { setStorage, removeStorage } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
 import './A11yPanelSettings.css'
@@ -43,7 +44,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   const resetButtonRef = useRef(null)
   const t = useT()
   const { navigate, route } = useRouter()
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   const settingsPanelRef = useRef(null)
   const [errors, setErrors] = useState({})
@@ -57,13 +58,11 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   const [pendingShowPersonalCorpus, setPendingShowPersonalCorpus] = useState(showPersonalCorpus)
   const [pendingAiEnabled, setPendingAiEnabled] = useState(aiEnabled)
   const [pendingWcagFilter, setPendingWcagFilter] = useState(wcagFilter ?? DEFAULT_WCAG_FILTER)
-  const [pendingAgenticMode, setPendingAgenticMode] = useState(
-    () => isAgenticModeEnabled()
-  )
+  const [pendingAgenticMode, setPendingAgenticMode] = useState(false)
 
   // ── AI provider / key / model state ────────────────────────────────────────
   const [keys, setKeys] = useState(initApiKeys)
-  const [activeProvider, setActiveProvider] = useState(getAiProvider)
+  const [activeProvider, setActiveProvider] = useState('')
   const [models, setModels] = useState(initModels)
 
   // Saved snapshots to diff against for hasUnsaved
@@ -143,7 +142,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
 
   // Scroll to and focus the first invalid field when errors change
   useEffect(() => {
-    if (!errors.apiKey) return
+    if (!errors.provider && !errors.apiKey) return
     const el = settingsPanelRef.current?.querySelector('[aria-invalid="true"]')
     if (!el) return
     el.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
@@ -157,13 +156,18 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
     if (hasUnsaved) { setUnsavedOpen(true) } else { onClose() }
   })
 
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-
   const handleSave = () => {
-    if (pendingAiEnabled && !keys[activeProvider].trim() && !isLocalhost) {
-      setErrors({ apiKey: true })
-      announce(t('settings.api_key_error'), { priority: 'assertive' })
-      return
+    if (pendingAiEnabled) {
+      if (!activeProvider) {
+        setErrors({ provider: true })
+        announce(t('settings.provider_error'), { priority: 'assertive' })
+        return
+      }
+      if (!keys[activeProvider]?.trim()) {
+        setErrors({ apiKey: true })
+        announce(t('settings.api_key_error'), { priority: 'assertive' })
+        return
+      }
     }
     if (!hasUnsaved && !justResetRef.current) {
       setNoChangesOpen(true)

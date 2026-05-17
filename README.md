@@ -26,7 +26,7 @@ npm run build      # production build
 
 **Phase 1 (Feature Complete):** Complete (May 13). 106-entry public corpus (ACC prefix), all linters passing, @ulam framework published as npm packages, full component consolidation, CSS tokens, zero dead code. AI Assist (single-shot) and Match Existing Style (agentic) functional. Search, filter, sort, narrow mode, PWA/offline, and 65+ languages live.
 
-**Phase 2 (Code Quality):** Complete (May 17). `useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Five DRY optimization passes: command map consolidation (18 if-statements), rating handlers factory, template formatting helpers, URL param parsing utility, platform announcements. All TODOs resolved, all imports optimized.
+**Phase 2A (Code Quality):** Complete (May 17). `useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Component splits (A11yListResults, A11yPanelSettings) complete. Form controls accessibility refactored: aria-disabled pattern with keyboard prevention (new useAriaDisabledKeydown hook). Five DRY optimization passes in App.jsx: command map consolidation (18 if-statements), rating handlers factory, template formatting helpers, URL param parsing utility, platform announcements.
 
 **Phase 3 (Theme + Extensions):** In progress. Neighborly color theme on feature branch (WCAG AA compliance verified). Chrome and Firefox extension scaffolds ready. Electron scaffold empty. No timeline set.
 
@@ -74,7 +74,7 @@ Each corpus entry:
   "platform": "web",
   "desc": "Problem description.",
   "fix": "How to fix it.",
-  "creditNames": ["Adrian Roselli"],
+  "creditNames": ["Mikey Ilagan"],
   "keywords": ["keyboard", "label"],
   "relatedSC": ["1.3.1 Info and Relationships (Level A)"],
   "primarySC": "2.4.6 Headings and Labels (Level AA)",
