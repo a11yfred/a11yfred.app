@@ -18,7 +18,10 @@ import {
 } from '../utils/constants.js'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import { getPinnedEntries, getUnpinnedEntries } from '../utils/entryFilters.js'
+import { getViewAllPlatformLabel } from '../utils/labelFormatters.js'
 import { announce } from '@ulam/taho'
+
+const pluralResult = (n) => n === 1 ? 'result' : 'results'
 
 const EASTER_EGGS = { 'pig latin': 'pig', pirate: 'pir', klingon: 'tlh', valyrian: 'val', belter: 'blt', dothraki: 'dot', 'toki pona': 'tok', navi: 'nav', quenya: 'qya', sindarin: 'sjn', hodor: 'hod', dovahzul: 'dov', nadsat: 'nds', newspeak: 'nws', mandoa: 'mnd', cityspeak: 'csp', simlish: 'sim', alienese: 'ali' }
 
@@ -288,20 +291,13 @@ export default function useSearchManager({
     lastAnnouncedPlatformRef.current = platform
     if (!dataLoading && allEntries.length > 0) {
       const base = activeQuery.length >= 2 ? results.length : sortedEntries.length
-      // TODO: import getPlatformLabel and pluralResult
+      const platformLabel = platform !== 'all' ? getViewAllPlatformLabel(platform, t) : ''
+      const baseStr = `${base} ${pluralResult(base)}`
       if (narrowedResults !== null) {
-        const count = narrowedResults.length
-        if (platform !== 'all') {
-          announce(`${count} result(s) of ${base}; platform only.`)
-        } else {
-          announce(`${count} result(s) of ${base}.`)
-        }
+        const narrowStr = `${narrowedResults.length} ${pluralResult(narrowedResults.length)}`
+        announce(platform !== 'all' ? `${narrowStr} of ${baseStr}; ${platformLabel} only.` : `${narrowStr} of ${baseStr}.`)
       } else {
-        if (platform !== 'all') {
-          announce(`${base} result(s); platform only.`)
-        } else {
-          announce(`${base} result(s).`)
-        }
+        announce(platform !== 'all' ? `${baseStr}; ${platformLabel} only.` : `${baseStr}.`)
       }
     }
   }, [platform, results, sortedEntries, narrowedResults, activeQuery, dataLoading, allEntries, t])
