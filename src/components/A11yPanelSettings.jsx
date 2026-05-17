@@ -372,6 +372,12 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
         onFiestaConfirm={() => { setPendingTheme('fiesta'); announce(t('settings.theme_party_announce')); setFiestaConfirmOpen(false) }}
       />
 
+      <div className="settings-footer">
+        <small className="settings-version">
+          A11yFred v0.1.0
+        </small>
+      </div>
+
       <div className="panel-mobile-back">
         <Button
           variant="tertiary"
