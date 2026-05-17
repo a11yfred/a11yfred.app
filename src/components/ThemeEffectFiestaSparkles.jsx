@@ -75,7 +75,7 @@ export default function ThemeEffectFiestaSparkles({ active }) {
       cancelAnimationFrame(animRef.current)
       particlesRef.current = []
     }
-  }, [active])
+  }, [active]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!active) return null
 

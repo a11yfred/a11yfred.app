@@ -100,7 +100,7 @@ export default function ThemeEffectConfetti({ active }) {
       window.removeEventListener('resize', resize)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
     }
-  }, [active])
+  }, [active]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!active) return null
 
