@@ -44,9 +44,10 @@ export default function CarouselOnboarding({ onClose }) {
   const stepHeadingRef = useRef(null)
   usePaginationFocus(stepHeadingRef, step)
 
-  usePageTitle(t('onboarding.heading'))
-
   const total = SLIDES.length
+  const currentSlide = SLIDES[step]
+  const pageTitle = `${t('onboarding.heading')} | ${t(currentSlide.headingKey)}`
+  usePageTitle(pageTitle)
   const isFirst = step === 0
   const isLast = step === total - 1
 
