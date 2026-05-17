@@ -70,7 +70,7 @@ export default function SettingsSectionAi({
             id="active-model"
             value={models[activeProvider]}
             onChange={e => setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
-            disabled={!pendingAiEnabled}
+            disabled={!pendingAiEnabled || !activeProvider}
           >
             {PROVIDER_MODELS[activeProvider].map(m => (
               <option key={m.id} value={m.id}>{m.label}</option>

@@ -61,7 +61,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
 
   // ── AI provider / key / model state ────────────────────────────────────────
   const [keys, setKeys] = useState(initApiKeys)
-  const [activeProvider, setActiveProvider] = useState(getAiProvider)
+  const [activeProvider, setActiveProvider] = useState('')
   const [models, setModels] = useState(initModels)
 
   // Saved snapshots to diff against for hasUnsaved
