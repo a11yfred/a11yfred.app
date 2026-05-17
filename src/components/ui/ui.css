@@ -1035,7 +1035,7 @@ select:disabled {
   color: var(--text-body);
 }
 
-.panel-toggle-row--disabled .toggle {
+.panel-toggle-row--disabled {
   opacity: 0.5;
   pointer-events: none;
 }
