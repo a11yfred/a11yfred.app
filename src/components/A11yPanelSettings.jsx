@@ -8,7 +8,7 @@ import Button from './ui/Button.jsx'
 import SettingsSectionAppearance from './SettingsSectionAppearance.jsx'
 import SettingsSectionSearch from './SettingsSectionSearch.jsx'
 import SettingsSectionAi from './SettingsSectionAi.jsx'
-import ManagerModalsSheets from './SettingsModals.jsx'
+import ManagerModalsSettings from './ManagerModalsSettings.jsx'
 import { PROVIDERS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '@ulam/halohalo'
 import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES } from '../utils/constants.js'
@@ -339,7 +339,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
         </p>
       )}
 
-      <ManagerModalsSheets
+      <ManagerModalsSettings
         t={t}
         privacyOpen={privacyOpen}
         privacyCollapsed={privacyCollapsed}
