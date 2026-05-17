@@ -212,7 +212,7 @@ export function useRouteHandler({
     }
     setSheetCollapsed(false)
     setSelected(entry)
-    navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`)
+    navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`) // eslint-disable-line react-hooks/immutability
   }
 
   const handleSelectRelated = (entry) => {

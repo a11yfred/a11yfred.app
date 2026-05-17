@@ -339,7 +339,7 @@ export function useSearchManager({
     history.replaceState(null, '', url.pathname + url.search + url.hash)
   }
 
-  const syncFiltersUrl = ({ platformVal, sortVal, narrowVal, wcagVal } = {}) => {
+  const syncFiltersUrl = useCallback(({ platformVal, sortVal, narrowVal, wcagVal } = {}) => {
     const url = new URL(window.location.href)
     const p = platformVal ?? platform
     const s = sortVal ?? sortBy
@@ -355,7 +355,7 @@ export function useSearchManager({
     if (!isDefaultWcag) url.searchParams.set('wcag', `${w.maxVersion}|${w.maxLevel}`)
     else url.searchParams.delete('wcag')
     history.replaceState(null, '', url.pathname + url.search + url.hash)
-  }
+  }, [platform, sortBy, narrowQuery, wcagFilter])
 
   // Sync filters to URL
   useEffect(() => { syncFiltersUrl() }, [platform, sortBy, narrowQuery, wcagFilter, syncFiltersUrl])
