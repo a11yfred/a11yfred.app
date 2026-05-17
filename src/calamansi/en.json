@@ -18,6 +18,8 @@
   "header.open_about": "About this app",
 
   "onboarding.heading": "Welcome to A11yFred",
+  "onboarding.welcome_heading": "A11yFred",
+  "onboarding.welcome_body": "Your AI-second helper for manual accessibility auditing and reporting.",
   "onboarding.skip_tour": "Skip Tour",
   "onboarding.next": "Next",
   "onboarding.back": "Back",
