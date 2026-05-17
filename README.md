@@ -1,9 +1,9 @@
 # A11yFred
 
-> Audit finding descriptions, fast.
+> Audit entry descriptions, fast.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
+[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
 
 Fast, consistent defect descriptions for accessibility findings, the kind that hold up in a ticket, a report, or a handoff. Search a library built on real audits, fact-checked against WCAG and accessibility practitioners, copy the text, paste it in. Built for auditors, testers, specialists and anyone doing manual accessibility testing and reviews.
@@ -24,11 +24,11 @@ npm run build      # production build
 
 **Launched.** Live at [a11yfred.app](https://a11yfred.app).
 
-**Phase 1 (Personal Library):** Complete. 106-entry public corpus (ACC prefix), all linters passing, ulam framework published as `@ulam/*` npm packages, agentic AI, full component consolidation, CSS tokens, zero dead code.
+**Phase 1 (Personal Library):** Complete. 106-entry public corpus (ACC prefix), all linters passing, ulam framework published as `@ulam/*` npm packages, full component consolidation, CSS tokens, zero dead code. AI Assist complete (single-shot); Match Existing Style (agentic AI) 65% complete.
 
-**Phase 2 (AI + Sharing):** In progress. Narrow results mode, frequent findings signal, PWA/offline, and agentic AI complete. User contributions UI, multilingual editing UI, and context API consolidation in progress.
+**Phase 2 (AI + Sharing):** In progress. Narrow results mode, frequent findings signal, PWA/offline, agentic AI (partial), and context API consolidation all complete. User entries UI, multilingual editing UI, and export/sharing pending.
 
-**Phase 3 (Public Launch):** Partially started. Analytics (Umami) stubbed. Auth and cloud sync not started.
+**Phase 3 (Public Launch):** Partially started. Analytics (Umami) complete. Auth and cloud sync not started.
 
 ---
 
@@ -38,22 +38,28 @@ npm run build      # production build
 src/
 ├── data/           public corpus (ACC prefix), legacy corpus (ATH prefix, admin-only)
 ├── services/       data layer, AI integration, localStorage utilities
-├── hooks/          search, ratings, pinning, user findings, overrides
-├── components/     UI components; ui/ has reusable primitives
-├── calamansi/      i18n, hooks, shared logic
-├── halohalo/       AI provider abstraction
-├── sawsawan/       framework wiring
-├── sili/           focus management utilities
-├── siling-labuyo/  hash router, route focus
-├── siling-mahaba/  route focus manager
-├── taho/           live region / announce utilities
-├── taho-bayabas/   Announcer component
-└── taho-pandan/    route announcer
+├── hooks/          search, ratings, pinning, user entries, overrides
+├── components/     UI components; ui/ has reusable primitives (from @ulam/ube)
+├── calamansi/      i18n locale JSON files (logic via @ulam/calamansi npm package)
+├── sawsawan/       integration layer (logic via @ulam/sawsawan npm package)
+├── UlamMenu.jsx    test/development UI for ulam packages
+└── App.jsx         main app (routes, contexts, state management)
 ```
+
+**npm packages** (in package.json):
+
+- `@ulam/ube` — UI components, buttons, panels, inputs (20 reusable primitives)
+- `@ulam/taho` — ARIA live region announcer
+- `@ulam/sili` — focus management, modal/drawer handling, escape key
+- `@ulam/calamansi` — i18n, locale management, search relevance
+- `@ulam/halohalo` — AI provider abstraction (Anthropic, OpenAI, Google, Azure)
+- `@ulam/sawsawan` — integration bridge wiring packages together
+- `@a11yfred/neighbor` — ESLint and Stylelint a11y plugins
+- `@a11yfred/rogers` — accessibility debug tools
 
 ---
 
-## Finding schema
+## Entry schema
 
 Each corpus entry:
 
@@ -61,7 +67,7 @@ Each corpus entry:
 {
   "id": "ACC-079",
   "sc": "2.4.6",
-  "title": "Finding Title",
+  "title": "Entry Title",
   "wcagLevel": "AA",
   "wcagVersion": "2.1",
   "severity": "High",
