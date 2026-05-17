@@ -90,6 +90,7 @@
 
 .settings-key-input:disabled {
   color: var(--text-disabled);
+  border-color: var(--border);
   cursor: not-allowed;
 }
 
