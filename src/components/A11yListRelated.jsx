@@ -3,6 +3,8 @@ import { useT } from '@ulam/calamansi/react'
 import { relatedItems } from '../hooks/relevance.js'
 import entrySlug from '../utils/entrySlug.js'
 
+const defaultHeadingClasses = 'panel-detail-related__heading'
+
 // WCAG AAA/enhanced SC pairings — app-specific, both directions
 const AAA_PAIRS = {
   '2.4.11': '2.4.12',
@@ -46,20 +48,22 @@ export default function A11yListRelated({ entry, allEntries, onSelect, getPairsF
   const headingKey = related.length === 1 ? 'detail.related_issue_heading' : 'detail.related_heading'
 
   return (
-    <div className="panel-detail-related">
+    <section className="panel-detail-related" aria-label={t(headingKey)}>
       {related.length === 1 ? (
-        <p className="panel-detail-related__heading panel-detail-related__heading--single">
-          {t(headingKey)}{' '}
-          <a
-            href={`#/entry/${related[0].id}/${entrySlug(related[0].title)}`}
-            className="panel-detail-related__btn"
-          >
-            {related[0].title}
-          </a>
-        </p>
+        <div className="panel-detail-related__single">
+          <h3 className={`${defaultHeadingClasses} ${defaultHeadingClasses}--single`}>
+            {t(headingKey)}{' '}
+            <a
+              href={`#/entry/${related[0].id}/${entrySlug(related[0].title)}`}
+              className="panel-detail-related__btn"
+            >
+              {related[0].title}
+            </a>
+          </h3>
+        </div>
       ) : (
-        <>
-          <p className="panel-detail-related__heading">{t(headingKey)}</p>
+        <div className="panel-detail-related__multiple">
+          <h3 className={defaultHeadingClasses}>{t(headingKey)}</h3>
           <ul className="panel-detail-related__list">
             {related.map(d => (
               <li key={d.id}>
@@ -72,8 +76,8 @@ export default function A11yListRelated({ entry, allEntries, onSelect, getPairsF
               </li>
             ))}
           </ul>
-        </>
+        </div>
       )}
-    </div>
+    </section>
   )
 }

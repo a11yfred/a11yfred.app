@@ -2,7 +2,44 @@
 
 Plain-language record of what changed and why. For technical details see `CHANGELOG.md`.
 
-Full pre-launch history is in [docs/archive/prelaunch/UPDATES-prelaunch.md](archive/prelaunch/UPDATES-prelaunch.md). A summary is at the bottom of this file.
+---
+
+## 2026-05-17 -- Phase 2 Hooks Integration & Code Quality Pass
+
+### Phase 2 Hooks Integration (Complete)
+
+- AppContent refactored from 1336 to ~730 lines by integrating `useRouteHandler` and `useSearchManager` hooks
+- Removed 602 lines of duplicate state declarations, handlers, and useEffect blocks
+- Route management, entry history, focus restoration now fully owned by useRouteHandler
+- Search state, filtering, sorting, URL sync now fully owned by useSearchManager
+- All duplicate handler code eliminated (handleQueryChange, handleSearch, handleOpenSettings, handleBack, etc.)
+
+### Code Quality & DRY Improvements (Five Optimization Passes)
+
+**Pass 1 (hook integration):** 602 lines removed, duplicate state/handlers/effects consolidated
+
+**Pass 2 (App.jsx):** `runCommand()` moved logic to COMMANDS map (eliminated 18 if-statements); rating handlers factory; search example handler; baseListProps object (~100 lines saved); inert logic simplified
+
+**Pass 3 (template & handlers):** `countRatingsByField()` utility (replaces 2 filter patterns); `formatCountTemplate()` helper (consolidates template splitting); `handleViewAllClick()` and `handleViewAllConfirm()` extracted (unified view-all flow)
+
+**Pass 4 (URL parameters):** `getInitUrlParams()` utility extracted to storage.js (eliminates 6-line duplication across 2 hooks)
+
+**Pass 5 (platform announcements):** Platform announcement formatting now uses utilities instead of hardcoded strings; resolved TODO comment; added proper i18n support
+
+### Documentation Improvements
+
+- README.md updated: status section now reflects Phase 2 completion, version 0.1.0, and Phase 3 direction
+- PRIVACY.md and SECURITY.md: terminology and storage key names verified for accuracy
+- CHANGELOG.md expanded with detailed hook integration and quality improvement notes
+
+### UX Polish (Phase 1)
+
+- Related Entries and Sources lists: upgraded to semantic HTML (`<section>`, `<h3>` headings)
+- Added wrapper divs for consistent layout control (single vs. multiple item states)
+- Improved keyboard navigation structure with explicit heading elements
+- CSS rules consolidated for spacing consistency and visual hierarchy
+
+All work passes lint and build. Ready for browser testing.
 
 ---
 

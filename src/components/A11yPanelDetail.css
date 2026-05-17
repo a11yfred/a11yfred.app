@@ -449,10 +449,15 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   font-size: var(--fs-body);
   font-weight: 600;
   color: var(--text-heading);
+  margin: 0 0 var(--space-2) 0;
 }
 
-.panel-detail-related__heading {
-  margin-bottom: var(--space-2);
+.panel-detail-related__single,
+.panel-detail-related__multiple,
+.source-links__single,
+.source-links__multiple {
+  display: flex;
+  flex-direction: column;
 }
 
 .panel-detail-related__heading--single {
@@ -460,7 +465,15 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   align-items: baseline;
   gap: var(--space-1);
   flex-wrap: wrap;
+  margin-bottom: 0;
+}
+
+.panel-detail-related__single .panel-detail-related__heading--single {
   margin-bottom: var(--space-4);
+}
+
+.panel-detail-related__multiple .panel-detail-related__heading {
+  margin-bottom: var(--space-2);
 }
 
 /* â"€â"€â"€ Source â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
@@ -471,16 +484,26 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   border-top: 1px solid var(--border);
 }
 
-.source-links__row {
+.source-links__single,
+.source-links__multiple {
+  display: flex;
+  flex-direction: column;
+}
+
+.source-links__single {
+  gap: var(--space-2);
+}
+
+.source-links__single .source-links__heading {
   margin-bottom: 0;
 }
 
-.source-links__row--single {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  align-items: baseline;
-  margin-bottom: var(--space-4);
+.source-links__multiple .source-links__heading {
+  margin-bottom: var(--space-2);
+}
+
+.source-links__text {
+  color: var(--text-body);
 }
 
 .panel-detail-related__list,
@@ -490,9 +513,14 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  margin: 0;
 }
 
 .panel-detail-related__list {
+  margin-bottom: var(--space-4);
+}
+
+.source-links__list {
   margin-bottom: var(--space-4);
 }
 

@@ -17,6 +17,11 @@ const nextId = makeIdGenerator('USR')
 function load() { return getStorageJson(LS_USER_ENTRIES, []) }
 function persist(entries) { setStorageJson(LS_USER_ENTRIES, entries) }
 
+/**
+ * Load all user entries from storage.
+ *
+ * @returns {Array<Object>} Array of user entries
+ */
 export function loadUserEntries() {
   return load()
 }
@@ -24,6 +29,14 @@ export function loadUserEntries() {
 /**
  * Upsert an entry. If an entry with the same id already exists it is
  * replaced; otherwise the entry is appended. Returns the stored entry.
+ *
+ * @param {Object} entry - Entry to save
+ * @param {string} entry.id - Entry ID
+ * @param {string} entry.title - Entry title
+ * @param {string} entry.desc - Entry description
+ * @param {string} entry.fix - Entry fix/remediation
+ * @param {string} [entry.createdAt] - Creation timestamp (auto-generated if omitted)
+ * @returns {Object} The stored entry with timestamps and metadata
  */
 export function saveUserEntry(entry) {
   const all = load()
@@ -43,6 +56,8 @@ export function saveUserEntry(entry) {
 
 /**
  * Remove an entry by id. No-op if the id is not found.
+ *
+ * @param {string} entryId - Entry ID to delete
  */
 export function deleteUserEntry(entryId) {
   persist(load().filter(f => f.id !== entryId))
@@ -51,6 +66,9 @@ export function deleteUserEntry(entryId) {
 /**
  * Build a blank user entry with sensible defaults.
  * Pass any overrides in `fields`.
+ *
+ * @param {Object} [fields] - Field overrides
+ * @returns {Object} New blank user entry with generated ID and timestamps
  */
 export function createUserEntry(fields = {}) {
   const existing = load()
@@ -76,6 +94,11 @@ export function createUserEntry(fields = {}) {
 /**
  * Derive a new user entry from an existing corpus or user entry.
  * The copy gets a new USR-NNN id and a `copiedFrom` pointer to the original.
+ *
+ * @param {Object} sourceEntry - Entry to copy from
+ * @param {string} sourceEntry.id - Source entry ID
+ * @param {string} sourceEntry.title - Source entry title
+ * @returns {Object} New user entry copied from source with new ID
  */
 export function copyUserEntry(sourceEntry) {
   const existing = load()

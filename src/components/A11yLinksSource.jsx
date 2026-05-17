@@ -18,23 +18,21 @@ export default function A11yLinksSource({
   if (!links?.length) return null
 
   return (
-    <div className="source-links">
+    <section className="source-links" aria-label={singleHeading && multipleHeading ? (links.length === 1 ? singleHeading : multipleHeading) : undefined}>
       {links.length === 1 ? (
-        <p className="source-links__row source-links__row--single">
-          <span className="source-links__heading">{singleHeading}</span>
+        <div className="source-links__single">
+          <h3 className="source-links__heading">{singleHeading}</h3>
           {links[0].url ? (
             <a href={links[0].url} target="_blank" rel="noreferrer" className="source-links__link">
               <A11yLinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <IconExternalLink />}<span className="sr-only"> (opens in new tab)</span>
             </a>
           ) : (
-            <span>{links[0].text}</span>
+            <span className="source-links__text">{links[0].text}</span>
           )}
-        </p>
+        </div>
       ) : (
-        <>
-          <p className="source-links__row">
-            <span className="source-links__heading">{multipleHeading}</span>
-          </p>
+        <div className="source-links__multiple">
+          <h3 className="source-links__heading">{multipleHeading}</h3>
           <ul className="source-links__list">
             {links.map(link => (
               <li key={link.url || link.text}>
@@ -43,13 +41,13 @@ export default function A11yLinksSource({
                     <A11yLinkTitle url={link.url} fallback={link.text} />{isExternalLink(link.url) && <IconExternalLink />}<span className="sr-only"> (opens in new tab)</span>
                   </a>
                 ) : (
-                  <span>{link.text}</span>
+                  <span className="source-links__text">{link.text}</span>
                 )}
               </li>
             ))}
           </ul>
-        </>
+        </div>
       )}
-    </div>
+    </section>
   )
 }

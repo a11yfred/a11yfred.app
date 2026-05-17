@@ -1,8 +1,62 @@
 # Changelog
 
-All significant changes to A11yFred, newest first. Pre-launch history is in [docs/archive/prelaunch/CHANGELOG-prelaunch.md](archive/prelaunch/CHANGELOG-prelaunch.md).
+All significant changes to A11yFred, newest first.
 
 Versions follow [Semantic Versioning](https://semver.org/). Each production deploy gets a version tag. Releases are batched -- at most one per day.
+
+---
+
+## 2026-05-17 -- Phase 2 Hooks Integration & Code Quality
+
+### App refactoring and hook integration
+
+- `AppContent` refactored to integrate `useRouteHandler` and `useSearchManager` hooks (Phase 2)
+- Removed 602 lines of duplicate code (state declarations, handlers, useEffect blocks) from App.jsx
+- App component reduced from 1336 to ~730 lines with cleaner separation of concerns
+- Route management, entry history, focus restoration now fully encapsulated in useRouteHandler
+- Search state, filtering, sorting, URL sync now fully encapsulated in useSearchManager
+
+### Code quality improvements (Phase 2, Pass 1)
+
+- `useStorageSync` hook extracted: consolidates 4 repeated localStorage sync patterns
+- `entryFilters` utilities created: `getPinnedEntries()` and `getUnpinnedEntries()` replace 7+ filter instances
+- Documentation updated: PRIVACY.md and SECURITY.md accuracy pass (storage key names, terminology, version info)
+
+### Code quality improvements (Phase 2, DRY Passes 2-5)
+
+**Pass 2:**
+
+- `runCommand()` refactored: debug toggle logic moved to COMMANDS map, eliminated 18 repetitive if-statements
+- Rating handlers consolidated: `clearRatingField()` replaced with `makeClearRatingHandler()` factory
+- Search handler extracted: `handleExampleSearch()` consolidates 4-line inline pattern
+- Component props deduplicated: `baseListProps` object eliminates 100+ lines of repetition across 4 A11yListResults instances
+- Inert logic simplified: `mobileOverlayOpen` variable replaces 4-condition OR chain
+
+**Pass 3:**
+
+- `countRatingsByField()` utility extracted to entryFilters.js, replaces 2 Object.values().filter() patterns
+- `formatCountTemplate()` helper for {count} template formatting in modals
+- `handleViewAllClick()` and `handleViewAllConfirm()` extracted, consolidate view-all button and modal logic
+
+**Pass 4:**
+
+- `getInitUrlParams()` utility extracted to storage.js, eliminates 6-line duplication across useAppSettings and useAppSearch hooks
+
+**Pass 5:**
+
+- Platform announcement formatting now uses `getViewAllPlatformLabel()` and `pluralResult()` utilities
+- Resolved TODO comment in useSearchManager, improved i18n support for announcements
+
+### UX polish
+
+- Related Entries and Sources lists improved: semantic HTML (`<section>`, `<h3>` headings), consistent layout wrapper classes
+- Better keyboard navigation structure with explicit heading elements
+- Improved spacing consistency and visual hierarchy
+
+### Documentation
+
+- README.md updated: status section reflects Phase 2 completion, v0.1.0 version, and Phase 3 direction
+- UPDATES.md consolidated: plain-language summary of all Phase 2 work
 
 ---
 

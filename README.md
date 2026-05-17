@@ -22,13 +22,13 @@ npm run build      # production build
 
 ## Status
 
-**Launched.** Live at [a11yfred.app](https://a11yfred.app).
+**Launched.** Live at [a11yfred.app](https://a11yfred.app). Version [v0.1.0](https://github.com/a11yfred/a11yfred/releases/tag/v0.1.0).
 
-**Phase 1 (Personal Library):** Complete. 106-entry public corpus (ACC prefix), all linters passing, ulam framework published as `@ulam/*` npm packages, full component consolidation, CSS tokens, zero dead code. AI Assist complete (single-shot); Match Existing Style (agentic AI) 65% complete.
+**Phase 1 (Feature Complete):** Complete (May 13). 106-entry public corpus (ACC prefix), all linters passing, @ulam framework published as npm packages, full component consolidation, CSS tokens, zero dead code. AI Assist (single-shot) and Match Existing Style (agentic) functional. Search, filter, sort, narrow mode, PWA/offline, and 65+ languages live.
 
-**Phase 2 (AI + Sharing):** In progress. Narrow results mode, frequent findings signal, PWA/offline, agentic AI (partial), and context API consolidation all complete. User entries UI, multilingual editing UI, and export/sharing pending.
+**Phase 2 (Code Quality):** Complete (May 17). `useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Five DRY optimization passes: command map consolidation (18 if-statements), rating handlers factory, template formatting helpers, URL param parsing utility, platform announcements. All TODOs resolved, all imports optimized.
 
-**Phase 3 (Public Launch):** Partially started. Analytics (Umami) complete. Auth and cloud sync not started.
+**Phase 3 (Theme + Extensions):** In progress. Neighborly color theme on feature branch (WCAG AA compliance verified). Chrome and Firefox extension scaffolds ready. Electron scaffold empty. No timeline set.
 
 ---
 
