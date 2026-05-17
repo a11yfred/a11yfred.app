@@ -531,6 +531,7 @@ select:disabled {
   opacity: 0;
   cursor: pointer;
   z-index: 1;
+  appearance: none;
 }
 
 .toggle__track {
