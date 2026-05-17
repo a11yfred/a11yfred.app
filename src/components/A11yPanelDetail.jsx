@@ -197,12 +197,9 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                 onClick={() => {
                   const sourceLinksEl = document.querySelector('.source-links')
                   if (sourceLinksEl) {
-                    const panelBody = sourceLinksEl.closest('.panel-body') || sourceLinksEl.parentElement
-                    if (panelBody) {
-                      panelBody.scrollTop = sourceLinksEl.offsetTop - 100
-                    }
                     const heading = sourceLinksEl.querySelector('.source-links__heading')
                     if (heading) {
+                      heading.scrollIntoView({ behavior: 'smooth', block: 'start' })
                       setTimeout(() => heading.focus(), 100)
                     }
                   }
