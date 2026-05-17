@@ -26,7 +26,7 @@ npm run build      # production build
 
 **Phase 1 (Feature Complete):** Complete (May 13). 106-entry public corpus (ACC prefix), all linters passing, @ulam framework published as npm packages, full component consolidation, CSS tokens, zero dead code. AI Assist (single-shot) and Match Existing Style (agentic) functional. Search, filter, sort, narrow mode, PWA/offline, and 65+ languages live.
 
-**Phase 2 (Code Quality):** Complete (May 17). `useRouteHandler` and `useSearchManager` hooks integrated into AppContent (reduced 1336 >> 730 lines), `useStorageSync` hook extracted, entry filter utilities consolidated, documentation accuracy pass, UX polish on Related/Sources lists. All 602 lines of duplicate code removed.
+**Phase 2 (Code Quality):** Complete (May 17). `useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Five DRY optimization passes: command map consolidation (18 if-statements), rating handlers factory, template formatting helpers, URL param parsing utility, platform announcements. All TODOs resolved, all imports optimized.
 
 **Phase 3 (Theme + Extensions):** In progress. Neighborly color theme on feature branch (WCAG AA compliance verified). Chrome and Firefox extension scaffolds ready. Electron scaffold empty. No timeline set.
 
