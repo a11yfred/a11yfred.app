@@ -1035,6 +1035,11 @@ select:disabled {
   color: var(--text-body);
 }
 
+.panel-toggle-row--disabled .toggle {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 /* ─── Radio chip group ─────────────────────────────────────── */
 
 .radio-chip-group {
