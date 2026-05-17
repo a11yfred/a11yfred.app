@@ -4,7 +4,37 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## 2026-05-17 -- Phase 2 Hooks Integration & Code Quality Pass
+## 2026-05-17 -- Form Controls Accessibility & Keyboard Prevention (Session 6)
+
+### aria-disabled Accessibility Pattern with Keyboard Prevention
+
+Refactored all form controls (select, textarea, toggle) to use the `aria-disabled` attribute instead of the HTML `disabled` attribute. This keeps disabled controls in the tab order and keyboard-focusable, while preventing unwanted interaction via JavaScript handlers.
+
+**What changed:**
+
+- Extracted keyboard prevention logic into reusable `useAriaDisabledKeydown` hook (prevents Space/Enter key activation)
+- Select and Toggle components now use `aria-disabled` with `onMouseDown` and `onKeyDown` handlers
+- Disabled controls show focus outline when tabbed to (keyboard accessibility requirement)
+- Consolidated CSS for aria-disabled state: reduced opacity, disabled cursor, gray text
+- Toggle switches maintain their visual appearance when disabled (excluded from generic opacity reduction)
+- Prevented hover state changes on disabled toggles with `:not([aria-disabled="true"])` selector
+
+**Settings form improvements:**
+
+- Added provider selection validation with error message display
+- Fixed API key validation to use optional chaining (`?.trim()`)
+- Improved model select logic: shows "N/A" when provider has no available models
+- Provider and API key error messages display below their respective fields
+
+**Accessibility benefit:**
+
+Disabled elements remain keyboard-focusable and in tab order, following WCAG recommendations for `aria-disabled`. Users can tab to disabled fields and see the focus indicator, but cannot activate them via keyboard (Space/Enter only) or mouse (preventDefault handlers).
+
+This pattern is now ready to contribute back to the @ulam/ube library as a reusable accessibility pattern for form controls.
+
+---
+
+## 2026-05-17 -- Phase 2 Hooks Integration & Code Quality Pass (Sessions 4-5)
 
 ### Phase 2 Hooks Integration (Complete)
 

@@ -2,6 +2,44 @@
 
 All notable changes to A11yFred are documented here.
 
+## May 17, 2026 (Session 6)
+
+### Form controls accessibility: aria-disabled pattern with keyboard prevention
+
+**Refactoring:**
+
+- Extracted keyboard interaction prevention into reusable `useAriaDisabledKeydown` hook
+- Migrated Select and Toggle components from HTML `disabled` attribute to `aria-disabled`
+- This keeps disabled controls in tab order while preventing activation via Space/Enter keys
+- Consolidated aria-disabled CSS rules with proper selector specificity ordering
+
+**Component updates:**
+
+- **Select.jsx**: Added `onMouseDown` handler to prevent dropdown opening on disabled controls
+- **Toggle.jsx**: Uses new hook for keyboard prevention; maintains visual toggle appearance when disabled
+- **useAriaDisabled.js** (new): Centralized Space/Enter key prevention logic for reusability
+
+**CSS improvements:**
+
+- Form controls (input, textarea, select) show consistent disabled state: reduced opacity, disabled cursor, gray text
+- Toggle role="switch" inputs excluded from generic opacity reduction to maintain toggle appearance
+- Prevented hover state changes on disabled toggles with `:not([aria-disabled="true"])` selector
+- Restored keyboard focus outline for disabled form controls (accessibility requirement)
+- Suppressed mouse focus-visible styling on disabled controls while preserving keyboard focus
+
+**Settings form validation:**
+
+- Added provider selection validation with error message display
+- Fixed API key validation to use optional chaining for safety
+- SettingsSectionAi now shows provider error message when required provider not selected
+- Improved model select logic: shows "N/A" when provider has no available models
+
+**Accessibility benefits:**
+
+Disabled elements remain keyboard-focusable and in tab order, following WCAG recommendations for aria-disabled. Users can tab to disabled fields and see focus indicator, but cannot activate them via keyboard or mouse.
+
+---
+
 ## May 14, 2026 (Session 4)
 
 ### Refactoring: Platform label extraction
