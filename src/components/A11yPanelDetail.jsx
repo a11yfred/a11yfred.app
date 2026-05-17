@@ -195,25 +195,12 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                 key="sources-badge"
                 variant="source"
                 onClick={() => {
-                  const sourceLinksEl = document.querySelector('.source-links')
-                  if (sourceLinksEl) {
-                    const heading = sourceLinksEl.querySelector('.source-links__heading')
-                    if (heading) {
-                      // Find the scrollable panel parent and scroll it
-                      let scrollParent = sourceLinksEl.parentElement
-                      while (scrollParent && scrollParent !== document.body) {
-                        const style = window.getComputedStyle(scrollParent)
-                        if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
-                          const rect = heading.getBoundingClientRect()
-                          const parentRect = scrollParent.getBoundingClientRect()
-                          const offset = rect.top - parentRect.top
-                          scrollParent.scrollTop += offset - 50
-                          break
-                        }
-                        scrollParent = scrollParent.parentElement
-                      }
-                      setTimeout(() => heading.focus(), 100)
-                    }
+                  const heading = document.querySelector('.source-links__heading')
+                  if (heading) {
+                    setTimeout(() => {
+                      heading.focus()
+                      heading.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                    }, 50)
                   }
                 }}
                 aria-label={t('detail.sources_badge_multiple_aria')}
