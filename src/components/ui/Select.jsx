@@ -4,8 +4,9 @@ export default function Select({ id, value, onChange, disabled, wrapClass, child
       <select
         id={id}
         value={value}
-        onChange={onChange}
-        disabled={disabled}
+        onChange={e => !disabled && onChange(e)}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : undefined}
         className="select"
         {...rest}
       >

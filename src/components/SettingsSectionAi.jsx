@@ -90,11 +90,13 @@ export default function SettingsSectionAi({
             autoComplete="off"
             value={keys[p.id]}
             onChange={e => {
+              if (!pendingAiEnabled) return
               setKeys(prev => ({ ...prev, [p.id]: e.target.value }))
               if (errors.apiKey) setErrors({})
             }}
             placeholder={t(p.placeholderKey)}
-            disabled={!pendingAiEnabled}
+            aria-disabled={!pendingAiEnabled}
+            tabIndex={!pendingAiEnabled ? -1 : undefined}
             className="settings-key-input"
             aria-invalid={errors.apiKey && pendingAiEnabled ? 'true' : undefined}
             aria-describedby={errors.apiKey && pendingAiEnabled ? 'api-key-error' : undefined}

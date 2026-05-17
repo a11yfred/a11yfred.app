@@ -1135,9 +1135,11 @@ select:disabled {
   transition: background-color var(--duration-fast);
 }
 
-.select:disabled {
+.select[aria-disabled="true"] {
   color: var(--text-disabled);
   cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .select:focus-visible {
