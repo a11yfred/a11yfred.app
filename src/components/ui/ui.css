@@ -77,8 +77,8 @@ input[role="switch"]:focus-visible + span {
 
 /* ─── Disabled inputs ────────────────────────────────────────── */
 
-input:disabled,
-textarea:disabled {
+input[aria-disabled="true"],
+textarea[aria-disabled="true"] {
   background-color: var(--bg-subtle);
   color: var(--text-disabled);
   border-color: var(--border);
@@ -372,7 +372,7 @@ select[aria-disabled="true"] {
    on selects so border and text color are controlled entirely by
    the component's CSS classes (which already use --text-disabled). */
 
-select:disabled {
+select[aria-disabled="true"] {
   opacity: 1;
 }
 
@@ -740,7 +740,7 @@ select:disabled {
   outline-offset: var(--focus-outline-offset);
 }
 
-.app-checkbox:disabled {
+.app-checkbox[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -1167,7 +1167,7 @@ select:disabled {
   border-radius: var(--radius-sm);
 }
 
-.select:not(:disabled):hover {
+.select:not([aria-disabled="true"]):hover {
   background: var(--bg);
 }
 
@@ -1232,7 +1232,7 @@ input[type="radio"].control:not(:checked):hover {
   outline-offset: var(--focus-outline-offset);
 }
 
-.control:disabled {
+.control[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -1590,9 +1590,9 @@ input[type="radio"].control:not(:checked):hover {
   .btn--secondary.btn--disabled,
   .btn--icon[aria-disabled="true"],
   .btn--icon.btn--disabled,
-  .toggle:has(.toggle__input:disabled),
-  .app-checkbox:disabled,
-  .control:disabled {
+  .toggle:has(.toggle__input[aria-disabled="true"]),
+  .app-checkbox[aria-disabled="true"],
+  .control[aria-disabled="true"] {
     opacity: 1;
     color: var(--text-disabled);
   }

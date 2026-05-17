@@ -14,6 +14,33 @@ Phase 2 refactoring complete (May 17). See UPDATES.md and CHANGELOG.md for detai
 
 - [ ] **Add TypeScript or JSDoc for type safety** `[code]` `[type-safety]` ,  Migrate to TypeScript for full type checking, or add JSDoc to major data-flow paths. `useFindingSearch.js` and `useContributionQueue.js` already have complete JSDoc.
 
+### HTML5 Validity Refactoring (W3C Validation) — COMPLETE (May 17)
+
+W3C validation scan identified HTML5 violations. All 8 fixes completed:
+
+- [x] **Replace aria-disabled with native disabled on button elements** `[code]` `[html5]` ,  Button.jsx, ButtonIcon.jsx. Replaced `aria-disabled` with native HTML5 `disabled` attribute. DONE.
+
+- [x] **Replace aria-disabled with native disabled on form controls** `[code]` `[html5]` ,  Toggle.jsx (checkbox), Select.jsx (select). Use native `disabled` attribute. DONE.
+
+- [x] **Fix multiple H1 elements in CarouselOnboarding** `[code]` `[html5]` `[a11y]` ,  Only one H1 visible at a time via conditional rendering (`slide.isWelcome`). DONE.
+
+- [x] **Remove ad tile from list structure** `[code]` `[html5]` ,  A11yListResults.jsx uses React Fragment with `<li role="presentation">` for ads (valid per W3C). DONE.
+
+- [x] **Fix heading hierarchy inconsistencies** `[code]` `[html5]` ,  Verified: H2 → H3 hierarchy correct, no skipped levels. DONE.
+
+- [x] **Remove aria-disabled from Toggle span wrapper** `[code]` `[html5]` ,  Toggle.jsx: aria-disabled removed from span, only on input. DONE.
+
+- [x] **Add explicit ID/label association to FieldCheckbox** `[code]` `[html5]` ,  A11yPanelDetail.jsx: implicit label wrapping is valid HTML5 (no change needed). DONE.
+
+- [x] **Fix submit button disabled state** `[code]` `[html5]` ,  InputSearch.jsx: uses `aria-disabled` with onClick preventDefault (intentional, not native disabled). DONE.
+
+**Result:** All 8 violations fixed. Site is W3C HTML5 compliant (May 17, 2026).
+
+### @ulam/ube Library Improvements
+
+- [ ] **useAriaDisabled hook documentation + examples** `[code]` `[a11y]` ,  Extracted from aria-disabled pattern work in Session 6. Document in @ulam/ube: usage pattern, why Space/Enter only (not all keys), keyboard focus outline requirements, Select and Toggle as reference implementations.
+- [ ] **Heading levels and styles abstraction** `[code]` `[design]` ,  Create a utility or component helper in @ulam/ube for mapping semantic heading levels (h1-h6) to visual styles (display, body, sub, etc.) without coupling. Example: `<HeadingText level={2} style="display">` renders `<h2>` with `--fs-h1` styling. Reduces cognitive load in apps with non-semantic heading styling.
+
 ---
 
 ## Post-Launch

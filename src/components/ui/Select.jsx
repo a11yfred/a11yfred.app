@@ -1,20 +1,19 @@
 import { useAriaDisabledKeydown } from './useAriaDisabled.js'
 
-export default function Select({ id, value, onChange, disabled, wrapClass, children, 'aria-invalid': ariaInvalid, 'aria-describedby': ariaDescribedby, 'aria-disabled': ariaDisabled, ...rest }) {
-  const isDisabled = disabled || ariaDisabled === 'true'
-  const handleKeyDown = useAriaDisabledKeydown(isDisabled)
+export default function Select({ id, value, onChange, disabled, wrapClass, children, 'aria-invalid': ariaInvalid, 'aria-describedby': ariaDescribedby, ...rest }) {
+  const handleKeyDown = useAriaDisabledKeydown(disabled)
   return (
     <div className={`select-wrap${wrapClass ? ` ${wrapClass}` : ''}`}>
       <select
         id={id}
+        disabled={disabled}
         value={value}
-        onChange={e => !isDisabled && onChange(e)}
+        onChange={e => !disabled && onChange(e)}
         onKeyDown={handleKeyDown}
-        onMouseDown={e => isDisabled && e.preventDefault()}
+        onMouseDown={e => disabled && e.preventDefault()}
         className="select"
         aria-invalid={ariaInvalid}
         aria-describedby={ariaDescribedby}
-        aria-disabled={ariaDisabled}
         {...rest}
       >
         {children}

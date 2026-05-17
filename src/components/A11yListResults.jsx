@@ -317,8 +317,9 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
           {displayResults.map((entry, index) => {
             const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
             return (
-              <div key={entry.id}>
+              <>
                 <A11yListResultCard
+                  key={entry.id}
                   entry={entry}
                   index={index}
                   selected={selected}
@@ -352,8 +353,8 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
                   itemRefs={itemRefs}
                   snapshotPositions={snapshotPositions}
                 />
-                {showAdAfter && <TileAd />}
-              </div>
+                {showAdAfter && <li role="presentation"><TileAd /></li>}
+              </>
             )
           })}
         </ul>

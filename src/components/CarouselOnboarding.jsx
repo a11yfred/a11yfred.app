@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, usePageTitle, Modal } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
@@ -53,8 +53,14 @@ export default function CarouselOnboarding({ onClose }) {
   const total = SLIDES.length
   const currentSlide = SLIDES[step]
   const slideHeading = currentSlide.isWelcome ? null : t(currentSlide.headingKey)
-  const pageTitle = slideHeading ? `${t('onboarding.welcome_heading')} | ${slideHeading}` : t('onboarding.welcome_heading')
-  usePageTitle(pageTitle)
+  const pageTitle = slideHeading ? `${t('onboarding.heading')} | ${slideHeading}` : t('onboarding.heading')
+
+  useEffect(() => {
+    document.title = pageTitle
+    return () => {
+      document.title = 'A11yFred'
+    }
+  }, [pageTitle])
   const isFirst = step === 0
   const isLast = step === total - 1
 
@@ -89,18 +95,19 @@ export default function CarouselOnboarding({ onClose }) {
       </div>
 
       <div className="onboarding-header">
-        <h1 id="onboarding-title" ref={titleRef} tabIndex={-1} className="onboarding-title" style={step === 0 ? { visibility: 'hidden', height: 0, margin: 0 } : {}}>
+        <h1 id="onboarding-title" ref={titleRef} tabIndex={-1} className="onboarding-title" style={slide.isWelcome ? { visibility: 'hidden', height: 0, margin: 0 } : {}}>
           {t('onboarding.heading')}
         </h1>
       </div>
 
       <div className="onboarding-content">
         <FadeTransition watchKey={step} className="onboarding-slide" direction={slideDir}>
-          {slide.isWelcome ? (
+          {slide.isWelcome && (
             <h1 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
               {t(slide.headingKey)}
             </h1>
-          ) : (
+          )}
+          {!slide.isWelcome && (
             <h2 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
               <SlideIcon size={36} strokeWidth={1.5} className="onboarding-step-icon" aria-hidden="true" />
               {t(slide.headingKey)}

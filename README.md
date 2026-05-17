@@ -74,7 +74,7 @@ Each corpus entry:
   "platform": "web",
   "desc": "Problem description.",
   "fix": "How to fix it.",
-  "creditNames": ["Adrian Roselli"],
+  "creditNames": ["Mikey Ilagan"],
   "keywords": ["keyboard", "label"],
   "relatedSC": ["1.3.1 Info and Relationships (Level A)"],
   "primarySC": "2.4.6 Headings and Labels (Level AA)",

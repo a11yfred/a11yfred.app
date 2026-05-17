@@ -158,15 +158,17 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
 
   const handleSave = () => {
-    if (pendingAiEnabled && !activeProvider) {
-      setErrors({ provider: true })
-      announce(t('settings.provider_error'), { priority: 'assertive' })
-      return
-    }
-    if (pendingAiEnabled && activeProvider && !keys[activeProvider]?.trim() && !isLocalhost) {
-      setErrors({ apiKey: true })
-      announce(t('settings.api_key_error'), { priority: 'assertive' })
-      return
+    if (pendingAiEnabled) {
+      if (!activeProvider) {
+        setErrors({ provider: true })
+        announce(t('settings.provider_error'), { priority: 'assertive' })
+        return
+      }
+      if (!keys[activeProvider]?.trim()) {
+        setErrors({ apiKey: true })
+        announce(t('settings.api_key_error'), { priority: 'assertive' })
+        return
+      }
     }
     if (!hasUnsaved && !justResetRef.current) {
       setNoChangesOpen(true)
