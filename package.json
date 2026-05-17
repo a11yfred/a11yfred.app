@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:extension": "vite build --config vite.config.extension.js",
     "preview": "vite preview",
     "lint:js": "eslint src/",
     "lint:css": "stylelint \"src/**/*.css\"",

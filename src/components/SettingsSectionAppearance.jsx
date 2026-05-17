@@ -1,0 +1,105 @@
+import { Check } from 'lucide-react'
+import { useT } from '@ulam/calamansi/react'
+import { announce } from '@ulam/taho'
+import RadioChip from './ui/RadioChip.jsx'
+import PanelRowSetting from './ui/PanelRowSetting.jsx'
+import Select from './ui/Select.jsx'
+import Button from './ui/Button.jsx'
+import { SETTINGS_FLASH_MS } from '../utils/constants.js'
+import LANGUAGES from '../data/languages.js'
+
+function PendingNote({ t }) {
+  const raw = t('settings.pending_save_note')
+  const [before, rest] = raw.split('{unsaved}')
+  const [middle, after] = rest.split('{save}')
+  return (
+    <p className="panel-pending-note">
+      {before}<strong>Unsaved.</strong>{middle}<strong>Save</strong>{after}
+    </p>
+  )
+}
+
+export default function SettingsSectionAppearance({
+  theme,
+  pendingTheme,
+  setPendingTheme,
+  language,
+  pendingLanguage,
+  setPendingLanguage,
+  fiestaUnlocked,
+  setFiestaConfirmOpen,
+  setLanguagePreviewed,
+  languagePreviewed,
+}) {
+  const t = useT()
+
+  const savedLanguageLabel = (() => {
+    const entry = LANGUAGES.find(l => l.value === language)
+    if (!entry) return LANGUAGES.find(l => l.value === language?.split('-')[0])?.label ?? language
+    return language?.startsWith('en') && entry.en ? `${entry.label} (${entry.en})` : entry.label
+  })()
+
+  return (
+    <section className="panel-section">
+      <h3 className="panel-section-heading">{t('settings.appearance')}</h3>
+
+      {pendingTheme !== theme && <PendingNote t={t} />}
+      <fieldset>
+        <legend className="sr-only">{t('settings.appearance')}</legend>
+        <div className="radio-chip-group">
+          {[
+            { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
+            { value: 'auto',  labelKey: 'settings.theme_auto',  announceKey: 'settings.theme_auto_announce'  },
+            { value: 'dark',  labelKey: 'settings.theme_dark',  announceKey: 'settings.theme_dark_announce'  },
+            ...(fiestaUnlocked ? [{ value: 'fiesta', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
+          ].map(({ value, labelKey, announceKey }) => (
+            <RadioChip
+              key={value}
+              name="theme-setting"
+              value={value}
+              label={t(labelKey)}
+              current={pendingTheme}
+              onChange={(val) => {
+                if (val === 'fiesta') { setFiestaConfirmOpen(true); return }
+                setPendingTheme(val); announce(t(announceKey))
+              }}
+            />
+          ))}
+        </div>
+      </fieldset>
+
+      <PanelRowSetting block label={t('settings.language_label')} description={<>The current language is <strong>{savedLanguageLabel}</strong>.</>}>
+        <div className="settings-language-row">
+          <Select
+            value={pendingLanguage === language ? '' : pendingLanguage}
+            onChange={e => { setPendingLanguage(e.target.value || language); setLanguagePreviewed(false) }}
+            wrapClass="select-wrap--language"
+            aria-label={t('settings.language_label')}
+          >
+            <option value="">{t('settings.language_select_one')}</option>
+            {LANGUAGES.map(lang => (
+              <option key={lang.value} value={lang.value}>
+                {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
+              </option>
+            ))}
+          </Select>
+          <Button
+            variant="primary"
+            active={languagePreviewed}
+            activeIcon={<Check size={14} aria-hidden="true" />}
+            className="settings-language-change-btn"
+            disabled={!pendingLanguage || pendingLanguage === language}
+            onClick={() => {
+              setLanguagePreviewed(true)
+              setTimeout(() => setLanguagePreviewed(false), SETTINGS_FLASH_MS)
+              announce(t('settings.language_changed_announce'))
+            }}
+          >
+            {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
+          </Button>
+        </div>
+        {pendingLanguage !== language && <PendingNote t={t} />}
+      </PanelRowSetting>
+    </section>
+  )
+}

@@ -1,64 +1,23 @@
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
-import { Check, Info, PinOff, OctagonX, AlertTriangle, Save, ArrowLeft } from 'lucide-react'
-import { Modal, Sheet, useRouter } from '@ulam/sili/react'
+import { Check, Info, Save, ArrowLeft } from 'lucide-react'
+import { useRouter } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
-import Toggle from './ui/Toggle.jsx'
-import RadioChip from './ui/RadioChip.jsx'
-import PanelRowSetting from './ui/PanelRowSetting.jsx'
-import Select from './ui/Select.jsx'
 import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
-import { PROVIDERS, PROVIDER_MODELS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '@ulam/halohalo'
+import SettingsSectionAppearance from './SettingsSectionAppearance.jsx'
+import SettingsSectionSearch from './SettingsSectionSearch.jsx'
+import SettingsSectionAi from './SettingsSectionAi.jsx'
+import SettingsModals from './SettingsModals.jsx'
+import { PROVIDERS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '@ulam/halohalo'
 import { applyTheme } from '../hooks/useThemeManager.js'
-import { TOAST_HIDE_DURATION, SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER, URL_PRIVACY_POLICY, EASTER_EGG_LOCALES } from '../utils/constants.js'
+import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES } from '../utils/constants.js'
 import { setStorage, removeStorage } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
 import './A11yPanelSettings.css'
 
-function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {
-  return (
-    <div className="panel-toggle-row">
-      <div>
-        <h3 className="panel-toggle-label">{t(labelKey)}</h3>
-        <p className="panel-toggle-desc">{hasData ? t(descKey) : t(emptyKey)}</p>
-      </div>
-      <Button
-        active={isDone}
-        icon={<Icon size={14} aria-hidden="true" />}
-        activeIcon={<Check size={14} aria-hidden="true" />}
-        label={t(labelActionKey)}
-        activeLabel={t(labelDoneKey)}
-        variant="primary"
-        className={className}
-        disabled={!hasData}
-        onClick={() => {
-          onClear?.()
-          setIsDone(true)
-          if (announceKey) announce(t(announceKey))
-          setTimeout(() => setIsDone(false), SETTINGS_FLASH_MS)
-        }}
-      >
-        {isDone ? t(labelDoneKey) : t(labelActionKey)}
-      </Button>
-    </div>
-  )
-}
-
-function PendingNote({ t }) {
-  const raw = t('settings.pending_save_note')
-  const [before, rest] = raw.split('{unsaved}')
-  const [middle, after] = rest.split('{save}')
-  return (
-    <p className="panel-pending-note">
-      {before}<strong>Unsaved.</strong>{middle}<strong>Save</strong>{after}
-    </p>
-  )
-}
-
-import LANGUAGES from '../data/languages.js'
 
 const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   onUnlock,
@@ -263,12 +222,6 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
 
   useImperativeHandle(ref, () => ({ guardedClose }), [guardedClose])
 
-  const savedLanguageLabel = (() => {
-    const entry = LANGUAGES.find(l => l.value === language)
-    if (!entry) return LANGUAGES.find(l => l.value === language?.split('-')[0])?.label ?? language
-    return language?.startsWith('en') && entry.en ? `${entry.label} (${entry.en})` : entry.label
-  })()
-
   return (
     <Panel
       ref={settingsPanelRef}
@@ -280,288 +233,68 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
     >
       <p className="panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
 
-      {/* ── Appearance ──────────────────────────────── */}
-      <section className="panel-section">
-        <h3 className="panel-section-heading">{t('settings.appearance')}</h3>
+      <SettingsSectionAppearance
+        theme={theme}
+        pendingTheme={pendingTheme}
+        setPendingTheme={setPendingTheme}
+        language={language}
+        pendingLanguage={pendingLanguage}
+        setPendingLanguage={setPendingLanguage}
+        fiestaUnlocked={fiestaUnlocked}
+        setFiestaConfirmOpen={setFiestaConfirmOpen}
+        setLanguagePreviewed={setLanguagePreviewed}
+        languagePreviewed={languagePreviewed}
+      />
 
-        {/* Theme */}
-        {pendingTheme !== theme && <PendingNote t={t} />}
-        <fieldset>
-          <legend className="sr-only">{t('settings.appearance')}</legend>
-          <div className="radio-chip-group">
-            {[
-              { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
-              { value: 'auto',  labelKey: 'settings.theme_auto',  announceKey: 'settings.theme_auto_announce'  },
-              { value: 'dark',  labelKey: 'settings.theme_dark',  announceKey: 'settings.theme_dark_announce'  },
-              ...(fiestaUnlocked ? [{ value: 'fiesta', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
-            ].map(({ value, labelKey, announceKey }) => (
-              <RadioChip
-                key={value}
-                name="theme-setting"
-                value={value}
-                label={t(labelKey)}
-                current={pendingTheme}
-                onChange={(val) => {
-                  if (val === 'fiesta') { setFiestaConfirmOpen(true); return }
-                  setPendingTheme(val); announce(t(announceKey))
-                }}
-              />
-            ))}
-          </div>
-        </fieldset>
+      <SettingsSectionSearch
+        platform={platform}
+        pendingPlatform={pendingPlatform}
+        setPendingPlatform={setPendingPlatform}
+        liveSearch={liveSearch}
+        pendingLiveSearch={pendingLiveSearch}
+        setPendingLiveSearch={setPendingLiveSearch}
+        showPersonalCorpus={showPersonalCorpus}
+        pendingShowPersonalCorpus={pendingShowPersonalCorpus}
+        setPendingShowPersonalCorpus={setPendingShowPersonalCorpus}
+        wcagFilter={wcagFilter}
+        pendingWcagFilter={pendingWcagFilter}
+        setPendingWcagFilter={setPendingWcagFilter}
+        showVoting={showVoting}
+        pendingShowVoting={pendingShowVoting}
+        setPendingShowVoting={setPendingShowVoting}
+        hasPins={hasPins}
+        hasStarred={hasStarred}
+        hasRankings={hasRankings}
+        hasArchived={hasArchived}
+        onClearPins={onClearPins}
+        onClearStarred={onClearStarred}
+        onResetRankings={onResetRankings}
+        onClearArchived={onClearArchived}
+        unpinAllDone={unpinAllDone}
+        setUnpinAllDone={setUnpinAllDone}
+        unstarAllDone={unstarAllDone}
+        setUnstarAllDone={setUnstarAllDone}
+        resetRankingsDone={resetRankingsDone}
+        setResetRankingsDone={setResetRankingsDone}
+        unarchiveAllDone={unarchiveAllDone}
+        setUnarchiveAllDone={setUnarchiveAllDone}
+      />
 
-        {/* Language */}
-        <PanelRowSetting block label={t('settings.language_label')} description={<>The current language is <strong>{savedLanguageLabel}</strong>.</>}>
-          <div className="settings-language-row">
-            <Select
-              value={pendingLanguage === language ? '' : pendingLanguage}
-              onChange={e => { setPendingLanguage(e.target.value || language); setLanguagePreviewed(false) }}
-              wrapClass="select-wrap--language"
-              aria-label={t('settings.language_label')}
-            >
-              <option value="">{t('settings.language_select_one')}</option>
-              {LANGUAGES.map(lang => (
-                <option key={lang.value} value={lang.value}>
-                  {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
-                </option>
-              ))}
-            </Select>
-            <Button
-              variant="primary"
-              active={languagePreviewed}
-              activeIcon={<Check size={14} aria-hidden="true" />}
-              className="settings-language-change-btn"
-              disabled={!pendingLanguage || pendingLanguage === language}
-              onClick={() => {
-                if (pendingLanguage === 'rhg') { setRhgPending(true) }
-                else {
-                  setLanguagePreviewed(true)
-                  setTimeout(() => setLanguagePreviewed(false), SETTINGS_FLASH_MS)
-                  announce(t('settings.language_changed_announce'))
-                }
-              }}
-            >
-              {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
-            </Button>
-          </div>
-          {pendingLanguage !== language && <PendingNote t={t} />}
-        </PanelRowSetting>
-      </section>
-
-      {/* ── Search ──────────────────────────────────── */}
-      <section className="panel-section">
-        <h3 className="panel-section-heading">
-          {t('settings.search_section')}
-        </h3>
-
-      {/* Platform */}
-      <PanelRowSetting block label={t('settings.platform_label')} description={
-        pendingPlatform === 'all'    ? <>Show <strong>all results</strong> across web, native apps, and documents.</> :
-        pendingPlatform === 'web'    ? <>Show <strong>web-oriented</strong> results.</> :
-        pendingPlatform === 'native' ? <>Show <strong>native app-oriented</strong> results.</> :
-                                       <>Show <strong>document-oriented</strong> results.</>
-      }>
-        {pendingPlatform !== platform && <PendingNote t={t} />}
-        <fieldset>
-          <legend className="sr-only">{t('settings.platform_label')}</legend>
-          <div className="radio-chip-group">
-            {[
-              { value: 'all',      labelKey: 'settings.platform_all',      announceKey: 'settings.platform_all_announce'      },
-              { value: 'web',      labelKey: 'settings.platform_web',      announceKey: 'settings.platform_web_announce'      },
-              { value: 'native',   labelKey: 'settings.platform_native',   announceKey: 'settings.platform_native_announce'   },
-              { value: 'document', labelKey: 'settings.platform_document', announceKey: 'settings.platform_document_announce' },
-            ].map(({ value, labelKey, announceKey }) => (
-              <RadioChip
-                key={value}
-                name="platform-setting"
-                value={value}
-                label={t(labelKey)}
-                current={pendingPlatform}
-                onChange={(val) => { setPendingPlatform(val); announce(t(announceKey)) }}
-              />
-            ))}
-          </div>
-        </fieldset>
-      </PanelRowSetting>
-
-      {/* Live search */}
-      <PanelRowSetting label={<label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>} description={pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}>
-        {pendingLiveSearch !== liveSearch && <PendingNote t={t} />}
-        <Toggle id="toggle-live-search" checked={pendingLiveSearch} onChange={() => setPendingLiveSearch(v => !v)} />
-      </PanelRowSetting>
-
-      {/* Personal corpus */}
-      <PanelRowSetting label={<label htmlFor="toggle-personal-corpus">{t('settings.personal_corpus_label')}</label>} description={pendingShowPersonalCorpus ? <>Your custom findings <strong>appear in search results</strong>.</> : <>Your custom findings <strong>are hidden from results</strong>.</>}>
-        {pendingShowPersonalCorpus !== showPersonalCorpus && <PendingNote t={t} />}
-        <Toggle id="toggle-personal-corpus" checked={pendingShowPersonalCorpus} onChange={() => setPendingShowPersonalCorpus(v => !v)} />
-      </PanelRowSetting>
-
-      {/* WCAG Version + Level Filter */}
-      <div className="panel-group">
-        <h3 className="panel-group__label">{t('settings.wcag_filter_label')}</h3>
-        <p className="panel-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each version includes all findings from previous versions.</p>
-        {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) ||
-          pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel)) && (
-          <PendingNote t={t} />
-        )}
-        <div className="settings-wcag-filter-row">
-          <fieldset>
-            <legend className="panel-radio-legend">{t('settings.wcag_filter_legend')}</legend>
-            <div className="panel-radio-group">
-              {[
-                { value: '2.0', labelKey: 'settings.wcag_filter_20' },
-                { value: '2.1', labelKey: 'settings.wcag_filter_21' },
-                { value: '2.2', labelKey: 'settings.wcag_filter_22' },
-              ].map(({ value, labelKey }) => (
-                <label key={value} className="control__label">
-                  <input
-                    type="radio"
-                    name="wcag-version"
-                    value={value}
-                    checked={(pendingWcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) === value}
-                    onChange={() => setPendingWcagFilter(f => ({ ...f, maxVersion: value }))}
-                    className="control"
-                  />
-                  {t(labelKey)}
-                </label>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset>
-            <legend className="panel-radio-legend">{t('settings.wcag_level_legend')}</legend>
-            <div className="panel-radio-group">
-              {[
-                { value: 'A',  labelKey: 'settings.wcag_level_a'  },
-                { value: 'AA', labelKey: 'settings.wcag_level_aa' },
-              ].map(({ value, labelKey }) => (
-                <label key={value} className="control__label">
-                  <input
-                    type="radio"
-                    name="wcag-level"
-                    value={value}
-                    checked={(pendingWcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel) === value}
-                    onChange={() => setPendingWcagFilter(f => ({ ...f, maxLevel: value }))}
-                    className="control"
-                  />
-                  {t(labelKey)}
-                </label>
-              ))}
-            </div>
-          </fieldset>
-        </div>
-      </div>
-
-      {/* Pinned Results */}
-      <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-unpin-all-btn" />
-
-      {/* Result ranking */}
-      <PanelRowSetting
-        label={<label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>}
-        description={pendingShowVoting
-          ? <>Ranking controls <strong>are visible on each result</strong>.</>
-          : <>Ranking controls <strong>are hidden</strong>.</>}
-      >
-        {pendingShowVoting !== showVoting && <PendingNote t={t} />}
-        <Toggle id="toggle-ranking" checked={pendingShowVoting} onChange={() => setPendingShowVoting(v => !v)} />
-      </PanelRowSetting>
-
-      {/* Starred Results */}
-      <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={OctagonX} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" />
-
-      {/* Ranking Data */}
-      <ClearDataRow t={t} labelKey="settings.rankings_label" hasData={hasRankings} descKey="settings.rankings_desc" emptyKey="settings.rankings_empty" isDone={resetRankingsDone} setIsDone={setResetRankingsDone} onClear={onResetRankings} labelActionKey="settings.reset_rankings" labelDoneKey="settings.reset_rankings_done" Icon={OctagonX} className="settings-reset-rankings-btn" announceKey="settings.reset_rankings_done" />
-
-      {/* Archived Results */}
-      <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={OctagonX} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" />
-      </section>
-
-      {/* ── AI Assist ───────────────────────────────── */}
-      <section className="panel-section">
-        <h3 className="panel-section-heading">
-          {t('settings.ai_heading')}
-        </h3>
-
-      <PanelRowSetting
-        sm
-        label={<label htmlFor="toggle-ai">{t('settings.ai_enable_label')}</label>}
-        description={<>Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</>}
-      >
-        {pendingAiEnabled !== aiEnabled && <PendingNote t={t} />}
-        <Toggle id="toggle-ai" checked={pendingAiEnabled} onChange={() => setPendingAiEnabled(v => !v)} />
-      </PanelRowSetting>
-
-      <div className="settings-provider-group">
-        <label htmlFor="active-provider" className="panel-field-label">
-          {t('settings.provider_label')}
-        </label>
-        <Select
-          id="active-provider"
-          value={activeProvider}
-          onChange={e => setActiveProvider(e.target.value)}
-          disabled={!pendingAiEnabled}
-        >
-          {PROVIDERS.map(p => (
-            <option key={p.id} value={p.id}>{p.label}</option>
-          ))}
-        </Select>
-      </div>
-
-      {PROVIDER_MODELS[activeProvider].length > 0 && (
-        <div className="settings-provider-group">
-          <label htmlFor="active-model" className="panel-field-label">
-            {t('settings.model_label')}
-          </label>
-          <Select
-            id="active-model"
-            value={models[activeProvider]}
-            onChange={e => setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
-            disabled={!pendingAiEnabled}
-          >
-            {PROVIDER_MODELS[activeProvider].map(m => (
-              <option key={m.id} value={m.id}>{m.label}</option>
-            ))}
-          </Select>
-        </div>
-      )}
-
-      {PROVIDERS.filter(p => p.id === activeProvider).map(p => (
-        <div key={p.id} className="settings-key-group">
-          <label htmlFor={`apikey-${p.id}`} className="panel-field-label">
-            {t('settings.api_key_label_prefix')}, {p.label}
-            {pendingAiEnabled && <span className="panel-field-required"> {t('settings.api_key_required')}</span>}
-          </label>
-          <textarea
-            id={`apikey-${p.id}`}
-            autoComplete="off"
-            value={keys[p.id]}
-            onChange={e => {
-              setKeys(prev => ({ ...prev, [p.id]: e.target.value }))
-              if (errors.apiKey) setErrors({})
-            }}
-            placeholder={t(p.placeholderKey)}
-            disabled={!pendingAiEnabled}
-            className="settings-key-input"
-            aria-invalid={errors.apiKey && pendingAiEnabled ? 'true' : undefined}
-            aria-describedby={errors.apiKey && pendingAiEnabled ? 'api-key-error' : undefined}
-          />
-          {errors.apiKey && pendingAiEnabled && (
-            <p id="api-key-error" className="panel-field-error">
-              {t('settings.api_key_error')}
-            </p>
-          )}
-        </div>
-      ))}
-
-      <PanelRowSetting
-        sm
-        disabled={!pendingAiEnabled || activeProvider !== 'anthropic'}
-        label={<label htmlFor="toggle-agentic">{t('settings.agentic_mode_label')}</label>}
-        description={t('settings.agentic_mode_desc')}
-      >
-        {pendingAgenticMode !== (isAgenticModeEnabled()) && <PendingNote t={t} />}
-        <Toggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} disabled={!pendingAiEnabled || activeProvider !== 'anthropic'} />
-      </PanelRowSetting>
-      </section>
+      <SettingsSectionAi
+        aiEnabled={aiEnabled}
+        pendingAiEnabled={pendingAiEnabled}
+        setPendingAiEnabled={setPendingAiEnabled}
+        activeProvider={activeProvider}
+        setActiveProvider={setActiveProvider}
+        models={models}
+        setModels={setModels}
+        keys={keys}
+        setKeys={setKeys}
+        errors={errors}
+        setErrors={setErrors}
+        pendingAgenticMode={pendingAgenticMode}
+        setPendingAgenticMode={setPendingAgenticMode}
+      />
 
       {/* ── Footer ──────────────────────────────────── */}
       <div className="settings-footer-row">
@@ -606,163 +339,38 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
         </p>
       )}
 
-      <Sheet
-        open={privacyOpen}
-        onClose={() => navigate('/settings')}
-        collapsed={privacyCollapsed}
-        onCollapse={setPrivacyCollapsed}
-        label={t('settings.privacy_heading')}
-        heading={t('settings.privacy_heading')}
-        closeLabel={t('common.close')}
-        returnFocusRef={privacyButtonRef}
-        hideCloseBottom
-      >
-        <h2 className="sheet-heading">{t('settings.privacy_heading')}</h2>
-        <h3 className="panel-subheading">{t('settings.privacy_subhead_storage')}</h3>
-        <p>{t('settings.privacy_body_1')}</p>
-        <p>{t('settings.privacy_body_2')}</p>
-        <h3 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h3>
-        <p>{t('settings.privacy_body_translations')}</p>
-        <p><a href={URL_PRIVACY_POLICY} target="_blank" rel="noreferrer">{t('settings.privacy_full_policy')}<span className="sr-only"> (opens in new tab)</span></a></p>
-        <div className="panel-detail-actions-end">
-          <button className="btn btn--primary panel-detail-close-btn" onClick={() => navigate('/settings')}>
-            {t('common.close')}
-          </button>
-        </div>
-      </Sheet>
-
-      <Modal
-        open={rhgPending}
-        onClose={() => setRhgPending(false)}
-        heading={t('settings.language_rhg_heading')}
-        actions={[
-          { label: t('settings.language_rhg_use_anyway'), onClick: () => { setPendingLanguage('rhg'); setRhgPending(false) }, className: 'btn--primary' },
-          { label: t('common.cancel'),                    onClick: () => setRhgPending(false),                                 className: 'btn--tertiary' },
-        ]}
-      >
-        <p>{t('settings.language_rhg_body_1')}</p>
-        <p>{t('settings.language_rhg_body_2')}</p>
-      </Modal>
-
-      <Modal
-        open={unsavedOpen}
-        onClose={() => setUnsavedOpen(false)}
-        heading={t('settings.unsaved_heading')}
-        actions={[
-          {
-            label: t('settings.unsaved_save_close'),
-            onClick: () => { handleSave(); setUnsavedOpen(false); onClose() },
-            className: 'btn--primary',
-          },
-          {
-            label: t('settings.unsaved_discard'),
-            onClick: () => { setUnsavedOpen(false); onClose() },
-            className: 'btn--secondary',
-          },
-          {
-            label: t('settings.unsaved_cancel'),
-            onClick: () => setUnsavedOpen(false),
-            className: 'btn--tertiary',
-          },
-        ]}
-      >
-        <p>{t('settings.unsaved_body')}</p>
-      </Modal>
-
-      <Sheet
-        open={resetConfirmOpen}
-        onClose={() => setResetConfirmOpen(false)}
-        label={t('settings.confirm_reset_all_heading')}
-        closeLabel={t('common.close')}
-        hideCloseBottom={true}
-      >
-        <div className="settings-reset-sheet">
-          <h2 className="sheet-heading">{t('settings.confirm_reset_all_heading')}</h2>
-
-          <div className="alert-banner alert-banner--warning">
-            <AlertTriangle size={18} aria-hidden="true" />
-            <p>{t('settings.confirm_reset_all_intro')}</p>
-          </div>
-
-          <div className="settings-reset-section">
-            <h3>{t('settings.confirm_reset_all_will_clear')}</h3>
-            <ul className="settings-reset-list">
-              <li>{t('settings.confirm_reset_all_item_api_keys')}</li>
-              <li>{t('settings.confirm_reset_all_item_frequency')}</li>
-              <li>{t('settings.confirm_reset_all_item_recent')}</li>
-            </ul>
-          </div>
-
-          <div className="settings-reset-section">
-            <h3>{t('settings.confirm_reset_all_will_reset')}</h3>
-            <ul className="settings-reset-list">
-              <li>{t('settings.confirm_reset_all_keep_item_theme')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_language')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_platform')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_live_search')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_wcag_filter')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_pins')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_ranking_controls')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_starred')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_ranking_data')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_archived')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_ai_enabled')}</li>
-            </ul>
-          </div>
-
-          <div className="settings-reset-section">
-            <h3>{t('settings.confirm_reset_all_will_keep')}</h3>
-            <ul className="settings-reset-list">
-              <li>{t('settings.confirm_reset_all_keep_item_corpus')}</li>
-              <li>{t('settings.confirm_reset_all_keep_item_contributions')}</li>
-            </ul>
-          </div>
-
-          <div className="settings-reset-actions">
-            <Button
-              variant="primary"
-              onClick={() => {
-                setResetConfirmOpen(false)
-                onReset?.()
-                justResetRef.current = true
-                announce(t('settings.reset_all_announce'))
-                setResetDisabled(true)
-                setSaveAndClose(true)
-                saveButtonRef.current?.focus()
-              }}
-            >
-              {t('settings.confirm_reset_all_yes')}
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={() => { setResetConfirmOpen(false); announce(t('settings.preserved_announce')) }}
-            >
-              {t('settings.confirm_reset_all_no')}
-            </Button>
-          </div>
-        </div>
-      </Sheet>
-
-      <Modal
-        open={noChangesOpen}
-        onClose={() => setNoChangesOpen(false)}
-        returnFocusRef={saveButtonRef}
-        heading={t('settings.no_changes_heading')}
-      >
-        <p>{t('settings.no_changes_body')}</p>
-      </Modal>
-
-      <Modal
-        open={fiestaConfirmOpen}
-        onClose={() => setFiestaConfirmOpen(false)}
-        heading={t('settings.party_confirm_heading')}
-        actions={[
-          { label: t('settings.party_confirm_yes'), onClick: () => { setPendingTheme('fiesta'); announce(t('settings.theme_party_announce')); setFiestaConfirmOpen(false) }, className: 'btn--primary' },
-          { label: t('settings.party_confirm_no'),  onClick: () => setFiestaConfirmOpen(false), className: 'btn--tertiary' },
-        ]}
-      >
-        <p>{t('settings.party_confirm_body')}</p>
-      </Modal>
+      <SettingsModals
+        t={t}
+        privacyOpen={privacyOpen}
+        privacyCollapsed={privacyCollapsed}
+        setPrivacyCollapsed={setPrivacyCollapsed}
+        onPrivacyClose={() => navigate('/settings')}
+        privacyButtonRef={privacyButtonRef}
+        rhgPending={rhgPending}
+        onRhgClose={() => setRhgPending(false)}
+        onRhgUseAnyway={() => { setPendingLanguage('rhg'); setRhgPending(false) }}
+        unsavedOpen={unsavedOpen}
+        onUnsavedClose={() => setUnsavedOpen(false)}
+        onUnsavedSaveAndClose={() => { handleSave(); setUnsavedOpen(false); onClose() }}
+        onUnsavedDiscard={() => { setUnsavedOpen(false); onClose() }}
+        resetConfirmOpen={resetConfirmOpen}
+        onResetClose={() => setResetConfirmOpen(false)}
+        onResetConfirm={() => {
+          setResetConfirmOpen(false)
+          onReset?.()
+          justResetRef.current = true
+          announce(t('settings.reset_all_announce'))
+          setResetDisabled(true)
+          setSaveAndClose(true)
+          saveButtonRef.current?.focus()
+        }}
+        noChangesOpen={noChangesOpen}
+        onNoChangesClose={() => setNoChangesOpen(false)}
+        saveButtonRef={saveButtonRef}
+        fiestaConfirmOpen={fiestaConfirmOpen}
+        onFiestaClose={() => setFiestaConfirmOpen(false)}
+        onFiestaConfirm={() => { setPendingTheme('fiesta'); announce(t('settings.theme_party_announce')); setFiestaConfirmOpen(false) }}
+      />
 
       <div className="panel-mobile-back">
         <Button
