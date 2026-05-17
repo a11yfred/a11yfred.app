@@ -1,5 +1,36 @@
 import { useState } from 'react'
 
+/**
+ * Manages search state: query, submission, narrow mode, sorting, selection, and focus.
+ * Initializes from URL parameters (hash or search query).
+ *
+ * @returns {{
+ *   query: string,
+ *   setQuery: (q: string) => void,
+ *   submittedQuery: string,
+ *   setSubmittedQuery: (q: string) => void,
+ *   searchKey: number,
+ *   setSearchKey: (key: number | (prev: number) => number) => void,
+ *   selected: Object | null,
+ *   setSelected: (entry: Object | null) => void,
+ *   sheetCollapsed: boolean,
+ *   setSheetCollapsed: (collapsed: boolean) => void,
+ *   pendingEntry: Object | null,
+ *   setPendingEntry: (entry: Object | null) => void,
+ *   pendingPrivacy: boolean,
+ *   setPendingPrivacy: (pending: boolean) => void,
+ *   panelFocusTrigger: number,
+ *   setPanelFocusTrigger: (trigger: number | (prev: number) => number) => void,
+ *   narrowMode: boolean,
+ *   setNarrowMode: (narrow: boolean) => void,
+ *   narrowQuery: string,
+ *   setNarrowQuery: (q: string) => void,
+ *   submittedNarrowQuery: string,
+ *   setSubmittedNarrowQuery: (q: string) => void,
+ *   sortBy: string,
+ *   setSortBy: (sort: string) => void,
+ * }}
+ */
 export default function useAppSearch() {
   const hashSearch = window.location.hash.includes('?') ? window.location.hash.slice(window.location.hash.indexOf('?') + 1) : ''
   const initParams = new URLSearchParams(window.location.search || hashSearch)
