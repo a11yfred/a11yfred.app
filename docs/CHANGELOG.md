@@ -22,13 +22,30 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 - `entryFilters` utilities created: `getPinnedEntries()` and `getUnpinnedEntries()` replace 7+ filter instances
 - Documentation updated: PRIVACY.md and SECURITY.md accuracy pass (storage key names, terminology, version info)
 
-### Code quality improvements (Phase 2, Pass 2 -- DRY refactoring)
+### Code quality improvements (Phase 2, DRY Passes 2-5)
+
+**Pass 2:**
 
 - `runCommand()` refactored: debug toggle logic moved to COMMANDS map, eliminated 18 repetitive if-statements
 - Rating handlers consolidated: `clearRatingField()` replaced with `makeClearRatingHandler()` factory
-- Search handler extracted: `handleExampleSearch()` consolidates 4-line inline pattern (used in onExampleSearch)
+- Search handler extracted: `handleExampleSearch()` consolidates 4-line inline pattern
 - Component props deduplicated: `baseListProps` object eliminates 100+ lines of repetition across 4 A11yListResults instances
-- Inert logic simplified: `mobileOverlayOpen` variable replaces 4-condition OR chain with 2-condition logic
+- Inert logic simplified: `mobileOverlayOpen` variable replaces 4-condition OR chain
+
+**Pass 3:**
+
+- `countRatingsByField()` utility extracted to entryFilters.js, replaces 2 Object.values().filter() patterns
+- `formatCountTemplate()` helper for {count} template formatting in modals
+- `handleViewAllClick()` and `handleViewAllConfirm()` extracted, consolidate view-all button and modal logic
+
+**Pass 4:**
+
+- `getInitUrlParams()` utility extracted to storage.js, eliminates 6-line duplication across useAppSettings and useAppSearch hooks
+
+**Pass 5:**
+
+- Platform announcement formatting now uses `getViewAllPlatformLabel()` and `pluralResult()` utilities
+- Resolved TODO comment in useSearchManager, improved i18n support for announcements
 
 ### UX polish
 

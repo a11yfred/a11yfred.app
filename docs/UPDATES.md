@@ -14,13 +14,17 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 - Search state, filtering, sorting, URL sync now fully owned by useSearchManager
 - All duplicate handler code eliminated (handleQueryChange, handleSearch, handleOpenSettings, handleBack, etc.)
 
-### Code Quality & DRY Improvements (Second Pass)
+### Code Quality & DRY Improvements (Five Optimization Passes)
 
-- `runCommand()` refactored: debug toggle logic moved to COMMANDS map (eliminated 18 repetitive if-statements)
-- Rating clear handlers: `clearRatingField()` factory replaced with `makeClearRatingHandler()` helper
-- Search example handler: extracted `handleExampleSearch()` (consolidates 4-line inline pattern)
-- A11yListResults props: created `baseListProps` object, removed ~100 lines of prop repetition across 4 component instances
-- Background inert logic: simplified to `mobileOverlayOpen` variable, removed 4-condition OR chain to 2-condition logic
+**Pass 1 (hook integration):** 602 lines removed, duplicate state/handlers/effects consolidated
+
+**Pass 2 (App.jsx):** `runCommand()` moved logic to COMMANDS map (eliminated 18 if-statements); rating handlers factory; search example handler; baseListProps object (~100 lines saved); inert logic simplified
+
+**Pass 3 (template & handlers):** `countRatingsByField()` utility (replaces 2 filter patterns); `formatCountTemplate()` helper (consolidates template splitting); `handleViewAllClick()` and `handleViewAllConfirm()` extracted (unified view-all flow)
+
+**Pass 4 (URL parameters):** `getInitUrlParams()` utility extracted to storage.js (eliminates 6-line duplication across 2 hooks)
+
+**Pass 5 (platform announcements):** Platform announcement formatting now uses utilities instead of hardcoded strings; resolved TODO comment; added proper i18n support
 
 ### Documentation Improvements
 
