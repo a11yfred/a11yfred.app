@@ -113,7 +113,7 @@ export default function SettingsSectionAi({
         description={t('settings.agentic_mode_desc')}
       >
         {pendingAgenticMode !== (isAgenticModeEnabled()) && <PendingNote t={t} />}
-        <Toggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} />
+        <Toggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} disabled={!pendingAiEnabled || activeProvider !== 'anthropic'} />
       </PanelRowSetting>
     </section>
   )
