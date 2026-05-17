@@ -315,7 +315,7 @@
   vertical-align: middle;
   position: relative;
   top: -1px;
-  color: currentcolor;
+  color: var(--accent);
 }
 
 .rank-hint-link {
