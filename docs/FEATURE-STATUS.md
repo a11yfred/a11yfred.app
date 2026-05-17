@@ -6,15 +6,9 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 ---
 
-## Phase 1: Complete (17/17 features, 1 pre-launch remaining)
+## Phase 1: Complete (17/17 features)
 
-**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All three linters passing with zero errors (ESLint, Stylelint, Markdownlint). prefers-reduced-motion and prefers-reduced-transparency fallback blocks added across all UI components. UI component library fully portable with 20 components, zero app-specific dependencies. ulam framework published as `@ulam/*` npm packages; rogers and neighbor published as standalone `@a11yfred/*` packages.
-
-**Pre-launch remaining (1):**
-
-| Feature | Status | % |
-| --- | --- | --- |
-| Analytics (Umami) | 💤 | 20 |
+**Status:** All Phase 1 features shipped and stable. Public corpus fully sourced and WCAG-mapped. Button consolidation complete (5 types → 2 base). All three linters passing with zero errors (ESLint, Stylelint, Markdownlint). prefers-reduced-motion and prefers-reduced-transparency fallback blocks added across all UI components. UI component library fully portable with 20 components, zero app-specific dependencies. ulam framework published as `@ulam/*` npm packages; rogers and neighbor published as standalone `@a11yfred/*` packages. Large components split into focused sub-components. Neighborly theme (warm Mr. Rogers/Daniel Tiger palette) in feature/neighborly-theme branch with full WCAG AA contrast compliance. Umami analytics configured and enabled.
 
 **Shipped (17/17):**
 
@@ -154,9 +148,9 @@ Done:
 
 Done:
 
-- Full finding display: title, severity badge, WCAG SC links, source, related findings
+- Full finding display: title, severity badge, WCAG SC links, source, related entries
 - Copy / Reset desc + fix (individual and "Copy all / Reset all")
-- Related findings navigation with back button history
+- Related entries navigation with back button history
 - Reset confirmation modal when >70% of text changed
 - Edit distance guard; `aria-busy` + spinner on AI refine
 - `exportFinding.js` utility (text / markdown / csv) ,  data layer only
@@ -168,7 +162,7 @@ Done:
 - All copy buttons show Check icon for 2 seconds on success, with accessibility announcements
 - Platform badge display with clickable filter integration
 - Severity badge positioning below h2 for visual clarity
-- Related findings displayed with singular/plural labels
+- Related entries displayed with singular/plural labels
 - Sources displayed inline (single) or as bullet list (multiple)
 
 Missing:
@@ -177,7 +171,7 @@ Missing:
 - Save changes button (triggers multilingual edit flow; Phase 2)
 - Personal override indicator badge (`_hasOverride` flag exists, badge missing; Phase 2)
 - Edit scope and target dialogs (Phase 2)
-- Location prefix value persistence between findings
+- Location prefix value persistence between entries
 
 ---
 
@@ -212,7 +206,7 @@ Done:
 - Reset All as BottomSheet with explicit lists (what gets deleted, what resets to defaults with values shown)
 - Privacy & Storage disclosure sheet
 - Rank up/rank down ratings restore on reload
-- Pinned findings display with clear option
+- Pinned entries display with clear option
 
 Missing:
 
@@ -538,7 +532,7 @@ Missing:
 
 Done:
 
-- CRUD stubs for findings and settings
+- CRUD stubs for entries and settings
 
 Missing:
 
@@ -558,16 +552,15 @@ Done:
 
 ---
 
-### Analytics (Umami) ,  20%
+### Analytics (Umami) ,  100%
 
 Done:
 
-- Script placeholder in `index.html` (disabled)
-
-Missing:
-
-- Umami account + website ID
-- Zero-cookie verification before enabling
+- Umami account and website ID configured
+- Script enabled in `index.html`
+- Zero-cookie verification completed
+- Privacy policy updated
+- Ready for production tracking
 
 ---
 
