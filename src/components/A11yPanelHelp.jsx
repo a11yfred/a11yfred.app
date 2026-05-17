@@ -2,6 +2,7 @@ import { PlayCircle, ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import Panel from './ui/PanelReact.jsx'
 import Button from './ui/Button.jsx'
+import { version } from '../../package.json'
 
 export default function A11yPanelHelp({ onClose, onStartTour }) {
   const t = useT()
@@ -66,7 +67,7 @@ export default function A11yPanelHelp({ onClose, onStartTour }) {
 
       <div className="help-footer">
         <small className="help-version">
-          A11yFred v0.1.0
+          A11yFred v{version}
         </small>
       </div>
 
