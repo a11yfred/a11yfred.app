@@ -118,6 +118,12 @@ export default function A11yPanelAbout({ onClose, allEntries = [] }) {
         </ul>
       </section>
 
+      <div className="about-footer">
+        <small className="about-version">
+          A11yFred v0.1.0
+        </small>
+      </div>
+
       <div className="panel-mobile-back">
         <Button
           variant="primary"
