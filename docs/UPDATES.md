@@ -6,6 +6,12 @@ Full pre-launch history is in [docs/archive/prelaunch/UPDATES-prelaunch.md](arch
 
 ---
 
+## 2026-05-16 -- Post-Launch Cleanup
+
+Large component refactoring pass completed: `A11yListResults` (869 lines) split into `A11yListResultCard`, `ResultsMetaHeader`, and `ResultsActiveFilterBar`; `A11yPanelSettings` (857 lines) split into `SettingsSectionAppearance`, `SettingsSectionSearch`, `SettingsSectionAi`, and `SettingsModals`. Label formatters extracted to `src/utils/labelFormatters.js`. Entry terminology standardized throughout codebase. Neighborly theme (warm Mr. Rogers/Daniel Tiger palette) completed on feature/neighborly-theme branch with full WCAG AA contrast compliance. feature/ulam branch deleted; all @ulam packages now imported from npm only. v0.1.0 GitHub release created with release notes.
+
+---
+
 ## v0.2.0 -- 2026-05-14
 
 ### Icon and navigation polish
@@ -16,7 +22,7 @@ The `SkipLink` component was renamed to `LinkSkipTo` throughout -- file, functio
 
 ### WCAG version and level as separate badges
 
-WCAG version (`2.1`, `2.2`) and conformance level (`A`, `AA`, `AAA`) now show as separate color-coded badges instead of a combined one. Cyan for version, emerald for level. Clicking either filters the list to all findings with that attribute. The detail panel shows the full label ("WCAG version: 2.1", "Level: AA") while the list view stays compact.
+WCAG version (`2.1`, `2.2`) and conformance level (`A`, `AA`, `AAA`) now show as separate color-coded badges instead of a combined one. Cyan for version, emerald for level. Clicking either filters the list to all entries with that attribute. The detail panel shows the full label ("WCAG version: 2.1", "Level: AA") while the list view stays compact.
 
 ### Clear All Filters
 
@@ -48,11 +54,11 @@ Initial public launch at a11yfred.app. 106-entry public corpus, full search and 
 
 ## Pre-launch History
 
-**2026-05-13:** Framework packages (`@ulam/*`) published as npm, ~45 vendor files removed from source. Component and hook renames. exceljs replacing xlsx (security). BOM cleanup. PWA icons.
+**2026-05-13:** Framework packages (`@ulam/*`) published as npm (ube, taho, sili, calamansi, halohalo, sawsawan), ~45 vendor files removed from source. Component and hook renames. exceljs replacing xlsx (security). BOM cleanup. PWA icons. UI component library extraction to npm complete: 20 portable components (zero app-specific dependencies), button unification (5 types → 2 base), cross-project reusability audited, monorepo scaffolded.
 
 **2026-05-12:** Full lint clean pass -- zero JS, CSS, and Markdown errors across all three linters.
 
-**2026-05-11:** `@ulam` framework extracted into standalone packages: `halohalo` (AI), `calamansi/relevance` (search), `sawsawan` (storage adapters), `neighbor` (lint plugins).
+**2026-05-11:** `@ulam` framework extracted into standalone packages: `ube` (UI components), `taho` (announcer), `sili` (focus/routing), `calamansi` (i18n), `halohalo` (AI), `sawsawan` (bridge). `neighbor` (lint rules) and `rogers` (debug tools) extracted separately. Monorepo structure scaffolded at mikeyil/ulam.
 
 **2026-05-10:** Multiple code quality passes -- mobile-first CSS refactor, token consolidation, dead code removal, full i18n translate run across 59 locales.
 
@@ -68,4 +74,4 @@ Initial public launch at a11yfred.app. 106-entry public corpus, full search and 
 
 **April 29:** Chrome extension, Firefox extension, and Electron desktop app scaffolded on feature branches.
 
-**April 28 -- April 24:** Badge filters, shareable search URLs, export utility, user findings data layer, focus management, party mode, multilingual support (10 languages at the time), bottom sheet panel, debug tools, initial build.
+**April 28 -- April 24:** Badge filters, shareable search URLs, export utility, user entries data layer, focus management, party mode, multilingual support (10 languages at the time), bottom sheet panel, debug tools, initial build.

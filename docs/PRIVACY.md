@@ -31,12 +31,12 @@ All data you create is stored in your browser's `localStorage` (and one entry in
 | Show personal corpus toggle | `showPersonalCorpus` | Browser storage clear or Settings → Reset All |
 | WCAG version/level filter | `wcagFilter` | Browser storage clear or Settings → Reset All |
 | Finding ratings (rank up/down, stars) | `defect_ratings` | Browser storage clear or Settings → Reset All |
-| Pinned findings | `pinnedFindings` | Browser storage clear or Settings → Reset All |
+| Pinned entries | `pinnedFindings` | Browser storage clear or Settings → Reset All |
 | Co-selection pairs (usage signal) | `coSelectionPairs` | Browser storage clear or Settings → Reset All |
 | Personal corpus edits | `userOverrides` | Browser storage clear or Settings → Reset All |
-| User-created custom findings | `userFindings` | Browser storage clear or Settings → Reset All |
+| User-created custom entries | `userFindings` | Browser storage clear or Settings → Reset All |
 | Pending contribution suggestions | `pendingContributions` | Browser storage clear, in-app export-and-clear, or Settings → Reset All |
-| Recent findings (last 10 IDs) | `recentFindings` | Browser storage clear or Settings → Reset All |
+| Recent entries (last 10 IDs) | `recentFindings` | Browser storage clear or Settings → Reset All |
 | Per-finding notes | `finding_note_<id>` | Browser storage clear or Settings → Reset All |
 | Onboarding seen flag | `onboardingSeen` | Browser storage clear or Settings → Reset All |
 | Settings save count (Party Mode unlock) | `settingsSaveCount` | Browser storage clear or Settings → Reset All |

@@ -6,6 +6,28 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 
 ---
 
+## 2026-05-16 -- Post-Launch Cleanup
+
+### Component refactoring
+
+- `A11yListResults.jsx` (869 lines) split into `A11yListResultCard.jsx`, `ResultsMetaHeader.jsx`, `ResultsActiveFilterBar.jsx`
+- `A11yPanelSettings.jsx` (857 lines) split into `SettingsSectionAppearance.jsx`, `SettingsSectionSearch.jsx`, `SettingsSectionAi.jsx`, `SettingsModals.jsx`
+
+### Code quality
+
+- Label formatters extracted to `src/utils/labelFormatters.js` (`getPlatformLabel()`, `getViewAllPlatformLabel()`)
+- Entry terminology standardized throughout codebase (replacing "finding" for corpus items)
+- Context API consolidation completed (SettingsContext, SearchContext, RatingsContext removing ~140 prop slots)
+
+### Theming and infrastructure
+
+- Neighborly theme (warm Mr. Rogers/Daniel Tiger palette) completed on feature/neighborly-theme branch with full WCAG AA contrast compliance
+- feature/ulam branch deleted; all @ulam packages now imported from npm only
+- Verified mikeyil/ulam, a11yfred/neighbor, a11yfred/rogers repos are current with latest fixes
+- v0.1.0 GitHub release created with CHANGELOG notes
+
+---
+
 ## v0.2.0 -- 2026-05-14
 
 ### UI polish and icon updates
@@ -19,7 +41,7 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 
 - WCAG version and conformance level are now separate badges (cyan = version, emerald = level)
 - List view shows compact values (`2.1`, `AA`); detail panel shows full labels (`WCAG version: 2.1`, `Level: AA`)
-- Both badges are filterable; clicking either filters to all findings with that tag
+- Both badges are filterable; clicking either filters to all entries with that tag
 - New design tokens: `--wcag-level-bg`, `--wcag-level-text` (light + dark)
 
 ### Active filters and clear controls
@@ -69,11 +91,11 @@ Initial public launch at a11yfred.app.
 
 Development history from April 23 -- May 13, 2026, before the public launch. See [docs/archive/prelaunch/CHANGELOG-prelaunch.md](archive/prelaunch/CHANGELOG-prelaunch.md) for the full log.
 
-**2026-05-13:** `@ulam/*` migration (taho, sili, calamansi published as npm packages, ~45 vendor files removed), CSS class rename (`detail-*` to `panel-detail-*`), JSDoc audit, dependency updates.
+**2026-05-13:** `@ulam/*` migration: all 6 packages published to npm (ube, taho, sili, calamansi, halohalo, sawsawan), ~45 vendor files removed from source, CSS class rename (`detail-*` to `panel-detail-*`), JSDoc audit, dependency updates. UI component library extraction complete: 20 portable components with zero app-specific dependencies, full button unification (5→2), cross-project reusability verified, monorepo published.
 
 **2026-05-12:** Full lint clean pass -- zero JS, CSS, and Markdown errors.
 
-**2026-05-11:** @ulam framework extraction: halohalo (AI layer), calamansi/relevance (search), sawsawan (storage adapters), neighbor (ESLint/Stylelint plugins).
+**2026-05-11:** @ulam framework extraction: ube (20 components), taho (announcer), sili (focus/routing), calamansi (i18n), halohalo (AI), sawsawan (bridge). neighbor (lint rules) and rogers (debug tools) extracted separately. Monorepo structure (mikeyil/ulam) scaffolded.
 
 **2026-05-10:** Multiple code quality and CSS refactor passes (mobile-first, token consolidation, dead code removal, i18n translate run across 59 locales).
 
@@ -89,4 +111,4 @@ Development history from April 23 -- May 13, 2026, before the public launch. See
 
 **April 29:** Chrome extension, Firefox extension, and Electron scaffold on feature branches.
 
-**April 28 -- April 24:** Badge filters, shareable URLs, export utility, user findings data layer, focus management, party mode, multi-language support, bottom sheet, debug tools, accessibility audit, initial build.
+**April 28 -- April 24:** Badge filters, shareable URLs, export utility, user entries data layer, focus management, party mode, multi-language support, bottom sheet, debug tools, accessibility audit, initial build.
