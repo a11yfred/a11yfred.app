@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 
 const COLORS = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b', '#cc5de8', '#ff63c3', '#20c997']
 const COUNT = 110
@@ -23,10 +24,10 @@ export default function ThemeEffectConfetti({ active }) {
   const canvasRef = useRef(null)
   const animRef = useRef(null)
   const startTimeRef = useRef(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!active || prefersReduced) return
+    if (!active || prefersReducedMotion) return
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')

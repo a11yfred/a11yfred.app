@@ -15,13 +15,13 @@ import { useFlipList } from '../hooks/useFlipList.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useSearch } from '../context/ContextSearch.js'
 import { useRatings } from '../context/ContextRatings.js'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import './A11yListResults.css'
-
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   const t = useT()
   const { showVoting: showRanking } = useSettings()
+  const prefersReducedMotion = usePrefersReducedMotion()
   const [clearingAll, setClearingAll] = useState(false)
   if (!entries.length) return null
 

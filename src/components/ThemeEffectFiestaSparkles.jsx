@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 
 const COLORS = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b', '#cc5de8', '#ff6b81', '#74c0fc']
 const COUNT = 14
@@ -7,11 +8,10 @@ export default function ThemeEffectFiestaSparkles({ active }) {
   const canvasRef = useRef(null)
   const particlesRef = useRef([])
   const animRef = useRef(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
-    if (!active) return
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
+    if (!active || prefersReducedMotion) return
 
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')

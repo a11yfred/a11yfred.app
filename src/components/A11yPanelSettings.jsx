@@ -14,6 +14,7 @@ import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES } from '../utils/constants.js'
 import { setStorage, removeStorage } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
+import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
 import './A11yPanelSettings.css'
@@ -43,7 +44,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   const resetButtonRef = useRef(null)
   const t = useT()
   const { navigate, route } = useRouter()
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   const settingsPanelRef = useRef(null)
   const [errors, setErrors] = useState({})
