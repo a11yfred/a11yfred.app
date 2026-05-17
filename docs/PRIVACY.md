@@ -1,13 +1,13 @@
 # Privacy Policy
 
 **Effective date:** 2026-05-13
-**Last updated:** 2026-05-13
+**Last updated:** 2026-05-17
 
 ---
 
 ## What A11yFred is
 
-A11yFred is a single-page web application that helps accessibility auditors look up and adapt finding descriptions and remediation text. It runs entirely in your browser. There is no server, no database, and no account system.
+A11yFred is a single-page web application that helps accessibility auditors look up and adapt accessibility entry descriptions and remediation text. It runs entirely in your browser. There is no server, no database, and no account system.
 
 ---
 
@@ -30,23 +30,23 @@ All data you create is stored in your browser's `localStorage` (and one entry in
 | Show ranking toggle | `showRanking` | Browser storage clear or Settings → Reset All |
 | Show personal corpus toggle | `showPersonalCorpus` | Browser storage clear or Settings → Reset All |
 | WCAG version/level filter | `wcagFilter` | Browser storage clear or Settings → Reset All |
-| Finding ratings (rank up/down, stars) | `defect_ratings` | Browser storage clear or Settings → Reset All |
-| Pinned entries | `pinnedFindings` | Browser storage clear or Settings → Reset All |
+| Entry ratings (rank up/down, stars) | `defect_ratings` | Browser storage clear or Settings → Reset All |
+| Pinned entries | `pinnedEntries` | Browser storage clear or Settings → Reset All |
 | Co-selection pairs (usage signal) | `coSelectionPairs` | Browser storage clear or Settings → Reset All |
 | Personal corpus edits | `userOverrides` | Browser storage clear or Settings → Reset All |
-| User-created custom entries | `userFindings` | Browser storage clear or Settings → Reset All |
+| User-created custom entries | `userEntries` | Browser storage clear or Settings → Reset All |
 | Pending contribution suggestions | `pendingContributions` | Browser storage clear, in-app export-and-clear, or Settings → Reset All |
-| Recent entries (last 10 IDs) | `recentFindings` | Browser storage clear or Settings → Reset All |
-| Per-finding notes | `finding_note_<id>` | Browser storage clear or Settings → Reset All |
+| Recent entries (last 10 IDs) | `recentEntries` | Browser storage clear or Settings → Reset All |
+| Per-entry notes | `entry_note_<id>` | Browser storage clear or Settings → Reset All |
 | Onboarding seen flag | `onboardingSeen` | Browser storage clear or Settings → Reset All |
 | Settings save count (Party Mode unlock) | `settingsSaveCount` | Browser storage clear or Settings → Reset All |
 | Admin panel dataset preference | `adminDataset` | Browser storage clear |
-| View-all skip preference | `viewAllSkipConfirm` | Browser storage clear |
+| View-all skip preference | `viewAllSkip` | Browser storage clear |
 | AI provider preference | `ai_provider` | Browser storage clear or Settings → Reset All |
 | AI model per provider | `ai_model_<provider>` | Browser storage clear or Settings → Reset All |
 | Agentic mode toggle | `agentic_mode` | Browser storage clear or Settings → Reset All |
 | AI API keys | `apikey_<provider>` | Browser storage clear, in-app key field clear, or Settings → Reset All |
-| Last selected finding (current tab only) | `lastSelectedId` (sessionStorage) | Tab close |
+| Last selected entry (current tab only) | `lastSelectedId` (sessionStorage) | Tab close |
 
 **Your right to deletion:** Use Settings → Reset All to clear all stored data at once, or clear your browser's site data directly (browser Settings → Privacy → Clear browsing data). Either action removes all locally stored data permanently and is not reversible.
 

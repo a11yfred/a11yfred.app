@@ -2,11 +2,12 @@
 
 ## Supported Versions
 
-A11yFred is a client-side web application currently in pre-release (Phase 2). Only the latest commit on the `main` branch is actively maintained.
+A11yFred is a client-side web application. Currently in active development with post-launch Phase 2 refactoring complete. Only the latest commit on the `main` branch is actively maintained.
 
-| Version | Supported |
-| ------- | --------- |
-| main    | Yes       |
+| Version | Supported                    |
+| ------- | ---------------------------- |
+| main    | Yes                          |
+| v0.1.0+ | Backport critical fixes only |
 
 ## Reporting a Vulnerability
 
@@ -24,9 +25,9 @@ You should receive a response within 5 business days. If the report is confirmed
 
 This app:
 
-- Runs entirely in the browser. There is no server-side component, no database, and no user accounts (Phase 2; auth stubs exist but are not active)
+- Runs entirely in the browser. There is no server-side component, no database, and no user accounts (auth stubs exist but are not active)
 - Stores only local preferences and API keys in `localStorage`; API keys are sent directly to the respective AI provider and never to any intermediate server
-- Has no authentication surface in Phase 1
+- Has no authentication surface
 
 Vulnerabilities of interest include:
 
