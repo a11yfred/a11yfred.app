@@ -189,7 +189,15 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
               <Badge
                 key="sources-badge"
                 variant="source"
-                onClick={() => document.querySelector('.source-links')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                onClick={() => {
+                  const sourceLinksEl = document.querySelector('.source-links')
+                  if (sourceLinksEl) {
+                    const panelBody = sourceLinksEl.closest('.panel-body') || sourceLinksEl.parentElement
+                    if (panelBody) {
+                      panelBody.scrollTop = sourceLinksEl.offsetTop - 100
+                    }
+                  }
+                }}
                 aria-label={t('detail.sources_badge_multiple_aria')}
               >
                 {t('detail.sources_badge_multiple')}
