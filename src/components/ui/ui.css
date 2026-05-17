@@ -640,6 +640,13 @@ select:disabled {
   pointer-events: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .toggle[aria-disabled="true"] {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+}
+
 /* ─── Field ───────────────────────────────────────────────── */
 
 .field {
@@ -1140,6 +1147,13 @@ select:disabled {
   cursor: not-allowed;
   opacity: 0.5;
   pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .select[aria-disabled="true"] {
+    opacity: 1;
+    background: var(--bg-subtle);
+  }
 }
 
 .select:focus-visible {

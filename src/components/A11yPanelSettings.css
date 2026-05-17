@@ -96,6 +96,13 @@
   pointer-events: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .settings-key-input[aria-disabled="true"] {
+    opacity: 1;
+    background: var(--bg-subtle);
+  }
+}
+
 .settings-key-input[aria-invalid="true"] {
   border-color: var(--error);
   outline: 1px solid var(--error);
