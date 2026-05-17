@@ -20,7 +20,7 @@ import useAppRatings from './hooks/useAppRatings.js'
 import { MAX_RECENT_ENTRIES, LS_RECENT_ENTRIES, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, EASTER_EGG_LOCALES, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getViewAllPlatformLabel } from './utils/labelFormatters.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson } from './utils/storage.js'
-import { getUnpinnedEntries } from './utils/entryFilters.js'
+import { getUnpinnedEntries, countRatingsByField } from './utils/entryFilters.js'
 import { isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from '@ulam/halohalo'
 import {
   Router,
@@ -127,6 +127,16 @@ function boldStatPhrase(str, n) {
   const andIdx = filled.indexOf(' and ')
   if (andIdx === -1) return <strong>{filled}</strong>
   return <><strong>{filled.slice(0, andIdx)}</strong>{filled.slice(andIdx)}</>
+}
+
+// Formats template with {count} placeholder: splits on count and bolds the first word count.
+// e.g. "{count} items loaded"  => <> <strong>X item(s)</strong> loaded</>
+function formatCountTemplate(tmpl, count) {
+  const [before, after] = tmpl.split('{count}')
+  const spaceIdx = after.indexOf(' ', 1)
+  const boldTail = spaceIdx === -1 ? after : after.slice(0, spaceIdx)
+  const rest = spaceIdx === -1 ? '' : after.slice(spaceIdx)
+  return <>{before}<strong style={{ color: 'var(--text-heading)' }}>{formatCount(count)}{boldTail}</strong>{rest}</>
 }
 
 function AppContent() {
@@ -323,6 +333,26 @@ function AppContent() {
     syncSearchUrl(q)
   }
 
+  const handleViewAllClick = () => {
+    viewAllTriggerRef.current = document.activeElement
+    if (getStorage(LS_VIEW_ALL_SKIP) === VIEW_ALL_SKIP_FLAG) {
+      announce(t('results.loading_announce'))
+      setViewAllLoading(true)
+      navigate('/results/all')
+    } else {
+      setViewAllDontAsk(false)
+      setViewAllConfirmOpen(true)
+    }
+  }
+
+  const handleViewAllConfirm = () => {
+    if (viewAllDontAsk) setStorage(LS_VIEW_ALL_SKIP, VIEW_ALL_SKIP_FLAG)
+    announce(t('results.loading_announce'))
+    setViewAllLoading(true)
+    navigate('/results/all')
+    setViewAllConfirmOpen(false)
+  }
+
   const settingsProps = {
     onUnlock: unlock,
     onSave: handleSettingsSave,
@@ -474,17 +504,7 @@ function AppContent() {
                   <button
                     type="button"
                     className="btn--secondary view-all-btn"
-                    onClick={() => {
-                      viewAllTriggerRef.current = document.activeElement
-                      if (getStorage(LS_VIEW_ALL_SKIP) === VIEW_ALL_SKIP_FLAG) {
-                        announce(t('results.loading_announce'))
-                        setViewAllLoading(true)
-                        navigate('/results/all')
-                      } else {
-                        setViewAllDontAsk(false)
-                        setViewAllConfirmOpen(true)
-                      }
-                    }}
+                    onClick={handleViewAllClick}
                   >
                     {t('search.view_all')}
                   </button>
@@ -499,13 +519,7 @@ function AppContent() {
         actions={[
           {
             label: t('search.view_all_confirm_yes'),
-            onClick: () => {
-              if (viewAllDontAsk) setStorage(LS_VIEW_ALL_SKIP, VIEW_ALL_SKIP_FLAG)
-              announce(t('results.loading_announce'))
-              setViewAllLoading(true)
-              navigate('/results/all')
-              setViewAllConfirmOpen(false)
-            },
+            onClick: handleViewAllConfirm,
             className: 'btn--primary modal-ok-btn',
           },
           {
@@ -528,8 +542,8 @@ function AppContent() {
         </p>
         {(() => {
           const pinnedCount = pinnedIds.size
-          const starredCount = Object.values(ratings).filter(r => r.starred).length
-          const archivedCount = Object.values(ratings).filter(r => r.archived).length
+          const starredCount = countRatingsByField(ratings, 'starred')
+          const archivedCount = countRatingsByField(ratings, 'archived')
           if (!pinnedCount && !starredCount && !archivedCount) return null
           return (
             <ul className="view-all-confirm-stat-list">
@@ -539,15 +553,12 @@ function AppContent() {
             </ul>
           )
         })()}
-        <p className="view-all-confirm-body">{(() => {
-          const n = sortedEntries.length
-          const tmpl = n === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body')
-          const [before, after] = tmpl.split('{count}')
-          const spaceIdx = after.indexOf(' ', 1) // end of " result(s)"
-          const boldTail = spaceIdx === -1 ? after : after.slice(0, spaceIdx)
-          const rest = spaceIdx === -1 ? '' : after.slice(spaceIdx)
-          return <>{before}<strong style={{ color: 'var(--text-heading)' }}>{formatCount(n)}{boldTail}</strong>{rest}</>
-        })()}</p>
+        <p className="view-all-confirm-body">
+          {formatCountTemplate(
+            sortedEntries.length === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body'),
+            sortedEntries.length
+          )}
+        </p>
         <label className="view-all-dont-ask-label">
           <input
             type="checkbox"
