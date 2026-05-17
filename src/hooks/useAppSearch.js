@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { getInitUrlParams } from '../utils/storage.js'
 
 /**
  * Manages search state: query, submission, narrow mode, sorting, selection, and focus.
@@ -32,8 +33,7 @@ import { useState } from 'react'
  * }}
  */
 export default function useAppSearch() {
-  const hashSearch = window.location.hash.includes('?') ? window.location.hash.slice(window.location.hash.indexOf('?') + 1) : ''
-  const initParams = new URLSearchParams(window.location.search || hashSearch)
+  const initParams = getInitUrlParams()
   const initQ = initParams.get('q') || ''
   const initNarrow = initParams.get('narrow') || ''
   const initSort = initParams.get('sort') || 'smart'

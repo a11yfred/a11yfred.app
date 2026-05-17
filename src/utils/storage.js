@@ -6,3 +6,9 @@ import { LS_ENTRY_NOTE_PREFIX } from './constants.js'
 export function getEntryNoteKey(id) {
   return `${LS_ENTRY_NOTE_PREFIX}${id}`
 }
+
+// Parse URL params from hash or search query
+export function getInitUrlParams() {
+  const hashSearch = window.location.hash.includes('?') ? window.location.hash.slice(window.location.hash.indexOf('?') + 1) : ''
+  return new URLSearchParams(window.location.search || hashSearch)
+}
