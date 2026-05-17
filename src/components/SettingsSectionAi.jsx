@@ -61,7 +61,7 @@ export default function SettingsSectionAi({
         </Select>
       </div>
 
-      {PROVIDER_MODELS[activeProvider].length > 0 && (
+      {activeProvider && PROVIDER_MODELS[activeProvider]?.length > 0 && (
         <div className="settings-provider-group">
           <label htmlFor="active-model" className="panel-field-label">
             {t('settings.model_label')}
