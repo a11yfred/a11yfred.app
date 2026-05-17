@@ -198,7 +198,13 @@ export default function ManagerModalsSheets({
           },
         ]
       case 'noChanges':
-        return []
+        return [
+          {
+            label: t('common.ok'),
+            onClick: handleClose,
+            className: 'btn--primary',
+          },
+        ]
       case 'fiesta':
         return [
           {
