@@ -25,10 +25,11 @@ import './A11yPanelDetail.css'
 const WCAG_BADGE_STYLE = { '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }
 const WCAG_LEVEL_BADGE_STYLE = { '--badge-bg': 'var(--wcag-level-bg)', '--badge-text': 'var(--wcag-level-text)' }
 
-function FieldCheckbox({ label, checked, onChange, disabled }) {
+function FieldCheckbox({ label, checked, onChange, disabled, id }) {
   return (
-    <label className="panel-detail-ai-field-select-item">
+    <label className="panel-detail-ai-field-select-item" htmlFor={id}>
       <input
+        id={id}
         type="checkbox"
         className="app-checkbox"
         checked={checked}
@@ -403,8 +404,8 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                 </label>
               )}
               <div className="panel-detail-ai-field-select">
-                <FieldCheckbox label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
-                <FieldCheckbox label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
+                <FieldCheckbox id="field-desc-checkbox" label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
+                <FieldCheckbox id="field-fix-checkbox" label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
               </div>
             </div>
             <button
