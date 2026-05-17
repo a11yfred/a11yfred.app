@@ -410,8 +410,8 @@ export default function useSearchManager({
     setSubmittedQuery('')
     syncBadgeUrl(filter)
     syncSearchUrl('')
-    navigate('/')
-    setTimeout(() => searchInputRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
+    navigate('/results/all')
+    setTimeout(() => resultsCountRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
   }
 
   function clearNarrowState() {
