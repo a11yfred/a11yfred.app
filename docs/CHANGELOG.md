@@ -6,15 +6,27 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 
 ---
 
-## 2026-05-17 -- Phase 2 Hooks Integration
+## 2026-05-17 -- Phase 2 Hooks Integration & Code Quality
 
-### App refactoring
+### App refactoring and hook integration
 
 - `AppContent` refactored to integrate `useRouteHandler` and `useSearchManager` hooks (Phase 2)
 - Removed 602 lines of duplicate code (state declarations, handlers, useEffect blocks) from App.jsx
 - App component reduced from 1336 to ~730 lines with cleaner separation of concerns
 - Route management, entry history, focus restoration now fully encapsulated in useRouteHandler
 - Search state, filtering, sorting, URL sync now fully encapsulated in useSearchManager
+
+### Code quality improvements
+
+- `useStorageSync` hook extracted: consolidates 4 repeated localStorage sync patterns
+- `entryFilters` utilities created: `getPinnedEntries()` and `getUnpinnedEntries()` replace 7+ filter instances
+- Documentation updated: PRIVACY.md and SECURITY.md accuracy pass (storage key names, terminology, version info)
+
+### UX polish
+
+- Related Entries and Sources lists improved: semantic HTML (`<section>`, `<h3>` headings), consistent layout wrapper classes
+- Better keyboard navigation structure with explicit heading elements
+- Improved spacing consistency and visual hierarchy
 
 ---
 

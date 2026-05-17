@@ -4,9 +4,21 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## 2026-05-17 -- Phase 2 Hooks Integration Complete
+## 2026-05-17 -- Phase 2 Hooks Integration & Quality Improvements
 
-The AppContent refactor is finished. The two custom hooks extracted in Phase 1 (useRouteHandler and useSearchManager) are now fully integrated, eliminating all duplicate code from the original AppContent. The component went from 1336 lines down to approximately 730 lines by removing 602 lines of state declarations, handlers, and effects that are now owned by the hooks. This makes the code much easier to maintain and reason about -- each hook encapsulates a complete subsystem (routing + focus management, or search + filtering), and App.jsx orchestrates them together. Both lint and build pass; ready for browser testing.
+The AppContent refactor is finished. The two custom hooks extracted in Phase 1 (useRouteHandler and useSearchManager) are now fully integrated, eliminating all duplicate code from the original AppContent. The component went from 1336 lines down to approximately 730 lines by removing 602 lines of state declarations, handlers, and effects that are now owned by the hooks.
+
+Beyond hook integration, three quality improvements were completed:
+
+**useStorageSync hook** — A new custom hook consolidates four repeated useEffect patterns that sync state to localStorage. Reduces boilerplate and creates a single pattern for this common operation.
+
+**Entry filter utilities** — New helper functions (`getPinnedEntries()` and `getUnpinnedEntries()`) replace 7+ instances of manual filter patterns across the codebase, making the filtering logic easier to find and modify.
+
+**Documentation accuracy** — PRIVACY.md and SECURITY.md updated to match current storage key names and terminology (pinnedFindings → pinnedEntries, finding_note_ → entry_note_, etc).
+
+**UX polish** — Related Entries and Sources lists improved with semantic HTML (sections, proper heading elements) and consistent layout for single vs. multiple item states, better keyboard navigation structure.
+
+All work passes lint and build. Ready for browser testing.
 
 ---
 
