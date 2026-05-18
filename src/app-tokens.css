@@ -1,6 +1,86 @@
 @import "@ulam/ube/tokens.css";
-@import "./components/ui/user-preferences.css";
+@import "@ulam/ube/user-preferences.css";
 
 /* ─── App token overrides ─────────────────────────────────────
    Override ube token defaults for this app here. */
 
+/* ─── App-specific user preference overrides ──────────────────
+   Overrides for a11yfred components beyond the framework. */
+
+@media (prefers-reduced-transparency: reduce) {
+  .app-checkbox:disabled,
+  .control:disabled,
+  .search-input-submit:disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+    border-color: var(--border);
+  }
+
+  .search-input-field--disabled,
+  input.search-input--disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+
+  .result-rank-btn:disabled {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+
+  .result-row--archived .result-pin-btn,
+  .result-row--archived .result-rank-btn:not(.result-rank-btn--archive),
+  .result-row--archived .result-rank-score,
+  .result-row--archived .result-item__badges,
+  .result-row--archived .result-item__sc,
+  .result-row--archived .result-item__desc {
+    opacity: 1;
+    color: var(--text-disabled);
+  }
+
+  .app-background:not([data-sheet-collapsed]) .result-list--has-selection
+    .result-row:not(:has(.result-item--selected)) .result-item__sc,
+  .app-background:not([data-sheet-collapsed]) .result-list--has-selection
+    .result-row:not(:has(.result-item--selected)) .result-item__desc {
+    opacity: 1;
+    visibility: hidden;
+  }
+
+  .result-swipe-hint__chevron {
+    opacity: 1;
+    color: var(--text-muted);
+  }
+
+  .announce-toast__badge {
+    opacity: 1;
+    color: inherit;
+  }
+
+  .help-tour-banner__icon {
+    opacity: 1;
+  }
+
+  .header-github-link .external-link-icon {
+    opacity: 1;
+    color: var(--text-muted);
+  }
+
+  .onboarding-arrow-btn:hover,
+  .onboarding-arrow-btn:focus-visible {
+    opacity: 1;
+    color: var(--text-muted);
+  }
+
+  .announce-toast {
+    background: #111;
+  }
+
+  .announce-toast--assertive {
+    background: #b40000;
+  }
+
+  .announce-toast--fading {
+    animation: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
