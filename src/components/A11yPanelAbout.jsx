@@ -1,9 +1,10 @@
+import { Panel, Button, IconExternalLink } from './ui/index.js'
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
-import Panel from './ui/PanelReact.jsx'
-import Button from './ui/Button.jsx'
-import IconExternalLink from './ui/IconExternalLink.jsx'
+
+
+
 import entrySlug from '../utils/entrySlug.js'
 import { version } from '../../package.json'
 import './A11yPanelAbout.css'

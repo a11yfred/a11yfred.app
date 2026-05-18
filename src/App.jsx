@@ -1,3 +1,4 @@
+import { FadeTransition } from './ui/index.js'
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
@@ -10,7 +11,7 @@ import A11yPanelDetail from './components/A11yPanelDetail.jsx'
 import A11yPanelAbout from './components/A11yPanelAbout.jsx'
 import A11yPanelHelp from './components/A11yPanelHelp.jsx'
 import CarouselOnboarding from './components/CarouselOnboarding.jsx'
-import FadeTransition from './components/ui/FadeTransition.jsx'
+
 import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
 import ThemeEffectFiestaSparkles from './components/ThemeEffectFiestaSparkles.jsx'
 import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPlayer.jsx'
@@ -243,6 +244,16 @@ function AppContent() {
     }
   }, [language])
 
+  const prevViewAllRef = useRef(viewAll)
+  useEffect(() => {
+    if (prevViewAllRef.current && !viewAll && wcagFilter.maxLevel === 'AAA') {
+      const saved = getStorageJson(LS_WCAG_FILTER, null)
+      const defaultFilter = !saved || 'show20' in saved ? DEFAULT_WCAG_FILTER : saved
+      setWcagFilter(defaultFilter)
+    }
+    prevViewAllRef.current = viewAll
+  }, [viewAll, wcagFilter.maxLevel])
+
   useStorageSync(liveSearch, LS_LIVE_SEARCH)
   useStorageSync(showVoting, LS_SHOW_RANKING)
   useStorageSync(showPersonalCorpus, LS_SHOW_PERSONAL_CORPUS)
@@ -339,6 +350,7 @@ function AppContent() {
     if (getStorage(LS_VIEW_ALL_SKIP) === VIEW_ALL_SKIP_FLAG) {
       announce(t('results.loading_announce'))
       setViewAllLoading(true)
+      setWcagFilter({ maxVersion: '2.2', maxLevel: 'AAA' })
       navigate('/results/all')
     } else {
       setViewAllDontAsk(false)
@@ -350,6 +362,7 @@ function AppContent() {
     if (viewAllDontAsk) setStorage(LS_VIEW_ALL_SKIP, VIEW_ALL_SKIP_FLAG)
     announce(t('results.loading_announce'))
     setViewAllLoading(true)
+    setWcagFilter({ maxVersion: '2.2', maxLevel: 'AAA' })
     navigate('/results/all')
     setViewAllConfirmOpen(false)
   }

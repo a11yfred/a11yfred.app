@@ -1,7 +1,8 @@
+import { Button } from './ui/index.js'
 import { useMemo } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { Modal, Sheet } from '@ulam/sili/react'
-import Button from './ui/Button.jsx'
+
 import { URL_PRIVACY_POLICY } from '../utils/constants.js'
 
 export default function ManagerModalsSheets({

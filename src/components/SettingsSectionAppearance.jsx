@@ -1,10 +1,11 @@
+import { RadioChip, PanelRowSetting, Select, Button } from './ui/index.js'
 import { Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { announce } from '@ulam/taho'
-import RadioChip from './ui/RadioChip.jsx'
-import PanelRowSetting from './ui/PanelRowSetting.jsx'
-import Select from './ui/Select.jsx'
-import Button from './ui/Button.jsx'
+
+
+
+
 import { SETTINGS_FLASH_MS } from '../utils/constants.js'
 import LANGUAGES from '../data/languages.js'
 

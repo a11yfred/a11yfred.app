@@ -1,10 +1,11 @@
+import { RadioChip, PanelRowSetting, Toggle, Button } from './ui/index.js'
 import { PinOff, OctagonX, Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { announce } from '@ulam/taho'
-import RadioChip from './ui/RadioChip.jsx'
-import PanelRowSetting from './ui/PanelRowSetting.jsx'
-import Toggle from './ui/Toggle.jsx'
-import Button from './ui/Button.jsx'
+
+
+
+
 import { SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
 
 function PendingNote({ t }) {

@@ -1,14 +1,15 @@
+import { Button, InfoBox, Toggle, InputWithClear, Badge } from './ui/index.js'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Modal } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
-import Button from './ui/Button.jsx'
-import InfoBox from './ui/InfoBox.jsx'
-import Toggle from './ui/Toggle.jsx'
-import InputWithClear from './ui/InputWithClear.jsx'
-import Badge from './ui/Badge.jsx'
+
+
+
+
+
 import A11yTextareaCopyable from './A11yTextareaCopyable.jsx'
 import A11yLinkSc from './A11yLinkSc.jsx'
 import A11yLinksSource from './A11yLinksSource.jsx'
@@ -50,7 +51,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
 
   const handleBadgeClickAndClose = (filter) => {
     onBadgeClick?.(filter)
-    onClose?.()
+    setTimeout(() => onClose?.(), 0)
   }
 
   const [location, setLocation] = useState('')

@@ -415,10 +415,12 @@ export default function useSearchManager({
   }
 
   function handleBadgeClick(filter) {
-    setBadgeFilter(filter)
+    const isClickingSameBadge = badgeFilter?.type === filter.type && badgeFilter?.value === filter.value
+    const nextFilter = isClickingSameBadge ? null : filter
+    setBadgeFilter(nextFilter)
     setQuery('')
     setSubmittedQuery('')
-    syncBadgeUrl(filter)
+    syncBadgeUrl(nextFilter)
     syncSearchUrl('')
     navigate('/results/all')
     setTimeout(() => resultsCountRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
@@ -452,8 +454,9 @@ export default function useSearchManager({
 
   const handleCopyLink = useCallback(() => {
     const url = new URL(window.location.origin + window.location.pathname)
-    if (query) url.searchParams.set('q', query)
     const current = new URL(window.location.href)
+
+    if (submittedQuery) url.searchParams.set('q', submittedQuery)
     const badge = current.searchParams.get('badge')
     if (badge) url.searchParams.set('badge', badge)
     const platformParam = current.searchParams.get('platform')
@@ -464,7 +467,10 @@ export default function useSearchManager({
     if (wcag) url.searchParams.set('wcag', wcag)
     const narrow = current.searchParams.get('narrow')
     if (narrow) url.searchParams.set('narrow', narrow)
-    const shareUrl = url.toString()
+
+    const hash = window.location.hash || ''
+    const shareUrl = url.toString() + hash
+
     if (navigator.clipboard?.writeText) {
       navigator.clipboard.writeText(shareUrl)
     } else {
@@ -477,7 +483,7 @@ export default function useSearchManager({
       document.execCommand('copy')
       document.body.removeChild(el)
     }
-  }, [query])
+  }, [submittedQuery])
 
   return {
     query,

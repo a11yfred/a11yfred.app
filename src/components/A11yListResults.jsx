@@ -1,9 +1,10 @@
+import { Button, NoResults, DataError } from './ui/index.js'
 import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
-import Button from './ui/Button.jsx'
-import NoResults from './ui/NoResults.jsx'
+
+
 import TileAd from './TileAd.jsx'
 import A11yListResultCard from './A11yListResultCard.jsx'
 import ResultsMetaHeader from './ResultsMetaHeader.jsx'
@@ -60,7 +61,7 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   )
 }
 
-export default function A11yListResults({ results, selected, onSelect, query, _countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick, isBadgeFiltered = false }) {
+export default function A11yListResults({ results, selected, onSelect, query, countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick, isBadgeFiltered = false }) {
   const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter, setWcagFilter } = useSettings()
   const { narrowMode, narrowQuery, sortBy, setSortBy: onSortChange, setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery } = useSearch()
   const onNarrow = () => setNarrowMode(true)
@@ -76,7 +77,7 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
     document: t('settings.platform_document'),
   }
   const itemRefs = useRef({})
-  const countHeadingRef = useRef(null)
+  const countHeadingRef = countRef ?? useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
   const [pendingSort, setPendingSort] = useState(sortBy)
   const [sortToCommit, setSortToCommit] = useState(null)
@@ -386,4 +387,4 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
 }
 
 export { default as A11yListResultSkeleton } from './A11yListResultSkeleton.jsx'
-export { default as DataError } from './ui/DataError.jsx'
+export { DataError }

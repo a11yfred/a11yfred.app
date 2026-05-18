@@ -1,7 +1,8 @@
+import { InputWithClear, Button } from './ui/index.js'
 import { useRef, useState, useEffect } from 'react'
 import { useT } from '@ulam/calamansi/react'
-import InputWithClear from './ui/InputWithClear.jsx'
-import Button from './ui/Button.jsx'
+
+
 import { CYCLE_MS } from '../utils/constants.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import './A11yInputSearchHero.css'

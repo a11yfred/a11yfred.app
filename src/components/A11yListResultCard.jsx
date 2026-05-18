@@ -1,11 +1,12 @@
+import { ButtonIcon, Badge, LinkSkipTo } from './ui/index.js'
 import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Pin, PinOff, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { Fragment } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
-import ButtonIcon from './ui/ButtonIcon.jsx'
-import Badge from './ui/Badge.jsx'
-import LinkSkipTo from './ui/LinkSkipTo.jsx'
+
+
+
 import entrySlug from '../utils/entrySlug.js'
 import { DEFAULT_RATING, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_THRESHOLD, SWIPE_REVEAL, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, PIN_FLY_MS, UNPIN_FLY_MS, ARCHIVE_FLY_MS, UNARCHIVE_FLY_MS, RANK_ANIM_MS } from '../utils/constants.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'

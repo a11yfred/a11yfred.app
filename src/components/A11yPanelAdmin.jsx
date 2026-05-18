@@ -1,3 +1,4 @@
+import { Toggle, ButtonIcon } from './ui/index.js'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './A11yPanelAdmin.css'
@@ -5,8 +6,8 @@ import publicCorpus from '../data/corpus.json'
 import legacyCorpus from '../data/legacy-corpus.json'
 import personalCorpus from '../data/personal-corpus.json'
 import entrySlug from '../utils/entrySlug.js'
-import Toggle from './ui/Toggle.jsx'
-import ButtonIcon from './ui/ButtonIcon.jsx'
+
+
 import { LS_ADMIN_DATASET } from '../utils/constants.js'
 import { getStorage, setStorage } from '../utils/storage.js'
 import { detectOverlays, WCAG_CRITERIA } from '@a11yfred/rogers'
