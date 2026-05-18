@@ -1,4 +1,3 @@
-@import "../../tokens.css";
 
 /* ── Admin Panel — dev-only, localhost only ─────────────────────────────────
    Inherits app CSS custom properties so it respects light/dark/fiesta themes.
