@@ -252,7 +252,7 @@ function AppContent() {
       setWcagFilter(defaultFilter)
     }
     prevViewAllRef.current = viewAll
-  }, [viewAll, wcagFilter.maxLevel])
+  }, [viewAll, wcagFilter.maxLevel, setWcagFilter])
 
   useStorageSync(liveSearch, LS_LIVE_SEARCH)
   useStorageSync(showVoting, LS_SHOW_RANKING)
