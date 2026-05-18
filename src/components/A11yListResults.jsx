@@ -77,7 +77,8 @@ export default function A11yListResults({ results, selected, onSelect, query, co
     document: t('settings.platform_document'),
   }
   const itemRefs = useRef({})
-  const countHeadingRef = countRef ?? useRef(null)
+  const defaultCountHeadingRef = useRef(null)
+  const countHeadingRef = countRef ?? defaultCountHeadingRef
   const [linkCopied, setLinkCopied] = useState(false)
   const [pendingSort, setPendingSort] = useState(sortBy)
   const [sortToCommit, setSortToCommit] = useState(null)
