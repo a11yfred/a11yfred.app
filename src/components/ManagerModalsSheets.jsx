@@ -1,4 +1,4 @@
-import { Button } from './ui/index.js'
+import { Button } from '@ulam/ube'
 import { useMemo } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { Modal, Sheet } from '@ulam/sili/react'

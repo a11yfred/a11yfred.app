@@ -1,4 +1,4 @@
-import { FadeTransition } from './ui/index.js'
+import { FadeTransition } from '@ulam/ube'
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'

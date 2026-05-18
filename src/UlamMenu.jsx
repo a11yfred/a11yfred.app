@@ -1,4 +1,4 @@
-import { LinkSkipTo, Button, ButtonLink, ButtonIcon, Badge, RadioChip, Toggle, Select, InputWithClear, Panel, InputSearch } from './ui/index.js'
+import { LinkSkipTo, Button, ButtonLink, ButtonIcon, Badge, RadioChip, Toggle, Select, InputWithClear, Panel, InputSearch } from '@ulam/ube'
 import { useState } from 'react'
 import {
   Star, Settings, Search, X, Plus, Trash2,

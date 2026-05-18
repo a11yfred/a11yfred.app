@@ -1,4 +1,4 @@
-import { Panel, Button } from './ui/index.js'
+import { Panel, Button } from '@ulam/ube'
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, Save, ArrowLeft } from 'lucide-react'
 import { useRouter } from '@ulam/sili/react'

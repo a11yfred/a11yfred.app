@@ -1,4 +1,4 @@
-import { IconExternalLink } from './ui/index.js'
+import { IconExternalLink } from '@ulam/ube'
 
 import A11yLinkTitle from './A11yLinkTitle.jsx'
 

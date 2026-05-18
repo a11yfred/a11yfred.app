@@ -1,4 +1,4 @@
-import { Toggle, ButtonIcon } from './ui/index.js'
+import { Toggle, ButtonIcon } from '@ulam/ube'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './A11yPanelAdmin.css'
