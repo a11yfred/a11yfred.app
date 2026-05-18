@@ -120,8 +120,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
     setPendingShowVoting(showVoting)
     setPendingShowPersonalCorpus(showPersonalCorpus)
     setPendingAiEnabled(aiEnabled)
-    setPendingWcagFilter(wcagFilter ?? DEFAULT_WCAG_FILTER)
-  }, [theme, language, platform, liveSearch, showVoting, showPersonalCorpus, aiEnabled, wcagFilter])
+  }, [theme, language, platform, liveSearch, showVoting, showPersonalCorpus, aiEnabled])
 
   // In Electron, load API keys from safeStorage after mount
   useEffect(() => {
