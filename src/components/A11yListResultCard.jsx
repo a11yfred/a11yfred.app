@@ -1,4 +1,4 @@
-import { ButtonIcon, Badge, LinkSkipTo } from './ui/index.js'
+import { ButtonIcon, Badge, LinkSkipTo } from '@ulam/ube'
 import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Pin, PinOff, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { Fragment } from 'react'
 import { announce } from '@ulam/taho'

@@ -1,4 +1,4 @@
-import { PanelRowSetting, Toggle, Select } from './ui/index.js'
+import { PanelRowSetting, Toggle, Select } from '@ulam/ube'
 import { useT } from '@ulam/calamansi/react'
 
 

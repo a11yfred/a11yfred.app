@@ -1,4 +1,4 @@
-import { InputWithClear, Button } from './ui/index.js'
+import { InputWithClear, Button } from '@ulam/ube'
 import { useRef, useState, useEffect } from 'react'
 import { useT } from '@ulam/calamansi/react'
 

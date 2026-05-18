@@ -1,4 +1,4 @@
-import { RadioChip, PanelRowSetting, Toggle, Button } from './ui/index.js'
+import { RadioChip, PanelRowSetting, Toggle, Button } from '@ulam/ube'
 import { PinOff, OctagonX, Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { announce } from '@ulam/taho'

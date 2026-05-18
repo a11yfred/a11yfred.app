@@ -1,4 +1,4 @@
-import { Button, FadeTransition } from './ui/index.js'
+import { Button, FadeTransition } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, Modal } from '@ulam/sili/react'

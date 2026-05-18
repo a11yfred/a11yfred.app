@@ -1,4 +1,4 @@
-import { ButtonIcon, LinkSkipTo } from './ui/index.js'
+import { ButtonIcon, LinkSkipTo } from '@ulam/ube'
 import { Settings, X, Info, HelpCircle, ExternalLink as ExternalLinkIcon } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 

@@ -1,4 +1,4 @@
-import { Button, NoResults, DataError } from './ui/index.js'
+import { Button, NoResults, DataError } from '@ulam/ube'
 import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'

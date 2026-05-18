@@ -1,4 +1,4 @@
-import { Panel, Button } from './ui/index.js'
+import { Panel, Button } from '@ulam/ube'
 import { PlayCircle, ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 

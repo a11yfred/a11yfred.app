@@ -1,4 +1,4 @@
-import { Button, Select, RadioChip, InputWithClear, InfoBox } from './ui/index.js'
+import { Button, Select, RadioChip, InputWithClear, InfoBox } from '@ulam/ube'
 import { Link, Check, Filter, OctagonX, Trash2, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 

@@ -1,4 +1,4 @@
-import { Button, InfoBox, Toggle, InputWithClear, Badge } from './ui/index.js'
+import { Button, InfoBox, Toggle, InputWithClear, Badge } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Modal } from '@ulam/sili/react'
