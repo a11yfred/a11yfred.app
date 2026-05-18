@@ -7,13 +7,13 @@ import { useT } from '@ulam/calamansi/react'
 
 import entrySlug from '../utils/entrySlug.js'
 import { version } from '../../package.json'
-import './A11yPanelAbout.css'
+import './A11yDrawerPanelAbout.css'
 
 function ExtLink({ href, children }) {
   return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<IconExternalLink /><span className="sr-only"> (opens in new tab)</span></a>
 }
 
-export default function A11yPanelAbout({ onClose, allEntries = [] }) {
+export default function A11yDrawerPanelAbout({ onClose, allEntries = [] }) {
   const t = useT()
 
   const [exampleEntries] = useState(() => {

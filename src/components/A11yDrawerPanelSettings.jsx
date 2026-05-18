@@ -19,10 +19,10 @@ import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
 import { version } from '../../package.json'
-import './A11yPanelSettings.css'
+import './A11yDrawerPanelSettings.css'
 
 
-const A11yPanelSettings = forwardRef(function A11yPanelSettings({
+const A11yDrawerPanelSettings = forwardRef(function A11yDrawerPanelSettings({
   onUnlock,
   onClose,
   onSave,
@@ -401,4 +401,4 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   )
 })
 
-export default A11yPanelSettings
+export default A11yDrawerPanelSettings

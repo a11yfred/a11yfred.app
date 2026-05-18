@@ -8,8 +8,8 @@ import FiestaBanner from './components/FiestaBanner.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
 import A11yListResults, { A11yListResultSkeleton, DataError, PinnedSection } from './components/A11yListResults.jsx'
 import A11yPanelDetail from './components/A11yPanelDetail.jsx'
-import A11yPanelAbout from './components/A11yPanelAbout.jsx'
-import A11yPanelHelp from './components/A11yPanelHelp.jsx'
+import A11yDrawerPanelAbout from './components/A11yDrawerPanelAbout.jsx'
+import A11yDrawerPanelHelp from './components/A11yDrawerPanelHelp.jsx'
 import CarouselOnboarding from './components/CarouselOnboarding.jsx'
 
 import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
@@ -59,7 +59,7 @@ import useUserOverrides from './hooks/useUserOverrides.js'
 import entrySlug from './utils/entrySlug.js'
 import './components/ThemeFiestaMode.css'
 
-const A11yPanelSettings = lazy(() => import('./components/A11yPanelSettings.jsx'))
+const A11yDrawerPanelSettings = lazy(() => import('./components/A11yDrawerPanelSettings.jsx'))
 const A11yPanelAdmin = import.meta.env.DEV
   ? lazy(() => import('./components/A11yPanelAdmin.jsx'))
   : () => null
@@ -691,11 +691,11 @@ function AppContent() {
                   : adminOpen
                   ? <A11yPanelAdmin {...adminProps} />
                   : isDesktop && settingsOpen
-                    ? <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
+                    ? <A11yDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
                     : isDesktop && aboutOpen
-                      ? <A11yPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+                      ? <A11yDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
                       : isDesktop && helpOpen
-                        ? <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+                        ? <A11yDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
                         : isDesktop && onboardingOpen
                           ? <CarouselOnboarding onClose={handleCloseOnboarding} />
                           : searchView}
@@ -708,20 +708,20 @@ function AppContent() {
       {!isDesktop && (
         <Drawer open={settingsOpen} onClose={handleGuardedCloseSettings} label={t('settings.drawer_label')} focusOnClose={settingsTriggerRef}>
           <Suspense fallback={null}>
-            <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
+            <A11yDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
           </Suspense>
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={aboutOpen} onClose={handleCloseOverlay} label={t('about.sheet_label')} focusOnClose={aboutTriggerRef}>
-          <A11yPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+          <A11yDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={helpOpen} onClose={handleCloseOverlay} label={t('help.sheet_label')} focusOnClose={helpTriggerRef}>
-          <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+          <A11yDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
         </Drawer>
       )}
 
