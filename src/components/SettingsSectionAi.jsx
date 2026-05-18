@@ -1,7 +1,8 @@
+import { PanelRowSetting, Toggle, Select } from './ui/index.js'
 import { useT } from '@ulam/calamansi/react'
-import PanelRowSetting from './ui/PanelRowSetting.jsx'
-import Toggle from './ui/Toggle.jsx'
-import Select from './ui/Select.jsx'
+
+
+
 import { PROVIDERS, PROVIDER_MODELS, isAgenticModeEnabled } from '@ulam/halohalo'
 
 function PendingNote({ t }) {

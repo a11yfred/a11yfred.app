@@ -1,19 +1,20 @@
+import { LinkSkipTo, Button, ButtonLink, ButtonIcon, Badge, RadioChip, Toggle, Select, InputWithClear, Panel, InputSearch } from './ui/index.js'
 import { useState } from 'react'
 import {
   Star, Settings, Search, X, Plus, Trash2,
   AlertTriangle, Info, CheckCircle, Copy,
 } from 'lucide-react'
-import LinkSkipTo from './components/ui/LinkSkipTo.jsx'
-import Button from './components/ui/Button.jsx'
-import ButtonLink from './components/ui/ButtonLink.jsx'
-import ButtonIcon from './components/ui/ButtonIcon.jsx'
-import Badge from './components/ui/Badge.jsx'
-import RadioChip from './components/ui/RadioChip.jsx'
-import Toggle from './components/ui/Toggle.jsx'
-import Select from './components/ui/Select.jsx'
-import InputWithClear from './components/ui/InputWithClear.jsx'
-import Panel from './components/ui/PanelReact.jsx'
-import InputSearch from './components/ui/InputSearch.jsx'
+
+
+
+
+
+
+
+
+
+
+
 import { Sheet, Modal, Drawer } from '@ulam/sili/react'
 import { usePref } from '@ulam/calamansi/react'
 import { initI18n, setLocale, getT } from '@ulam/calamansi'

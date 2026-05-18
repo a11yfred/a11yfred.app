@@ -1,7 +1,8 @@
+import { Panel, Button } from './ui/index.js'
 import { PlayCircle, ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
-import Panel from './ui/PanelReact.jsx'
-import Button from './ui/Button.jsx'
+
+
 import { version } from '../../package.json'
 
 export default function A11yPanelHelp({ onClose, onStartTour }) {

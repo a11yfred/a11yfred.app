@@ -1,4 +1,5 @@
-import IconExternalLink from './ui/IconExternalLink.jsx'
+import { IconExternalLink } from './ui/index.js'
+
 import scToWaiUrl from '../utils/scToWaiUrl.js'
 
 export default function A11yLinkSc({ label }) {

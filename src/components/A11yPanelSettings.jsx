@@ -1,10 +1,11 @@
+import { Panel, Button } from './ui/index.js'
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, Save, ArrowLeft } from 'lucide-react'
 import { useRouter } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
-import Panel from './ui/PanelReact.jsx'
-import Button from './ui/Button.jsx'
+
+
 import SettingsSectionAppearance from './SettingsSectionAppearance.jsx'
 import SettingsSectionSearch from './SettingsSectionSearch.jsx'
 import SettingsSectionAi from './SettingsSectionAi.jsx'

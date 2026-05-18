@@ -1,9 +1,10 @@
+import { Button, NoResults, DataError } from './ui/index.js'
 import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
-import Button from './ui/Button.jsx'
-import NoResults from './ui/NoResults.jsx'
+
+
 import TileAd from './TileAd.jsx'
 import A11yListResultCard from './A11yListResultCard.jsx'
 import ResultsMetaHeader from './ResultsMetaHeader.jsx'
@@ -386,4 +387,4 @@ export default function A11yListResults({ results, selected, onSelect, query, co
 }
 
 export { default as A11yListResultSkeleton } from './A11yListResultSkeleton.jsx'
-export { default as DataError } from './ui/DataError.jsx'
+export { DataError }

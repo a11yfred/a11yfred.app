@@ -1,3 +1,4 @@
+import { FadeTransition } from './ui/index.js'
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
@@ -10,7 +11,7 @@ import A11yPanelDetail from './components/A11yPanelDetail.jsx'
 import A11yPanelAbout from './components/A11yPanelAbout.jsx'
 import A11yPanelHelp from './components/A11yPanelHelp.jsx'
 import CarouselOnboarding from './components/CarouselOnboarding.jsx'
-import FadeTransition from './components/ui/FadeTransition.jsx'
+
 import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
 import ThemeEffectFiestaSparkles from './components/ThemeEffectFiestaSparkles.jsx'
 import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPlayer.jsx'
