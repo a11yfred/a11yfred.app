@@ -1,12 +1,12 @@
 /* Layer order:
-   1. tokens.css        — design primitives (via app-tokens.css)
-   2. app-tokens.css    — app layout overrides (modal/panel sizing)
+   1. tokens.css        — design primitives (via tokens-app.css)
+   2. tokens-app.css    — app layout overrides (modal/panel sizing)
    3. ui.css            — ube base styles (loaded via components/ui/index.js barrel)
-   4. App.css           — app shell (header, footer, layout, 404)
+   4. app.css           — app shell (header, footer, layout, 404)
    5. Component CSS     — each component imports its own tokens.css
    6. This file         — global base only; nothing app-specific lives here */
-@import "./app-tokens.css";
-@import "./App.css";
+@import "./tokens-app.css";
+@import "./app.css";
 
 /* ─── Global base ─────────────────────────────────────────── */
 
