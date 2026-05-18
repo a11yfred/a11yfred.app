@@ -11,8 +11,8 @@ import SettingsSectionAi from './SettingsSectionAi.jsx'
 import ManagerModalsSheets from './ManagerModalsSheets.jsx'
 import { PROVIDERS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '@ulam/halohalo'
 import { applyTheme } from '../hooks/useThemeManager.js'
-import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES } from '../utils/constants.js'
-import { setStorage, removeStorage } from '../utils/storage.js'
+import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES, LS_WCAG_FILTER } from '../utils/constants.js'
+import { setStorage, removeStorage, getStorageJson } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import { useSettings } from '../context/ContextSettings.js'
@@ -58,7 +58,10 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
   const [pendingShowVoting, setPendingShowVoting] = useState(showVoting)
   const [pendingShowPersonalCorpus, setPendingShowPersonalCorpus] = useState(showPersonalCorpus)
   const [pendingAiEnabled, setPendingAiEnabled] = useState(aiEnabled)
-  const [pendingWcagFilter, setPendingWcagFilter] = useState(wcagFilter ?? DEFAULT_WCAG_FILTER)
+  const [pendingWcagFilter, setPendingWcagFilter] = useState(() => {
+    const saved = getStorageJson(LS_WCAG_FILTER, null)
+    return !saved || 'show20' in saved ? DEFAULT_WCAG_FILTER : saved
+  })
   const [pendingAgenticMode, setPendingAgenticMode] = useState(false)
 
   // ── AI provider / key / model state ────────────────────────────────────────
