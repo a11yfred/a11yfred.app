@@ -87,42 +87,49 @@
   /* Spacing (rem, scales with html font-size) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
+  --space-2-5: 0.625rem;  /* 10px */
   --space-3: 0.75rem;
   --space-4: 1rem;
   --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
 
-  /* Borders */
-  --radius-xs:   2px;
-  --radius-sm:   4px;
-  --radius:      6px;
-  --radius-lg:   16px;
-  --radius-full: 9999px;
-  /* Stroke width for small interactive control chrome (radio, toggle, checkbox). */
+  /* Border radius — corner rounding */
+  --rounded-xs:   2px;
+  --rounded-sm:   4px;
+  --rounded:      6px;
+  --rounded-lg:   16px;
+  --rounded-full: 9999px;
+
+  /* Borders — stroke */
   --border-width-control: 1.5px;
 
   /* Sizing */
-  /* WCAG 2.5.5 minimum touch target size. */
-  --touch-target: 44px;
+  /* Google Material Design recommended minimum touch target size. */
+  --touch-target: 48px;
 
   /* Component defaults — override in your app layer if needed */
   --modal-max-width: 720px;
   --modal-max-height-mobile: 92dvh;
   --panel-width-mobile: min(360px, calc(100vw - var(--space-8)));
 
-  --btn-height-standard:  44px;
-  --btn-height-compact:   44px;
+  --btn-height-standard:  var(--touch-target);
+  --btn-height-compact:   var(--touch-target);
   --input-height:         4rem;
-  --select-height:        44px;
+  --select-height:        var(--touch-target);
+
+  /* Icon button padding — internal padding for icon centering within touch targets */
+  --icon-btn-padding: var(--space-2-5);
 
   /* Toggle control sizing */
-  --toggle-width:              40px;
-  --toggle-height:             22px;
-  --toggle-radius:             11px;
-  --toggle-thumb-size:         16px;
-  --toggle-thumb-offset:       3px;
-  --toggle-thumb-transition-offset: 21px;
+  --toggle-width:              var(--touch-target);
+  --toggle-height:             calc(var(--touch-target) / 2);
+  --toggle-radius:             calc(var(--touch-target) / 4);
+  --toggle-thumb-size:         calc(var(--toggle-height) - 2px);  /* 22px: height minus 1px border on each side */
+  --toggle-thumb-offset:       1px;  /* 1px from edge */
+  --toggle-thumb-transition-offset: calc(var(--toggle-width) - var(--toggle-thumb-size) - 1px);  /* width minus thumb size minus 1px edge */
+
 
   /* Shared transition shorthand for interactive buttons */
   --transition-btn: background var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
@@ -139,7 +146,7 @@
   /* Icon sizing */
   --icon-size-sm: 1rem;
   --icon-size-md: 1.5em;
-  --icon-size-lg: 24px;
+  --icon-size-lg: 2em;
 
   /* Overlay */
   --overlay-bg: rgb(0 0 0 / 0.45);

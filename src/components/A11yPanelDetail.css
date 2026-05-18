@@ -12,7 +12,7 @@
   gap: var(--space-2);
   padding: 4px;
   margin: -4px;
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   transition: background var(--duration-fast);
 }
 
@@ -147,7 +147,7 @@
   gap: var(--space-1);
   height: var(--btn-height-standard);
   font-size: var(--fs-body);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   white-space: nowrap;
   text-align: center;
   flex-grow: 1;
@@ -204,7 +204,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   font-size: var(--fs-body);
   background: var(--bg-subtle);
   border: 1px solid var(--border-control);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   color: var(--text-heading);
   margin-bottom: 2em;
   display: flex;
@@ -253,7 +253,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-right: auto;
+  margin-inline-start: auto;
 }
 
 .panel-detail-ai-field-select {
@@ -261,7 +261,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
-  padding-left: var(--space-3);
+  padding-inline-start: var(--space-3);
 }
 
 .panel-detail-ai-field-select-item {
@@ -272,7 +272,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   color: var(--text-heading);
   cursor: pointer;
   padding: 0 var(--space-2);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   transition: background var(--duration-fast);
   min-height: var(--touch-target);
   min-width: var(--touch-target);
@@ -383,7 +383,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   justify-content: center;
   gap: var(--space-1);
   font-size: var(--fs-body);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   cursor: pointer;
 }
 
@@ -400,7 +400,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
 }
 
 .panel-detail-close-btn {
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   font-size: var(--fs-body);
   font-weight: 600;
   white-space: nowrap;
@@ -480,14 +480,15 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   border-top: 1px solid var(--border);
 }
 
-.source-links__single,
-.source-links__multiple {
+.source-links__single {
+  gap: var(--space-2);
   display: flex;
   flex-direction: column;
 }
 
-.source-links__single {
-  gap: var(--space-2);
+.source-links__multiple {
+  display: flex;
+  flex-direction: column;
 }
 
 .source-links__single .source-links__heading {
@@ -505,7 +506,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
 .panel-detail-related__list,
 .source-links__list {
   list-style: disc;
-  padding-left: var(--space-5);
+  padding-inline-start: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -538,7 +539,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
 .panel-detail-related__btn:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
-  border-radius: var(--radius-xs);
+  border-radius: var(--rounded-xs);
 }
 
 .source-links__link {
@@ -556,6 +557,6 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
 .source-links__link:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
-  border-radius: var(--radius-xs);
+  border-radius: var(--rounded-xs);
   text-decoration: none;
 }

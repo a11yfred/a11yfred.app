@@ -17,7 +17,7 @@ import '@fontsource/inter/latin-ext-700.css'
 import '@fontsource/outfit/latin-700.css'
 import '@fontsource/outfit/latin-800.css'
 import '@ulam/sili/core/sili.css'
-import './components/ui/ui.css'
+import '@ulam/ube/ui.css'
 import './index.css'
 import './calamansi/locales.css'
 

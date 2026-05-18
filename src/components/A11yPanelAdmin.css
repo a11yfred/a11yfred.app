@@ -94,7 +94,7 @@
 .admin-number-input {
   width: 4rem;
   padding: 0.2em 0.5em;
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   border: 1px solid var(--border-control);
   background: var(--bg-subtle);
   color: var(--text-heading);
@@ -247,7 +247,7 @@
   align-items: center;
   gap: var(--space-2);
   padding: 0.3rem 0.5rem;
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   font-size: 0.82rem;
   line-height: 1.4;
 }
@@ -341,7 +341,7 @@
   color: var(--text-muted);
   font-size: 0.85rem;
   line-height: 1;
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   opacity: 0;
   transition: opacity var(--duration-fast);
   display: flex;
@@ -381,7 +381,7 @@
   align-items: center;
   gap: var(--space-2);
   padding: 0.25rem 0.4rem;
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   font-size: 0.8rem;
   line-height: 1.4;
 }

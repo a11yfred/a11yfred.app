@@ -22,7 +22,7 @@
 }
 
 .settings-panel .radio-chip-group {
-  margin-bottom: 2em;
+  margin-bottom: var(--space-8);
 }
 
 .settings-language-row {
@@ -51,7 +51,7 @@
   height: var(--btn-height-compact);
   padding: 0 var(--space-3);
   font-size: var(--fs-body);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -61,7 +61,7 @@
 }
 
 .settings-provider-group {
-  margin-bottom: 2em;
+  margin-bottom: var(--space-8);
 }
 
 .settings-provider-group:has([aria-disabled="true"]) .panel-field-label,
@@ -80,7 +80,7 @@
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
   background: var(--bg-subtle);
   border: 1px solid var(--border-control);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   color: var(--text-heading);
   margin-bottom: var(--space-2);
   resize: vertical;
@@ -122,7 +122,7 @@ textarea[aria-disabled="true"].settings-key-input {
 
 .settings-reset-list {
   margin: 0;
-  padding-left: var(--space-5);
+  padding-inline-start: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
@@ -151,7 +151,7 @@ textarea[aria-disabled="true"].settings-key-input {
   height: var(--btn-height-standard);
   padding: 0 var(--space-4);
   font-size: var(--fs-body);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
 }
 
 .settings-save-btn {
@@ -162,7 +162,7 @@ textarea[aria-disabled="true"].settings-key-input {
   height: var(--btn-height-standard);
   padding: 0 var(--space-3);
   font-size: var(--fs-body);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   order: -1;
 }
 
@@ -214,7 +214,7 @@ textarea[aria-disabled="true"].settings-key-input {
   padding: var(--space-3) var(--space-4);
   background: var(--bg-subtle);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   font-size: var(--fs-body);
   color: var(--text-body);
   line-height: 1.5;

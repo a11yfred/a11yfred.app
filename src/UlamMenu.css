@@ -31,19 +31,20 @@
 }
 
 .ulam-menu-tagline {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-small);
   color: var(--text-muted);
   font-style: italic;
 }
 
 .ulam-menu-desc {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-small);
   color: var(--text-muted);
   max-width: 56ch;
   margin: 0;
 }
 
 .ulam-menu-main {
+  /* 900px max-width = 3-column layout constraint for demo/playground UI */
   max-width: 900px;
   margin: 0 auto;
   padding: var(--space-6) var(--space-4);
@@ -61,7 +62,7 @@
 }
 
 .ulam-section-title {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-small);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -86,7 +87,7 @@
 }
 
 .ulam-row-label {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-small);
   color: var(--text-muted);
   padding-top: 2px;
 }
@@ -124,17 +125,17 @@
   height: var(--input-height, 2.75rem);
   padding: 0 var(--space-3);
   border: 1px solid var(--border-control);
-  border-radius: var(--radius-md);
+  border-radius: var(--rounded);
   background: var(--bg);
   color: var(--text-body);
   font-size: var(--fs-body);
   width: 100%;
-  max-width: 320px;
+  max-width: 320px; /* mobile input constraint */
 }
 
 .ulam-input:focus-visible {
-  outline: var(--focus-width) solid var(--focus);
-  outline-offset: var(--focus-offset);
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .ulam-input:disabled {
@@ -145,19 +146,19 @@
 .ulam-textarea {
   padding: var(--space-3);
   border: 1px solid var(--border-control);
-  border-radius: var(--radius-md);
+  border-radius: var(--rounded);
   background: var(--bg);
   color: var(--text-body);
   font-size: var(--fs-body);
   width: 100%;
-  max-width: 480px;
+  max-width: 480px; /* mobile textarea constraint */
   resize: vertical;
   line-height: 1.5;
 }
 
 .ulam-textarea:focus-visible {
-  outline: var(--focus-width) solid var(--focus);
-  outline-offset: var(--focus-offset);
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .ulam-input-wrap {
@@ -183,12 +184,12 @@
   display: flex;
   align-items: center;
   padding: var(--space-1);
-  border-radius: var(--radius-sm);
+  border-radius: var(--rounded-sm);
 }
 
 .ulam-input-clear:focus-visible {
-  outline: var(--focus-width) solid var(--focus);
-  outline-offset: var(--focus-offset);
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 /* ── Overlay helpers ─────────────────────────────────────── */
@@ -201,7 +202,7 @@
 }
 
 .ulam-overlay-content h3 {
-  font-size: var(--fs-md);
+  font-size: var(--fs-body);
   font-weight: 600;
 }
 
@@ -233,7 +234,7 @@
 
 /* ── Responsive ──────────────────────────────────────────── */
 
-@media (width >= 600px) {
+@media (width >= 768px) {
   .ulam-row {
     grid-template-columns: 10rem 1fr;
   }

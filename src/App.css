@@ -72,7 +72,7 @@
   white-space: nowrap;
   padding: 0 var(--space-2);
   height: var(--btn-height-standard);
-  border-radius: var(--radius);
+  border-radius: var(--rounded);
   transition: background-color var(--duration-fast), color var(--duration-fast);
 }
 
