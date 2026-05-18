@@ -415,7 +415,7 @@ export default function useSearchManager({
   }
 
   function handleBadgeClick(filter) {
-    const isClickingSameBadge = badgeFilter && badgeFilter.type === filter.type && badgeFilter.value === filter.value
+    const isClickingSameBadge = badgeFilter?.type === filter.type && badgeFilter?.value === filter.value
     const nextFilter = isClickingSameBadge ? null : filter
     setBadgeFilter(nextFilter)
     setQuery('')
