@@ -60,7 +60,7 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   )
 }
 
-export default function A11yListResults({ results, selected, onSelect, query, _countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick, isBadgeFiltered = false }) {
+export default function A11yListResults({ results, selected, onSelect, query, countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick, isBadgeFiltered = false }) {
   const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter, setWcagFilter } = useSettings()
   const { narrowMode, narrowQuery, sortBy, setSortBy: onSortChange, setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery } = useSearch()
   const onNarrow = () => setNarrowMode(true)
@@ -76,7 +76,7 @@ export default function A11yListResults({ results, selected, onSelect, query, _c
     document: t('settings.platform_document'),
   }
   const itemRefs = useRef({})
-  const countHeadingRef = useRef(null)
+  const countHeadingRef = countRef ?? useRef(null)
   const [linkCopied, setLinkCopied] = useState(false)
   const [pendingSort, setPendingSort] = useState(sortBy)
   const [sortToCommit, setSortToCommit] = useState(null)
