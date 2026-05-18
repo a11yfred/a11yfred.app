@@ -49,8 +49,8 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
   const t = useT()
 
   const handleBadgeClickAndClose = (filter) => {
-    onClose?.()
     onBadgeClick?.(filter)
+    onClose?.()
   }
 
   const [location, setLocation] = useState('')

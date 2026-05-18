@@ -243,13 +243,15 @@ function AppContent() {
     }
   }, [language])
 
+  const prevViewAllRef = useRef(viewAll)
   useEffect(() => {
-    if (!viewAll && wcagFilter.maxLevel === 'AAA') {
+    if (prevViewAllRef.current && !viewAll && wcagFilter.maxLevel === 'AAA') {
       const saved = getStorageJson(LS_WCAG_FILTER, null)
       const defaultFilter = !saved || 'show20' in saved ? DEFAULT_WCAG_FILTER : saved
       setWcagFilter(defaultFilter)
     }
-  }, [viewAll])
+    prevViewAllRef.current = viewAll
+  }, [viewAll, wcagFilter.maxLevel])
 
   useStorageSync(liveSearch, LS_LIVE_SEARCH)
   useStorageSync(showVoting, LS_SHOW_RANKING)
