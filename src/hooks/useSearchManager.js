@@ -415,10 +415,12 @@ export default function useSearchManager({
   }
 
   function handleBadgeClick(filter) {
-    setBadgeFilter(filter)
+    const isClickingSameBadge = badgeFilter && badgeFilter.type === filter.type && badgeFilter.value === filter.value
+    const nextFilter = isClickingSameBadge ? null : filter
+    setBadgeFilter(nextFilter)
     setQuery('')
     setSubmittedQuery('')
-    syncBadgeUrl(filter)
+    syncBadgeUrl(nextFilter)
     syncSearchUrl('')
     navigate('/results/all')
     setTimeout(() => resultsCountRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
