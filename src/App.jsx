@@ -1,4 +1,4 @@
-import { FadeTransition } from '@ulam/ube'
+import { FadeTransition, FormControlCheckbox } from '@ulam/ube'
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
@@ -574,15 +574,13 @@ function AppContent() {
             sortedEntries.length
           )}
         </p>
-        <label className="view-all-dont-ask-label">
-          <input
-            type="checkbox"
-            className="app-checkbox"
+        <div className="view-all-dont-ask-label">
+          <FormControlCheckbox
+            label={t('search.view_all_confirm_dont_ask')}
             checked={viewAllDontAsk}
             onChange={e => setViewAllDontAsk(e.target.checked)}
           />
-          {t('search.view_all_confirm_dont_ask')}
-        </label>
+        </div>
       </Modal>
     </>
   )

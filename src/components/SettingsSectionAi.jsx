@@ -1,4 +1,4 @@
-import { PanelRowSetting, Toggle, Select } from '@ulam/ube'
+import { FormControlToggle, FormControlSelect } from '@ulam/ube'
 import { useT } from '@ulam/calamansi/react'
 
 
@@ -37,21 +37,25 @@ export default function SettingsSectionAi({
     <section className="panel-section">
       <h3 className="panel-section-heading">{t('settings.ai_heading')}</h3>
 
-      <PanelRowSetting
-        sm
-        label={<label htmlFor="toggle-ai">{t('settings.ai_enable_label')}</label>}
-        description={<>Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</>}
-      >
-        {pendingAiEnabled !== aiEnabled && <PendingNote t={t} />}
-        <Toggle id="toggle-ai" checked={pendingAiEnabled} onChange={() => setPendingAiEnabled(v => !v)} />
-      </PanelRowSetting>
+      <div className="panel-section">
+        <div className="panel-row">
+          <div className="panel-row-label">
+            <label htmlFor="toggle-ai" className="panel-field-label">{t('settings.ai_enable_label')}</label>
+            <p className="panel-field-desc">Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</p>
+          </div>
+          <div className="panel-row-control">
+            {pendingAiEnabled !== aiEnabled && <PendingNote t={t} />}
+            <FormControlToggle id="toggle-ai" checked={pendingAiEnabled} onChange={() => setPendingAiEnabled(v => !v)} />
+          </div>
+        </div>
+      </div>
 
       <div className="settings-provider-group">
         <label htmlFor="active-provider" className="panel-field-label">
           {t('settings.provider_label')}
           {pendingAiEnabled && <span className="panel-field-required"> {t('settings.api_key_required')}</span>}
         </label>
-        <Select
+        <FormControlSelect
           id="active-provider"
           value={activeProvider}
           onChange={e => {
@@ -66,7 +70,7 @@ export default function SettingsSectionAi({
           {PROVIDERS.map(p => (
             <option key={p.id} value={p.id}>{p.label}</option>
           ))}
-        </Select>
+        </FormControlSelect>
         {errors.provider && pendingAiEnabled && (
           <p id="provider-error" className="panel-field-error">
             {t('settings.provider_error')}
@@ -78,7 +82,7 @@ export default function SettingsSectionAi({
         <label htmlFor="active-model" className="panel-field-label">
           {t('settings.model_label')}
         </label>
-        <Select
+        <FormControlSelect
           id="active-model"
           value={activeProvider && PROVIDER_MODELS[activeProvider]?.length > 0 ? models[activeProvider] : 'N/A'}
           onChange={e => activeProvider && setModels(prev => ({ ...prev, [activeProvider]: e.target.value }))}
@@ -93,7 +97,7 @@ export default function SettingsSectionAi({
               <option key={m.id} value={m.id}>{m.label}</option>
             ))
           )}
-        </Select>
+        </FormControlSelect>
       </div>
 
       <div className="settings-key-group">
@@ -123,14 +127,18 @@ export default function SettingsSectionAi({
         )}
       </div>
 
-      <PanelRowSetting
-        sm
-        label={<label htmlFor="toggle-agentic">{t('settings.agentic_mode_label')}</label>}
-        description={t('settings.agentic_mode_desc')}
-      >
-        {pendingAgenticMode !== (isAgenticModeEnabled()) && <PendingNote t={t} />}
-        <Toggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} disabled={!pendingAiEnabled || activeProvider !== 'anthropic'} />
-      </PanelRowSetting>
+      <div className="panel-section">
+        <div className="panel-row">
+          <div className="panel-row-label">
+            <label htmlFor="toggle-agentic" className="panel-field-label">{t('settings.agentic_mode_label')}</label>
+            <p className="panel-field-desc">{t('settings.agentic_mode_desc')}</p>
+          </div>
+          <div className="panel-row-control">
+            {pendingAgenticMode !== (isAgenticModeEnabled()) && <PendingNote t={t} />}
+            <FormControlToggle id="toggle-agentic" checked={pendingAgenticMode} onChange={() => setPendingAgenticMode(v => !v)} disabled={!pendingAiEnabled || activeProvider !== 'anthropic'} />
+          </div>
+        </div>
+      </div>
     </section>
   )
 }

@@ -1,4 +1,4 @@
-import { InputWithClear, Button } from '@ulam/ube'
+import { FormControlInputWithClear, ButtonText } from '@ulam/ube'
 import { useRef, useState, useEffect } from 'react'
 import { useT } from '@ulam/calamansi/react'
 
@@ -63,7 +63,7 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
         )}
       </div>
       <div className="search-row">
-        <InputWithClear
+        <FormControlInputWithClear
           id="entry-search"
           type="text"
           value={query}
@@ -82,14 +82,14 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
           inputRef={inputRef}
         />
         {!liveSearch && (
-          <Button
+          <ButtonText
             onClick={onSearch}
             disabled={query.length < 2}
             variant="primary"
             className="search-submit-btn btn--input-height"
           >
             {t('search.button')}
-          </Button>
+          </ButtonText>
         )}
       </div>
       {query.length === 0 && !narrowMode && (

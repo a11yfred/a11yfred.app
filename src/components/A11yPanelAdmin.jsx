@@ -1,4 +1,4 @@
-import { Toggle, ButtonIcon } from '@ulam/ube'
+import { FormControlToggle, ButtonIcon } from '@ulam/ube'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './A11yPanelAdmin.css'
@@ -151,7 +151,7 @@ export default function A11yPanelAdmin({
             ].map(({ id, label, value, toggle }) => (
               <div key={id} className="panel-toggle-row panel-toggle-row--sm">
                 <label htmlFor={id} className="panel-toggle-label">{label}</label>
-                <Toggle id={id} checked={!!value} onChange={toggle} />
+                <FormControlToggle id={id} checked={!!value} onChange={toggle} />
               </div>
             ))}
           </div>
@@ -177,7 +177,7 @@ export default function A11yPanelAdmin({
           <h2 className="admin-section__title">Ad Tiles</h2>
           <div className="panel-toggle-row panel-toggle-row--sm">
             <label htmlFor="admin-show-ads" className="panel-toggle-label">Show ads</label>
-            <Toggle id="admin-show-ads" checked={!!showAds} onChange={() => setShowAds(v => !v)} />
+            <FormControlToggle id="admin-show-ads" checked={!!showAds} onChange={() => setShowAds(v => !v)} />
           </div>
           <div className="admin-deploy-row">
             <label htmlFor="admin-ad-freq" className="panel-toggle-label admin-deploy-label">

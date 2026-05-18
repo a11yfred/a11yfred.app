@@ -1,4 +1,4 @@
-import { Panel, Button } from '@ulam/ube'
+import { Panel, ButtonText } from '@ulam/ube'
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, Save, ArrowLeft } from 'lucide-react'
 import { useRouter } from '@ulam/sili/react'
@@ -306,7 +306,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
 
       {/* ── Footer ──────────────────────────────────── */}
       <div className="settings-footer-row">
-        <Button
+        <ButtonText
           ref={privacyButtonRef}
           variant="tertiary"
           icon={<Info size={14} aria-hidden="true" />}
@@ -314,9 +314,9 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
           onClick={() => onOpenPrivacy ? onOpenPrivacy() : navigate('/settings/privacy')}
         >
           {t('settings.privacy_button')}
-        </Button>
+        </ButtonText>
         <div className="settings-footer-actions">
-          <Button
+          <ButtonText
             ref={resetButtonRef}
             variant="warning"
             className="settings-reset-btn"
@@ -324,8 +324,8 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
             onClick={() => setResetConfirmOpen(true)}
           >
             {t('settings.reset_all')}
-          </Button>
-          <Button
+          </ButtonText>
+          <ButtonText
             ref={saveButtonRef}
             active={saved}
             icon={<Save size={14} aria-hidden="true" />}
@@ -337,7 +337,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
             onClick={handleSave}
           >
             {saved ? t('settings.saved') : saveAndClose ? t('settings.save_and_close') : t('settings.save')}
-          </Button>
+          </ButtonText>
         </div>
       </div>
 
@@ -387,7 +387,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
       </div>
 
       <div className="panel-mobile-back">
-        <Button
+        <ButtonText
           variant="tertiary"
           className="panel-mobile-back-btn"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
@@ -395,7 +395,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
           tabIndex={-1}
         >
           {t('settings.back')}
-        </Button>
+        </ButtonText>
       </div>
     </Panel>
   )

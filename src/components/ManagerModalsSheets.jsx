@@ -1,4 +1,4 @@
-import { Button } from '@ulam/ube'
+import { ButtonText } from '@ulam/ube'
 import { useMemo } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { Modal, Sheet } from '@ulam/sili/react'
@@ -131,18 +131,18 @@ export default function ManagerModalsSheets({
             </div>
 
             <div className="settings-reset-actions">
-              <Button
+              <ButtonText
                 variant="primary"
                 onClick={onResetConfirm}
               >
                 {t('settings.confirm_reset_all_yes')}
-              </Button>
-              <Button
+              </ButtonText>
+              <ButtonText
                 variant="secondary"
                 onClick={handleClose}
               >
                 {t('settings.confirm_reset_all_no')}
-              </Button>
+              </ButtonText>
             </div>
           </div>
         )

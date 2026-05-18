@@ -1,4 +1,4 @@
-import { Panel, Button, IconExternalLink } from '@ulam/ube'
+import { Panel, ButtonText, IconExternalLink } from '@ulam/ube'
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
@@ -127,7 +127,7 @@ export default function A11yPanelAbout({ onClose, allEntries = [] }) {
       </div>
 
       <div className="panel-mobile-back">
-        <Button
+        <ButtonText
           variant="primary"
           className="panel-mobile-back-btn"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
@@ -135,7 +135,7 @@ export default function A11yPanelAbout({ onClose, allEntries = [] }) {
           tabIndex={-1}
         >
           {t('settings.back')}
-        </Button>
+        </ButtonText>
       </div>
     </Panel>
   )

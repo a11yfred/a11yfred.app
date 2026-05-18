@@ -1,4 +1,4 @@
-import { Button, InfoBox, Toggle, InputWithClear, Badge } from '@ulam/ube'
+import { ButtonText, InfoBox, FormControlToggle, FormControlInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Modal } from '@ulam/sili/react'
@@ -28,17 +28,15 @@ const WCAG_LEVEL_BADGE_STYLE = { '--badge-bg': 'var(--wcag-level-bg)', '--badge-
 
 function FieldCheckbox({ label, checked, onChange, disabled, id }) {
   return (
-    <label className="panel-detail-ai-field-select-item" htmlFor={id}>
-      <input
+    <div className="panel-detail-ai-field-select-item">
+      <FormControlCheckbox
         id={id}
-        type="checkbox"
-        className="app-checkbox"
+        label={label}
         checked={checked}
         onChange={e => onChange(e.target.checked)}
         disabled={disabled}
       />
-      <span>{label}</span>
-    </label>
+    </div>
   )
 }
 
@@ -152,7 +150,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
           <h2 ref={titleRef} tabIndex={-1} className="panel-detail-title">
             {entry.title}
           </h2>
-          <Button
+          <ButtonText
             variant="tertiary"
             active={copiedTitle}
             icon={<Copy size={14} aria-hidden="true" />}
@@ -239,7 +237,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
             {entry.primarySC
               ? <>
                   <A11yLinkSc label={entry.primarySC} />
-                  <Button
+                  <ButtonText
                     variant="tertiary"
                     active={copiedPrimarySc}
                     icon={<Copy size={14} aria-hidden="true" />}
@@ -264,7 +262,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                   </span>
                 ))}
               </span>
-              <Button
+              <ButtonText
                 variant="tertiary"
                 active={copiedRelatedSc}
                 icon={<Copy size={14} aria-hidden="true" />}
@@ -291,7 +289,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
           {t('detail.location_label')}
           {!location.trim() && <span className="panel-detail-optional">{' '}{t('common.optional')}</span>}
         </label>
-        <InputWithClear
+        <FormControlInputWithClear
           id="location-prefix"
           type="text"
           value={location}
@@ -397,7 +395,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
               {getAiProvider() === 'anthropic' && (
                 <label className="panel-detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
                   <span className="panel-detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
-                  <Toggle
+                  <FormControlToggle
                     id="agentic-mode-toggle"
                     checked={useAgenticMode}
                     onChange={setUseAgenticMode}

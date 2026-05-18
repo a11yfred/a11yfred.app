@@ -1,4 +1,4 @@
-import { Button, NoResults, DataError } from '@ulam/ube'
+import { ButtonText, NoResults, DataError } from '@ulam/ube'
 import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
@@ -42,9 +42,9 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
           <span className="pinned-section__count">{entries.length}</span>
         </h2>
         {onClearPins && (
-          <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={handleClearAll} icon={<PinOff size={14} aria-hidden="true" />}>
+          <ButtonText variant="tertiary" className="pinned-unpin-all-btn" onClick={handleClearAll} icon={<PinOff size={14} aria-hidden="true" />}>
             {t('results.unpin_all')}
-          </Button>
+          </ButtonText>
         )}
       </div>
       <A11yListResults
@@ -369,7 +369,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
       )}
       {results.length > RESULTS_VIEW_ALL_THRESHOLD && (
         <div className="view-all-section">
-          <Button
+          <ButtonText
             variant="secondary"
             className="back-to-top-btn"
             onClick={() => {
@@ -380,7 +380,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
           >
             <ArrowUp size={16} aria-hidden="true" />
             {t('results.back_to_top')}
-          </Button>
+          </ButtonText>
         </div>
       )}
     </div>

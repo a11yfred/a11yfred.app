@@ -1,4 +1,4 @@
-import { RadioChip, PanelRowSetting, Select, Button } from '@ulam/ube'
+import { FormControlRadioChip, FormControlSelect, ButtonText } from '@ulam/ube'
 import { Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { announce } from '@ulam/taho'
@@ -54,7 +54,7 @@ export default function SettingsSectionAppearance({
             { value: 'dark',  labelKey: 'settings.theme_dark',  announceKey: 'settings.theme_dark_announce'  },
             ...(fiestaUnlocked ? [{ value: 'fiesta', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
           ].map(({ value, labelKey, announceKey }) => (
-            <RadioChip
+            <FormControlRadioChip
               key={value}
               name="theme-setting"
               value={value}
@@ -69,38 +69,47 @@ export default function SettingsSectionAppearance({
         </div>
       </fieldset>
 
-      <PanelRowSetting block label={t('settings.language_label')} description={<>The current language is <strong>{savedLanguageLabel}</strong>.</>}>
-        <div className="settings-language-row">
-          <Select
-            value={pendingLanguage === language ? '' : pendingLanguage}
-            onChange={e => { setPendingLanguage(e.target.value || language); setLanguagePreviewed(false) }}
-            wrapClass="select-wrap--language"
-            aria-label={t('settings.language_label')}
-          >
-            <option value="">{t('settings.language_select_one')}</option>
-            {LANGUAGES.map(lang => (
-              <option key={lang.value} value={lang.value}>
-                {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
-              </option>
-            ))}
-          </Select>
-          <Button
-            variant="primary"
-            active={languagePreviewed}
-            activeIcon={<Check size={14} aria-hidden="true" />}
-            className="settings-language-change-btn"
-            disabled={!pendingLanguage || pendingLanguage === language}
-            onClick={() => {
-              setLanguagePreviewed(true)
-              setTimeout(() => setLanguagePreviewed(false), SETTINGS_FLASH_MS)
-              announce(t('settings.language_changed_announce'))
-            }}
-          >
-            {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
-          </Button>
+      <div className="panel-section">
+        <div className="panel-row">
+          <div className="panel-row-label">
+            <label htmlFor="language-select" className="panel-field-label">{t('settings.language_label')}</label>
+            <p className="panel-field-desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
+          </div>
+          <div className="panel-row-control">
+            <div className="settings-language-row">
+              <FormControlSelect
+                id="language-select"
+                value={pendingLanguage === language ? '' : pendingLanguage}
+                onChange={e => { setPendingLanguage(e.target.value || language); setLanguagePreviewed(false) }}
+                wrapClass="select-wrap--language"
+                aria-label={t('settings.language_label')}
+              >
+                <option value="">{t('settings.language_select_one')}</option>
+                {LANGUAGES.map(lang => (
+                  <option key={lang.value} value={lang.value}>
+                    {language?.startsWith('en') && lang.en ? `${lang.label} (${lang.en})` : lang.label}
+                  </option>
+                ))}
+              </FormControlSelect>
+              <ButtonText
+                variant="primary"
+                active={languagePreviewed}
+                activeIcon={<Check size={14} aria-hidden="true" />}
+                className="settings-language-change-btn"
+                disabled={!pendingLanguage || pendingLanguage === language}
+                onClick={() => {
+                  setLanguagePreviewed(true)
+                  setTimeout(() => setLanguagePreviewed(false), SETTINGS_FLASH_MS)
+                  announce(t('settings.language_changed_announce'))
+                }}
+              >
+                {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
+              </ButtonText>
+            </div>
+            {pendingLanguage !== language && <PendingNote t={t} />}
+          </div>
         </div>
-        {pendingLanguage !== language && <PendingNote t={t} />}
-      </PanelRowSetting>
+      </div>
     </section>
   )
 }
