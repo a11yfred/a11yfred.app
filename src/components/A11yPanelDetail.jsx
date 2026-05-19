@@ -347,12 +347,12 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
       />
 
       <div className="panel-detail-section">
-        <label htmlFor="entry-note" className="panel-detail-label">{t('detail.finding_note_label')}</label>
+        <label htmlFor="entry-note" className="panel-detail-label">{t('detail.entry_note_label')}</label>
         <textarea
           id="entry-note"
           value={entryNote}
           onChange={e => setEntryNote(e.target.value)}
-          placeholder={t('detail.finding_note_placeholder')}
+          placeholder={t('detail.entry_note_placeholder')}
           className="panel-detail-input panel-detail-input--textarea"
           rows={3}
         />
@@ -361,16 +361,16 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
             onClick={entryNote.trim() ? () => {
               setStorage(getEntryNoteKey(entry.id), entryNote)
               setEntryNoteSaved(true)
-              announce(t('detail.saved_finding_note_aria'))
+              announce(t('detail.saved_entry_note_aria'))
               setTimeout(() => setEntryNoteSaved(false), NOTIFICATION_TIMEOUT)
             } : undefined}
             aria-disabled={!entryNote.trim() || undefined}
             className={`btn--primary panel-detail-section-btn btn--height-standard${entryNoteSaved ? ' btn__field--success' : ''}`}
-            aria-label={entryNoteSaved ? t('detail.saved_finding_note_aria') : t('detail.save_finding_note_aria')}
+            aria-label={entryNoteSaved ? t('detail.saved_entry_note_aria') : t('detail.save_entry_note_aria')}
           >
             {entryNoteSaved
-              ? <><Check size={14} aria-hidden="true" /><span>{t('detail.saved_finding_note_text')}</span></>
-              : <><Save size={14} aria-hidden="true" /><span>{t('detail.save_finding_note_text')}</span></>}
+              ? <><Check size={14} aria-hidden="true" /><span>{t('detail.saved_entry_note_text')}</span></>
+              : <><Save size={14} aria-hidden="true" /><span>{t('detail.save_entry_note_text')}</span></>}
           </button>
         </div>
       </div>

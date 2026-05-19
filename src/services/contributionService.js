@@ -2,7 +2,7 @@
  * contributionService.js
  *
  * Phase 1: localStorage-backed queue for user-submitted corpus edits.
- * When a user edits a finding and chooses "Contribute to the shared corpus",
+ * When a user edits an entry and chooses "Contribute to the shared corpus",
  * the change is queued here and held for maintainer review before being
  * merged into corpus.json or the locale translation overlays.
  *
