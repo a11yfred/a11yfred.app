@@ -6,9 +6,9 @@ import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 
 
-import SettingsSectionAppearance from './SettingsSectionAppearance.jsx'
-import SettingsSectionSearch from './SettingsSectionSearch.jsx'
-import SettingsSectionAi from './SettingsSectionAi.jsx'
+import A11ySettingsSectionAppearance from './A11ySettingsSectionAppearance.jsx'
+import A11ySettingsSectionSearch from './A11ySettingsSectionSearch.jsx'
+import A11ySettingsSectionAi from './A11ySettingsSectionAi.jsx'
 import A11yOverlayManager from './AppOverlayManager.jsx'
 import { PROVIDERS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '@ulam/halohalo'
 import { applyTheme } from '../hooks/useThemeManager.js'
@@ -241,7 +241,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
     >
       <p className="panel-intro">Most settings require the <strong>Save</strong> button to take effect. <strong>Pinned</strong>, <strong>Starred</strong>, <strong>Ranking</strong>, and <strong>Archived</strong> changes apply immediately.</p>
 
-      <SettingsSectionAppearance
+      <A11ySettingsSectionAppearance
         theme={theme}
         pendingTheme={pendingTheme}
         setPendingTheme={setPendingTheme}
@@ -254,7 +254,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
         languagePreviewed={languagePreviewed}
       />
 
-      <SettingsSectionSearch
+      <A11ySettingsSectionSearch
         platform={platform}
         pendingPlatform={pendingPlatform}
         setPendingPlatform={setPendingPlatform}
@@ -288,7 +288,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
         setUnarchiveAllDone={setUnarchiveAllDone}
       />
 
-      <SettingsSectionAi
+      <A11ySettingsSectionAi
         aiEnabled={aiEnabled}
         pendingAiEnabled={pendingAiEnabled}
         setPendingAiEnabled={setPendingAiEnabled}
