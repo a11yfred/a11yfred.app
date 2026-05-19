@@ -25,20 +25,20 @@ Two separate efforts: do them in order:
 
 | Package | Status |
 | --- | --- |
-| `@ulam/siling-mahaba` | Complete: re-exports `Modal`, `Drawer`, `Sheet` from siling-labuyo React wrappers |
-| `@ulam/taho-pandan` | Complete: no changes needed |
+| `@ulam/sili/remix` | Complete: exports Dialog, Drawer, Sheet adapters |
+| `@ulam/taho/remix` | Complete: no changes needed |
 
-### React-dependent (needs migration)
+### React adapters (available)
 
 | Package | React surface | Status |
 | --------- | -------------- | -------- |
-| `@ulam/calamansi` | `I18nProvider` context, `useT`, `usePref` hooks | ✅ DONE |
-| `@a11yfred/rogers` | 8 debug components | ✅ DONE |
-| `@ulam/ube` | UI components | ✅ DONE (Groups A–D) |
-| `@ulam/siling-labuyo` | hooks + `Modal`, `Drawer`, `Sheet` components | ✅ DONE |
-| `@ulam/taho-bayabas` | `Announcer`, `useAnnounce` | In progress |
-| `@ulam/halohalo` | `useCompletion`, `useProviderConfig` hooks | In progress |
-| `@ulam/sawsawan` | `useSawsawan` hook | In progress |
+| `@ulam/calamansi/react` | `I18nProvider` context, `useT`, `usePref` hooks | ✅ DONE |
+| `@a11yfred/rogers/react` | Debug components via useOverlay | ✅ DONE |
+| `@ulam/ube` | UI components (FormInputSearch, FormInputWithClear, Screen, Dialog, etc.) | ✅ DONE |
+| `@ulam/sili/react` | hooks + Dialog, Drawer, Sheet components | ✅ DONE |
+| `@ulam/taho/react` | Announcer component | ✅ DONE |
+| `@ulam/halohalo` | `useCompletion`, `useProviderConfig` hooks | ✅ DONE |
+| `@ulam/sawsawan` | Storage adapters with platform detection | ✅ DONE |
 
 ---
 
