@@ -58,7 +58,7 @@ If you choose to use the AI Assist feature:
 
 - You supply your own API key from Anthropic, OpenAI, Google, or Microsoft Azure.
 - Your API key is stored in `localStorage` on your device only (`apikey_<provider>`).
-- When you request a revision, the current finding's description and/or remediation text is sent directly from your browser to the AI provider's API. No other personal data is included.
+- When you request a revision, the current entry's description and/or remediation text is sent directly from your browser to the AI provider's API. No other personal data is included.
 - The text you send is subject to the privacy policy of whichever AI provider you choose.
 
 **A11yFred never sees your API key or the content of your requests.** All API calls go directly from your browser to the provider. There is no intermediate server.

@@ -176,7 +176,7 @@ Current hash routes → Remix file-based routes:
 | ------------------- | ----------------- |
 | `#/` | `app/routes/_index.tsx` |
 | `#/results/all` | `app/routes/results.all.tsx` |
-| `#/finding/:id/:slug` | `app/routes/finding.$id.$slug.tsx` |
+| `#/entry/:id/:slug` | `app/routes/entry.$id.$slug.tsx` |
 | `#/settings` | `app/routes/settings.tsx` |
 | `#/admin` | `app/routes/admin.tsx` |
 | `#/onboarding` | `app/routes/onboarding.tsx` |

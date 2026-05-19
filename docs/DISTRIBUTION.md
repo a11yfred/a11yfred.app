@@ -34,7 +34,7 @@ Publishing A11yFred extensions and Electron app to app stores and distribution c
 4. **Fill in store listing**
 
    - **Name:** A11yFred
-   - **Description (140 chars max):** Accessible finding reference for web, iOS, and Android -- search, filter, copy, refine entries
+   - **Description (140 chars max):** Accessible entry reference for web, iOS, and Android -- search, filter, copy, refine entries
    - **Detailed Description:** Full description from README
    - **Screenshots:**
      - 1280x800px or 640x400px minimum

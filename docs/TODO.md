@@ -71,7 +71,7 @@ Ordered high-value + low-effort first within each section.
 
 ### Export & Sharing
 
-- [ ] **Export entries -- UI** `[ux]` ,  Backend done: `exportFinding(finding, format)` in `src/utils/exportFinding.js` supports `'text'`, `'markdown'`, `'csv'`, `'excel'` (dynamic `exceljs` import). Needs UI: multi-select (checkboxes or shift-click in result list) and format picker to call it.
+- [ ] **Export entries -- UI** `[ux]` ,  Backend done: `exportEntry(entry, format)` in `src/utils/exportEntry.js` supports `'text'`, `'markdown'`, `'csv'`, `'excel'` (dynamic `exceljs` import). Needs UI: multi-select (checkboxes or shift-click in result list) and format picker to call it.
 - [ ] **Email results** `[ux]` `[enhancement]` ,  Add Email delivery to Export: mailto: compose option or SendGrid/Resend API, test end-to-end.
 - [ ] **Bug tracker integration** `[ux]` `[infra]` `[enhancement]` ,  Implement Jira/Linear URL generation, test deep links, document format.
 

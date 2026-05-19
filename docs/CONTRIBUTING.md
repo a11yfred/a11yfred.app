@@ -1,6 +1,6 @@
 ﻿# Contributing
 
-Contributions welcome, especially finding entries, keyword improvements, and bug fixes.
+Contributions welcome, especially entry additions, keyword improvements, and bug fixes.
 
 ## Setup
 
@@ -13,7 +13,7 @@ npm run dev   # http://localhost:5173
 
 ## Adding entries
 
-Findings go in `src/data/corpus.json`. See the **Finding schema** section in the main [README](../README.md) for the full field reference.
+Entries go in `src/data/corpus.json`. See the **Entry schema** section in the main [README](../README.md) for the full field reference.
 
 A few things that matter most:
 
@@ -24,7 +24,7 @@ A few things that matter most:
 
 ## Submitting a pull request
 
-Fork → branch (`add-finding-acc-214`) → change → PR with a short description. If adding entries, mention the WCAG success criterion and source.
+Fork → branch (`add-entry-acc-214`) → change → PR with a short description. If adding entries, mention the WCAG success criterion and source.
 
 A PR template lives at `.github/PULL_REQUEST_TEMPLATE.md` and loads automatically on GitHub.
 

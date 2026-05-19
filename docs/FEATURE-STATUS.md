@@ -109,7 +109,7 @@ Features parked with no active timeline. Revisit post-launch.
 | --- | --- | --- |
 | Ko-fi Integration | 💤 | Widget disabled pending console error resolution; Ko-fi link in footer as fallback |
 | SCSS Migration | 💤 | CSS custom properties sufficient; migrate only if specificity/mixin complexity grows |
-| Compare Mode | 💤 | Side-by-side finding comparison; no user demand yet |
+| Compare Mode | 💤 | Side-by-side entry comparison; no user demand yet |
 | GitHub Sponsors | 💤 | Activate once public launch is stable |
 
 ---
@@ -156,13 +156,13 @@ Done:
 
 Done:
 
-- Full finding display: title, severity badge, WCAG SC links, source, related entries
+- Full entry display: title, severity badge, WCAG SC links, source, related entries
 - Copy / Reset desc + fix (individual and "Copy all / Reset all")
 - Related entries navigation with back button history
 - Reset confirmation modal when >70% of text changed
 - Edit distance guard; `aria-busy` + spinner on AI refine
 - `exportFinding.js` utility (text / markdown / csv) ,  data layer only
-- **Copy button next to title** ,  copy just the finding name
+- **Copy button next to title** ,  copy just the entry name
 - **Copy buttons for SCs** ,  copy primary success criterion and related criteria separately
 - Location prefix field with **dynamic "(optional)" label** ,  disappears when field has value
 - **Clear button for location prefix** ,  × positioned inside field (matches search clear button UX)
@@ -187,12 +187,12 @@ Missing:
 
 Done:
 
-- `useFindingRatings.js` ,  localStorage-backed per-finding `{ score, starred, archived }`
+- `useEntryRatings.js` ,  localStorage-backed per-entry `{ score, starred, archived }`
 - Rank up / rank down / star / archive in result list UI
 - Archive moves item to bottom of sorted list instantly
 - Star disables when archived; focus moves to adjacent card on archive
 - Ratings influence sort order (starred > archived suppressed)
-- Open/copy counts tracked implicitly in `recentFindings` and finding frequency signals
+- Open/copy counts tracked implicitly in `recentEntries` and entry frequency signals
 - Ratings persisted in `defect_ratings` localStorage key
 
 Missing:
@@ -321,13 +321,13 @@ Files: `src/services/aiService.js`
 Done:
 
 - 4 provider configs (Anthropic, OpenAI, Google, Azure) with model selector in Settings
-- Refine note rewrites finding desc + rem in auditor voice
+- Refine note rewrites entry desc + rem in auditor voice
 - Typed errors + localhost API key bypass
 
 Missing:
 
 - Azure endpoint untested
-- System prompt tuning (20+ finding test pass needed)
+- System prompt tuning (20+ entry test pass needed)
 
 ---
 

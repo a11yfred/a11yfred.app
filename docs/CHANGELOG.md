@@ -130,8 +130,8 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 
 ### Privacy modal (navigation context)
 
-- When opening Privacy & Storage without a finding open, modal body now reads "Opening this will discard your collapsed panel and any unsaved changes."
-- Buttons read "OK" / "Cancel" instead of "Open New Finding" / "Keep Current"
+- When opening Privacy & Storage without an entry open, modal body now reads "Opening this will discard your collapsed panel and any unsaved changes."
+- Buttons read "OK" / "Cancel" instead of "Open New Entry" / "Keep Current"
 
 ### Copy and label text
 

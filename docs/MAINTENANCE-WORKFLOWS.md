@@ -131,7 +131,7 @@ Current keys (from `src/utils/constants.js` and `src/halohalo/constants.js`):
 - `recentFindings`, `lastSelectedId` (session-like, persists across tabs)
 - `userFindings`, `userOverrides`, `pendingContributions`
 - `pinnedFindings`, `defect_ratings`, `coSelectionPairs`
-- `finding_note_<id>` (one key per finding with a saved note)
+- `entry_note_<id>` (one key per entry with a saved note)
 - `adminDataset`: last-selected admin panel corpus tab
 - `ai_provider`, `agentic_mode`, `apikey_<provider>`, `ai_model_<provider>` (one per configured provider: anthropic, openai, google, gemini)
 
@@ -271,7 +271,7 @@ Toggle dark theme. Inspect all states:
 
 - Empty state
 - Results list
-- Selected finding detail
+- Selected entry detail
 - Settings panel
 - AI refinement active
 - All four severity badge levels

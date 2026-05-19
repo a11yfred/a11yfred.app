@@ -89,7 +89,7 @@ Dev-only tools are all guarded by an `IS_DEV` check (`hostname === 'localhost'`)
 
 ### 404 for Unknown Routes
 
-The router provides primitives (`useRouter`, `useRouteMatch`, `Route`) but not a 404 concept. The 404 check (`const isNotFound = !KNOWN_ROUTES.has(route) && !findingMatch`) is app-level logic in `AppContent`, using the router's `route` value against a local `Set` of valid paths. Anything not in that set renders a `NotFoundPage` with a "Back to Home" link. It's a few lines of app code, not a router plugin feature, and it's intentionally kept that way. The set of valid routes is app-specific, not something a portable router should own.
+The router provides primitives (`useRouter`, `useRouteMatch`, `Route`) but not a 404 concept. The 404 check (`const isNotFound = !KNOWN_ROUTES.has(route) && !entryMatch`) is app-level logic in `AppContent`, using the router's `route` value against a local `Set` of valid paths. Anything not in that set renders a `NotFoundPage` with a "Back to Home" link. It's a few lines of app code, not a router plugin feature, and it's intentionally kept that way. The set of valid routes is app-specific, not something a portable router should own.
 
 ### Framework packages
 

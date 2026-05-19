@@ -94,8 +94,8 @@ Disabled elements remain keyboard-focusable and in tab order, following WCAG rec
 - `A11yPanelSettings.jsx`: Fixed undefined export (`export default A11yPanelSettings` now resolves correctly via `const A11yPanelSettings = SettingsPanel`)
 - `useCompletion.js` / `useProviderConfig.js`: Replaced `useRef` lazy init pattern with `useState` initializer function; eliminates `react-hooks/refs` errors (reading `ref.current` during render)
 - `UlamMenu.jsx`: Escaped `app's` apostrophe as `app&apos;s`
-- `useFindingSearch.js`: Removed stale `eslint-disable react-hooks/exhaustive-deps` comment
-- `findingSearchService.js`: Renamed unused `searchKey` parameter to `_searchKey`
+- `useEntrySearch.js`: Removed stale `eslint-disable react-hooks/exhaustive-deps` comment
+- `entrySearchService.js`: Renamed unused `searchKey` parameter to `_searchKey`
 - `Announcer.jsx`: Added targeted disable comment for intentional mount-once `useEffect`
 - `useRouter.js`: Fixed eslint-disable namespace (`neighbor/` to `@a11yfred/neighbor/`)
 - `App.jsx`: Fixed disable namespace for `no-announce-in-render` on fiesta callback
@@ -124,7 +124,7 @@ Disabled elements remain keyboard-focusable and in tab order, following WCAG rec
 Extracted and organized the `@ulam` monorepo packages alongside the app:
 
 - `@ulam/halohalo`: AI connectivity layer (provider config, completions, connectivity check)
-- `@ulam/calamansi/relevance`: relevance scoring and finding search logic
+- `@ulam/calamansi/relevance`: relevance scoring and entry search logic
 - `@ulam/sawsawan`: runtime-agnostic storage adapters (localStorage, sessionStorage, memory)
 - `@a11yfred/neighbor`: ESLint and Stylelint plugin with custom accessibility lint rules
 - `tools/neighbor/` and `tools/neighbor-stylelint.mjs`: lint rule implementations
@@ -207,4 +207,4 @@ Removed Ko-fi widget and all related CSS tokens, i18n keys, and media queries. A
 - "Agentic Mode" → "Match Existing Style (Agentic AI)"
 - "Prioritize" → "Rank Results" in onboarding and help text
 - "Sort Priority" → "Ranking Controls" in settings
-- "Results" (search/list context) vs. "Findings" (individual items) distinction confirmed intentional
+- "Results" (search/list context) vs. "Entries" (individual items) distinction confirmed intentional
