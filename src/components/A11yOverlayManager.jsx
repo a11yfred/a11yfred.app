@@ -1,5 +1,5 @@
 import { ButtonText } from '@ulam/ube'
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { OverlayManager } from '@ulam/sili/react'
 
@@ -67,7 +67,7 @@ export default function A11yOverlayManager({
   }, [viewAllConfirmOpen, pendingEntry, pendingPrivacy, privacyOpen, rhgPending, unsavedOpen, resetConfirmOpen, noChangesOpen, fiestaConfirmOpen])
 
   // Generic close handler that routes to specific handlers
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     const closeHandlers = {
       viewAllConfirm: onViewAllConfirmClose,
       pendingEntry: onPendingEntryClose,
@@ -80,7 +80,7 @@ export default function A11yOverlayManager({
       fiesta: onFiestaClose,
     }
     closeHandlers[activeId]?.()
-  }
+  }, [activeId, onViewAllConfirmClose, onPendingEntryClose, onPendingPrivacyClose, onPrivacyClose, onRhgClose, onUnsavedClose, onResetClose, onNoChangesClose, onFiestaClose])
 
   // Build overlay config array for OverlayManager
   const overlays = useMemo(() => [

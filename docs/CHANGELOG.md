@@ -12,7 +12,7 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 
 - FormControlInputSearch to FormInputSearch migrations (3 files)
 - FormControlInputWithClear to FormInputWithClear migrations (4 files)
-- All form input CSS imports updated: form-control-input* to form-input*
+- All form input CSS imports updated: `form-control-input*` to `form-input*`
 - Modal to Dialog component updates verified
 - DataError, NoResults to Screen component updates verified
 - ESLint: 10 errors resolved to 0 errors

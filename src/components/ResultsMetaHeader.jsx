@@ -1,4 +1,4 @@
-import { ButtonText, FormControlSelect, FormControlRadioChip, FormInputWithClear, InfoBox } from '@ulam/ube'
+import { ButtonText, FormControlSelect, FormControlRadioChip, FormControlInputWithClear, InfoBox } from '@ulam/ube'
 import { Link, Check, Filter, OctagonX, Trash2, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 
@@ -222,7 +222,7 @@ export default function ResultsMetaHeader({
                 {t('search.narrowing_results')}
               </label>
               <div className={`results-narrow-row${!query && !narrowQuery ? ' results-narrow-row--dimmed' : ''}`}>
-                <FormInputWithClear
+                <FormControlInputWithClear
                   id="narrow-filter"
                   type="text"
                   value={narrowQuery}

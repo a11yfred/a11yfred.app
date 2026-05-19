@@ -1,4 +1,4 @@
-import { ButtonText, InfoBox, FormControlToggle, FormInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
+import { ButtonText, InfoBox, FormControlToggle, FormControlInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
@@ -289,7 +289,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
           {t('detail.location_label')}
           {!location.trim() && <span className="panel-detail-optional">{' '}{t('common.optional')}</span>}
         </label>
-        <FormInputWithClear
+        <FormControlInputWithClear
           id="location-prefix"
           type="text"
           value={location}
