@@ -1,5 +1,4 @@
 import { ButtonText, InfoBox, FormControlToggle, FormInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
-import { setAriaDisabled } from '@ulam/ube/core/ariaDisabled'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save, Mail } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
@@ -50,9 +49,6 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
   const [includeFixTitle, setIncludeFixTitle] = useState(false)
   const descCopyBtnRef = useRef(null)
   const fixCopyBtnRef = useRef(null)
-  const entryNoteSaveBtnRef = useRef(null)
-  const aiRevisionButtonRef = useRef(null)
-  const resetAllBtnRef = useRef(null)
 
   const displayDesc = location.trim()
     ? `${location.trim().replace(/:?\s*$/, ':')} ${entry.desc}`
@@ -123,24 +119,6 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
       onDebugPanelCmdHandled?.()
     }
   }, [debugPanelCmd]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    if (entryNoteSaveBtnRef.current) {
-      setAriaDisabled(entryNoteSaveBtnRef.current, !entryNote.trim())
-    }
-  }, [entryNote])
-
-  useEffect(() => {
-    if (aiRevisionButtonRef.current) {
-      setAriaDisabled(aiRevisionButtonRef.current, refining || animating || !aiNote.trim())
-    }
-  }, [refining, animating, aiNote])
-
-  useEffect(() => {
-    if (resetAllBtnRef.current) {
-      setAriaDisabled(resetAllBtnRef.current, descText === entry.desc && fixText === entry.fix)
-    }
-  }, [descText, fixText, entry.desc, entry.fix])
 
   const p = SEVERITY_VARS[entry.severity] || SEVERITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
@@ -231,26 +209,26 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             )
           })()}
           {entry.wcagVersion && (
-            <button
-              type="button"
-              className="badge--wcag"
-              style={WCAG_BADGE_STYLE}
+            <Badge
+              variant="wcag"
+              bg={WCAG_BADGE_STYLE['--badge-bg']}
+              color={WCAG_BADGE_STYLE['--badge-text']}
               onClick={() => handleBadgeClickAndClose({ type: 'wcag', value: entry.wcagVersion })}
               aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria')}`}
             >
               {t('badge.wcag_version_label')}{entry.wcagVersion}
-            </button>
+            </Badge>
           )}
           {entry.wcagLevel && (
-            <button
-              type="button"
-              className="badge--wcag-level"
-              style={WCAG_LEVEL_BADGE_STYLE}
+            <Badge
+              variant="wcag-level"
+              bg={WCAG_LEVEL_BADGE_STYLE['--badge-bg']}
+              color={WCAG_LEVEL_BADGE_STYLE['--badge-text']}
               onClick={() => handleBadgeClickAndClose({ type: 'wcag-level', value: entry.wcagLevel })}
               aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
             >
               {t('badge.level_label')}{entry.wcagLevel}
-            </button>
+            </Badge>
           )}
         </div>
 
@@ -380,21 +358,22 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           rows={3}
         />
         <div className="panel-detail-section-controls">
-          <button
+          <ButtonText
             ref={entryNoteSaveBtnRef}
-            onClick={entryNote.trim() ? () => {
+            variant="primary"
+            disabled={!entryNote.trim()}
+            active={entryNoteSaved}
+            icon={entryNoteSaved ? <Check size={14} aria-hidden="true" /> : <Save size={14} aria-hidden="true" />}
+            label={entryNoteSaved ? t('detail.saved_entry_note_aria') : t('detail.save_entry_note_aria')}
+            onClick={() => {
               setStorage(getEntryNoteKey(entry.id), entryNote)
               setEntryNoteSaved(true)
               announce(t('detail.saved_entry_note_aria'))
               setTimeout(() => setEntryNoteSaved(false), NOTIFICATION_TIMEOUT)
-            } : undefined}
-            className={`btn--primary panel-detail-section-btn btn--height-standard${entryNoteSaved ? ' btn__field--success' : ''}`}
-            aria-label={entryNoteSaved ? t('detail.saved_entry_note_aria') : t('detail.save_entry_note_aria')}
+            }}
           >
-            {entryNoteSaved
-              ? <><Check size={14} aria-hidden="true" /><span>{t('detail.saved_entry_note_text')}</span></>
-              : <><Save size={14} aria-hidden="true" /><span>{t('detail.save_entry_note_text')}</span></>}
-          </button>
+            {entryNoteSaved ? t('detail.saved_entry_note_text') : t('detail.save_entry_note_text')}
+          </ButtonText>
         </div>
       </div>
 
@@ -434,17 +413,20 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                 </div>
               </div>
             </div>
-            <button
+            <ButtonText
               ref={aiRevisionButtonRef}
-              onClick={(refining || animating || !aiNote.trim()) ? undefined : handleRefine}
-              aria-busy={refining ? true : undefined}
-              className="btn--primary panel-detail-section-btn btn--height-standard"
-              aria-label={refining ? t('detail.rewriting_aria') : t('detail.ai_revision_aria')}
+              variant="primary"
+              disabled={refining || animating || !aiNote.trim()}
+              busy={refining}
+              icon={refining
+                ? <Loader2 size={12} strokeWidth={2} className="panel-detail-revising-spinner" aria-hidden="true" />
+                : <Sparkles size={12} strokeWidth={2} className="panel-detail-ai-revision-icon" aria-hidden="true" />
+              }
+              label={refining ? t('detail.rewriting_aria') : t('detail.ai_revision_aria')}
+              onClick={handleRefine}
             >
-              {refining
-                ? <><span className="btn-icon"><Loader2 size={12} strokeWidth={2} className="panel-detail-revising-spinner" aria-hidden="true" /></span><span>{t('detail.rewriting_text')}</span></>
-                : <><span className="btn-icon"><Sparkles size={12} strokeWidth={2} className="panel-detail-ai-revision-icon" aria-hidden="true" /></span><span>{t('detail.ai_revision_save_text')}</span></>}
-            </button>
+              {refining ? t('detail.rewriting_text') : t('detail.ai_revision_save_text')}
+            </ButtonText>
           </div>
           {(descText !== entry.desc || fixText !== entry.fix) && (
             <p className="panel-detail-edit-warning" role="status">
@@ -463,46 +445,48 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
       />
 
       <div className="panel-detail-actions-end">
-        <button
-          ref={resetAllBtnRef}
-          type="button"
-          className={`btn--secondary panel-detail-action-btn btn--height-standard${resetAllDone ? ' btn__field--success' : ''}`}
-          onClick={(descText === entry.desc && fixText === entry.fix) ? undefined : handleResetAllFields}
-          aria-label={t('detail.reset_all_fields_aria')}
-        >
-          {resetAllDone
-            ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.reset_all_done_desktop')}</>
-            : <><RotateCcw size={14} aria-hidden="true" />{' '}{t('detail.reset_all_fields_text')}</>
+        <ButtonText
+          variant="secondary"
+          disabled={descText === entry.desc && fixText === entry.fix}
+          active={resetAllDone}
+          icon={resetAllDone
+            ? <Check size={14} aria-hidden="true" />
+            : <RotateCcw size={14} aria-hidden="true" />
           }
-        </button>
-        <button
-          type="button"
-          className={`btn--primary panel-detail-action-btn btn--height-standard${copiedAll ? ' btn__field--success' : ''}`}
+          label={t('detail.reset_all_fields_aria')}
+          onClick={handleResetAllFields}
+        >
+          {resetAllDone ? t('detail.reset_all_done_desktop') : t('detail.reset_all_fields_text')}
+        </ButtonText>
+        <ButtonText
+          variant="primary"
+          active={copiedAll}
+          icon={copiedAll
+            ? <Check size={14} aria-hidden="true" />
+            : <Copy size={14} aria-hidden="true" />
+          }
+          label={t('detail.copy_all_aria')}
           onClick={handleCopyAll}
-          aria-label={t('detail.copy_all_aria')}
         >
-          {copiedAll
-            ? <><Check size={14} aria-hidden="true" />{' '}{t('detail.copy_all_copied_text')}</>
-            : <><Copy size={14} aria-hidden="true" />{' '}{t('detail.copy_all_text')}</>
-          }
-        </button>
-        <button
-          type="button"
-          className="btn btn--primary panel-detail-action-btn btn--height-standard"
-          onClick={handleEmailShare}
-          aria-label={t('detail.email_share_aria', 'Email this defect')}
+          {copiedAll ? t('detail.copy_all_copied_text') : t('detail.copy_all_text')}
+        </ButtonText>
+        <ButtonText
+          variant="primary"
+          icon={<Mail size={14} aria-hidden="true" />}
+          label={t('detail.email_share_aria', 'Email this defect')}
           title={t('detail.email_share_aria', 'Email this defect')}
+          onClick={handleEmailShare}
         >
-          <Mail size={14} aria-hidden="true" />{' '}Email
-        </button>
+          Email
+        </ButtonText>
         {onClose && (
-          <button
-            type="button"
-            className={`${isDesktop ? 'btn btn--primary' : 'btn--tertiary'} panel-detail-close-btn btn--height-standard`}
+          <ButtonText
+            variant={isDesktop ? 'primary' : 'tertiary'}
+            label={t('common.close')}
             onClick={onClose}
           >
             {t('common.close')}
-          </button>
+          </ButtonText>
         )}
       </div>
 
