@@ -766,7 +766,7 @@ function AppContent() {
         )}
       </Sheet>
 
-      <Modal
+      <Dialog
         open={!!pendingEntry}
         onClose={() => setPendingEntry(null)}
         heading={t('detail.discard_confirm_heading')}
@@ -790,7 +790,7 @@ function AppContent() {
         <p>{t('detail.discard_confirm_body')}</p>
       </Dialog>
 
-      <Modal
+      <Dialog
         open={pendingPrivacy}
         onClose={() => setPendingPrivacy(false)}
         heading={t('detail.discard_confirm_heading')}
