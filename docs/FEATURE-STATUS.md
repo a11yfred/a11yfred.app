@@ -76,7 +76,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | --- | --- | --- |
 | Corpus Guide Page (/corpus-guide) | 🔲 | 0 |
 | Add / Edit / Delete Entry UI | 🔲 | 0 |
-| Export Findings (UI + Email) | 🔲 | 10 |
+| Export Findings (UI + Email) | 🟡 | 30 |
 
 **Distribution Targets:**
 
