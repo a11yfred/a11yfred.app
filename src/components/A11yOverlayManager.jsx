@@ -142,6 +142,7 @@ export default function A11yOverlayManager({
       onCollapse: setPrivacyCollapsed,
       hideCloseBottom: true,
       returnFocusRef: privacyButtonRef,
+      initialFocusContainer: true,
       content: (
         <>
           <h2 className="sheet-heading">{t('settings.privacy_heading')}</h2>
@@ -165,6 +166,7 @@ export default function A11yOverlayManager({
       label: t('settings.confirm_reset_all_heading'),
       heading: t('settings.confirm_reset_all_heading'),
       hideCloseBottom: true,
+      initialFocusContainer: true,
       content: (
         <div className="settings-reset-sheet">
           <h2 className="sheet-heading">{t('settings.confirm_reset_all_heading')}</h2>

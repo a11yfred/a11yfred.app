@@ -1,4 +1,4 @@
-import { FadeTransition, FormControlCheckbox } from '@ulam/ube'
+import { FadeTransition, FormControlCheckbox, Screen } from '@ulam/ube'
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
@@ -440,13 +440,14 @@ function AppContent() {
         />
       )}
       {dataError
-        ? <DataError
-            onRetry={retryData}
+        ? <Screen
+            variant="error"
             ariaLabel={t('error.announce')}
             heading={t('error.heading')}
             body={t('error.body')}
-            retryLabel={t('error.retry')}
-            retryIcon={() => <RotateCcw size={12} strokeWidth={2} aria-hidden="true" />}
+            actionLabel={t('error.retry')}
+            actionIcon={() => <RotateCcw size={12} strokeWidth={2} aria-hidden="true" />}
+            action={retryData}
             onMount={() => announce(t('error.announce'), { priority: 'assertive' })}
           />
         : dataLoading || viewAllLoading
