@@ -72,10 +72,10 @@ The canonical package names (`@ulam/ube` etc.) are always the stable reference. 
 ## Quick start
 
 ```jsx
-import { Button, Toggle, SearchInput, Modal } from '@ulam/ube'
-import { Announcer, announce } from '@ulam/ube/announce'
-import { Router, useRouter } from '@ulam/ube/router'
-import '@ulam/ube/tokens.css'
+import { ButtonText, FormControlToggle, FormInputSearch, Screen } from '@ulam/ube'
+import { Dialog } from '@ulam/sili/react'
+import { Announcer, announce } from '@ulam/taho/react'
+import { Router, useRouter } from '@ulam/sili/react'
 import '@ulam/ube/ui.css'
 
 export default function App() {
@@ -451,30 +451,6 @@ import { ButtonBack } from '@ulam/ube'
 
 ---
 
-### NoResults
-
-Empty state with illustration and message.
-
-```jsx
-import { NoResults } from '@ulam/ube'
-
-<NoResults message="No results for this query." />
-```
-
----
-
-### DataError
-
-Error state with retry action.
-
-```jsx
-import { DataError } from '@ulam/ube'
-
-<DataError message="Failed to load data." onRetry={retryData} />
-```
-
----
-
 ### ResultListSkeleton
 
 Animated skeleton loading state for result lists.
@@ -552,12 +528,13 @@ announce('Copy: Copied to clipboard')
 Hash-based routing with built-in focus management, RTL support, Escape handling, and page title updates. Zero dependencies.
 
 ```jsx
-import { Router, useRouter, Drawer, BottomSheet, Modal } from '@ulam/ube/router'
+import { Router, useRouter } from '@ulam/sili/react'
+import { Drawer, Sheet, Dialog } from '@ulam/sili/react'
 import {
   useFocusOnMount, useReturnFocus, useFocusTrap,
   usePaginationFocus, useAriaHide, useDir,
   useMediaQuery, usePageTitle, useEscapeKey,
-} from '@ulam/ube/router'
+} from '@ulam/sili/react'
 
 // Wrap app
 <Router>
@@ -574,11 +551,11 @@ usePageTitle('Page Name')      // sets document.title = "AppName | Page Name"
 **Components:**
 
 - **`Router`**: context provider, wraps the app
-- **`Modal`**: centered dialog, focus trap, Escape-to-dismiss, stacks at z-index 301
+- **`Dialog`** (`@ulam/sili/react`): centered dialog, focus trap, Escape-to-dismiss, stacks at z-index 301
 - **`Drawer`**: slide-in panel from left, focus management built in
-- **`BottomSheet`**: slide-up sheet from bottom, focus management, desktop collapse
+- **`Sheet`** (`@ulam/sili/react`): slide-up sheet from bottom, focus management, desktop collapse
 
-**Focus management hooks:**
+**Focus management hooks** (`@ulam/sili/react`):
 
 | Hook | Description |
 | ---- | ----------- |
@@ -600,8 +577,8 @@ usePageTitle('Page Name')      // sets document.title = "AppName | Page Name"
 **Focus rules (WCAG 2.4.3):**
 
 1. New page: focus the main heading (`tabIndex={-1}`)
-2. Modal open: focus first focusable element (usually close button)
-3. Modal close: restore focus to trigger (`useReturnFocus`)
+2. Dialog/Sheet/Drawer open: focus first focusable element or heading (usually close button or title)
+3. Overlay close: restore focus to trigger (`useReturnFocus`)
 4. Overlay open: set background inert (`useAriaHide`, overlays do this automatically)
 5. Escape: each overlay layer handles its own
 6. Paginated content: use `usePaginationFocus` on page change
@@ -653,7 +630,7 @@ Import order:
 | `--accent-text` | Text on accent background |
 | `--focus` | Focus outline color |
 | `--success` | Success state |
-| `--overlay-bg` | Modal/overlay backdrop |
+| `--overlay-bg` | Dialog/Sheet/Drawer backdrop |
 
 **Sizing tokens:**
 

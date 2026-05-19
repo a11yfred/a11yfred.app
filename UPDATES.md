@@ -4,6 +4,40 @@
 
 Recent updates align a11yfred with the latest @ulam/sili and @ulam/ube changes. Focus is on leveraging new framework improvements for better focus management and cleaner component usage.
 
+## May 18, 2026 -- Breaking Change Audit and README Updates
+
+### ulam 0.3.0 Breaking Change Compliance
+
+**Completed audit** of a11yfred against ulam 0.3.0 breaking changes:
+
+**Component Migration:**
+
+- All `FormControlInputSearch` → `FormInputSearch` (3 files)
+- All `FormControlInputWithClear` → `FormInputWithClear` (4 files)
+- All `Modal` → `Dialog` from @ulam/sili/react (already done)
+- All `DataError`, `NoResults` → `Screen` with variants (already done)
+
+**CSS Import Updates:**
+
+- All form-control-input* imports → form-input* in component files
+
+**ESLint Compliance:**
+
+- Fixed missing `lazy` import in App.jsx
+- Fixed Button → ButtonText in A11yDrawerPanelHelp.jsx
+- Fixed Toggle → FormControlToggle in UlamMenu.jsx
+- Removed unused FormControlCheckbox imports
+- Prefixed unused parameters with underscore
+- All 10 ESLint errors resolved, 1 warning remains (non-blocking)
+
+**Documentation Updates:**
+
+- Updated `src/components/ui/README.md` to reflect new component names and imports
+- Updated component reference section: Modal → Dialog, BottomSheet → Sheet
+- Added @ulam/sili/react package references in focus management hooks section
+- Removed outdated DataError and NoResults documentation sections
+- Updated Quick start imports to use current component names
+
 ## Major Changes
 
 ### Modal → Dialog Migration
