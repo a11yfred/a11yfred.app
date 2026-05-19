@@ -87,11 +87,13 @@ export default function AppDrawerPanelAbout({ onClose, allEntries = [] }) {
 
       <section className="panel-section">
         <h3 className="panel-section-heading">{t('settings.privacy_heading')}</h3>
-        <h4 className="panel-subheading">{t('settings.privacy_subhead_storage')}</h4>
-        <p className="panel-body">{t('settings.privacy_body_1')}</p>
-        <p className="panel-body">{t('settings.privacy_body_2')}</p>
+        <p className="panel-body">A11yFred is <strong>privacy-first</strong>: no accounts, no tracking, no profiling. All your data stays in your browser.</p>
         <h4 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h4>
         <p className="panel-body">{t('settings.privacy_body_translations')}</p>
+        <p className="panel-body" style={{ marginTop: 'var(--space-2)', fontSize: 'var(--fs-small)', opacity: '0.8' }}>
+          For complete details on data storage, AI Assist, analytics, and your rights, see the{' '}
+          <ExtLink href="https://github.com/a11yfred/a11yfred/blob/main/docs/PRIVACY.md">full Privacy Policy</ExtLink>.
+        </p>
       </section>
 
       <section className="panel-section">

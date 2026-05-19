@@ -200,6 +200,34 @@
   font-size: var(--fs-body);
   line-height: 2em;
   margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: var(--space-3);
+}
+
+@media (width >= 768px) {
+  .footer-credit {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.footer-credit-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+@media (width >= 768px) {
+  .footer-credit-left {
+    flex: 1;
+  }
+}
+
+.footer-privacy-link {
+  white-space: nowrap;
 }
 
 .footer-credit__name {

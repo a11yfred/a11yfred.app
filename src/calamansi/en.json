@@ -478,6 +478,7 @@
   "footer.sponsor": "Sponsor",
   "footer.sponsor_title": "Support on GitHub Sponsors",
   "footer.linkedin": "LinkedIn",
+  "footer.privacy": "Privacy",
 
   "error.announce": "Something went wrong. The finding library could not be loaded. Check your connection and try again.",
   "error.heading": "Something Went Wrong",
