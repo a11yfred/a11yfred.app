@@ -4,21 +4,19 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## 2026-05-18 -- @ulam/ube Component Updates & Overlay Refactoring
+## 2026-05-18 -- @ulam/ube 0.3.0 Component Naming & Overlay Refactoring
 
-### @ulam/ube Component Naming Updates (v0.2.2)
+### @ulam/ube v0.3.0 Component Migrations
 
-Updated all a11yfred component imports to match @ulam/ube's new naming conventions:
+Updated all a11yfred component imports to match @ulam/ube v0.3.0 naming refinements:
 
-- `ControlCheckbox` → `FormControlCheckbox`
-- `InputWithClear` → `FormControlInputWithClear`
-- `Button` → `ButtonText` (consolidated button variants)
-- `RadioChip` → `FormControlRadioChip`
-- `Toggle` → `FormControlToggle`
-- `Select` → `FormControlSelect`
-- `InputSearch` → `FormControlInputSearch`
+- `FormControlInputSearch` → `FormInputSearch` (more semantic: styles text inputs, not all form controls)
+- `FormControlInputWithClear` → `FormInputWithClear`
+- `Modal` → `Dialog` (from @ulam/sili; aligns with HTML `<dialog>` semantics)
+- `DataError`, `NoResults` → `Screen` component with variants
+- Form input CSS: `form-control-input*` → `form-input*`
 
-CSS bundling change: removed separate `@ulam/ube/tokens.css` and `@ulam/ube/user-preferences.css` imports (now included in `@ulam/ube/ui.css`). Replaced deprecated `PanelRowControl` component with semantic HTML structure. All 18 component files updated; build passing with zero errors.
+CSS organization: Components now import their own CSS. Foundational styles (`base-tokens.css`, `base-reset.css`, etc.) live in @ulam/ube with `ui.css` as the main import. All 13 component files updated; ESLint passing with zero breaking change errors.
 
 ### Overlay Architecture Refactoring (Completed)
 

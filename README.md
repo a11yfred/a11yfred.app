@@ -3,7 +3,7 @@
 > Audit entry descriptions, fast.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
 
 Fast, consistent defect descriptions for accessibility findings, the kind that hold up in a ticket, a report, or a handoff. Search a library built on real audits, fact-checked against WCAG and accessibility practitioners, copy the text, paste it in. Built for auditors, testers, specialists and anyone doing manual accessibility testing and reviews.
@@ -22,7 +22,7 @@ npm run build      # production build
 
 ## Status
 
-**Launched.** Live at [a11yfred.app](https://a11yfred.app). Version [v0.1.0](https://github.com/a11yfred/a11yfred/releases/tag/v0.1.0).
+**Launched.** Live at [a11yfred.app](https://a11yfred.app). Version [v0.2.0](https://github.com/a11yfred/a11yfred/releases/tag/v0.2.0).
 
 **Phase 1 (Feature Complete):** Complete (May 13). 106-entry public corpus (ACC prefix), all linters passing, @ulam framework published as npm packages, full component consolidation, CSS tokens, zero dead code. AI Assist (single-shot) and Match Existing Style (agentic) functional. Search, filter, sort, narrow mode, PWA/offline, and 65+ languages live.
 
@@ -48,12 +48,12 @@ src/
 
 **npm packages** (in package.json):
 
-- `@ulam/ube` — UI components, buttons, panels, inputs (20 reusable primitives)
-- `@ulam/taho` — ARIA live region announcer
-- `@ulam/sili` — focus management, modal/drawer handling, escape key
-- `@ulam/calamansi` — i18n, locale management, search relevance
+- `@ulam/ube` (v0.3.0) — UI components: FormInputSearch, FormInputWithClear, ButtonText, ButtonIcon, FormControlToggle, FormControlRadio(Chip/Group), FormControlSelect, FormControlCheckbox, Screen, Panel, Badge, FadeTransition, etc.
+- `@ulam/taho` — ARIA live region announcer and Announcer React component
+- `@ulam/sili` (v0.3.0) — Dialog, Sheet, Drawer with focus management, OverlayManager, escape key handling
+- `@ulam/calamansi` — i18n, locale management, search relevance scoring
 - `@ulam/halohalo` — AI provider abstraction (Anthropic, OpenAI, Google, Azure)
-- `@ulam/sawsawan` — integration bridge wiring packages together
+- `@ulam/sawsawan` — storage adapters (localStorage, sessionStorage, memory) with platform detection
 - `@a11yfred/neighbor` — ESLint and Stylelint a11y plugins
 - `@a11yfred/rogers` — accessibility debug tools
 
@@ -69,9 +69,9 @@ Only one overlay (dialog/sheet/drawer) can be active at a time (by design per @u
 
 Uses @ulam/sili hash router. No native search param support (workaround: use state management or localStorage). Migrate to Remix router if moving to Remix, or React Router for more features.
 
-### UI Components (@ulam/ube)
+### UI Components (@ulam/ube v0.3.0)
 
-@ulam/ube v0.2.2+ exports include FormControlCheckbox, FormControlInputWithClear, ButtonText, ButtonIcon, FormControlRadioChip, FormControlToggle, FormControlSelect, FormControlInputSearch, and Screen components. CSS is bundled in ui.css; separate tokens.css and user-preferences.css imports are not available as standalone files.
+@ulam/ube v0.3.0 renamed form input components for semantic accuracy: `FormInputSearch` and `FormInputWithClear` (replacing FormControlInputSearch/FormControlInputWithClear). All components import their own CSS; `ui.css` is the foundational stylesheet containing tokens, reset, typography, user preferences, and print styles.
 
 ### Forms (@ulam/ube)
 
