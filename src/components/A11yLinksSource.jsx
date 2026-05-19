@@ -37,7 +37,7 @@ export default function A11yLinksSource({
               <li key={link.url || link.text}>
                 {link.url ? (
                   <a href={link.url} target="_blank" rel="noreferrer" className="source-links__link">
-                    <A11yLinkTitle url={link.url} fallback={link.text} />{isExternalLink(link.url) && <IconExternalLink />}<span className="sr-only"> (opens in new tab)</span>
+                    {link.text}{isExternalLink(link.url) && <IconExternalLink />}<span className="sr-only"> (opens in new tab)</span>
                   </a>
                 ) : (
                   <span className="source-links__text">{link.text}</span>
