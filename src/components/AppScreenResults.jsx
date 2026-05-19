@@ -47,7 +47,7 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
           </ButtonText>
         )}
       </div>
-      <A11yListResults
+      <AppScreenResults
         results={entries}
         onSelect={onSelect}
         selected={null}
@@ -325,7 +325,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
             const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
             return (
               <React.Fragment key={entry.id}>
-                <A11yListResultCard
+                <AppListResultCard
                   key={entry.id}
                   entry={entry}
                   index={index}
