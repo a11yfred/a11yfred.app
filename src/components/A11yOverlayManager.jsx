@@ -1,12 +1,33 @@
-import { ButtonText } from '@ulam/ube'
+import { ButtonText, FormControlCheckbox } from '@ulam/ube'
 import { useMemo } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { OverlayManager } from '@ulam/sili/react'
 
 import { URL_PRIVACY_POLICY } from '../utils/constants.js'
 
+/**
+ * App-level overlay manager for a11yfred.
+ * Orchestrates all overlays: app-level (viewAll, pendingEntry, pendingPrivacy)
+ * and settings panel (privacy, language, unsaved, reset, fiesta).
+ * Delegates rendering to sili's OverlayManager.
+ */
 export default function A11yOverlayManager({
   t,
+  // App-level overlays
+  viewAllConfirmOpen,
+  onViewAllConfirmClose,
+  onViewAllConfirm,
+  viewAllDontAsk,
+  onViewAllDontAskChange,
+  viewAllConfirmContent,
+  viewAllTriggerRef,
+  pendingEntry,
+  onPendingEntryClose,
+  onPendingEntryConfirm,
+  pendingPrivacy,
+  onPendingPrivacyClose,
+  onPendingPrivacyConfirm,
+  // Settings panel overlays
   privacyOpen,
   privacyCollapsed,
   setPrivacyCollapsed,
@@ -31,6 +52,11 @@ export default function A11yOverlayManager({
 }) {
   // Determine which overlay should be open (single active overlay at a time)
   const activeId = useMemo(() => {
+    // App-level overlays have priority
+    if (viewAllConfirmOpen) return 'viewAllConfirm'
+    if (pendingEntry) return 'pendingEntry'
+    if (pendingPrivacy) return 'pendingPrivacy'
+    // Settings panel overlays
     if (privacyOpen) return 'privacy'
     if (rhgPending) return 'rhg'
     if (unsavedOpen) return 'unsaved'
@@ -38,11 +64,14 @@ export default function A11yOverlayManager({
     if (noChangesOpen) return 'noChanges'
     if (fiestaConfirmOpen) return 'fiesta'
     return null
-  }, [privacyOpen, rhgPending, unsavedOpen, resetConfirmOpen, noChangesOpen, fiestaConfirmOpen])
+  }, [viewAllConfirmOpen, pendingEntry, pendingPrivacy, privacyOpen, rhgPending, unsavedOpen, resetConfirmOpen, noChangesOpen, fiestaConfirmOpen])
 
   // Generic close handler that routes to specific handlers
   const handleClose = () => {
     const closeHandlers = {
+      viewAllConfirm: onViewAllConfirmClose,
+      pendingEntry: onPendingEntryClose,
+      pendingPrivacy: onPendingPrivacyClose,
       privacy: onPrivacyClose,
       rhg: onRhgClose,
       unsaved: onUnsavedClose,
@@ -55,6 +84,55 @@ export default function A11yOverlayManager({
 
   // Build overlay config array for OverlayManager
   const overlays = useMemo(() => [
+    // App-level overlays
+    {
+      id: 'viewAllConfirm',
+      type: 'dialog',
+      heading: t('search.view_all_confirm_heading'),
+      returnFocusRef: viewAllTriggerRef,
+      actions: [
+        { label: t('search.view_all_confirm_yes'), onClick: onViewAllConfirm, className: 'btn--primary' },
+        { label: t('search.view_all_confirm_no'), onClick: handleClose, className: 'btn--secondary' },
+      ],
+      content: viewAllConfirmContent,
+    },
+    {
+      id: 'pendingEntry',
+      type: 'dialog',
+      heading: t('detail.discard_confirm_heading'),
+      actions: [
+        {
+          label: t('detail.discard_confirm_yes'),
+          onClick: onPendingEntryConfirm,
+          className: 'btn--warning',
+        },
+        {
+          label: t('detail.discard_confirm_no'),
+          onClick: handleClose,
+          className: 'btn--tertiary',
+        },
+      ],
+      content: <p>{t('detail.discard_confirm_body')}</p>,
+    },
+    {
+      id: 'pendingPrivacy',
+      type: 'dialog',
+      heading: t('detail.discard_confirm_heading'),
+      actions: [
+        {
+          label: t('detail.discard_nav_yes'),
+          onClick: onPendingPrivacyConfirm,
+          className: 'btn--warning',
+        },
+        {
+          label: t('detail.discard_nav_no'),
+          onClick: handleClose,
+          className: 'btn--tertiary',
+        },
+      ],
+      content: <p>{t('detail.discard_nav_body')}</p>,
+    },
+    // Settings panel overlays
     {
       id: 'privacy',
       type: 'sheet',
@@ -217,7 +295,7 @@ export default function A11yOverlayManager({
         },
       ],
     },
-  ], [t, privacyCollapsed, setPrivacyCollapsed, onRhgUseAnyway, handleClose, onUnsavedSaveAndClose, onUnsavedDiscard, onFiestaConfirm, saveButtonRef, privacyButtonRef, onResetConfirm])
+  ], [t, viewAllConfirmContent, viewAllTriggerRef, onViewAllConfirm, onPendingEntryConfirm, onPendingPrivacyConfirm, privacyCollapsed, setPrivacyCollapsed, onRhgUseAnyway, handleClose, onUnsavedSaveAndClose, onUnsavedDiscard, onFiestaConfirm, saveButtonRef, privacyButtonRef, onResetConfirm])
 
   return <OverlayManager overlays={overlays} activeId={activeId} onClose={handleClose} />
 }
