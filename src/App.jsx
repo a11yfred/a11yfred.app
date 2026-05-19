@@ -4,17 +4,17 @@ import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-reac
 import AppInputSearchHero from './components/AppInputSearchHero.jsx'
 import AppScreenHeader from './components/AppScreenHeader.jsx'
 import A11yScreenFooter from './components/A11yScreenFooter.jsx'
-import A11yFiestaBanner from './components/A11yFiestaBanner.jsx'
 import A11yScreenNotFound from './components/A11yScreenNotFound.jsx'
 import AppScreenResults, { A11yResultSkeleton, PinnedSection } from './components/AppScreenResults.jsx'
 import AppSheetDetail from './components/AppSheetDetail.jsx'
-import AppDrawerPanelAbout from './components/AppDrawerPanelAbout.jsx'
-import AppDrawerPanelHelp from './components/AppDrawerPanelHelp.jsx'
-import AppCarouselOnboarding from './components/AppCarouselOnboarding.jsx'
 
-import A11yThemeEffectConfetti from './components/A11yThemeEffectConfetti.jsx'
-import A11yThemeEffectFiestaSparkles from './components/A11yThemeEffectFiestaSparkles.jsx'
-import A11yThemeWidgetFiestaMusicPlayer from './components/A11yThemeWidgetFiestaMusicPlayer.jsx'
+const A11yFiestaBanner = lazy(() => import('./components/A11yFiestaBanner.jsx'))
+const AppDrawerPanelAbout = lazy(() => import('./components/AppDrawerPanelAbout.jsx'))
+const AppDrawerPanelHelp = lazy(() => import('./components/AppDrawerPanelHelp.jsx'))
+const AppCarouselOnboarding = lazy(() => import('./components/AppCarouselOnboarding.jsx'))
+const A11yThemeEffectConfetti = lazy(() => import('./components/A11yThemeEffectConfetti.jsx'))
+const A11yThemeEffectFiestaSparkles = lazy(() => import('./components/A11yThemeEffectFiestaSparkles.jsx'))
+const A11yThemeWidgetFiestaMusicPlayer = lazy(() => import('./components/A11yThemeWidgetFiestaMusicPlayer.jsx'))
 import useAppSettings from './hooks/useAppSettings.js'
 import useAppSearch from './hooks/useAppSearch.js'
 import useAppRatings from './hooks/useAppRatings.js'
@@ -668,10 +668,12 @@ function AppContent() {
           ]}
         />
       </>}
-      <A11yThemeEffectConfetti active={theme === 'fiesta'} />
-      <A11yThemeEffectFiestaSparkles active={theme === 'fiesta'} />
-      <A11yThemeWidgetFiestaMusicPlayer active={theme === 'fiesta'} />
-      {theme === 'fiesta' && <A11yFiestaBanner />}
+      <Suspense fallback={null}>
+        <A11yThemeEffectConfetti active={theme === 'fiesta'} />
+        <A11yThemeEffectFiestaSparkles active={theme === 'fiesta'} />
+        <A11yThemeWidgetFiestaMusicPlayer active={theme === 'fiesta'} />
+        {theme === 'fiesta' && <A11yFiestaBanner />}
+      </Suspense>
 
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
         <AppScreenHeader
@@ -726,19 +728,25 @@ function AppContent() {
 
       {!isDesktop && (
         <Drawer open={aboutOpen} onClose={handleCloseOverlay} label={t('about.sheet_label')} focusOnClose={aboutTriggerRef}>
-          <AppDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+          <Suspense fallback={null}>
+            <AppDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+          </Suspense>
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={helpOpen} onClose={handleCloseOverlay} label={t('help.sheet_label')} focusOnClose={helpTriggerRef}>
-          <AppDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+          <Suspense fallback={null}>
+            <AppDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+          </Suspense>
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={onboardingOpen} onClose={handleCloseOnboarding} label={t('onboarding.heading')} focusOnClose={onboardingTriggerRef}>
-          <AppCarouselOnboarding onClose={handleCloseOnboarding} />
+          <Suspense fallback={null}>
+            <AppCarouselOnboarding onClose={handleCloseOnboarding} />
+          </Suspense>
         </Drawer>
       )}
 
