@@ -16,8 +16,8 @@ import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES, LS_WCAG_F
 import { setStorage, removeStorage, getStorageJson } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
-import { useSettings } from '../context/ContextSettings.js'
-import { useRatings } from '../context/ContextRatings.js'
+import { useSettings } from '../context/contextSettings.js'
+import { useRatings } from '../context/contextRatings.js'
 import { version } from '../../package.json'
 import './app-drawer-panel-settings.css'
 

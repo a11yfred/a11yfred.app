@@ -14,8 +14,8 @@ import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 import { getStorage, setStorage, getEntryNoteKey } from '../utils/storage.js'
 import useSheetDetailClipboard from '../hooks/useSheetDetailClipboard.js'
 import useSheetDetailRefine from '../hooks/useSheetDetailRefine.js'
-import { useSettings } from '../context/ContextSettings.js'
-import { useRatings } from '../context/ContextRatings.js'
+import { useSettings } from '../context/contextSettings.js'
+import { useRatings } from '../context/contextRatings.js'
 import './app-sheet-detail.css'
 
 const createBadgeStyle = (bgVar, textVar) => ({ '--badge-bg': `var(${bgVar})`, '--badge-text': `var(${textVar})` })

@@ -13,9 +13,9 @@ import { DEFAULT_RATING, pluralResult, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_
 import { useKeydown } from '../hooks/useKeydown.js'
 import useSwipeReveal from '../hooks/useSwipeReveal.js'
 import { useFlipList } from '../hooks/useFlipList.js'
-import { useSettings } from '../context/ContextSettings.js'
-import { useSearch } from '../context/ContextSearch.js'
-import { useRatings } from '../context/ContextRatings.js'
+import { useSettings } from '../context/contextSettings.js'
+import { useSearch } from '../context/contextSearch.js'
+import { useRatings } from '../context/contextRatings.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import './app-screen-results.css'
 
