@@ -2,6 +2,61 @@
 
 All notable changes to A11yFred are documented here.
 
+## May 19, 2026 -- Component Naming & File Reorganization (Session 7)
+
+### Component Naming Convention Established
+
+**Purpose**: Distinguish framework-wrapping components (App*) from custom a11yfred components (A11y*), making codebase intent immediately clear.
+
+**Naming rules:**
+
+- **App* prefix** (15 components) — wrap or compose @ulam framework components (ButtonIcon, LinkSkipTo, Panel, Dialog, Sheet, etc.)
+- **A11y* prefix** (18 components) — custom to a11yfred, not simple framework wrappers (ResultAd, FiestaSparkles, SettingsSectionAi, etc.)
+
+**Component renames for consistency:**
+
+- AppPanelDetail → AppSheetDetail (uses Sheet, clarifies interface type)
+- AppPanelAdmin → AppDrawerPanelAdmin (consistent with AppDrawerPanel* naming)
+- A11yTileAd → A11yResultAd (semantic context: ad in results)
+- ResultsActiveFilterBar → A11yResultsActiveFilterBar (custom a11yfred component)
+- A11yAppTitle → A11yTitle (cleaner naming)
+
+**CSS file renames:**
+
+- user-preferences.css → a11y-user-prefs.css (custom user preference overrides)
+- app-panel-detail.css → app-sheet-detail.css
+- app-panel-admin.css → app-drawer-panel-admin.css
+
+**Config and utility file renames:**
+
+- ai-config.js → config-ai.js
+- i18n-locales.js → locales-i18n.js
+- rtl-locales.js → locales-rtl.js
+- theme.js → theming.js
+
+**Documentation:**
+
+- Added "Component naming convention" section to README.md with examples and rationale
+- All 33 components now follow strict two-tier naming (App\* vs A11y\*)
+
+### Linting & Quality Checks
+
+**Fixed issues:**
+
+- AppScreenResults: A11yListResults → AppScreenResults (self-reference in PinnedSection)
+- AppScreenResults: A11yListResultCard → AppListResultCard (corrected component reference)
+
+**Verification:**
+
+- All imports and references updated across codebase
+- ESLint: 0 errors, 0 warnings
+- Stylelint: 0 errors
+- Markdownlint: 0 errors
+- Build: successful
+- All 33 components follow naming convention
+
+---
+
 ## May 18, 2026
 
 ### Breaking change compliance: ulam 0.3.0

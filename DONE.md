@@ -139,6 +139,19 @@ Persistent record of completed features, fixes, and improvements. This is comple
 - [x] CHANGELOG.md expanded — detailed hook integration, optimization notes
 - [x] Keyboard shortcuts documentation — documented in Help panel (j/k/s/e/u/Shift+↑/Shift+↓)
 
+### Component Naming Convention & File Organization (May 19)
+
+- [x] Component naming system established — 33 components follow two-tier convention (App\* vs A11y\*)
+- [x] Framework-wrapping components (App\*) — 15 components wrapping @ulam packages
+- [x] Custom components (A11y\*) — 18 components custom to a11yfred
+- [x] Component renames — AppPanelDetail → AppSheetDetail, AppPanelAdmin → AppDrawerPanelAdmin, A11yTileAd → A11yResultAd, and 2 others
+- [x] CSS file renames — user-preferences.css → a11y-user-prefs.css, app-panel-* → app-drawer-panel-admin/app-sheet-detail
+- [x] Config file renames — ai-config.js → config-ai.js, i18n-locales.js → locales-i18n.js, rtl-locales.js → locales-rtl.js, theme.js → theming.js
+- [x] Reference updates — all imports and component usages updated across codebase
+- [x] Bug fixes — corrected AppScreenResults self-reference and child component reference
+- [x] Documentation — added "Component naming convention" section to README.md with examples
+- [x] Quality assurance — all linting passes (ESLint, Stylelint, Markdownlint), build succeeds
+
 ---
 
 ## Styling & Theming
