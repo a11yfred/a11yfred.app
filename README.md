@@ -24,11 +24,11 @@ npm run build      # production build
 
 **Launched.** Live at [a11yfred.app](https://a11yfred.app). Version [v0.2.0](https://github.com/a11yfred/a11yfred/releases/tag/v0.2.0).
 
-**Phase 1 (Feature Complete):** Complete (May 13). 106-entry public corpus (ACC prefix), all linters passing, @ulam framework published as npm packages, full component consolidation, CSS tokens, zero dead code. AI Assist (single-shot) and Match Existing Style (agentic) functional. Search, filter, sort, narrow mode, PWA/offline, and 65+ languages live.
+**Phase 1 (Feature Complete):** Done (May 13).
+**Phase 2A (Code Quality):** Done (May 17).
+**Phase 3 (Theme + Extensions):** In progress.
 
-**Phase 2A (Code Quality):** Complete (May 17). `useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Component refactors: AppScreenResults (renamed from A11yListResults), AppDrawerPanelSettings (renamed from A11yPanelSettings). Form controls accessibility refactored: aria-disabled pattern with keyboard prevention (new useAriaDisabledKeydown hook). Five DRY optimization passes in App.jsx: command map consolidation (18 if-statements), rating handlers factory, template formatting helpers, URL param parsing utility, platform announcements.
-
-**Phase 3 (Theme + Extensions):** In progress. Neighborly color theme on feature branch (WCAG AA compliance verified). Chrome and Firefox extension scaffolds ready. Electron scaffold empty. No timeline set.
+See [DONE.md](DONE.md) for detailed phase summaries and [TODO.md](TODO.md) for remaining work.
 
 ---
 
