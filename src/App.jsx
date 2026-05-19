@@ -57,7 +57,7 @@ import { useSawsawan } from './sawsawan/react.js'
 import useUserEntries from './hooks/useUserEntries.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import entrySlug from './utils/entrySlug.js'
-import './components/theme-fiesta-mode.css'
+import './components/a11y-theme-fiesta-mode.css'
 
 const AppDrawerPanelSettings = lazy(() => import('./components/AppDrawerPanelSettings.jsx'))
 const AppDrawerPanelAdmin = import.meta.env.DEV
