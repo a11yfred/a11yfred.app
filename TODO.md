@@ -22,12 +22,8 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ### UX / Interaction
 
-- [ ] **Settings for search debounce/live search toggle** `[ux]` — move debounce timing to Settings; allow users to switch between live (instant) and on-demand (Enter key) search
 - [ ] **Keyboard shortcut help dialog** `[ux]` `[a11y]` — trigger with `?` or `Ctrl+/`; display current keyboard shortcuts (j/k for nav, etc); non-modal overlay
 - [ ] **Search history** `[ux]` — show last 10 searches in `localStorage` below search field when empty; include recent defects list
-- [ ] **Bookmarks/favorites system** `[ux]` — star icon on result cards; persist to `localStorage`; show starred section above results
-- [ ] **How to use onboarding** `[ux]` — brief modal or help page on first visit explaining: search → select → add location → refine → copy; trigger on `localStorage` flag
-- [ ] **Shareable defect URLs** `[ux]` `[infra]` — encode selected defect ID into hash (e.g., `#defect/ACC-023`); parse on load and auto-select matching defect
 - [ ] **Export to formats** `[ux]` — CSV, Markdown, or plain text export (single defect or multi-select batch); implement as Blob download
 - [ ] **Audit report builder** `[ux]` — multi-select defects, add occurrence counts/severity overrides, export formatted report in Markdown/plain text
 - [ ] **Component-level filtering** `[ux]` `[corpus]` — secondary filter (modal, form, button, heading, image, etc); add `component` field to schema; update `useDefectSearch`
@@ -39,30 +35,19 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 - [ ] **Expand public corpus** `[corpus]` — target 150+ entries beyond ACC prefix; source from WAI Understanding docs, axe-core, Deque University
 - [ ] **Batch import tooling** `[corpus]` `[code]` — Node.js script to convert CSV/Excel audit exports to schema; run once, review, delete
-- [ ] **Keyword audit** `[corpus]` — review `keywords` array on every imported entry; add synonyms and component names for search coverage
 - [ ] **Platform coverage audit** `[corpus]` — verify native-only defects flagged correctly; balance native vs web entries
 - [ ] **Related SC links** `[corpus]` — spot-check `related` arrays for accuracy; add missing secondary SCs
 - [ ] **Corpus provenance field** `[corpus]` — add `source` field (personal, WAI, axe, Deque) to each entry; helps contributors follow the right style
 - [ ] **Custom data source support** `[corpus]` `[ux]` — allow Settings to accept URL or file path to user-supplied JSON corpus; validate schema on load; fall back to built-in if unreachable
 - [ ] **i18n expansion** `[i18n]` — add more languages via @ulam/calamansi beyond current 65+
-- [ ] **WCAG version tagging** `[corpus]` — add `wcagVersion` field (`"2.1"` or `"2.2"`); display on result card and in DetailPanel
 - [ ] **Machine translation pass** `[i18n]` `[corpus]` — translate corpus to all supported languages; flag WCAG terminology for human review
 
 ### Accessibility & Design
 
-- [ ] **Verify overlay transitions in screen readers** `[a11y]` — test with NVDA + Firefox and VoiceOver + Safari; confirm DetailPanel announcements, Settings focus, focus trap
-- [ ] **Check Sheet collapse on mobile** `[a11y]` `[ux]` — verify animation timing and behavior on small screens
-- [ ] **Keyboard trap implementation audit** `[a11y]` — review focus trap in all overlays; ensure Escape key works correctly everywhere
-- [ ] **Visible selection indicator** `[design]` `[a11y]` — add secondary cue (left-edge bar or checkmark) to selected result card; improves CVD accessibility
-- [ ] **Empty state before search** `[design]` — add prompt, illustration, or sample query to pre-search state; make tool feel more inviting
 - [ ] **Responsive design for tablets** `[design]` `[ux]` — improve tablet UX; adjust layout for 768–1024px breakpoint
 - [ ] **Dark mode theming** `[design]` — Neighborly theme on feature/neighborly-theme branch (WCAG AA verified); ready to merge
 - [ ] **Reflow at 400% zoom test** `[a11y]` — verify no horizontal scrolling required (WCAG 1.4.10)
 - [ ] **prefers-contrast: more test** `[a11y]` — enable high contrast mode; verify token overrides improve legibility
-- [ ] **Skip links** `[a11y]` — add "Skip to Main Content" and navigation landmarks
-- [ ] **Keyboard navigation tests** `[a11y]` — full keyboard-only pass; no mouse required
-- [ ] **Contrast ratio audit** `[a11y]` `[design]` — run axe DevTools; fix any WCAG 1.4.3 violations (≥ 4.5:1)
-- [ ] **User accessibility testing** `[a11y]` — test with actual disabled users (external validation)
 
 ### Performance & Optimization
 
@@ -71,44 +56,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 - [ ] **Virtual scrolling for large lists** `[perf]` — implement windowing for result lists with 1000+ entries
 - [ ] **Debounce tuning** `[perf]` — adjust Fuse.js `threshold`, `minMatchCharLength`, or `keys` weights
 - [ ] **Memoize expensive computations** `[perf]` `[code]` — optimize sorting, filtering, and rating aggregations
-- [ ] **CSS optimization** `[perf]` `[code]` — remove unused classes, consolidate media queries, migrate remaining inline values to tokens
 - [ ] **Bundle size baseline** `[perf]` — record chunk sizes; target < 200 kB gzipped (with vendor splitting already in place)
-- [ ] **Cold load time** `[perf]` — test on throttled connection (Slow 3G); target first usable search within 3 seconds
-- [ ] **Font self-hosting** `[perf]` `[privacy]` — replace Google Fonts CDN with @fontsource/inter npm package; add subsetting to Latin range
-
-### Testing Gaps
-
-#### Unit Tests
-
-- [ ] A11yOverlayManager focus management `[code]` `[a11y]`
-- [ ] A11yListResults filtering logic `[code]` `[ux]`
-- [ ] A11yInputSearchHero debouncing `[code]` `[perf]`
-- [ ] Focus restoration across overlay types `[code]` `[a11y]`
-
-#### Integration Tests
-
-- [ ] Complete workflow: search → select → details → close `[code]` `[ux]`
-- [ ] Overlay transitions: dialog → sheet → drawer → close `[code]` `[a11y]`
-- [ ] Keyboard-only navigation of entire app `[code]` `[a11y]`
-- [ ] Screen reader navigation of all major sections `[code]` `[a11y]`
-
-#### Accessibility Tests
-
-- [ ] axe-core automated checks `[a11y]`
-- [ ] Keyboard navigation (no mouse) `[a11y]`
-- [ ] VoiceOver (macOS) `[a11y]`
-- [ ] NVDA (Windows) `[a11y]`
-- [ ] High contrast mode `[a11y]`
-- [ ] Reduced motion mode `[a11y]`
-
-### Documentation
-
-- [ ] **Architecture overview** `[code]` — document how components fit together
-- [ ] **Focus flow diagram** `[code]` `[a11y]` — visual representation of focus movement through app
-- [ ] **Keyboard shortcuts documentation** `[ux]` `[a11y]` — document all j/k/?, etc shortcuts
-- [ ] **Contributing guide** `[code]` — guidelines for external contributors
-- [ ] **Development setup instructions** `[infra]` — how to clone, install, and run locally
-- [ ] **Component API docs** `[code]` — reusable component prop documentation
 
 ---
 
@@ -117,17 +65,11 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 ### AI & Agentic Features
 
 - [ ] **Evaluate tool use approach** `[agent]` `[ai]` — prototype agentic refinement with `search_corpus` tool; compare quality vs. single-prompt
-- [ ] **`search_corpus` tool** `[agent]` `[ai]` — define JSON schema for corpus search; return top 3 matches
 - [ ] **Multi-turn refinement** `[agent]` `[ux]` — extend Refine section to support back-and-forth conversation; store turn history in state
 - [ ] **Agentic error handling** `[agent]` `[ai]` — add turn limit (5 max); surface clear error if limit reached
 - [ ] **System prompt for agents** `[agent]` `[ai]` — separate prompt for agentic mode; instruct model to search corpus before rewriting
-- [ ] **Model selection for agent mode** `[agent]` `[ai]` — default to `claude-opus-4-7`; make configurable in Settings
-- [ ] **Wire OpenAI provider** `[ai]` — implement GPT-4o via `/v1/chat/completions`; test with real API key
-- [ ] **Wire Google Gemini** `[ai]` — implement Gemini API; include model selection
-- [ ] **Wire Microsoft Copilot** `[ai]` — implement Azure OpenAI endpoint
 - [ ] **AI error surface** `[ai]` `[ux]` — inline error messages in DetailPanel instead of console.error only
 - [ ] **System prompt tuning** `[ai]` — test across 20+ defect types; adjust tone/length/format
-- [ ] **AI loading state** `[ai]` `[ux]` `[a11y]` — animated spinner with aria-busy; respect prefers-reduced-motion
 
 ### Authentication & User Data
 
@@ -139,16 +81,12 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ### Infrastructure & Distribution
 
-- [ ] **Offline-first PWA** `[infra]` — Service Worker caching app shell and corpus JSON; fully functional without internet
 - [ ] **Bug tracker integration** `[ux]` `[infra]` — Jira and Linear deep links with pre-filled defect data
-- [ ] **Browser extensions** `[infra]` — Chrome and Firefox extensions (scaffolds ready on feature branches)
+- [ ] **Browser extensions** `[infra]` — Chrome and Firefox extensions (in progress on feature branches)
 - [ ] **Electron desktop app** `[infra]` — cross-platform desktop version (scaffold empty, no timeline)
-- [ ] **Umami analytics** `[infra]` `[privacy]` — privacy-first analytics (zero cookies, no personal data)
-- [ ] **Version tagging** `[infra]` — semantic versioning: v0.1.0 (Phase 1), v0.2.0 (Phase 2), v1.0.0 (Phase 3)
 - [ ] **Phase 3 public corpus** `[corpus]` `[infra]` — separate repo with 150+ entries; never mixed with personal corpus
-- [ ] **Phase 3 public hosting** `[infra]` — separate Netlify site for public deployment
 - [ ] **GDPR privacy disclosure** `[privacy]` `[infra]` — brief statement for Phase 3 public launch
-- [ ] **Tip jar** `[infra]` — Ko-fi or GitHub Sponsors link (Phase 3 only)
+- [ ] **Tip jar** `[infra]` — GitHub Sponsors link wired; Ko-fi deferred
 
 ### Community & Accessibility
 
@@ -159,9 +97,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ### Code Quality & Maintenance
 
-- [ ] **Migrate to CSS Modules** `[code]` — evaluate migration as component count grows; better tooling without runtime cost
 - [ ] **Performance profiling suite** `[code]` `[perf]` — automated measurements for search latency, bundle size, paint times
-- [ ] **Component story documentation** `[code]` — Storybook or similar for component prop documentation
 
 ---
 
@@ -174,4 +110,49 @@ These are continuous maintenance tasks, not one-off features.
 - [ ] Monitor @ulam packages for updates
 - [ ] Review breaking changes before upgrading
 - [ ] Update CHANGELOG when upgrading dependencies
+
+### Code Quality & Performance
+
+- [ ] CSS optimization — remove unused classes, consolidate media queries, migrate remaining inline values to tokens
+- [ ] Memoize expensive computations — optimize sorting, filtering, and rating aggregations
+- [ ] Cold load time — test on throttled connection (Slow 3G); target first usable search within 3 seconds
+- [ ] Bundle size baseline — record chunk sizes; target < 200 kB gzipped (with vendor splitting already in place)
+
+### Documentation & Community
+
+- [ ] Contributing guide — review CONTRIBUTING.md for accuracy; keep branch types, workflow, and linting guidelines current
+- [ ] Development setup instructions — review README.md quick start and docs/DEPLOYING.md for accuracy; keep npm scripts and local dev workflow current
+- [ ] Version tagging — maintain semantic versioning (v0.1.0 Phase 1, v0.2.0 Phase 2, v1.0.0 Phase 3 per phase completion)
+- [ ] PWA Service Worker validation — regularly test offline functionality; verify app shell and corpus JSON caching still working
+
+### Testing & QA
+
+Manual testing covers the full app lifecycle and runs throughout development, not phase-gated.
+
+**Unit Tests:**
+
+- [ ] A11yOverlayManager focus management — trap, restore, escape key handling
+- [ ] A11yListResults filtering logic — badge filters, narrow mode, clear all
+- [ ] A11yInputSearchHero debouncing — typeahead on/off, live vs. on-demand modes
+- [ ] Focus restoration across overlay types — screen/drawer/sheet/dialog transitions
+
+**Integration Tests:**
+
+- [ ] Complete workflow — search → select → details → copy/edit → close
+- [ ] Overlay transitions — open/close animations, focus movement, backdrop interactions
+- [ ] Keyboard-only navigation — Tab/Shift+Tab, j/k, ?, Enter, Escape (no mouse)
+- [ ] Screen reader navigation — VoiceOver, NVDA, announcements on every state change
+
+**Accessibility Tests:**
+
+- [ ] axe-core automated checks — run before each release
+- [ ] Keyboard navigation tests — full keyboard-only pass; no mouse required
+- [ ] Keyboard trap implementation audit — review focus trap in all overlays; ensure Escape key works correctly everywhere
+- [ ] Contrast ratio audit — run axe DevTools; fix any WCAG 1.4.3 violations (≥ 4.5:1)
+- [ ] VoiceOver (macOS) — overlay transitions, DetailPanel announcements, Settings focus, focus trap
+- [ ] NVDA (Windows) — overlay transitions, DetailPanel announcements, Settings focus, focus trap
+- [ ] High contrast mode — all text ≥ 4.5:1, focus indicators visible
+- [ ] Reduced motion mode — animations respect `prefers-reduced-motion`
+- [ ] Sheet collapse on mobile — verify animation timing and behavior on small screens
+- [ ] User accessibility testing — test with actual disabled users (external validation)
 

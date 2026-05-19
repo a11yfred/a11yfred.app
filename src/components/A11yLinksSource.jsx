@@ -1,7 +1,5 @@
 import { IconExternalLink } from '@ulam/ube'
 
-import A11yLinkTitle from './A11yLinkTitle.jsx'
-
 function isExternalLink(url) {
   try {
     const linkUrl = new URL(url)
@@ -25,7 +23,7 @@ export default function A11yLinksSource({
           <h3 className="source-links__heading" tabIndex={-1}>{singleHeading}</h3>
           {links[0].url ? (
             <a href={links[0].url} target="_blank" rel="noreferrer" className="source-links__link">
-              <A11yLinkTitle url={links[0].url} fallback={links[0].text} />{isExternalLink(links[0].url) && <IconExternalLink />}<span className="sr-only"> (opens in new tab)</span>
+              {links[0].text}{isExternalLink(links[0].url) && <IconExternalLink />}<span className="sr-only"> (opens in new tab)</span>
             </a>
           ) : (
             <span className="source-links__text">{links[0].text}</span>

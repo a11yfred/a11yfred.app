@@ -20,6 +20,7 @@ Persistent record of completed features, fixes, and improvements. This is comple
 - [x] SR-only utility — `.sr-only` class for visually hidden content (e.g., radio legend)
 - [x] `prefers-contrast: more` support — token overrides for increased contrast in both light and dark themes
 - [x] Dark mode priority badge colors — contrast ratios verified (≥ 4.5:1 text on badge background)
+- [x] Skip links — LinkSkipTo component with "Skip to Main Content" navigation landmark
 
 ### Design & Layout
 
@@ -32,6 +33,7 @@ Persistent record of completed features, fixes, and improvements. This is comple
 - [x] `theme-color` meta tags — light and dark values set; tints browser chrome on Chrome/Edge/Safari mobile
 - [x] Icon sizing — gear 22px, close 24px (iOS-appropriate scale)
 - [x] Nothing Found state — styled empty state with SVG magnifying-glass illustration and search tips
+- [x] Empty state before search — pre-search and no-results states use unified Screen component with actionable guidance
 - [x] Settings mobile bottom sheet — slides up from bottom, drag handle, Escape dismissal
 
 ### Code Quality & Architecture
@@ -55,12 +57,23 @@ Persistent record of completed features, fixes, and improvements. This is comple
 - [x] Detail panel — full defect view with description, remediation, related SCs, source links
 - [x] WAI SC links — ScBadge in DetailPanel links to WCAG 2.2 Understanding pages
 - [x] AI Assist (single-shot) — rewrite description/remediation using Anthropic API
+- [x] AI loading state — animated spinner with aria-busy attribute; respects prefers-reduced-motion
 - [x] Theme toggle — Light / Auto / Dark radio chips in Settings; Auto follows `prefers-color-scheme`
 - [x] Typeahead toggle — on by default; off mode shows Search button and requires Enter/click
+- [x] Model selection for agent mode — configurable in SettingsSectionAi; supports Anthropic, OpenAI, Google, Azure providers via @ulam/halohalo
+- [x] Wire OpenAI provider — GPT-4o via /v1/chat/completions; integrated in @ulam/halohalo
+- [x] Wire Google Gemini — Gemini API integrated in @ulam/halohalo with model selection
+- [x] Wire Microsoft Copilot — Azure OpenAI endpoint integrated in @ulam/halohalo (SettingsSectionSearch)
+- [x] Settings for search debounce/live search toggle — toggle in Settings to switch between live (instant) and on-demand (Enter key) search
 - [x] Copy to clipboard — description and remediation with success announcement
 - [x] Corpus — 106-entry public corpus (ACC prefix), fully sourced with 2+ references
+- [x] Keyword audit — keywords array populated with synonyms and component names for search coverage
+- [x] WCAG version tagging — wcagVersion field in corpus; displayed as badge on result cards and in DetailPanel
 - [x] Internationalization — 65+ languages via @ulam/calamansi
-- [x] PWA/Offline — Service Worker caching for offline functionality
+- [x] PWA/Offline — Service Worker caching app shell and corpus JSON; fully functional without internet
+- [x] Shareable defect URLs — hash routing with `#/entry/:id/:slug` for direct defect linking
+- [x] How to use onboarding — CarouselOnboarding component with localStorage flag for first-visit modal
+- [x] Bookmarks/favorites system — star icon on result cards; persist to localStorage; show starred section (PinnedSection) above results
 
 ### Privacy & Security
 
@@ -69,6 +82,10 @@ Persistent record of completed features, fixes, and improvements. This is comple
 - [x] `robots.txt` — blocks crawlers on dev deployment (to be replaced before Phase 3)
 - [x] `rel="noreferrer"` audit — all `target="_blank"` links have noreferrer
 
+### Performance & Privacy
+
+- [x] Font self-hosting — @fontsource/inter with latin-ext subsetting; replaces Google Fonts CDN
+
 ### Infrastructure
 
 - [x] Vite vendor chunk splitting — React/React-DOM and Fuse.js in separate cached chunks
@@ -76,6 +93,7 @@ Persistent record of completed features, fixes, and improvements. This is comple
 - [x] SEO meta tags (prepared) — description, OG tags, Twitter Card, JSON-LD WebApplication schema (commented out for dev)
 - [x] GitHub repository — initialized, public, linked to Netlify
 - [x] Netlify deployment — connected, auto-deploy on push, production live at a11yfred.app
+- [x] Umami analytics — privacy-first analytics script configured in index.html (zero cookies, no personal data)
 
 ---
 
@@ -119,6 +137,7 @@ Persistent record of completed features, fixes, and improvements. This is comple
 - [x] PRIVACY.md verified — storage keys, data handling accuracy
 - [x] SECURITY.md verified — terminology, security practices
 - [x] CHANGELOG.md expanded — detailed hook integration, optimization notes
+- [x] Keyboard shortcuts documentation — documented in Help panel (j/k/s/e/u/Shift+↑/Shift+↓)
 
 ---
 
