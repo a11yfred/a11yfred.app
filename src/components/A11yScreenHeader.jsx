@@ -6,7 +6,7 @@ import { useT } from '@ulam/calamansi/react'
 import AppTitle from './AppTitle.jsx'
 import { URL_GITHUB_REPO } from '../utils/constants.js'
 
-export default function A11yPageHeader({ h1Ref, h1LinkRef, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop, skipTarget }) {
+export default function A11yScreenHeader({ h1Ref, h1LinkRef, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop, skipTarget }) {
   const t = useT()
   const compact = isDesktop && (settingsOpen || aboutOpen || helpOpen || onboardingOpen)
   return (

@@ -2,10 +2,10 @@ import { FadeTransition, FormControlCheckbox, Screen } from '@ulam/ube'
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
-import A11yPageHeader from './components/A11yPageHeader.jsx'
-import A11yPageFooter from './components/A11yPageFooter.jsx'
+import A11yScreenHeader from './components/A11yScreenHeader.jsx'
+import A11yScreenFooter from './components/A11yScreenFooter.jsx'
 import A11yFiestaBanner from './components/A11yFiestaBanner.jsx'
-import A11yNotFoundPage from './components/A11yNotFoundPage.jsx'
+import A11yScreenNotFound from './components/A11yScreenNotFound.jsx'
 import A11yListResults, { A11yListResultSkeleton, PinnedSection } from './components/A11yListResults.jsx'
 import A11yPanelDetail from './components/A11yPanelDetail.jsx'
 import A11yDrawerPanelAbout from './components/A11yDrawerPanelAbout.jsx'
@@ -660,7 +660,7 @@ function AppContent() {
       {theme === 'fiesta' && <A11yFiestaBanner />}
 
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
-        <A11yPageHeader
+        <A11yScreenHeader
           h1Ref={h1Ref}
           h1LinkRef={h1LinkRef}
           settingsOpen={settingsOpen}
@@ -682,7 +682,7 @@ function AppContent() {
           <FadeTransition watchKey={isNotFound ? 'notfound' : ulamOpen ? 'ulam' : adminOpen ? 'admin' : settingsOpen ? 'settings' : aboutOpen ? 'about' : helpOpen ? 'help' : onboardingOpen ? 'onboarding' : 'search'}>
             <Suspense fallback={null}>
               {isNotFound
-                ? <A11yNotFoundPage />
+                ? <A11yScreenNotFound />
                 : ulamOpen
                   ? <UlamMenu />
                   : adminOpen
@@ -699,7 +699,7 @@ function AppContent() {
             </Suspense>
           </FadeTransition>
         </main>
-        <A11yPageFooter />
+        <A11yScreenFooter />
       </div>
 
       {!isDesktop && (

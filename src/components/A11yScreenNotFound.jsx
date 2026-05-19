@@ -2,7 +2,7 @@ import { House } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { useRouter } from '@ulam/sili/react'
 
-export default function A11yNotFoundPage() {
+export default function A11yScreenNotFound() {
   const t = useT()
   const { navigate } = useRouter()
   return (

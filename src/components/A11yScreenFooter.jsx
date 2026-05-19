@@ -2,7 +2,7 @@ import { Heart, ExternalLink as ExternalLinkIcon } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, FOOTER_CREDIT_NAME } from '../utils/constants.js'
 
-export default function A11yPageFooter() {
+export default function A11yScreenFooter() {
   const t = useT()
   const credit = t('footer.credit')
   const nameIdx = credit.indexOf(FOOTER_CREDIT_NAME)
