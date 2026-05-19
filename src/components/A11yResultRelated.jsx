@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useT } from '@ulam/calamansi/react'
-import { relatedItems } from '../hooks/relevance.js'
+import { relatedItems } from '../hooks/useRelevance.js'
 import entrySlug from '../utils/entrySlug.js'
 
 const defaultHeadingClasses = 'panel-detail-related__heading'

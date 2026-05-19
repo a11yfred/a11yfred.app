@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useItemSignals, usePinnedItems, useCoSelection } from './relevance.js'
+import { useItemSignals, usePinnedItems, useCoSelection } from './useRelevance.js'
 import { LS_DEFECT_RATINGS, LS_PINNED_ENTRIES, LS_CO_SELECTION, SS_COPIED_IDS, POP_STAR_BONUS, POP_UNSTAR_PENALTY, POP_ARCHIVE_PENALTY, POP_OPEN_BOOST, POP_COPY_BOOST } from '../utils/constants.js'
 
 const COPY_FIELD = { title: 'lifetimeCopiedTitle', primarySc: 'lifetimeCopiedPrimarySc', relatedSc: 'lifetimeCopiedRelatedSc', desc: 'lifetimeCopiedDesc', fix: 'lifetimeCopiedFix', all: 'lifetimeCopiedAll' }

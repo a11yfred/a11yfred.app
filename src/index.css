@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════
    CSS Layer Order:
 
-   1. tokens-app.css     — design tokens + app overrides
+   1. app-tokens.css     — design tokens + app overrides
    2. ui.css             — ube base styles
    3. app.css            — app shell (layout, header, footer)
    4. component CSS      — each component imports its own styles
@@ -9,7 +9,7 @@
 
    ════════════════════════════════════════════════════════════ */
 
-@import "./tokens-app.css";
+@import "./app-tokens.css";
 @import "./app.css";
 
 /* ─── Global base styles ──────────────────────────────────── */
