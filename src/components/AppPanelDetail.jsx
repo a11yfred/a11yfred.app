@@ -8,7 +8,7 @@ import { SEVERITY_VARS } from '../data/severityStyles.js'
 import A11yTextareaCopyable from './A11yTextareaCopyable.jsx'
 import A11yLinkSc from './AppLinkSc.jsx'
 import A11yLinksSource from './AppLinksSource.jsx'
-import A11yListRelated from './A11yListRelated.jsx'
+import A11yResultRelated from './A11yResultRelated.jsx'
 import { DEBUG_COMMANDS, DEBUG_AI_DELAY_MS, getAiProvider, getProviderLabel } from '@ulam/halohalo'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 import { getStorage, setStorage, getEntryNoteKey } from '../utils/storage.js'
@@ -415,7 +415,7 @@ export default function AppPanelDetail({ entry, agenticMode = false, focusTrigge
         </div>
       )}
 
-      <A11yListRelated entry={entry} allEntries={allEntries} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
+      <A11yResultRelated entry={entry} allEntries={allEntries} onSelect={onSelectRelated ?? onSelect} getPairsFor={getPairsFor} />
       <A11yLinksSource
         links={entry.creditLinks}
         singleHeading={t('detail.source_heading')}

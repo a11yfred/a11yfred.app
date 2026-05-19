@@ -6,8 +6,8 @@ import { useT } from '@ulam/calamansi/react'
 
 
 import TileAd from './TileAd.jsx'
-import A11yListResultCard from './AppListResultCard.jsx'
-import ResultsMetaHeader from './ResultsMetaHeader.jsx'
+import AppListResultCard from './AppListResultCard.jsx'
+import AppResultsMetaHeader from './AppResultsMetaHeader.jsx'
 import ResultsActiveFilterBar from './ResultsActiveFilterBar.jsx'
 import { DEFAULT_RATING, pluralResult, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD, UNPIN_FLY_MS } from '../utils/constants.js'
 import { useKeydown } from '../hooks/useKeydown.js'
@@ -264,7 +264,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
 
   return (
     <div className="result-list-section">
-      <ResultsMetaHeader
+      <AppResultsMetaHeader
         displayCount={displayCount}
         query={query}
         onCopyLink={onCopyLink}
@@ -389,4 +389,4 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
   )
 }
 
-export { default as A11yListResultSkeleton } from './A11yListResultSkeleton.jsx'
+export { default as A11yResultSkeleton } from './A11yResultSkeleton.jsx'

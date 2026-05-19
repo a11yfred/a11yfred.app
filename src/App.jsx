@@ -6,7 +6,7 @@ import AppScreenHeader from './components/AppScreenHeader.jsx'
 import A11yScreenFooter from './components/A11yScreenFooter.jsx'
 import A11yFiestaBanner from './components/A11yFiestaBanner.jsx'
 import A11yScreenNotFound from './components/A11yScreenNotFound.jsx'
-import AppScreenResults, { A11yListResultSkeleton, PinnedSection } from './components/AppScreenResults.jsx'
+import AppScreenResults, { A11yResultSkeleton, PinnedSection } from './components/AppScreenResults.jsx'
 import AppPanelDetail from './components/AppPanelDetail.jsx'
 import AppDrawerPanelAbout from './components/AppDrawerPanelAbout.jsx'
 import AppDrawerPanelHelp from './components/AppDrawerPanelHelp.jsx'
@@ -447,7 +447,7 @@ function AppContent() {
             onMount={() => announce(t('error.announce'), { priority: 'assertive' })}
           />
         : dataLoading || viewAllLoading
-          ? <A11yListResultSkeleton count={activeQuery === 'debug skeleton' ? sortedEntries.length : undefined} />
+          ? <A11yResultSkeleton count={activeQuery === 'debug skeleton' ? sortedEntries.length : undefined} />
           : (viewAll || sheetCollapsed)
             ? (
               <AppScreenResults

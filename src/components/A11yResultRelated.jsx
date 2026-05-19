@@ -35,7 +35,7 @@ function wcagRankTier(candidate, current, coSelectionPairs) {
   return                                  { tier: 6, boost: coBoost }
 }
 
-export default function A11yListRelated({ entry, allEntries, onSelect, getPairsFor }) {
+export default function A11yResultRelated({ entry, allEntries, onSelect, getPairsFor }) {
   const t = useT()
 
   const related = useMemo(() => {

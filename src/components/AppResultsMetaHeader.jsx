@@ -8,7 +8,7 @@ import { useT } from '@ulam/calamansi/react'
 
 import { CLIPBOARD_TIMEOUT, SORT_FLASH_MS } from '../utils/constants.js'
 
-export default function ResultsMetaHeader({
+export default function AppResultsMetaHeader({
   displayCount,
   query,
   onCopyLink,

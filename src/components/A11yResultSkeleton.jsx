@@ -1,6 +1,6 @@
 const SKELETON_CARDS = 8
 
-export default function A11yListResultSkeleton({ count = SKELETON_CARDS }) {
+export default function A11yResultSkeleton({ count = SKELETON_CARDS }) {
   return (
     <div className="result-list-section" aria-busy="true" aria-live="polite">
       <div className="results-meta">
