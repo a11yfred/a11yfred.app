@@ -2,23 +2,9 @@
    Overrides for a11yfred components beyond the framework. */
 
 @media (prefers-reduced-transparency: reduce) {
-  .app-checkbox:disabled,
-  .control:disabled,
-  .search-input-submit:disabled {
+  /* Disabled controls use aria-disabled from ube framework */
+  [aria-disabled="true"] {
     opacity: 1;
-    color: var(--text-disabled);
-    border-color: var(--border);
-  }
-
-  .search-input-field--disabled,
-  input.search-input--disabled {
-    opacity: 1;
-    color: var(--text-disabled);
-  }
-
-  .result-rank-btn:disabled {
-    opacity: 1;
-    color: var(--text-disabled);
   }
 
   .result-row--archived .result-pin-btn,

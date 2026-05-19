@@ -101,9 +101,17 @@
   text-align: center;
 }
 
-.admin-number-input:disabled {
-  opacity: 0.4;
+.admin-number-input[aria-disabled="true"] {
+  opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .admin-number-input[aria-disabled="true"] {
+    opacity: 1;
+    background-color: var(--border);
+    border-color: var(--text-disabled);
+  }
 }
 
 /* ── Corpus tabs ─────────────────────────────────────────────────────────── */

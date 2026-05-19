@@ -168,8 +168,9 @@
   margin-bottom: 4px;
 }
 
-.panel-detail-label--disabled {
-  color: var(--text-body);
+.panel-detail-label:has(+ [aria-disabled="true"]),
+[aria-disabled="true"] ~ .panel-detail-label {
+  color: var(--text-disabled);
 }
 
 .panel-detail-optional {

@@ -671,10 +671,9 @@
   }
 }
 
-.result-rank-btn:disabled {
-  opacity: 0.3;
+.result-rank-btn[aria-disabled="true"] {
+  opacity: 0.5;
   cursor: not-allowed;
-  pointer-events: none;
 }
 
 @keyframes rank-up {
@@ -711,33 +710,33 @@
   }
 }
 
-.result-rank-btn--up:not(:disabled),
-.result-rank-btn--down:not(:disabled) {
+.result-rank-btn--up:not([aria-disabled="true"]),
+.result-rank-btn--down:not([aria-disabled="true"]) {
   transition: transform var(--duration-fast) var(--ease-out);
 }
 
-.result-rank-btn--up:active:not(:disabled),
-.result-rank-btn--up.animating:not(:disabled) {
+.result-rank-btn--up:active:not([aria-disabled="true"]),
+.result-rank-btn--up.animating:not([aria-disabled="true"]) {
   animation: rank-up 400ms var(--ease-out);
 }
 
-.result-rank-btn--down:active:not(:disabled),
-.result-rank-btn--down.animating:not(:disabled) {
+.result-rank-btn--down:active:not([aria-disabled="true"]),
+.result-rank-btn--down.animating:not([aria-disabled="true"]) {
   animation: rank-down 400ms var(--ease-out);
 }
 
-.result-rank-btn:hover:not(:disabled) {
+.result-rank-btn:hover:not([aria-disabled="true"]) {
   color: var(--text-heading);
   background: var(--accent-bg);
 }
 
-.result-rank-btn:active:not(:disabled) {
+.result-rank-btn:active:not([aria-disabled="true"]) {
   color: var(--bg);
   background: var(--accent);
 }
 
 .result-rank-btn--active,
-.result-rank-btn--active:hover:not(:disabled) {
+.result-rank-btn--active:hover:not([aria-disabled="true"]) {
   color: var(--bg);
   background: var(--accent);
   border-color: transparent;
@@ -746,7 +745,7 @@
 
 @media (width >= 768px) {
   .result-rank-btn--active,
-  .result-rank-btn--active:hover:not(:disabled) {
+  .result-rank-btn--active:hover:not([aria-disabled="true"]) {
     border-color: var(--accent);
     border-radius: var(--rounded-sm);
   }
@@ -984,8 +983,8 @@
   margin-inline-start: auto;
 }
 
-.panel-detail-copy-btn:not(:disabled):hover,
-.panel-detail-sc-copy-btn:not(:disabled):hover {
+.panel-detail-copy-btn:not([aria-disabled="true"]):hover,
+.panel-detail-sc-copy-btn:not([aria-disabled="true"]):hover {
   background: var(--bg-subtle);
   border-radius: var(--rounded);
 }
@@ -1104,18 +1103,18 @@
 
 /* Dark-mode overrides: --accent (#7f77dd) is too light for white text (3.76:1);
    use --accent-bg (#26215c) as the filled bg with --accent-text (#afa9ec, 14.9:1) for icons. */
-[data-theme="dark"] .result-rank-btn:active:not(:disabled),
+[data-theme="dark"] .result-rank-btn:active:not([aria-disabled="true"]),
 [data-theme="dark"] .result-rank-btn.result-rank-btn--active,
-[data-theme="dark"] .result-rank-btn--active:hover:not(:disabled),
+[data-theme="dark"] .result-rank-btn--active:hover:not([aria-disabled="true"]),
 [data-theme="dark"] .result-row--archived .result-rank-btn--archive {
   background: var(--accent-bg);
   color: var(--accent-text);
 }
 
 @media (width >= 768px) {
-  [data-theme="dark"] .result-rank-btn:active:not(:disabled),
+  [data-theme="dark"] .result-rank-btn:active:not([aria-disabled="true"]),
   [data-theme="dark"] .result-rank-btn.result-rank-btn--active,
-  [data-theme="dark"] .result-rank-btn--active:hover:not(:disabled) {
+  [data-theme="dark"] .result-rank-btn--active:hover:not([aria-disabled="true"]) {
     border-color: var(--accent);
   }
 }

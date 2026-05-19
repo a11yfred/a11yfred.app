@@ -11,24 +11,9 @@
    visibility/display instead of opacity. */
 
 @media (prefers-reduced-transparency: reduce) {
-  /* Disabled controls */
-  .app-checkbox:disabled,
-  .control:disabled,
-  .search-input-submit:disabled {
+  /* Disabled controls: aria-disabled attribute pattern */
+  [aria-disabled="true"] {
     opacity: 1;
-    color: var(--text-disabled);
-    border-color: var(--border);
-  }
-
-  .search-input-field--disabled,
-  input.search-input--disabled {
-    opacity: 1;
-    color: var(--text-disabled);
-  }
-
-  .result-rank-btn:disabled {
-    opacity: 1;
-    color: var(--text-disabled);
   }
 
   /* Archived items */

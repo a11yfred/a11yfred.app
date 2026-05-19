@@ -1,4 +1,5 @@
 import { ButtonText, InfoBox, FormControlToggle, FormInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
+import { setAriaDisabled } from '@ulam/ube/core/ariaDisabled'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save, Mail } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
@@ -49,6 +50,9 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
   const [includeFixTitle, setIncludeFixTitle] = useState(false)
   const descCopyBtnRef = useRef(null)
   const fixCopyBtnRef = useRef(null)
+  const entryNoteSaveBtnRef = useRef(null)
+  const aiRevisionButtonRef = useRef(null)
+  const resetAllBtnRef = useRef(null)
 
   const displayDesc = location.trim()
     ? `${location.trim().replace(/:?\s*$/, ':')} ${entry.desc}`
@@ -119,6 +123,24 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
       onDebugPanelCmdHandled?.()
     }
   }, [debugPanelCmd]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (entryNoteSaveBtnRef.current) {
+      setAriaDisabled(entryNoteSaveBtnRef.current, !entryNote.trim())
+    }
+  }, [entryNote])
+
+  useEffect(() => {
+    if (aiRevisionButtonRef.current) {
+      setAriaDisabled(aiRevisionButtonRef.current, refining || animating || !aiNote.trim())
+    }
+  }, [refining, animating, aiNote])
+
+  useEffect(() => {
+    if (resetAllBtnRef.current) {
+      setAriaDisabled(resetAllBtnRef.current, descText === entry.desc && fixText === entry.fix)
+    }
+  }, [descText, fixText, entry.desc, entry.fix])
 
   const p = SEVERITY_VARS[entry.severity] || SEVERITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
@@ -359,13 +381,13 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
         />
         <div className="panel-detail-section-controls">
           <button
+            ref={entryNoteSaveBtnRef}
             onClick={entryNote.trim() ? () => {
               setStorage(getEntryNoteKey(entry.id), entryNote)
               setEntryNoteSaved(true)
               announce(t('detail.saved_entry_note_aria'))
               setTimeout(() => setEntryNoteSaved(false), NOTIFICATION_TIMEOUT)
             } : undefined}
-            aria-disabled={!entryNote.trim() || undefined}
             className={`btn--primary panel-detail-section-btn btn--height-standard${entryNoteSaved ? ' btn__field--success' : ''}`}
             aria-label={entryNoteSaved ? t('detail.saved_entry_note_aria') : t('detail.save_entry_note_aria')}
           >
@@ -415,7 +437,6 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             <button
               ref={aiRevisionButtonRef}
               onClick={(refining || animating || !aiNote.trim()) ? undefined : handleRefine}
-              aria-disabled={(refining || animating || !aiNote.trim()) || undefined}
               aria-busy={refining ? true : undefined}
               className="btn--primary panel-detail-section-btn btn--height-standard"
               aria-label={refining ? t('detail.rewriting_aria') : t('detail.ai_revision_aria')}
@@ -443,10 +464,10 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
 
       <div className="panel-detail-actions-end">
         <button
+          ref={resetAllBtnRef}
           type="button"
           className={`btn--secondary panel-detail-action-btn btn--height-standard${resetAllDone ? ' btn__field--success' : ''}`}
           onClick={(descText === entry.desc && fixText === entry.fix) ? undefined : handleResetAllFields}
-          aria-disabled={(descText === entry.desc && fixText === entry.fix) || undefined}
           aria-label={t('detail.reset_all_fields_aria')}
         >
           {resetAllDone

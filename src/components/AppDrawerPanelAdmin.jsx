@@ -1,5 +1,6 @@
 import { FormControlToggle, ButtonIcon } from '@ulam/ube'
-import { useState, useMemo, useEffect, useCallback } from 'react'
+import { setAriaDisabled } from '@ulam/ube/core/ariaDisabled'
+import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './app-drawer-panel-admin.css'
 import publicCorpus from '../data/corpus.json'
@@ -82,6 +83,7 @@ export default function AppDrawerPanelAdmin({
   const [connectivity, setConnectivity] = useState(null)
   const [connectivityChecking, setConnectivityChecking] = useState(false)
   const [overlays, setOverlays] = useState(null)
+  const connectivityCheckBtnRef = useRef(null)
 
   const runConnectivityCheck = useCallback(async () => {
     setConnectivityChecking(true)
@@ -95,6 +97,12 @@ export default function AppDrawerPanelAdmin({
   }, [])
 
   useEffect(() => { setStorage(LS_ADMIN_DATASET, dataset) }, [dataset])
+
+  useEffect(() => {
+    if (connectivityCheckBtnRef.current) {
+      setAriaDisabled(connectivityCheckBtnRef.current, connectivityChecking)
+    }
+  }, [connectivityChecking])
 
   const corpus = { public: publicCorpus, legacy: legacyCorpus, personal: personalCorpus }[dataset] ?? publicCorpus
   const stats = useMemo(() => computeStats(corpus), [corpus])
@@ -269,9 +277,9 @@ export default function AppDrawerPanelAdmin({
         <section className="admin-section">
           <h2 className="admin-section__title">AI Connectivity</h2>
           <button
+            ref={connectivityCheckBtnRef}
             className="btn--secondary admin-check-btn"
             onClick={connectivityChecking ? undefined : runConnectivityCheck}
-            aria-disabled={connectivityChecking || undefined}
           >
             {connectivityChecking ? 'Checking…' : 'Check providers'}
           </button>

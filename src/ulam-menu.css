@@ -121,9 +121,16 @@
   cursor: pointer;
 }
 
-.ulam-toggle-label--disabled {
+.ulam-toggle-label[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .ulam-toggle-label[aria-disabled="true"] {
+    opacity: 1;
+    background-color: var(--border);
+  }
 }
 
 /* ─── Input Styles (Menu-local, no app dependencies) ────────── */
@@ -145,9 +152,17 @@
   outline-offset: var(--focus-outline-offset);
 }
 
-.ulam-input:disabled {
+.ulam-input[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .ulam-input[aria-disabled="true"] {
+    opacity: 1;
+    background-color: var(--border);
+    border-color: var(--text-disabled);
+  }
 }
 
 .ulam-textarea {

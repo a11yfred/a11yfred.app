@@ -89,14 +89,13 @@
   text-decoration: underline;
 }
 
-.onboarding-skip-btn.onboarding-skip-btn:not(:disabled):hover,
-.onboarding-skip-btn.onboarding-skip-btn:not([aria-disabled="true"]):hover {
+.onboarding-skip-btn:not([aria-disabled="true"]):hover {
   background: transparent;
   color: var(--accent-text);
   text-decoration: none;
 }
 
-.onboarding-skip-btn:not(:disabled):focus-visible {
+.onboarding-skip-btn:not([aria-disabled="true"]):focus-visible {
   background: none;
   outline: 1px solid var(--accent-text);
   text-decoration: none;

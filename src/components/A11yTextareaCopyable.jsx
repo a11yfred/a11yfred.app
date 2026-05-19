@@ -1,6 +1,7 @@
 import { useRef, useEffect, forwardRef } from 'react'
 import { RotateCcw, Copy, Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
+import { setAriaDisabled } from '@ulam/ube/core/ariaDisabled'
 
 const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
   id,
@@ -23,6 +24,7 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
 }, copyBtnRef) {
   const t = useT()
   const taRef = useRef(null)
+  const resetBtnRef = useRef(null)
 
   useEffect(() => {
     const el = taRef.current
@@ -33,6 +35,19 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
     el.style.height = 'auto'
     el.style.height = Math.min(el.scrollHeight, maxHeight) + 'px'
   }, [value])
+
+  useEffect(() => {
+    if (resetBtnRef.current) {
+      const disabled = animating || (!undoable && !hasChanged)
+      setAriaDisabled(resetBtnRef.current, disabled)
+    }
+  }, [animating, undoable, hasChanged])
+
+  useEffect(() => {
+    if (copyBtnRef.current) {
+      setAriaDisabled(copyBtnRef.current, animating)
+    }
+  }, [animating])
 
   function handleResetOrUndo() {
     if (undoable) onUndo()
@@ -78,8 +93,8 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
               id={`${id}-include-title`}
               type="checkbox"
               checked={includeTitle}
-              onChange={e => onIncludeTitleChange(e.target.checked)}
-              disabled={animating}
+              onChange={e => !animating && onIncludeTitleChange(e.target.checked)}
+              aria-disabled={animating || undefined}
               className="control"
             />
             <span className="field-include-title-label">
@@ -90,9 +105,9 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
         </div>
         <div className="field__actions">
           <button
+            ref={resetBtnRef}
             onClick={(animating || (!undoable && !hasChanged)) ? undefined : handleResetOrUndo}
             aria-label={resetBtnLabel}
-            aria-disabled={(animating || (!undoable && !hasChanged)) || undefined}
             className={`btn--secondary btn--field${reset ? ' btn__field--success' : ''}`}
           >
             {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
@@ -102,7 +117,6 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
             ref={copyBtnRef}
             onClick={animating ? undefined : onCopy}
             aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
-            aria-disabled={animating || undefined}
             className={`btn--primary btn--field${copied ? ' btn__field--success' : ''}`}
           >
             {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
