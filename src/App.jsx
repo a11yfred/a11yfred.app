@@ -6,7 +6,7 @@ import A11yScreenHeader from './components/A11yScreenHeader.jsx'
 import A11yScreenFooter from './components/A11yScreenFooter.jsx'
 import A11yFiestaBanner from './components/A11yFiestaBanner.jsx'
 import A11yScreenNotFound from './components/A11yScreenNotFound.jsx'
-import A11yListResults, { A11yListResultSkeleton, PinnedSection } from './components/A11yListResults.jsx'
+import A11yScreenResults, { A11yListResultSkeleton, PinnedSection } from './components/A11yScreenResults.jsx'
 import A11yPanelDetail from './components/A11yPanelDetail.jsx'
 import A11yDrawerPanelAbout from './components/A11yDrawerPanelAbout.jsx'
 import A11yDrawerPanelHelp from './components/A11yDrawerPanelHelp.jsx'
@@ -450,7 +450,7 @@ function AppContent() {
           ? <A11yListResultSkeleton count={activeQuery === 'debug skeleton' ? sortedEntries.length : undefined} />
           : (viewAll || sheetCollapsed)
             ? (
-              <A11yListResults
+              <A11yScreenResults
                 key="view-all"
                 {...baseListProps}
                 results={applySortBy(getUnpinnedEntries(sortedEntries, pinnedIds))}
@@ -480,7 +480,7 @@ function AppContent() {
                       </ul>
                     </div>
                   )}
-                  <A11yListResults
+                  <A11yScreenResults
                     key="search"
                     {...baseListProps}
                     results={unpinnedResults}
@@ -491,7 +491,7 @@ function AppContent() {
               )
               : badgeFilter
                 ? (
-                  <A11yListResults
+                  <A11yScreenResults
                     key="badge"
                     {...baseListProps}
                     results={applySortBy(badgeResults)}
@@ -503,7 +503,7 @@ function AppContent() {
                 )
               : sortedEntries.length === 0
                 ? (
-                  <A11yListResults
+                  <A11yScreenResults
                     key="no-results-home"
                     {...baseListProps}
                     results={[]}
