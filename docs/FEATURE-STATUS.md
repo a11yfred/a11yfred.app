@@ -38,8 +38,8 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 
 - Phase 2 hooks integration: AppContent refactored (1336 → ~730 lines), 602 lines of duplicate code removed
 - Five DRY optimization passes: command map consolidation, rating handlers, template formatting, URL param parsing, platform announcements
-- Ube component naming updates (May 18): all imports updated to match new conventions (FormControlCheckbox, FormControlInputWithClear, ButtonText, etc)
-- CSS import cleanup: removed obsolete @ulam/ube/tokens.css and @ulam/ube/user-prefs.css
+- ulam 0.3.0 component naming updates (May 18): all imports updated to v0.3.0 conventions (FormInputSearch, FormInputWithClear, ButtonText, Screen, Dialog, etc)
+- CSS organization: All components import individual CSS files; @ulam/ube/ui.css is the main stylesheet with foundational styles
 - All TODOs resolved, all imports optimized, full lint/build passing
 
 **Features Complete (8):**
@@ -211,7 +211,7 @@ Done:
 - Live search toggle
 - WCAG version (2.0 / 2.1 / 2.2) + level (A / AA) radio filters
 - AI Assist: toggle, provider, API key validation, model selector
-- Reset All as BottomSheet with explicit lists (what gets deleted, what resets to defaults with values shown)
+- Reset All as Sheet (bottom panel) with explicit lists (what gets deleted, what resets to defaults with values shown)
 - Privacy & Storage disclosure sheet
 - Rank up/rank down ratings restore on reload
 - Pinned entries display with clear option
