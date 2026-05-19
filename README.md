@@ -130,6 +130,22 @@ See [docs/DEPLOYING.md](docs/DEPLOYING.md) for full instructions.
 
 ---
 
+## Questions & Support
+
+**How do I use this tool?** Start with the built-in "How to Use" onboarding (auto-launches on first visit, re-launchable from Help). Check [README.md](README.md) for general questions.
+
+**What just changed?** See [docs/UPDATES.md](docs/UPDATES.md) for plain-language snapshots of recent work, or [docs/CHANGELOG.md](docs/CHANGELOG.md) for technical changes.
+
+**Found a bug?** Open a [GitHub issue](https://github.com/a11yfred/a11yfred/issues) with the `bug:` prefix. Include:
+
+1. Minimal reproduction steps
+2. Browser, OS, and screen reader (if a11y-related)
+3. Expected vs actual behavior
+
+**Want to improve accessibility?** See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
