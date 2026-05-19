@@ -6,7 +6,7 @@ import publicCorpus from '../data/corpus.json'
 import legacyCorpus from '../data/legacy-corpus.json'
 import personalCorpus from '../data/personal-corpus.json'
 import entrySlug from '../utils/entrySlug.js'
-import AdminDatasetSelector from './AdminDatasetSelector.jsx'
+import A11yAdminDatasetSelector from './A11yAdminDatasetSelector.jsx'
 import { LS_ADMIN_DATASET } from '../utils/constants.js'
 import { getStorage, setStorage } from '../utils/storage.js'
 import { detectOverlays, WCAG_CRITERIA } from '@a11yfred/rogers'
@@ -196,7 +196,7 @@ export default function A11yPanelAdmin({
           </div>
         </section>
 
-        <AdminDatasetSelector dataset={dataset} setDataset={setDataset} stats={stats} onFilter={onFilter} />
+        <A11yAdminDatasetSelector dataset={dataset} setDataset={setDataset} stats={stats} onFilter={onFilter} />
 
         {/* ── WCAG SC Coverage ────────────────────────────────── */}
         <section className="admin-section">

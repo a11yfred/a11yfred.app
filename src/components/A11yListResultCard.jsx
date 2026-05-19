@@ -3,7 +3,7 @@ import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Pin, PinOff, Chevr
 import { Fragment } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
-import ResultCardBadges from './ResultCardBadges.jsx'
+import A11yResultCardBadges from './A11yResultCardBadges.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import entrySlug from '../utils/entrySlug.js'
 import { DEFAULT_RATING, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_THRESHOLD, SWIPE_REVEAL, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, PIN_FLY_MS, UNPIN_FLY_MS, ARCHIVE_FLY_MS, UNARCHIVE_FLY_MS, RANK_ANIM_MS } from '../utils/constants.js'
@@ -266,7 +266,7 @@ export default function A11yListResultCard({
                 <span className="result-item__title">
                   {entry.title}
                 </span>
-                <ResultCardBadges entry={entry} archived={archived} />
+                <A11yResultCardBadges entry={entry} archived={archived} />
               </div>
 
               <div className="result-item__sc">{entry.primarySC}</div>
