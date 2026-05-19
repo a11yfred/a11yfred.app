@@ -2,6 +2,66 @@
 
 All notable changes to A11yFred are documented here.
 
+## May 19, 2026 -- Quick-Win Features (Session 8b)
+
+### Keyboard Hotkeys for Help Panel
+
+**Feature**: `?` and `Ctrl+/` keys now open Help panel from anywhere in the app
+
+- Global keydown listener detects both key combinations
+- Safely skips if focus is on search input (to avoid interference with typing)
+- Non-intrusive: only prevents default when help opens
+- Updated AppDrawerPanelHelp to document new hotkeys in shortcut list
+
+**Files Changed:**
+
+- `src/App.jsx`: Added useEffect with global keydown listener
+- `src/components/AppDrawerPanelHelp.jsx`: Added ? and Ctrl+/ to shortcuts list
+
+### Print View Styles
+
+**Feature**: `@media print` styles for clean audit report printing
+
+**Styling:**
+
+- Hides app shell: header, footer, search bar, overlays
+- Shows detail panel full-width with print-friendly typography
+- SC badges formatted as bordered inline boxes
+- Links display visible URLs in parentheses for printing
+- Black text on white background for optimal print contrast
+- Page break hints using modern `break-after` / `break-inside` properties
+
+**Benefits:**
+
+- Auditors can print defect details as clean reports
+- Suitable for archiving in audit documentation
+- Professional presentation without UI chrome
+
+**Files Changed:**
+
+- `src/index.css`: Added comprehensive @media print block
+
+### Email Sharing
+
+**Feature**: Email button in detail panel to share defect details
+
+- Opens user's email client (mailto:) with pre-filled message
+- Subject: "Accessibility Defect: [Title]"
+- Body includes: title, severity, WCAG SC, description, suggested fix, attribution
+- Enables quick sharing to non-technical stakeholders
+
+**Implementation:**
+
+- Added Mail icon import from lucide-react
+- handleEmailShare function constructs mailto link with URL-encoded content
+- Button placed in action buttons row next to Copy All button
+
+**Files Changed:**
+
+- `src/components/AppSheetDetail.jsx`: Added email handler and button
+
+---
+
 ## May 19, 2026 -- Codebase Cleanup & DRY Audit (Session 8)
 
 ### Documentation Consolidation

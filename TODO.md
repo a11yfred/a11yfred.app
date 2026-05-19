@@ -28,13 +28,13 @@ Six-pass documentation and code audit: consolidated duplicate README content, fi
 
 ### UX / Interaction
 
-- [x] **Keyboard shortcut help dialog** `[ux]` `[a11y]` — Help panel exists with keyboard shortcuts documented; awaits `?` and `Ctrl+/` hotkeys to trigger it
+- [x] **Keyboard shortcut help dialog** `[ux]` `[a11y]` — Help panel exists with keyboard shortcuts documented; `?` and `Ctrl+/` hotkeys implemented
 - [ ] **Search history** `[ux]` — show last 10 searches in `localStorage` below search field when empty; include recent defects list
 - [x] **Export to formats** `[ux]` — CSV, Markdown, or plain text export (data layer implemented); awaits UI for multi-select batch export
 - [ ] **Audit report builder** `[ux]` — multi-select defects, add occurrence counts/severity overrides, export formatted report in Markdown/plain text
 - [ ] **Component-level filtering** `[ux]` `[corpus]` — secondary filter (modal, form, button, heading, image, etc); add `component` field to schema; update `useDefectSearch`
-- [ ] **Print view** `[ux]` `[design]` — @media print styles for clean printing; hide header/footer/search/settings; show only defect title, SC labels, desc, remediation
-- [ ] **Email results** `[ux]` — mailto: link with pre-populated subject and body for quick sharing
+- [x] **Print view** `[ux]` `[design]` — @media print styles for clean printing; hides app shell, shows defect details formatted for audit reports
+- [x] **Email results** `[ux]` — mailto: link with pre-populated subject and body for quick sharing of defect details
 - [ ] **Compare mode** `[ux]` — open two defects side-by-side in split view; useful for choosing which SC fits best
 
 ### Corpus & Localization

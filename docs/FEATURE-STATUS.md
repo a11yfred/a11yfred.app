@@ -86,13 +86,16 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Chrome Extension | 🟡 | 60 |
 | Firefox Extension | 🟡 | 60 |
 
-## Phase 3: Planned
+## Phase 3: In Progress
 
-**Complete (1):**
+**Complete (4):**
 
 | Feature | Status | % |
 | --- | --- | --- |
 | Ad Tiles (infrastructure) | ✅ | 100 |
+| Keyboard hotkeys for Help panel (`?` / `Ctrl+/`) | ✅ | 100 |
+| Print view styles for audit reports | ✅ | 100 |
+| Email sharing for defect details | ✅ | 100 |
 
 **Stubbed (2):**
 
