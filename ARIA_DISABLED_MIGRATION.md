@@ -32,6 +32,7 @@ import ButtonIcon from '@ulam/ube'
 For custom components that must stay, add aria-disabled support:
 
 **Before:**
+
 ```tsx
 // Custom button using native disabled
 export function ResultRankBtn({ disabled, onClick, ...props }) {
@@ -48,6 +49,7 @@ export function ResultRankBtn({ disabled, onClick, ...props }) {
 ```
 
 **After:**
+
 ```tsx
 // Custom button using aria-disabled
 import { setAriaDisabled } from '@ulam/ube'

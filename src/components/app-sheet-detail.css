@@ -451,11 +451,6 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
 .panel-detail-related__single,
 .panel-detail-related__multiple,
 .source-links__single,
-.source-links__multiple {
-  display: flex;
-  flex-direction: column;
-}
-
 .panel-detail-related__heading--single {
   display: flex;
   align-items: baseline;
@@ -511,13 +506,6 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   flex-direction: column;
   gap: var(--space-1);
   margin: 0;
-}
-
-.panel-detail-related__list {
-  margin-bottom: var(--space-4);
-}
-
-.source-links__list {
   margin-bottom: var(--space-4);
 }
 

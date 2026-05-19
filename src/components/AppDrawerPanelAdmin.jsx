@@ -1,5 +1,5 @@
 import { FormControlToggle, Button } from '@ulam/ube'
-import { setAriaDisabled } from '@ulam/ube/core/ariaDisabled'
+import { setAriaDisabled } from '@ulam/ube/core'
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './app-drawer-panel-admin.css'
