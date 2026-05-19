@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import entrySlug from '../utils/entrySlug.js'
 import { getSession, removeSession, setSession } from '../utils/storage.js'
 import { returnFocus } from '@ulam/sili/react'
-
-const LS_LAST_SELECTED = 'lastSelectedId'
+import { LS_LAST_SELECTED } from '../utils/constants.js'
 
 /**
  * Manages navigation, entry history, and focus restoration.
