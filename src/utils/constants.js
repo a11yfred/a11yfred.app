@@ -36,7 +36,6 @@ export const RESULTS_COUNT_FOCUS_DELAY = 80
 export const VIEW_ALL_LOADING_DELAY = 400
 export const ANIMATION_COMPLETE_DELAY = 5000
 
-// Migration note: old key was 'recentFindings' (LS_RECENT_FINDINGS)
 export const LS_RECENT_ENTRIES   = 'recentEntries'
 export const LS_LAST_SELECTED    = 'lastSelectedId'
 export const LS_THEME            = 'theme'
@@ -49,11 +48,9 @@ export const LS_PLATFORM         = 'platform'
 export const LS_WCAG_FILTER      = 'wcagFilter'
 export const LS_ONBOARDING_SEEN  = 'onboardingSeen'
 export const LS_DEFECT_RATINGS   = 'defect_ratings'
-// Migration note: old key was 'pinnedFindings' (LS_PINNED_FINDINGS)
 export const LS_PINNED_ENTRIES   = 'pinnedEntries'
 export const LS_CO_SELECTION     = 'coSelectionPairs'
 export const LS_USER_OVERRIDES   = 'userOverrides'
-// Migration note: old key was 'userFindings' (LS_USER_FINDINGS)
 export const LS_USER_ENTRIES     = 'userEntries'
 export const LS_CONTRIBUTIONS    = 'pendingContributions'
 export const LS_ADMIN_DATASET    = 'adminDataset'
@@ -112,7 +109,6 @@ export const URL_GITHUB_SPONSORS  = 'https://github.com/sponsors/mikeyil'
 export const URL_LINKEDIN         = 'https://www.linkedin.com/in/mikeyil'
 export const URL_PERSONAL_SITE    = 'https://www.mikey.fyi?ref=a11yfred'
 
-// Migration note: old key prefix was 'finding_note_' (LS_FINDING_NOTE_PREFIX)
 export const LS_ENTRY_NOTE_PREFIX = 'entry_note_'
 
 export const SEVERITY_SORT_ORDER = { Critical: 0, High: 1, Medium: 2, Low: 3, 'Best Practice': 4 }

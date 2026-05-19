@@ -69,10 +69,6 @@ const UlamMenu = import.meta.env.DEV
 
 const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify', 'debug deploy netlify': 'netlify', 'debug deploy pages': 'pages', 'debug deploy vercel': 'vercel' }
 
-// Redirect legacy /finding/ routes to /entry/ for backwards compatibility
-if (window.location.hash.startsWith('#/finding/')) {
-  window.location.replace(window.location.href.replace('#/finding/', '#/entry/'))
-}
 
 function recordRecentEntry(id) {
   const recent = getStorageJson(LS_RECENT_ENTRIES, [])
