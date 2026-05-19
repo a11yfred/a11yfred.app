@@ -32,12 +32,14 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Settings Panel | ✅ | 90 |
 | Internationalization | 🟡 | 80 |
 
-## Phase 2: Code Quality + Features (In Progress)
+## Phase 2: Code Quality + Features (Complete)
 
 **Code Quality (Complete):**
 
 - Phase 2 hooks integration: AppContent refactored (1336 → ~730 lines), 602 lines of duplicate code removed
 - Five DRY optimization passes: command map consolidation, rating handlers, template formatting, URL param parsing, platform announcements
+- Ube component naming updates (May 18): all imports updated to match new conventions (FormControlCheckbox, FormControlInputWithClear, ButtonText, etc)
+- CSS import cleanup: removed obsolete @ulam/ube/tokens.css and @ulam/ube/user-prefs.css
 - All TODOs resolved, all imports optimized, full lint/build passing
 
 **Features Complete (8):**
