@@ -1,4 +1,4 @@
-import { ButtonText, Screen, NoResults, DataError } from '@ulam/ube'
+import { ButtonText, Screen } from '@ulam/ube'
 import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
@@ -388,4 +388,3 @@ export default function A11yListResults({ results, selected, onSelect, query, co
 }
 
 export { default as A11yListResultSkeleton } from './A11yListResultSkeleton.jsx'
-export { DataError }
