@@ -2,19 +2,19 @@ import { FadeTransition, FormControlCheckbox, Screen } from '@ulam/ube'
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
-import PageHeader from './components/PageHeader.jsx'
-import PageFooter from './components/PageFooter.jsx'
-import FiestaBanner from './components/FiestaBanner.jsx'
-import NotFoundPage from './components/NotFoundPage.jsx'
+import A11yPageHeader from './components/A11yPageHeader.jsx'
+import A11yPageFooter from './components/A11yPageFooter.jsx'
+import A11yFiestaBanner from './components/A11yFiestaBanner.jsx'
+import A11yNotFoundPage from './components/A11yNotFoundPage.jsx'
 import A11yListResults, { A11yListResultSkeleton, PinnedSection } from './components/A11yListResults.jsx'
 import A11yPanelDetail from './components/A11yPanelDetail.jsx'
 import A11yDrawerPanelAbout from './components/A11yDrawerPanelAbout.jsx'
 import A11yDrawerPanelHelp from './components/A11yDrawerPanelHelp.jsx'
-import CarouselOnboarding from './components/CarouselOnboarding.jsx'
+import A11yCarouselOnboarding from './components/A11yCarouselOnboarding.jsx'
 
-import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
-import ThemeEffectFiestaSparkles from './components/ThemeEffectFiestaSparkles.jsx'
-import ThemeWidgetFiestaMusicPlayer from './components/ThemeWidgetFiestaMusicPlayer.jsx'
+import A11yThemeEffectConfetti from './components/A11yThemeEffectConfetti.jsx'
+import A11yThemeEffectFiestaSparkles from './components/A11yThemeEffectFiestaSparkles.jsx'
+import A11yThemeWidgetFiestaMusicPlayer from './components/A11yThemeWidgetFiestaMusicPlayer.jsx'
 import useAppSettings from './hooks/useAppSettings.js'
 import useAppSearch from './hooks/useAppSearch.js'
 import useAppRatings from './hooks/useAppRatings.js'
@@ -654,13 +654,13 @@ function AppContent() {
           ]}
         />
       </>}
-      <ThemeEffectConfetti active={theme === 'fiesta'} />
-      <ThemeEffectFiestaSparkles active={theme === 'fiesta'} />
-      <ThemeWidgetFiestaMusicPlayer active={theme === 'fiesta'} />
-      {theme === 'fiesta' && <FiestaBanner />}
+      <A11yThemeEffectConfetti active={theme === 'fiesta'} />
+      <A11yThemeEffectFiestaSparkles active={theme === 'fiesta'} />
+      <A11yThemeWidgetFiestaMusicPlayer active={theme === 'fiesta'} />
+      {theme === 'fiesta' && <A11yFiestaBanner />}
 
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
-        <PageHeader
+        <A11yPageHeader
           h1Ref={h1Ref}
           h1LinkRef={h1LinkRef}
           settingsOpen={settingsOpen}
@@ -682,7 +682,7 @@ function AppContent() {
           <FadeTransition watchKey={isNotFound ? 'notfound' : ulamOpen ? 'ulam' : adminOpen ? 'admin' : settingsOpen ? 'settings' : aboutOpen ? 'about' : helpOpen ? 'help' : onboardingOpen ? 'onboarding' : 'search'}>
             <Suspense fallback={null}>
               {isNotFound
-                ? <NotFoundPage />
+                ? <A11yNotFoundPage />
                 : ulamOpen
                   ? <UlamMenu />
                   : adminOpen
@@ -694,12 +694,12 @@ function AppContent() {
                       : isDesktop && helpOpen
                         ? <A11yDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
                         : isDesktop && onboardingOpen
-                          ? <CarouselOnboarding onClose={handleCloseOnboarding} />
+                          ? <A11yCarouselOnboarding onClose={handleCloseOnboarding} />
                           : searchView}
             </Suspense>
           </FadeTransition>
         </main>
-        <PageFooter />
+        <A11yPageFooter />
       </div>
 
       {!isDesktop && (
@@ -724,7 +724,7 @@ function AppContent() {
 
       {!isDesktop && (
         <Drawer open={onboardingOpen} onClose={handleCloseOnboarding} label={t('onboarding.heading')} focusOnClose={onboardingTriggerRef}>
-          <CarouselOnboarding onClose={handleCloseOnboarding} />
+          <A11yCarouselOnboarding onClose={handleCloseOnboarding} />
         </Drawer>
       )}
 

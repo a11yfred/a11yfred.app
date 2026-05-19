@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useT } from '@ulam/calamansi/react'
 import { ANIMATION_COMPLETE_DELAY } from '../utils/constants.js'
 
-export default function FiestaBanner() {
+export default function A11yFiestaBanner() {
   const t = useT()
   const [animating, setAnimating] = useState(true)
   const timerRef = useRef(null)

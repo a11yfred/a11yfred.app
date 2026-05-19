@@ -1,4 +1,4 @@
-import { LinkSkipTo, ButtonText, ButtonIcon, Badge, FormControlRadioChip, FormControlToggle, FormControlSelect, FormControlInputWithClear, Panel, FormControlInputSearch } from '@ulam/ube'
+import { LinkSkipTo, ButtonText, ButtonIcon, Badge, FormControlRadioChip, FormControlToggle, FormControlSelect, FormInputWithClear, Panel, FormControlInputSearch } from '@ulam/ube'
 import { useState } from 'react'
 import {
   Star, Settings, Search, X, Plus, Trash2,
@@ -363,9 +363,9 @@ export default function UlamMenu() {
           </Row>
         </Section>
 
-        <Section title="FormControlInputWithClear">
+        <Section title="FormInputWithClear">
           <Row label="Default">
-            <FormControlInputWithClear
+            <FormInputWithClear
               id="search-demo"
               type="search"
               value={inputVal}

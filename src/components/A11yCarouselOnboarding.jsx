@@ -37,7 +37,7 @@ const SLIDES = [
   },
 ]
 
-export default function CarouselOnboarding({ onClose }) {
+export default function A11yCarouselOnboarding({ onClose }) {
   const t = useT()
   const dir = useDir()
   const FwdArrow  = dir === 'rtl' ? CircleArrowLeft  : CircleArrowRight

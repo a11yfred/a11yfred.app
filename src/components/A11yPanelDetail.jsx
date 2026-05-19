@@ -1,11 +1,10 @@
-import { ButtonText, InfoBox, FormControlToggle, FormControlInputWithClear, Badge } from '@ulam/ube'
+import { ButtonText, InfoBox, FormControlToggle, FormInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
-import FormControlCheckbox from './FormControlCheckbox.jsx'
 import A11yTextareaCopyable from './A11yTextareaCopyable.jsx'
 import A11yLinkSc from './A11yLinkSc.jsx'
 import A11yLinksSource from './A11yLinksSource.jsx'
@@ -272,7 +271,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
           {t('detail.location_label')}
           {!location.trim() && <span className="panel-detail-optional">{' '}{t('common.optional')}</span>}
         </label>
-        <FormControlInputWithClear
+        <FormInputWithClear
           id="location-prefix"
           type="text"
           value={location}
@@ -386,8 +385,12 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                 </label>
               )}
               <div className="panel-detail-ai-field-select">
-                <FormControlCheckbox id="field-desc-checkbox" label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
-                <FormControlCheckbox id="field-fix-checkbox" label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
+                <div className="panel-detail-ai-field-select-item">
+                  <FormControlCheckbox id="field-desc-checkbox" label={descLabel} checked={aiRevisedDesc} onChange={e => setAiRevisedDesc(e.target.checked)} disabled={animating} />
+                </div>
+                <div className="panel-detail-ai-field-select-item">
+                  <FormControlCheckbox id="field-fix-checkbox" label={fixLabel} checked={aiRevisedFix} onChange={e => setAiRevisedFix(e.target.checked)} disabled={animating} />
+                </div>
               </div>
             </div>
             <button

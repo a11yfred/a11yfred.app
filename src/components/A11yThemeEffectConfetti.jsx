@@ -20,7 +20,7 @@ function makeParticle(canvasWidth, canvasHeight) {
   }
 }
 
-export default function ThemeEffectConfetti({ active }) {
+export default function A11yThemeEffectConfetti({ active }) {
   const canvasRef = useRef(null)
   const animRef = useRef(null)
   const startTimeRef = useRef(null)
