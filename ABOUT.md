@@ -26,13 +26,13 @@ The party palette is generated fresh each time you switch to it. No two sessions
 
 ## Feature Highlights
 
-### Modals Stay in the Viewport
+### Dialogs, Sheets, and Drawers Stay in the Viewport
 
-The settings panel is a drawer that slides in via CSS `translateX`. Any modal opened from within the settings panel could render in the wrong position: sometimes offscreen, sometimes overlapping incorrectly. The root cause is a CSS quirk: `position: fixed` is calculated relative to the nearest transformed ancestor, not the viewport. Once an ancestor has a `transform`, it becomes the containing block. The fix was `createPortal`, rendering every modal and bottom sheet directly at `document.body`, outside the drawer's transform context entirely.
+The settings panel is a Drawer that slides in via CSS `translateX`. Any Dialog (formerly Modal) or Sheet opened from within the Drawer could render in the wrong position: sometimes offscreen, sometimes overlapping incorrectly. The root cause is a CSS quirk: `position: fixed` is calculated relative to the nearest transformed ancestor, not the viewport. Once an ancestor has a `transform`, it becomes the containing block. The fix was `createPortal`, rendering every Dialog and Sheet directly at `document.body`, outside the Drawer's transform context entirely.
 
-### Bottom Sheet Swipe Gesture
+### Sheet Swipe Gesture
 
-On mobile, you can drag the bottom sheet down and release to dismiss it. The gesture only activates if the touch starts within the top 56px of the panel (the chrome area with the handle and close button). During the drag, the sheet translates downward in real time with no CSS transition. If the drag delta exceeds 100px when the finger lifts, the sheet closes. Otherwise it snaps back.
+On mobile, you can drag the Sheet (bottom panel) down and release to dismiss it. The gesture only activates if the touch starts within the top 56px of the panel (the chrome area with the handle and close button). During the drag, the sheet translates downward in real time with no CSS transition. If the drag delta exceeds 100px when the finger lifts, the sheet closes. Otherwise it snaps back.
 
 It's about 40 lines of touch event handling. It works like native iOS bottom sheets because it's doing exactly what native iOS bottom sheets do: tracking Y position, translating, checking threshold.
 
@@ -69,9 +69,9 @@ Two locales, Palestinian Arabic (`ar-PS`) and Uyghur (`ug`), are right-to-left s
 
 ## Accessibility Details
 
-### The `useAriaHide` Hook
+### Overlay Aria Hiding
 
-When any overlay is open (settings drawer, bottom sheet, confirmation dialog), `useAriaHide` sets `aria-hidden="true"` on every sibling of the overlay in `document.body`. It uses a `data-overlay-aria-hidden` attribute as a marker to track which elements it hid, so it can restore exactly those elements when the overlay closes, and so that multiple nested overlays don't accidentally un-hide siblings that a parent overlay is still hiding.
+When any overlay is open (Drawer, Sheet, or Dialog), the app automatically sets `aria-hidden="true"` on every sibling of the overlay via `useAriaHide` hook. It uses a `data-overlay-aria-hidden` attribute as a marker to track which elements were hidden, so it can restore exactly those elements when the overlay closes. This prevents screen reader users from navigating to content beneath an open overlay.
 
 ---
 
@@ -95,9 +95,9 @@ The router provides primitives (`useRouter`, `useRouteMatch`, `Route`) but not a
 
 A11yFred is built on the ulam accessibility framework, developed alongside the app. Each package has a barrel export. See [ULAM.md](ULAM.md) for full documentation.
 
-- **@ulam/ube** (`src/components/ui/`): UI component library: Button, Modal, Drawer, Sheet, and 18 others. Vanilla-first with thin React wrappers.
-- **@ulam/taho** (`src/taho/`): ARIA live region announcer. Call `announce(message)` from anywhere. React wrapper in `@ulam/taho-bayabas`.
-- **@ulam/sili** (`src/sili/`): Focus management core: focus trap, return focus, aria-hide, escape key. React hooks in `@ulam/siling-labuyo`.
+- **@ulam/ube** (v0.3.0): UI component library: ButtonText, Dialog, Drawer, Sheet, FormInputSearch, FormInputWithClear, Screen, and 15+ others. Pure CSS with minimal dependencies.
+- **@ulam/taho**: ARIA live region announcer. Call `announce(message)` from anywhere. Announcer React component in `@ulam/taho/react`.
+- **@ulam/sili** (v0.3.0): Focus management: OverlayManager for orchestrating Dialog/Sheet/Drawer transitions, focus trap, return focus, aria-hide, escape key handling.
 - **@ulam/calamansi** (`src/calamansi/`): i18n, locale-aware hooks, and text utilities.
 - **@ulam/halohalo** (`src/halohalo/`): AI integration layer with connectivity checks.
 - **@ulam/sawsawan** (`src/sawsawan/`): Integration bridge wiring the packages together.

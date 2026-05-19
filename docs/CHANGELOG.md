@@ -6,6 +6,20 @@ Versions follow [Semantic Versioning](https://semver.org/). Each production depl
 
 ---
 
+## 2026-05-18 -- v0.2.0 Released
+
+### ulam 0.3.0 Breaking Change Compliance
+
+- FormControlInputSearch to FormInputSearch migrations (3 files)
+- FormControlInputWithClear to FormInputWithClear migrations (4 files)
+- All form input CSS imports updated: form-control-input* to form-input*
+- Modal to Dialog component updates verified
+- DataError, NoResults to Screen component updates verified
+- ESLint: 10 errors resolved to 0 errors
+- Markdown linting: all errors fixed (MD032, MD037, MD012)
+
+---
+
 ## 2026-05-17 -- Phase 2 Hooks Integration & Code Quality
 
 ### App refactoring and hook integration
