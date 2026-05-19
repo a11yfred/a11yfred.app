@@ -5,7 +5,7 @@ import { Dialog, Sheet } from '@ulam/sili/react'
 
 import { URL_PRIVACY_POLICY } from '../utils/constants.js'
 
-export default function ManagerModalsSheets({
+export default function A11yOverlayManager({
   t,
   privacyOpen,
   privacyCollapsed,

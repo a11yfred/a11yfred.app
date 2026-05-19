@@ -9,7 +9,7 @@ import { useT } from '@ulam/calamansi/react'
 import SettingsSectionAppearance from './SettingsSectionAppearance.jsx'
 import SettingsSectionSearch from './SettingsSectionSearch.jsx'
 import SettingsSectionAi from './SettingsSectionAi.jsx'
-import ManagerModalsSheets from './ManagerModalsSheets.jsx'
+import A11yOverlayManager from './A11yOverlayManager.jsx'
 import { PROVIDERS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '@ulam/halohalo'
 import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES, LS_WCAG_FILTER } from '../utils/constants.js'
@@ -347,7 +347,7 @@ const A11yDrawerPanelSettings = forwardRef(function A11yDrawerPanelSettings({
         </p>
       )}
 
-      <ManagerModalsSheets
+      <A11yOverlayManager
         t={t}
         privacyOpen={privacyOpen}
         privacyCollapsed={privacyCollapsed}
