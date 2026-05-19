@@ -2,6 +2,43 @@
 
 All notable changes to A11yFred are documented here.
 
+## May 19, 2026 -- Framework Extraction & Cleanup (Session 9)
+
+### @ulam Framework Extraction Complete
+
+**Scope Decision**: Extracted swipe/touch gestures to @ulam/sili; kept data export and relevance utilities local to a11yfred.
+
+**@ulam/sili** (keyboard, animations, touch):
+
+- `onSwipeGesture()`, `getSwipeDirection()`, `isHorizontalSwipe()`, `clampSwipeDelta()` vanilla core utilities
+- `useSwipeGesture()` React hook
+- Vue composables and Angular services (swipe support across all frameworks)
+- Remix 3 adapter exports swipe utilities alongside keyboard/focus management
+- Swipe gesture UI components (card reveal) remain in a11yfred (too app-specific)
+
+**@ulam/ube** (UI components):
+
+- Removed data export utilities (`exportAsCSV`, `exportAsMarkdown`, `exportAsText`, `downloadFile`, `downloadExcel`)
+- Removed `useExport` React hook
+- Kept to UI components only (buttons, form controls, panels, etc.)
+
+**a11yfred** (accessibility domain tool):
+
+- Data serialization (CSV, Markdown, Excel, plain text) stays local
+- Relevance scoring stays local
+- Swipe-to-reveal card UI stays local
+- Clear separation: @ulam provides infrastructure (focus, keyboard, gestures, UI); a11yfred provides domain-specific a11y features
+
+**Files Changed**:
+
+- `packages/ube/core/index.js`: Removed export data exports
+- `packages/ube/react/index.js`: Removed export utilities and useExport hook
+- `packages/ube/core/exportData.js`: Deleted
+- `packages/ube/react/hooks/useExport.js`: Deleted
+- Verified swipe gestures remain in @ulam/sili/core and @ulam/sili/react
+
+---
+
 ## May 19, 2026 -- Quick-Win Features (Session 8b)
 
 ### Keyboard Hotkeys for Help Panel

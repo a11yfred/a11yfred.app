@@ -2,6 +2,12 @@
 
 Plain-language snapshots of what changed and why (by date). For detailed technical changes, see [CHANGELOG.md](CHANGELOG.md). For completed features by phase, see [DONE.md](DONE.md). For remaining work, see [TODO.md](TODO.md).
 
+## May 19, 2026 -- Framework Extraction & Cleanup (Session 9)
+
+Completed @ulam framework extraction strategy: swipe/touch gestures moved to @ulam/sili (with React, Vue, Angular, and Remix 3 adapters); data export and relevance utilities kept in a11yfred as domain-specific features. Decision: @ulam provides accessibility infrastructure (focus management, keyboard handling, UI gestures, components); a11yfred provides domain-specific accessibility tooling. Removed export utilities from @ulam/ube, verified swipe gestures remain in @ulam/sili, pushed changes to origin.
+
+---
+
 ## May 19, 2026 -- Quick-Win Features (Session 8b)
 
 Added three high-value Phase 3 features in quick succession: keyboard hotkeys (`?` and `Ctrl+/`) to open Help panel from anywhere; print view styles (@media print) for clean audit report printing with formatted defect details; email sharing button to send defect via mailto with pre-populated subject and body. All linting clean; all pushed to origin.

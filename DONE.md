@@ -101,6 +101,21 @@ Comprehensive archive of completed features, organized by phase and category. Us
 
 ---
 
+## Phase 3 Framework Extraction (Complete — May 19)
+
+### @ulam Scope Definition & Extraction
+
+- [x] **Framework vs. domain decision** — @ulam provides accessibility infrastructure (focus, keyboard, gestures, UI); a11yfred provides domain-specific a11y features
+- [x] **Swipe/touch gestures to @ulam/sili** — vanilla core (`onSwipeGesture`, `getSwipeDirection`, `isHorizontalSwipe`, `clampSwipeDelta`) + React hook (`useSwipeGesture`)
+- [x] **Multi-framework adapters** — swipe gestures added to Vue composables, Angular services, Remix 3 adapters
+- [x] **Data export utilities kept local** — CSV, Markdown, Excel, plain text export remains in a11yfred (domain-specific, not generic infrastructure)
+- [x] **Relevance scoring kept local** — popularity weighting and search scoring remains in a11yfred
+- [x] **Swipe card UI kept local** — swipe-to-reveal action panels on result cards (too app-specific for generic library)
+- [x] **@ulam/ube cleanup** — removed data export utilities, kept UI components only
+- [x] **Framework exports verified** — @ulam/sili exports swipe gestures; @ulam/ube has no export utilities; Remix 3 adapter correctly exports both vanilla core and framework-specific hooks
+
+---
+
 ## Phase 3 Quick Wins (In Progress — May 19)
 
 ### UX & Interaction Features

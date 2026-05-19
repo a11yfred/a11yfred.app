@@ -20,7 +20,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ## Phase 2A: Cleanup & Maintenance (Complete — May 19)
 
-Six-pass documentation and code audit: consolidated duplicate README content, fixed 18 stale component name references across docs, corrected outdated file paths, removed redundant MAINTENANCE.md wrapper, consolidated LS_LAST_SELECTED constant to single source, verified no inappropriate framework code duplication. All linting passes; build succeeds.
+Six-pass documentation and code audit: consolidated duplicate README content, fixed 18 stale component name references across docs, corrected outdated file paths, removed redundant MAINTENANCE.md wrapper, consolidated LS_LAST_SELECTED constant to single source, verified no inappropriate framework code duplication. Completed @ulam framework extraction strategy: swipe/touch gestures to @ulam/sili, data export/relevance utilities kept in a11yfred. All linting passes; build succeeds.
 
 ---
 
