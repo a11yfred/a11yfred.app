@@ -19,7 +19,7 @@ import { Sheet, Dialog, Drawer } from '@ulam/sili/react'
 import { usePref } from '@ulam/calamansi/react'
 import { initI18n, setLocale, getT } from '@ulam/calamansi'
 import DEMO_MESSAGES from './calamansi/demo-messages.js'
-import './UlamMenu.css'
+import './ulam-menu.css' // kebab-case CSS file
 
 function Section({ title, children }) {
   return (
