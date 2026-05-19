@@ -15,17 +15,17 @@ Recent updates align a11yfred with the latest @ulam/sili and @ulam/ube changes. 
 - All `FormControlInputSearch` → `FormInputSearch` (3 files)
 - All `FormControlInputWithClear` → `FormInputWithClear` (4 files)
 - All `Modal` → `Dialog` from @ulam/sili/react (already done)
-- All `DataError`, `NoResults` → `Screen` with variants (already done)
+- All `DataError`, `NoResults` to `Screen` with variants (already done)
 
 **CSS Import Updates:**
 
-- All form-control-input* imports → form-input* in component files
+- All `form-control-input*` imports to `form-input*` in component files
 
 **ESLint Compliance:**
 
 - Fixed missing `lazy` import in App.jsx
-- Fixed Button → ButtonText in A11yDrawerPanelHelp.jsx
-- Fixed Toggle → FormControlToggle in UlamMenu.jsx
+- Fixed Button to ButtonText in A11yDrawerPanelHelp.jsx
+- Fixed Toggle to FormControlToggle in UlamMenu.jsx
 - Removed unused FormControlCheckbox imports
 - Prefixed unused parameters with underscore
 - All 10 ESLint errors resolved, 1 warning remains (non-blocking)
@@ -33,20 +33,21 @@ Recent updates align a11yfred with the latest @ulam/sili and @ulam/ube changes. 
 **Documentation Updates:**
 
 - Updated `src/components/ui/README.md` to reflect new component names and imports
-- Updated component reference section: Modal → Dialog, BottomSheet → Sheet
+- Updated component reference section: Modal to Dialog, BottomSheet to Sheet
 - Added @ulam/sili/react package references in focus management hooks section
 - Removed outdated DataError and NoResults documentation sections
 - Updated Quick start imports to use current component names
 
 ## Major Changes
 
-### Modal → Dialog Migration
+### Modal to Dialog Migration
 
 **Change**: All `Modal` components updated to `Dialog` per upstream @ulam/sili changes.
 
 **Impact**: Improved semantic accuracy and consistency with HTML `<dialog>` standards.
 
 **Files Updated**:
+
 - `src/App.jsx`: Updated pendingEntry and pendingPrivacy overlays
 - All imports updated from `Modal` to `Dialog`
 
@@ -59,10 +60,12 @@ Recent updates align a11yfred with the latest @ulam/sili and @ulam/ube changes. 
 **Impact**: Unified screen-state handling across the app. Single component for errors, empty states, and filters.
 
 **Files Updated**:
+
 - `src/App.jsx`: Error state now uses `Screen variant="error"`
 - `src/components/A11yListResults.jsx`: No-results states now use `Screen variant="no-results"`
 
 **Benefits**:
+
 - Fewer imports and components
 - Consistent API for all screen states
 - Filter display and clear/settings actions built-in
@@ -74,11 +77,13 @@ Recent updates align a11yfred with the latest @ulam/sili and @ulam/ube changes. 
 **Impact**: Automatic focus management across all overlay transitions (dialog ↔ sheet, sheet ↔ drawer, etc.).
 
 **Files Updated**:
+
 - `src/components/A11yOverlayManager.jsx`: New app-level overlay orchestrator
 - `src/components/A11yDrawerPanelSettings.jsx`: Updated imports
 - `src/App.jsx`: Centralized overlay management
 
 **Benefits**:
+
 - Automatic focus restoration on overlay close
 - Focus management across 23 transition scenarios
 - Page title management for sheets and drawers
@@ -89,16 +94,19 @@ Recent updates align a11yfred with the latest @ulam/sili and @ulam/ube changes. 
 **Change**: Overlays now implement WCAG 2.4.3 best practices for initial focus.
 
 **Strategy**:
+
 1. Focus heading with `tabIndex={-1}` (if present)
 2. Fall back to first focusable element (buttons, inputs, etc.)
 3. Fall back to container as last resort
 
 **Special Override for a11yfred**:
+
 - Privacy sheet: `initialFocusContainer={true}` (focuses container due to content-heavy panel)
 - Reset sheet: `initialFocusContainer={true}` (focuses container for scrollable content)
 - All dialogs: Use default (focus heading or first button)
 
 **Files Updated**:
+
 - `src/components/A11yOverlayManager.jsx`: Added initialFocusContainer overrides
 
 ### Component Naming Clarifications
@@ -106,7 +114,8 @@ Recent updates align a11yfred with the latest @ulam/sili and @ulam/ube changes. 
 **Change**: Better naming alignment with actual component purposes.
 
 **Files Updated**:
-- All references to "Modal" → "Dialog"
+
+- All references to "Modal" to "Dialog"
 - All references to component names verified for accuracy
 
 ## Updated Dependencies
@@ -158,4 +167,3 @@ If you're updating a11yfred locally:
 - **How do overlays work?**: See [A11yOverlayManager.jsx](src/components/A11yOverlayManager.jsx)
 - **What changed in sili?**: See [@ulam/sili UPDATES](../ulam/UPDATES.md)
 - **What changed in ube?**: See [@ulam/ube CHANGELOG](../ulam/packages/ube/CHANGELOG.md)
-

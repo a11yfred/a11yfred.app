@@ -155,4 +155,3 @@ Manual testing covers the full app lifecycle and runs throughout development, no
 - [ ] Reduced motion mode — animations respect `prefers-reduced-motion`
 - [ ] Sheet collapse on mobile — verify animation timing and behavior on small screens
 - [ ] User accessibility testing — test with actual disabled users (external validation)
-

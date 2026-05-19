@@ -8,21 +8,21 @@ All notable changes to A11yFred are documented here.
 
 **Component migration:**
 
-- FormControlInputSearch → FormInputSearch (UlamMenu.jsx, A11yInputSearchHero.jsx, ResultsMetaHeader.jsx)
-- FormControlInputWithClear → FormInputWithClear (A11yInputSearchHero.jsx, A11yPanelDetail.jsx, ResultsMetaHeader.jsx, UlamMenu.jsx)
-- Form input CSS imports updated: form-control-input* → form-input*
+- FormControlInputSearch to FormInputSearch (UlamMenu.jsx, A11yInputSearchHero.jsx, ResultsMetaHeader.jsx)
+- FormControlInputWithClear to FormInputWithClear (A11yInputSearchHero.jsx, A11yPanelDetail.jsx, ResultsMetaHeader.jsx, UlamMenu.jsx)
+- Form input CSS imports updated: `form-control-input*` to `form-input*`
 
-**ESLint errors resolved (10 → 0):**
+**ESLint errors resolved (10 to 0):**
 
 - Added missing `lazy` import in App.jsx
-- Fixed Button → ButtonText in A11yDrawerPanelHelp.jsx
-- Fixed Toggle → FormControlToggle in UlamMenu.jsx
+- Fixed Button to ButtonText in A11yDrawerPanelHelp.jsx
+- Fixed Toggle to FormControlToggle in UlamMenu.jsx
 - Removed unused FormControlCheckbox imports from A11yOverlayManager.jsx and A11yTextareaCopyable.jsx
 - Prefixed unused parameters with underscore: viewAllDontAsk, onViewAllDontAskChange in A11yOverlayManager.jsx
 
 **Documentation updates:**
 
-- `src/components/ui/README.md`: Updated component references (Modal → Dialog, BottomSheet → Sheet)
+- `src/components/ui/README.md`: Updated component references (Modal to Dialog, BottomSheet to Sheet)
 - Added @ulam/sili/react package references for focus management hooks
 - Removed outdated DataError and NoResults documentation sections
 - Updated Quick start example imports to current component names
