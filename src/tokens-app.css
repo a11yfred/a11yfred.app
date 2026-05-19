@@ -1,10 +1,17 @@
-/* ─── App token overrides ─────────────────────────────────────
-   Override ube token defaults for this app here. */
+/* ═══════════════════════════════════════════════════════════
+   App Token Overrides & User Preference Styles
+   ════════════════════════════════════════════════════════════
 
-/* ─── App-specific user preference overrides ──────────────────
-   Overrides for a11yfred components beyond the framework. */
+   Override ube token defaults for this app.
+   Accessibility overrides for prefers-reduced-transparency.
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── prefers-reduced-transparency override ─────────────────
+   When transparency is reduced, use solid colors and explicit
+   visibility/display instead of opacity. */
 
 @media (prefers-reduced-transparency: reduce) {
+  /* Disabled controls */
   .app-checkbox:disabled,
   .control:disabled,
   .search-input-submit:disabled {
@@ -24,6 +31,7 @@
     color: var(--text-disabled);
   }
 
+  /* Archived items */
   .result-row--archived .result-pin-btn,
   .result-row--archived .result-rank-btn:not(.result-rank-btn--archive),
   .result-row--archived .result-rank-score,
@@ -34,6 +42,7 @@
     color: var(--text-disabled);
   }
 
+  /* Deselected items (when a selection is active) */
   .app-background:not([data-sheet-collapsed]) .result-list--has-selection
     .result-row:not(:has(.result-item--selected)) .result-item__sc,
   .app-background:not([data-sheet-collapsed]) .result-list--has-selection
@@ -42,6 +51,7 @@
     visibility: hidden;
   }
 
+  /* Icons and decorative elements */
   .result-swipe-hint__chevron {
     opacity: 1;
     color: var(--text-muted);
@@ -67,6 +77,7 @@
     color: var(--text-muted);
   }
 
+  /* Announce toast backgrounds */
   .announce-toast {
     background: #111;
   }

@@ -1,20 +1,25 @@
-/* Layer order:
-   1. tokens.css        — design primitives (via tokens-app.css)
-   2. tokens-app.css    — app layout overrides (modal/panel sizing)
-   3. ui.css            — ube base styles (loaded via components/ui/index.js barrel)
-   4. app.css           — app shell (header, footer, layout, 404)
-   5. Component CSS     — each component imports its own tokens.css
-   6. This file         — global base only; nothing app-specific lives here */
+/* ═══════════════════════════════════════════════════════════
+   CSS Layer Order:
+
+   1. tokens-app.css     — design tokens + app overrides
+   2. ui.css             — ube base styles
+   3. app.css            — app shell (layout, header, footer)
+   4. component CSS      — each component imports its own styles
+   5. index.css          — global base only
+
+   ════════════════════════════════════════════════════════════ */
+
 @import "./tokens-app.css";
 @import "./app.css";
 
-/* ─── Global base ─────────────────────────────────────────── */
+/* ─── Global base styles ──────────────────────────────────── */
 
 html {
   height: 100%;
 }
 
-body, #root {
+body,
+#root {
   min-height: 100%;
 }
 
@@ -32,6 +37,6 @@ body {
   }
 }
 
-/* ─── Rogers plugin styles (debug/admin) ────────────────────
-   Base styles loaded from @a11yfred/rogers via the plugin itself.
+/* ─── Rogers plugin (debug/admin) overrides ──────────────────
+   Base styles loaded from @a11yfred/rogers via the plugin.
    Override here without editing rogers. */
