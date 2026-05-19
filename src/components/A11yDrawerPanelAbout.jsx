@@ -1,4 +1,4 @@
-import { Panel, Button, IconExternalLink } from '@ulam/ube'
+import { Panel, ButtonText, IconExternalLink } from '@ulam/ube'
 import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
@@ -7,13 +7,13 @@ import { useT } from '@ulam/calamansi/react'
 
 import entrySlug from '../utils/entrySlug.js'
 import { version } from '../../package.json'
-import './A11yPanelAbout.css'
+import './A11yDrawerPanelAbout.css'
 
 function ExtLink({ href, children }) {
   return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<IconExternalLink /><span className="sr-only"> (opens in new tab)</span></a>
 }
 
-export default function A11yPanelAbout({ onClose, allEntries = [] }) {
+export default function A11yDrawerPanelAbout({ onClose, allEntries = [] }) {
   const t = useT()
 
   const [exampleEntries] = useState(() => {
@@ -127,7 +127,7 @@ export default function A11yPanelAbout({ onClose, allEntries = [] }) {
       </div>
 
       <div className="panel-mobile-back">
-        <Button
+        <ButtonText
           variant="primary"
           className="panel-mobile-back-btn"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
@@ -135,7 +135,7 @@ export default function A11yPanelAbout({ onClose, allEntries = [] }) {
           tabIndex={-1}
         >
           {t('settings.back')}
-        </Button>
+        </ButtonText>
       </div>
     </Panel>
   )

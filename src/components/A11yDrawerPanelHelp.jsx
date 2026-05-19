@@ -1,11 +1,11 @@
-import { Panel, Button } from '@ulam/ube'
+import { Panel, ButtonText } from '@ulam/ube'
 import { PlayCircle, ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 
 
 import { version } from '../../package.json'
 
-export default function A11yPanelHelp({ onClose, onStartTour }) {
+export default function A11yDrawerPanelHelp({ onClose, onStartTour }) {
   const t = useT()
 
   return (
@@ -24,13 +24,13 @@ export default function A11yPanelHelp({ onClose, onStartTour }) {
               <p className="help-tour-banner__heading"><PlayCircle size={20} className="help-tour-banner__icon" aria-hidden="true" />{t('help.walkthrough_heading')}</p>
               <p className="help-tour-banner__desc">{t('help.take_tour_description')}</p>
             </div>
-            <Button
+            <ButtonText
               variant="primary"
               className="help-tour-btn"
               onClick={() => { onClose(); onStartTour() }}
             >
               {t('help.take_tour')}
-            </Button>
+            </ButtonText>
           </div>
         </section>
       )}

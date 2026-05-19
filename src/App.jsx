@@ -1,15 +1,15 @@
-import { FadeTransition } from '@ulam/ube'
-import { useState, useEffect, useRef, lazy, Suspense } from 'react'
+import { FadeTransition, FormControlCheckbox, Screen } from '@ulam/ube'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
 import PageHeader from './components/PageHeader.jsx'
 import PageFooter from './components/PageFooter.jsx'
 import FiestaBanner from './components/FiestaBanner.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
-import A11yListResults, { A11yListResultSkeleton, DataError, PinnedSection } from './components/A11yListResults.jsx'
+import A11yListResults, { A11yListResultSkeleton, PinnedSection } from './components/A11yListResults.jsx'
 import A11yPanelDetail from './components/A11yPanelDetail.jsx'
-import A11yPanelAbout from './components/A11yPanelAbout.jsx'
-import A11yPanelHelp from './components/A11yPanelHelp.jsx'
+import A11yDrawerPanelAbout from './components/A11yDrawerPanelAbout.jsx'
+import A11yDrawerPanelHelp from './components/A11yDrawerPanelHelp.jsx'
 import CarouselOnboarding from './components/CarouselOnboarding.jsx'
 
 import ThemeEffectConfetti from './components/ThemeEffectConfetti.jsx'
@@ -29,7 +29,7 @@ import {
   useRouteMatch,
   Drawer,
   Sheet,
-  Modal,
+  Dialog,
   useMediaQuery,
 } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
@@ -59,7 +59,7 @@ import useUserOverrides from './hooks/useUserOverrides.js'
 import entrySlug from './utils/entrySlug.js'
 import './components/ThemeFiestaMode.css'
 
-const A11yPanelSettings = lazy(() => import('./components/A11yPanelSettings.jsx'))
+const A11yDrawerPanelSettings = lazy(() => import('./components/A11yDrawerPanelSettings.jsx'))
 const A11yPanelAdmin = import.meta.env.DEV
   ? lazy(() => import('./components/A11yPanelAdmin.jsx'))
   : () => null
@@ -440,13 +440,14 @@ function AppContent() {
         />
       )}
       {dataError
-        ? <DataError
-            onRetry={retryData}
+        ? <Screen
+            variant="error"
             ariaLabel={t('error.announce')}
             heading={t('error.heading')}
             body={t('error.body')}
-            retryLabel={t('error.retry')}
-            retryIcon={() => <RotateCcw size={12} strokeWidth={2} aria-hidden="true" />}
+            actionLabel={t('error.retry')}
+            actionIcon={() => <RotateCcw size={12} strokeWidth={2} aria-hidden="true" />}
+            action={retryData}
             onMount={() => announce(t('error.announce'), { priority: 'assertive' })}
           />
         : dataLoading || viewAllLoading
@@ -526,7 +527,7 @@ function AppContent() {
                 </div>
               )
       }
-      <Modal
+      <Dialog
         open={viewAllConfirmOpen}
         onClose={() => setViewAllConfirmOpen(false)}
         returnFocusRef={viewAllTriggerRef}
@@ -574,16 +575,14 @@ function AppContent() {
             sortedEntries.length
           )}
         </p>
-        <label className="view-all-dont-ask-label">
-          <input
-            type="checkbox"
-            className="app-checkbox"
+        <div className="view-all-dont-ask-label">
+          <FormControlCheckbox
+            label={t('search.view_all_confirm_dont_ask')}
             checked={viewAllDontAsk}
             onChange={e => setViewAllDontAsk(e.target.checked)}
           />
-          {t('search.view_all_confirm_dont_ask')}
-        </label>
-      </Modal>
+        </div>
+      </Dialog>
     </>
   )
 
@@ -693,11 +692,11 @@ function AppContent() {
                   : adminOpen
                   ? <A11yPanelAdmin {...adminProps} />
                   : isDesktop && settingsOpen
-                    ? <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
+                    ? <A11yDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
                     : isDesktop && aboutOpen
-                      ? <A11yPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+                      ? <A11yDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
                       : isDesktop && helpOpen
-                        ? <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+                        ? <A11yDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
                         : isDesktop && onboardingOpen
                           ? <CarouselOnboarding onClose={handleCloseOnboarding} />
                           : searchView}
@@ -710,20 +709,20 @@ function AppContent() {
       {!isDesktop && (
         <Drawer open={settingsOpen} onClose={handleGuardedCloseSettings} label={t('settings.drawer_label')} focusOnClose={settingsTriggerRef}>
           <Suspense fallback={null}>
-            <A11yPanelSettings ref={settingsPanelRef} {...settingsProps} />
+            <A11yDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
           </Suspense>
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={aboutOpen} onClose={handleCloseOverlay} label={t('about.sheet_label')} focusOnClose={aboutTriggerRef}>
-          <A11yPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+          <A11yDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={helpOpen} onClose={handleCloseOverlay} label={t('help.sheet_label')} focusOnClose={helpTriggerRef}>
-          <A11yPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+          <A11yDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
         </Drawer>
       )}
 
@@ -767,7 +766,7 @@ function AppContent() {
         )}
       </Sheet>
 
-      <Modal
+      <Dialog
         open={!!pendingEntry}
         onClose={() => setPendingEntry(null)}
         heading={t('detail.discard_confirm_heading')}
@@ -789,9 +788,9 @@ function AppContent() {
         ]}
       >
         <p>{t('detail.discard_confirm_body')}</p>
-      </Modal>
+      </Dialog>
 
-      <Modal
+      <Dialog
         open={pendingPrivacy}
         onClose={() => setPendingPrivacy(false)}
         heading={t('detail.discard_confirm_heading')}
@@ -809,7 +808,7 @@ function AppContent() {
         ]}
       >
         <p>{t('detail.discard_nav_body')}</p>
-      </Modal>
+      </Dialog>
     </div>
   )
 }

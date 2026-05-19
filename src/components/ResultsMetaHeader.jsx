@@ -1,4 +1,4 @@
-import { Button, Select, RadioChip, InputWithClear, InfoBox } from '@ulam/ube'
+import { ButtonText, FormControlSelect, FormControlRadioChip, FormControlInputWithClear, InfoBox } from '@ulam/ube'
 import { Link, Check, Filter, OctagonX, Trash2, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 
@@ -71,7 +71,7 @@ export default function ResultsMetaHeader({
               {displayCount}
             </h2>
             {onCopyLink && (
-              <Button
+              <ButtonText
                 active={linkCopied}
                 icon={<Link size={14} aria-hidden="true" />}
                 activeIcon={<Check size={14} aria-hidden="true" />}
@@ -87,7 +87,7 @@ export default function ResultsMetaHeader({
                 }}
               >
                 {linkCopied ? t('results.copied_link') : t('results.copy_link')}
-              </Button>
+              </ButtonText>
             )}
           </div>
           {onSortChange && results.length > 0 && getSortInfo()}
@@ -130,7 +130,7 @@ export default function ResultsMetaHeader({
               <div className={`results-sort-group${results.length > 0 ? ' results-sort-group--visible' : ''}`}>
                 <div className="results-sort-controls">
                   <label htmlFor="results-sort" className="results-sort-label">{t('results.sort_label')}</label>
-                  <Select
+                  <FormControlSelect
                     id="results-sort"
                     value={liveSearch ? sortBy : pendingSort}
                     onChange={e => {
@@ -153,9 +153,9 @@ export default function ResultsMetaHeader({
                     <option value="wcag-level">{t('results.sort_wcag_level')}</option>
                     <option value="platform">{t('results.sort_platform')}</option>
                     <option value="popularity">{t('results.sort_popularity')}</option>
-                  </Select>
+                  </FormControlSelect>
                   {!liveSearch && (
-                    <Button
+                    <ButtonText
                       variant="primary"
                       active={sortFlash}
                       disabled={pendingSort === sortBy}
@@ -168,14 +168,14 @@ export default function ResultsMetaHeader({
                     >
                       {sortFlash && <Check size={16} aria-hidden="true" />}
                       <span>{sortFlash ? t('results.sorted_confirm') : t('results.sort_apply')}</span>
-                    </Button>
+                    </ButtonText>
                   )}
                 </div>
               </div>
             )}
             <div className="results-filter-btns">
               {results.length > 0 && onNarrow && (
-                <Button
+                <ButtonText
                   variant="secondary"
                   className="results-narrow-btn"
                   title={narrowMode ? t('search.exit_narrow_aria') : t('results.narrow_title')}
@@ -192,10 +192,10 @@ export default function ResultsMetaHeader({
                       <span>{t('results.narrow_results')}</span>
                     </>
                   )}
-                </Button>
+                </ButtonText>
               )}
               {onClear && (
-                <Button
+                <ButtonText
                   variant="tertiary"
                   className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
                   title={t('results.clear_all_results')}
@@ -204,7 +204,7 @@ export default function ResultsMetaHeader({
                   onClick={onClear}
                 >
                   {t('results.clear_all_results')}
-                </Button>
+                </ButtonText>
               )}
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function ResultsMetaHeader({
                 {t('search.narrowing_results')}
               </label>
               <div className={`results-narrow-row${!query && !narrowQuery ? ' results-narrow-row--dimmed' : ''}`}>
-                <InputWithClear
+                <FormControlInputWithClear
                   id="narrow-filter"
                   type="text"
                   value={narrowQuery}
@@ -241,14 +241,14 @@ export default function ResultsMetaHeader({
                   disabled={!query && !narrowQuery}
                 />
                 {!liveSearch && (
-                  <Button
+                  <ButtonText
                     onClick={onNarrowSearch}
                     disabled={narrowQuery.length < 2 || (!query && !narrowQuery)}
                     variant="primary"
                     className="results-narrow-submit-btn btn--input-height"
                   >
                     {t('search.narrow_button')}
-                  </Button>
+                  </ButtonText>
                 )}
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function ResultsMetaHeader({
               <legend className="results-narrow-platform-legend">{t('results.narrow_platform_label')}</legend>
               <div className="radio-chip-group">
                 {Object.entries(platformLabels).map(([value, label]) => (
-                  <RadioChip
+                  <FormControlRadioChip
                     key={value}
                     name="narrow-platform"
                     value={value}

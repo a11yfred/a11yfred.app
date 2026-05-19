@@ -1,7 +1,7 @@
-import { Button, FadeTransition } from '@ulam/ube'
+import { ButtonText, FadeTransition } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
-import { useFocusOnMount, usePaginationFocus, useDir, Modal } from '@ulam/sili/react'
+import { useFocusOnMount, usePaginationFocus, useDir, Dialog } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 
@@ -152,16 +152,16 @@ export default function CarouselOnboarding({ onClose }) {
       </div>
 
       <div className="onboarding-footer">
-        <Button
+        <ButtonText
           variant="tertiary"
           className="onboarding-skip-btn"
           onClick={handleRequestClose}
         >
           {t('onboarding.skip_tour')}
-        </Button>
+        </ButtonText>
       </div>
 
-      <Modal
+      <Dialog
         open={confirmOpen}
         onClose={() => setConfirmOpen(false)}
         heading={t('onboarding.confirm_heading')}
@@ -179,7 +179,7 @@ export default function CarouselOnboarding({ onClose }) {
         ]}
       >
         <p>{t('onboarding.confirm_body')}</p>
-      </Modal>
+      </Dialog>
     </div>
   )
 }

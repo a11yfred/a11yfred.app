@@ -4,6 +4,33 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
+## 2026-05-18 -- @ulam/ube Component Updates & Overlay Refactoring
+
+### @ulam/ube Component Naming Updates (v0.2.2)
+
+Updated all a11yfred component imports to match @ulam/ube's new naming conventions:
+
+- `ControlCheckbox` → `FormControlCheckbox`
+- `InputWithClear` → `FormControlInputWithClear`
+- `Button` → `ButtonText` (consolidated button variants)
+- `RadioChip` → `FormControlRadioChip`
+- `Toggle` → `FormControlToggle`
+- `Select` → `FormControlSelect`
+- `InputSearch` → `FormControlInputSearch`
+
+CSS bundling change: removed separate `@ulam/ube/tokens.css` and `@ulam/ube/user-preferences.css` imports (now included in `@ulam/ube/ui.css`). Replaced deprecated `PanelRowControl` component with semantic HTML structure. All 18 component files updated; build passing with zero errors.
+
+### Overlay Architecture Refactoring (Completed)
+
+- ✅ Modal → Dialog migration
+- ✅ DataError/NoResults → Screen consolidation
+- ✅ ManagerModalsSheets → A11yOverlayManager refactor
+- ✅ Focus management improvements (WCAG 2.4.3)
+- ✅ Page title management for overlays
+- ✅ Automatic focus restoration across overlay transitions
+
+---
+
 ## 2026-05-17 -- Phase 2A Complete: Code Quality, Hooks, Accessibility (Sessions 4-6)
 
 ### Session 6: Form Controls Accessibility & Keyboard Prevention

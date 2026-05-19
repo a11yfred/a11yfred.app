@@ -1,4 +1,4 @@
-import { Panel, Button } from '@ulam/ube'
+import { Panel, ButtonText } from '@ulam/ube'
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, Save, ArrowLeft } from 'lucide-react'
 import { useRouter } from '@ulam/sili/react'
@@ -9,7 +9,7 @@ import { useT } from '@ulam/calamansi/react'
 import SettingsSectionAppearance from './SettingsSectionAppearance.jsx'
 import SettingsSectionSearch from './SettingsSectionSearch.jsx'
 import SettingsSectionAi from './SettingsSectionAi.jsx'
-import ManagerModalsSheets from './ManagerModalsSheets.jsx'
+import A11yOverlayManager from './A11yOverlayManager.jsx'
 import { PROVIDERS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled, LS_AI_PROVIDER, LS_AGENTIC_MODE, LS_APIKEY_PREFIX, LS_AI_MODEL_PREFIX } from '@ulam/halohalo'
 import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES, LS_WCAG_FILTER } from '../utils/constants.js'
@@ -19,10 +19,10 @@ import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
 import { version } from '../../package.json'
-import './A11yPanelSettings.css'
+import './A11yDrawerPanelSettings.css'
 
 
-const A11yPanelSettings = forwardRef(function A11yPanelSettings({
+const A11yDrawerPanelSettings = forwardRef(function A11yDrawerPanelSettings({
   onUnlock,
   onClose,
   onSave,
@@ -306,7 +306,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
 
       {/* ── Footer ──────────────────────────────────── */}
       <div className="settings-footer-row">
-        <Button
+        <ButtonText
           ref={privacyButtonRef}
           variant="tertiary"
           icon={<Info size={14} aria-hidden="true" />}
@@ -314,9 +314,9 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
           onClick={() => onOpenPrivacy ? onOpenPrivacy() : navigate('/settings/privacy')}
         >
           {t('settings.privacy_button')}
-        </Button>
+        </ButtonText>
         <div className="settings-footer-actions">
-          <Button
+          <ButtonText
             ref={resetButtonRef}
             variant="warning"
             className="settings-reset-btn"
@@ -324,8 +324,8 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
             onClick={() => setResetConfirmOpen(true)}
           >
             {t('settings.reset_all')}
-          </Button>
-          <Button
+          </ButtonText>
+          <ButtonText
             ref={saveButtonRef}
             active={saved}
             icon={<Save size={14} aria-hidden="true" />}
@@ -337,7 +337,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
             onClick={handleSave}
           >
             {saved ? t('settings.saved') : saveAndClose ? t('settings.save_and_close') : t('settings.save')}
-          </Button>
+          </ButtonText>
         </div>
       </div>
 
@@ -347,7 +347,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
         </p>
       )}
 
-      <ManagerModalsSheets
+      <A11yOverlayManager
         t={t}
         privacyOpen={privacyOpen}
         privacyCollapsed={privacyCollapsed}
@@ -387,7 +387,7 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
       </div>
 
       <div className="panel-mobile-back">
-        <Button
+        <ButtonText
           variant="tertiary"
           className="panel-mobile-back-btn"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
@@ -395,10 +395,10 @@ const A11yPanelSettings = forwardRef(function A11yPanelSettings({
           tabIndex={-1}
         >
           {t('settings.back')}
-        </Button>
+        </ButtonText>
       </div>
     </Panel>
   )
 })
 
-export default A11yPanelSettings
+export default A11yDrawerPanelSettings

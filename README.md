@@ -59,6 +59,30 @@ src/
 
 ---
 
+## Known limitations
+
+### Overlay Management (@ulam/sili)
+
+Only one overlay (dialog/sheet/drawer) can be active at a time (by design per @ulam/sili OverlayManager architecture). Screen z-order is fixed: Screen(0) < Drawer(1) < Sheet(2) < Dialog(3). Nested overlays are not supported; workaround is to convert nested overlays to dialogs stacked on top.
+
+### Navigation & Routing (@ulam/sili)
+
+Uses @ulam/sili hash router. No native search param support (workaround: use state management or localStorage). Migrate to Remix router if moving to Remix, or React Router for more features.
+
+### UI Components (@ulam/ube)
+
+@ulam/ube v0.2.2+ exports include FormControlCheckbox, FormControlInputWithClear, ButtonText, ButtonIcon, FormControlRadioChip, FormControlToggle, FormControlSelect, FormControlInputSearch, and Screen components. CSS is bundled in ui.css; separate tokens.css and user-preferences.css imports are not available as standalone files.
+
+### Forms (@ulam/ube)
+
+No built-in form validation (implement using standard React patterns). No form state library; use React Hook Form or Formik for complex forms.
+
+### Accessibility
+
+Most animations respect `prefers-reduced-motion`, but some transition speeds should be reviewed for edge cases. High contrast mode is mostly supported, but custom styles in A11yDrawerPanel* components may need review.
+
+---
+
 ## Entry schema
 
 Each corpus entry:
@@ -94,6 +118,22 @@ Each corpus entry:
 
 ---
 
+## Dependencies
+
+### Current Versions
+
+- React 18.x
+- @ulam/sili 0.3.0+
+- @ulam/ube 0.2.2+
+- @ulam/calamansi (latest)
+- @ulam/taho (latest)
+- @ulam/halohalo (latest)
+- @ulam/sawsawan (latest)
+- @a11yfred/neighbor (latest)
+- @a11yfred/rogers (latest)
+
+---
+
 ## Changelog
 
 See [docs/CHANGELOG.md](docs/CHANGELOG.md).
@@ -103,6 +143,22 @@ See [docs/CHANGELOG.md](docs/CHANGELOG.md).
 ## Deployment
 
 See [docs/DEPLOYING.md](docs/DEPLOYING.md) for full instructions.
+
+---
+
+## Questions & Support
+
+**How do I use this tool?** Start with the built-in "How to Use" onboarding (auto-launches on first visit, re-launchable from Help). Check [README.md](README.md) for general questions.
+
+**What just changed?** See [docs/UPDATES.md](docs/UPDATES.md) for plain-language snapshots of recent work, or [docs/CHANGELOG.md](docs/CHANGELOG.md) for technical changes.
+
+**Found a bug?** Open a [GitHub issue](https://github.com/a11yfred/a11yfred/issues) with the `bug:` prefix. Include:
+
+1. Minimal reproduction steps
+2. Browser, OS, and screen reader (if a11y-related)
+3. Expected vs actual behavior
+
+**Want to improve accessibility?** See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
 ---
 

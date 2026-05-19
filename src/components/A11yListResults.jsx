@@ -1,4 +1,4 @@
-import { Button, NoResults, DataError } from '@ulam/ube'
+import { ButtonText, Screen } from '@ulam/ube'
 import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
@@ -42,9 +42,9 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
           <span className="pinned-section__count">{entries.length}</span>
         </h2>
         {onClearPins && (
-          <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={handleClearAll} icon={<PinOff size={14} aria-hidden="true" />}>
+          <ButtonText variant="tertiary" className="pinned-unpin-all-btn" onClick={handleClearAll} icon={<PinOff size={14} aria-hidden="true" />}>
             {t('results.unpin_all')}
-          </Button>
+          </ButtonText>
         )}
       </div>
       <A11yListResults
@@ -232,14 +232,15 @@ export default function A11yListResults({ results, selected, onSelect, query, co
   const hasAnyActiveFilter = activeFilters.length > 0 || hasNonDefaultSort
 
   if (results.length === 0 && platform === 'all') {
-    return <NoResults
-      query={query}
+    return <Screen
+      variant="no-results"
       ariaLabel={t('results.no_results_aria')}
       heading={t('results.no_results_heading', { query })}
       body={t('results.no_results_body')}
       onMount={() => announce(t('results.no_results_announce', { query }))}
       activeFilters={activeFilters}
-      onClearFilters={hasAnyActiveFilter ? onClear : undefined}
+      action={hasAnyActiveFilter ? onClear : undefined}
+      actionLabel={hasAnyActiveFilter ? t('results.no_results_clear_filters') : undefined}
       onOpenSettings={onOpenSettings}
     />
   }
@@ -309,13 +310,14 @@ export default function A11yListResults({ results, selected, onSelect, query, co
       )}
 
       {(narrowNoResults || platformNoResults)
-        ? <NoResults
-            query={narrowNoResults ? narrowQuery : query}
+        ? <Screen
+            variant="no-results"
             ariaLabel={t('results.no_results_aria')}
             heading={t('results.no_results_heading', { query: narrowNoResults ? narrowQuery : query })}
             body={t('results.no_results_body')}
             activeFilters={activeFilters}
-            onClearFilters={narrowNoResults || hasAnyActiveFilter ? onClear : undefined}
+            action={narrowNoResults || hasAnyActiveFilter ? onClear : undefined}
+            actionLabel={narrowNoResults || hasAnyActiveFilter ? t('results.no_results_clear_filters') : undefined}
             onOpenSettings={onOpenSettings}
           />
         : <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>
@@ -369,7 +371,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
       )}
       {results.length > RESULTS_VIEW_ALL_THRESHOLD && (
         <div className="view-all-section">
-          <Button
+          <ButtonText
             variant="secondary"
             className="back-to-top-btn"
             onClick={() => {
@@ -380,7 +382,7 @@ export default function A11yListResults({ results, selected, onSelect, query, co
           >
             <ArrowUp size={16} aria-hidden="true" />
             {t('results.back_to_top')}
-          </Button>
+          </ButtonText>
         </div>
       )}
     </div>
@@ -388,4 +390,3 @@ export default function A11yListResults({ results, selected, onSelect, query, co
 }
 
 export { default as A11yListResultSkeleton } from './A11yListResultSkeleton.jsx'
-export { DataError }

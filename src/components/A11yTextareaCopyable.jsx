@@ -1,6 +1,7 @@
 import { useRef, useEffect, forwardRef } from 'react'
 import { RotateCcw, Copy, Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
+import { FormControlCheckbox } from '@ulam/ube'
 
 const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
   id,
@@ -73,17 +74,19 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
       />
       <div className="field__footer">
         <div className="field__include-title">
-          <input
-            type="checkbox"
-            id={`${id}-include-title`}
-            checked={includeTitle}
-            onChange={e => onIncludeTitleChange(e.target.checked)}
-            disabled={animating}
-            className="app-checkbox"
-          />
-          <label htmlFor={`${id}-include-title`} className="field-include-title-label">
-            {includeTitleLabel}
-            {includeTitle && isDesktop && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
+          <label className="control__label" htmlFor={`${id}-include-title`}>
+            <input
+              id={`${id}-include-title`}
+              type="checkbox"
+              checked={includeTitle}
+              onChange={e => onIncludeTitleChange(e.target.checked)}
+              disabled={animating}
+              className="control"
+            />
+            <span className="field-include-title-label">
+              {includeTitleLabel}
+              {includeTitle && isDesktop && <Copy size={14} aria-hidden="true" className="field-include-title-icon" />}
+            </span>
           </label>
         </div>
         <div className="field__actions">

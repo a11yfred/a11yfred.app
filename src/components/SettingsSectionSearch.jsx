@@ -1,4 +1,4 @@
-import { RadioChip, PanelRowSetting, Toggle, Button } from '@ulam/ube'
+import { FormControlRadioChip, FormControlToggle, ButtonText } from '@ulam/ube'
 import { PinOff, OctagonX, Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { announce } from '@ulam/taho'
@@ -26,7 +26,7 @@ function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDo
         <h3 className="panel-toggle-label">{t(labelKey)}</h3>
         <p className="panel-toggle-desc">{hasData ? t(descKey) : t(emptyKey)}</p>
       </div>
-      <Button
+      <ButtonText
         active={isDone}
         icon={<Icon size={14} aria-hidden="true" />}
         activeIcon={<Check size={14} aria-hidden="true" />}
@@ -43,7 +43,7 @@ function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDo
         }}
       >
         {isDone ? t(labelDoneKey) : t(labelActionKey)}
-      </Button>
+      </ButtonText>
     </div>
   )
 }
@@ -87,44 +87,69 @@ export default function SettingsSectionSearch({
     <section className="panel-section">
       <h3 className="panel-section-heading">{t('settings.search_section')}</h3>
 
-      <PanelRowSetting block label={t('settings.platform_label')} description={
-        pendingPlatform === 'all'    ? <>Show <strong>all results</strong> across web, native apps, and documents.</> :
-        pendingPlatform === 'web'    ? <>Show <strong>web-oriented</strong> results.</> :
-        pendingPlatform === 'native' ? <>Show <strong>native app-oriented</strong> results.</> :
-                                       <>Show <strong>document-oriented</strong> results.</>
-      }>
-        {pendingPlatform !== platform && <PendingNote t={t} />}
-        <fieldset>
-          <legend className="sr-only">{t('settings.platform_label')}</legend>
-          <div className="radio-chip-group">
-            {[
-              { value: 'all',      labelKey: 'settings.platform_all',      announceKey: 'settings.platform_all_announce'      },
-              { value: 'web',      labelKey: 'settings.platform_web',      announceKey: 'settings.platform_web_announce'      },
-              { value: 'native',   labelKey: 'settings.platform_native',   announceKey: 'settings.platform_native_announce'   },
-              { value: 'document', labelKey: 'settings.platform_document', announceKey: 'settings.platform_document_announce' },
-            ].map(({ value, labelKey, announceKey }) => (
-              <RadioChip
-                key={value}
-                name="platform-setting"
-                value={value}
-                label={t(labelKey)}
-                current={pendingPlatform}
-                onChange={(val) => { setPendingPlatform(val); announce(t(announceKey)) }}
-              />
-            ))}
+      <div className="panel-section">
+        <div className="panel-row">
+          <div className="panel-row-label">
+            <h3 className="panel-field-label">{t('settings.platform_label')}</h3>
+            <p className="panel-field-desc">
+              {pendingPlatform === 'all'    ? <>Show <strong>all results</strong> across web, native apps, and documents.</> :
+               pendingPlatform === 'web'    ? <>Show <strong>web-oriented</strong> results.</> :
+               pendingPlatform === 'native' ? <>Show <strong>native app-oriented</strong> results.</> :
+                                              <>Show <strong>document-oriented</strong> results.</>
+              }
+            </p>
           </div>
-        </fieldset>
-      </PanelRowSetting>
+          <div className="panel-row-control">
+            {pendingPlatform !== platform && <PendingNote t={t} />}
+            <fieldset>
+              <legend className="sr-only">{t('settings.platform_label')}</legend>
+              <div className="radio-chip-group">
+                {[
+                  { value: 'all',      labelKey: 'settings.platform_all',      announceKey: 'settings.platform_all_announce'      },
+                  { value: 'web',      labelKey: 'settings.platform_web',      announceKey: 'settings.platform_web_announce'      },
+                  { value: 'native',   labelKey: 'settings.platform_native',   announceKey: 'settings.platform_native_announce'   },
+                  { value: 'document', labelKey: 'settings.platform_document', announceKey: 'settings.platform_document_announce' },
+                ].map(({ value, labelKey, announceKey }) => (
+                  <FormControlRadioChip
+                    key={value}
+                    name="platform-setting"
+                    value={value}
+                    label={t(labelKey)}
+                    current={pendingPlatform}
+                    onChange={(val) => { setPendingPlatform(val); announce(t(announceKey)) }}
+                  />
+                ))}
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
 
-      <PanelRowSetting label={<label htmlFor="toggle-live-search">{t('settings.live_search_label')}</label>} description={pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}>
-        {pendingLiveSearch !== liveSearch && <PendingNote t={t} />}
-        <Toggle id="toggle-live-search" checked={pendingLiveSearch} onChange={() => setPendingLiveSearch(v => !v)} />
-      </PanelRowSetting>
+      <div className="panel-section">
+        <div className="panel-row">
+          <div className="panel-row-label">
+            <label htmlFor="toggle-live-search" className="panel-field-label">{t('settings.live_search_label')}</label>
+            <p className="panel-field-desc">{pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}</p>
+          </div>
+          <div className="panel-row-control">
+            {pendingLiveSearch !== liveSearch && <PendingNote t={t} />}
+            <FormControlToggle id="toggle-live-search" checked={pendingLiveSearch} onChange={() => setPendingLiveSearch(v => !v)} />
+          </div>
+        </div>
+      </div>
 
-      <PanelRowSetting label={<label htmlFor="toggle-personal-corpus">{t('settings.personal_corpus_label')}</label>} description={pendingShowPersonalCorpus ? <>Your custom findings <strong>appear in search results</strong>.</> : <>Your custom findings <strong>are hidden from results</strong>.</>}>
-        {pendingShowPersonalCorpus !== showPersonalCorpus && <PendingNote t={t} />}
-        <Toggle id="toggle-personal-corpus" checked={pendingShowPersonalCorpus} onChange={() => setPendingShowPersonalCorpus(v => !v)} />
-      </PanelRowSetting>
+      <div className="panel-section">
+        <div className="panel-row">
+          <div className="panel-row-label">
+            <label htmlFor="toggle-personal-corpus" className="panel-field-label">{t('settings.personal_corpus_label')}</label>
+            <p className="panel-field-desc">{pendingShowPersonalCorpus ? <>Your custom findings <strong>appear in search results</strong>.</> : <>Your custom findings <strong>are hidden from results</strong>.</>}</p>
+          </div>
+          <div className="panel-row-control">
+            {pendingShowPersonalCorpus !== showPersonalCorpus && <PendingNote t={t} />}
+            <FormControlToggle id="toggle-personal-corpus" checked={pendingShowPersonalCorpus} onChange={() => setPendingShowPersonalCorpus(v => !v)} />
+          </div>
+        </div>
+      </div>
 
       <div className="panel-group">
         <h3 className="panel-group__label">{t('settings.wcag_filter_label')}</h3>
@@ -182,15 +207,21 @@ export default function SettingsSectionSearch({
 
       <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-unpin-all-btn" />
 
-      <PanelRowSetting
-        label={<label htmlFor="toggle-ranking">{t('settings.ranking_label')}</label>}
-        description={pendingShowVoting
-          ? <>Ranking controls <strong>are visible on each result</strong>.</>
-          : <>Ranking controls <strong>are hidden</strong>.</>}
-      >
-        {pendingShowVoting !== showVoting && <PendingNote t={t} />}
-        <Toggle id="toggle-ranking" checked={pendingShowVoting} onChange={() => setPendingShowVoting(v => !v)} />
-      </PanelRowSetting>
+      <div className="panel-section">
+        <div className="panel-row">
+          <div className="panel-row-label">
+            <label htmlFor="toggle-ranking" className="panel-field-label">{t('settings.ranking_label')}</label>
+            <p className="panel-field-desc">{pendingShowVoting
+              ? <>Ranking controls <strong>are visible on each result</strong>.</>
+              : <>Ranking controls <strong>are hidden</strong>.</>}
+            </p>
+          </div>
+          <div className="panel-row-control">
+            {pendingShowVoting !== showVoting && <PendingNote t={t} />}
+            <FormControlToggle id="toggle-ranking" checked={pendingShowVoting} onChange={() => setPendingShowVoting(v => !v)} />
+          </div>
+        </div>
+      </div>
 
       <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={OctagonX} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" />
 
