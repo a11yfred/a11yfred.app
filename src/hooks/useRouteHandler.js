@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import entrySlug from '../utils/entrySlug.js'
 import { getSession, removeSession, setSession } from '../utils/storage.js'
 import { returnFocus } from '@ulam/sili/react'
-import { LS_LAST_SELECTED } from '../utils/constants.js'
+import { LS_LAST_SELECTED, LS_ONBOARDING_SEEN } from '../utils/constants.js'
 
 /**
  * Manages navigation, entry history, and focus restoration.
@@ -316,7 +316,6 @@ export default function useRouteHandler({
   useEffect(() => {
     if (onboardingSeenCheckRef.current) return
     onboardingSeenCheckRef.current = true
-    const LS_ONBOARDING_SEEN = 'onboardingSeen'
     if (!window.localStorage.getItem(LS_ONBOARDING_SEEN) && route === '/') {
       navigate('/onboarding')
     }

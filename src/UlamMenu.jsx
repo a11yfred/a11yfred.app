@@ -4,6 +4,7 @@ import {
   Star, Settings, Search, X, Plus, Trash2,
   AlertTriangle, Info, CheckCircle, Copy,
 } from 'lucide-react'
+import { CLIPBOARD_TIMEOUT } from './utils/constants.js'
 
 
 
@@ -95,7 +96,7 @@ export default function UlamMenu() {
 
   const handleSave = () => {
     setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
+    setTimeout(() => setSaved(false), CLIPBOARD_TIMEOUT)
   }
 
   return (
