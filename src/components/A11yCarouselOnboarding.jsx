@@ -9,7 +9,7 @@ import { useT } from '@ulam/calamansi/react'
 import { LS_ONBOARDING_SEEN } from '../utils/constants.js'
 import { setStorage } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
-import './CarouselOnboarding.css'
+import './a11y-carousel-onboarding.css'
 
 const randomAngle = () => Math.floor(Math.random() * 360)
 

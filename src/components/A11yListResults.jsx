@@ -17,7 +17,7 @@ import { useSettings } from '../context/ContextSettings.js'
 import { useSearch } from '../context/ContextSearch.js'
 import { useRatings } from '../context/ContextRatings.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
-import './A11yListResults.css'
+import './a11y-list-results.css'
 
 export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   const t = useT()

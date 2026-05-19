@@ -1,7 +1,7 @@
 import { FormControlToggle, ButtonIcon } from '@ulam/ube'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { X, Copy, Check } from 'lucide-react'
-import './A11yPanelAdmin.css'
+import './a11y-panel-admin.css'
 import publicCorpus from '../data/corpus.json'
 import legacyCorpus from '../data/legacy-corpus.json'
 import personalCorpus from '../data/personal-corpus.json'

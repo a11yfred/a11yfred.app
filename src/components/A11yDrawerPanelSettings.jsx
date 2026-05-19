@@ -19,7 +19,7 @@ import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
 import { version } from '../../package.json'
-import './A11yDrawerPanelSettings.css'
+import './a11y-drawer-panel-settings.css'
 
 
 const A11yDrawerPanelSettings = forwardRef(function A11yDrawerPanelSettings({

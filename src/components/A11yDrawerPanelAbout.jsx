@@ -7,7 +7,7 @@ import { useT } from '@ulam/calamansi/react'
 
 import entrySlug from '../utils/entrySlug.js'
 import { version } from '../../package.json'
-import './A11yDrawerPanelAbout.css'
+import './a11y-drawer-panel-about.css'
 
 function ExtLink({ href, children }) {
   return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<IconExternalLink /><span className="sr-only"> (opens in new tab)</span></a>

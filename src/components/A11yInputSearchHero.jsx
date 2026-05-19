@@ -5,7 +5,7 @@ import { useT } from '@ulam/calamansi/react'
 
 import { CYCLE_MS } from '../utils/constants.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
-import './A11yInputSearchHero.css'
+import './a11y-input-search-hero.css'
 
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.
