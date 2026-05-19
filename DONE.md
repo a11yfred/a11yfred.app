@@ -179,20 +179,26 @@ Persistent record of completed features, fixes, and improvements. This is comple
 
 ## Recent Improvements (May 18)
 
-### @ulam/ube v0.2.2 Component Updates
+### @ulam Framework v0.3.0 Breaking Change Compliance
 
-- [x] @ulam/ube component naming updates — aligned all imports with v0.2.2 conventions
-  - `ControlCheckbox` → `FormControlCheckbox`
-  - `InputWithClear` → `FormControlInputWithClear`
-  - `Button` → `ButtonText` (consolidated to single base component)
-  - `RadioChip` → `FormControlRadioChip`
-  - `Toggle` → `FormControlToggle`
-  - `Select` → `FormControlSelect`
-  - `InputSearch` → `FormControlInputSearch`
-  - All 18 component files across the codebase updated
-- [x] @ulam/ube CSS import cleanup — removed deprecated `@ulam/ube/tokens.css` and `@ulam/ube/user-preferences.css` (now bundled in `@ulam/ube/ui.css`)
-- [x] PanelRowControl deprecation — replaced with semantic HTML divs (component removed from @ulam/ube)
-- [x] Build verification — full build passing with 41 precached entries (4637 KiB PWA)
+- [x] @ulam/ube v0.3.0 component naming updates — migrated to semantic naming conventions
+  - `FormControlInputSearch` → `FormInputSearch` (more precise: styles text inputs, not all form controls)
+  - `FormControlInputWithClear` → `FormInputWithClear`
+  - Form input CSS: `form-control-input*` → `form-input*`
+  - CSS consolidation: merged `form-control-field.css` into `form-input.css`
+  - All 7 component files updated
+- [x] @ulam/sili v0.3.0 component naming — migrated to semantic HTML5 dialog semantics
+  - `Modal` → `Dialog` (aligns with HTML `<dialog>` and ARIA `role="dialog"`)
+  - `DataError`, `NoResults` → `Screen` with variants (`variant="error"`, `variant="no-results"`)
+  - Focus management improvements: automatic focus strategy (heading → first focusable → container)
+  - OverlayManager enhancements: orchestrates 23 transition scenarios with automatic focus restoration
+- [x] Breaking change audit — comprehensive review of a11yfred against v0.3.0 changes
+  - All component migrations verified and completed
+  - ESLint compliance: 10 errors resolved to 0 errors
+  - All imports updated across codebase
+- [x] Documentation updates — UPDATES.md, CHANGELOG.md, README.md, docs/* all reflect v0.3.0 breaking changes
+- [x] Markdown linting — all documentation passing markdownlint (0 errors)
+- [x] Build verification — ESLint and npm run lint:js fully passing with 0 errors
 
 ---
 

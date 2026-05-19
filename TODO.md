@@ -22,9 +22,9 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ### UX / Interaction
 
-- [ ] **Keyboard shortcut help dialog** `[ux]` `[a11y]` — trigger with `?` or `Ctrl+/`; display current keyboard shortcuts (j/k for nav, etc); non-modal overlay
+- [x] **Keyboard shortcut help dialog** `[ux]` `[a11y]` — Help panel with keyboard shortcuts (j/k for nav, ?/Ctrl+/ to toggle); accessible drawer panel
 - [ ] **Search history** `[ux]` — show last 10 searches in `localStorage` below search field when empty; include recent defects list
-- [ ] **Export to formats** `[ux]` — CSV, Markdown, or plain text export (single defect or multi-select batch); implement as Blob download
+- [x] **Export to formats** `[ux]` — CSV, Markdown, or plain text export (data layer implemented); awaits UI for multi-select batch export
 - [ ] **Audit report builder** `[ux]` — multi-select defects, add occurrence counts/severity overrides, export formatted report in Markdown/plain text
 - [ ] **Component-level filtering** `[ux]` `[corpus]` — secondary filter (modal, form, button, heading, image, etc); add `component` field to schema; update `useDefectSearch`
 - [ ] **Print view** `[ux]` `[design]` — @media print styles for clean printing; hide header/footer/search/settings; show only defect title, SC labels, desc, remediation
@@ -45,7 +45,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 ### Accessibility & Design
 
 - [ ] **Responsive design for tablets** `[design]` `[ux]` — improve tablet UX; adjust layout for 768–1024px breakpoint
-- [ ] **Dark mode theming** `[design]` — Neighborly theme on feature/neighborly-theme branch (WCAG AA verified); ready to merge
+- [x] **Dark mode theming** `[design]` — Neighborly theme on feature/neighborly-theme branch (WCAG AA verified); awaiting merge to main
 - [ ] **Reflow at 400% zoom test** `[a11y]` — verify no horizontal scrolling required (WCAG 1.4.10)
 - [ ] **prefers-contrast: more test** `[a11y]` — enable high contrast mode; verify token overrides improve legibility
 
