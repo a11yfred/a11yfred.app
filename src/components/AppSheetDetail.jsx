@@ -359,7 +359,6 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
         />
         <div className="panel-detail-section-controls">
           <Button
-            ref={entryNoteSaveBtnRef}
             variant="primary"
             disabled={!entryNote.trim()}
             active={entryNoteSaved}

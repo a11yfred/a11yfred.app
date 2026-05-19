@@ -47,7 +47,7 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
     if (copyBtnRef.current) {
       setAriaDisabled(copyBtnRef.current, animating)
     }
-  }, [animating])
+  }, [animating, copyBtnRef])
 
   function handleResetOrUndo() {
     if (undoable) onUndo()

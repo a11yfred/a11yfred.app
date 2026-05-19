@@ -305,9 +305,9 @@ export default function UlamMenu() {
           </Row>
         </Section>
 
-        <Section title="FormControlInputSearch">
+        <Section title="FormInputText">
           <Row label="Live search">
-            <FormControlInputSearch
+            <FormInputText
               id="search-live"
               value={searchVal}
               onChange={setSearchVal}
@@ -318,7 +318,7 @@ export default function UlamMenu() {
             />
           </Row>
           <Row label="Submit mode">
-            <FormControlInputSearch
+            <FormInputText
               id="search-submit"
               value={searchVal}
               onChange={setSearchVal}
@@ -337,7 +337,7 @@ export default function UlamMenu() {
             </label>
           </Row>
           <Row label="With toggle">
-            <FormControlInputSearch
+            <FormInputText
               id="search-toggled"
               value={searchVal}
               onChange={setSearchVal}
@@ -350,7 +350,7 @@ export default function UlamMenu() {
             />
           </Row>
           <Row label="Disabled">
-            <FormControlInputSearch
+            <FormInputText
               id="search-disabled"
               value=""
               onChange={() => {}}
