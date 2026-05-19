@@ -5,7 +5,7 @@ import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
-import A11yFieldCheckbox from './A11yFieldCheckbox.jsx'
+import FormControlCheckbox from './FormControlCheckbox.jsx'
 import A11yTextareaCopyable from './A11yTextareaCopyable.jsx'
 import A11yLinkSc from './A11yLinkSc.jsx'
 import A11yLinksSource from './A11yLinksSource.jsx'
@@ -386,8 +386,8 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
                 </label>
               )}
               <div className="panel-detail-ai-field-select">
-                <A11yFieldCheckbox id="field-desc-checkbox" label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
-                <A11yFieldCheckbox id="field-fix-checkbox" label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
+                <FormControlCheckbox id="field-desc-checkbox" label={descLabel} checked={aiRevisedDesc} onChange={setAiRevisedDesc} disabled={animating} />
+                <FormControlCheckbox id="field-fix-checkbox" label={fixLabel} checked={aiRevisedFix} onChange={setAiRevisedFix} disabled={animating} />
               </div>
             </div>
             <button
