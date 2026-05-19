@@ -1,4 +1,4 @@
-// Canonical location: @ulam/sawsawan
+// Storage helpers - internal to @ulam/sawsawan but re-exported here for app use
 export { getStorage, setStorage, removeStorage, clearAllStorage, getStorageJson, setStorageJson, getSession, setSession, removeSession, getSessionJson, setSessionJson } from '../sawsawan/storage.js'
 
 // App-specific key helper

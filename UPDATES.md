@@ -2,6 +2,12 @@
 
 Plain-language snapshots of what changed and why (by date). For detailed technical changes, see [CHANGELOG.md](CHANGELOG.md). For completed features by phase, see [DONE.md](DONE.md). For remaining work, see [TODO.md](TODO.md).
 
+## May 19, 2026 -- Cleanup & DRY Audit (Session 8)
+
+Completed six-pass documentation and code audit: consolidated duplicate README content (status section, framework packages), fixed 18 stale component name references across DONE.md/TODO.md/REMIX-MIGRATION.md, fixed outdated file paths in CONTRIBUTING.md, removed redundant MAINTENANCE.md wrapper, consolidated LS_LAST_SELECTED constant to single source, and verified no framework code duplication (sawsawan/storage.js must remain local). All linting passes; build succeeds.
+
+---
+
 ## May 19, 2026 -- Component Naming Convention & File Organization (Session 7)
 
 Established App\* (15 framework wrappers) and A11y\* (18 custom) naming convention. Renamed 8 components, 7 config/utility files. Fixed 2 component reference bugs. All imports updated, linting passes, build succeeds. See [CHANGELOG.md](CHANGELOG.md) for technical details.

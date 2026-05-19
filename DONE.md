@@ -101,6 +101,32 @@ Comprehensive archive of completed features, organized by phase and category. Us
 
 ---
 
+## Phase 2A: Cleanup & Maintenance (Complete — May 19)
+
+### Documentation Consolidation
+
+- [x] Link verification — fixed 18 stale component name references across DONE.md, TODO.md, REMIX-MIGRATION.md
+- [x] Content consolidation — removed duplicate README.md sections (framework packages, entry schema)
+- [x] README.md streamlined — status section condensed to brief pointers; added documentation map table; reduced from ~203 to 133 lines
+- [x] Redundancy removal — identified and archived MAINTENANCE.md (redundant wrapper duplicating MAINTENANCE-CHECKLIST.md)
+- [x] Documentation accuracy — verified cross-references and file organization across all markdown files
+- [x] CONTRIBUTING.md fixes — updated outdated file path references to current documentation
+
+### Code Quality & DRY
+
+- [x] Constant consolidation — removed duplicate LS_LAST_SELECTED from useRouteHandler.js; single source in constants.js
+- [x] Storage abstraction audit — verified utils/storage.js re-exports; confirmed @ulam/sawsawan limitation
+- [x] Framework code audit — verified no inappropriate duplication (router, focus, overlays, announcements, i18n, keyboard handling all correct)
+- [x] File archival — moved deprecated test-phase2.sh to untracked archive
+
+### Quality Assurance
+
+- [x] Linting — ESLint 0 errors, Stylelint 0 errors, Markdownlint 0 errors
+- [x] Build — verified successful, no warnings
+- [x] Documentation consistency — UPDATES.md, CHANGELOG.md, TODO.md, DONE.md aligned
+
+---
+
 ## Phase 2: Code Quality & Hooks (Complete)
 
 ### Hooks & State Management

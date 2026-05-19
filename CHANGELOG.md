@@ -2,6 +2,80 @@
 
 All notable changes to A11yFred are documented here.
 
+## May 19, 2026 -- Codebase Cleanup & DRY Audit (Session 8)
+
+### Documentation Consolidation
+
+#### Pass 1: Link Verification & Correction
+
+- Fixed 18 stale component name references across DONE.md, TODO.md, REMIX-MIGRATION.md (A11yListResults -> AppScreenResults, A11yPanelSettings -> AppDrawerPanelSettings, etc.)
+- Verified all markdown links are valid and point to existing files
+- Updated CONTRIBUTING.md: fixed "src/components/ui/README.md" reference to README.md component naming section
+
+#### Pass 2-3: Content Consolidation
+
+- README.md: removed duplicate framework packages section (moved to ABOUT.md only)
+- README.md: condensed status section from detailed descriptions to brief pointers to DONE.md/TODO.md
+- README.md: removed redundant entry schema documentation (technical detail not needed in quick start)
+- README.md: added documentation map table explaining purpose of each markdown file
+- README.md: reduced from ~203 lines to 133 lines while maintaining clarity
+
+#### Pass 4: Redundancy Removal
+
+- MAINTENANCE.md: identified as redundant wrapper/index file duplicating MAINTENANCE-CHECKLIST.md guidance
+- Moved MAINTENANCE.md to untracked archive (removed from tracked files)
+- All maintenance guidance consolidated in MAINTENANCE-CHECKLIST.md and MAINTENANCE-WORKFLOWS.md
+
+#### Pass 5-6: Accuracy & Consistency
+
+- Verified UPDATES.md uses consistent plain-language summaries with CHANGELOG.md for detailed info
+- Verified DONE.md serves as complementary archive to UPDATES.md, CHANGELOG.md, TODO.md
+- Verified all doc cross-references match current file organization
+
+### Code Quality & DRY Improvements
+
+#### Constant Consolidation
+
+- `hooks/useRouteHandler.js`: removed duplicate LS_LAST_SELECTED constant definition
+- Imported LS_LAST_SELECTED from utils/constants.js (single source of truth)
+- Verified all localStorage key names centralized in constants.js
+
+#### Storage Abstraction
+
+- `utils/storage.js`: verified re-exports storage functions from sawsawan/storage.js
+- Added clarifying comment: "Storage helpers -- internal to @ulam/sawsawan but re-exported here for app use"
+- Attempted consolidation: confirmed @ulam/sawsawan barrel export does NOT include storage functions
+- **Decision**: sawsawan/storage.js must remain locally (not a duplication issue)
+
+### Framework Code Audit
+
+Comprehensive pass to ensure no inappropriate framework code duplication:
+
+- Router logic: All using @ulam/sili/react hooks (useRouter, navigate) -- correct
+- Focus management: All using @ulam/sili hooks (useFocus, returnFocus) -- correct
+- Overlay handling: All using @ulam/sili components (Dialog, Sheet, Drawer) -- correct
+- Announcements: All using @ulam/taho announce() -- correct
+- Keyboard handling: App-specific handlers only (Enter to search, etc.) -- correct
+- i18n: All using @ulam/calamansi useT() -- correct
+- Storage: One necessary local copy (sawsawan/storage.js) due to export limitation
+
+**Finding**: No significant framework code duplication found. One local copy necessary due to @ulam/sawsawan export constraints.
+
+### File Archival
+
+- `test-phase2.sh`: moved to untracked archive (deprecated Phase 2 testing guide from commit 7303c21)
+- No longer referenced anywhere; superseded by current integration testing in useRouteHandler and useSearchManager
+
+### Quality Assurance
+
+- ESLint: 0 errors, 0 warnings
+- Stylelint: 0 errors
+- Markdownlint: 0 errors
+- Build: successful, no warnings
+- Git: clean working directory
+
+---
+
 ## May 19, 2026 -- Component Naming & File Reorganization (Session 7)
 
 ### Component Naming Convention Established
