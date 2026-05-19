@@ -113,6 +113,6 @@ git commit -m "WIP"
 
 ## Questions?
 
-- For UI library questions, see `src/components/ui/README.md`
-- For maintenance, see `MAINTENANCE.md`
+- For component conventions, see README.md [Component naming convention](README.md#component-naming-convention)
+- For maintenance, see `docs/MAINTENANCE-CHECKLIST.md`
 - For deployment, see `docs/DEPLOYING.md`
