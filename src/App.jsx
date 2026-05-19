@@ -250,6 +250,20 @@ function AppContent() {
     prevViewAllRef.current = viewAll
   }, [viewAll, wcagFilter.maxLevel, setWcagFilter])
 
+  useEffect(() => {
+    function handleGlobalKeyDown(e) {
+      if ((e.key === '?' && !e.ctrlKey && !e.metaKey) || (e.key === '/' && (e.ctrlKey || e.metaKey))) {
+        const searchInput = document.querySelector('input[type="search"]')
+        if (searchInput !== document.activeElement) {
+          e.preventDefault()
+          handleOpenHelp()
+        }
+      }
+    }
+    window.addEventListener('keydown', handleGlobalKeyDown)
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown)
+  }, [handleOpenHelp])
+
   useStorageSync(liveSearch, LS_LIVE_SEARCH)
   useStorageSync(showVoting, LS_SHOW_RANKING)
   useStorageSync(showPersonalCorpus, LS_SHOW_PERSONAL_CORPUS)

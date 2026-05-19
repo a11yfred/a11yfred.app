@@ -56,6 +56,8 @@ export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
         <h3 className="panel-section-heading">{t('help.shortcuts_heading')}</h3>
         <p className="help-shortcuts-note">{t('help.shortcuts_note')}</p>
         <ul className="help-shortcuts">
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">?</code> {t('help.shortcut_help', 'Open this help panel')}</li>
+          <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">Ctrl+/</code> {t('help.shortcut_help', 'Open this help panel')}</li>
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">J</code> {t('help.shortcut_j')}</li>
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">K</code> {t('help.shortcut_k')}</li>
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">S</code> {t('help.shortcut_s')}</li>
