@@ -61,13 +61,21 @@ src/
 
 ## Known limitations
 
-**Overlay Management:** Only one overlay (dialog/sheet/drawer) can be active at a time (by design). Screen z-order is fixed: Screen(0) < Drawer(1) < Sheet(2) < Dialog(3). Nested overlays are not supported; workaround is to convert nested overlays to dialogs stacked on top.
+### Overlay Management
 
-**Navigation:** Uses @ulam/sili hash router. No native search param support (workaround: use state management or localStorage). Migrate to Remix or React Router for more features.
+Only one overlay (dialog/sheet/drawer) can be active at a time (by design per OverlayManager architecture). Screen z-order is fixed: Screen(0) < Drawer(1) < Sheet(2) < Dialog(3). Nested overlays are not supported; workaround is to convert nested overlays to dialogs stacked on top.
 
-**Forms:** No built-in validation. Complex forms should use React Hook Form or Formik.
+### Navigation & Routing
 
-**Animations:** Most respect `prefers-reduced-motion`, but some transition speeds should be reviewed for edge cases. High contrast mode mostly supported, but custom styles in A11yDrawerPanel* may need review.
+Uses @ulam/sili hash router. No native search param support (workaround: use state management or localStorage). Migrate to Remix router if moving to Remix, or React Router for more features.
+
+### Forms
+
+No built-in form validation (implement using standard React patterns). No form state library; use React Hook Form or Formik for complex forms.
+
+### Accessibility
+
+Most animations respect `prefers-reduced-motion`, but some transition speeds should be reviewed for edge cases. High contrast mode is mostly supported, but custom styles in A11yDrawerPanel* components may need review.
 
 ---
 

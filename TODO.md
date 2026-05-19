@@ -1,38 +1,6 @@
-# A11yFred Known Issues and Future Work
+# A11yFred Roadmap & Work Items
 
-## Current Status
-
-### Completed Recently
-
-- ✅ Modal → Dialog migration
-- ✅ DataError/NoResults → Screen consolidation
-- ✅ ManagerModalsSheets → A11yOverlayManager refactor
-- ✅ Focus management improvements (WCAG 2.4.3)
-- ✅ Page title management for overlays
-- ✅ Automatic focus restoration across overlay transitions
-
-## Known Limitations
-
-### Overlay Management
-
-- **Single active overlay at a time**: Only one overlay (dialog/sheet/drawer) can be active. This is by design per OverlayManager architecture.
-- **Fixed layer ordering**: Screen(0) < Drawer(1) < Sheet(2) < Dialog(3). Cannot customize hierarchy.
-- **No nested overlays**: Cannot open one overlay from another and have both visible. Workaround: convert nested overlay to dialog stacked on top.
-
-### Navigation & Routing
-
-- **Hash-based router**: Using @ulam/sili/react hash router. Migrate to Remix router if moving to Remix, or React Router for more features.
-- **Search parameter handling**: No direct search param support in hash router. Workaround: use state management or localStorage.
-
-### Form Handling
-
-- **No built-in form validation**: Validation must be implemented in components using standard React patterns.
-- **No form state library**: If forms get complex, consider adding React Hook Form or Formik.
-
-### Accessibility
-
-- **Reduced motion support**: Most animations respect `prefers-reduced-motion`, but some transition speeds should be reviewed for edge cases.
-- **High contrast mode**: Most components support high contrast, but custom styles in A11yDrawerPanel* components may need review.
+See [UPDATES.md](docs/UPDATES.md) for what's been completed, and [README.md](README.md) for known limitations.
 
 ## Near Term (Next Sprint)
 
@@ -124,18 +92,7 @@
 - [ ] Memoize expensive computations (sorting, filtering)
 - [ ] Optimize CSS (remove unused classes, consolidate media queries)
 
-## Accessibility Wins
-
-### Completed
-
-- ✅ Focus management for all overlays
-- ✅ Keyboard navigation throughout app
-- ✅ ARIA labels and live regions
-- ✅ Screen reader support
-- ✅ Reduced motion support
-- ✅ High contrast support
-
-### Remaining
+## Accessibility Tasks
 
 - [ ] Verify all interactive elements are keyboard accessible
 - [ ] Add skip links (skip to main content)

@@ -4,9 +4,20 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## 2026-05-18 -- Ube Component Updates
+## 2026-05-18 -- Ube Component Updates & Overlay Refactoring
+
+### Ube Component Updates
 
 Updated all component imports to match ube's new naming conventions. `ControlCheckbox` → `FormControlCheckbox`, `InputWithClear` → `FormControlInputWithClear`, button components consolidated to `ButtonText` and `ButtonIcon`. Removed separate `@ulam/ube/tokens.css` and `@ulam/ube/user-prefs.css` imports as they are now bundled into `ui.css`.
+
+### Overlay Architecture Refactoring (Completed)
+
+- ✅ Modal → Dialog migration
+- ✅ DataError/NoResults → Screen consolidation
+- ✅ ManagerModalsSheets → A11yOverlayManager refactor
+- ✅ Focus management improvements (WCAG 2.4.3)
+- ✅ Page title management for overlays
+- ✅ Automatic focus restoration across overlay transitions
 
 ---
 
