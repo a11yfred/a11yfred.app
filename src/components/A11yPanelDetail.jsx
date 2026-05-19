@@ -1,15 +1,11 @@
-import { ButtonText, InfoBox, FormControlToggle, FormControlInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
+import { ButtonText, InfoBox, FormControlToggle, FormControlInputWithClear, Badge } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
-
-
-
-
-
+import FieldCheckbox from './FieldCheckbox.jsx'
 import A11yTextareaCopyable from './A11yTextareaCopyable.jsx'
 import A11yLinkSc from './A11yLinkSc.jsx'
 import A11yLinksSource from './A11yLinksSource.jsx'
@@ -23,22 +19,9 @@ import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
 import './A11yPanelDetail.css'
 
-const WCAG_BADGE_STYLE = { '--badge-bg': 'var(--wcag-bg)', '--badge-text': 'var(--wcag-text)' }
-const WCAG_LEVEL_BADGE_STYLE = { '--badge-bg': 'var(--wcag-level-bg)', '--badge-text': 'var(--wcag-level-text)' }
-
-function FieldCheckbox({ label, checked, onChange, disabled, id }) {
-  return (
-    <div className="panel-detail-ai-field-select-item">
-      <FormControlCheckbox
-        id={id}
-        label={label}
-        checked={checked}
-        onChange={e => onChange(e.target.checked)}
-        disabled={disabled}
-      />
-    </div>
-  )
-}
+const createBadgeStyle = (bgVar, textVar) => ({ '--badge-bg': `var(${bgVar})`, '--badge-text': `var(${textVar})` })
+const WCAG_BADGE_STYLE = createBadgeStyle('--wcag-bg', '--wcag-text')
+const WCAG_LEVEL_BADGE_STYLE = createBadgeStyle('--wcag-level-bg', '--wcag-level-text')
 
 export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigger = 0, allEntries = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const { aiEnabled } = useSettings()

@@ -1,12 +1,10 @@
-import { ButtonIcon, Badge, LinkSkipTo } from '@ulam/ube'
+import { ButtonIcon, LinkSkipTo } from '@ulam/ube'
 import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Pin, PinOff, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { Fragment } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
+import ResultCardBadges from './ResultCardBadges.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
-
-
-
 import entrySlug from '../utils/entrySlug.js'
 import { DEFAULT_RATING, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_THRESHOLD, SWIPE_REVEAL, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, PIN_FLY_MS, UNPIN_FLY_MS, ARCHIVE_FLY_MS, UNARCHIVE_FLY_MS, RANK_ANIM_MS } from '../utils/constants.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
@@ -65,8 +63,8 @@ export default function A11yListResultCard({
   const t = useT()
   const prefersReducedMotion = usePrefersReducedMotion()
   const { score, starred, archived } = ratings[entry.id] || DEFAULT_RATING
-  const p = SEVERITY_VARS[entry.severity] || SEVERITY_VARS['Best Practice']
   const pinned = pinnedIds.has(entry.id)
+  const p = SEVERITY_VARS[entry.severity] || SEVERITY_VARS['Best Practice']
 
   const truncDesc = entry.desc.length > DESC_PREVIEW_LENGTH
     ? entry.desc.slice(0, DESC_PREVIEW_LENGTH).trimEnd() + '…'
@@ -268,32 +266,7 @@ export default function A11yListResultCard({
                 <span className="result-item__title">
                   {entry.title}
                 </span>
-                <span className="result-item__badges">
-                  <Badge
-                    variant="severity"
-                    bg={archived ? undefined : p.bg}
-                    color={archived ? undefined : p.color}
-                    prefix={entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
-                  >
-                    {t(p.key)}
-                  </Badge>
-                  {entry.wcagVersion && (
-                    <Badge
-                      variant="wcag"
-                      title={`${t('badge.wcag_prefix')}${entry.wcagVersion}`}
-                    >
-                      {entry.wcagVersion}
-                    </Badge>
-                  )}
-                  {entry.wcagLevel && (
-                    <Badge
-                      variant="wcag-level"
-                      title={`${t('badge.level_prefix')}${entry.wcagLevel}`}
-                    >
-                      {entry.wcagLevel}
-                    </Badge>
-                  )}
-                </span>
+                <ResultCardBadges entry={entry} archived={archived} />
               </div>
 
               <div className="result-item__sc">{entry.primarySC}</div>
