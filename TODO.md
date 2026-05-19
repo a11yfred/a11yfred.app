@@ -165,21 +165,11 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ---
 
-## Dependency Management
+## Ongoing / Recurring
 
-### Current Versions
+These are continuous maintenance tasks, not one-off features.
 
-- React 18.x
-- @ulam/sili 0.3.0+
-- @ulam/ube 0.2.2+
-- @ulam/calamansi (latest)
-- @ulam/taho (latest)
-- @ulam/halohalo (latest)
-- @ulam/sawsawan (latest)
-- @a11yfred/neighbor (latest)
-- @a11yfred/rogers (latest)
-
-### Monitoring
+### Dependency Monitoring
 
 - [ ] Monitor @ulam packages for updates
 - [ ] Review breaking changes before upgrading

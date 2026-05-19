@@ -118,6 +118,22 @@ Each corpus entry:
 
 ---
 
+## Dependencies
+
+### Current Versions
+
+- React 18.x
+- @ulam/sili 0.3.0+
+- @ulam/ube 0.2.2+
+- @ulam/calamansi (latest)
+- @ulam/taho (latest)
+- @ulam/halohalo (latest)
+- @ulam/sawsawan (latest)
+- @a11yfred/neighbor (latest)
+- @a11yfred/rogers (latest)
+
+---
+
 ## Changelog
 
 See [docs/CHANGELOG.md](docs/CHANGELOG.md).
