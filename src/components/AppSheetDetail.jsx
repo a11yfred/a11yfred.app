@@ -16,13 +16,13 @@ import useSheetDetailClipboard from '../hooks/useSheetDetailClipboard.js'
 import useSheetDetailRefine from '../hooks/useSheetDetailRefine.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
-import './app-panel-detail.css'
+import './app-sheet-detail.css'
 
 const createBadgeStyle = (bgVar, textVar) => ({ '--badge-bg': `var(${bgVar})`, '--badge-text': `var(${textVar})` })
 const WCAG_BADGE_STYLE = createBadgeStyle('--wcag-bg', '--wcag-text')
 const WCAG_LEVEL_BADGE_STYLE = createBadgeStyle('--wcag-level-bg', '--wcag-level-text')
 
-export default function AppPanelDetail({ entry, agenticMode = false, focusTrigger = 0, allEntries = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function AppSheetDetail({ entry, agenticMode = false, focusTrigger = 0, allEntries = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const { aiEnabled } = useSettings()
   const { getPairsFor } = useRatings()
   const titleRef = useRef(null)

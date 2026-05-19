@@ -3,7 +3,7 @@ import { Settings, X, Info, HelpCircle, ExternalLink as ExternalLinkIcon } from 
 import { useT } from '@ulam/calamansi/react'
 
 
-import AppTitle from './AppTitle.jsx'
+import A11yTitle from './A11yTitle.jsx'
 import { URL_GITHUB_REPO } from '../utils/constants.js'
 
 export default function AppScreenHeader({ h1Ref, h1LinkRef, settingsOpen, aboutOpen, helpOpen, onboardingOpen, onOpenSettings, onCloseSettings, onOpenAbout, onCloseAbout, onOpenHelp, onCloseHelp, onCloseOnboarding, isDesktop, skipTarget }) {
@@ -67,12 +67,12 @@ export default function AppScreenHeader({ h1Ref, h1LinkRef, settingsOpen, aboutO
 
       {(onboardingOpen || settingsOpen || aboutOpen || helpOpen) ? (
         <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'}>
-          <AppTitle t={t} />
+          <A11yTitle t={t} />
         </h1>
       ) : (
         <h1 ref={h1Ref} tabIndex={-1} className={compact ? 'sr-only' : 'page-title'}>
           <a ref={h1LinkRef} href="/" className={`page-title-link${compact ? ' sr-only' : ''}`}>
-            <AppTitle t={t} />
+            <A11yTitle t={t} />
           </a>
         </h1>
       )}

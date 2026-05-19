@@ -5,10 +5,10 @@ import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 
 
-import TileAd from './TileAd.jsx'
+import A11yResultAd from './A11yResultAd.jsx'
 import AppListResultCard from './AppListResultCard.jsx'
 import AppResultsMetaHeader from './AppResultsMetaHeader.jsx'
-import ResultsActiveFilterBar from './ResultsActiveFilterBar.jsx'
+import A11yResultsActiveFilterBar from './A11yResultsActiveFilterBar.jsx'
 import { DEFAULT_RATING, pluralResult, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD, UNPIN_FLY_MS } from '../utils/constants.js'
 import { useKeydown } from '../hooks/useKeydown.js'
 import useSwipeReveal from '../hooks/useSwipeReveal.js'
@@ -300,7 +300,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
       />
 
       {!hideFilters && results.length > 0 && !platformNoResults && !narrowNoResults && (
-        <ResultsActiveFilterBar
+        <A11yResultsActiveFilterBar
           activeFilters={activeFilters}
           sortBy={sortBy}
           sortLabels={sortLabels}
@@ -360,7 +360,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
                   itemRefs={itemRefs}
                   snapshotPositions={snapshotPositions}
                 />
-                {showAdAfter && <li key={`ad-${entry.id}`} role="presentation"><TileAd /></li>}
+                {showAdAfter && <li key={`ad-${entry.id}`} role="presentation"><A11yResultAd /></li>}
               </React.Fragment>
             )
           })}

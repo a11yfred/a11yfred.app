@@ -1,6 +1,6 @@
 import { useT } from '@ulam/calamansi/react'
 
-export default function TileAd() {
+export default function A11yTileAd() {
   const t = useT()
 
   return (

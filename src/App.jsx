@@ -7,7 +7,7 @@ import A11yScreenFooter from './components/A11yScreenFooter.jsx'
 import A11yFiestaBanner from './components/A11yFiestaBanner.jsx'
 import A11yScreenNotFound from './components/A11yScreenNotFound.jsx'
 import AppScreenResults, { A11yResultSkeleton, PinnedSection } from './components/AppScreenResults.jsx'
-import AppPanelDetail from './components/AppPanelDetail.jsx'
+import AppSheetDetail from './components/AppSheetDetail.jsx'
 import AppDrawerPanelAbout from './components/AppDrawerPanelAbout.jsx'
 import AppDrawerPanelHelp from './components/AppDrawerPanelHelp.jsx'
 import AppCarouselOnboarding from './components/AppCarouselOnboarding.jsx'
@@ -60,8 +60,8 @@ import entrySlug from './utils/entrySlug.js'
 import './components/theme-fiesta-mode.css'
 
 const AppDrawerPanelSettings = lazy(() => import('./components/AppDrawerPanelSettings.jsx'))
-const AppPanelAdmin = import.meta.env.DEV
-  ? lazy(() => import('./components/AppPanelAdmin.jsx'))
+const AppDrawerPanelAdmin = import.meta.env.DEV
+  ? lazy(() => import('./components/AppDrawerPanelAdmin.jsx'))
   : () => null
 const UlamMenu = import.meta.env.DEV
   ? lazy(() => import('./UlamMenu.jsx'))
@@ -686,7 +686,7 @@ function AppContent() {
                 : ulamOpen
                   ? <UlamMenu />
                   : adminOpen
-                  ? <AppPanelAdmin {...adminProps} />
+                  ? <AppDrawerPanelAdmin {...adminProps} />
                   : isDesktop && settingsOpen
                     ? <AppDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
                     : isDesktop && aboutOpen
@@ -745,7 +745,7 @@ function AppContent() {
         collapseIcon={() => <ChevronsUp size={16} strokeWidth={2} aria-hidden="true" />}
       >
         {selected && (
-          <AppPanelDetail
+          <AppSheetDetail
             key={selected.id}
             entry={selected}
             agenticMode={isAgenticModeEnabled()}
