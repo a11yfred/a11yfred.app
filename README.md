@@ -59,6 +59,32 @@ src/
 
 ---
 
+## Component naming convention
+
+All components in `src/components/` follow a strict two-tier naming convention based on their purpose:
+
+**`App*` prefix** — Components that wrap or compose @ulam framework components.
+
+Examples:
+
+- `AppScreenHeader.jsx` — wraps @ulam/ube `ButtonIcon`, `LinkSkipTo`
+- `AppDrawerPanelSettings.jsx` — wraps @ulam/ube `Panel`
+- `AppSheetDetail.jsx` — wraps @ulam/sili `Sheet`, @ulam/ube form controls, Dialog
+- `AppBadges.jsx` — wraps @ulam/ube `Badge`
+
+**`A11y*` prefix** — Components that are custom to a11yfred and not simple wrappers of framework components.
+
+Examples:
+
+- `A11yResultAd.jsx` — custom ad tile component unique to a11yfred
+- `A11yThemeEffectFiestaSparkles.jsx` — custom canvas-based sparkle effect
+- `A11yResultsActiveFilterBar.jsx` — custom filter bar UI
+- `A11ySettingsSectionAi.jsx` — custom settings panel section
+
+This convention keeps the codebase clear: framework integrations (App*) are distinct from custom features (A11y*), making it easy to identify what each component does at a glance.
+
+---
+
 ## Known limitations
 
 ### Overlay Management (@ulam/sili)
