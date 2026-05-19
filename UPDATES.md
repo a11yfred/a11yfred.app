@@ -1,54 +1,10 @@
 # Recent Updates
 
-## Overview
-
-Recent updates have focused on component naming consistency, file organization, and framework compliance. Work includes aligning with ulam 0.3.0 breaking changes, establishing naming conventions for 33 components, and improving code organization through strategic file renames.
+Plain-language snapshots of what changed and why (by date). For detailed technical changes, see [CHANGELOG.md](CHANGELOG.md). For completed features by phase, see [DONE.md](DONE.md). For remaining work, see [TODO.md](TODO.md).
 
 ## May 19, 2026 -- Component Naming Convention & File Organization (Session 7)
 
-### Component Naming System
-
-Established strict two-tier naming convention for all 33 components:
-
-**App\* components (15):** Wrap or compose @ulam framework components
-
-- AppBadges, AppCarouselOnboarding, AppDrawerPanelAbout, AppDrawerPanelAdmin, AppDrawerPanelHelp, AppDrawerPanelSettings, AppInputSearchHero, AppLinkSc, AppLinksSource, AppListResultCard, AppOverlayManager, AppResultsMetaHeader, AppScreenHeader, AppScreenResults, AppSheetDetail
-
-**A11y\* components (18):** Custom to a11yfred, not framework wrappers
-
-- A11yAdminDatasetSelector, A11yFiestaBanner, A11yResultAd, A11yResultRelated, A11yResultsActiveFilterBar, A11yResultSkeleton, A11yScreenFooter, A11yScreenNotFound, A11ySettingsSectionAi, A11ySettingsSectionAppearance, A11ySettingsSectionSearch, A11yTextareaCopyable, A11yThemeEffectConfetti, A11yThemeEffectFiestaSparkles, A11yThemeWidgetFiestaMusicPlayer, A11yTitle, A11yToastAiDebug, A11yWidgetKofi
-
-### File Renames
-
-**Components:**
-
-- AppPanelDetail → AppSheetDetail (uses Sheet interface, clarifies purpose)
-- AppPanelAdmin → AppDrawerPanelAdmin (consistent with AppDrawerPanel\* naming)
-- A11yTileAd → A11yResultAd (semantic: ad in results context)
-- ResultsActiveFilterBar → A11yResultsActiveFilterBar (custom a11yfred component)
-- A11yAppTitle → A11yTitle (cleaner)
-
-**CSS files:**
-
-- user-preferences.css → a11y-user-prefs.css
-- app-panel-detail.css → app-sheet-detail.css
-- app-panel-admin.css → app-drawer-panel-admin.css
-
-**Config/utility files:**
-
-- ai-config.js → config-ai.js
-- i18n-locales.js → locales-i18n.js
-- rtl-locales.js → locales-rtl.js
-- theme.js → theming.js
-
-### Quality Assurance
-
-Fixed component reference bugs:
-
-- AppScreenResults: corrected self-reference (A11yListResults → AppScreenResults)
-- AppScreenResults: fixed child component reference (A11yListResultCard → AppListResultCard)
-
-All imports updated across codebase. Linting passes (ESLint, Stylelint, Markdownlint). Build succeeds. All 33 components follow convention.
+Established App\* (15 framework wrappers) and A11y\* (18 custom) naming convention. Renamed 8 components, 7 config/utility files. Fixed 2 component reference bugs. All imports updated, linting passes, build succeeds. See [CHANGELOG.md](CHANGELOG.md) for technical details.
 
 ---
 

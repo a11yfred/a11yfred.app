@@ -46,16 +46,9 @@ src/
 └── App.jsx         main app (routes, contexts, state management)
 ```
 
-**npm packages** (in package.json):
+**Framework packages:**
 
-- `@ulam/ube` (v0.3.0) — UI components: FormInputSearch, FormInputWithClear, ButtonText, ButtonIcon, FormControlToggle, FormControlRadio(Chip/Group), FormControlSelect, FormControlCheckbox, Screen, Panel, Badge, FadeTransition, etc.
-- `@ulam/taho` — ARIA live region announcer and Announcer React component
-- `@ulam/sili` (v0.3.0) — Dialog, Sheet, Drawer with focus management, OverlayManager, escape key handling
-- `@ulam/calamansi` — i18n, locale management, search relevance scoring
-- `@ulam/halohalo` — AI provider abstraction (Anthropic, OpenAI, Google, Azure)
-- `@ulam/sawsawan` — storage adapters (localStorage, sessionStorage, memory) with platform detection
-- `@a11yfred/neighbor` — ESLint and Stylelint a11y plugins
-- `@a11yfred/rogers` — accessibility debug tools
+Built on @ulam (ulam accessibility framework). See [ABOUT.md](ABOUT.md) for full framework documentation.
 
 ---
 
@@ -85,84 +78,21 @@ This convention keeps the codebase clear: framework integrations (App*) are dist
 
 ---
 
-## Known limitations
-
-### Overlay Management (@ulam/sili)
-
-Only one overlay (dialog/sheet/drawer) can be active at a time (by design per @ulam/sili OverlayManager architecture). Screen z-order is fixed: Screen(0) < Drawer(1) < Sheet(2) < Dialog(3). Nested overlays are not supported; workaround is to convert nested overlays to dialogs stacked on top.
-
-### Navigation & Routing (@ulam/sili)
-
-Uses @ulam/sili hash router. No native search param support (workaround: use state management or localStorage). Migrate to Remix router if moving to Remix, or React Router for more features. See [ULAM.md](docs/archive/ULAM.md) for framework details.
-
-### UI Components (@ulam/ube v0.3.0)
-
-@ulam/ube v0.3.0 renamed form input components for semantic accuracy: `FormInputSearch` and `FormInputWithClear` (replacing FormControlInputSearch/FormControlInputWithClear). All components import their own CSS; `ui.css` is the foundational stylesheet containing tokens, reset, typography, user preferences, and print styles.
-
-### Forms (@ulam/ube)
-
-No built-in form validation (implement using standard React patterns). No form state library; use React Hook Form or Formik for complex forms.
-
-### Accessibility
-
-Most animations respect `prefers-reduced-motion`, but some transition speeds should be reviewed for edge cases. High contrast mode is mostly supported, but custom styles in A11yDrawerPanel* components may need review.
-
 ---
 
-## Entry schema
+## Architecture & Limitations
 
-Each corpus entry:
+See [ABOUT.md](ABOUT.md) for architectural patterns, technical decisions, and design rationale.
 
-```json
-{
-  "id": "ACC-079",
-  "sc": "2.4.6",
-  "title": "Entry Title",
-  "wcagLevel": "AA",
-  "wcagVersion": "2.1",
-  "severity": "High",
-  "platform": "web",
-  "desc": "Problem description.",
-  "fix": "How to fix it.",
-  "creditNames": ["Mikey Ilagan"],
-  "keywords": ["keyboard", "label"],
-  "relatedSC": ["1.3.1 Info and Relationships (Level A)"],
-  "primarySC": "2.4.6 Headings and Labels (Level AA)",
-  "creditLinks": [{ "text": "Source Title", "url": "https://..." }],
-  "note": "Optional clarifying note."
-}
-```
+**Key framework limitations:**
+
+- Only one overlay active at a time (Dialog/Sheet/Drawer); z-order: Screen < Drawer < Sheet < Dialog
+- Hash-based routing; no native search params (use localStorage/state management)
+- No form validation in @ulam/ube (use React Hook Form or Formik)
+
+See [docs/archive/ULAM.md](docs/archive/ULAM.md) for framework details.
 
 ---
-
-## Tools
-
-| Package | Description |
-| --- | --- |
-| [`@a11yfred/neighbor`](https://github.com/a11yfred/neighbor) | ESLint and Stylelint accessibility linting plugin |
-| [`@a11yfred/rogers`](https://github.com/a11yfred/rogers) | Accessibility debug panel for development |
-
----
-
-## Dependencies
-
-### Current Versions
-
-- React 18.x
-- @ulam/sili 0.3.0+
-- @ulam/ube 0.2.2+
-- @ulam/calamansi (latest)
-- @ulam/taho (latest)
-- @ulam/halohalo (latest)
-- @ulam/sawsawan (latest)
-- @a11yfred/neighbor (latest)
-- @a11yfred/rogers (latest)
-
----
-
-## Changelog
-
-See [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
@@ -172,19 +102,26 @@ See [docs/DEPLOYING.md](docs/DEPLOYING.md) for full instructions.
 
 ---
 
+## Documentation Map
+
+| Document | Purpose |
+| --- | --- |
+| [README.md](README.md) | You are here: project overview, quick start, component conventions |
+| [ABOUT.md](ABOUT.md) | Technical deep-dive: architecture, design choices, easter eggs |
+| [DONE.md](DONE.md) | Completed features by phase (reference archive) |
+| [TODO.md](TODO.md) | Remaining work and roadmap (Phase 3 & 4) |
+| [UPDATES.md](UPDATES.md) | Dated snapshots of recent work (plain language) |
+| [CHANGELOG.md](CHANGELOG.md) | Technical changes and breaking changes by version |
+
 ## Questions & Support
 
-**How do I use this tool?** Start with the built-in "How to Use" onboarding (auto-launches on first visit, re-launchable from Help). Check [README.md](README.md) for general questions.
+**How do I use this tool?** Start with the built-in "How to Use" onboarding (auto-launches on first visit, re-launchable from Help).
 
-**What just changed?** See [UPDATES.md](UPDATES.md) for plain-language snapshots of recent work, or [CHANGELOG.md](CHANGELOG.md) for technical changes.
+**What just changed?** See [UPDATES.md](UPDATES.md) for recent work snapshots, or [CHANGELOG.md](CHANGELOG.md) for technical details.
 
-**Found a bug?** Open a [GitHub issue](https://github.com/a11yfred/a11yfred/issues) with the `bug:` prefix. Include:
+**Found a bug?** Open a [GitHub issue](https://github.com/a11yfred/a11yfred/issues) with the `bug:` prefix. Include minimal reproduction steps, browser/OS, and expected vs actual behavior.
 
-1. Minimal reproduction steps
-2. Browser, OS, and screen reader (if a11y-related)
-3. Expected vs actual behavior
-
-**Want to improve accessibility?** See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+**Want to contribute?** See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 

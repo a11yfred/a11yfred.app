@@ -1,6 +1,10 @@
 # A11yFred Completed Work
 
-Persistent record of completed features, fixes, and improvements. This is complementary to [UPDATES.md](UPDATES.md) (recurring snapshots of work by date) and [CHANGELOG.md](CHANGELOG.md) (technical changes). See [TODO.md](TODO.md) for remaining work.
+Comprehensive archive of completed features, organized by phase and category. Use this to understand what's been built and how. Complementary documents:
+
+- [UPDATES.md](UPDATES.md) — dated snapshots of recent work
+- [CHANGELOG.md](CHANGELOG.md) — technical changes and breaking changes
+- [TODO.md](TODO.md) — remaining work and roadmap
 
 ---
 
