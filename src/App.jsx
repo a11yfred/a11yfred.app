@@ -1,16 +1,16 @@
 import { FadeTransition, FormControlCheckbox, Screen } from '@ulam/ube'
 import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
-import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
-import A11yScreenHeader from './components/A11yScreenHeader.jsx'
+import AppInputSearchHero from './components/AppInputSearchHero.jsx'
+import AppScreenHeader from './components/AppScreenHeader.jsx'
 import A11yScreenFooter from './components/A11yScreenFooter.jsx'
 import A11yFiestaBanner from './components/A11yFiestaBanner.jsx'
 import A11yScreenNotFound from './components/A11yScreenNotFound.jsx'
-import A11yScreenResults, { A11yListResultSkeleton, PinnedSection } from './components/A11yScreenResults.jsx'
-import A11yPanelDetail from './components/A11yPanelDetail.jsx'
-import A11yDrawerPanelAbout from './components/A11yDrawerPanelAbout.jsx'
-import A11yDrawerPanelHelp from './components/A11yDrawerPanelHelp.jsx'
-import A11yCarouselOnboarding from './components/A11yCarouselOnboarding.jsx'
+import AppScreenResults, { A11yListResultSkeleton, PinnedSection } from './components/AppScreenResults.jsx'
+import AppPanelDetail from './components/AppPanelDetail.jsx'
+import AppDrawerPanelAbout from './components/AppDrawerPanelAbout.jsx'
+import AppDrawerPanelHelp from './components/AppDrawerPanelHelp.jsx'
+import AppCarouselOnboarding from './components/AppCarouselOnboarding.jsx'
 
 import A11yThemeEffectConfetti from './components/A11yThemeEffectConfetti.jsx'
 import A11yThemeEffectFiestaSparkles from './components/A11yThemeEffectFiestaSparkles.jsx'
@@ -59,9 +59,9 @@ import useUserOverrides from './hooks/useUserOverrides.js'
 import entrySlug from './utils/entrySlug.js'
 import './components/theme-fiesta-mode.css'
 
-const A11yDrawerPanelSettings = lazy(() => import('./components/A11yDrawerPanelSettings.jsx'))
-const A11yPanelAdmin = import.meta.env.DEV
-  ? lazy(() => import('./components/A11yPanelAdmin.jsx'))
+const AppDrawerPanelSettings = lazy(() => import('./components/AppDrawerPanelSettings.jsx'))
+const AppPanelAdmin = import.meta.env.DEV
+  ? lazy(() => import('./components/AppPanelAdmin.jsx'))
   : () => null
 const UlamMenu = import.meta.env.DEV
   ? lazy(() => import('./UlamMenu.jsx'))
@@ -415,7 +415,7 @@ function AppContent() {
 
   const searchView = (
     <>
-      <A11yInputSearchHero
+      <AppInputSearchHero
         query={query}
         onChange={handleQueryChange}
         onSearch={handleSearch}
@@ -450,7 +450,7 @@ function AppContent() {
           ? <A11yListResultSkeleton count={activeQuery === 'debug skeleton' ? sortedEntries.length : undefined} />
           : (viewAll || sheetCollapsed)
             ? (
-              <A11yScreenResults
+              <AppScreenResults
                 key="view-all"
                 {...baseListProps}
                 results={applySortBy(getUnpinnedEntries(sortedEntries, pinnedIds))}
@@ -480,7 +480,7 @@ function AppContent() {
                       </ul>
                     </div>
                   )}
-                  <A11yScreenResults
+                  <AppScreenResults
                     key="search"
                     {...baseListProps}
                     results={unpinnedResults}
@@ -491,7 +491,7 @@ function AppContent() {
               )
               : badgeFilter
                 ? (
-                  <A11yScreenResults
+                  <AppScreenResults
                     key="badge"
                     {...baseListProps}
                     results={applySortBy(badgeResults)}
@@ -503,7 +503,7 @@ function AppContent() {
                 )
               : sortedEntries.length === 0
                 ? (
-                  <A11yScreenResults
+                  <AppScreenResults
                     key="no-results-home"
                     {...baseListProps}
                     results={[]}
@@ -660,7 +660,7 @@ function AppContent() {
       {theme === 'fiesta' && <A11yFiestaBanner />}
 
       <div className="app-background" data-sheet-collapsed={sheetCollapsed ? true : undefined} inert={backgroundInert ? true : undefined}>
-        <A11yScreenHeader
+        <AppScreenHeader
           h1Ref={h1Ref}
           h1LinkRef={h1LinkRef}
           settingsOpen={settingsOpen}
@@ -686,15 +686,15 @@ function AppContent() {
                 : ulamOpen
                   ? <UlamMenu />
                   : adminOpen
-                  ? <A11yPanelAdmin {...adminProps} />
+                  ? <AppPanelAdmin {...adminProps} />
                   : isDesktop && settingsOpen
-                    ? <A11yDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
+                    ? <AppDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
                     : isDesktop && aboutOpen
-                      ? <A11yDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+                      ? <AppDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
                       : isDesktop && helpOpen
-                        ? <A11yDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+                        ? <AppDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
                         : isDesktop && onboardingOpen
-                          ? <A11yCarouselOnboarding onClose={handleCloseOnboarding} />
+                          ? <AppCarouselOnboarding onClose={handleCloseOnboarding} />
                           : searchView}
             </Suspense>
           </FadeTransition>
@@ -705,26 +705,26 @@ function AppContent() {
       {!isDesktop && (
         <Drawer open={settingsOpen} onClose={handleGuardedCloseSettings} label={t('settings.drawer_label')} focusOnClose={settingsTriggerRef}>
           <Suspense fallback={null}>
-            <A11yDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
+            <AppDrawerPanelSettings ref={settingsPanelRef} {...settingsProps} />
           </Suspense>
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={aboutOpen} onClose={handleCloseOverlay} label={t('about.sheet_label')} focusOnClose={aboutTriggerRef}>
-          <A11yDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
+          <AppDrawerPanelAbout onClose={handleCloseOverlay} allEntries={allEntries} />
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={helpOpen} onClose={handleCloseOverlay} label={t('help.sheet_label')} focusOnClose={helpTriggerRef}>
-          <A11yDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
+          <AppDrawerPanelHelp onClose={handleCloseOverlay} onStartTour={handleOpenOnboarding} />
         </Drawer>
       )}
 
       {!isDesktop && (
         <Drawer open={onboardingOpen} onClose={handleCloseOnboarding} label={t('onboarding.heading')} focusOnClose={onboardingTriggerRef}>
-          <A11yCarouselOnboarding onClose={handleCloseOnboarding} />
+          <AppCarouselOnboarding onClose={handleCloseOnboarding} />
         </Drawer>
       )}
 
@@ -745,7 +745,7 @@ function AppContent() {
         collapseIcon={() => <ChevronsUp size={16} strokeWidth={2} aria-hidden="true" />}
       >
         {selected && (
-          <A11yPanelDetail
+          <AppPanelDetail
             key={selected.id}
             entry={selected}
             agenticMode={isAgenticModeEnabled()}

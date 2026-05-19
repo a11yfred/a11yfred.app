@@ -3,7 +3,7 @@ import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Pin, PinOff, Chevr
 import { Fragment } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
-import A11yBadges from './A11yBadges.jsx'
+import A11yBadges from './AppBadges.jsx'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import entrySlug from '../utils/entrySlug.js'
 import { DEFAULT_RATING, DESC_PREVIEW_LENGTH, TITLE_TRUNCATE_LENGTH, SWIPE_THRESHOLD, SWIPE_REVEAL, SWIPE_ACTIVATE, SWIPE_PIN_FLASH_MS, PIN_FLY_MS, UNPIN_FLY_MS, ARCHIVE_FLY_MS, UNARCHIVE_FLY_MS, RANK_ANIM_MS } from '../utils/constants.js'
@@ -27,7 +27,7 @@ function triggerButtonAnimation(btn, id, setAnimating) {
   }, RANK_ANIM_MS)
 }
 
-export default function A11yListResultCard({
+export default function AppListResultCard({
   entry,
   index,
   selected,

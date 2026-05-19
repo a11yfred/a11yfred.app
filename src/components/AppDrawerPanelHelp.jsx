@@ -5,7 +5,7 @@ import { useT } from '@ulam/calamansi/react'
 
 import { version } from '../../package.json'
 
-export default function A11yDrawerPanelHelp({ onClose, onStartTour }) {
+export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
   const t = useT()
 
   return (

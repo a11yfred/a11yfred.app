@@ -5,7 +5,7 @@ import { useT } from '@ulam/calamansi/react'
 
 import { CYCLE_MS } from '../utils/constants.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
-import './a11y-input-search-hero.css'
+import './app-input-search-hero.css'
 
 // Each phrase has a display label and an optional accessible expansion.
 // Clicking a phrase populates the search field with its `text` value.
@@ -22,7 +22,7 @@ const TYPEWRITER_PHRASES = [
   { text: 'error' },
 ]
 
-export default function A11yInputSearchHero({ query, onChange, onSearch, onExampleSearch, onFocus, onBlur, liveSearch, narrowMode = false, inputRef: externalRef, onOpenSettings }) {
+export default function AppInputSearchHero({ query, onChange, onSearch, onExampleSearch, onFocus, onBlur, liveSearch, narrowMode = false, inputRef: externalRef, onOpenSettings }) {
   const t = useT()
   const internalRef = useRef(null)
   const inputRef = externalRef || internalRef

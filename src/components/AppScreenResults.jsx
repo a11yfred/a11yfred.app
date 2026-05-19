@@ -6,7 +6,7 @@ import { useT } from '@ulam/calamansi/react'
 
 
 import TileAd from './TileAd.jsx'
-import A11yListResultCard from './A11yListResultCard.jsx'
+import A11yListResultCard from './AppListResultCard.jsx'
 import ResultsMetaHeader from './ResultsMetaHeader.jsx'
 import ResultsActiveFilterBar from './ResultsActiveFilterBar.jsx'
 import { DEFAULT_RATING, pluralResult, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD, UNPIN_FLY_MS } from '../utils/constants.js'
@@ -17,7 +17,7 @@ import { useSettings } from '../context/ContextSettings.js'
 import { useSearch } from '../context/ContextSearch.js'
 import { useRatings } from '../context/ContextRatings.js'
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
-import './a11y-screen-results.css'
+import './app-screen-results.css'
 
 export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   const t = useT()
@@ -61,7 +61,7 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   )
 }
 
-export default function A11yScreenResults({ results, selected, onSelect, query, countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick, isBadgeFiltered = false }) {
+export default function AppScreenResults({ results, selected, onSelect, query, countRef, onCopyLink, hideCount = false, hideFilters = false, filterLabel, narrowResults = null, _showRankingSort = false, showAds = false, adFrequency = 8, onClear, onClearQuery, hasPinnedItems = false, defaultWcagFilter = null, onOpenSettings, onBadgeClick, isBadgeFiltered = false }) {
   const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter, setWcagFilter } = useSettings()
   const { narrowMode, narrowQuery, sortBy, setSortBy: onSortChange, setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery } = useSearch()
   const onNarrow = () => setNarrowMode(true)

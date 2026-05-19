@@ -1,7 +1,7 @@
 import { FormControlToggle, ButtonIcon } from '@ulam/ube'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { X, Copy, Check } from 'lucide-react'
-import './a11y-panel-admin.css'
+import './app-panel-admin.css'
 import publicCorpus from '../data/corpus.json'
 import legacyCorpus from '../data/legacy-corpus.json'
 import personalCorpus from '../data/personal-corpus.json'
@@ -62,7 +62,7 @@ function copyText(text) {
   navigator.clipboard?.writeText(text).catch(() => {})
 }
 
-export default function A11yPanelAdmin({
+export default function AppPanelAdmin({
   devAllEnabled, setDevAllEnabled,
   namesEnabled, setNamesEnabled,
   fabEnabled, setFabEnabled,

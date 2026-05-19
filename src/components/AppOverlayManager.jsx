@@ -11,7 +11,7 @@ import { URL_PRIVACY_POLICY } from '../utils/constants.js'
  * and settings panel (privacy, language, unsaved, reset, fiesta).
  * Delegates rendering to sili's OverlayManager.
  */
-export default function A11yOverlayManager({
+export default function AppOverlayManager({
   t,
   // App-level overlays
   viewAllConfirmOpen,

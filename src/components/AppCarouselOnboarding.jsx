@@ -9,7 +9,7 @@ import { useT } from '@ulam/calamansi/react'
 import { LS_ONBOARDING_SEEN } from '../utils/constants.js'
 import { setStorage } from '../utils/storage.js'
 import { useKeydown } from '../hooks/useKeydown.js'
-import './a11y-carousel-onboarding.css'
+import './app-carousel-onboarding.css'
 
 const randomAngle = () => Math.floor(Math.random() * 360)
 
@@ -37,7 +37,7 @@ const SLIDES = [
   },
 ]
 
-export default function A11yCarouselOnboarding({ onClose }) {
+export default function AppCarouselOnboarding({ onClose }) {
   const t = useT()
   const dir = useDir()
   const FwdArrow  = dir === 'rtl' ? CircleArrowLeft  : CircleArrowRight

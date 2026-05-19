@@ -2,7 +2,7 @@ import { IconExternalLink } from '@ulam/ube'
 
 import scToWaiUrl from '../utils/scToWaiUrl.js'
 
-export default function A11yLinkSc({ label }) {
+export default function AppLinkSc({ label }) {
   const href = scToWaiUrl(label)
   if (href) {
     return (

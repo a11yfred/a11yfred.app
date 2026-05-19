@@ -9,7 +9,7 @@ function isExternalLink(url) {
   }
 }
 
-export default function A11yLinksSource({
+export default function AppLinksSource({
   links,
   singleHeading = 'Source',
   multipleHeading = 'Sources'

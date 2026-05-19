@@ -6,8 +6,8 @@ import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import A11yTextareaCopyable from './A11yTextareaCopyable.jsx'
-import A11yLinkSc from './A11yLinkSc.jsx'
-import A11yLinksSource from './A11yLinksSource.jsx'
+import A11yLinkSc from './AppLinkSc.jsx'
+import A11yLinksSource from './AppLinksSource.jsx'
 import A11yListRelated from './A11yListRelated.jsx'
 import { DEBUG_COMMANDS, DEBUG_AI_DELAY_MS, getAiProvider, getProviderLabel } from '@ulam/halohalo'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
@@ -16,13 +16,13 @@ import useSheetDetailClipboard from '../hooks/useSheetDetailClipboard.js'
 import useSheetDetailRefine from '../hooks/useSheetDetailRefine.js'
 import { useSettings } from '../context/ContextSettings.js'
 import { useRatings } from '../context/ContextRatings.js'
-import './a11y-panel-detail.css'
+import './app-panel-detail.css'
 
 const createBadgeStyle = (bgVar, textVar) => ({ '--badge-bg': `var(${bgVar})`, '--badge-text': `var(${textVar})` })
 const WCAG_BADGE_STYLE = createBadgeStyle('--wcag-bg', '--wcag-text')
 const WCAG_LEVEL_BADGE_STYLE = createBadgeStyle('--wcag-level-bg', '--wcag-level-text')
 
-export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigger = 0, allEntries = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, debugPanelCmd = null, onDebugPanelCmdHandled }) {
+export default function AppPanelDetail({ entry, agenticMode = false, focusTrigger = 0, allEntries = [], onSelect, onSelectRelated, onClose, onBadgeClick, onCopyEvent, debugPanelCmd = null, onDebugPanelCmdHandled }) {
   const { aiEnabled } = useSettings()
   const { getPairsFor } = useRatings()
   const titleRef = useRef(null)
