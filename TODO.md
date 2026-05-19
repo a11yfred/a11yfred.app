@@ -1,6 +1,6 @@
 # A11yFred Roadmap & Work Items
 
-See [UPDATES.md](docs/UPDATES.md) for what's been completed, and [README.md](README.md) for known limitations.
+See [UPDATES.md](UPDATES.md) for what's been completed, and [README.md](README.md) for known limitations.
 
 Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `[privacy]` `[perf]` `[i18n]` `[agent]`
 
@@ -14,7 +14,7 @@ Category tags: `[corpus]` `[ai]` `[ux]` `[a11y]` `[design]` `[infra]` `[code]` `
 
 ## Phase 2: Code Quality & Hooks (Complete — May 17)
 
-`useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Component splits (A11yListResults, A11yPanelSettings) complete. Form controls accessibility refactored: aria-disabled pattern with keyboard prevention (new useAriaDisabledKeydown hook). Five DRY optimization passes completed.
+`useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Component refactors: AppScreenResults (renamed from A11yListResults), AppDrawerPanelSettings (renamed from A11yPanelSettings) complete. Form controls accessibility refactored: aria-disabled pattern with keyboard prevention (new useAriaDisabledKeydown hook). Five DRY optimization passes completed.
 
 ---
 
@@ -132,7 +132,7 @@ Manual testing covers the full app lifecycle and runs throughout development, no
 **Unit Tests:**
 
 - [ ] A11yOverlayManager focus management — trap, restore, escape key handling
-- [ ] A11yListResults filtering logic — badge filters, narrow mode, clear all
+- [ ] AppScreenResults filtering logic — badge filters, narrow mode, clear all
 - [ ] A11yInputSearchHero debouncing — typeahead on/off, live vs. on-demand modes
 - [ ] Focus restoration across overlay types — screen/drawer/sheet/dialog transitions
 

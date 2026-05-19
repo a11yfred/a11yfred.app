@@ -26,7 +26,7 @@ npm run build      # production build
 
 **Phase 1 (Feature Complete):** Complete (May 13). 106-entry public corpus (ACC prefix), all linters passing, @ulam framework published as npm packages, full component consolidation, CSS tokens, zero dead code. AI Assist (single-shot) and Match Existing Style (agentic) functional. Search, filter, sort, narrow mode, PWA/offline, and 65+ languages live.
 
-**Phase 2A (Code Quality):** Complete (May 17). `useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Component splits (A11yListResults, A11yPanelSettings) complete. Form controls accessibility refactored: aria-disabled pattern with keyboard prevention (new useAriaDisabledKeydown hook). Five DRY optimization passes in App.jsx: command map consolidation (18 if-statements), rating handlers factory, template formatting helpers, URL param parsing utility, platform announcements.
+**Phase 2A (Code Quality):** Complete (May 17). `useRouteHandler` and `useSearchManager` hooks integrated (1336 >> 730 lines, 602 lines removed). Component refactors: AppScreenResults (renamed from A11yListResults), AppDrawerPanelSettings (renamed from A11yPanelSettings). Form controls accessibility refactored: aria-disabled pattern with keyboard prevention (new useAriaDisabledKeydown hook). Five DRY optimization passes in App.jsx: command map consolidation (18 if-statements), rating handlers factory, template formatting helpers, URL param parsing utility, platform announcements.
 
 **Phase 3 (Theme + Extensions):** In progress. Neighborly color theme on feature branch (WCAG AA compliance verified). Chrome and Firefox extension scaffolds ready. Electron scaffold empty. No timeline set.
 
@@ -93,7 +93,7 @@ Only one overlay (dialog/sheet/drawer) can be active at a time (by design per @u
 
 ### Navigation & Routing (@ulam/sili)
 
-Uses @ulam/sili hash router. No native search param support (workaround: use state management or localStorage). Migrate to Remix router if moving to Remix, or React Router for more features.
+Uses @ulam/sili hash router. No native search param support (workaround: use state management or localStorage). Migrate to Remix router if moving to Remix, or React Router for more features. See [ULAM.md](docs/archive/ULAM.md) for framework details.
 
 ### UI Components (@ulam/ube v0.3.0)
 
@@ -162,7 +162,7 @@ Each corpus entry:
 
 ## Changelog
 
-See [docs/CHANGELOG.md](docs/CHANGELOG.md).
+See [CHANGELOG.md](CHANGELOG.md).
 
 ---
 
@@ -176,7 +176,7 @@ See [docs/DEPLOYING.md](docs/DEPLOYING.md) for full instructions.
 
 **How do I use this tool?** Start with the built-in "How to Use" onboarding (auto-launches on first visit, re-launchable from Help). Check [README.md](README.md) for general questions.
 
-**What just changed?** See [docs/UPDATES.md](docs/UPDATES.md) for plain-language snapshots of recent work, or [docs/CHANGELOG.md](docs/CHANGELOG.md) for technical changes.
+**What just changed?** See [UPDATES.md](UPDATES.md) for plain-language snapshots of recent work, or [CHANGELOG.md](CHANGELOG.md) for technical changes.
 
 **Found a bug?** Open a [GitHub issue](https://github.com/a11yfred/a11yfred/issues) with the `bug:` prefix. Include:
 

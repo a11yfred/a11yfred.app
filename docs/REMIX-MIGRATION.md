@@ -92,16 +92,16 @@ fallbacks (`retryIcon`, `closeIcon`, `backLtrIcon`, `backRtlIcon`, `collapseIcon
 
 App-specific components extracted to `src/components/` with `A11y` prefix:
 
-- `A11yPanelAbout`, `A11yPanelHelp`, `A11yPanelSettings`, `A11yPanelAdmin`
-- `A11yListResults`, `A11yListResultSkeleton`, `A11yListRelated`, `A11yLinksSource`
-- `A11yLinkSc`, `A11yLinkTitle`, `A11yTextareaCopyable`, `A11yInputSearchHero`
+- `AppDrawerPanelAbout`, `AppDrawerPanelHelp`, `AppDrawerPanelSettings`, `AppDrawerPanelAdmin`
+- `AppScreenResults`, `A11yResultSkeleton`, `A11yResultRelated`, `AppLinksSource`
+- `AppLinkSc`, `AppLinkTitle`, `A11yTextareaCopyable`, `AppInputSearchHero`
 - `A11yToastAiDebug`
 
-Other app components renamed to noun-modifier convention:
+Other app components follow naming convention (App\* for framework wrappers, A11y\* for custom):
 
-- `A11yPanelDetail`, `CarouselOnboarding`, `TileAd`, `EffectConfetti`, `EffectFiestaSparkles`,
-
-  `WidgetFiestaMusicPlayer`, `WidgetKofi`, `ThemeFiestaMode.css`
+- `AppSheetDetail` (formerly A11yPanelDetail), `AppCarouselOnboarding` (formerly CarouselOnboarding)
+- `A11yResultAd` (formerly TileAd), `A11yThemeEffectConfetti`, `A11yThemeEffectFiestaSparkles`
+- `A11yThemeWidgetFiestaMusicPlayer`, `A11yWidgetKofi`, `a11y-theme-fiesta-mode.css`
 
 Subpath exports:
 

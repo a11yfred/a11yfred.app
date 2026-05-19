@@ -93,7 +93,7 @@ The router provides primitives (`useRouter`, `useRouteMatch`, `Route`) but not a
 
 ### Framework packages
 
-A11yFred is built on the ulam accessibility framework, developed alongside the app. Each package has a barrel export. See [ULAM.md](ULAM.md) for full documentation.
+A11yFred is built on the ulam accessibility framework, developed alongside the app. Each package has a barrel export. See [ULAM.md](docs/archive/ULAM.md) for full documentation.
 
 - **@ulam/ube** (v0.3.0): UI component library: ButtonText, Dialog, Drawer, Sheet, FormInputSearch, FormInputWithClear, Screen, and 15+ others. Pure CSS with minimal dependencies.
 - **@ulam/taho**: ARIA live region announcer. Call `announce(message)` from anywhere. Announcer React component in `@ulam/taho/react`.

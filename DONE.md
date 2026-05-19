@@ -1,6 +1,6 @@
 # A11yFred Completed Work
 
-Persistent record of completed features, fixes, and improvements. This is complementary to [UPDATES.md](docs/UPDATES.md) (recurring snapshots of work by date) and [CHANGELOG.md](docs/CHANGELOG.md) (technical changes). See [TODO.md](TODO.md) for remaining work.
+Persistent record of completed features, fixes, and improvements. This is complementary to [UPDATES.md](UPDATES.md) (recurring snapshots of work by date) and [CHANGELOG.md](CHANGELOG.md) (technical changes). See [TODO.md](TODO.md) for remaining work.
 
 ---
 
@@ -116,7 +116,7 @@ Persistent record of completed features, fixes, and improvements. This is comple
 
 ### Component Refactoring
 
-- [x] A11yListResults split — extracted A11yListResultCard, ResultsMetaHeader, ResultsActiveFilterBar
+- [x] A11yListResults refactored to AppScreenResults — extracted AppListResultCard, AppResultsMetaHeader, A11yResultsActiveFilterBar
 - [x] A11yPanelSettings split — extracted SettingsSectionAppearance, SettingsSectionSearch, SettingsSectionAi
 - [x] Label formatters extracted — `src/utils/labelFormatters.js` for reusable formatting logic
 - [x] Related Entries upgrade — semantic HTML (`<section>`, `<h3>` headings)
