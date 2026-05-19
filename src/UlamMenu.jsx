@@ -489,7 +489,7 @@ export default function UlamMenu() {
           </Row>
           <Row label="usePref (React hook)">
             <label htmlFor="live-pref-tog" className="ulam-toggle-label">
-              <Toggle id="live-pref-tog" checked={liveSearch} onChange={setLiveSearch} />
+              <FormControlToggle id="live-pref-tog" checked={liveSearch} onChange={setLiveSearch} />
               Live search persisted: {String(liveSearch)}
             </label>
             <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>

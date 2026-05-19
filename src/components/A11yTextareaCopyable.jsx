@@ -1,7 +1,6 @@
 import { useRef, useEffect, forwardRef } from 'react'
 import { RotateCcw, Copy, Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
-import { FormControlCheckbox } from '@ulam/ube'
 
 const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
   id,

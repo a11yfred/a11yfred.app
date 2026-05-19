@@ -1,4 +1,4 @@
-import { ButtonText, FormControlCheckbox } from '@ulam/ube'
+import { ButtonText } from '@ulam/ube'
 import { useMemo } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { OverlayManager } from '@ulam/sili/react'
@@ -17,8 +17,8 @@ export default function A11yOverlayManager({
   viewAllConfirmOpen,
   onViewAllConfirmClose,
   onViewAllConfirm,
-  viewAllDontAsk,
-  onViewAllDontAskChange,
+  viewAllDontAsk: _viewAllDontAsk,
+  onViewAllDontAskChange: _onViewAllDontAskChange,
   viewAllConfirmContent,
   viewAllTriggerRef,
   pendingEntry,

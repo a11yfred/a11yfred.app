@@ -1,5 +1,5 @@
 import { FadeTransition, FormControlCheckbox, Screen } from '@ulam/ube'
-import { useState, useEffect, useRef, Suspense } from 'react'
+import { useState, useEffect, useRef, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import A11yInputSearchHero from './components/A11yInputSearchHero.jsx'
 import PageHeader from './components/PageHeader.jsx'

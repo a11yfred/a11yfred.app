@@ -73,7 +73,7 @@ export default function A11yDrawerPanelHelp({ onClose, onStartTour }) {
       </div>
 
       <div className="panel-mobile-back">
-        <Button
+        <ButtonText
           variant="primary"
           className="panel-mobile-back-btn"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
@@ -81,7 +81,7 @@ export default function A11yDrawerPanelHelp({ onClose, onStartTour }) {
           tabIndex={-1}
         >
           {t('settings.back')}
-        </Button>
+        </ButtonText>
       </div>
     </Panel>
   )
