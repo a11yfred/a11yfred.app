@@ -29,7 +29,7 @@ import {
   useRouteMatch,
   Drawer,
   Sheet,
-  Modal,
+  Dialog,
   useMediaQuery,
 } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
@@ -526,7 +526,7 @@ function AppContent() {
                 </div>
               )
       }
-      <Modal
+      <Dialog
         open={viewAllConfirmOpen}
         onClose={() => setViewAllConfirmOpen(false)}
         returnFocusRef={viewAllTriggerRef}
@@ -581,7 +581,7 @@ function AppContent() {
             onChange={e => setViewAllDontAsk(e.target.checked)}
           />
         </div>
-      </Modal>
+      </Dialog>
     </>
   )
 
@@ -787,7 +787,7 @@ function AppContent() {
         ]}
       >
         <p>{t('detail.discard_confirm_body')}</p>
-      </Modal>
+      </Dialog>
 
       <Modal
         open={pendingPrivacy}
@@ -807,7 +807,7 @@ function AppContent() {
         ]}
       >
         <p>{t('detail.discard_nav_body')}</p>
-      </Modal>
+      </Dialog>
     </div>
   )
 }

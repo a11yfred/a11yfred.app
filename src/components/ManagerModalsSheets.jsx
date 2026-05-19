@@ -1,7 +1,7 @@
 import { ButtonText } from '@ulam/ube'
 import { useMemo } from 'react'
 import { AlertTriangle } from 'lucide-react'
-import { Modal, Sheet } from '@ulam/sili/react'
+import { Dialog, Sheet } from '@ulam/sili/react'
 
 import { URL_PRIVACY_POLICY } from '../utils/constants.js'
 
@@ -264,9 +264,9 @@ export default function ManagerModalsSheets({
         </Sheet>
       )}
 
-      {/* Single Modal */}
+      {/* Single Dialog */}
       {isModalActive && (
-        <Modal
+        <Dialog
           open={true}
           onClose={handleClose}
           heading={getModalHeading()}
@@ -274,7 +274,7 @@ export default function ManagerModalsSheets({
           returnFocusRef={activeModal === 'noChanges' ? saveButtonRef : null}
         >
           {renderModalContent()}
-        </Modal>
+        </Dialog>
       )}
     </>
   )

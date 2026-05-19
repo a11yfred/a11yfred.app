@@ -1,7 +1,7 @@
 import { ButtonText, InfoBox, FormControlToggle, FormControlInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
-import { useMediaQuery, useFocusOnChange, Modal } from '@ulam/sili/react'
+import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
@@ -471,24 +471,24 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
         )}
       </div>
 
-      <Modal
+      <Dialog
         open={nothingToCopy}
         onClose={() => setNothingToCopy(false)}
         heading={t('detail.nothing_to_copy_heading')}
       >
         <p>{t('detail.nothing_to_copy_body')}</p>
-      </Modal>
+      </Dialog>
 
-      <Modal
+      <Dialog
         open={!!revisionFailed}
         onClose={() => setRevisionFailed(null)}
         heading={t('detail.ai_revision_error_heading')}
         returnFocusRef={aiRevisionButtonRef}
       >
         <p>{revisionFailed}</p>
-      </Modal>
+      </Dialog>
 
-      <Modal
+      <Dialog
         open={!!confirmReset}
         onClose={() => setConfirmReset(null)}
         heading={t('detail.confirm_reset_heading')}
@@ -506,7 +506,7 @@ export default function A11yPanelDetail({ entry, agenticMode = false, focusTrigg
         ]}
       >
         <p>{t('detail.confirm_reset_body')}</p>
-      </Modal>
+      </Dialog>
     </div>
   )
 }

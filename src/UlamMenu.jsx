@@ -15,7 +15,7 @@ import {
 
 
 
-import { Sheet, Modal, Drawer } from '@ulam/sili/react'
+import { Sheet, Dialog, Drawer } from '@ulam/sili/react'
 import { usePref } from '@ulam/calamansi/react'
 import { initI18n, setLocale, getT } from '@ulam/calamansi'
 import DEMO_MESSAGES from './calamansi/demo-messages.js'
@@ -417,19 +417,19 @@ export default function UlamMenu() {
               </div>
             </Sheet>
           </Row>
-          <Row label="Modal">
-            <ButtonText variant="secondary" onClick={() => setModalOpen(true)}>Open Modal</ButtonText>
-            <Modal
+          <Row label="Dialog">
+            <ButtonText variant="secondary" onClick={() => setModalOpen(true)}>Open Dialog</ButtonText>
+            <Dialog
               open={modalOpen}
               onClose={() => setModalOpen(false)}
-              heading="Example Modal"
+              heading="Example Dialog"
             >
               <p>Centered dialog with focus trap and Escape-to-dismiss. Focus is restored to the trigger on close.</p>
               <div className="ulam-modal-actions">
                 <ButtonText variant="secondary" onClick={() => setModalOpen(false)}>Cancel</ButtonText>
                 <ButtonText variant="primary" onClick={() => setModalOpen(false)}>Confirm</ButtonText>
               </div>
-            </Modal>
+            </Dialog>
           </Row>
           <Row label="Drawer">
             <ButtonText variant="secondary" onClick={() => setDrawerOpen(true)}>Open Drawer</ButtonText>
