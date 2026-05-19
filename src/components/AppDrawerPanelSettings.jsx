@@ -1,4 +1,4 @@
-import { Panel, ButtonText } from '@ulam/ube'
+import { Panel, Button } from '@ulam/ube'
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, Save, ArrowLeft } from 'lucide-react'
 import { useRouter, useKeydown, usePrefersReducedMotion } from '@ulam/sili/react'
@@ -303,7 +303,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
 
       {/* ── Footer ──────────────────────────────────── */}
       <div className="settings-footer-row">
-        <ButtonText
+        <Button
           ref={privacyButtonRef}
           variant="tertiary"
           icon={<Info size={14} aria-hidden="true" />}
@@ -311,9 +311,9 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
           onClick={() => onOpenPrivacy ? onOpenPrivacy() : navigate('/settings/privacy')}
         >
           {t('settings.privacy_button')}
-        </ButtonText>
+        </Button>
         <div className="settings-footer-actions">
-          <ButtonText
+          <Button
             ref={resetButtonRef}
             variant="warning"
             className="settings-reset-btn"
@@ -321,8 +321,8 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
             onClick={() => setResetConfirmOpen(true)}
           >
             {t('settings.reset_all')}
-          </ButtonText>
-          <ButtonText
+          </Button>
+          <Button
             ref={saveButtonRef}
             active={saved}
             icon={<Save size={14} aria-hidden="true" />}
@@ -334,7 +334,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
             onClick={handleSave}
           >
             {saved ? t('settings.saved') : saveAndClose ? t('settings.save_and_close') : t('settings.save')}
-          </ButtonText>
+          </Button>
         </div>
       </div>
 
@@ -384,7 +384,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
       </div>
 
       <div className="panel-mobile-back">
-        <ButtonText
+        <Button
           variant="tertiary"
           className="panel-mobile-back-btn"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
@@ -392,7 +392,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
           tabIndex={-1}
         >
           {t('settings.back')}
-        </ButtonText>
+        </Button>
       </div>
     </Panel>
   )

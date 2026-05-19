@@ -1,4 +1,4 @@
-import { FormControlToggle, ButtonIcon } from '@ulam/ube'
+import { FormControlToggle, Button } from '@ulam/ube'
 import { setAriaDisabled } from '@ulam/ube/core/ariaDisabled'
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { X, Copy, Check } from 'lucide-react'
@@ -134,7 +134,7 @@ export default function AppDrawerPanelAdmin({
           <span className="admin-dev-badge">DEV</span>
           Admin
         </div>
-        <ButtonIcon
+        <Button
           icon={<X size={18} aria-hidden="true" />}
           label="Close admin panel"
           onClick={onClose}

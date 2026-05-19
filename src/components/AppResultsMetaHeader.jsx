@@ -1,4 +1,4 @@
-import { ButtonText, FormControlSelect, FormControlRadioChip, FormInputWithClear, InfoBox } from '@ulam/ube'
+import { Button, FormControlSelect, FormControlRadioChip, FormInputText, InfoBox } from '@ulam/ube'
 import { Link, Check, Filter, OctagonX, Trash2, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 
@@ -71,7 +71,7 @@ export default function AppResultsMetaHeader({
               {displayCount}
             </h2>
             {onCopyLink && (
-              <ButtonText
+              <Button
                 active={linkCopied}
                 icon={<Link size={14} aria-hidden="true" />}
                 activeIcon={<Check size={14} aria-hidden="true" />}
@@ -87,7 +87,7 @@ export default function AppResultsMetaHeader({
                 }}
               >
                 {linkCopied ? t('results.copied_link') : t('results.copy_link')}
-              </ButtonText>
+              </Button>
             )}
           </div>
           {onSortChange && results.length > 0 && getSortInfo()}
@@ -155,7 +155,7 @@ export default function AppResultsMetaHeader({
                     <option value="popularity">{t('results.sort_popularity')}</option>
                   </FormControlSelect>
                   {!liveSearch && (
-                    <ButtonText
+                    <Button
                       variant="primary"
                       active={sortFlash}
                       disabled={pendingSort === sortBy}
@@ -168,14 +168,14 @@ export default function AppResultsMetaHeader({
                     >
                       {sortFlash && <Check size={16} aria-hidden="true" />}
                       <span>{sortFlash ? t('results.sorted_confirm') : t('results.sort_apply')}</span>
-                    </ButtonText>
+                    </Button>
                   )}
                 </div>
               </div>
             )}
             <div className="results-filter-btns">
               {results.length > 0 && onNarrow && (
-                <ButtonText
+                <Button
                   variant="secondary"
                   className="results-narrow-btn"
                   title={narrowMode ? t('search.exit_narrow_aria') : t('results.narrow_title')}
@@ -192,10 +192,10 @@ export default function AppResultsMetaHeader({
                       <span>{t('results.narrow_results')}</span>
                     </>
                   )}
-                </ButtonText>
+                </Button>
               )}
               {onClear && (
-                <ButtonText
+                <Button
                   variant="tertiary"
                   className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
                   title={t('results.clear_all_results')}
@@ -204,7 +204,7 @@ export default function AppResultsMetaHeader({
                   onClick={onClear}
                 >
                   {t('results.clear_all_results')}
-                </ButtonText>
+                </Button>
               )}
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function AppResultsMetaHeader({
                 {t('search.narrowing_results')}
               </label>
               <div className={`results-narrow-row${!query && !narrowQuery ? ' results-narrow-row--dimmed' : ''}`}>
-                <FormInputWithClear
+                <FormInputText
                   id="narrow-filter"
                   type="text"
                   value={narrowQuery}
@@ -241,14 +241,14 @@ export default function AppResultsMetaHeader({
                   disabled={!query && !narrowQuery}
                 />
                 {!liveSearch && (
-                  <ButtonText
+                  <Button
                     onClick={onNarrowSearch}
                     disabled={narrowQuery.length < 2 || (!query && !narrowQuery)}
                     variant="primary"
                     className="results-narrow-submit-btn btn--input-height"
                   >
                     {t('search.narrow_button')}
-                  </ButtonText>
+                  </Button>
                 )}
               </div>
             </div>

@@ -1,4 +1,4 @@
-import { ButtonIcon, LinkSkipTo } from '@ulam/ube'
+import { Button, LinkSkipTo } from '@ulam/ube'
 import { Settings, X, Info, HelpCircle, ExternalLink as ExternalLinkIcon } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 
@@ -35,7 +35,7 @@ export default function AppScreenHeader({ h1Ref, h1LinkRef, settingsOpen, aboutO
 
       <div className="page-header__actions">
         {compact && !onboardingOpen ? (
-          <ButtonIcon
+          <Button
             onClick={settingsOpen ? onCloseSettings : aboutOpen ? onCloseAbout : helpOpen ? onCloseHelp : onCloseOnboarding}
             label={t('common.close')}
             icon={<X size={20} strokeWidth={2.5} aria-hidden="true" />}
@@ -43,19 +43,19 @@ export default function AppScreenHeader({ h1Ref, h1LinkRef, settingsOpen, aboutO
           />
         ) : !onboardingOpen && (
           <>
-            <ButtonIcon
+            <Button
               onClick={onOpenHelp}
               label={t('help.open_help')}
               icon={<HelpCircle size={20} strokeWidth={2} aria-hidden="true" />}
               className="page-header__help-btn"
             />
-            <ButtonIcon
+            <Button
               onClick={onOpenAbout}
               label={t('header.open_about')}
               icon={<Info size={20} strokeWidth={2} aria-hidden="true" />}
               className="page-header__about-btn"
             />
-            <ButtonIcon
+            <Button
               onClick={onOpenSettings}
               label={t('header.open_settings')}
               icon={<Settings size={20} strokeWidth={2} aria-hidden="true" />}

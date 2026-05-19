@@ -1,4 +1,4 @@
-import { LinkSkipTo, ButtonText, ButtonIcon, Badge, FormControlRadioChip, FormControlToggle, FormControlSelect, FormInputWithClear, Panel, FormControlInputSearch } from '@ulam/ube'
+import { LinkSkipTo, Button, Badge, FormControlRadioChip, FormControlToggle, FormControlSelect, FormInputText, Panel } from '@ulam/ube'
 import { useState } from 'react'
 import {
   Star, Settings, Search, X, Plus, Trash2,
@@ -58,13 +58,13 @@ function CalamansiDemo() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
         {DEMO_LOCALES.map(l => (
-          <ButtonText
+          <Button
             key={l}
             variant={locale === l ? 'primary' : 'secondary'}
             onClick={() => switchTo(l)}
           >
             {DEMO_MESSAGES[l].language}
-          </ButtonText>
+          </Button>
         ))}
       </div>
       {output && (
@@ -134,21 +134,21 @@ export default function UlamMenu() {
 
         <Section title="Button">
           <Row label="Primary">
-            <ButtonText variant="primary" onClick={() => {}}>Save changes</ButtonText>
-            <ButtonText variant="primary" icon={<Star size={16} />} onClick={() => {}}>With icon</ButtonText>
-            <ButtonText variant="primary" disabled onClick={() => {}}>Disabled</ButtonText>
+            <Button variant="primary" onClick={() => {}}>Save changes</Button>
+            <Button variant="primary" icon={<Star size={16} />} onClick={() => {}}>With icon</Button>
+            <Button variant="primary" disabled onClick={() => {}}>Disabled</Button>
           </Row>
           <Row label="Secondary">
-            <ButtonText variant="secondary" onClick={() => {}}>Cancel</ButtonText>
-            <ButtonText variant="secondary" icon={<Settings size={16} />} onClick={() => {}}>With icon</ButtonText>
-            <ButtonText variant="secondary" disabled onClick={() => {}}>Disabled</ButtonText>
+            <Button variant="secondary" onClick={() => {}}>Cancel</Button>
+            <Button variant="secondary" icon={<Settings size={16} />} onClick={() => {}}>With icon</Button>
+            <Button variant="secondary" disabled onClick={() => {}}>Disabled</Button>
           </Row>
           <Row label="Danger">
-            <ButtonText variant="danger" onClick={() => {}}>Delete</ButtonText>
-            <ButtonText variant="danger" icon={<Trash2 size={16} />} onClick={() => {}}>With icon</ButtonText>
+            <Button variant="danger" onClick={() => {}}>Delete</Button>
+            <Button variant="danger" icon={<Trash2 size={16} />} onClick={() => {}}>With icon</Button>
           </Row>
           <Row label="Toggle state">
-            <ButtonText
+            <Button
               variant="secondary"
               active={btnActive}
               icon={<Star size={16} />}
@@ -157,10 +157,10 @@ export default function UlamMenu() {
               onClick={() => setBtnActive(v => !v)}
             >
               {btnActive ? 'Starred' : 'Star'}
-            </ButtonText>
+            </Button>
           </Row>
           <Row label="Save cycle">
-            <ButtonText
+            <Button
               variant="primary"
               icon={<Copy size={16} />}
               active={saved}
@@ -169,34 +169,34 @@ export default function UlamMenu() {
               onClick={handleSave}
             >
               {saved ? 'Saved' : 'Save'}
-            </ButtonText>
+            </Button>
           </Row>
           <Row label="Full width">
-            <ButtonText variant="primary" fullWidth onClick={() => {}}>Full-width button</ButtonText>
+            <Button variant="primary" fullWidth onClick={() => {}}>Full-width button</Button>
           </Row>
         </Section>
 
-        <Section title="ButtonIcon">
+        <Section title="Button">
           <Row label="Accent">
-            <ButtonIcon icon={<X size={20} />} label="Close" variant="accent" onClick={() => {}} />
-            <ButtonIcon icon={<Settings size={20} />} label="Settings" variant="accent" onClick={() => {}} />
-            <ButtonIcon icon={<Search size={20} />} label="Search" variant="accent" onClick={() => {}} />
+            <Button icon={<X size={20} />} label="Close" variant="accent" onClick={() => {}} />
+            <Button icon={<Settings size={20} />} label="Settings" variant="accent" onClick={() => {}} />
+            <Button icon={<Search size={20} />} label="Search" variant="accent" onClick={() => {}} />
           </Row>
           <Row label="Tertiary">
-            <ButtonIcon icon={<Plus size={20} />} label="Add" variant="tertiary" onClick={() => {}} />
-            <ButtonIcon icon={<AlertTriangle size={20} />} label="Warning" variant="tertiary" onClick={() => {}} />
+            <Button icon={<Plus size={20} />} label="Add" variant="tertiary" onClick={() => {}} />
+            <Button icon={<AlertTriangle size={20} />} label="Warning" variant="tertiary" onClick={() => {}} />
           </Row>
           <Row label="Disabled">
-            <ButtonIcon icon={<Star size={20} />} label="Star" variant="accent" disabled onClick={() => {}} />
+            <Button icon={<Star size={20} />} label="Star" variant="accent" disabled onClick={() => {}} />
           </Row>
         </Section>
 
-        <Section title="ButtonText">
+        <Section title="Button">
           <Row label="Primary">
-            <ButtonText href="https://a11yfred.app" variant="primary">a11yfred.app</ButtonText>
+            <Button href="https://a11yfred.app" variant="primary">a11yfred.app</Button>
           </Row>
           <Row label="Secondary">
-            <ButtonText href="https://a11yfred.app" variant="secondary">Secondary link</ButtonText>
+            <Button href="https://a11yfred.app" variant="secondary">Secondary link</Button>
           </Row>
         </Section>
 
@@ -364,9 +364,9 @@ export default function UlamMenu() {
           </Row>
         </Section>
 
-        <Section title="FormInputWithClear">
+        <Section title="FormInputText">
           <Row label="Default">
-            <FormInputWithClear
+            <FormInputText
               id="search-demo"
               type="search"
               value={inputVal}
@@ -405,7 +405,7 @@ export default function UlamMenu() {
 
         <Section title="Overlays">
           <Row label="Bottom Sheet">
-            <ButtonText variant="secondary" onClick={() => setSheetOpen(true)}>Open Bottom Sheet</ButtonText>
+            <Button variant="secondary" onClick={() => setSheetOpen(true)}>Open Bottom Sheet</Button>
             <Sheet
               open={sheetOpen}
               onClose={() => setSheetOpen(false)}
@@ -419,7 +419,7 @@ export default function UlamMenu() {
             </Sheet>
           </Row>
           <Row label="Dialog">
-            <ButtonText variant="secondary" onClick={() => setModalOpen(true)}>Open Dialog</ButtonText>
+            <Button variant="secondary" onClick={() => setModalOpen(true)}>Open Dialog</Button>
             <Dialog
               open={modalOpen}
               onClose={() => setModalOpen(false)}
@@ -427,13 +427,13 @@ export default function UlamMenu() {
             >
               <p>Centered dialog with focus trap and Escape-to-dismiss. Focus is restored to the trigger on close.</p>
               <div className="ulam-modal-actions">
-                <ButtonText variant="secondary" onClick={() => setModalOpen(false)}>Cancel</ButtonText>
-                <ButtonText variant="primary" onClick={() => setModalOpen(false)}>Confirm</ButtonText>
+                <Button variant="secondary" onClick={() => setModalOpen(false)}>Cancel</Button>
+                <Button variant="primary" onClick={() => setModalOpen(false)}>Confirm</Button>
               </div>
             </Dialog>
           </Row>
           <Row label="Drawer">
-            <ButtonText variant="secondary" onClick={() => setDrawerOpen(true)}>Open Drawer</ButtonText>
+            <Button variant="secondary" onClick={() => setDrawerOpen(true)}>Open Drawer</Button>
             <Drawer
               open={drawerOpen}
               onClose={() => setDrawerOpen(false)}
@@ -442,12 +442,12 @@ export default function UlamMenu() {
               <div className="ulam-overlay-content">
                 <h3>Drawer</h3>
                 <p>Slides in from the left. Focus is trapped while open, restored to trigger on close.</p>
-                <ButtonText variant="primary" onClick={() => setDrawerOpen(false)}>Close Drawer</ButtonText>
+                <Button variant="primary" onClick={() => setDrawerOpen(false)}>Close Drawer</Button>
               </div>
             </Drawer>
           </Row>
           <Row label="Panel">
-            <ButtonText variant="secondary" onClick={() => setPanelOpen(true)}>Open Panel</ButtonText>
+            <Button variant="secondary" onClick={() => setPanelOpen(true)}>Open Panel</Button>
             {panelOpen && (
               <div className="ulam-panel-shell">
                 <Panel
@@ -457,7 +457,7 @@ export default function UlamMenu() {
                 >
                   <div className="ulam-overlay-content">
                     <p>Panel with back-button header. Focuses the heading on mount and restores the page title on unmount.</p>
-                    <ButtonText variant="secondary" onClick={() => setPanelOpen(false)}>Go back</ButtonText>
+                    <Button variant="secondary" onClick={() => setPanelOpen(false)}>Go back</Button>
                   </div>
                 </Panel>
               </div>

@@ -1,4 +1,4 @@
-import { FormInputWithClear, ButtonText } from '@ulam/ube'
+import { FormInputText, Button } from '@ulam/ube'
 import { useRef, useState, useEffect } from 'react'
 import { useT } from '@ulam/calamansi/react'
 import { usePrefersReducedMotion } from '@ulam/sili/react'
@@ -62,7 +62,7 @@ export default function AppInputSearchHero({ query, onChange, onSearch, onExampl
         )}
       </div>
       <div className="search-row">
-        <FormInputWithClear
+        <FormInputText
           id="entry-search"
           type="text"
           value={query}
@@ -81,14 +81,14 @@ export default function AppInputSearchHero({ query, onChange, onSearch, onExampl
           inputRef={inputRef}
         />
         {!liveSearch && (
-          <ButtonText
+          <Button
             onClick={onSearch}
             disabled={query.length < 2}
             variant="primary"
             className="search-submit-btn btn--input-height"
           >
             {t('search.button')}
-          </ButtonText>
+          </Button>
         )}
       </div>
       {query.length === 0 && !narrowMode && (

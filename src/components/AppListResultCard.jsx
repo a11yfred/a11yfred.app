@@ -1,4 +1,4 @@
-import { ButtonIcon, LinkSkipTo } from '@ulam/ube'
+import { Button, LinkSkipTo } from '@ulam/ube'
 import { Star, ThumbsUp, ThumbsDown, Archive, ArchiveRestore, Pin, PinOff, ChevronsLeft, ChevronsRight } from 'lucide-react'
 import { Fragment } from 'react'
 import { announce } from '@ulam/taho'
@@ -292,7 +292,7 @@ export default function AppListResultCard({
               </LinkSkipTo>
             )}
             {onPin && (
-              <ButtonIcon
+              <Button
                 variant="tertiary"
                 label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
                 disabled={archived}
@@ -307,7 +307,7 @@ export default function AppListResultCard({
           </div>
 
           {showRanking && !pinned && <div className="result-rank-col">
-            <ButtonIcon
+            <Button
               variant="tertiary"
               label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })}
               disabled={archived}
@@ -317,7 +317,7 @@ export default function AppListResultCard({
             />
 
             {!pinned && <>
-              <ButtonIcon
+              <Button
                 variant="tertiary"
                 label={t('results.rank_up', { title: shortTitle })}
                 disabled={archived}
@@ -334,7 +334,7 @@ export default function AppListResultCard({
                 <span aria-hidden="true">{score}</span>
               </span>
 
-              <ButtonIcon
+              <Button
                 variant="tertiary"
                 label={t('results.rank_down', { title: shortTitle })}
                 disabled={archived}
@@ -344,7 +344,7 @@ export default function AppListResultCard({
               />
             </>}
 
-            <ButtonIcon
+            <Button
               variant="tertiary"
               label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })}
               onClick={handleArchive}
@@ -363,7 +363,7 @@ export default function AppListResultCard({
             onFocus={() => setSwipeOpenId({ id: entry.id, side: 'right' })}
             onBlur={() => setSwipeOpenId(null)}
           >
-            <ButtonIcon
+            <Button
               variant="tertiary"
               label={pinned ? t('results.unpin', { title: shortTitle }) : t('results.pin', { title: shortTitle })}
               disabled={archived}
@@ -383,20 +383,20 @@ export default function AppListResultCard({
             onFocus={() => setSwipeOpenId({ id: entry.id, side: 'left' })}
             onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setSwipeOpenId(null) }}
           >
-            <ButtonIcon variant="tertiary" label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })} onClick={handleStar}
+            <Button variant="tertiary" label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })} onClick={handleStar}
               icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
               className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
             />
-            <ButtonIcon variant="tertiary" label={t('results.rank_up', { title: shortTitle })} disabled={archived} onClick={handleRankUp}
+            <Button variant="tertiary" label={t('results.rank_up', { title: shortTitle })} disabled={archived} onClick={handleRankUp}
               icon={<ThumbsUp size={14} aria-hidden="true" />}
               className="result-rank-btn result-rank-btn--up"
             />
             <span className="result-rank-score" aria-hidden="true">{score}</span>
-            <ButtonIcon variant="tertiary" label={t('results.rank_down', { title: shortTitle })} disabled={archived} onClick={handleRankDown}
+            <Button variant="tertiary" label={t('results.rank_down', { title: shortTitle })} disabled={archived} onClick={handleRankDown}
               icon={<ThumbsDown size={14} aria-hidden="true" />}
               className="result-rank-btn result-rank-btn--down"
             />
-            <ButtonIcon variant="tertiary" label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })} onClick={handleArchive}
+            <Button variant="tertiary" label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })} onClick={handleArchive}
               icon={archived ? <ArchiveRestore size={13} aria-hidden="true" /> : <Archive size={13} aria-hidden="true" />}
               className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
             />

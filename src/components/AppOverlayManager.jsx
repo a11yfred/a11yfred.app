@@ -1,4 +1,4 @@
-import { ButtonText } from '@ulam/ube'
+import { Button } from '@ulam/ube'
 import { useMemo, useCallback } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { OverlayManager } from '@ulam/sili/react'
@@ -211,18 +211,18 @@ export default function AppOverlayManager({
           </div>
 
           <div className="settings-reset-actions">
-            <ButtonText
+            <Button
               variant="primary"
               onClick={onResetConfirm}
             >
               {t('settings.confirm_reset_all_yes')}
-            </ButtonText>
-            <ButtonText
+            </Button>
+            <Button
               variant="secondary"
               onClick={handleClose}
             >
               {t('settings.confirm_reset_all_no')}
-            </ButtonText>
+            </Button>
           </div>
         </div>
       ),

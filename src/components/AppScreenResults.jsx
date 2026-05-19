@@ -1,4 +1,4 @@
-import { ButtonText, Screen } from '@ulam/ube'
+import { Button, Screen } from '@ulam/ube'
 import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
@@ -39,9 +39,9 @@ export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
           <span className="pinned-section__count">{entries.length}</span>
         </h2>
         {onClearPins && (
-          <ButtonText variant="tertiary" className="pinned-unpin-all-btn" onClick={handleClearAll} icon={<PinOff size={14} aria-hidden="true" />}>
+          <Button variant="tertiary" className="pinned-unpin-all-btn" onClick={handleClearAll} icon={<PinOff size={14} aria-hidden="true" />}>
             {t('results.unpin_all')}
-          </ButtonText>
+          </Button>
         )}
       </div>
       <AppScreenResults
@@ -368,7 +368,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
       )}
       {results.length > RESULTS_VIEW_ALL_THRESHOLD && (
         <div className="view-all-section">
-          <ButtonText
+          <Button
             variant="secondary"
             className="back-to-top-btn"
             onClick={() => {
@@ -379,7 +379,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
           >
             <ArrowUp size={16} aria-hidden="true" />
             {t('results.back_to_top')}
-          </ButtonText>
+          </Button>
         </div>
       )}
     </div>

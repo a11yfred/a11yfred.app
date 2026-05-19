@@ -1,4 +1,4 @@
-import { ButtonText, FadeTransition } from '@ulam/ube'
+import { Button, FadeTransition } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, Dialog, useKeydown } from '@ulam/sili/react'
@@ -150,13 +150,13 @@ export default function AppCarouselOnboarding({ onClose }) {
       </div>
 
       <div className="onboarding-footer">
-        <ButtonText
+        <Button
           variant="tertiary"
           className="onboarding-skip-btn"
           onClick={handleRequestClose}
         >
           {t('onboarding.skip_tour')}
-        </ButtonText>
+        </Button>
       </div>
 
       <Dialog

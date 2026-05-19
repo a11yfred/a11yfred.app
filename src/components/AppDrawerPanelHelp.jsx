@@ -1,4 +1,4 @@
-import { Panel, ButtonText } from '@ulam/ube'
+import { Panel, Button } from '@ulam/ube'
 import { PlayCircle, ArrowLeft } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 
@@ -24,13 +24,13 @@ export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
               <p className="help-tour-banner__heading"><PlayCircle size={20} className="help-tour-banner__icon" aria-hidden="true" />{t('help.walkthrough_heading')}</p>
               <p className="help-tour-banner__desc">{t('help.take_tour_description')}</p>
             </div>
-            <ButtonText
+            <Button
               variant="primary"
               className="help-tour-btn"
               onClick={() => { onClose(); onStartTour() }}
             >
               {t('help.take_tour')}
-            </ButtonText>
+            </Button>
           </div>
         </section>
       )}
@@ -75,7 +75,7 @@ export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
       </div>
 
       <div className="panel-mobile-back">
-        <ButtonText
+        <Button
           variant="primary"
           className="panel-mobile-back-btn"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
@@ -83,7 +83,7 @@ export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
           tabIndex={-1}
         >
           {t('settings.back')}
-        </ButtonText>
+        </Button>
       </div>
     </Panel>
   )

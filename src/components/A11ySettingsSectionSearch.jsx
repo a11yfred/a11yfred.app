@@ -1,4 +1,4 @@
-import { FormControlRadioChip, FormControlToggle, ButtonText } from '@ulam/ube'
+import { FormControlRadioChip, FormControlToggle, Button } from '@ulam/ube'
 import { PinOff, OctagonX, Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { announce } from '@ulam/taho'
@@ -26,7 +26,7 @@ function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDo
         <h3 className="panel-toggle-label">{t(labelKey)}</h3>
         <p className="panel-toggle-desc">{hasData ? t(descKey) : t(emptyKey)}</p>
       </div>
-      <ButtonText
+      <Button
         active={isDone}
         icon={<Icon size={14} aria-hidden="true" />}
         activeIcon={<Check size={14} aria-hidden="true" />}
@@ -43,7 +43,7 @@ function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDo
         }}
       >
         {isDone ? t(labelDoneKey) : t(labelActionKey)}
-      </ButtonText>
+      </Button>
     </div>
   )
 }

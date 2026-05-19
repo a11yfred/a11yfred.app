@@ -1,4 +1,4 @@
-import { ButtonText, InfoBox, FormControlToggle, FormInputWithClear, Badge, FormControlCheckbox } from '@ulam/ube'
+import { Button, InfoBox, FormControlToggle, FormInputText, Badge, FormControlCheckbox } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save, Mail } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
@@ -151,7 +151,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           <h2 ref={titleRef} tabIndex={-1} className="panel-detail-title">
             {entry.title}
           </h2>
-          <ButtonText
+          <Button
             variant="tertiary"
             active={copiedTitle}
             icon={<Copy size={14} aria-hidden="true" />}
@@ -238,7 +238,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             {entry.primarySC
               ? <>
                   <A11yLinkSc label={entry.primarySC} />
-                  <ButtonText
+                  <Button
                     variant="tertiary"
                     active={copiedPrimarySc}
                     icon={<Copy size={14} aria-hidden="true" />}
@@ -263,7 +263,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                   </span>
                 ))}
               </span>
-              <ButtonText
+              <Button
                 variant="tertiary"
                 active={copiedRelatedSc}
                 icon={<Copy size={14} aria-hidden="true" />}
@@ -290,7 +290,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           {t('detail.location_label')}
           {!location.trim() && <span className="panel-detail-optional">{' '}{t('common.optional')}</span>}
         </label>
-        <FormInputWithClear
+        <FormInputText
           id="location-prefix"
           type="text"
           value={location}
@@ -358,7 +358,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           rows={3}
         />
         <div className="panel-detail-section-controls">
-          <ButtonText
+          <Button
             ref={entryNoteSaveBtnRef}
             variant="primary"
             disabled={!entryNote.trim()}
@@ -373,7 +373,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             }}
           >
             {entryNoteSaved ? t('detail.saved_entry_note_text') : t('detail.save_entry_note_text')}
-          </ButtonText>
+          </Button>
         </div>
       </div>
 
@@ -413,7 +413,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                 </div>
               </div>
             </div>
-            <ButtonText
+            <Button
               ref={aiRevisionButtonRef}
               variant="primary"
               disabled={refining || animating || !aiNote.trim()}
@@ -426,7 +426,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
               onClick={handleRefine}
             >
               {refining ? t('detail.rewriting_text') : t('detail.ai_revision_save_text')}
-            </ButtonText>
+            </Button>
           </div>
           {(descText !== entry.desc || fixText !== entry.fix) && (
             <p className="panel-detail-edit-warning" role="status">
@@ -445,7 +445,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
       />
 
       <div className="panel-detail-actions-end">
-        <ButtonText
+        <Button
           variant="secondary"
           disabled={descText === entry.desc && fixText === entry.fix}
           active={resetAllDone}
@@ -457,8 +457,8 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           onClick={handleResetAllFields}
         >
           {resetAllDone ? t('detail.reset_all_done_desktop') : t('detail.reset_all_fields_text')}
-        </ButtonText>
-        <ButtonText
+        </Button>
+        <Button
           variant="primary"
           active={copiedAll}
           icon={copiedAll
@@ -469,8 +469,8 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           onClick={handleCopyAll}
         >
           {copiedAll ? t('detail.copy_all_copied_text') : t('detail.copy_all_text')}
-        </ButtonText>
-        <ButtonText
+        </Button>
+        <Button
           variant="primary"
           icon={<Mail size={14} aria-hidden="true" />}
           label={t('detail.email_share_aria', 'Email this defect')}
@@ -478,15 +478,15 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           onClick={handleEmailShare}
         >
           Email
-        </ButtonText>
+        </Button>
         {onClose && (
-          <ButtonText
+          <Button
             variant={isDesktop ? 'primary' : 'tertiary'}
             label={t('common.close')}
             onClick={onClose}
           >
             {t('common.close')}
-          </ButtonText>
+          </Button>
         )}
       </div>
 

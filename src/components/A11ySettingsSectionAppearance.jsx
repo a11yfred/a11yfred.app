@@ -1,4 +1,4 @@
-import { FormControlRadioChip, FormControlSelect, ButtonText } from '@ulam/ube'
+import { FormControlRadioChip, FormControlSelect, Button } from '@ulam/ube'
 import { Check } from 'lucide-react'
 import { useT } from '@ulam/calamansi/react'
 import { announce } from '@ulam/taho'
@@ -91,7 +91,7 @@ export default function SettingsSectionAppearance({
                   </option>
                 ))}
               </FormControlSelect>
-              <ButtonText
+              <Button
                 variant="primary"
                 active={languagePreviewed}
                 activeIcon={<Check size={14} aria-hidden="true" />}
@@ -104,7 +104,7 @@ export default function SettingsSectionAppearance({
                 }}
               >
                 {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
-              </ButtonText>
+              </Button>
             </div>
             {pendingLanguage !== language && <PendingNote t={t} />}
           </div>
