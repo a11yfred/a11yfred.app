@@ -1,6 +1,8 @@
-# Distribution Guide
+# Extension & Desktop App Distribution Plan
 
-Publishing A11yFred extensions and Electron app to app stores and distribution channels.
+Guide for publishing A11yFred **browser extensions** (Chrome, Firefox) and **Electron desktop app** (macOS, Windows, Linux) to app stores and distribution channels.
+
+**Note:** The main web app at [a11yfred.app](https://a11yfred.app) is deployed to Netlify. This guide covers extension and desktop distributions only.
 
 ---
 

@@ -1,10 +1,9 @@
 import { Panel, ButtonText } from '@ulam/ube'
 import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardRef } from 'react'
 import { Check, Info, Save, ArrowLeft } from 'lucide-react'
-import { useRouter } from '@ulam/sili/react'
+import { useRouter, useKeydown, usePrefersReducedMotion } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
-
 
 import A11ySettingsSectionAppearance from './A11ySettingsSectionAppearance.jsx'
 import A11ySettingsSectionSearch from './A11ySettingsSectionSearch.jsx'
@@ -14,8 +13,6 @@ import { PROVIDERS, initModels, initApiKeys, getAiProvider, isAgenticModeEnabled
 import { applyTheme } from '../hooks/useThemeManager.js'
 import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES, LS_WCAG_FILTER } from '../utils/constants.js'
 import { setStorage, removeStorage, getStorageJson } from '../utils/storage.js'
-import { useKeydown } from '../hooks/useKeydown.js'
-import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import { useSettings } from '../context/contextSettings.js'
 import { useRatings } from '../context/contextRatings.js'
 import { version } from '../../package.json'

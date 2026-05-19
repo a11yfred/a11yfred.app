@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
+import { usePrefersReducedMotion } from '@ulam/sili/react'
 
 const COLORS = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff922b', '#cc5de8', '#ff6b81', '#74c0fc']
 const COUNT = 14

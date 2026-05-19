@@ -31,6 +31,7 @@ import {
   Sheet,
   Dialog,
   useMediaQuery,
+  usePrefersReducedMotion,
 } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { Announcer } from '@ulam/taho/react'
@@ -41,7 +42,6 @@ import useThemeManager from './hooks/useThemeManager.js'
 import useRouteHandler from './hooks/useRouteHandler.js'
 import useSearchManager from './hooks/useSearchManager.js'
 import useStorageSync from './hooks/useStorageSync.js'
-import usePrefersReducedMotion from './hooks/usePrefersReducedMotion.js'
 import { ContextSettings, useSettings } from './context/contextSettings.js'
 import { ContextSearch, useSearch } from './context/contextSearch.js'
 import { ContextRatings, useRatings } from './context/contextRatings.js'

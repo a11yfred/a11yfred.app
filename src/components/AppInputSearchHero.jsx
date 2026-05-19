@@ -1,10 +1,9 @@
 import { FormInputWithClear, ButtonText } from '@ulam/ube'
 import { useRef, useState, useEffect } from 'react'
 import { useT } from '@ulam/calamansi/react'
-
+import { usePrefersReducedMotion } from '@ulam/sili/react'
 
 import { CYCLE_MS } from '../utils/constants.js'
-import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import './app-input-search-hero.css'
 
 // Each phrase has a display label and an optional accessible expansion.

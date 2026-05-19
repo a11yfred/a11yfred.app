@@ -3,20 +3,17 @@ import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '@ulam/calamansi/react'
-
+import { useKeydown, useFlipList, usePrefersReducedMotion } from '@ulam/sili/react'
 
 import A11yResultAd from './A11yResultAd.jsx'
 import AppListResultCard from './AppListResultCard.jsx'
 import AppResultsMetaHeader from './AppResultsMetaHeader.jsx'
 import A11yResultsActiveFilterBar from './A11yResultsActiveFilterBar.jsx'
 import { DEFAULT_RATING, pluralResult, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD, UNPIN_FLY_MS } from '../utils/constants.js'
-import { useKeydown } from '../hooks/useKeydown.js'
 import useSwipeReveal from '../hooks/useSwipeReveal.js'
-import { useFlipList } from '../hooks/useFlipList.js'
 import { useSettings } from '../context/contextSettings.js'
 import { useSearch } from '../context/contextSearch.js'
 import { useRatings } from '../context/contextRatings.js'
-import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion.js'
 import './app-screen-results.css'
 
 export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
