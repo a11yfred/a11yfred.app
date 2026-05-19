@@ -61,15 +61,19 @@ src/
 
 ## Known limitations
 
-### Overlay Management
+### Overlay Management (@ulam/sili)
 
-Only one overlay (dialog/sheet/drawer) can be active at a time (by design per OverlayManager architecture). Screen z-order is fixed: Screen(0) < Drawer(1) < Sheet(2) < Dialog(3). Nested overlays are not supported; workaround is to convert nested overlays to dialogs stacked on top.
+Only one overlay (dialog/sheet/drawer) can be active at a time (by design per @ulam/sili OverlayManager architecture). Screen z-order is fixed: Screen(0) < Drawer(1) < Sheet(2) < Dialog(3). Nested overlays are not supported; workaround is to convert nested overlays to dialogs stacked on top.
 
-### Navigation & Routing
+### Navigation & Routing (@ulam/sili)
 
 Uses @ulam/sili hash router. No native search param support (workaround: use state management or localStorage). Migrate to Remix router if moving to Remix, or React Router for more features.
 
-### Forms
+### UI Components (@ulam/ube)
+
+@ulam/ube v0.2.2+ exports include FormControlCheckbox, FormControlInputWithClear, ButtonText, ButtonIcon, FormControlRadioChip, FormControlToggle, FormControlSelect, FormControlInputSearch, and Screen components. CSS is bundled in ui.css; separate tokens.css and user-preferences.css imports are not available as standalone files.
+
+### Forms (@ulam/ube)
 
 No built-in form validation (implement using standard React patterns). No form state library; use React Hook Form or Formik for complex forms.
 

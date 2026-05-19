@@ -160,17 +160,20 @@ Persistent record of completed features, fixes, and improvements. This is comple
 
 ## Recent Improvements (May 18)
 
-- [x] Ube component naming updates — updated all imports to match new ube conventions
+### @ulam/ube v0.2.2 Component Updates
+
+- [x] @ulam/ube component naming updates — aligned all imports with v0.2.2 conventions
   - `ControlCheckbox` → `FormControlCheckbox`
   - `InputWithClear` → `FormControlInputWithClear`
-  - `Button` → `ButtonText` (consolidated)
+  - `Button` → `ButtonText` (consolidated to single base component)
   - `RadioChip` → `FormControlRadioChip`
   - `Toggle` → `FormControlToggle`
   - `Select` → `FormControlSelect`
   - `InputSearch` → `FormControlInputSearch`
-- [x] CSS import cleanup — removed obsolete `@ulam/ube/tokens.css` and `@ulam/ube/user-prefs.css` (now in ui.css)
-- [x] PanelRowControl replacement — replaced with semantic HTML divs
-- [x] Build verification — full build passing with 41 precached entries
+  - All 18 component files across the codebase updated
+- [x] @ulam/ube CSS import cleanup — removed deprecated `@ulam/ube/tokens.css` and `@ulam/ube/user-preferences.css` (now bundled in `@ulam/ube/ui.css`)
+- [x] PanelRowControl deprecation — replaced with semantic HTML divs (component removed from @ulam/ube)
+- [x] Build verification — full build passing with 41 precached entries (4637 KiB PWA)
 
 ---
 

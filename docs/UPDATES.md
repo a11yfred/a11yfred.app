@@ -4,11 +4,21 @@ Plain-language record of what changed and why. For technical details see `CHANGE
 
 ---
 
-## 2026-05-18 -- Ube Component Updates & Overlay Refactoring
+## 2026-05-18 -- @ulam/ube Component Updates & Overlay Refactoring
 
-### Ube Component Updates
+### @ulam/ube Component Naming Updates (v0.2.2)
 
-Updated all component imports to match ube's new naming conventions. `ControlCheckbox` → `FormControlCheckbox`, `InputWithClear` → `FormControlInputWithClear`, button components consolidated to `ButtonText` and `ButtonIcon`. Removed separate `@ulam/ube/tokens.css` and `@ulam/ube/user-prefs.css` imports as they are now bundled into `ui.css`.
+Updated all a11yfred component imports to match @ulam/ube's new naming conventions:
+
+- `ControlCheckbox` → `FormControlCheckbox`
+- `InputWithClear` → `FormControlInputWithClear`
+- `Button` → `ButtonText` (consolidated button variants)
+- `RadioChip` → `FormControlRadioChip`
+- `Toggle` → `FormControlToggle`
+- `Select` → `FormControlSelect`
+- `InputSearch` → `FormControlInputSearch`
+
+CSS bundling change: removed separate `@ulam/ube/tokens.css` and `@ulam/ube/user-preferences.css` imports (now included in `@ulam/ube/ui.css`). Replaced deprecated `PanelRowControl` component with semantic HTML structure. All 18 component files updated; build passing with zero errors.
 
 ### Overlay Architecture Refactoring (Completed)
 
