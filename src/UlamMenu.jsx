@@ -1,4 +1,4 @@
-import { LinkSkipTo, ButtonText, ButtonIcon, Badge, FormControlRadioChip, FormControlToggle, FormControlSelect, FormControlInputWithClear, Panel, FormControlInputSearch } from '@ulam/ube'
+import { LinkSkipTo, ButtonText, ButtonIcon, Badge, FormControlRadioChip, FormControlToggle, FormControlSelect, FormInputWithClear, Panel, FormInputSearch } from '@ulam/ube'
 import { useState } from 'react'
 import {
   Star, Settings, Search, X, Plus, Trash2,
@@ -304,9 +304,9 @@ export default function UlamMenu() {
           </Row>
         </Section>
 
-        <Section title="FormControlInputSearch">
+        <Section title="FormInputSearch">
           <Row label="Live search">
-            <FormControlInputSearch
+            <FormInputSearch
               id="search-live"
               value={searchVal}
               onChange={setSearchVal}
@@ -317,7 +317,7 @@ export default function UlamMenu() {
             />
           </Row>
           <Row label="Submit mode">
-            <FormControlInputSearch
+            <FormInputSearch
               id="search-submit"
               value={searchVal}
               onChange={setSearchVal}
@@ -336,7 +336,7 @@ export default function UlamMenu() {
             </label>
           </Row>
           <Row label="With toggle">
-            <FormControlInputSearch
+            <FormInputSearch
               id="search-toggled"
               value={searchVal}
               onChange={setSearchVal}
@@ -349,7 +349,7 @@ export default function UlamMenu() {
             />
           </Row>
           <Row label="Disabled">
-            <FormControlInputSearch
+            <FormInputSearch
               id="search-disabled"
               value=""
               onChange={() => {}}
@@ -363,9 +363,9 @@ export default function UlamMenu() {
           </Row>
         </Section>
 
-        <Section title="FormControlInputWithClear">
+        <Section title="FormInputWithClear">
           <Row label="Default">
-            <FormControlInputWithClear
+            <FormInputWithClear
               id="search-demo"
               type="search"
               value={inputVal}

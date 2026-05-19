@@ -1,4 +1,4 @@
-import { FormControlInputWithClear, ButtonText } from '@ulam/ube'
+import { FormInputWithClear, ButtonText } from '@ulam/ube'
 import { useRef, useState, useEffect } from 'react'
 import { useT } from '@ulam/calamansi/react'
 
@@ -63,7 +63,7 @@ export default function A11yInputSearchHero({ query, onChange, onSearch, onExamp
         )}
       </div>
       <div className="search-row">
-        <FormControlInputWithClear
+        <FormInputWithClear
           id="entry-search"
           type="text"
           value={query}
