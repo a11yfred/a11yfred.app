@@ -1,6 +1,13 @@
 import { useState, useCallback, useRef } from 'react'
 import { getAdapter } from '../sawsawan/platformAdapter.js'
 
+/**
+ * useRelevance: Relevance scoring and item signal tracking system.
+ * Provides hooks for tracking item interactions (open, copy, star, pin, archive)
+ * and computing popularity scores for sorting and discovery.
+ * Includes useItemSignals, usePinnedItems, and useCoSelection hooks.
+ */
+
 const readJson      = (key, fallback) => getAdapter().readPrefJson(key, fallback)
 const writeJson     = (key, value)    => getAdapter().writePrefJson(key, value)
 const readSessionJson  = (key, fallback) => getAdapter().readSessionJson(key, fallback)

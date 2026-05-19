@@ -1,6 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
 import { SWIPE_REVEAL, SWIPE_ACTIVATE } from '../utils/constants.js'
 
+/**
+ * Manages swipe-to-reveal gesture on a list of items with action panels.
+ * Tracks which item is open and provides touch handling with clamping.
+ * @param {Object} config
+ * @param {React.RefObject} config.listRef - Ref to the list container
+ * @param {boolean} config.showRanking - Whether ranking actions are available
+ * @param {Function} config.onPin - Pin/unpin callback
+ * @param {Set} config.pinnedIds - Set of currently pinned IDs
+ * @returns {Object} State and refs for swipe management
+ */
 export default function useSwipeReveal({ listRef, showRanking, onPin, pinnedIds }) {
   const [swipeOpenId, setSwipeOpenId] = useState(null)
   const swipeTouchRef = useRef(null)
