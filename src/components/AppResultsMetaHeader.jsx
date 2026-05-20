@@ -1,5 +1,5 @@
 import { Button, FormControlSelect, FormControlRadioChip, FormInputText, InfoBox } from '@ulam/ube'
-import { Link, Check, Filter, OctagonX, Trash2, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
+import { Link, Check, Filter, OctagonX, RotateCcw, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
 import { useT } from '../hooks/useTranslate.js'
 
 
@@ -196,7 +196,7 @@ export default function AppResultsMetaHeader({
                 <Button
                   variant="tertiary"
                   className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
-                  icon={<Trash2 size={14} aria-hidden="true" />}
+                  icon={<RotateCcw size={14} aria-hidden="true" />}
                   disabled={!hasAnyActiveFilter}
                   onClick={onClear}
                 >
