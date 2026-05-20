@@ -59,6 +59,13 @@ import useUserEntries from './hooks/useUserEntries.js'
 import useUserOverrides from './hooks/useUserOverrides.js'
 import entrySlug from './utils/entrySlug.js'
 import './components/a11y-theme-fiesta-mode.css'
+import './components/app-screen-results.css'
+import './components/app-input-search-hero.css'
+import './components/app-drawer-panel-about.css'
+import './components/app-drawer-panel-settings.css'
+import './components/app-carousel-onboarding.css'
+import './components/app-sheet-detail.css'
+import './components/ui/a11y-user-prefs.css'
 
 const AppDrawerPanelSettings = lazy(() => import('./components/AppDrawerPanelSettings.jsx'))
 const AppDrawerPanelAdmin = import.meta.env.DEV
