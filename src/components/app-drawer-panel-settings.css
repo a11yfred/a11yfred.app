@@ -5,12 +5,14 @@
 
 .panel-section {
   margin-bottom: var(--space-6);
-  border-bottom: 1px solid var(--border);
   padding-bottom: var(--space-6);
 }
 
+.panel-section:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+}
+
 .panel-section:last-child {
-  border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
 }
