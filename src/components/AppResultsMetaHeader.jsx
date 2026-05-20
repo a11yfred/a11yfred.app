@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { Button, FormControlSelect, FormControlRadioChip, FormInputText, InfoBox } from '@ulam/ube'
-import { Link, Check, Filter, OctagonX, RotateCcw, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
+import { Link, Check, Filter, OctagonX, RotateCcw, Pin, Star, Archive, ThumbsUp, ThumbsDown, ArrowUpDown } from 'lucide-react'
 import { useT } from '../hooks/useTranslate.js'
 
 
@@ -42,6 +43,7 @@ export default function AppResultsMetaHeader({
   hideFilters = false,
 }) {
   const t = useT()
+  const [sortInteracted, setSortInteracted] = useState(false)
 
   if (hideCount && hideFilters) return null
 
@@ -133,6 +135,7 @@ export default function AppResultsMetaHeader({
                     id="results-sort"
                     value={liveSearch ? sortBy : pendingSort}
                     onChange={e => {
+                      setSortInteracted(true)
                       if (liveSearch) {
                         onSortChange(e.target.value)
                       } else {
@@ -157,7 +160,8 @@ export default function AppResultsMetaHeader({
                     <Button
                       variant="primary"
                       active={sortFlash}
-                      disabled={pendingSort === sortBy}
+                      disabled={!sortInteracted || pendingSort === sortBy}
+                      aria-disabled={!sortInteracted ? 'true' : undefined}
                       className="results-sort-btn"
                       onClick={() => {
                         setSortToCommit(pendingSort)
@@ -165,7 +169,7 @@ export default function AppResultsMetaHeader({
                         setTimeout(() => setSortFlash(false), SORT_FLASH_MS)
                       }}
                     >
-                      {sortFlash && <Check size={16} aria-hidden="true" />}
+                      {sortFlash ? <Check size={16} aria-hidden="true" /> : <ArrowUpDown size={16} aria-hidden="true" />}
                       <span>{sortFlash ? t('results.sorted_confirm') : t('results.sort_apply')}</span>
                     </Button>
                   )}
