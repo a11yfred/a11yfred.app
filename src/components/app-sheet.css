@@ -10,6 +10,10 @@ ube-sheet {
   border-radius: var(--rounded-lg);
 }
 
+.sheet-panel {
+  border-radius: var(--rounded-lg);
+}
+
 /* ─── Copyable Textarea Field ──────────────────────────────── */
 
 .field {
@@ -79,13 +83,34 @@ ube-sheet {
   gap: var(--size-2);
   align-items: center;
   margin: var(--size-2) 0;
+  flex-wrap: wrap;
 }
 
 .field__actions {
   display: flex;
   gap: var(--size-2);
   align-items: center;
-  margin-left: auto;
+  margin-left: 0;
+  width: 100%;
+}
+
+.field__actions .btn--field {
+  flex: 1;
+}
+
+@media (width >= 768px) {
+  .field__footer {
+    flex-wrap: nowrap;
+  }
+
+  .field__actions {
+    margin-left: auto;
+    width: auto;
+  }
+
+  .field__actions .btn--field {
+    flex: none;
+  }
 }
 
 .btn {
@@ -165,7 +190,7 @@ ube-sheet {
   flex-wrap: wrap;
   gap: var(--size-2);
   margin-top: var(--size-2);
-  margin-bottom: var(--size-2);
+  margin-bottom: var(--size-4);
 }
 
 .sheet-detail-badges button,
@@ -506,9 +531,17 @@ textarea.sheet-detail-input.sheet-detail-input[aria-invalid="true"] {
   margin-top: var(--size-5);
 }
 
+.sheet-detail-actions-end .btn {
+  width: 100%;
+}
+
 @media (width >= 768px) {
   .sheet-detail-actions-end {
     flex-direction: row;
+  }
+
+  .sheet-detail-actions-end .btn {
+    width: auto;
   }
 }
 
