@@ -1,6 +1,46 @@
 
 /* ─── Settings panel ──────────────────────────────────────── */
 
+/* ─── Alert Banner ───────────────────────────────────────── */
+
+.alert-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--rounded);
+  border: 1px solid;
+  margin-bottom: var(--space-4);
+}
+
+.alert-banner p {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: 1.5;
+}
+
+.alert-banner--warning {
+  background: var(--alert-bg-warning, rgb(255 193 7 / 0.1));
+  border-color: var(--alert-border-warning, #ffc107);
+  color: var(--alert-text-warning, #856404);
+}
+
+.alert-banner--warning svg {
+  color: var(--alert-icon-warning, #ffc107);
+  flex-shrink: 0;
+}
+
+.alert-banner--error {
+  background: var(--alert-bg-error, rgb(255 59 48 / 0.1));
+  border-color: var(--alert-border-error, #ff3b30);
+  color: var(--alert-text-error, #721c24);
+}
+
+.alert-banner--error svg {
+  color: var(--alert-icon-error, #ff3b30);
+  flex-shrink: 0;
+}
+
 /* ─── Panel Sections ──────────────────────────────────────── */
 
 .panel-section {
