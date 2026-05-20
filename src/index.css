@@ -1,17 +1,17 @@
 /* ═══════════════════════════════════════════════════════════
    CSS Layer Order:
 
-   1. app-tokens.css     — design tokens + app overrides
-   2. ui.css             — ube base styles
-   3. app.css            — app shell (layout, header, footer)
-   4. component CSS      — each component imports its own styles
-   5. index.css          — global base only
+   1. app-tokens.css         — design tokens + app overrides + user prefs
+   2. ui.css                 — ube base styles
+   3. app.css                — app shell (layout, header, footer)
+   4. component CSS          — each component imports its own styles
+   5. a11y-theme-fiesta.css  — theme overrides (in App.jsx)
+   6. index.css              — global base only
 
    ════════════════════════════════════════════════════════════ */
 
 @import "./app-tokens.css";
 @import "./app.css";
-@import "./components/ui/a11y-user-prefs.css";
 
 /* ─── Global base styles ──────────────────────────────────── */
 

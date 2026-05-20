@@ -65,7 +65,6 @@ import './components/app-input-search-hero.css'
 import './components/app-drawer-panel.css'
 import './components/app-carousel-onboarding.css'
 import './components/app-sheet.css'
-import './components/ui/a11y-user-prefs.css'
 
 const AppDrawerPanelSettings = lazy(() => import('./components/AppDrawerPanelSettings.jsx'))
 const AppDrawerPanelAdmin = import.meta.env.DEV
