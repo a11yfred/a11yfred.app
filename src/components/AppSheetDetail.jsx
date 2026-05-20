@@ -16,7 +16,7 @@ import useSheetDetailClipboard from '../hooks/useSheetDetailClipboard.js'
 import useSheetDetailRefine from '../hooks/useSheetDetailRefine.js'
 import { useSettings } from '../context/contextSettings.js'
 import { useRatings } from '../context/contextRatings.js'
-import './app-sheet-detail.css'
+import './app-sheet.css'
 
 const createBadgeStyle = (bgVar, textVar) => ({ '--badge-bg': `var(${bgVar})`, '--badge-text': `var(${textVar})` })
 const WCAG_BADGE_STYLE = createBadgeStyle('--wcag-bg', '--wcag-text')

@@ -16,7 +16,7 @@ import { setStorage, removeStorage, getStorageJson } from '../utils/storage.js'
 import { useSettings } from '../context/contextSettings.js'
 import { useRatings } from '../context/contextRatings.js'
 import { version } from '../../package.json'
-import './app-drawer-panel-settings.css'
+import './app-drawer-panel.css'
 
 
 const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({

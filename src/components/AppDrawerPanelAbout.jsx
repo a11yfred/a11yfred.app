@@ -7,7 +7,7 @@ import { useT } from '../hooks/useTranslate.js'
 
 import entrySlug from '../utils/entrySlug.js'
 import { version } from '../../package.json'
-import './app-drawer-panel-about.css'
+import './app-drawer-panel.css'
 
 function ExtLink({ href, children }) {
   return <a href={href} target="_blank" rel="noreferrer" className="panel-inline-link">{children}<IconExternalLink /><span className="sr-only"> (opens in new tab)</span></a>
