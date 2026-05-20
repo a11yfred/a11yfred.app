@@ -1152,7 +1152,7 @@
 
 .result-item__badges ube-badge,
 .result-item__badges span[class*="badge"] {
-  border-radius: var(--rounded);
+  border-radius: var(--radius-full);
 }
 
 .result-item__title {
