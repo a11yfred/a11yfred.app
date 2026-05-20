@@ -254,25 +254,13 @@ h2 {
 /* ─── Links ───────────────────────────────────────────────── */
 
 .footer-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3em;
   color: var(--accent-text);
   text-decoration: underline;
-  text-underline-offset: var(--text-underline-offset);
   white-space: nowrap;
-  line-height: 1.2;
-  padding: 4px 8px;
-  border-radius: var(--rounded);
-  border: 1px solid transparent;
-  transition: all var(--duration-fast);
 }
 
 .footer-link:hover {
-  background: var(--bg-subtle);
   color: var(--text-heading);
-  text-decoration: none;
-  border-color: var(--border);
 }
 
 .footer-link:focus-visible {
