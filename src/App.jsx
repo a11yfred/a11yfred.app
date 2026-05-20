@@ -62,11 +62,9 @@ import './components/a11y-theme-fiesta-mode.css'
 // Import all component CSS to ensure they're bundled in the main chunk
 import './components/app-screen-results.css'
 import './components/app-input-search-hero.css'
-import './components/app-drawer-panel-about.css'
-import './components/app-drawer-panel-admin.css'
-import './components/app-drawer-panel-settings.css'
+import './components/app-drawer-panel.css'
 import './components/app-carousel-onboarding.css'
-import './components/app-sheet-detail.css'
+import './components/app-sheet.css'
 import './components/ui/a11y-user-prefs.css'
 
 const AppDrawerPanelSettings = lazy(() => import('./components/AppDrawerPanelSettings.jsx'))
