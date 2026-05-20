@@ -181,8 +181,8 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  height: var(--btn-height-compact);
-  padding: 0 var(--space-2);
+  height: var(--btn-height-standard);
+  padding: 0 var(--space-3);
   border-radius: var(--rounded);
 }
 
@@ -335,14 +335,13 @@
 .result-list {
   list-style: none;
   border-bottom: 1px solid var(--border);
-  padding-inline: var(--space-4);
   margin: 0;
+  padding: 0;
 }
 
 @media (width >= 768px) {
   .result-list {
     border-bottom: none;
-    padding-inline: 0;
   }
 }
 
@@ -1025,13 +1024,18 @@
 }
 
 .pinned-section__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: var(--fs-small);
   font-weight: 500;
   background: var(--accent-bg);
   color: var(--accent-text);
   border-radius: var(--radius-full);
-  padding: 0 var(--space-2);
+  padding: 2px var(--space-2);
   line-height: 1.6;
+  min-width: 24px;
+  height: 24px;
 }
 
 .result-row--archived .result-rank-btn:not(.result-rank-btn--archive) {
