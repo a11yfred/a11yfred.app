@@ -1,6 +1,6 @@
 import { Panel, Button } from '@ulam/ube'
 import { PlayCircle, ArrowLeft } from 'lucide-react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 
 
 import { version } from '../../package.json'

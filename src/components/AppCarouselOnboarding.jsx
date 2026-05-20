@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, Dialog, useKeydown } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 
 import { LS_ONBOARDING_SEEN } from '../utils/constants.js'
 import { setStorage } from '../utils/storage.js'

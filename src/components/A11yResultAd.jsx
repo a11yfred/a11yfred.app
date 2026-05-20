@@ -1,4 +1,4 @@
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 
 export default function A11yTileAd() {
   const t = useT()

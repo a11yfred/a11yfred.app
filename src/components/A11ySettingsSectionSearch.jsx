@@ -1,6 +1,6 @@
 import { FormControlRadioChip, FormControlToggle, Button } from '@ulam/ube'
 import { PinOff, OctagonX, Check } from 'lucide-react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { announce } from '@ulam/taho'
 
 

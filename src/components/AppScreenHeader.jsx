@@ -1,6 +1,6 @@
 import { Button, LinkSkipTo } from '@ulam/ube'
 import { Settings, X, Info, HelpCircle, ExternalLink as ExternalLinkIcon } from 'lucide-react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 
 
 import A11yTitle from './A11yTitle.jsx'

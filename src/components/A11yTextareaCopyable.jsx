@@ -1,6 +1,6 @@
 import { useRef, useEffect, forwardRef } from 'react'
 import { RotateCcw, Copy, Check } from 'lucide-react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { setAriaDisabled } from '../utils/ariaDisabled.js'
 
 const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({

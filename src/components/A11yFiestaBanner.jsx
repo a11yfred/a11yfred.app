@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { ANIMATION_COMPLETE_DELAY } from '../utils/constants.js'
 
 export default function A11yFiestaBanner() {

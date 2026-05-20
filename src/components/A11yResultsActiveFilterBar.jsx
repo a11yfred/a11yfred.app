@@ -1,4 +1,4 @@
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 
 export default function ResultsActiveFilterBar({ activeFilters, sortBy, sortLabels, onSortChange, hasNonDefaultSort }) {
   const t = useT()

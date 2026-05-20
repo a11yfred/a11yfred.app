@@ -1,6 +1,6 @@
 import { FormInputText, Button } from '@ulam/ube'
 import { useRef, useState, useEffect } from 'react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { usePrefersReducedMotion } from '@ulam/sili/react'
 
 import { CYCLE_MS } from '../utils/constants.js'

@@ -1,5 +1,5 @@
 import { House } from 'lucide-react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { useRouter } from '@ulam/sili/react'
 
 export default function A11yScreenNotFound() {

@@ -1,5 +1,5 @@
 import { Heart, ExternalLink as ExternalLinkIcon } from 'lucide-react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { URL_GITHUB_SPONSORS, URL_LINKEDIN, URL_PERSONAL_SITE, URL_PRIVACY_POLICY, FOOTER_CREDIT_NAME } from '../utils/constants.js'
 
 export default function A11yScreenFooter() {

@@ -1,5 +1,5 @@
 import { Badge } from '@ulam/ube'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 
 export default function ResultCardBadges({ entry, archived }) {

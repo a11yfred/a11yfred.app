@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { relatedItems } from '../hooks/useRelevance.js'
 import entrySlug from '../utils/entrySlug.js'
 

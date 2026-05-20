@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useImperativeHandle, useCallback, forwardR
 import { Check, Info, Save, ArrowLeft } from 'lucide-react'
 import { useRouter, useKeydown, usePrefersReducedMotion } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 
 import A11ySettingsSectionAppearance from './A11ySettingsSectionAppearance.jsx'
 import A11ySettingsSectionSearch from './A11ySettingsSectionSearch.jsx'

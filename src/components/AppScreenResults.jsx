@@ -2,7 +2,7 @@ import { Button, Screen } from '@ulam/ube'
 import { ArrowUp, PinOff } from 'lucide-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 import { useKeydown, useFlipList, usePrefersReducedMotion } from '@ulam/sili/react'
 
 import A11yResultAd from './A11yResultAd.jsx'

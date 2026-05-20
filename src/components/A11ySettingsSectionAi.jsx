@@ -1,5 +1,5 @@
 import { FormControlToggle, FormControlSelect } from '@ulam/ube'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 
 
 

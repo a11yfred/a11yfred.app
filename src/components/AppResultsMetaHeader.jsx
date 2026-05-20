@@ -1,6 +1,6 @@
 import { Button, FormControlSelect, FormControlRadioChip, FormInputText, InfoBox } from '@ulam/ube'
 import { Link, Check, Filter, OctagonX, Trash2, Pin, Star, Archive, ThumbsUp, ThumbsDown } from 'lucide-react'
-import { useT } from '@ulam/calamansi/react'
+import { useT } from '../hooks/useTranslate.js'
 
 
 
