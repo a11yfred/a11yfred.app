@@ -100,18 +100,29 @@
 
 .panel-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--space-4);
-  align-items: flex-start;
   margin-bottom: var(--space-5);
+}
+
+@media (width >= 768px) {
+  .panel-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 }
 
 .panel-row-label {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  flex: 1;
-  min-width: 200px;
+}
+
+@media (width >= 768px) {
+  .panel-row-label {
+    flex: 1;
+    min-width: 200px;
+  }
 }
 
 .panel-row-control {
@@ -119,7 +130,12 @@
   align-items: center;
   gap: var(--space-2);
   flex-wrap: wrap;
-  min-width: 180px;
+}
+
+@media (width >= 768px) {
+  .panel-row-control {
+    min-width: 180px;
+  }
 }
 
 .panel-toggle-row {
@@ -417,6 +433,9 @@ textarea[aria-disabled="true"].settings-key-input {
   flex: 1;
   min-width: 0;
   margin: 0;
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--text-heading);
 }
 
 .panel-mobile-back {
