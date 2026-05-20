@@ -237,15 +237,15 @@
   margin-bottom: var(--size-8);
 }
 
-input.panel-detail-input.panel-detail-input {
+input.sheet-detail-input.sheet-detail-input {
   margin-bottom: var(--size-8);
 }
 
-.panel-detail-input {
+.sheet-detail-input {
   margin-bottom: var(--size-8);
 }
 
-.panel-detail-input--textarea {
+.sheet-detail-input--textarea {
   margin-bottom: var(--size-8);
 }
 

@@ -3,7 +3,7 @@ import { useT } from '../hooks/useTranslate.js'
 import { relatedItems } from '../hooks/useRelevance.js'
 import entrySlug from '../utils/entrySlug.js'
 
-const defaultHeadingClasses = 'panel-detail-related__heading'
+const defaultHeadingClasses = 'sheet-detail-related__heading'
 
 // WCAG AAA/enhanced SC pairings — app-specific, both directions
 const AAA_PAIRS = {
@@ -48,28 +48,28 @@ export default function A11yResultRelated({ entry, allEntries, onSelect, getPair
   const headingKey = related.length === 1 ? 'detail.related_issue_heading' : 'detail.related_heading'
 
   return (
-    <section className="panel-detail-related" aria-label={t(headingKey)}>
+    <section className="sheet-detail-related" aria-label={t(headingKey)}>
       {related.length === 1 ? (
-        <div className="panel-detail-related__single">
+        <div className="sheet-detail-related__single">
           <h3 className={`${defaultHeadingClasses} ${defaultHeadingClasses}--single`}>
             {t(headingKey)}{' '}
             <a
               href={`#/entry/${related[0].id}/${entrySlug(related[0].title)}`}
-              className="panel-detail-related__btn"
+              className="sheet-detail-related__btn"
             >
               {related[0].title}
             </a>
           </h3>
         </div>
       ) : (
-        <div className="panel-detail-related__multiple">
+        <div className="sheet-detail-related__multiple">
           <h3 className={defaultHeadingClasses}>{t(headingKey)}</h3>
-          <ul className="panel-detail-related__list">
+          <ul className="sheet-detail-related__list">
             {related.map(d => (
               <li key={d.id}>
                 <a
                   href={`#/entry/${d.id}/${entrySlug(d.title)}`}
-                  className="panel-detail-related__btn"
+                  className="sheet-detail-related__btn"
                 >
                   {d.title}
                 </a>

@@ -1178,7 +1178,7 @@ ube-badge,
 }
 
 @media (width >= 768px) {
-  .panel-detail-badges .badge-prefix {
+  .sheet-detail-badges .badge-prefix {
     display: inline;
   }
 }

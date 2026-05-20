@@ -145,10 +145,10 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
   // }
 
   return (
-    <div className="panel-detail-sheet">
-      <div className="panel-detail-header">
-        <div className="panel-detail-title-row">
-          <h2 ref={titleRef} tabIndex={-1} className="panel-detail-title">
+    <div className="sheet-detail-sheet">
+      <div className="sheet-detail-header">
+        <div className="sheet-detail-title-row">
+          <h2 ref={titleRef} tabIndex={-1} className="sheet-detail-title">
             {entry.title}
           </h2>
           <Button
@@ -162,7 +162,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             onClick={copyTitle}
           />
         </div>
-        <div className="panel-detail-badges">
+        <div className="sheet-detail-badges">
           <Badge
             variant="severity"
             bg={p.bg}
@@ -231,9 +231,9 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           )}
         </div>
 
-        <div className="panel-detail-sc-group">
-          <p className="panel-detail-sc-row">
-            <span className="panel-detail-sc-label">{t('detail.sc_failed')}</span>{' '}
+        <div className="sheet-detail-sc-group">
+          <p className="sheet-detail-sc-row">
+            <span className="sheet-detail-sc-label">{t('detail.sc_failed')}</span>{' '}
             {entry.primarySC
               ? <>
                   <A11yLinkSc label={entry.primarySC} />
@@ -248,13 +248,13 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                     onClick={copyPrimarySc}
                   />
                 </>
-              : <span className="panel-detail-sc-na">{t('common.na')}</span>
+              : <span className="sheet-detail-sc-na">{t('common.na')}</span>
             }
           </p>
           {entry.relatedSC.length > 0 && (
-            <p className="panel-detail-sc-row">
-              <span className="panel-detail-sc-label">{t('detail.related_sc')}</span>{' '}
-              <span className="panel-detail-sc-links">
+            <p className="sheet-detail-sc-row">
+              <span className="sheet-detail-sc-label">{t('detail.related_sc')}</span>{' '}
+              <span className="sheet-detail-sc-links">
                 {entry.relatedSC.map((r, i) => (
                   <span key={r}>
                     <A11yLinkSc label={r} />{i < entry.relatedSC.length - 1 && ', '}
@@ -277,15 +277,15 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
       </div>
 
       {entry.note && (
-        <InfoBox label={t('detail.note_label')} className="panel-detail-corpus-note">
+        <InfoBox label={t('detail.note_label')} className="sheet-detail-corpus-note">
           {entry.note}
         </InfoBox>
       )}
 
-      <div className="panel-detail-section panel-detail-section--location">
-        <label htmlFor="location-prefix" className="panel-detail-label">
+      <div className="sheet-detail-section sheet-detail-section--location">
+        <label htmlFor="location-prefix" className="sheet-detail-label">
           {t('detail.location_label')}
-          {!location.trim() && <span className="panel-detail-optional">{' '}{t('common.optional')}</span>}
+          {!location.trim() && <span className="sheet-detail-optional">{' '}{t('common.optional')}</span>}
         </label>
         <FormInputText
           id="location-prefix"
@@ -295,8 +295,8 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           onClear={() => setLocation('')}
           placeholder={t('detail.location_placeholder')}
           clearAriaLabel={t('search.clear_aria_label')}
-          wrapClassName="panel-detail-location-input-wrap"
-          inputClassName="panel-detail-input"
+          wrapClassName="sheet-detail-location-input-wrap"
+          inputClassName="sheet-detail-input"
           clearButtonClassName="btn--primary btn-panel--clear-input"
           disabled={animating}
         />
@@ -344,17 +344,17 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
         includeTitleLabel={t('detail.include_fix_title_when_copied')}
       />
 
-      <div className="panel-detail-section">
-        <label htmlFor="entry-note" className="panel-detail-label">{t('detail.entry_note_label')}</label>
+      <div className="sheet-detail-section">
+        <label htmlFor="entry-note" className="sheet-detail-label">{t('detail.entry_note_label')}</label>
         <textarea
           id="entry-note"
           value={entryNote}
           onChange={e => setEntryNote(e.target.value)}
           placeholder={t('detail.entry_note_placeholder')}
-          className="panel-detail-input panel-detail-input--textarea"
+          className="sheet-detail-input sheet-detail-input--textarea"
           rows={3}
         />
-        <div className="panel-detail-section-controls">
+        <div className="sheet-detail-section-controls">
           <Button
             variant="primary"
             disabled={!entryNote || !entryNote.trim() || entryNoteSaved}
@@ -374,25 +374,25 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
       </div>
 
       {aiEnabled && (
-        <div className="panel-detail-section">
-          <label htmlFor="ai-note" className={`panel-detail-label${animating ? ' panel-detail-label--disabled' : ''}`}>{aiRevisionLabel}</label>
-          <p className="panel-detail-ai-revision-hint">
+        <div className="sheet-detail-section">
+          <label htmlFor="ai-note" className={`sheet-detail-label${animating ? ' sheet-detail-label--disabled' : ''}`}>{aiRevisionLabel}</label>
+          <p className="sheet-detail-ai-revision-hint">
             {t('detail.ai_revision_hint')}{' '}
-            <a href="#/settings" className="panel-detail-settings-link">{t('common.settings')}</a>.
+            <a href="#/settings" className="sheet-detail-settings-link">{t('common.settings')}</a>.
           </p>
           <textarea
             id="ai-note"
             value={aiNote}
             onChange={e => setAiNote(e.target.value)}
             placeholder={t('detail.ai_revision_placeholder')}
-            className="panel-detail-input panel-detail-input--textarea"
+            className="sheet-detail-input sheet-detail-input--textarea"
             rows={3}
           />
-          <div className="panel-detail-section-controls">
-            <div className="panel-detail-ai-settings-group">
+          <div className="sheet-detail-section-controls">
+            <div className="sheet-detail-ai-settings-group">
               {getAiProvider() === 'anthropic' && (
-                <label className="panel-detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
-                  <span className="panel-detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
+                <label className="sheet-detail-ai-agentic-row" htmlFor="agentic-mode-toggle">
+                  <span className="sheet-detail-ai-agentic-label">{t('detail.agentic_mode_label') || 'Match Existing Style'}</span>
                   <FormControlToggle
                     id="agentic-mode-toggle"
                     checked={useAgenticMode}
@@ -400,11 +400,11 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                   />
                 </label>
               )}
-              <div className="panel-detail-ai-field-select">
-                <div className="panel-detail-ai-field-select-item">
+              <div className="sheet-detail-ai-field-select">
+                <div className="sheet-detail-ai-field-select-item">
                   <FormControlCheckbox id="field-desc-checkbox" label={descLabel} checked={aiRevisedDesc} onChange={e => setAiRevisedDesc(e.target.checked)} disabled={animating} />
                 </div>
-                <div className="panel-detail-ai-field-select-item">
+                <div className="sheet-detail-ai-field-select-item">
                   <FormControlCheckbox id="field-fix-checkbox" label={fixLabel} checked={aiRevisedFix} onChange={e => setAiRevisedFix(e.target.checked)} disabled={animating} />
                 </div>
               </div>
@@ -415,8 +415,8 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
               disabled={refining || animating || !aiNote.trim()}
               busy={refining}
               icon={refining
-                ? <Loader2 size={12} strokeWidth={2} className="panel-detail-revising-spinner" aria-hidden="true" />
-                : <Sparkles size={12} strokeWidth={2} className="panel-detail-ai-revision-icon" aria-hidden="true" />
+                ? <Loader2 size={12} strokeWidth={2} className="sheet-detail-revising-spinner" aria-hidden="true" />
+                : <Sparkles size={12} strokeWidth={2} className="sheet-detail-ai-revision-icon" aria-hidden="true" />
               }
               label={refining ? t('detail.rewriting_aria_live') : t('detail.ai_revision_aria_label')}
               onClick={handleRefine}
@@ -425,8 +425,8 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             </Button>
           </div>
           {(descText !== entry.desc || fixText !== entry.fix) && (
-            <p className="panel-detail-edit-warning" role="status">
-              <AlertCircle size={16} aria-hidden="true" className="panel-detail-edit-warning-icon" />
+            <p className="sheet-detail-edit-warning" role="status">
+              <AlertCircle size={16} aria-hidden="true" className="sheet-detail-edit-warning-icon" />
               {t('detail.edit_lang_warning')}
             </p>
           )}
@@ -440,7 +440,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
         multipleHeading={t('detail.sources_heading')}
       />
 
-      <div className="panel-detail-actions-end">
+      <div className="sheet-detail-actions-end">
         <Button
           variant="secondary"
           disabled={descText === entry.desc && fixText === entry.fix}
