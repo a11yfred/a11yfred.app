@@ -194,6 +194,10 @@
   text-align: center;
 }
 
+.page-footer p {
+  margin: 0;
+}
+
 /* ─── Credit ──────────────────────────────────────────────── */
 
 .footer-credit {
