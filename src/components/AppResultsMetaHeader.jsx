@@ -79,7 +79,6 @@ export default function AppResultsMetaHeader({
                 activeLabel={t('results.copied_link')}
                 variant="secondary"
                 className="results-copy-link-btn"
-                title={linkCopied ? t('results.copied_link') : t('results.copy_link')}
                 onClick={() => {
                   onCopyLink()
                   setLinkCopied(true)
@@ -178,7 +177,6 @@ export default function AppResultsMetaHeader({
                 <Button
                   variant="secondary"
                   className="results-narrow-btn"
-                  title={narrowMode ? t('search.exit_narrow_aria_label') : t('results.narrow_title')}
                   onClick={narrowMode ? onNarrowExit : onNarrow}
                 >
                   {narrowMode ? (
@@ -198,7 +196,6 @@ export default function AppResultsMetaHeader({
                 <Button
                   variant="tertiary"
                   className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
-                  title={t('results.clear_all_results')}
                   icon={<Trash2 size={14} aria-hidden="true" />}
                   disabled={!hasAnyActiveFilter}
                   onClick={onClear}

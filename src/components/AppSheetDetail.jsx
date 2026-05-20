@@ -160,7 +160,6 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             activeLabel={t('detail.copied_aria_live')}
             className="btn-panel--copy"
             onClick={copyTitle}
-            title={copiedTitle ? t('detail.copied_aria_live') : t('detail.copy_title_aria_label')}
           />
         </div>
         <div className="panel-detail-badges">
@@ -247,7 +246,6 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                     activeLabel={t('detail.copied_aria_live')}
                     className="btn-panel--copy"
                     onClick={copyPrimarySc}
-                    title={copiedPrimarySc ? t('detail.copied_aria_live') : t('detail.copy_sc_aria_label')}
                   />
                 </>
               : <span className="panel-detail-sc-na">{t('common.na')}</span>
@@ -272,7 +270,6 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                 activeLabel={t('detail.copied_aria_live')}
                 className="btn-panel--copy"
                 onClick={copyRelatedSc}
-                title={copiedRelatedSc ? t('detail.copied_aria_live') : t('detail.copy_sc_aria_label')}
               />
             </p>
           )}
@@ -473,7 +470,6 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           variant="primary"
           icon={<Mail size={14} aria-hidden="true" />}
           label={t('detail.email_share_aria', 'Email this defect')}
-          title={t('detail.email_share_aria', 'Email this defect')}
           onClick={handleEmailShare}
         >
           Email

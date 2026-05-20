@@ -17,18 +17,12 @@ export default function ResultCardBadges({ entry, archived }) {
         {t(p.key)}
       </Badge>
       {entry.wcagVersion && (
-        <Badge
-          variant="wcag"
-          title={`${t('badge.wcag_prefix')}${entry.wcagVersion}`}
-        >
+        <Badge variant="wcag">
           {entry.wcagVersion}
         </Badge>
       )}
       {entry.wcagLevel && (
-        <Badge
-          variant="wcag-level"
-          title={`${t('badge.level_prefix')}${entry.wcagLevel}`}
-        >
+        <Badge variant="wcag-level">
           {entry.wcagLevel}
         </Badge>
       )}

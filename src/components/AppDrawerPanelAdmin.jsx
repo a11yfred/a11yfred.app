@@ -247,7 +247,6 @@ export default function AppDrawerPanelAdmin({
                   <button
                     className="admin-sc-search"
                     onClick={() => onSearch(c.sc)}
-                    title={`Search for ${c.sc}`}
                   >
                     {c.sc}
                   </button>
@@ -260,7 +259,6 @@ export default function AppDrawerPanelAdmin({
                     className="admin-sc-copy"
                     onClick={() => handleCopy(c.sc)}
                     aria-label={`Copy ${c.sc}`}
-                    title="Copy SC number"
                   >
                     {copied === c.sc
                       ? <Check size={13} aria-hidden="true" />
@@ -334,7 +332,6 @@ export default function AppDrawerPanelAdmin({
                 <a
                   href={`#/entry/${entry.id}/${entrySlug(entry.title)}`}
                   className="admin-entry-link"
-                  title={entry.title}
                 >
                   {entry.id}
                 </a>

@@ -328,7 +328,6 @@ export default function AppListResultCard({
 
               <span
                 className="result-rank-score"
-                title={t('results.score_label', { score })}
               >
                 <span className="sr-only">{t('results.score_label', { score })}</span>
                 <span aria-hidden="true">{score}</span>
