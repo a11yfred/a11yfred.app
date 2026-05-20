@@ -56,7 +56,7 @@
 }
 
 .panel-section-heading {
-  font-size: var(--fs-h2);
+  font-size: var(--fs-body);
   font-weight: 600;
   color: var(--text-heading);
   margin: 0 0 var(--space-4) 0;
@@ -162,12 +162,12 @@
 }
 
 ube-button {
-  height: var(--btn-height-standard);
+  min-height: var(--btn-height-standard) !important;
 }
 
 .panel-toggle-row ube-button,
 .panel-toggle-row .btn {
-  height: var(--btn-height-standard);
+  min-height: var(--btn-height-standard) !important;
   padding: 0 var(--space-3);
   font-size: var(--fs-body);
 }
@@ -195,7 +195,7 @@ ube-button {
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  height: var(--btn-height-compact);
+  min-height: var(--btn-height-compact) !important;
   padding: 0 var(--space-3);
   font-size: var(--fs-body);
   border-radius: var(--rounded);
@@ -215,7 +215,7 @@ ube-button {
 }
 
 .settings-privacy-btn {
-  height: var(--btn-height-standard);
+  min-height: var(--btn-height-standard) !important;
   padding: 0 var(--space-3);
   display: flex;
   align-items: center;
@@ -318,7 +318,7 @@ textarea[aria-disabled="true"].settings-key-input {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--btn-height-standard);
+  min-height: var(--btn-height-standard) !important;
   font-size: var(--fs-body);
   font-weight: 500;
   padding: 0 var(--space-4);
@@ -329,7 +329,7 @@ textarea[aria-disabled="true"].settings-key-input {
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  height: var(--btn-height-standard);
+  min-height: var(--btn-height-standard) !important;
   font-size: var(--fs-body);
   font-weight: 500;
   padding: 0 var(--space-3);
@@ -451,5 +451,5 @@ textarea[aria-disabled="true"].settings-key-input {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: var(--btn-height-standard);
+  min-height: var(--btn-height-standard) !important;
 }
