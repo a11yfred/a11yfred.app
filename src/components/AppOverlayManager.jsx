@@ -5,6 +5,14 @@ import { OverlayManager } from '@ulam/sili/react'
 
 import { URL_PRIVACY_POLICY } from '../utils/constants.js'
 
+// Strip <strong> tags from heading text while preserving the content
+function stripHeadingTags(heading) {
+  if (typeof heading === 'string') {
+    return heading.replace(/<strong[^>]*>/g, '').replace(/<\/strong>/g, '')
+  }
+  return heading
+}
+
 /**
  * App-level overlay manager for a11yfred.
  * Orchestrates all overlays: app-level (viewAll, pendingEntry, pendingPrivacy)
@@ -88,7 +96,7 @@ export default function AppOverlayManager({
     {
       id: 'viewAllConfirm',
       type: 'dialog',
-      heading: t('search.view_all_confirm_heading'),
+      heading: stripHeadingTags(t('search.view_all_confirm_heading')),
       returnFocusRef: viewAllTriggerRef,
       actions: [
         { label: t('search.view_all_confirm_yes'), onClick: onViewAllConfirm, className: 'btn--primary' },
