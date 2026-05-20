@@ -335,11 +335,14 @@
 .result-list {
   list-style: none;
   border-bottom: 1px solid var(--border);
+  padding-inline: var(--space-4);
+  margin: 0;
 }
 
 @media (width >= 768px) {
   .result-list {
     border-bottom: none;
+    padding-inline: 0;
   }
 }
 
