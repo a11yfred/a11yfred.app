@@ -39,15 +39,6 @@ export default function A11yScreenFooter() {
             {t('footer.linkedin')}<ExternalLinkIcon size="0.7em" className="inline-icon footer-ext-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
           </a>
         </span>
-        <a
-          href={URL_PRIVACY_POLICY}
-          target="_blank"
-          rel="noreferrer"
-          className="footer-link footer-privacy-link"
-          title="Privacy Policy"
-        >
-          {t('footer.privacy') || 'Privacy'}<ExternalLinkIcon size="0.7em" className="inline-icon footer-ext-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
-        </a>
       </p>
     </footer>
   )
