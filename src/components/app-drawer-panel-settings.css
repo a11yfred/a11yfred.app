@@ -207,11 +207,7 @@
   flex: 1;
 }
 
-.settings-language-change-btn,
-.settings-unpin-all-btn,
-.settings-unstar-all-btn,
-.settings-unarchive-all-btn,
-.settings-reset-rankings-btn {
+.settings-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -225,27 +221,15 @@
   transition: opacity var(--duration-fast);
 }
 
-.settings-language-change-btn[disabled],
-.settings-language-change-btn[aria-disabled="true"],
-.settings-unpin-all-btn[disabled],
-.settings-unstar-all-btn[disabled],
-.settings-unarchive-all-btn[disabled],
-.settings-reset-rankings-btn[disabled],
-.settings-unpin-all-btn[aria-disabled="true"],
-.settings-unstar-all-btn[aria-disabled="true"],
-.settings-unarchive-all-btn[aria-disabled="true"],
-.settings-reset-rankings-btn[aria-disabled="true"] {
+.settings-btn[disabled],
+.settings-btn[aria-disabled="true"] {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
   pointer-events: none !important;
 }
 
-.settings-privacy-btn {
+.settings-btn--primary {
   min-height: var(--btn-height-standard) !important;
-  padding: 0 var(--space-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .settings-provider-group {
@@ -343,30 +327,18 @@ textarea[aria-disabled="true"].settings-key-input {
   padding-top: var(--space-4);
 }
 
-.settings-reset-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--btn-height-standard) !important;
-  font-size: var(--fs-body);
-  font-weight: 500;
+.settings-btn--reset {
   padding: 0 var(--space-4);
 }
 
-.settings-save-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.settings-btn--save {
   gap: var(--space-1);
-  min-height: var(--btn-height-standard) !important;
-  font-size: var(--fs-body);
-  font-weight: 500;
   padding: 0 var(--space-3);
   order: -1;
 }
 
-.settings-save-btn[aria-pressed="true"],
-.settings-save-btn.active {
+.settings-btn--save[aria-pressed="true"],
+.settings-btn--save.active {
   background: var(--success, #4caf50) !important;
   color: white !important;
   border-color: var(--success, #4caf50) !important;
@@ -385,8 +357,8 @@ textarea[aria-disabled="true"].settings-key-input {
   order: 0;
 }
 
-.settings-reset-btn,
-.settings-save-btn {
+.settings-btn--reset,
+.settings-btn--save {
   width: 100%;
   justify-content: center;
 }
@@ -403,12 +375,12 @@ textarea[aria-disabled="true"].settings-key-input {
     margin-inline-start: auto;
   }
 
-  .settings-reset-btn,
-  .settings-save-btn {
+  .settings-btn--reset,
+  .settings-btn--save {
     width: auto;
   }
 
-  .settings-save-btn {
+  .settings-btn--save {
     flex: none;
     order: 0;
   }

@@ -206,7 +206,7 @@ export default function SettingsSectionSearch({
         </div>
       </div>
 
-      <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-unpin-all-btn" wrapperClass="panel-data-row" />
+      <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-btn" wrapperClass="panel-data-row" />
 
       <div className="panel-section">
         <div className="panel-row">
@@ -224,11 +224,11 @@ export default function SettingsSectionSearch({
         </div>
       </div>
 
-      <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={OctagonX} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" wrapperClass="panel-data-row" />
+      <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={OctagonX} className="settings-btn" announceKey="settings.unstar_all_done" wrapperClass="panel-data-row" />
 
-      <ClearDataRow t={t} labelKey="settings.rankings_label" hasData={hasRankings} descKey="settings.rankings_desc" emptyKey="settings.rankings_empty" isDone={resetRankingsDone} setIsDone={setResetRankingsDone} onClear={onResetRankings} labelActionKey="settings.reset_rankings" labelDoneKey="settings.reset_rankings_done" Icon={OctagonX} className="settings-reset-rankings-btn" announceKey="settings.reset_rankings_done" wrapperClass="panel-data-row" />
+      <ClearDataRow t={t} labelKey="settings.rankings_label" hasData={hasRankings} descKey="settings.rankings_desc" emptyKey="settings.rankings_empty" isDone={resetRankingsDone} setIsDone={setResetRankingsDone} onClear={onResetRankings} labelActionKey="settings.reset_rankings" labelDoneKey="settings.reset_rankings_done" Icon={OctagonX} className="settings-btn" announceKey="settings.reset_rankings_done" wrapperClass="panel-data-row" />
 
-      <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={OctagonX} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" wrapperClass="panel-data-row" />
+      <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={OctagonX} className="settings-btn" announceKey="settings.unarchive_all_done" wrapperClass="panel-data-row" />
     </section>
   )
 }

@@ -306,7 +306,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
           ref={privacyButtonRef}
           variant="tertiary"
           icon={<Info size={14} aria-hidden="true" />}
-          className="settings-privacy-btn"
+          className="settings-btn settings-btn--primary"
           onClick={() => onOpenPrivacy ? onOpenPrivacy() : navigate('/settings/privacy')}
         >
           {t('settings.privacy_button')}
@@ -315,7 +315,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
           <Button
             ref={resetButtonRef}
             variant="warning"
-            className="settings-reset-btn"
+            className="settings-btn settings-btn--primary settings-btn--reset"
             disabled={resetDisabled}
             onClick={() => setResetConfirmOpen(true)}
           >
@@ -329,7 +329,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
             label={saveAndClose ? t('settings.save_and_close') : t('settings.save')}
             activeLabel={t('settings.saved')}
             variant="primary"
-            className="settings-save-btn"
+            className="settings-btn settings-btn--primary settings-btn--save"
             onClick={handleSave}
           >
             {saved ? t('settings.saved') : saveAndClose ? t('settings.save_and_close') : t('settings.save')}
