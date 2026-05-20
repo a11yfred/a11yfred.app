@@ -210,7 +210,8 @@
 .settings-language-change-btn,
 .settings-unpin-all-btn,
 .settings-unstar-all-btn,
-.settings-unarchive-all-btn {
+.settings-unarchive-all-btn,
+.settings-reset-rankings-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -229,9 +230,11 @@
 .settings-unpin-all-btn[disabled],
 .settings-unstar-all-btn[disabled],
 .settings-unarchive-all-btn[disabled],
+.settings-reset-rankings-btn[disabled],
 .settings-unpin-all-btn[aria-disabled="true"],
 .settings-unstar-all-btn[aria-disabled="true"],
-.settings-unarchive-all-btn[aria-disabled="true"] {
+.settings-unarchive-all-btn[aria-disabled="true"],
+.settings-reset-rankings-btn[aria-disabled="true"] {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
   pointer-events: none !important;
