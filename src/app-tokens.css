@@ -59,7 +59,7 @@
     opacity: 1;
   }
 
-  .header-github-link .external-link-icon {
+  .header-link-github .external-link-icon {
     opacity: 1;
     color: var(--text-muted);
   }

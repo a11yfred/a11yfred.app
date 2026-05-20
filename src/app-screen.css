@@ -69,7 +69,7 @@
 
 /* ─── GitHub Link ─────────────────────────────────────────── */
 
-.header-github-link {
+.header-link-github {
   position: absolute;
   top: 0;
   left: 0;
@@ -89,19 +89,19 @@
   transition: background-color var(--duration-fast), color var(--duration-fast);
 }
 
-[dir="rtl"] .header-github-link {
+[dir="rtl"] .header-link-github {
   left: auto;
   right: 0;
 }
 
-.header-github-link:hover {
+.header-link-github:hover {
   background: var(--bg-subtle);
   color: var(--text-heading);
   text-decoration: none;
 }
 
-.header-github-link .external-link-icon,
-.header-github-link .inline-icon {
+.header-link-github .external-link-icon,
+.header-link-github .inline-icon {
   width: 0.8em;
   height: 0.8em;
   opacity: 0.7;
