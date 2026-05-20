@@ -149,6 +149,17 @@
   border-radius: var(--rounded);
   white-space: nowrap;
   flex-shrink: 0;
+  transition: opacity var(--duration-fast);
+}
+
+.settings-unpin-all-btn[disabled],
+.settings-unstar-all-btn[disabled],
+.settings-unarchive-all-btn[disabled],
+.settings-unpin-all-btn[aria-disabled="true"],
+.settings-unstar-all-btn[aria-disabled="true"],
+.settings-unarchive-all-btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .settings-privacy-btn {
