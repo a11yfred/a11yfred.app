@@ -818,7 +818,6 @@ input.sheet-detail-input.sheet-detail-input {
 }
 
 .panel-section-heading {
-  font-size: var(--fs-small);
   font-weight: 600;
   color: var(--color-text-heading);
   margin: 0 0 var(--size-4) 0;
