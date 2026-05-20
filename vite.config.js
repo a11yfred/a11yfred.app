@@ -46,6 +46,7 @@ export default defineConfig(({ mode }) => ({
   },
 
   build: {
+    sourcemap: true,
     // Enable LightningCSS for faster, smaller CSS output
     css: { transformer: 'lightningcss' },
     // 50+ locale JSON files make the main bundle intentionally large; suppress warning
