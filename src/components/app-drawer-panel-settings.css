@@ -204,14 +204,17 @@ ube-button {
   transition: opacity var(--duration-fast);
 }
 
+ube-button[disabled],
+ube-button[aria-disabled="true"],
 .settings-unpin-all-btn[disabled],
 .settings-unstar-all-btn[disabled],
 .settings-unarchive-all-btn[disabled],
 .settings-unpin-all-btn[aria-disabled="true"],
 .settings-unstar-all-btn[aria-disabled="true"],
 .settings-unarchive-all-btn[aria-disabled="true"] {
-  opacity: 0.5;
-  cursor: not-allowed;
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
 }
 
 .settings-privacy-btn {
