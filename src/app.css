@@ -4,6 +4,7 @@
 
 .app-container {
   padding: var(--space-2) var(--space-4) var(--space-5);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -71,16 +72,14 @@
   gap: var(--space-1);
   font-size: var(--fs-body);
   font-weight: 500;
-  color: var(--text-body);
-  text-decoration: none;
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: var(--text-underline-offset);
   white-space: nowrap;
   padding: 0 var(--space-2);
   height: var(--btn-height-standard);
   border-radius: var(--rounded);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: all var(--duration-fast);
+  transition: background-color var(--duration-fast), color var(--duration-fast);
 }
 
 [dir="rtl"] .header-github-link {
@@ -91,17 +90,13 @@
 .header-github-link:hover {
   background: var(--bg-subtle);
   color: var(--text-heading);
-}
-
-.header-github-link:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus);
-  outline-offset: var(--focus-outline-offset);
+  text-decoration: none;
 }
 
 .header-github-link .external-link-icon,
 .header-github-link .inline-icon {
-  width: 1em;
-  height: 1em;
+  width: 0.8em;
+  height: 0.8em;
   opacity: 0.7;
 }
 
@@ -121,13 +116,6 @@
 .page-title-link:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
-}
-
-h2 {
-  font-size: var(--fs-h2);
-  font-weight: 700;
-  color: var(--text-heading);
-  margin: 0;
 }
 
 .page-title {
@@ -210,6 +198,7 @@ h2 {
 
 .footer-credit {
   font-size: var(--fs-body);
+  line-height: 2em;
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
@@ -229,7 +218,6 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  line-height: 1.5;
 }
 
 @media (width >= 768px) {
@@ -252,12 +240,8 @@ h2 {
 /* ─── Links ───────────────────────────────────────────────── */
 
 .footer-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2em;
   color: var(--accent-text);
   text-decoration: underline;
-  text-underline-offset: var(--text-underline-offset);
   white-space: nowrap;
 }
 
@@ -265,58 +249,18 @@ h2 {
   color: var(--text-heading);
 }
 
-.footer-link:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus);
-  outline-offset: var(--focus-outline-offset);
-}
-
-.footer-link .footer-brand-icon,
-.footer-link .inline-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.footer-link .footer-brand-icon {
   width: 0.9em;
   height: 0.9em;
-  flex-shrink: 0;
+  vertical-align: middle;
 }
 
 .footer-link .footer-ext-icon {
   width: 0.65em;
   height: 0.65em;
+  vertical-align: middle;
   opacity: 0.7;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Panel Headers
-   ════════════════════════════════════════════════════════════ */
-
-.page-panel ube-panel-header,
-.page-panel > div:first-child {
-  display: flex !important;
-  align-items: center !important;
-  gap: var(--space-2) !important;
-}
-
-.page-panel h2 {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Dialog & Modal
-   ════════════════════════════════════════════════════════════ */
-
-dialog,
-ube-dialog,
-[role="dialog"] {
-  border-radius: var(--rounded-lg) !important;
-}
-
-dialog button,
-ube-dialog button,
-[role="dialog"] button {
-  border-radius: var(--rounded);
+  margin-left: 0.1em;
 }
 
 /* ═══════════════════════════════════════════════════════════
