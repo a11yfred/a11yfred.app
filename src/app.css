@@ -256,16 +256,21 @@
 
 .footer-link .footer-brand-icon,
 .footer-link .inline-icon {
-  width: 0.9em;
-  height: 0.9em;
+  width: 0.9em !important;
+  height: 0.9em !important;
   vertical-align: -0.05em;
 }
 
 .footer-link .footer-ext-icon {
-  width: 0.65em;
-  height: 0.65em;
+  width: 0.65em !important;
+  height: 0.65em !important;
   opacity: 0.7;
   margin-left: 0.1em;
+}
+
+.footer-link svg {
+  width: 0.9em !important;
+  height: 0.9em !important;
 }
 
 /* ═══════════════════════════════════════════════════════════
