@@ -347,6 +347,7 @@ ube-sheet {
   align-items: center;
 }
 
+/* App-specific input/textarea sizing and spacing */
 input.sheet-detail-input.sheet-detail-input {
   margin-bottom: var(--size-8);
 }
@@ -364,18 +365,9 @@ textarea.sheet-detail-input.sheet-detail-input[aria-invalid="true"] {
   width: 100%;
   height: var(--size-input-big);
   padding: 0 10px;
-  font-size: var(--fs-body);
-  background: var(--color-bg-subtle);
-  border: var(--size-border-width-thin) solid var(--color-border-control);
-  border-radius: var(--rounded);
-  color: var(--color-text-heading);
   margin-bottom: var(--size-8);
   display: flex;
   align-items: center;
-}
-
-.sheet-detail-input:focus {
-  border-color: var(--color-focus);
 }
 
 .btn-panel--clear-input {
@@ -395,7 +387,6 @@ textarea.sheet-detail-input.sheet-detail-input[aria-invalid="true"] {
   resize: vertical;
   min-height: calc(var(--size-4) * 4.5);
   line-height: 1.5;
-  font-family: inherit;
   margin-bottom: var(--size-8);
 }
 

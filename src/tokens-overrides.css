@@ -99,3 +99,13 @@
   --color-border-control: #686868;
 }
 
+/* ─── Textarea Overrides ───────────────────────────────────────────────────
+   App-specific textarea styling — framework now handles base input/textarea
+   styles. These are app-specific overrides for context and usage.
+───────────────────────────────────────────────────────────────────────────── */
+
+textarea {
+  font-family: var(--font-mono);
+  line-height: 1.5;
+}
+
