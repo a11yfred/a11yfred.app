@@ -177,13 +177,6 @@
 .results-narrow-btn,
 .results-copy-link-btn {
   font-size: var(--fs-body);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  height: var(--btn-height-standard);
-  padding: 0 var(--space-3);
-  border-radius: var(--rounded);
 }
 
 .results-narrow-btn {
