@@ -153,7 +153,7 @@ export default function AppOverlayManager({
           <p>{t('settings.privacy_body_translations')}</p>
           <p><a href={URL_PRIVACY_POLICY} target="_blank" rel="noreferrer">{t('settings.privacy_full_policy')}<span className="sr-only"> (opens in new tab)</span></a></p>
           <div className="panel-detail-actions-end">
-            <button className="btn btn--primary panel-detail-close-btn" onClick={handleClose}>
+            <button className="btn btn--primary panel-btn--close" onClick={handleClose}>
               {t('common.close')}
             </button>
           </div>

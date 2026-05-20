@@ -968,8 +968,7 @@
 }
 
 /* Detail copy buttons â€" icon-only with state change */
-.panel-detail-copy-btn,
-.panel-detail-sc-copy-btn {
+.panel-btn--copy {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -986,10 +985,8 @@
   border-radius: var(--rounded);
 }
 
-.panel-detail-copy-btn:not([aria-disabled="true"]):hover,
-.panel-detail-sc-copy-btn:not([aria-disabled="true"]):hover {
+.panel-btn--copy:not([aria-disabled="true"]):hover {
   background: var(--bg-subtle);
-  border-radius: var(--rounded);
 }
 
 /* Pinned section above main results */

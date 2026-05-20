@@ -268,22 +268,25 @@ ube-sheet {
   }
 }
 
-.panel-detail-section-btn {
+.panel-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-1);
-  height: var(--btn-height-standard);
   font-size: var(--fs-body);
   border-radius: var(--rounded);
   white-space: nowrap;
+}
+
+.panel-btn--section {
+  height: var(--btn-height-standard);
   text-align: center;
   flex-grow: 1;
   align-self: stretch;
 }
 
 @media (width >= 768px) {
-  .panel-detail-section-btn {
+  .panel-btn--section {
     flex-grow: 0;
     align-self: flex-end;
   }
@@ -344,7 +347,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   border-color: var(--focus);
 }
 
-.panel-detail-location-clear-btn {
+.panel-btn--clear-input {
   position: absolute;
   right: 8px;
   top: 50%;
@@ -354,9 +357,6 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   border-radius: 50%;
   font-size: var(--fs-body);
   line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .panel-detail-input--textarea {
@@ -506,40 +506,28 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   }
 }
 
-.panel-detail-action-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-1);
-  font-size: var(--fs-body);
-  border-radius: var(--rounded);
+.panel-btn--action {
   cursor: pointer;
-}
-
-.panel-detail-actions-end .panel-detail-action-btn {
   width: 100%;
   justify-content: center;
 }
 
 @media (width >= 768px) {
-  .panel-detail-actions-end .panel-detail-action-btn {
+  .panel-btn--action {
     width: auto;
     justify-content: initial;
   }
 }
 
-.panel-detail-close-btn {
-  border-radius: var(--rounded);
-  font-size: var(--fs-body);
+.panel-btn--close {
   font-weight: 600;
-  white-space: nowrap;
   width: 100%;
   text-align: center;
   justify-content: center;
 }
 
 @media (width >= 768px) {
-  .panel-detail-close-btn {
+  .panel-btn--close {
     width: auto;
     text-align: initial;
   }

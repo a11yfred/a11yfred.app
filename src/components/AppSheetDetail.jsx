@@ -158,7 +158,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             activeIcon={<Check size={14} aria-hidden="true" />}
             label={t('detail.copy_title_aria')}
             activeLabel={t('detail.copied_aria')}
-            className="panel-detail-copy-btn"
+            className="panel-btn--copy"
             onClick={copyTitle}
             title={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
           />
@@ -245,7 +245,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                     activeIcon={<Check size={14} aria-hidden="true" />}
                     label={t('detail.copy_sc_aria')}
                     activeLabel={t('detail.copied_aria')}
-                    className="panel-detail-sc-copy-btn"
+                    className="panel-btn--copy"
                     onClick={copyPrimarySc}
                     title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
                   />
@@ -270,7 +270,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                 activeIcon={<Check size={14} aria-hidden="true" />}
                 label={t('detail.copy_sc_aria')}
                 activeLabel={t('detail.copied_aria')}
-                className="panel-detail-sc-copy-btn"
+                className="panel-btn--copy"
                 onClick={copyRelatedSc}
                 title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
               />
@@ -300,7 +300,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           clearAriaLabel={t('search.clear_aria')}
           wrapClassName="panel-detail-location-input-wrap"
           inputClassName="panel-detail-input"
-          clearButtonClassName="btn--primary panel-detail-location-clear-btn"
+          clearButtonClassName="btn--primary panel-btn--clear-input"
           disabled={animating}
         />
       </div>
