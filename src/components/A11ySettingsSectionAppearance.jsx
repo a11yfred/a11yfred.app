@@ -96,7 +96,7 @@ export default function SettingsSectionAppearance({
                 variant="primary"
                 active={languagePreviewed}
                 activeIcon={<Check size={14} aria-hidden="true" />}
-                className="settings-btn"
+                className="btn-settings"
                 disabled={!pendingLanguage || pendingLanguage === language}
                 onClick={() => {
                   setLanguagePreviewed(true)

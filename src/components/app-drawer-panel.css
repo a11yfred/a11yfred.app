@@ -902,7 +902,7 @@
   flex: 1;
 }
 
-.settings-btn {
+.btn-settings {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -916,14 +916,14 @@
   transition: opacity var(--duration-fast);
 }
 
-.settings-btn[disabled],
-.settings-btn[aria-disabled="true"] {
+.btn-settings[disabled],
+.btn-settings[aria-disabled="true"] {
   opacity: 0.5 !important;
   cursor: not-allowed !important;
   pointer-events: none !important;
 }
 
-.settings-btn--primary {
+.btn-settings--primary {
   min-height: var(--btn-height-standard) !important;
 }
 
@@ -1022,18 +1022,18 @@ textarea[aria-disabled="true"].settings-key-input {
   padding-top: var(--space-4);
 }
 
-.settings-btn--reset {
+.btn-settings--reset {
   padding: 0 var(--space-4);
 }
 
-.settings-btn--save {
+.btn-settings--save {
   gap: var(--space-1);
   padding: 0 var(--space-3);
   order: -1;
 }
 
-.settings-btn--save[aria-pressed="true"],
-.settings-btn--save.active {
+.btn-settings--save[aria-pressed="true"],
+.btn-settings--save.active {
   background: var(--success, #4caf50) !important;
   color: white !important;
   border-color: var(--success, #4caf50) !important;
@@ -1052,8 +1052,8 @@ textarea[aria-disabled="true"].settings-key-input {
   order: 0;
 }
 
-.settings-btn--reset,
-.settings-btn--save {
+.btn-settings--reset,
+.btn-settings--save {
   width: 100%;
   justify-content: center;
 }
@@ -1070,12 +1070,12 @@ textarea[aria-disabled="true"].settings-key-input {
     margin-inline-start: auto;
   }
 
-  .settings-btn--reset,
-  .settings-btn--save {
+  .btn-settings--reset,
+  .btn-settings--save {
     width: auto;
   }
 
-  .settings-btn--save {
+  .btn-settings--save {
     flex: none;
     order: 0;
   }
