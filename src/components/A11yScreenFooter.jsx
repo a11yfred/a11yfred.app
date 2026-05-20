@@ -25,7 +25,7 @@ export default function A11yScreenFooter() {
           className="footer-link"
           title={t('footer.sponsor_title') || 'Support on GitHub Sponsors'}
         >
-          <Heart aria-hidden="true" className="inline-icon footer-brand-icon" fill="currentColor" strokeWidth={0} />
+          <Heart size="1em" aria-hidden="true" className="inline-icon footer-brand-icon" fill="currentColor" strokeWidth={0} />
           {t('footer.sponsor')}<ExternalLinkIcon size="0.7em" className="inline-icon footer-ext-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
         </a>
         {'  ·  '}
