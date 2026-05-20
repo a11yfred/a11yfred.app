@@ -972,6 +972,9 @@
 /* Detail copy buttons â€" icon-only with state change */
 .panel-detail-copy-btn,
 .panel-detail-sc-copy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: var(--touch-target);
   min-height: var(--touch-target);
   padding: var(--icon-btn-padding) 12px;
@@ -980,8 +983,9 @@
   text-decoration: none;
   color: var(--accent-text);
   font-weight: 500;
+  cursor: pointer;
   transition: background var(--duration-fast);
-  margin-inline-start: auto;
+  border-radius: var(--rounded);
 }
 
 .panel-detail-copy-btn:not([aria-disabled="true"]):hover,
