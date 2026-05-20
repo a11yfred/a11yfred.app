@@ -133,8 +133,8 @@ function boldStatPhrase(str, n) {
   return <><strong>{filled.slice(0, andIdx)}</strong>{filled.slice(andIdx)}</>
 }
 
-// Formats template with {count} placeholder: splits on count and bolds the first word count.
-// e.g. "{count} items loaded"  => <> <strong>X item(s)</strong> loaded</>
+// Formats template with {count} placeholder as plain text
+// e.g. "{count} items loaded" => "X item(s) loaded"
 function formatCountTemplate(tmpl, count) {
   const parts = tmpl.split('{count}')
   if (parts.length !== 2) return tmpl
@@ -142,7 +142,7 @@ function formatCountTemplate(tmpl, count) {
   const spaceIdx = after.indexOf(' ', 1)
   const boldTail = spaceIdx === -1 ? after : after.slice(0, spaceIdx)
   const rest = spaceIdx === -1 ? '' : after.slice(spaceIdx)
-  return <>{before}<strong style={{ color: 'var(--text-heading)' }}>{formatCount(count)}{boldTail}</strong>{rest}</>
+  return `${before}${formatCount(count)}${boldTail}${rest}`
 }
 
 function AppContent() {
