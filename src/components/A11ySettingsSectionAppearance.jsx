@@ -74,6 +74,7 @@ export default function SettingsSectionAppearance({
           <div className="panel-row-label">
             <label htmlFor="language-select" className="panel-field-label">{t('settings.language_label')}</label>
             <p className="panel-field-desc">The current language is <strong>{savedLanguageLabel}</strong>.</p>
+            {pendingLanguage !== language && <PendingNote t={t} />}
           </div>
           <div className="panel-row-control">
             <div className="settings-language-row">
@@ -106,7 +107,6 @@ export default function SettingsSectionAppearance({
                 {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}
               </Button>
             </div>
-            {pendingLanguage !== language && <PendingNote t={t} />}
           </div>
         </div>
       </div>

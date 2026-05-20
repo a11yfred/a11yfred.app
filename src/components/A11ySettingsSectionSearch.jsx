@@ -19,9 +19,9 @@ function PendingNote({ t }) {
   )
 }
 
-function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey }) {
+function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDone, onClear, labelActionKey, labelDoneKey, Icon, className, announceKey, wrapperClass }) {
   return (
-    <div className="panel-toggle-row">
+    <div className={`panel-toggle-row ${wrapperClass || ''}`}>
       <div>
         <h3 className="panel-toggle-label">{t(labelKey)}</h3>
         <p className="panel-toggle-desc">{hasData ? t(descKey) : t(emptyKey)}</p>
@@ -88,7 +88,7 @@ export default function SettingsSectionSearch({
     <section className="panel-section">
       <h3 className="panel-section-heading">{t('settings.search_section')}</h3>
 
-      <div className="panel-section">
+      <div className="panel-section panel-data-row">
         <div className="panel-row">
           <div className="panel-row-label">
             <h3 className="panel-field-label">{t('settings.platform_label')}</h3>
@@ -99,9 +99,9 @@ export default function SettingsSectionSearch({
                                               <>Show <strong>document-oriented</strong> results.</>
               }
             </p>
+            {pendingPlatform !== platform && <PendingNote t={t} />}
           </div>
           <div className="panel-row-control">
-            {pendingPlatform !== platform && <PendingNote t={t} />}
             <fieldset>
               <legend className="sr-only">{t('settings.platform_label')}</legend>
               <div className="radio-chip-group">
@@ -131,9 +131,9 @@ export default function SettingsSectionSearch({
           <div className="panel-row-label">
             <label htmlFor="toggle-live-search" className="panel-field-label">{t('settings.live_search_label')}</label>
             <p className="panel-field-desc">{pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}</p>
+            {pendingLiveSearch !== liveSearch && <PendingNote t={t} />}
           </div>
           <div className="panel-row-control">
-            {pendingLiveSearch !== liveSearch && <PendingNote t={t} />}
             <FormControlToggle id="toggle-live-search" checked={pendingLiveSearch} onChange={() => setPendingLiveSearch(v => !v)} />
           </div>
         </div>
@@ -144,9 +144,9 @@ export default function SettingsSectionSearch({
           <div className="panel-row-label">
             <label htmlFor="toggle-personal-corpus" className="panel-field-label">{t('settings.personal_corpus_label')}</label>
             <p className="panel-field-desc">{pendingShowPersonalCorpus ? <>Your custom findings <strong>appear in search results</strong>.</> : <>Your custom findings <strong>are hidden from results</strong>.</>}</p>
+            {pendingShowPersonalCorpus !== showPersonalCorpus && <PendingNote t={t} />}
           </div>
           <div className="panel-row-control">
-            {pendingShowPersonalCorpus !== showPersonalCorpus && <PendingNote t={t} />}
             <FormControlToggle id="toggle-personal-corpus" checked={pendingShowPersonalCorpus} onChange={() => setPendingShowPersonalCorpus(v => !v)} />
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function SettingsSectionSearch({
 
       <div className="panel-group">
         <h3 className="panel-group__label">{t('settings.wcag_filter_label')}</h3>
-        <p className="panel-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each version includes all findings from previous versions.</p>
+        <p className="panel-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each Version includes all findings from previous versions.</p>
         {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) ||
           pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel)) && (
           <PendingNote t={t} />
@@ -206,7 +206,7 @@ export default function SettingsSectionSearch({
         </div>
       </div>
 
-      <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-unpin-all-btn" />
+      <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="settings-unpin-all-btn" wrapperClass="panel-data-row" />
 
       <div className="panel-section">
         <div className="panel-row">
@@ -216,19 +216,19 @@ export default function SettingsSectionSearch({
               ? <>Ranking controls <strong>are visible on each result</strong>.</>
               : <>Ranking controls <strong>are hidden</strong>.</>}
             </p>
+            {pendingShowVoting !== showVoting && <PendingNote t={t} />}
           </div>
           <div className="panel-row-control">
-            {pendingShowVoting !== showVoting && <PendingNote t={t} />}
             <FormControlToggle id="toggle-ranking" checked={pendingShowVoting} onChange={() => setPendingShowVoting(v => !v)} />
           </div>
         </div>
       </div>
 
-      <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={OctagonX} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" />
+      <ClearDataRow t={t} labelKey="settings.starred_results_label" hasData={hasStarred} descKey="settings.starred_results_desc" emptyKey="settings.starred_results_empty" isDone={unstarAllDone} setIsDone={setUnstarAllDone} onClear={onClearStarred} labelActionKey="settings.unstar_all" labelDoneKey="settings.unstar_all_done" Icon={OctagonX} className="settings-unstar-all-btn" announceKey="settings.unstar_all_done" wrapperClass="panel-data-row" />
 
-      <ClearDataRow t={t} labelKey="settings.rankings_label" hasData={hasRankings} descKey="settings.rankings_desc" emptyKey="settings.rankings_empty" isDone={resetRankingsDone} setIsDone={setResetRankingsDone} onClear={onResetRankings} labelActionKey="settings.reset_rankings" labelDoneKey="settings.reset_rankings_done" Icon={OctagonX} className="settings-reset-rankings-btn" announceKey="settings.reset_rankings_done" />
+      <ClearDataRow t={t} labelKey="settings.rankings_label" hasData={hasRankings} descKey="settings.rankings_desc" emptyKey="settings.rankings_empty" isDone={resetRankingsDone} setIsDone={setResetRankingsDone} onClear={onResetRankings} labelActionKey="settings.reset_rankings" labelDoneKey="settings.reset_rankings_done" Icon={OctagonX} className="settings-reset-rankings-btn" announceKey="settings.reset_rankings_done" wrapperClass="panel-data-row" />
 
-      <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={OctagonX} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" />
+      <ClearDataRow t={t} labelKey="settings.archived_results_label" hasData={hasArchived} descKey="settings.archived_results_desc" emptyKey="settings.archived_results_empty" isDone={unarchiveAllDone} setIsDone={setUnarchiveAllDone} onClear={onClearArchived} labelActionKey="settings.unarchive_all" labelDoneKey="settings.unarchive_all_done" Icon={OctagonX} className="settings-unarchive-all-btn" announceKey="settings.unarchive_all_done" wrapperClass="panel-data-row" />
     </section>
   )
 }

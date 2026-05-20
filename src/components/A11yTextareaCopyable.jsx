@@ -26,15 +26,6 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
   const taRef = useRef(null)
   const resetBtnRef = useRef(null)
 
-  useEffect(() => {
-    const el = taRef.current
-    if (!el) return
-    const style = getComputedStyle(el)
-    const lineHeight = parseFloat(style.lineHeight)
-    const maxHeight = 5 * lineHeight + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
-    el.style.height = 'auto'
-    el.style.height = Math.min(el.scrollHeight, maxHeight) + 'px'
-  }, [value])
 
   useEffect(() => {
     if (resetBtnRef.current) {
@@ -48,6 +39,16 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
       setAriaDisabled(copyBtnRef.current, animating)
     }
   }, [animating, copyBtnRef])
+
+  useEffect(() => {
+    const el = taRef.current
+    if (!el) return
+    const style = getComputedStyle(el)
+    const lineHeight = parseFloat(style.lineHeight)
+    const maxHeight = 5 * lineHeight + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom)
+    el.style.height = 'auto'
+    el.style.height = Math.min(el.scrollHeight, maxHeight) + 'px'
+  }, [value])
 
   function handleResetOrUndo() {
     if (undoable) onUndo()
@@ -108,7 +109,7 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
             ref={resetBtnRef}
             onClick={(animating || (!undoable && !hasChanged)) ? undefined : handleResetOrUndo}
             aria-label={resetBtnLabel}
-            className={`btn--secondary btn--field${reset ? ' btn__field--success' : ''}`}
+            className={`btn btn--secondary btn--field${reset ? ' btn__field--success' : ''}`}
           >
             {reset ? <Check size={14} aria-hidden="true" /> : <RotateCcw size={14} aria-hidden="true" />}
             <span>{resetBtnText}</span>
@@ -117,7 +118,7 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
             ref={copyBtnRef}
             onClick={animating ? undefined : onCopy}
             aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
-            className={`btn--primary btn--field${copied ? ' btn__field--success' : ''}`}
+            className={`btn btn--primary btn--field${copied ? ' btn__field--success' : ''}`}
           >
             {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
             <span>{copied ? t('detail.copied_desktop') : t('detail.copy_desktop')}</span>

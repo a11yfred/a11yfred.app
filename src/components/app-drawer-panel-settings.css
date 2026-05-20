@@ -44,15 +44,18 @@
 /* ─── Panel Sections ──────────────────────────────────────── */
 
 .panel-section {
-  margin-bottom: var(--space-6);
-  padding-bottom: var(--space-6);
-  border-bottom: 1px solid var(--border);
+  /* margin-bottom: var(--space-6);
+  padding-bottom: var(--space-6); */
 }
 
 .panel-section:last-child {
   margin-bottom: 0;
   padding-bottom: 0;
-  border-bottom: none;
+}
+
+.panel-section--no-spacing {
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .panel-section-heading {
@@ -88,11 +91,16 @@
   margin-bottom: var(--space-8);
   width: 100%;
   max-width: 100%;
+  align-items: stretch;
 }
 
 .settings-panel .radio-chip-group ube-radio-chip {
   flex: 1;
   min-width: 0;
+}
+
+.panel-row-control .radio-chip-group {
+  margin-bottom: 0;
 }
 
 .panel-row {
@@ -120,8 +128,8 @@
   gap: var(--space-1);
 }
 
-.panel-row-label > * {
-  font-size: var(--fs-body);
+.panel-row-label label {
+  font-size: var(--fs-sub);
   font-weight: 500;
 }
 
@@ -134,10 +142,9 @@
 
 .panel-row-control {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--space-2);
-  flex-wrap: wrap;
-  width: 100%;
 }
 
 
@@ -184,6 +191,16 @@ ube-button {
 .panel-row-control:has(.settings-language-row),
 .panel-row-control:has(.radio-chip-group) {
   width: 100%;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+@media (width >= 768px) {
+  .panel-row:has(> .panel-toggle-row) .panel-row-control {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
 }
 
 .settings-language-row + .panel-pending-note {
@@ -247,6 +264,10 @@ ube-button[aria-disabled="true"],
   font-weight: 500;
   color: var(--text-heading);
   margin-bottom: var(--space-1);
+}
+
+.panel-field-desc {
+  margin-bottom: 0;
 }
 
 .settings-provider-group:has([aria-disabled="true"]) .panel-field-label,
@@ -322,7 +343,6 @@ textarea[aria-disabled="true"].settings-key-input {
   gap: var(--space-2);
   margin-top: var(--space-2);
   padding-top: var(--space-4);
-  border-top: 1px solid var(--border);
 }
 
 .settings-reset-btn {
@@ -358,9 +378,6 @@ textarea[aria-disabled="true"].settings-key-input {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--border);
 }
 
 .settings-footer-actions {
@@ -438,7 +455,7 @@ textarea[aria-disabled="true"].settings-key-input {
 .page-panel h2 {
   flex: 1;
   min-width: 0;
-  margin: 0;
+  margin: 0 0 var(--space-4) 0;
   font-size: var(--fs-h2);
   font-weight: 700;
   color: var(--text-heading);
@@ -446,9 +463,6 @@ textarea[aria-disabled="true"].settings-key-input {
 
 .panel-mobile-back {
   display: none;
-  margin-top: var(--space-4);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--border);
 }
 
 @media (width < 768px) {

@@ -469,7 +469,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
         >
           {copiedAll ? t('detail.copy_all_copied_text') : t('detail.copy_all_text')}
         </Button>
-        <Button
+        {/* <Button
           variant="primary"
           icon={<Mail size={14} aria-hidden="true" />}
           label={t('detail.email_share_aria', 'Email this defect')}
@@ -477,7 +477,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           onClick={handleEmailShare}
         >
           Email
-        </Button>
+        </Button> */}
         {onClose && (
           <Button
             variant={isDesktop ? 'primary' : 'tertiary'}

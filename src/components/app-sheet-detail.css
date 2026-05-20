@@ -15,7 +15,7 @@ ube-sheet {
 .field {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: 0;
 }
 
 .field__header {
@@ -28,6 +28,7 @@ ube-sheet {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  margin-bottom: 4px;
 }
 
 .field__label {
@@ -50,7 +51,7 @@ ube-sheet {
 .field__textarea {
   width: 100%;
   padding: var(--space-2);
-  font-size: var(--fs-body);
+  font-size: var(--fs-small);
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
   background: var(--bg-subtle);
   border: 1px solid var(--border-control);
@@ -59,6 +60,7 @@ ube-sheet {
   line-height: 1.5;
   resize: none;
   transition: border-color var(--duration-fast);
+  overflow: hidden;
 }
 
 .field__textarea:focus {
@@ -75,6 +77,38 @@ ube-sheet {
   display: flex;
   gap: var(--space-2);
   align-items: center;
+  margin: 0.35em 0;
+}
+
+.field__actions {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin-left: auto;
+}
+
+.btn,
+.btn--field {
+  min-height: var(--btn-height-standard);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-3);
+  font-size: var(--fs-body);
+  border-radius: var(--rounded);
+}
+
+.btn--primary.btn--field,
+.btn--secondary.btn--field {
+  min-height: var(--btn-height-standard);
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-3);
+  font-size: var(--fs-body);
+  border-radius: var(--rounded);
 }
 
 .field__include-title {
@@ -115,6 +149,11 @@ ube-sheet {
   }
 }
 
+.panel-detail-sc-row button {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
 .panel-detail-badges {
   display: flex;
   flex-wrap: wrap;
@@ -123,12 +162,16 @@ ube-sheet {
   margin-bottom: 6px;
 }
 
-.panel-detail-badges button {
+.panel-detail-badges button,
+.panel-detail-badges button.badge,
+.panel-detail-badges [variant="wcag-level"],
+.badge--wcag-level {
   min-height: var(--btn-height-compact);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 var(--space-2);
+  border-radius: 9999px;
 }
 
 .panel-detail-badges button:focus-visible {
@@ -161,18 +204,19 @@ ube-sheet {
 }
 
 .panel-detail-sc-group {
-  margin: 1em 0 0;
+  margin: 0;
 }
 
 .panel-detail-sc-row {
+  display: block;
   font-size: var(--fs-body);
-  margin-bottom: 0.35em;
+  margin-bottom: 0;
 }
 
 .panel-detail-sc-label {
   color: var(--text-heading);
   font-weight: 600;
-  margin-inline-end: var(--space-1);
+  margin-inline-end: var(--space-2);
 }
 
 .panel-detail-sc-na {

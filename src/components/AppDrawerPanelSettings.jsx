@@ -376,12 +376,6 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
         onFiestaConfirm={() => { setPendingTheme('fiesta'); announce(t('settings.theme_party_announce')); setFiestaConfirmOpen(false) }}
       />
 
-      <div className="settings-footer">
-        <small className="settings-version">
-          A11yFred v{version}
-        </small>
-      </div>
-
       <div className="panel-mobile-back">
         <Button
           variant="tertiary"
@@ -392,6 +386,12 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
         >
           {t('settings.back')}
         </Button>
+      </div>
+
+      <div className="settings-footer">
+        <small className="settings-version">
+          A11yFred v{version}
+        </small>
       </div>
     </Panel>
   )

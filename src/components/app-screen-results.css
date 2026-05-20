@@ -1155,6 +1155,10 @@
   flex-shrink: 0;
 }
 
+.badge {
+  border-radius: 9999px;
+}
+
 ube-badge,
 .result-item__badges ube-badge,
 .result-item__badges span[class*="badge"],
@@ -1162,7 +1166,7 @@ ube-badge,
 .badge--source,
 .badge--wcag,
 .badge--platform {
-  border-radius: var(--radius-full) !important;
+  border-radius: 9999px !important;
 }
 
 .result-item__title {

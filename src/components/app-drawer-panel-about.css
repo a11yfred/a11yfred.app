@@ -1,6 +1,19 @@
 
 /* ─── About panel ─────────────────────────────────────────── */
 
+.panel-body {
+  margin: 0;
+  font-size: var(--fs-body);
+  color: var(--text-body);
+  line-height: 1.5;
+}
+
+.panel-body--secondary {
+  margin-top: var(--space-2);
+  font-size: var(--fs-small);
+  opacity: 0.8;
+}
+
 .about-features {
   list-style: none;
   display: flex;
@@ -18,13 +31,6 @@
   font-size: var(--fs-body);
   font-weight: 600;
   color: var(--text-heading);
-  margin: 0;
-}
-
-.about-feature-body {
-  font-size: var(--fs-body);
-  color: var(--text-body);
-  line-height: 1.5;
   margin: 0;
 }
 

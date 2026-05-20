@@ -17,7 +17,7 @@ export default function AppScreenHeader({ h1Ref, h1LinkRef, settingsOpen, aboutO
           href={URL_GITHUB_REPO}
           target="_blank"
           rel="noreferrer"
-          className="header-github-link"
+          className="link-btn-styled header-github-link"
         >
           <svg
             aria-hidden="true"
