@@ -124,7 +124,6 @@
   "results.narrow": "Narrow",
   "results.narrow_results": "Narrow Results",
   "results.narrow_aria_label": "Narrow results",
-  "results.narrow_title": "Filter these results further",
   "results.narrow_platform_label": "Narrow by Platform",
   "results.rank_hint": "Pin to show on every page. Star to always show first. Archive to always show last. Rank up or down to fine-tune the rest. Sort order is applied last. All actions can be undone.",
   "results.rank_hint_undone": "undone",
@@ -476,7 +475,6 @@
 
   "footer.credit": "Built by your digital neighbor, Mikey Ilagan",
   "footer.sponsor": "Sponsor",
-  "footer.sponsor_title": "Support on GitHub Sponsors",
   "footer.linkedin": "LinkedIn",
   "footer.privacy": "Privacy",
 
