@@ -603,7 +603,6 @@
   .result-card-wrap {
     position: static;
     width: auto;
-    min-height: 0;
     padding: 0;
     border-top: none;
     background: none;
