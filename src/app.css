@@ -4,7 +4,6 @@
 
 .app-container {
   padding: var(--space-2) var(--space-4) var(--space-5);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -79,7 +78,10 @@
   padding: 0 var(--space-2);
   height: var(--btn-height-standard);
   border-radius: var(--rounded);
-  transition: background-color var(--duration-fast), color var(--duration-fast);
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: background-color var(--duration-fast), color var(--duration-fast), border-color var(--duration-fast);
 }
 
 [dir="rtl"] .header-github-link {
@@ -91,12 +93,18 @@
   background: var(--bg-subtle);
   color: var(--text-heading);
   text-decoration: none;
+  border-color: var(--border-hover);
+}
+
+.header-github-link:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .header-github-link .external-link-icon,
 .header-github-link .inline-icon {
-  width: 0.8em;
-  height: 0.8em;
+  width: 1em;
+  height: 1em;
   opacity: 0.7;
 }
 
@@ -116,6 +124,13 @@
 .page-title-link:focus-visible {
   outline: var(--focus-outline-width) solid var(--focus);
   outline-offset: var(--focus-outline-offset);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--text-heading);
+  margin: 0;
 }
 
 .page-title {
@@ -198,7 +213,6 @@
 
 .footer-credit {
   font-size: var(--fs-body);
-  line-height: 2em;
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
@@ -218,6 +232,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  line-height: 1.5;
 }
 
 @media (width >= 768px) {
@@ -240,13 +255,28 @@
 /* ─── Links ───────────────────────────────────────────────── */
 
 .footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
   color: var(--accent-text);
   text-decoration: underline;
+  text-underline-offset: var(--text-underline-offset);
   white-space: nowrap;
+  line-height: 1.2;
+  padding: 4px 6px;
+  border-radius: var(--rounded);
+  transition: background-color var(--duration-fast), color var(--duration-fast);
 }
 
 .footer-link:hover {
+  background: var(--bg-subtle);
   color: var(--text-heading);
+  text-decoration: none;
+}
+
+.footer-link:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
 }
 
 .footer-link .footer-brand-icon {
@@ -261,6 +291,18 @@
   vertical-align: middle;
   opacity: 0.7;
   margin-left: 0.1em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Dialog & Modal
+   ════════════════════════════════════════════════════════════ */
+
+dialog {
+  border-radius: var(--rounded-lg);
+}
+
+dialog button {
+  border-radius: var(--rounded);
 }
 
 /* ═══════════════════════════════════════════════════════════

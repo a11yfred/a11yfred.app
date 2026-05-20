@@ -3,6 +3,84 @@
 
 .panel-detail-sheet {
   padding-top: var(--space-2);
+  border-radius: var(--rounded-lg);
+}
+
+ube-sheet {
+  border-radius: var(--rounded-lg);
+}
+
+/* ─── Copyable Textarea Field ──────────────────────────────── */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.field__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field__label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.field__label {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--text-heading);
+}
+
+.field__updated-badge {
+  display: inline-block;
+  font-size: var(--fs-small);
+  padding: 2px 6px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--rounded);
+  color: var(--text-body);
+  font-weight: 400;
+}
+
+.field__textarea {
+  width: 100%;
+  padding: var(--space-2);
+  font-size: var(--fs-body);
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-control);
+  border-radius: var(--rounded);
+  color: var(--text-heading);
+  line-height: 1.5;
+  resize: none;
+  transition: border-color var(--duration-fast);
+}
+
+.field__textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.field__textarea--animating {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.field__footer {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.field__include-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .panel-detail-title-row {

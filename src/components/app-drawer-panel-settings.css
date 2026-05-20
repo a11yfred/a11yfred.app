@@ -21,7 +21,66 @@
 }
 
 .settings-panel .radio-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
   margin-bottom: var(--space-8);
+}
+
+.settings-panel .radio-chip-group ube-radio-chip {
+  flex: 1;
+  min-width: 120px;
+}
+
+.panel-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-4);
+  align-items: start;
+  margin-bottom: var(--space-5);
+}
+
+.panel-row-label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.panel-row-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.panel-toggle-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-4);
+  align-items: center;
+  margin-bottom: var(--space-5);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-toggle-label {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--text-heading);
+  margin: 0 0 var(--space-1) 0;
+}
+
+.panel-toggle-desc {
+  font-size: var(--fs-body);
+  color: var(--text-body);
+  margin: 0;
+}
+
+.panel-toggle-row ube-button,
+.panel-toggle-row .btn {
+  height: var(--btn-height-standard);
+  padding: 0 var(--space-3);
+  font-size: var(--fs-body);
 }
 
 .settings-language-row {
@@ -63,13 +122,21 @@
   margin-bottom: var(--space-8);
 }
 
+.settings-key-group {
+  margin-bottom: var(--space-2);
+}
+
+.panel-field-label {
+  display: block;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--text-heading);
+  margin-bottom: var(--space-1);
+}
+
 .settings-provider-group:has([aria-disabled="true"]) .panel-field-label,
 .settings-key-group:has([aria-disabled="true"]) .panel-field-label {
   color: var(--text-body);
-}
-
-.settings-key-group {
-  margin-bottom: var(--space-2);
 }
 
 .settings-key-input {
@@ -144,13 +211,23 @@ textarea[aria-disabled="true"].settings-key-input {
 }
 
 .settings-reset-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: var(--btn-height-standard);
+  font-size: var(--fs-body);
+  font-weight: 500;
   padding: 0 var(--space-4);
 }
 
 .settings-save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: var(--space-1);
   height: var(--btn-height-standard);
+  font-size: var(--fs-body);
+  font-weight: 500;
   padding: 0 var(--space-3);
   order: -1;
 }
@@ -171,7 +248,8 @@ textarea[aria-disabled="true"].settings-key-input {
   order: 0;
 }
 
-.settings-footer-actions .btn {
+.settings-reset-btn,
+.settings-save-btn {
   width: 100%;
   justify-content: center;
 }
@@ -188,7 +266,8 @@ textarea[aria-disabled="true"].settings-key-input {
     margin-inline-start: auto;
   }
 
-  .settings-footer-actions .btn {
+  .settings-reset-btn,
+  .settings-save-btn {
     width: auto;
   }
 
@@ -220,4 +299,17 @@ textarea[aria-disabled="true"].settings-key-input {
   font-size: var(--fs-small);
   color: var(--text-body);
   opacity: 0.7;
+}
+
+/* ─── Mobile Back Button Layout ───────────────────────────── */
+
+.settings-panel ube-panel-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.settings-panel h2 {
+  flex: 1;
+  min-width: 0;
 }

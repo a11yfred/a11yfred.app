@@ -552,7 +552,7 @@ function AppContent() {
         open={viewAllConfirmOpen}
         onClose={() => setViewAllConfirmOpen(false)}
         returnFocusRef={viewAllTriggerRef}
-        heading={t('search.view_all_confirm_heading')}
+        heading={formatCountTemplate(t('search.view_all_confirm_heading'), allEntries.length)}
         actions={[
           {
             label: t('search.view_all_confirm_yes'),

@@ -1143,6 +1143,11 @@
   flex-shrink: 0;
 }
 
+.result-item__badges ube-badge,
+.result-item__badges span[class*="badge"] {
+  border-radius: var(--rounded);
+}
+
 .result-item__title {
   display: flex;
   align-items: center;
