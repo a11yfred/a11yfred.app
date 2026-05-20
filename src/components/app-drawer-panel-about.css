@@ -1,22 +1,6 @@
 
 /* ─── About panel ─────────────────────────────────────────── */
 
-.about-panel ube-panel-header,
-.help-panel ube-panel-header,
-.about-panel > div:first-child,
-.help-panel > div:first-child {
-  display: flex !important;
-  align-items: center !important;
-  gap: var(--space-2) !important;
-}
-
-.about-panel h2,
-.help-panel h2 {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
-}
-
 .about-features {
   list-style: none;
   display: flex;
