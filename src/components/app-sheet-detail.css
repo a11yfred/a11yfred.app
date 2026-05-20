@@ -123,6 +123,14 @@ ube-sheet {
   margin-bottom: 6px;
 }
 
+.panel-detail-badges button {
+  min-height: var(--btn-height-compact);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-2);
+}
+
 .panel-detail-badges button:focus-visible {
   outline: 2px solid currentcolor;
   outline-offset: var(--focus-outline-offset);
