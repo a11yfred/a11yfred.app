@@ -8,7 +8,7 @@ export default function A11yScreenFooter() {
   const nameIdx = credit.indexOf(FOOTER_CREDIT_NAME)
   return (
     <footer className="page-footer">
-      <p className="footer-credit">
+      <p style={{ margin: 0, marginBottom: 'var(--space-1)' }}>
         {nameIdx >= 0 ? (
           <>
             {credit.slice(0, nameIdx)}
@@ -16,7 +16,8 @@ export default function A11yScreenFooter() {
             {credit.slice(nameIdx + FOOTER_CREDIT_NAME.length)}
           </>
         ) : credit}
-        <br />
+      </p>
+      <p style={{ margin: 0, marginBottom: 'var(--space-1)' }}>
         <a
           href={URL_GITHUB_SPONSORS}
           target="_blank"
@@ -38,7 +39,7 @@ export default function A11yScreenFooter() {
           {t('footer.linkedin')}<ExternalLinkIcon size="0.7em" className="inline-icon footer-ext-icon" aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span>
         </a>
       </p>
-      <p style={{ margin: 0, textAlign: 'center' }}>
+      <p style={{ margin: 0 }}>
         <a
           href={URL_PRIVACY_POLICY}
           target="_blank"
