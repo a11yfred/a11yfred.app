@@ -237,6 +237,7 @@
 /* ─── Links ───────────────────────────────────────────────── */
 
 .footer-link {
+  display: inline;
   color: var(--accent-text);
   text-decoration: underline;
   text-underline-offset: var(--text-underline-offset);
