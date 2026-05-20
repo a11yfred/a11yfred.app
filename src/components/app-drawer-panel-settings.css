@@ -46,15 +46,13 @@
 .panel-section {
   margin-bottom: var(--space-6);
   padding-bottom: var(--space-6);
-}
-
-.panel-section:not(:last-child) {
   border-bottom: 1px solid var(--border);
 }
 
 .panel-section:last-child {
   margin-bottom: 0;
   padding-bottom: 0;
+  border-bottom: none;
 }
 
 .panel-section-heading {
@@ -145,6 +143,10 @@
   font-size: var(--fs-body);
   color: var(--text-body);
   margin: 0;
+}
+
+ube-button {
+  height: var(--btn-height-standard);
 }
 
 .panel-toggle-row ube-button,
