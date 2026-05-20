@@ -196,6 +196,7 @@
 
 .page-footer p {
   margin: 0;
+  display: inline;
 }
 
 /* ─── Credit ──────────────────────────────────────────────── */
