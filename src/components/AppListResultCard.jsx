@@ -104,7 +104,7 @@ export default function AppListResultCard({
     const next = displayResults[idx + 1] || displayResults[idx - 1]
     const nextId = next?.id
     if (!archived) {
-      announce(t('announce.archived'), { priority: 'assertive' })
+      announce(t('results.archived_aria_live'), { priority: 'assertive' })
       if (prefersReducedMotion || displayResults.length === 1) {
         onArchive?.(entry.id)
         if (nextId) requestAnimationFrame(() => itemRefs.current[nextId]?.focus())
@@ -117,7 +117,7 @@ export default function AppListResultCard({
         }, ARCHIVE_FLY_MS)
       }
     } else {
-      announce(t('announce.unarchived'), { priority: 'assertive' })
+      announce(t('results.unarchived_aria_live'), { priority: 'assertive' })
       if (prefersReducedMotion || displayResults.length === 1) {
         onArchive?.(entry.id)
       } else {

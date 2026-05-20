@@ -173,7 +173,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
         e.preventDefault()
         if (archived) {
           onArchive?.(currentEntry.id)
-          announce(t('announce.unarchived'))
+          announce(t('results.unarchived_aria_live'))
         }
         break
       default:
@@ -231,7 +231,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
   if (results.length === 0 && platform === 'all') {
     return <Screen
       variant="no-results"
-      ariaLabel={t('results.no_results_aria')}
+      ariaLabel={t('results.no_results_aria_live')}
       heading={t('results.no_results_heading', { query })}
       body={t('results.no_results_body')}
       onMount={() => announce(t('results.no_results_announce', { query }))}
@@ -291,7 +291,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
         results={results}
         platformNoResults={platformNoResults}
         platformLabels={platformLabels}
-        onClear={() => { announce(t('announce.filters_cleared')); setClearPending(true) }}
+        onClear={() => { announce(t('results.filters_cleared_aria_live')); setClearPending(true) }}
         countHeadingRef={countHeadingRef}
         hasAnyActiveFilter={hasAnyActiveFilter}
       />
@@ -309,7 +309,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
       {(narrowNoResults || platformNoResults)
         ? <Screen
             variant="no-results"
-            ariaLabel={t('results.no_results_aria')}
+            ariaLabel={t('results.no_results_aria_live')}
             heading={t('results.no_results_heading', { query: narrowNoResults ? narrowQuery : query })}
             body={t('results.no_results_body')}
             activeFilters={activeFilters}

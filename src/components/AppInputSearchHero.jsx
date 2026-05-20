@@ -74,7 +74,7 @@ export default function AppInputSearchHero({ query, onChange, onSearch, onExampl
           placeholder={t('search.placeholder')}
           autoComplete="off"
           spellCheck={false}
-          clearAriaLabel={t('search.clear_aria')}
+          clearAriaLabel={t('search.clear_aria_label')}
           wrapClassName="search-input-wrap"
           inputClassName={`search-input${query.length ? ' search-input--has-value' : ''}`}
           clearButtonClassName="btn--primary input-clear-btn"

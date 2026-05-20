@@ -16,7 +16,7 @@ export default function ResultsActiveFilterBar({ activeFilters, sortBy, sortLabe
         <button
           type="button"
           className={`active-bar__tag active-bar__tag--removable`}
-          aria-label={t('results.filter_remove_aria', { filter: f.label })}
+          aria-label={t('results.filter_remove_aria_label', { filter: f.label })}
           onClick={f.onRemove}
         >
           {f.label}

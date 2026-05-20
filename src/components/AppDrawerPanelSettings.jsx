@@ -363,7 +363,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
           setResetConfirmOpen(false)
           onReset?.()
           justResetRef.current = true
-          announce(t('settings.reset_all_announce'))
+          announce(t('settings.reset_all_aria_live'))
           setResetDisabled(true)
           setSaveAndClose(true)
           saveButtonRef.current?.focus()
@@ -373,7 +373,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
         saveButtonRef={saveButtonRef}
         fiestaConfirmOpen={fiestaConfirmOpen}
         onFiestaClose={() => setFiestaConfirmOpen(false)}
-        onFiestaConfirm={() => { setPendingTheme('fiesta'); announce(t('settings.theme_party_announce')); setFiestaConfirmOpen(false) }}
+        onFiestaConfirm={() => { setPendingTheme('fiesta'); announce(t('settings.theme_party_aria_live')); setFiestaConfirmOpen(false) }}
       />
 
       <div className="panel-mobile-back">

@@ -334,7 +334,7 @@ function AppContent() {
     setSaveCount(0)
     clearPins()
     clearAllRatings()
-    announce(t('settings.reset_all_announce'), { priority: 'assertive' })
+    announce(t('settings.reset_all_aria_live'), { priority: 'assertive' })
   }
 
   function unlock() {
@@ -367,7 +367,7 @@ function AppContent() {
   const handleViewAllClick = () => {
     viewAllTriggerRef.current = document.activeElement
     if (getStorage(LS_VIEW_ALL_SKIP) === VIEW_ALL_SKIP_FLAG) {
-      announce(t('results.loading_announce'))
+      announce(t('results.loading_aria_live'))
       setViewAllLoading(true)
       setWcagFilter({ maxVersion: '2.2', maxLevel: 'AAA' })
       navigate('/results/all')
@@ -379,7 +379,7 @@ function AppContent() {
 
   const handleViewAllConfirm = () => {
     if (viewAllDontAsk) setStorage(LS_VIEW_ALL_SKIP, VIEW_ALL_SKIP_FLAG)
-    announce(t('results.loading_announce'))
+    announce(t('results.loading_aria_live'))
     setViewAllLoading(true)
     setWcagFilter({ maxVersion: '2.2', maxLevel: 'AAA' })
     navigate('/results/all')
@@ -768,7 +768,7 @@ function AppContent() {
         label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
         onBack={entryHistory.length > 0 ? handleBack : undefined}
-        backLabel={t('detail.back_aria')}
+        backLabel={t('detail.back_aria_label')}
         hideCloseBottom
         closeIcon={() => <X size={20} strokeWidth={2.5} aria-hidden="true" />}
         backLtrIcon={() => <ChevronLeft size={20} strokeWidth={2.5} aria-hidden="true" />}

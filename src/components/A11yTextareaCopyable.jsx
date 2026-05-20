@@ -56,10 +56,10 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
   }
 
   const resetBtnLabel = reset
-    ? t('detail.reset_done_aria', { label })
+    ? t('detail.reset_done_aria_live', { label })
     : undoable
-      ? t('detail.undo_last_aria', { label })
-      : t('detail.reset_aria', { label })
+      ? t('detail.undo_last_aria_label', { label })
+      : t('detail.reset_aria_label', { label })
 
   const resetBtnText = reset
     ? t('detail.reset_done_desktop')
@@ -117,7 +117,7 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
           <button
             ref={copyBtnRef}
             onClick={animating ? undefined : onCopy}
-            aria-label={copied ? t('detail.copied_aria') : t('detail.copy_aria', { label })}
+            aria-label={copied ? t('detail.copied_aria_live') : t('detail.copy_aria_label', { label })}
             className={`btn btn--primary btn--field${copied ? ' btn__field--success' : ''}`}
           >
             {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}

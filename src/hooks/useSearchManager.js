@@ -290,7 +290,7 @@ export default function useSearchManager({
   // Live search loading announcement
   useEffect(() => {
     if (!liveSearch || query.length < 2) { liveSearchHadResultsRef.current = false; return }
-    if (liveSearchHadResultsRef.current) announce(t('results.loading_announce'))
+    if (liveSearchHadResultsRef.current) announce(t('results.loading_aria_live'))
     if (results.length > 0) liveSearchHadResultsRef.current = true
   }, [query, liveSearch, results, t])
 

@@ -105,7 +105,7 @@ export default function useSheetDetailClipboard({
     const text = `Description:\n${displayDesc}\n\nSuggested Fix:\n${fixText}`
     writeToClipboard(text).then(() => {
       setCopiedAll(true)
-      announce(t('detail.copy_all_announce'))
+      announce(t('detail.copy_all_aria_live'))
       resetAfterNotification(setCopiedAll)
       onCopyEvent?.(entry.id, 'all')
     })
@@ -119,7 +119,7 @@ export default function useSheetDetailClipboard({
       setFixText(entry.fix)
       setDescHistory([])
       setFixHistory([])
-      announce(t('detail.reset_all_content_announce'))
+      announce(t('detail.reset_all_content_aria_live'))
       setResetAllDone(true)
       resetAfterNotification(setResetAllDone)
     }
@@ -135,7 +135,7 @@ export default function useSheetDetailClipboard({
     if (!prev) return
     setDescText(prev)
     setDescHistory(h => h.slice(0, -1))
-    announce(t('detail.undo_last_announce'))
+    announce(t('detail.undo_last_aria_live'))
   }
 
   const handleUndoFix = () => {
@@ -143,7 +143,7 @@ export default function useSheetDetailClipboard({
     if (!prev) return
     setFixText(prev)
     setFixHistory(h => h.slice(0, -1))
-    announce(t('detail.undo_last_announce'))
+    announce(t('detail.undo_last_aria_live'))
   }
 
   const copyTitle = () => copy(entry.title, setCopiedTitle, t('detail.title_label'), null, false, 'title')

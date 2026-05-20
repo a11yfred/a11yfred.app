@@ -101,7 +101,7 @@ export default function SettingsSectionAppearance({
                 onClick={() => {
                   setLanguagePreviewed(true)
                   setTimeout(() => setLanguagePreviewed(false), SETTINGS_FLASH_MS)
-                  announce(t('settings.language_changed_announce'))
+                  announce(t('settings.language_changed_aria_live'))
                 }}
               >
                 {languagePreviewed ? t('settings.language_changed') : t('settings.language_change')}

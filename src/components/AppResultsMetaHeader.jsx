@@ -75,7 +75,7 @@ export default function AppResultsMetaHeader({
                 active={linkCopied}
                 icon={<Link size={14} aria-hidden="true" />}
                 activeIcon={<Check size={14} aria-hidden="true" />}
-                label={t('results.copy_link_aria')}
+                label={t('results.copy_link_aria_label')}
                 activeLabel={t('results.copied_link')}
                 variant="secondary"
                 className="results-copy-link-btn"
@@ -178,7 +178,7 @@ export default function AppResultsMetaHeader({
                 <Button
                   variant="secondary"
                   className="results-narrow-btn"
-                  title={narrowMode ? t('search.exit_narrow_aria') : t('results.narrow_title')}
+                  title={narrowMode ? t('search.exit_narrow_aria_label') : t('results.narrow_title')}
                   onClick={narrowMode ? onNarrowExit : onNarrow}
                 >
                   {narrowMode ? (
@@ -234,7 +234,7 @@ export default function AppResultsMetaHeader({
                   }}
                   onClear={() => onNarrowChange('')}
                   placeholder={!query && !narrowQuery ? t('search.narrow_placeholder_needs_query') : narrowResults ? t('search.narrow_placeholder', { count: results.length }) : t('search.narrow_placeholder_default')}
-                  clearAriaLabel={t('search.narrow_clear_aria')}
+                  clearAriaLabel={t('search.narrow_clear_aria_label')}
                   wrapClassName="results-narrow-input-wrap"
                   inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
                   clearButtonClassName="btn--primary input-clear-btn"

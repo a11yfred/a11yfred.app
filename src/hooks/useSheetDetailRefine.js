@@ -76,7 +76,7 @@ export default function useSheetDetailRefine({
 
       if (descDone && fixDone) {
         setAnimating(false)
-        announce(t('detail.ai_updated_announce'))
+        announce(t('detail.ai_updated_aria_live'))
       } else {
         typeTimerRef.current = setTimeout(tick, TYPEWRITER_TICK_MS)
       }

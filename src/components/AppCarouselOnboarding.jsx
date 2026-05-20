@@ -126,7 +126,7 @@ export default function AppCarouselOnboarding({ onClose }) {
               type="button"
               className="onboarding-arrow-btn"
               onClick={() => { setGradAngle(randomAngle()); setSlideDir('rtl'); setStep(s => { const next = s - 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }) }}
-              aria-label={t('onboarding.prev_aria')}
+              aria-label={t('onboarding.prev_aria_label')}
             >
               <BackArrow size={36} aria-hidden="true" />
             </button>
@@ -143,7 +143,7 @@ export default function AppCarouselOnboarding({ onClose }) {
           type="button"
           className="onboarding-arrow-btn"
           onClick={() => isLast ? commitClose() : (setGradAngle(randomAngle()), setSlideDir('ltr'), setStep(s => { const next = s + 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }))}
-          aria-label={isLast ? t('onboarding.done_aria') : t('onboarding.next_aria')}
+          aria-label={isLast ? t('onboarding.done_aria_label') : t('onboarding.next_aria_label')}
         >
           <FwdArrow size={36} aria-hidden="true" />
         </button>

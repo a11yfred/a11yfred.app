@@ -156,11 +156,11 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             active={copiedTitle}
             icon={<Copy size={14} aria-hidden="true" />}
             activeIcon={<Check size={14} aria-hidden="true" />}
-            label={t('detail.copy_title_aria')}
-            activeLabel={t('detail.copied_aria')}
+            label={t('detail.copy_title_aria_label')}
+            activeLabel={t('detail.copied_aria_live')}
             className="btn-panel--copy"
             onClick={copyTitle}
-            title={copiedTitle ? t('detail.copied_aria') : t('detail.copy_title_aria')}
+            title={copiedTitle ? t('detail.copied_aria_live') : t('detail.copy_title_aria_label')}
           />
         </div>
         <div className="panel-detail-badges">
@@ -170,7 +170,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             color={p.color}
             prefix={entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : undefined}
             onClick={() => handleBadgeClickAndClose({ type: 'severity', value: entry.severity })}
-            aria-label={`${entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria')}`}
+            aria-label={`${entry.severity !== 'Best Practice' ? t('badge.severity_prefix') : ''}${t(p.key)}, ${t('results.badge_filter_aria_label')}`}
           >
             {t(p.key)}
           </Badge>
@@ -185,7 +185,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                   variant="source"
                   prefix={t('detail.sources_badge_single_prefix')}
                   onClick={() => handleBadgeClickAndClose({ type: 'source', value: src })}
-                  aria-label={`${t('detail.sources_badge_single_prefix')} ${src}, ${t('results.badge_filter_aria')}`}
+                  aria-label={`${t('detail.sources_badge_single_prefix')} ${src}, ${t('results.badge_filter_aria_label')}`}
                 >
                   {src}
                 </Badge>
@@ -202,7 +202,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                     heading.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
                   }
                 }}
-                aria-label={t('detail.sources_badge_multiple_aria')}
+                aria-label={t('detail.sources_badge_multiple_aria_label')}
               >
                 {t('detail.sources_badge_multiple')}
               </Badge>
@@ -214,7 +214,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
               bg={WCAG_BADGE_STYLE['--badge-bg']}
               color={WCAG_BADGE_STYLE['--badge-text']}
               onClick={() => handleBadgeClickAndClose({ type: 'wcag', value: entry.wcagVersion })}
-              aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria')}`}
+              aria-label={`${t('badge.wcag_prefix')}${entry.wcagVersion}, ${t('results.badge_filter_aria_label')}`}
             >
               {t('badge.wcag_version_label')}{entry.wcagVersion}
             </Badge>
@@ -225,7 +225,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
               bg={WCAG_LEVEL_BADGE_STYLE['--badge-bg']}
               color={WCAG_LEVEL_BADGE_STYLE['--badge-text']}
               onClick={() => handleBadgeClickAndClose({ type: 'wcag-level', value: entry.wcagLevel })}
-              aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria')}`}
+              aria-label={`${t('badge.level_prefix')}${entry.wcagLevel}, ${t('results.badge_filter_aria_label')}`}
             >
               {t('badge.level_label')}{entry.wcagLevel}
             </Badge>
@@ -243,11 +243,11 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                     active={copiedPrimarySc}
                     icon={<Copy size={14} aria-hidden="true" />}
                     activeIcon={<Check size={14} aria-hidden="true" />}
-                    label={t('detail.copy_sc_aria')}
-                    activeLabel={t('detail.copied_aria')}
+                    label={t('detail.copy_sc_aria_label')}
+                    activeLabel={t('detail.copied_aria_live')}
                     className="btn-panel--copy"
                     onClick={copyPrimarySc}
-                    title={copiedPrimarySc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+                    title={copiedPrimarySc ? t('detail.copied_aria_live') : t('detail.copy_sc_aria_label')}
                   />
                 </>
               : <span className="panel-detail-sc-na">{t('common.na')}</span>
@@ -268,11 +268,11 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                 active={copiedRelatedSc}
                 icon={<Copy size={14} aria-hidden="true" />}
                 activeIcon={<Check size={14} aria-hidden="true" />}
-                label={t('detail.copy_sc_aria')}
-                activeLabel={t('detail.copied_aria')}
+                label={t('detail.copy_sc_aria_label')}
+                activeLabel={t('detail.copied_aria_live')}
                 className="btn-panel--copy"
                 onClick={copyRelatedSc}
-                title={copiedRelatedSc ? t('detail.copied_aria') : t('detail.copy_sc_aria')}
+                title={copiedRelatedSc ? t('detail.copied_aria_live') : t('detail.copy_sc_aria_label')}
               />
             </p>
           )}
@@ -297,7 +297,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           onChange={setLocation}
           onClear={() => setLocation('')}
           placeholder={t('detail.location_placeholder')}
-          clearAriaLabel={t('search.clear_aria')}
+          clearAriaLabel={t('search.clear_aria_label')}
           wrapClassName="panel-detail-location-input-wrap"
           inputClassName="panel-detail-input"
           clearButtonClassName="btn--primary btn-panel--clear-input"
@@ -363,11 +363,11 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             disabled={!entryNote.trim()}
             active={entryNoteSaved}
             icon={entryNoteSaved ? <Check size={14} aria-hidden="true" /> : <Save size={14} aria-hidden="true" />}
-            label={entryNoteSaved ? t('detail.saved_entry_note_aria') : t('detail.save_entry_note_aria')}
+            label={entryNoteSaved ? t('detail.saved_entry_note_aria_live') : t('detail.save_entry_note_aria_label')}
             onClick={() => {
               setStorage(getEntryNoteKey(entry.id), entryNote)
               setEntryNoteSaved(true)
-              announce(t('detail.saved_entry_note_aria'))
+              announce(t('detail.saved_entry_note_aria_live'))
               setTimeout(() => setEntryNoteSaved(false), NOTIFICATION_TIMEOUT)
             }}
           >
@@ -421,7 +421,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
                 ? <Loader2 size={12} strokeWidth={2} className="panel-detail-revising-spinner" aria-hidden="true" />
                 : <Sparkles size={12} strokeWidth={2} className="panel-detail-ai-revision-icon" aria-hidden="true" />
               }
-              label={refining ? t('detail.rewriting_aria') : t('detail.ai_revision_aria')}
+              label={refining ? t('detail.rewriting_aria_live') : t('detail.ai_revision_aria_label')}
               onClick={handleRefine}
             >
               {refining ? t('detail.rewriting_text') : t('detail.ai_revision_save_text')}
@@ -452,7 +452,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             ? <Check size={14} aria-hidden="true" />
             : <RotateCcw size={14} aria-hidden="true" />
           }
-          label={t('detail.reset_all_fields_aria')}
+          label={t('detail.reset_all_fields_aria_label')}
           onClick={handleResetAllFields}
         >
           {resetAllDone ? t('detail.reset_all_done_desktop') : t('detail.reset_all_fields_text')}
@@ -464,7 +464,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             ? <Check size={14} aria-hidden="true" />
             : <Copy size={14} aria-hidden="true" />
           }
-          label={t('detail.copy_all_aria')}
+          label={t('detail.copy_all_aria_label')}
           onClick={handleCopyAll}
         >
           {copiedAll ? t('detail.copy_all_copied_text') : t('detail.copy_all_text')}
