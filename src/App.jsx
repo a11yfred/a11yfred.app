@@ -130,7 +130,9 @@ function boldStatPhrase(str, n) {
 // Formats template with {count} placeholder: splits on count and bolds the first word count.
 // e.g. "{count} items loaded"  => <> <strong>X item(s)</strong> loaded</>
 function formatCountTemplate(tmpl, count) {
-  const [before, after] = tmpl.split('{count}')
+  const parts = tmpl.split('{count}')
+  if (parts.length !== 2) return tmpl
+  const [before, after] = parts
   const spaceIdx = after.indexOf(' ', 1)
   const boldTail = spaceIdx === -1 ? after : after.slice(0, spaceIdx)
   const rest = spaceIdx === -1 ? '' : after.slice(spaceIdx)
