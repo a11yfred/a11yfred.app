@@ -298,11 +298,15 @@ h2 {
    Dialog & Modal
    ════════════════════════════════════════════════════════════ */
 
-dialog {
-  border-radius: var(--rounded-lg);
+dialog,
+ube-dialog,
+[role="dialog"] {
+  border-radius: var(--rounded-lg) !important;
 }
 
-dialog button {
+dialog button,
+ube-dialog button,
+[role="dialog"] button {
   border-radius: var(--rounded);
 }
 
