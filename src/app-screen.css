@@ -286,8 +286,7 @@
 
 dialog,
 .overlay-dialog,
-[role="dialog"],
-.modal-panel {
+[role="dialog"] {
   border-radius: var(--rounded);
 }
 
