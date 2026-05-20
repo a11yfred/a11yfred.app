@@ -170,13 +170,8 @@
   margin: 0;
 }
 
-ube-button {
-  min-height: var(--btn-height-standard) !important;
-}
-
 .panel-toggle-row ube-button,
 .panel-toggle-row .btn {
-  min-height: var(--btn-height-standard) !important;
   padding: 0 var(--space-3);
   font-size: var(--fs-body);
 }
@@ -229,8 +224,8 @@ ube-button {
   transition: opacity var(--duration-fast);
 }
 
-ube-button[disabled],
-ube-button[aria-disabled="true"],
+.settings-language-change-btn[disabled],
+.settings-language-change-btn[aria-disabled="true"],
 .settings-unpin-all-btn[disabled],
 .settings-unstar-all-btn[disabled],
 .settings-unarchive-all-btn[disabled],

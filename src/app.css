@@ -283,12 +283,6 @@ dialog,
   border-radius: var(--rounded);
 }
 
-dialog button,
-.overlay-dialog button,
-[role="dialog"] button {
-  border-radius: var(--rounded);
-}
-
 /* ═══════════════════════════════════════════════════════════
    Print Styles
    ════════════════════════════════════════════════════════════ */

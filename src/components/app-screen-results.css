@@ -188,7 +188,6 @@
 
 .results-narrow-btn {
   flex: 1;
-  justify-content: center;
 }
 
 .results-narrow-btn svg {
@@ -197,7 +196,6 @@
 
 .results-clear-btn {
   flex: 1;
-  justify-content: center;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--duration-base) var(--ease-out);
@@ -1137,6 +1135,13 @@
   gap: var(--space-1);
 }
 
+.result-item__badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}
+
 @media (width >= 768px) {
   .result-item__header {
     flex-direction: row;
@@ -1148,20 +1153,8 @@
   }
 }
 
-.result-item__badges {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  flex-shrink: 0;
-}
-
-.badge {
-  border-radius: 9999px;
-}
-
+.badge,
 ube-badge,
-.result-item__badges ube-badge,
-.result-item__badges span[class*="badge"],
 .badge--severity,
 .badge--source,
 .badge--wcag,

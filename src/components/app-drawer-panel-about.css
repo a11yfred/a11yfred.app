@@ -8,25 +8,6 @@
   line-height: 1.5;
 }
 
-.panel-body--secondary {
-  margin-top: var(--space-2);
-  font-size: var(--fs-small);
-  opacity: 0.8;
-}
-
-.about-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-}
-
-.about-feature {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-}
-
 .about-feature-label {
   font-size: var(--fs-body);
   font-weight: 600;

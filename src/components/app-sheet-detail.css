@@ -87,8 +87,7 @@ ube-sheet {
   margin-left: auto;
 }
 
-.btn,
-.btn--field {
+.btn {
   min-height: var(--btn-height-standard);
   display: flex !important;
   align-items: center;
