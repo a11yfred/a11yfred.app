@@ -241,6 +241,8 @@
   color: var(--accent-text);
   text-decoration: underline;
   text-underline-offset: var(--text-underline-offset);
+  white-space: nowrap;
+  font-size: inherit;
 }
 
 .footer-link:hover {
