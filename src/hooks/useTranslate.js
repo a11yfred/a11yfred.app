@@ -5,9 +5,8 @@ export function useT() {
   const [t, setT] = useState(() => getCalamansiT())
 
   useEffect(() => {
-    setT(getCalamansiT())
     return _subscribe(setT)
   }, [])
 
-  return t || getCalamansiT()
+  return t
 }
