@@ -593,7 +593,7 @@
   flex: 1;
   min-width: 0;
   width: 100%;
-  min-height: 194px;
+  min-height: 218px;
   padding: var(--space-4) var(--space-4) var(--space-4) var(--space-6);
   border-top: 1px solid var(--border);
   background: var(--bg);
@@ -1209,7 +1209,6 @@ ube-badge,
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.5;
-  min-height: 218px;
   transition:
     max-height var(--duration-base) var(--ease-out),
     opacity var(--duration-base) var(--ease-out),
