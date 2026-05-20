@@ -50,6 +50,9 @@ export default defineConfig(({ mode }) => ({
     css: { transformer: 'lightningcss' },
     // 50+ locale JSON files make the main bundle intentionally large; suppress warning
     chunkSizeWarningLimit: 1200,
+    rolldownOptions: {
+      external: ['react-dom'],
+    },
     rollupOptions: {
       output: {
         // Split vendor chunks so the browser can cache React and Fuse.js
