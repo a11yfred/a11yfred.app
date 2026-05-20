@@ -4,9 +4,9 @@
 [data-theme="fiesta"] body {
   background-image: radial-gradient(
     ellipse at var(--fiesta-grad-x, 50%) var(--fiesta-grad-y, 50%),
-    var(--accent-bg) 0%,
-    var(--bg-subtle) 45%,
-    var(--bg) 100%
+    var(--color-accent-bg) 0%,
+    var(--color-bg-subtle) 45%,
+    var(--color-bg) 100%
   );
   background-attachment: fixed;
   background-size: cover;
@@ -20,15 +20,15 @@
 /* Fixed lower-right badge shown only in fiesta mode */
 .fiesta-banner {
   position: fixed;
-  bottom: var(--space-4);
-  right: var(--space-4);
+  bottom: var(--size-4);
+  right: var(--size-4);
   z-index: 190;
-  padding: var(--space-2) var(--space-4);
-  background: var(--accent-bg);
-  color: var(--accent-text);
-  border: 2px solid var(--accent);
-  border-radius: var(--radius-full);
-  font-family: var(--font);
+  padding: var(--size-2) var(--size-4);
+  background: var(--color-accent-bg);
+  color: var(--color-accent-text);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--rounded-full);
+  font-family: var(--font-display);
   font-size: var(--fs-body);
   font-weight: 700;
   white-space: nowrap;
@@ -75,12 +75,12 @@
 .fiesta-player {
   position: fixed;
   z-index: 195;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-bg);
-  border: 2px solid var(--accent-text);
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
+  border-radius: var(--rounded-full);
+  background: var(--color-accent);
+  color: var(--color-accent-bg);
+  border: 2px solid var(--color-accent-text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,11 +92,22 @@
 
 .fiesta-player:hover {
   transform: scale(1.18);
-  background: var(--accent-text);
-  color: var(--accent-bg);
+  background: var(--color-accent-text);
+  color: var(--color-accent-bg);
 }
 
 .fiesta-player:focus-visible {
-  outline: 2px dotted var(--focus);
-  outline-offset: 3px;
+  outline: 2px dotted var(--color-focus);
+  outline-offset: var(--size-outline-offset-thick);
 }
+
+
+
+
+
+
+
+
+
+
+

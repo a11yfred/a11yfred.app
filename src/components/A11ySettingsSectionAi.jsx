@@ -38,7 +38,7 @@ export default function SettingsSectionAi({
       <h3 className="panel-section-heading">{t('settings.ai_heading')}</h3>
 
       <div className="panel-section panel-section--no-spacing">
-        <div className="panel-row">
+        <div className="panel-toggle-row">
           <div className="panel-row-label">
             <label htmlFor="toggle-ai" className="panel-field-label">{t('settings.ai_enable_label')}</label>
             <p className="panel-field-desc">Revises <strong>Descriptions</strong> and/or <strong>Suggested Fix</strong> based on your <strong>AI Instructions</strong>.</p>
@@ -128,7 +128,7 @@ export default function SettingsSectionAi({
       </div>
 
       <div className="panel-section">
-        <div className="panel-row">
+        <div className="panel-toggle-row">
           <div className="panel-row-label">
             <label htmlFor="toggle-agentic" className="panel-field-label">{t('settings.agentic_mode_label')}</label>
             <p className="panel-field-desc">{t('settings.agentic_mode_desc')}</p>

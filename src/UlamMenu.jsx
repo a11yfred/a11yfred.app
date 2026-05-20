@@ -480,7 +480,7 @@ export default function UlamMenu() {
 
         <Section title="calamansi — vanilla API">
           <Row label="initI18n / setLocale / getT">
-            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>
+            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--color-text-muted)' }}>
               <code>initI18n(messages)</code> registers the app&apos;s catalogue.{' '}
               <code>setLocale(locale)</code> switches the singleton.{' '}
               <code>getT()</code> returns the current translate function synchronously — no React required.
@@ -493,7 +493,7 @@ export default function UlamMenu() {
               <FormControlToggle id="live-pref-tog" checked={liveSearch} onChange={setLiveSearch} />
               Live search persisted: {String(liveSearch)}
             </label>
-            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--text-muted)' }}>
+            <p style={{ fontSize: 'var(--fs-small)', color: 'var(--color-text-muted)' }}>
               Backed by <code>getPref</code> / <code>setPref</code> in localStorage. Reload the page — the value persists.
             </p>
           </Row>

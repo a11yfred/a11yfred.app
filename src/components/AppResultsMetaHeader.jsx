@@ -242,7 +242,7 @@ export default function AppResultsMetaHeader({
                     onClick={onNarrowSearch}
                     disabled={narrowQuery.length < 2 || (!query && !narrowQuery)}
                     variant="primary"
-                    className="results-narrow-submit-btn btn--input-height"
+                    className="btn-submit-narrow btn--input-height"
                   >
                     {t('search.narrow_button')}
                   </Button>

@@ -65,6 +65,8 @@ export function filterByPlatform(entries, platform) {
 
 /**
  * Filters entries by WCAG version and level ceiling.
+ * AAA has the most SC, AA has fewer, A has the fewest.
+ * AAA is the least restrictive and never filters results.
  *
  * @param {Array} entries
  * @param {{ maxVersion: string, maxLevel: string }} wcagFilter
@@ -74,7 +76,8 @@ export function filterByWcag(entries, wcagFilter = DEFAULT_WCAG_FILTER) {
   const { maxVersion = '2.2', maxLevel = 'AA' } = wcagFilter ?? {}
   const vMax = WCAG_VERSION_ORDER[maxVersion] ?? 2
   const lMax = WCAG_LEVEL_ORDER[maxLevel] ?? 1
-  if (vMax === 2 && lMax >= 1) return entries
+  // AAA (level 2) has the most SC, so it includes all results; no filtering needed
+  if (vMax === 2 && lMax === 2) return entries
   return entries.filter(f => {
     if (f.wcagVersion && (WCAG_VERSION_ORDER[f.wcagVersion] ?? 0) > vMax) return false
     if (f.wcagLevel  && (WCAG_LEVEL_ORDER[f.wcagLevel]   ?? 0) > lMax) return false

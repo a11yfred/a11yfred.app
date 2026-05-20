@@ -185,7 +185,7 @@
   "badge.severity_prefix": "Severity: ",
   "badge.source_prefix": "Source: ",
   "badge.wcag_prefix": "WCAG ",
-  "badge.wcag_version_label": "WCAG version: ",
+  "badge.wcag_version_label": "WCAG Version: ",
   "badge.level_prefix": "Level ",
   "badge.level_label": "Level: ",
   "badge.platform_prefix": "Platform: ",

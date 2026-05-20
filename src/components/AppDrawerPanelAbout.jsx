@@ -3,10 +3,7 @@ import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { useT } from '../hooks/useTranslate.js'
 
-
-
 import entrySlug from '../utils/entrySlug.js'
-import { version } from '../../package.json'
 import './app-drawer-panel.css'
 
 function ExtLink({ href, children }) {
@@ -120,12 +117,6 @@ export default function AppDrawerPanelAbout({ onClose, allEntries = [] }) {
           </li>
         </ul>
       </section>
-
-      <div className="about-footer">
-        <small className="about-version">
-          A11yFred v{version}
-        </small>
-      </div>
 
       <div className="panel-mobile-back">
         <Button

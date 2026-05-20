@@ -15,7 +15,6 @@ import { TOAST_HIDE_DURATION, DEFAULT_WCAG_FILTER, EASTER_EGG_LOCALES, LS_WCAG_F
 import { setStorage, removeStorage, getStorageJson } from '../utils/storage.js'
 import { useSettings } from '../context/contextSettings.js'
 import { useRatings } from '../context/contextRatings.js'
-import { version } from '../../package.json'
 import './app-drawer-panel.css'
 
 
@@ -69,7 +68,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
 
   // Saved snapshots to diff against for hasUnsaved
   const [savedKeys] = useState(initApiKeys)
-  const [savedProvider] = useState(getAiProvider)
+  const [savedProvider] = useState(getAiProvider())
   const [savedModels] = useState(initModels)
 
   const [saved, setSaved] = useState(false)
@@ -386,12 +385,6 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
         >
           {t('settings.back')}
         </Button>
-      </div>
-
-      <div className="settings-footer">
-        <small className="settings-version">
-          A11yFred v{version}
-        </small>
       </div>
     </Panel>
   )

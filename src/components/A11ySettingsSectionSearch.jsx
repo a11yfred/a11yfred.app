@@ -56,9 +56,9 @@ export default function SettingsSectionSearch({
   liveSearch,
   pendingLiveSearch,
   setPendingLiveSearch,
-  showPersonalCorpus,
-  pendingShowPersonalCorpus,
-  setPendingShowPersonalCorpus,
+  // showPersonalCorpus,
+  // pendingShowPersonalCorpus,
+  // setPendingShowPersonalCorpus,
   wcagFilter,
   pendingWcagFilter,
   setPendingWcagFilter,
@@ -127,7 +127,7 @@ export default function SettingsSectionSearch({
       </div>
 
       <div className="panel-section">
-        <div className="panel-row">
+        <div className="panel-toggle-row">
           <div className="panel-row-label">
             <label htmlFor="toggle-live-search" className="panel-field-label">{t('settings.live_search_label')}</label>
             <p className="panel-field-desc">{pendingLiveSearch ? <>Results appear <strong>as you type</strong>.</> : <>Results appear on <strong>Search</strong> button press or <strong>Enter</strong> key.</>}</p>
@@ -139,6 +139,7 @@ export default function SettingsSectionSearch({
         </div>
       </div>
 
+      {/* TODO: Unhide personal corpus feature for post-launch
       <div className="panel-section">
         <div className="panel-row">
           <div className="panel-row-label">
@@ -151,6 +152,7 @@ export default function SettingsSectionSearch({
           </div>
         </div>
       </div>
+      */}
 
       <div className="panel-group">
         <h3 className="panel-group__label">{t('settings.wcag_filter_label')}</h3>
@@ -209,7 +211,7 @@ export default function SettingsSectionSearch({
       <ClearDataRow t={t} labelKey="settings.pinned_results_label" hasData={hasPins} descKey="settings.pinned_results_desc" emptyKey="settings.pinned_results_empty" isDone={unpinAllDone} setIsDone={setUnpinAllDone} onClear={onClearPins} labelActionKey="settings.unpin_all" labelDoneKey="settings.unpin_all_done" Icon={PinOff} className="btn-settings" wrapperClass="panel-data-row" />
 
       <div className="panel-section">
-        <div className="panel-row">
+        <div className="panel-toggle-row">
           <div className="panel-row-label">
             <label htmlFor="toggle-ranking" className="panel-field-label">{t('settings.ranking_label')}</label>
             <p className="panel-field-desc">{pendingShowVoting

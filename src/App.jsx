@@ -249,6 +249,27 @@ function AppContent() {
     }
   }, [language])
 
+  useEffect(() => {
+    if (settingsOpen) {
+      document.title = `A11yFred | ${t('settings.drawer_label')}`
+      return () => { document.title = 'A11yFred' }
+    }
+  }, [settingsOpen, t])
+
+  useEffect(() => {
+    if (aboutOpen) {
+      document.title = `A11yFred | ${t('about.sheet_label')}`
+      return () => { document.title = 'A11yFred' }
+    }
+  }, [aboutOpen, t])
+
+  useEffect(() => {
+    if (helpOpen) {
+      document.title = `A11yFred | ${t('help.sheet_label')}`
+      return () => { document.title = 'A11yFred' }
+    }
+  }, [helpOpen, t])
+
   const prevViewAllRef = useRef(viewAll)
   useEffect(() => {
     if (prevViewAllRef.current && !viewAll && wcagFilter.maxLevel === 'AAA') {
@@ -784,7 +805,7 @@ function AppContent() {
             allEntries={allEntries}
             onSelect={handleSelectEntry}
             onSelectRelated={handleSelectRelated}
-            onClose={() => { applySelectEntry(null); returnToPanelRef.current = false }}
+            onClose={() => applySelectEntry(null)}
             onBadgeClick={handleBadgeClick}
             onCopyEvent={recordCopy}
             debugPanelCmd={debugPanelCmd}

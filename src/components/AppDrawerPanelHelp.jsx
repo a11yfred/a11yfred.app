@@ -2,9 +2,6 @@ import { Panel, Button } from '@ulam/ube'
 import { PlayCircle, ArrowLeft } from 'lucide-react'
 import { useT } from '../hooks/useTranslate.js'
 
-
-import { version } from '../../package.json'
-
 export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
   const t = useT()
 
@@ -66,12 +63,6 @@ export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
           <li className="help-shortcut"><code className="help-shortcut-key" aria-hidden="true">{'Shift+↓'}</code> {t('help.shortcut_rank_down')}</li>
         </ul>
       </section>
-
-      <div className="help-footer">
-        <small className="help-version">
-          A11yFred v{version}
-        </small>
-      </div>
 
       <div className="panel-mobile-back">
         <Button

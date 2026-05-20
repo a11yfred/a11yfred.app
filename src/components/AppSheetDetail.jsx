@@ -357,7 +357,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
         <div className="panel-detail-section-controls">
           <Button
             variant="primary"
-            disabled={!entryNote.trim()}
+            disabled={!entryNote || !entryNote.trim() || entryNoteSaved}
             active={entryNoteSaved}
             icon={entryNoteSaved ? <Check size={14} aria-hidden="true" /> : <Save size={14} aria-hidden="true" />}
             label={entryNoteSaved ? t('detail.saved_entry_note_aria_live') : t('detail.save_entry_note_aria_label')}

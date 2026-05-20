@@ -7,12 +7,7 @@
    Accessibility overrides for prefers-reduced-transparency.
    ════════════════════════════════════════════════════════════ */
 
-:root {
-  /* Map sili --radius-* tokens to ube --rounded-* for consistency */
-  --radius: var(--rounded, 6px);
-  --radius-lg: var(--rounded-lg, 16px);
-  --radius-full: var(--rounded-full, 9999px);
-}
+@import "./tokens-overrides.css";
 
 /* ─── prefers-reduced-transparency override ─────────────────
    When transparency is reduced, use solid colors and explicit
@@ -32,7 +27,7 @@
   .result-row--archived .result-item__sc,
   .result-row--archived .result-item__desc {
     opacity: 1;
-    color: var(--text-disabled);
+    color: var(--color-text-disabled);
   }
 
   /* Deselected items (when a selection is active) */
@@ -47,7 +42,7 @@
   /* Icons and decorative elements */
   .result-swipe-hint__chevron {
     opacity: 1;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
   }
 
   .announce-toast__badge {
@@ -61,13 +56,13 @@
 
   .header-link-github .external-link-icon {
     opacity: 1;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
   }
 
   .onboarding-arrow-btn:hover,
   .onboarding-arrow-btn:focus-visible {
     opacity: 1;
-    color: var(--text-muted);
+    color: var(--color-text-muted);
   }
 
   /* Announce toast backgrounds */
@@ -85,3 +80,4 @@
     visibility: hidden;
   }
 }
+

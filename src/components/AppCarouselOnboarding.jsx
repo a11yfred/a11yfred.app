@@ -52,7 +52,7 @@ export default function AppCarouselOnboarding({ onClose }) {
   const total = SLIDES.length
   const currentSlide = SLIDES[step]
   const slideHeading = currentSlide.isWelcome ? null : t(currentSlide.headingKey)
-  const pageTitle = slideHeading ? `${t('onboarding.heading')} | ${slideHeading}` : t('onboarding.heading')
+  const pageTitle = slideHeading ? `${slideHeading} | ${t('onboarding.heading')}` : t('onboarding.heading')
 
   useEffect(() => {
     document.title = pageTitle
