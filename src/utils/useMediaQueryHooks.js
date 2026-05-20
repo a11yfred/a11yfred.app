@@ -8,7 +8,6 @@ export function usePrefersReducedMotion() {
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReduced(mq.matches)
     const handler = (e) => setPrefersReduced(e.matches)
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
@@ -18,16 +17,16 @@ export function usePrefersReducedMotion() {
 }
 
 // Keyboard event handler hook (basic implementation)
-export function useKeydown(handler, dependencies = []) {
+export function useKeydown(handler) {
   useEffect(() => {
     const onKeydown = (e) => handler(e)
     window.addEventListener('keydown', onKeydown)
     return () => window.removeEventListener('keydown', onKeydown)
-  }, dependencies)
+  }, [handler])
 }
 
 // List flip/reorder utility (basic implementation for visual reordering)
-export function useFlipList(items, transform = (x) => x) {
+export function useFlipList(items, _transform = (x) => x) {
   const [flipped, setFlipped] = useState([])
 
   const flip = () => {

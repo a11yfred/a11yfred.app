@@ -8,5 +8,3 @@ release/
 src/data/personal-corpus.json
 src/data/personal-corpus-backup-*.json
 
-# Archived work documentation
-docs/archive/
