@@ -972,7 +972,7 @@ input.sheet-detail-input.sheet-detail-input {
   gap: var(--size-1);
   min-height: var(--size-6) !important;
   padding: 0 var(--size-3);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   border-radius: var(--rounded);
   white-space: nowrap;
   flex-shrink: 0;
