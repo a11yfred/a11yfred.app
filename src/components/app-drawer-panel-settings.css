@@ -87,11 +87,12 @@
   gap: 0;
   margin-bottom: var(--space-8);
   width: 100%;
+  max-width: 100%;
 }
 
 .settings-panel .radio-chip-group ube-radio-chip {
   flex: 1;
-  min-width: 100px;
+  min-width: 0;
 }
 
 .panel-row {
