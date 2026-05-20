@@ -268,7 +268,7 @@ ube-sheet {
   }
 }
 
-.panel-btn {
+.btn-panel {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -278,7 +278,7 @@ ube-sheet {
   white-space: nowrap;
 }
 
-.panel-btn--section {
+.btn-panel--section {
   height: var(--btn-height-standard);
   text-align: center;
   flex-grow: 1;
@@ -286,7 +286,7 @@ ube-sheet {
 }
 
 @media (width >= 768px) {
-  .panel-btn--section {
+  .btn-panel--section {
     flex-grow: 0;
     align-self: flex-end;
   }
@@ -347,7 +347,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   border-color: var(--focus);
 }
 
-.panel-btn--clear-input {
+.btn-panel--clear-input {
   position: absolute;
   right: 8px;
   top: 50%;
@@ -506,20 +506,20 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
   }
 }
 
-.panel-btn--action {
+.btn-panel--action {
   cursor: pointer;
   width: 100%;
   justify-content: center;
 }
 
 @media (width >= 768px) {
-  .panel-btn--action {
+  .btn-panel--action {
     width: auto;
     justify-content: initial;
   }
 }
 
-.panel-btn--close {
+.btn-panel--close {
   font-weight: 600;
   width: 100%;
   text-align: center;
@@ -527,7 +527,7 @@ textarea.panel-detail-input.panel-detail-input[aria-invalid="true"] {
 }
 
 @media (width >= 768px) {
-  .panel-btn--close {
+  .btn-panel--close {
     width: auto;
     text-align: initial;
   }
