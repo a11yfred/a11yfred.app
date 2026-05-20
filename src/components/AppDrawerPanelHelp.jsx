@@ -14,7 +14,6 @@ export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
       heading={t('help.sheet_label')}
       onClose={onClose}
       closeAriaLabel={t('settings.back')}
-      pageTitle={t('help.sheet_label')}
     >
 
       {onStartTour && (

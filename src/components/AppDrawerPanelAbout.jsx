@@ -28,7 +28,6 @@ export default function AppDrawerPanelAbout({ onClose, allEntries = [] }) {
       heading={t('about.sheet_label')}
       onClose={onClose}
       closeAriaLabel={t('settings.back')}
-      pageTitle={t('about.sheet_label')}
     >
 
       <section className="panel-section">
