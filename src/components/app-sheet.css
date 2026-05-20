@@ -114,23 +114,12 @@ ube-sheet {
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  flex: 1;
-  min-width: 0;
-}
-
-.field__include-title .control__label {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  flex: 1;
-  min-width: 0;
 }
 
 .field-include-title-label {
-  min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .panel-detail-title-row {
