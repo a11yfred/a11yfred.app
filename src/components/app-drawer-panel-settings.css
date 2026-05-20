@@ -120,8 +120,14 @@
 }
 
 .select-wrap--language {
-  flex: 1;
   min-width: 0;
+  max-width: 200px;
+}
+
+@media (width < 768px) {
+  .select-wrap--language {
+    flex: 1;
+  }
 }
 
 .settings-language-change-btn,
