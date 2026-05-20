@@ -179,7 +179,8 @@ ube-button {
   width: 100%;
 }
 
-.panel-row-control:has(.settings-language-row) {
+.panel-row-control:has(.settings-language-row),
+.panel-row-control:has(.radio-chip-group) {
   width: 100%;
 }
 
