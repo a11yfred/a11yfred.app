@@ -1209,7 +1209,7 @@ ube-badge,
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.5;
-  max-height: 218px;
+  min-height: 218px;
   transition:
     max-height var(--duration-base) var(--ease-out),
     opacity var(--duration-base) var(--ease-out),
