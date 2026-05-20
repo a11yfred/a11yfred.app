@@ -85,6 +85,8 @@
   white-space: nowrap;
   padding: 0 var(--space-2);
   height: var(--btn-height-standard);
+  background: none;
+  border: none;
   border-radius: var(--rounded);
   transition: background-color var(--duration-fast), color var(--duration-fast);
 }
