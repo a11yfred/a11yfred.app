@@ -107,7 +107,8 @@
     align-items: flex-start;
   }
 
-  .panel-row:has(.settings-language-row) {
+  .panel-row:has(.settings-language-row),
+  .panel-row:has(.radio-chip-group) {
     flex-direction: column;
   }
 }
