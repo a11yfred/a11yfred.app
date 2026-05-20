@@ -1,6 +1,27 @@
 
 /* ─── Settings panel ──────────────────────────────────────── */
 
+/* ─── Panel Sections ──────────────────────────────────────── */
+
+.panel-section {
+  margin-bottom: var(--space-6);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: var(--space-6);
+}
+
+.panel-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.panel-section-heading {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text-heading);
+  margin: 0 0 var(--space-4) 0;
+}
+
 .settings-wcag-filter-row {
   display: flex;
   gap: var(--space-6);
