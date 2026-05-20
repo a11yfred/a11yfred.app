@@ -51,8 +51,13 @@
 }
 
 .settings-panel .radio-chip-group ube-radio-chip {
-  flex: 1;
   min-width: 120px;
+}
+
+@media (width < 768px) {
+  .settings-panel .radio-chip-group ube-radio-chip {
+    flex: 1;
+  }
 }
 
 .panel-row {
