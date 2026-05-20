@@ -33,10 +33,10 @@
 }
 
 .panel-row {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-4);
-  align-items: start;
+  align-items: flex-start;
   margin-bottom: var(--space-5);
 }
 
@@ -44,13 +44,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  flex: 1;
+  min-width: 200px;
 }
 
 .panel-row-control {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  flex-shrink: 0;
+  flex-wrap: wrap;
+  min-width: 180px;
 }
 
 .panel-toggle-row {
@@ -303,13 +306,17 @@ textarea[aria-disabled="true"].settings-key-input {
 
 /* ─── Mobile Back Button Layout ───────────────────────────── */
 
-.settings-panel ube-panel-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+.settings-panel ube-panel-header,
+.page-panel ube-panel-header,
+.settings-panel > div:first-child {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--space-2) !important;
 }
 
-.settings-panel h2 {
+.settings-panel h2,
+.page-panel h2 {
   flex: 1;
   min-width: 0;
+  margin: 0;
 }
