@@ -1,6 +1,6 @@
 import { Button, InfoBox, FormControlToggle, FormInputText, Badge, FormControlCheckbox } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
-import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save, Mail } from 'lucide-react'
+import { Sparkles, Copy, Check, Loader2, AlertCircle, RotateCcw, Save } from 'lucide-react'
 import { useMediaQuery, useFocusOnChange, Dialog } from '@ulam/sili/react'
 import { announce } from '@ulam/taho'
 import { useT } from '../hooks/useTranslate.js'
@@ -125,24 +125,24 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
   const fixLabel = t('detail.fix_label')
   const aiRevisionLabel = t('detail.ai_revision_label')
 
-  const handleEmailShare = () => {
-    const subject = encodeURIComponent(`Accessibility Defect: ${entry.title}`)
-    const bodyLines = [
-      `Title: ${entry.title}`,
-      `Severity: ${entry.severity}`,
-      `WCAG: ${entry.sc}`,
-      '',
-      `Description:`,
-      displayDesc,
-      '',
-      `Suggested Fix:`,
-      fixText,
-      '',
-      `Source: A11yFred (a11yfred.app)`,
-    ]
-    const body = encodeURIComponent(bodyLines.join('\n'))
-    window.location.href = `mailto:?subject=${subject}&body=${body}`
-  }
+  // const handleEmailShare = () => {
+  //   const subject = encodeURIComponent(`Accessibility Defect: ${entry.title}`)
+  //   const bodyLines = [
+  //     `Title: ${entry.title}`,
+  //     `Severity: ${entry.severity}`,
+  //     `WCAG: ${entry.sc}`,
+  //     '',
+  //     `Description:`,
+  //     displayDesc,
+  //     '',
+  //     `Suggested Fix:`,
+  //     fixText,
+  //     '',
+  //     `Source: A11yFred (a11yfred.app)`,
+  //   ]
+  //   const body = encodeURIComponent(bodyLines.join('\n'))
+  //   window.location.href = `mailto:?subject=${subject}&body=${body}`
+  // }
 
   return (
     <div className="panel-detail-sheet">

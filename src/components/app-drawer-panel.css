@@ -592,9 +592,6 @@
   line-height: 1.4;
 }
 
-.admin-entry-list li:hover {
-  background: var(--bg-subtle);
-}
 
 .admin-entry-link {
   background: none;
@@ -1012,6 +1009,10 @@ textarea[aria-disabled="true"].settings-key-input {
 
 .settings-reset-list li {
   line-height: 1.5;
+}
+
+.admin-entry-list li:hover {
+  background: var(--bg-subtle);
 }
 
 .settings-reset-actions {
