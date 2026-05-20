@@ -240,7 +240,9 @@
 /* ─── Links ───────────────────────────────────────────────── */
 
 .footer-link {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2em;
   color: var(--accent-text);
   text-decoration: underline;
   text-underline-offset: var(--text-underline-offset);
