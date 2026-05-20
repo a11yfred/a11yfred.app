@@ -138,11 +138,6 @@
   flex-wrap: wrap;
 }
 
-@media (width >= 768px) {
-  .panel-row-control {
-    min-width: 180px;
-  }
-}
 
 .panel-toggle-row {
   display: grid;
