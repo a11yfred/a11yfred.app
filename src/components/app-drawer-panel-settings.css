@@ -320,3 +320,22 @@ textarea[aria-disabled="true"].settings-key-input {
   min-width: 0;
   margin: 0;
 }
+
+.panel-mobile-back {
+  display: none;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+@media (width < 768px) {
+  .panel-mobile-back {
+    display: block;
+  }
+}
+
+.panel-mobile-back-btn {
+  width: 100%;
+  height: var(--btn-height-standard);
+  justify-content: center;
+}
