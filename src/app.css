@@ -269,8 +269,10 @@
 }
 
 .footer-link svg {
+  display: inline-block;
   width: 0.9em !important;
   height: 0.9em !important;
+  vertical-align: -0.05em;
 }
 
 /* ═══════════════════════════════════════════════════════════
