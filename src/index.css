@@ -32,6 +32,10 @@ body {
   transition: background-color 300ms var(--ease-in-out), color 300ms var(--ease-in-out);
 }
 
+p {
+  margin-bottom: 2em;
+}
+
 @media (prefers-reduced-motion: reduce) {
   body {
     transition: none;
