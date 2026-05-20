@@ -422,7 +422,8 @@ textarea[aria-disabled="true"].settings-key-input {
 
 .settings-panel ube-panel-header,
 .page-panel ube-panel-header,
-.settings-panel > div:first-child {
+.settings-panel > div:first-child,
+.page-panel > div:first-child {
   display: flex !important;
   align-items: center !important;
   gap: var(--space-2) !important;
