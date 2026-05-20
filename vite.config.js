@@ -35,7 +35,6 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       '@ulam/sawsawan': new URL('./src/sawsawan/index.js', import.meta.url).pathname,
-      '@ulam/ube/useAriaDisabled.js': new URL('./src/hooks/useAriaDisabled.js', import.meta.url).pathname,
     },
   },
   define: {
