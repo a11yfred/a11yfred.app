@@ -3,7 +3,7 @@
 
    1. app-tokens.css         — design tokens + app overrides + user prefs
    2. ui.css                 — ube base styles
-   3. app.css                — app shell (layout, header, footer)
+   3. app-screen.css         — app shell (layout, header, footer, screen components)
    4. component CSS          — each component imports its own styles
    5. a11y-theme-fiesta.css  — theme overrides (in App.jsx)
    6. index.css              — global base only
@@ -11,7 +11,7 @@
    ════════════════════════════════════════════════════════════ */
 
 @import "./app-tokens.css";
-@import "./app.css";
+@import "./app-screen.css";
 
 /* ─── Global base styles ──────────────────────────────────── */
 

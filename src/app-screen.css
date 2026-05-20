@@ -1,5 +1,12 @@
 /* ═══════════════════════════════════════════════════════════
-   App Container & Layout Structure
+   App Shell & Screen Component Styles
+
+   Styles for:
+   - App container & layout structure
+   - AppScreenHeader / A11yTitle (page header, title, tagline)
+   - A11yScreenFooter (page footer, links, credit)
+   - A11yScreenNotFound (404 page)
+   - Dialogs & overlays
    ════════════════════════════════════════════════════════════ */
 
 .app-container {
