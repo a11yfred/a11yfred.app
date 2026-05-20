@@ -324,6 +324,13 @@ textarea[aria-disabled="true"].settings-key-input {
   order: -1;
 }
 
+.settings-save-btn[aria-pressed="true"],
+.settings-save-btn.active {
+  background: var(--success, #4caf50) !important;
+  color: white !important;
+  border-color: var(--success, #4caf50) !important;
+}
+
 .settings-footer-row {
   display: flex;
   flex-direction: column;
