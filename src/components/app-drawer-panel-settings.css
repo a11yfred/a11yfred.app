@@ -360,7 +360,9 @@ textarea[aria-disabled="true"].settings-key-input {
 }
 
 .panel-mobile-back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: var(--btn-height-standard);
-  justify-content: center;
 }
