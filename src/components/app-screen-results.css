@@ -1151,13 +1151,14 @@
   flex-shrink: 0;
 }
 
+ube-badge,
 .result-item__badges ube-badge,
 .result-item__badges span[class*="badge"],
 .badge--severity,
 .badge--source,
 .badge--wcag,
 .badge--platform {
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-full) !important;
 }
 
 .result-item__title {
