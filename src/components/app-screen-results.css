@@ -1294,41 +1294,7 @@
   text-transform: uppercase;
 }
 
-/* â"€â"€â"€ No results â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-
-.no-results {
-  text-align: center;
-  padding: var(--size-8) var(--size-4);
-  margin-bottom: var(--size-6);
-}
-
-.no-results__icon {
-  margin-bottom: var(--size-4);
-  display: inline-block;
-}
-
-.no-results__heading {
-  font-size: var(--fs-sub);
-  font-weight: 600;
-  color: var(--color-text-heading);
-  margin-bottom: var(--size-2);
-}
-
-.no-results__body {
-  font-size: var(--fs-body);
-  color: var(--color-text-body);
-  margin-bottom: 0;
-}
-
-.no-results__filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--size-1);
-  margin-top: var(--size-4);
-  font-size: var(--fs-body);
-}
+/* â"€â"€â"€ Active filter bar â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 
 .active-bar {
   display: flex;
@@ -1394,84 +1360,6 @@
 .active-bar__remove:focus-visible {
   outline-offset: 0;
   border-radius: var(--rounded-full);
-}
-
-/* Legacy alias used by NoResults.jsx -- keep until fully migrated */
-.no-results__filters-label {
-  color: var(--color-text-muted);
-}
-
-.no-results__filter-tag {
-  background: var(--color-bg-subtle);
-  border: var(--size-border-width-thin) solid var(--color-border);
-  border-radius: var(--rounded);
-  padding: 0 var(--size-2);
-  transition: border-color var(--duration-fast);
-}
-
-.no-results__filter-tag--removable {
-  cursor: pointer;
-  color: var(--color-text-heading);
-  font-weight: 500;
-}
-
-.no-results__filter-remove {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0 0 0 var(--size-1);
-  cursor: pointer;
-  color: var(--color-text-muted);
-  font-size: var(--fs-body);
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--size-5);
-  height: var(--size-5);
-  border-radius: var(--rounded-full);
-  flex-shrink: 0;
-  transition: color var(--duration-fast);
-}
-
-.no-results__filter-remove:hover {
-  color: var(--color-text-heading);
-}
-
-.no-results__filter-tag--removable:hover,
-.no-results__filter-tag:has(.no-results__filter-remove:hover) {
-  border-color: var(--color-text-heading);
-}
-
-.no-results__filter-remove:focus-visible {
-  outline-offset: 0;
-  border-radius: var(--rounded-full);
-}
-
-.no-results__settings-hint {
-  font-size: var(--fs-body);
-  color: var(--color-text-muted);
-  margin-top: var(--size-2);
-  margin-bottom: var(--size-4);
-}
-
-.no-results__settings-link {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: inherit;
-  color: var(--color-accent-text);
-  text-decoration: underline;
-  text-underline-offset: var(--text-underline-offset);
-  cursor: pointer;
-}
-
-.no-results__settings-link:hover {
-  color: var(--color-text-heading);
-}
-
-.no-results__clear-btn {
-  margin-top: var(--size-4);
 }
 
 /* â"€â"€â"€ Result skeleton â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
