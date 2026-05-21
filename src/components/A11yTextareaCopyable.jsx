@@ -86,6 +86,7 @@ const A11yTextareaCopyable = forwardRef(function A11yTextareaCopyable({
         onChange={e => onChange(e.target.value)}
         readOnly={animating}
         className={`field__textarea${animating ? ' field__textarea--animating' : ''}`}
+        style={animating ? { opacity: 0.6 } : undefined}
       />
       <div className="field__footer">
         <div className="field__include-title">

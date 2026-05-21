@@ -6,15 +6,15 @@ import { version } from '../../package.json'
 export default function A11yScreenFooter() {
   const t = useT()
   const credit = t('footer.credit')
-  const nameIdx = credit.indexOf(FOOTER_CREDIT_NAME)
+  const nameIndex = credit.indexOf(FOOTER_CREDIT_NAME)
   return (
     <footer className="page-footer">
       <p>
-        {nameIdx >= 0 ? (
+        {nameIndex >= 0 ? (
           <>
-            {credit.slice(0, nameIdx)}
+            {credit.slice(0, nameIndex)}
             <a href={URL_PERSONAL_SITE} target="_blank" rel="noreferrer" className="footer-link"><strong className="footer-credit__name">Mikey Ilagan</strong><span className="sr-only"> (opens in new tab)</span></a>
-            {credit.slice(nameIdx + FOOTER_CREDIT_NAME.length)}
+            {credit.slice(nameIndex + FOOTER_CREDIT_NAME.length)}
           </>
         ) : credit}
       </p>

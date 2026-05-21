@@ -8,14 +8,18 @@ const FIESTA_GRAD_RANGE        = 80
 const FIESTA_GRAD_MIN          = 10
 
 const FIESTA_CSS_KEYS = [
-  '--bg', '--bg-subtle', '--border', '--border-control',
-  '--text-heading', '--text-body', '--text-muted', '--text-disabled',
-  '--accent', '--accent-bg', '--accent-text', '--focus', '--success', '--overlay-bg',
+  '--color-bg', '--color-bg-subtle', '--color-border', '--color-border-control',
+  '--color-text-heading', '--color-text-body', '--color-text-muted', '--color-text-disabled',
+  '--color-accent', '--color-accent-bg', '--color-accent-text', '--color-focus', '--color-success', '--bg-overlay',
   '--severity-critical-text', '--severity-critical-bg',
   '--severity-high-text',     '--severity-high-bg',
   '--severity-medium-text',   '--severity-medium-bg',
   '--severity-low-text',      '--severity-low-bg',
   '--fiesta-grad-x', '--fiesta-grad-y',
+  /* backwards compat */
+  '--bg', '--bg-subtle', '--border', '--border-control',
+  '--text-heading', '--text-body', '--text-muted', '--text-disabled',
+  '--accent', '--accent-bg', '--accent-text', '--focus', '--success', '--overlay-bg',
 ]
 
 function generateFiestaPalette() {
@@ -23,6 +27,31 @@ function generateFiestaPalette() {
   const comp = (h + FIESTA_COMPLEMENT_OFFSET) % 360
   const tri  = (h + FIESTA_TRIAD_OFFSET)      % 360
   return {
+    '--color-bg':             `hsl(${h},    85%, 88%)`,
+    '--color-bg-subtle':      `hsl(${h},    75%, 80%)`,
+    '--color-border':         `hsl(${h},    50%, 68%)`,
+    '--color-border-control': `hsl(${comp}, 55%, 30%)`,
+    '--color-text-heading':   `hsl(${comp}, 70%,  8%)`,
+    '--color-text-body':      `hsl(${comp}, 45%, 22%)`,
+    '--color-text-muted':     `hsl(${comp}, 35%, 32%)`,
+    '--color-text-disabled':  `hsl(${comp}, 20%, 58%)`,
+    '--color-accent':         `hsl(${tri},  85%, 38%)`,
+    '--color-accent-bg':      `hsl(${tri},  75%, 88%)`,
+    '--color-accent-text':    `hsl(${tri},  80%, 22%)`,
+    '--color-focus':          `hsl(${tri},  85%, 38%)`,
+    '--color-success':        'hsl(140, 60%, 30%)',
+    '--bg-overlay':           `hsla(${h}, 40%, 15%, 0.55)`,
+    '--severity-critical-text': '#a32d2d',
+    '--severity-critical-bg':   '#fcebeb',
+    '--severity-high-text':     '#854f0b',
+    '--severity-high-bg':       '#faeeda',
+    '--severity-medium-text':   '#185fa5',
+    '--severity-medium-bg':     '#e6f1fb',
+    '--severity-low-text':      '#3b6d11',
+    '--severity-low-bg':        '#eaf3de',
+    '--fiesta-grad-x': `${Math.floor(Math.random() * FIESTA_GRAD_RANGE) + FIESTA_GRAD_MIN}%`,
+    '--fiesta-grad-y': `${Math.floor(Math.random() * FIESTA_GRAD_RANGE) + FIESTA_GRAD_MIN}%`,
+    /* backwards compat */
     '--bg':             `hsl(${h},    85%, 88%)`,
     '--bg-subtle':      `hsl(${h},    75%, 80%)`,
     '--border':         `hsl(${h},    50%, 68%)`,
@@ -37,16 +66,6 @@ function generateFiestaPalette() {
     '--focus':          `hsl(${tri},  85%, 38%)`,
     '--success':        'hsl(140, 60%, 30%)',
     '--overlay-bg':     `hsla(${h}, 40%, 15%, 0.55)`,
-    '--severity-critical-text': '#a32d2d',
-    '--severity-critical-bg':   '#fcebeb',
-    '--severity-high-text':     '#854f0b',
-    '--severity-high-bg':       '#faeeda',
-    '--severity-medium-text':   '#185fa5',
-    '--severity-medium-bg':     '#e6f1fb',
-    '--severity-low-text':      '#3b6d11',
-    '--severity-low-bg':        '#eaf3de',
-    '--fiesta-grad-x': `${Math.floor(Math.random() * FIESTA_GRAD_RANGE) + FIESTA_GRAD_MIN}%`,
-    '--fiesta-grad-y': `${Math.floor(Math.random() * FIESTA_GRAD_RANGE) + FIESTA_GRAD_MIN}%`,
   }
 }
 

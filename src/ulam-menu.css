@@ -148,7 +148,7 @@
 }
 
 .ulam-input:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus);
+  outline: var(--size-border-width-normal) solid var(--color-focus);
   outline-offset: var(--focus-outline-offset);
 }
 
@@ -179,7 +179,7 @@
 }
 
 .ulam-textarea:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus);
+  outline: var(--size-border-width-normal) solid var(--color-focus);
   outline-offset: var(--focus-outline-offset);
 }
 
@@ -210,7 +210,7 @@
 }
 
 .ulam-input-clear:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus);
+  outline: var(--size-border-width-normal) solid var(--color-focus);
   outline-offset: var(--focus-outline-offset);
 }
 

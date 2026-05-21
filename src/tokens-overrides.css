@@ -63,6 +63,10 @@
   /* Background overlay */
   --bg-overlay: rgb(0 0 0 / 0.45);
 
+  /* Announce toast colors (reduced-transparency fallback) */
+  --announce-toast-bg-default: #111;
+  --announce-toast-bg-assertive: #b40000;
+
   /* Color — renamed to --color-* prefix */
   --color-bg:              #f2f2f2;
   --color-bg-subtle:       #e8e8e8;
@@ -75,10 +79,60 @@
   --color-accent:          #5548c8;
   --color-accent-bg:       #eeedfe;
   --color-accent-text:     #3c3489;
+  --color-border-control-accent: var(--color-text-muted);
   --color-success:         #2d6a4f;
   --color-error:           #b91c1c;
   --color-focus:           #5548c8;
   --color-focus-disabled:  var(--color-text-disabled);
+
+  /* Badge tokens */
+  --badge-bg:                 #fce7e6;
+  --badge-text:               #c41e1e;
+  --severity-critical-text:   #c41e1e;
+  --severity-critical-bg:     #fce7e6;
+  --severity-high-text:       #d97706;
+  --severity-high-bg:         #fef0e6;
+  --severity-medium-text:     #1e5a96;
+  --severity-medium-bg:       #e6f1fb;
+  --severity-low-text:        #3d7817;
+  --severity-low-bg:          #eaf3de;
+  --severity-best-practice-text: #4a4a4a;
+  --severity-best-practice-bg:   #e8e8e8;
+  --source-text:              #3730a3;
+  --source-bg:                #eef2ff;
+  --wcag-text:                #155e75;
+  --wcag-bg:                  #ecfeff;
+  --wcag-level-bg:            #dbeafe;
+  --wcag-level-text:          #1e40af;
+  --platform-text:            #3c4558;
+  --platform-bg:              #e8eef5;
+
+  /* Framework token mappings (old naming convention) */
+  --border: var(--color-border);
+  --border-control: var(--color-border-control);
+  --border-control-accent: var(--color-border-control-accent);
+  --size-border-width-control: var(--size-border-width-normal);
+  --bg: var(--color-bg);
+  --bg-subtle: var(--color-bg-subtle);
+  --text-heading: var(--color-text-heading);
+  --text-body: var(--color-text-body);
+  --text-muted: var(--color-text-muted);
+  --text-disabled: var(--color-text-disabled);
+  --accent: var(--color-accent);
+  --accent-bg: var(--color-accent-bg);
+  --accent-text: var(--color-accent-text);
+  --focus: var(--color-focus);
+  --focus-disabled: var(--color-focus-disabled);
+  --focus-outline-width: var(--size-border-width-normal);
+  --focus-outline-offset: var(--size-outline-offset-normal);
+  --touch-target: var(--size-touch-target);
+  --control-size: var(--size-control);
+  --modal-max-width: var(--size-modal-max-width);
+  --modal-max-height-mobile: var(--size-modal-max-height-mobile);
+  --panel-width-mobile: var(--size-panel-width-mobile);
+  --rounded: var(--rounded-sm);
+  --duration-fast: 150ms;
+  --z-index-focus-local: 1;
 
 }
 
@@ -93,10 +147,40 @@
   --color-accent:      #7f77dd;
   --color-accent-bg:   #26215c;
   --color-accent-text: #afa9ec;
+  --color-border-control-accent: var(--color-text-muted);
   --color-success:     #5dca8a;
   --color-error:       #f87171;
   --color-focus:       #a09ce8;
   --color-border-control: #686868;
+
+  /* Invert badge tokens for dark mode */
+  --badge-bg:                 #3b1515;
+  --badge-text:               #f28b82;
+  --severity-critical-text:   #f28b82;
+  --severity-critical-bg:     #3b1515;
+  --severity-high-text:       #f0a050;
+  --severity-high-bg:         #3d2010;
+  --severity-medium-text:     #7eb4e8;
+  --severity-medium-bg:       #0e2440;
+  --severity-low-text:        #5dca8a;
+  --severity-low-bg:          #0d2d18;
+  --severity-best-practice-text: #999;
+  --severity-best-practice-bg:   #1a1a1a;
+  --source-text:              #a5b4fc;
+  --source-bg:                #1e1b4b;
+  --wcag-text:                #67e8f9;
+  --wcag-bg:                  #0a2733;
+  --wcag-level-bg:            #082f4b;
+  --wcag-level-text:          #38bdf8;
+  --platform-text:            #cbd5e1;
+  --platform-bg:              #1e293b;
+
+  /* Overlay backdrop dimming */
+  --overlay-bg: rgb(0 0 0 / 0.45);
+
+  /* Announce toast colors (reduced-transparency fallback) */
+  --announce-toast-bg-default: #222;
+  --announce-toast-bg-assertive: #f44;
 }
 
 /* ─── Textarea Overrides ───────────────────────────────────────────────────
@@ -107,5 +191,61 @@
 textarea {
   font-family: var(--font-mono);
   line-height: 1.5;
+}
+
+/* ─── Toggle Input Fix ────────────────────────────────────────────────────
+   Fix: Make toggle input cover full clickable area
+───────────────────────────────────────────────────────────────────────────── */
+
+.toggle {
+  pointer-events: auto;
+}
+
+.toggle__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: var(--z-index-focus-local);
+  pointer-events: auto;
+}
+
+/* Ensure thumb is not interactive (input handles it) */
+.toggle__thumb {
+  pointer-events: none;
+  cursor: inherit;
+}
+
+/* Match radio background and hover state */
+.toggle__track {
+  background-color: var(--color-border);
+  border: var(--size-border-width-thin) solid var(--color-border-control-accent);
+}
+
+.toggle:not([aria-disabled="true"]):hover:not(:has(.toggle__input:checked)) .toggle__track {
+  background-color: var(--color-bg-subtle);
+}
+
+/* Control border */
+.control {
+  border: var(--size-border-width-thin) solid var(--color-border-control-accent);
+}
+
+.control:checked {
+  border-color: var(--color-accent);
+}
+
+input[type="radio"].control {
+  border: var(--size-border-width-thin) solid var(--color-border-control-accent);
+}
+
+/* ─── Form field required indicator ────────────────────────────────────────
+   Smaller font for "(required)" text
+───────────────────────────────────────────────────────────────────────────── */
+
+.panel-field-required {
+  font-size: var(--fs-small);
 }
 

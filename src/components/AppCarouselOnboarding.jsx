@@ -2,6 +2,7 @@ import { Button, FadeTransition } from '@ulam/ube'
 import { useState, useRef, useEffect } from 'react'
 import { Search, Star, Copy, CircleArrowLeft, CircleArrowRight, Hand, ClipboardPaste } from 'lucide-react'
 import { useFocusOnMount, usePaginationFocus, useDir, Dialog, useKeydown } from '@ulam/sili/react'
+import { usePageTitle } from '../hooks/usePageTitle.js'
 import { announce } from '@ulam/taho'
 import { useT } from '../hooks/useTranslate.js'
 
@@ -52,14 +53,10 @@ export default function AppCarouselOnboarding({ onClose }) {
   const total = SLIDES.length
   const currentSlide = SLIDES[step]
   const slideHeading = currentSlide.isWelcome ? null : t(currentSlide.headingKey)
-  const pageTitle = slideHeading ? `${slideHeading} | ${t('onboarding.heading')}` : t('onboarding.heading')
+  const pageTitle = slideHeading || t('onboarding.heading')
 
-  useEffect(() => {
-    document.title = pageTitle
-    return () => {
-      document.title = 'A11yFred'
-    }
-  }, [pageTitle])
+  usePageTitle(pageTitle)
+
   const isFirst = step === 0
   const isLast = step === total - 1
 

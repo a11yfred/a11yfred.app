@@ -175,6 +175,9 @@ export default function useRouteHandler({
       setSession(LS_LAST_SELECTED, entry.id)
       recordOpen(entry.id)
       recordRecentEntry(entry.id)
+      setSheetCollapsed(false)
+      setSelected(entry)
+      navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`)
     } else {
       removeSession(LS_LAST_SELECTED)
       setEntryHistory([])
@@ -207,11 +210,7 @@ export default function useRouteHandler({
       }
       navigate('/')
       setTimeout(focusCard, 0)
-      return
     }
-    setSheetCollapsed(false)
-    setSelected(entry)
-    navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`)
   }
 
   const handleSelectRelated = (entry) => {
@@ -309,7 +308,7 @@ export default function useRouteHandler({
   // Update document title
   useEffect(() => {
     if (!selected || settingsOpen || aboutOpen || adminOpen) return
-    document.title = appName ? `${appName} | ${selected.title}` : selected.title
+    document.title = appName ? `${selected.title} | ${appName}` : selected.title
   }, [selected, settingsOpen, aboutOpen, adminOpen, appName])
 
   // Show onboarding on first visit

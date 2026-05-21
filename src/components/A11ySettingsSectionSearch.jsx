@@ -9,12 +9,9 @@ import { announce } from '@ulam/taho'
 import { SETTINGS_FLASH_MS, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
 
 function PendingNote({ t }) {
-  const raw = t('settings.pending_save_note')
-  const [before, rest] = raw.split('{unsaved}')
-  const [middle, after] = rest.split('{save}')
   return (
     <p className="panel-pending-note">
-      {before}<strong>Unsaved.</strong>{middle}<strong>Save</strong>{after}
+      <strong>{t('settings.pending_save_note')}</strong>
     </p>
   )
 }
@@ -145,7 +142,7 @@ export default function SettingsSectionSearch({
           <div className="panel-row-label">
             <label htmlFor="toggle-personal-corpus" className="panel-field-label">{t('settings.personal_corpus_label')}</label>
             <p className="panel-field-desc">{pendingShowPersonalCorpus ? <>Your custom findings <strong>appear in search results</strong>.</> : <>Your custom findings <strong>are hidden from results</strong>.</>}</p>
-            {pendingShowPersonalCorpus !== showPersonalCorpus && <PendingNote t={t} />}
+            <PendingNote t={t} visible={pendingShowPersonalCorpus !== showPersonalCorpus} />
           </div>
           <div className="panel-row-control">
             <FormControlToggle id="toggle-personal-corpus" checked={pendingShowPersonalCorpus} onChange={() => setPendingShowPersonalCorpus(v => !v)} />
@@ -158,9 +155,7 @@ export default function SettingsSectionSearch({
         <h3 className="panel-group__label">{t('settings.wcag_filter_label')}</h3>
         <p className="panel-group__desc">Filter findings by <strong>WCAG Version</strong> and <strong>Conformance Level</strong>. Each Version includes all findings from previous versions.</p>
         {(pendingWcagFilter.maxVersion !== (wcagFilter?.maxVersion ?? DEFAULT_WCAG_FILTER.maxVersion) ||
-          pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel)) && (
-          <PendingNote t={t} />
-        )}
+          pendingWcagFilter.maxLevel !== (wcagFilter?.maxLevel ?? DEFAULT_WCAG_FILTER.maxLevel)) && <PendingNote t={t} />}
         <div className="settings-wcag-filter-row">
           <fieldset>
             <legend className="panel-radio-legend">{t('settings.wcag_filter_legend')}</legend>
@@ -188,8 +183,9 @@ export default function SettingsSectionSearch({
             <legend className="panel-radio-legend">{t('settings.wcag_level_legend')}</legend>
             <div className="panel-radio-group">
               {[
-                { value: 'A',  labelKey: 'settings.wcag_level_a'  },
-                { value: 'AA', labelKey: 'settings.wcag_level_aa' },
+                { value: 'A',   labelKey: 'settings.wcag_level_a'   },
+                { value: 'AA',  labelKey: 'settings.wcag_level_aa'  },
+                { value: 'AAA', labelKey: 'settings.wcag_level_aaa' },
               ].map(({ value, labelKey }) => (
                 <label key={value} className="control__label">
                   <input

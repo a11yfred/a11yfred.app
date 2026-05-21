@@ -27,6 +27,7 @@ export default function useEntrySearch(query, platform, locale = 'en', searchKey
   const [corpusEntries, setCorpusEntries] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
   const [dataError, setDataError] = useState(false)
+  const [dataErrorMessage, setDataErrorMessage] = useState('')
   const [retryCount, setRetryCount] = useState(0)
   const [debugLoading, setDebugLoading] = useState(false)
   const [debugError, setDebugError] = useState(false)
@@ -51,6 +52,7 @@ export default function useEntrySearch(query, platform, locale = 'en', searchKey
     let cancelled = false
     setDataLoading(true)  // eslint-disable-line react-hooks/set-state-in-effect -- standard async loading pattern
     setDataError(false)
+    setDataErrorMessage('')
 
     const timeout = setTimeout(() => {
       if (!cancelled) { setDataError(true); setDataLoading(false) }
@@ -62,12 +64,14 @@ export default function useEntrySearch(query, platform, locale = 'en', searchKey
         clearTimeout(timeout)
         setCorpusEntries(data)
         setDataLoading(false)
+        setDataErrorMessage('')
       })
-      .catch(() => {
+      .catch((error) => {
         if (cancelled) return
         clearTimeout(timeout)
         setDataError(true)
         setDataLoading(false)
+        setDataErrorMessage(error?.message || `Failed to load accessibility data for ${locale}`)
       })
 
     return () => { cancelled = true; clearTimeout(timeout) }
@@ -94,8 +98,8 @@ export default function useEntrySearch(query, platform, locale = 'en', searchKey
   )
 
   if (query === DEBUG_SKELETON_QUERY) {
-    return { results: [], allEntries, sortedEntries, dataLoading: debugLoading, dataError: debugError, retryData }
+    return { results: [], allEntries, sortedEntries, dataLoading: debugLoading, dataError: debugError, dataErrorMessage, retryData }
   }
 
-  return { results, allEntries, sortedEntries, dataLoading, dataError, retryData }
+  return { results, allEntries, sortedEntries, dataLoading, dataError, dataErrorMessage, retryData }
 }

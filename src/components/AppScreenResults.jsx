@@ -1,6 +1,6 @@
-import { Button, Screen } from '@ulam/ube'
+import { Button } from '@ulam/ube'
 import { ArrowUp, PinOff } from 'lucide-react'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { announce } from '@ulam/taho'
 import { useT } from '../hooks/useTranslate.js'
 import { useKeydown, useFlipList, usePrefersReducedMotion } from '@ulam/sili/react'
@@ -9,12 +9,27 @@ import A11yResultAd from './A11yResultAd.jsx'
 import AppListResultCard from './AppListResultCard.jsx'
 import AppResultsMetaHeader from './AppResultsMetaHeader.jsx'
 import A11yResultsActiveFilterBar from './A11yResultsActiveFilterBar.jsx'
+import Screen from './A11yScreen.jsx'
 import { DEFAULT_RATING, pluralResult, ARCHIVE_FOCUS_DELAY_MS, RESULTS_VIEW_ALL_THRESHOLD, UNPIN_FLY_MS } from '../utils/constants.js'
 import useSwipeReveal from '../hooks/useSwipeReveal.js'
+import useAnimationStates from '../hooks/useAnimationStates.js'
 import { useSettings } from '../context/contextSettings.js'
 import { useSearch } from '../context/contextSearch.js'
 import { useRatings } from '../context/contextRatings.js'
 import './app-screen-results.css'
+
+function getDisplayCountLabel(narrowMode, narrowResults, filterLabel, hasPinnedItems, results, t) {
+  if (narrowMode && narrowResults) {
+    return t('results.narrow_count', { narrowed: narrowResults.length, total: results.length, result: pluralResult(narrowResults.length) })
+  }
+  if (filterLabel) {
+    return t('results.count_badge', { count: results.length, result: pluralResult(results.length), filter: filterLabel })
+  }
+  if (hasPinnedItems) {
+    return t('results.count_more', { count: results.length, result: pluralResult(results.length) })
+  }
+  return t('results.count', { count: results.length, result: pluralResult(results.length) })
+}
 
 export function PinnedSection({ entries, onSelect, onClearPins, headingRef }) {
   const t = useT()
@@ -82,12 +97,14 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
   const [clearPending, setClearPending] = useState(false)
   const [sortFlash, setSortFlash] = useState(false)
   const { listRef, snapshotPositions } = useFlipList()
-  const [animatingUp, setAnimatingUp] = useState(() => new Set())
-  const [animatingDown, setAnimatingDown] = useState(() => new Set())
-  const [pinningIds, setPinningIds] = useState(() => new Set())
-  const [unpinningIds, setUnpinningIds] = useState(() => new Set())
-  const [archivingIds, setArchivingIds] = useState(() => new Set())
-  const [unarchivingIds, setUnarchivingIds] = useState(() => new Set())
+  const {
+    animatingUp, setAnimatingUp,
+    animatingDown, setAnimatingDown,
+    pinningIds, setPinningIds,
+    unpinningIds, setUnpinningIds,
+    archivingIds, setArchivingIds,
+    unarchivingIds, setUnarchivingIds,
+  } = useAnimationStates()
   const prevNarrowResultsRef = useRef(undefined)
   const { swipeOpenId, setSwipeOpenId, swipeTouchRef } = useSwipeReveal({ listRef, showRanking, onPin, pinnedIds })
 
@@ -121,14 +138,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
   }, [narrowResults]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const displayResults = narrowMode && narrowResults ? narrowResults : results
-  const displayCount = narrowMode && narrowResults
-    ? t('results.narrow_count', { narrowed: narrowResults.length, total: results.length, result: pluralResult(narrowResults.length) })
-    : (filterLabel
-      ? t('results.count_badge', { count: results.length, result: pluralResult(results.length), filter: filterLabel })
-      : hasPinnedItems
-        ? t('results.count_more', { count: results.length, result: pluralResult(results.length) })
-        : t('results.count', { count: results.length, result: pluralResult(results.length) })
-    )
+  const displayCount = getDisplayCountLabel(narrowMode, narrowResults, filterLabel, hasPinnedItems, results, t)
 
   const handleKeyDown = useCallback((e) => {
     if (!listRef.current) return
@@ -204,26 +214,21 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
     return () => document.removeEventListener('pointerdown', handleOutsideTap)
   }, [swipeOpenId]) // eslint-disable-line react-hooks/exhaustive-deps -- setSwipeOpenId is stable
 
-  const activeFilters = [
-    query && onClearQuery
-      ? { label: `"${query}"`, onRemove: onClearQuery }
-      : null,
-    narrowMode && narrowQuery
-      ? { label: t('results.filter_narrow', { query: narrowQuery }), onRemove: onNarrowExit }
-      : null,
-    onPlatformChange && platform !== 'all'
-      ? { label: platformLabels[platform] ?? platform, onRemove: () => onPlatformChange('all') }
-      : null,
-    isBadgeFiltered && filterLabel && onClear
-      ? { label: filterLabel, onRemove: onClear }
-      : null,
-    !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
-      ? { label: `WCAG ${wcagFilter.maxVersion}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxVersion: defaultWcagFilter.maxVersion }) }
-      : null,
-    !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxLevel !== defaultWcagFilter.maxLevel && wcagFilter.maxLevel !== 'AAA'
-      ? { label: `Level ${wcagFilter.maxLevel}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxLevel: defaultWcagFilter.maxLevel }) }
-      : null,
-  ].filter(Boolean)
+  const isQueryFilterActive = query && onClearQuery
+  const isNarrowFilterActive = narrowMode && narrowQuery
+  const isPlatformFilterActive = onPlatformChange && platform !== 'all'
+  const isBadgeFilterActive = isBadgeFiltered && filterLabel && onClear
+  const isWcagVersionFilterActive = !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
+  const isWcagLevelFilterActive = !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxLevel !== defaultWcagFilter.maxLevel && wcagFilter.maxLevel !== 'AAA'
+
+  const activeFilters = useMemo(() => [
+    isQueryFilterActive ? { label: `"${query}"`, onRemove: onClearQuery } : null,
+    isNarrowFilterActive ? { label: t('results.filter_narrow', { query: narrowQuery }), onRemove: onNarrowExit } : null,
+    isPlatformFilterActive ? { label: platformLabels[platform] ?? platform, onRemove: () => onPlatformChange('all') } : null,
+    isBadgeFilterActive ? { label: filterLabel, onRemove: onClear } : null,
+    isWcagVersionFilterActive ? { label: `WCAG ${wcagFilter.maxVersion}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxVersion: defaultWcagFilter.maxVersion }) } : null,
+    isWcagLevelFilterActive ? { label: `Level ${wcagFilter.maxLevel}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxLevel: defaultWcagFilter.maxLevel }) } : null,
+  ].filter(Boolean), [isQueryFilterActive, query, onClearQuery, isNarrowFilterActive, narrowQuery, onNarrowExit, isPlatformFilterActive, platform, platformLabels, onPlatformChange, isBadgeFilterActive, filterLabel, onClear, isWcagVersionFilterActive, wcagFilter, defaultWcagFilter, setWcagFilter, isWcagLevelFilterActive, t])
 
   const hasNonDefaultSort = sortBy !== 'smart'
   const hasAnyActiveFilter = activeFilters.length > 0 || hasNonDefaultSort

@@ -146,7 +146,7 @@ input.results-narrow-input:focus {
 }
 
 .search-typewriter__phrase:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus);
+  outline: var(--size-border-width-normal) solid var(--color-focus);
   outline-offset: var(--size-outline-offset-normal);
   text-decoration: none;
 }

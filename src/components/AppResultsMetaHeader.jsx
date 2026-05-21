@@ -218,11 +218,11 @@ export default function AppResultsMetaHeader({
             >
               <label
                 htmlFor="narrow-filter"
-                className={`results-narrow-label${!query && !narrowQuery ? ' results-narrow-label--dimmed' : ''}`}
+                className={`results-narrow-label${!query ? ' results-narrow-label--dimmed' : ''}`}
               >
                 {t('search.narrowing_results')}
               </label>
-              <div className={`results-narrow-row${!query && !narrowQuery ? ' results-narrow-row--dimmed' : ''}`}>
+              <div className={`results-narrow-row${!query ? ' results-narrow-row--dimmed' : ''}`}>
                 <FormInputText
                   id="narrow-filter"
                   type="text"
@@ -239,12 +239,12 @@ export default function AppResultsMetaHeader({
                   wrapClassName="results-narrow-input-wrap"
                   inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
                   clearButtonClassName="btn--primary input-clear-btn"
-                  disabled={!query && !narrowQuery}
+                  disabled={!query}
                 />
                 {!liveSearch && (
                   <Button
                     onClick={onNarrowSearch}
-                    disabled={narrowQuery.length < 2 || (!query && !narrowQuery)}
+                    disabled={narrowQuery.length < 2 || !query}
                     variant="primary"
                     className="btn-submit-narrow btn--input-height"
                   >

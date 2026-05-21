@@ -12,6 +12,7 @@ import A11yResultRelated from './A11yResultRelated.jsx'
 import { DEBUG_COMMANDS, DEBUG_AI_DELAY_MS, getAiProvider, getProviderLabel } from '@ulam/halohalo'
 import { NOTIFICATION_TIMEOUT } from '../utils/constants.js'
 import { getStorage, setStorage, getEntryNoteKey } from '../utils/storage.js'
+import { setAriaDisabled } from '../utils/ariaDisabled.js'
 import useSheetDetailClipboard from '../hooks/useSheetDetailClipboard.js'
 import useSheetDetailRefine from '../hooks/useSheetDetailRefine.js'
 import { useSettings } from '../context/contextSettings.js'
@@ -49,6 +50,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
   const [includeFixTitle, setIncludeFixTitle] = useState(false)
   const descCopyBtnRef = useRef(null)
   const fixCopyBtnRef = useRef(null)
+  const entryNoteSaveBtnRef = useRef(null)
 
   const displayDesc = location.trim()
     ? `${location.trim().replace(/:?\s*$/, ':')} ${entry.desc}`
@@ -119,6 +121,13 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
       onDebugPanelCmdHandled?.()
     }
   }, [debugPanelCmd]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (entryNoteSaveBtnRef.current) {
+      const disabled = !entryNote || !entryNote.trim() || entryNoteSaved
+      setAriaDisabled(entryNoteSaveBtnRef.current, disabled)
+    }
+  }, [entryNote, entryNoteSaved])
 
   const p = SEVERITY_VARS[entry.severity] || SEVERITY_VARS['Best Practice']
   const descLabel = t('detail.desc_label')
@@ -351,11 +360,12 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           value={entryNote}
           onChange={e => setEntryNote(e.target.value)}
           placeholder={t('detail.entry_note_placeholder')}
-          className="sheet-detail-input sheet-detail-input--textarea"
+          className="field__textarea field__textarea--note"
           rows={3}
         />
         <div className="sheet-detail-section-controls">
           <Button
+            ref={entryNoteSaveBtnRef}
             variant="primary"
             disabled={!entryNote || !entryNote.trim() || entryNoteSaved}
             active={entryNoteSaved}
@@ -385,7 +395,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
             value={aiNote}
             onChange={e => setAiNote(e.target.value)}
             placeholder={t('detail.ai_revision_placeholder')}
-            className="sheet-detail-input sheet-detail-input--textarea"
+            className="field__textarea"
             rows={3}
           />
           <div className="sheet-detail-section-controls">

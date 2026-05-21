@@ -154,6 +154,7 @@ export default function AppListResultCard({
   }
 
   function handleSwipeTouchStart(e) {
+    if (!e.touches?.[0]) return
     const t = e.touches[0]
     swipeTouchRef.current = { startX: t.clientX, startY: t.clientY, id: entry.id, moved: false }
   }

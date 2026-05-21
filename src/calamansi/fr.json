@@ -382,6 +382,7 @@
   "settings.wcag_level_legend": "[EN] Conformance level",
   "settings.wcag_level_a": "[EN] Level A",
   "settings.wcag_level_aa": "[EN] Level AA",
+  "settings.wcag_level_aaa": "[EN] Level AAA",
   "settings.live_search_label": "Recherche en direct",
   "settings.live_search_on": "Les résultats s'affichent pendant la saisie.",
   "settings.live_search_off": "Les résultats s'affichent sur Rechercher / Entrée.",

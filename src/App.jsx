@@ -7,6 +7,8 @@ import A11yScreenFooter from './components/A11yScreenFooter.jsx'
 import A11yScreenNotFound from './components/A11yScreenNotFound.jsx'
 import AppScreenResults, { A11yResultSkeleton, PinnedSection } from './components/AppScreenResults.jsx'
 import AppSheetDetail from './components/AppSheetDetail.jsx'
+import AppOverlayManager from './components/AppOverlayManager.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 const A11yFiestaBanner = lazy(() => import('./components/A11yFiestaBanner.jsx'))
 const AppDrawerPanelAbout = lazy(() => import('./components/AppDrawerPanelAbout.jsx'))
@@ -28,11 +30,11 @@ import {
   useRouter,
   useRouteMatch,
   Drawer,
-  Sheet,
-  Dialog,
   useMediaQuery,
   usePrefersReducedMotion,
 } from '@ulam/sili/react'
+import Sheet from './components/A11ySheet.jsx'
+import { usePageTitle } from './hooks/usePageTitle.js'
 import { announce } from '@ulam/taho'
 import { Announcer } from '@ulam/taho/react'
 import { createComponents } from '@a11yfred/rogers/react'
@@ -86,9 +88,11 @@ function recordRecentEntry(id) {
 
 export default function App() {
   return (
-    <Router appName="A11yFred">
-      <AppShell />
-    </Router>
+    <ErrorBoundary>
+      <Router appName="A11yFred">
+        <AppShell />
+      </Router>
+    </ErrorBoundary>
   )
 }
 
@@ -128,9 +132,9 @@ function formatCount(n) {
 //   => <strong>Three (3) results are pinned</strong> and always shown.
 function boldStatPhrase(str, n) {
   const filled = str.replace('{count}', formatCount(n))
-  const andIdx = filled.indexOf(' and ')
-  if (andIdx === -1) return <strong>{filled}</strong>
-  return <><strong>{filled.slice(0, andIdx)}</strong>{filled.slice(andIdx)}</>
+  const andIndex = filled.indexOf(' and ')
+  if (andIndex === -1) return <strong>{filled}</strong>
+  return <><strong>{filled.slice(0, andIndex)}</strong>{filled.slice(andIndex)}</>
 }
 
 // Formats template with {count} placeholder as plain text
@@ -139,9 +143,9 @@ function formatCountTemplate(tmpl, count) {
   const parts = tmpl.split('{count}')
   if (parts.length !== 2) return tmpl
   const [before, after] = parts
-  const spaceIdx = after.indexOf(' ', 1)
-  const boldTail = spaceIdx === -1 ? after : after.slice(0, spaceIdx)
-  const rest = spaceIdx === -1 ? '' : after.slice(spaceIdx)
+  const spaceIndex = after.indexOf(' ', 1)
+  const boldTail = spaceIndex === -1 ? after : after.slice(0, spaceIndex)
+  const rest = spaceIndex === -1 ? '' : after.slice(spaceIndex)
   return `${before}${formatCount(count)}${boldTail}${rest}`
 }
 
@@ -249,26 +253,9 @@ function AppContent() {
     }
   }, [language])
 
-  useEffect(() => {
-    if (settingsOpen) {
-      document.title = `A11yFred | ${t('settings.drawer_label')}`
-      return () => { document.title = 'A11yFred' }
-    }
-  }, [settingsOpen, t])
-
-  useEffect(() => {
-    if (aboutOpen) {
-      document.title = `A11yFred | ${t('about.sheet_label')}`
-      return () => { document.title = 'A11yFred' }
-    }
-  }, [aboutOpen, t])
-
-  useEffect(() => {
-    if (helpOpen) {
-      document.title = `A11yFred | ${t('help.sheet_label')}`
-      return () => { document.title = 'A11yFred' }
-    }
-  }, [helpOpen, t])
+  usePageTitle(settingsOpen ? t('settings.drawer_label') : null)
+  usePageTitle(aboutOpen ? t('about.sheet_label') : null)
+  usePageTitle(helpOpen ? t('help.sheet_label') : null)
 
   const prevViewAllRef = useRef(viewAll)
   useEffect(() => {
@@ -567,62 +554,66 @@ function AppContent() {
                 </div>
               )
       }
-      <Dialog
-        open={viewAllConfirmOpen}
-        onClose={() => setViewAllConfirmOpen(false)}
-        returnFocusRef={viewAllTriggerRef}
-        heading={formatCountTemplate(t('search.view_all_confirm_heading'), allEntries.length)}
-        actions={[
-          {
-            label: t('search.view_all_confirm_yes'),
-            onClick: handleViewAllConfirm,
-            className: 'btn--primary modal-ok-btn',
-          },
-          {
-            label: t('search.view_all_confirm_no'),
-            onClick: () => setViewAllConfirmOpen(false),
-            className: 'btn--secondary modal-ok-btn',
-          },
-        ]}
-      >
-        <p className="view-all-confirm-filters">
-          {t('search.view_all_confirm_filters_label')}
-          {' '}
-          {t('search.view_all_confirm_filters', { platform: getViewAllPlatformLabel(platform, t), version: wcagFilter.maxVersion, level: wcagFilter.maxLevel })}
-          {'. '}
-          {t('search.view_all_confirm_filters_change')}
-          {' '}
-          <a href="#/settings" className="view-all-confirm-settings-link" onClick={() => setViewAllConfirmOpen(false)}>
-            {t('search.view_all_confirm_filters_link')}
-          </a>.
-        </p>
-        {(() => {
-          const pinnedCount = pinnedIds.size
-          const starredCount = countRatingsByField(ratings, 'starred')
-          const archivedCount = countRatingsByField(ratings, 'archived')
-          if (!pinnedCount && !starredCount && !archivedCount) return null
-          return (
-            <ul className="view-all-confirm-stat-list">
-              {pinnedCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(pinnedCount === 1 ? t('search.view_all_confirm_pinned_one') : t('search.view_all_confirm_pinned'), pinnedCount)}</li>}
-              {starredCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(starredCount === 1 ? t('search.view_all_confirm_starred_one') : t('search.view_all_confirm_starred'), starredCount)}</li>}
-              {archivedCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(archivedCount === 1 ? t('search.view_all_confirm_archived_one') : t('search.view_all_confirm_archived'), archivedCount)}</li>}
-            </ul>
-          )
-        })()}
-        <p className="view-all-confirm-body">
-          {formatCountTemplate(
-            sortedEntries.length === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body'),
-            sortedEntries.length
-          )}
-        </p>
-        <div className="view-all-dont-ask-label">
-          <FormControlCheckbox
-            label={t('search.view_all_confirm_dont_ask')}
-            checked={viewAllDontAsk}
-            onChange={e => setViewAllDontAsk(e.target.checked)}
-          />
-        </div>
-      </Dialog>
+      <AppOverlayManager
+        t={t}
+        viewAllConfirmOpen={viewAllConfirmOpen}
+        onViewAllConfirmClose={() => setViewAllConfirmOpen(false)}
+        onViewAllConfirm={handleViewAllConfirm}
+        viewAllDontAsk={viewAllDontAsk}
+        onViewAllDontAskChange={(checked) => setViewAllDontAsk(checked)}
+        viewAllConfirmContent={
+          <>
+            <p className="view-all-confirm-filters">
+              {t('search.view_all_confirm_filters_label')}
+              {' '}
+              {t('search.view_all_confirm_filters', { platform: getViewAllPlatformLabel(platform, t), version: wcagFilter.maxVersion, level: wcagFilter.maxLevel })}
+              {'. '}
+              {t('search.view_all_confirm_filters_change')}
+              {' '}
+              <a href="#/settings" className="view-all-confirm-settings-link" onClick={() => setViewAllConfirmOpen(false)}>
+                {t('search.view_all_confirm_filters_link')}
+              </a>.
+            </p>
+            {(() => {
+              const pinnedCount = pinnedIds.size
+              const starredCount = countRatingsByField(ratings, 'starred')
+              const archivedCount = countRatingsByField(ratings, 'archived')
+              if (!pinnedCount && !starredCount && !archivedCount) return null
+              return (
+                <ul className="view-all-confirm-stat-list">
+                  {pinnedCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(pinnedCount === 1 ? t('search.view_all_confirm_pinned_one') : t('search.view_all_confirm_pinned'), pinnedCount)}</li>}
+                  {starredCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(starredCount === 1 ? t('search.view_all_confirm_starred_one') : t('search.view_all_confirm_starred'), starredCount)}</li>}
+                  {archivedCount > 0 && <li className="view-all-confirm-stat">{boldStatPhrase(archivedCount === 1 ? t('search.view_all_confirm_archived_one') : t('search.view_all_confirm_archived'), archivedCount)}</li>}
+                </ul>
+              )
+            })()}
+            <p className="view-all-confirm-body">
+              {formatCountTemplate(
+                sortedEntries.length === 1 ? t('search.view_all_confirm_body_one') : t('search.view_all_confirm_body'),
+                sortedEntries.length
+              )}
+            </p>
+            <div className="view-all-dont-ask-label">
+              <FormControlCheckbox
+                label={t('search.view_all_confirm_dont_ask')}
+                checked={viewAllDontAsk}
+                onChange={e => setViewAllDontAsk(e.target.checked)}
+              />
+            </div>
+          </>
+        }
+        viewAllTriggerRef={viewAllTriggerRef}
+        pendingEntry={pendingEntry}
+        onPendingEntryClose={() => setPendingEntry(null)}
+        onPendingEntryConfirm={() => {
+          const f = pendingEntry
+          setPendingEntry(null)
+          applySelectEntry(f)
+        }}
+        pendingPrivacy={pendingPrivacy}
+        onPendingPrivacyClose={() => setPendingPrivacy(false)}
+        onPendingPrivacyConfirm={() => { setPendingPrivacy(false); setSheetCollapsed(false); setSelected(null); navigate('/settings/privacy') }}
+      />
     </>
   )
 
@@ -724,7 +715,6 @@ function AppContent() {
           skipTarget={onboardingOpen ? 'onboarding-title' : 'entry-search'}
         />
         <main className="app-main">
-          <Announcer devEnabled={devAllEnabled} />
           <FadeTransition watchKey={isNotFound ? 'notfound' : ulamOpen ? 'ulam' : adminOpen ? 'admin' : settingsOpen ? 'settings' : aboutOpen ? 'about' : helpOpen ? 'help' : onboardingOpen ? 'onboarding' : 'search'}>
             <Suspense fallback={null}>
               {isNotFound
@@ -814,49 +804,7 @@ function AppContent() {
         )}
       </Sheet>
 
-      <Dialog
-        open={!!pendingEntry}
-        onClose={() => setPendingEntry(null)}
-        heading={t('detail.discard_confirm_heading')}
-        actions={[
-          {
-            label: t('detail.discard_confirm_yes'),
-            onClick: () => {
-              const f = pendingEntry
-              setPendingEntry(null)
-              applySelectEntry(f)
-            },
-            className: 'btn--warning modal-ok-btn',
-          },
-          {
-            label: t('detail.discard_confirm_no'),
-            onClick: () => setPendingEntry(null),
-            className: 'btn--tertiary modal-ok-btn',
-          },
-        ]}
-      >
-        <p>{t('detail.discard_confirm_body')}</p>
-      </Dialog>
-
-      <Dialog
-        open={pendingPrivacy}
-        onClose={() => setPendingPrivacy(false)}
-        heading={t('detail.discard_confirm_heading')}
-        actions={[
-          {
-            label: t('detail.discard_nav_yes'),
-            onClick: () => { setPendingPrivacy(false); setSheetCollapsed(false); setSelected(null); navigate('/settings/privacy') },
-            className: 'btn--warning modal-ok-btn',
-          },
-          {
-            label: t('detail.discard_nav_no'),
-            onClick: () => setPendingPrivacy(false),
-            className: 'btn--tertiary modal-ok-btn',
-          },
-        ]}
-      >
-        <p>{t('detail.discard_nav_body')}</p>
-      </Dialog>
+      <Announcer devEnabled={devAllEnabled} />
     </div>
   )
 }

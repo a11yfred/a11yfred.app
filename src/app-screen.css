@@ -123,13 +123,13 @@
 }
 
 .page-title-link:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus);
+  outline: var(--size-border-width-normal) solid var(--color-focus);
   outline-offset: var(--focus-outline-offset);
 }
 
 .page-title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 10.5vw, 2.667rem);
+  font-size: clamp(2rem, 4rem, 5rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--color-text-heading);
@@ -258,7 +258,7 @@
 }
 
 .footer-link:focus-visible {
-  outline: var(--focus-outline-width) solid var(--color-focus);
+  outline: var(--size-border-width-normal) solid var(--color-focus);
   outline-offset: var(--focus-outline-offset);
 }
 

@@ -10,12 +10,9 @@ import { SETTINGS_FLASH_MS } from '../utils/constants.js'
 import LANGUAGES from '../data/languages.js'
 
 function PendingNote({ t }) {
-  const raw = t('settings.pending_save_note')
-  const [before, rest] = raw.split('{unsaved}')
-  const [middle, after] = rest.split('{save}')
   return (
     <p className="panel-pending-note">
-      {before}<strong>Unsaved.</strong>{middle}<strong>Save</strong>{after}
+      <strong>{t('settings.pending_save_note')}</strong>
     </p>
   )
 }

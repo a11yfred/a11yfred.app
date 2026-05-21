@@ -64,20 +64,5 @@
     opacity: 1;
     color: var(--color-text-muted);
   }
-
-  /* Announce toast backgrounds */
-  .announce-toast {
-    background: #111;
-  }
-
-  .announce-toast--assertive {
-    background: #b40000;
-  }
-
-  .announce-toast--fading {
-    animation: none;
-    opacity: 0;
-    visibility: hidden;
-  }
 }
 

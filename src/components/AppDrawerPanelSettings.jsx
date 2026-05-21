@@ -63,7 +63,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
 
   // ── AI provider / key / model state ────────────────────────────────────────
   const [keys, setKeys] = useState(initApiKeys)
-  const [activeProvider, setActiveProvider] = useState('')
+  const [activeProvider, setActiveProvider] = useState(getAiProvider())
   const [models, setModels] = useState(initModels)
 
   // Saved snapshots to diff against for hasUnsaved

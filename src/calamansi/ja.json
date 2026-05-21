@@ -382,6 +382,7 @@
   "settings.wcag_level_legend": "[EN] Conformance level",
   "settings.wcag_level_a": "[EN] Level A",
   "settings.wcag_level_aa": "[EN] Level AA",
+  "settings.wcag_level_aaa": "[EN] Level AAA",
   "settings.live_search_label": "ライブ検索",
   "settings.live_search_on": "入力中に結果が表示されます。",
   "settings.live_search_off": "検索／Enterで結果が表示されます。",
