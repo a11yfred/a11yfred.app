@@ -307,17 +307,7 @@ input[type="checkbox"].control {
   }
 }
 
-.btn-panel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--size-1);
-  font-size: var(--fs-body);
-  border-radius: var(--rounded);
-  white-space: nowrap;
-}
-
-.btn-panel--section {
+.btn--section {
   height: var(--size-touch-target);
   text-align: center;
   flex-grow: 1;
@@ -325,7 +315,7 @@ input[type="checkbox"].control {
 }
 
 @media (width >= 768px) {
-  .btn-panel--section {
+  .btn--section {
     flex-grow: 0;
     align-self: flex-end;
   }
@@ -374,7 +364,7 @@ textarea.sheet-detail-input {
   margin-bottom: 0;
 }
 
-.btn-panel--clear-input {
+.btn--clear-input {
   position: absolute;
   right: var(--size-2);
   top: 50%;
@@ -577,20 +567,20 @@ textarea.sheet-detail-input {
   display: none;
 }
 
-.btn-panel--action {
+.btn--action {
   cursor: pointer;
   width: 100%;
   justify-content: center;
 }
 
 @media (width >= 768px) {
-  .btn-panel--action {
+  .btn--action {
     width: auto;
     justify-content: initial;
   }
 }
 
-.btn-panel--close {
+.btn--close {
   font-weight: 600;
   width: 100%;
   text-align: center;
@@ -598,7 +588,7 @@ textarea.sheet-detail-input {
 }
 
 @media (width >= 768px) {
-  .btn-panel--close {
+  .btn--close {
     width: auto;
     text-align: initial;
   }

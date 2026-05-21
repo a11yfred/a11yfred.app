@@ -938,15 +938,8 @@
 }
 
 .btn-settings {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--size-1);
   min-height: var(--size-6) !important;
   padding: 0 var(--size-3);
-  font-size: var(--fs-body);
-  border-radius: var(--rounded);
-  white-space: nowrap;
   flex-shrink: 0;
   transition: opacity var(--duration-fast);
 }
