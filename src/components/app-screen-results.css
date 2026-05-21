@@ -297,10 +297,6 @@
   margin-bottom: var(--size-1);
 }
 
-.results-narrow-divider {
-  display: none;
-}
-
 .btn--input-height {
   height: var(--size-input-big);
 }
@@ -879,10 +875,6 @@
   border-radius: var(--rounded);
 }
 
-.result-row:has(.result-rank-col[style*="display: flex"]) .result-card-wrap {
-  min-height: calc(var(--size-touch-target) * 5);
-}
-
 .result-row--archived .result-item {
   pointer-events: none;
   filter: grayscale(1);
@@ -908,10 +900,6 @@
 
 .result-item--pinned:not(.result-item--selected) {
   border-color: var(--color-text-heading);
-}
-
-.result-row:has(.result-rank-col[style*="display: flex"]) .result-item {
-  min-height: calc(var(--size-touch-target) * 5);
 }
 
 /* Pin button â€" hidden on mobile, absolutely positioned on desktop */
@@ -1267,10 +1255,6 @@
 
 .result-item--sponsored .result-item__desc {
   color: var(--color-text-body);
-}
-
-.result-row:has(.result-rank-col[style*="display: flex"]) .result-item__desc {
-  -webkit-line-clamp: 4;
 }
 
 /* Fold non-selected cards when another card is selected (not while sheet is collapsed) */

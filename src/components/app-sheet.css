@@ -22,15 +22,6 @@ ube-sheet {
   border-radius: var(--rounded-lg);
 }
 
-.btn-close {
-  flex-shrink: 0;
-  color: var(--color-accent-text);
-}
-
-.sheet-panel.is-collapsed .btn-close {
-  display: none !important;
-}
-
 /* ─── Form Control Overrides ──────────────────────────────────── */
 
 input[type="checkbox"].control {
@@ -276,14 +267,6 @@ input[type="checkbox"].control {
 
 .sheet-detail-sc-na {
   color: var(--color-text-muted);
-}
-
-.sheet-detail-sc-value {
-  display: inline;
-}
-
-.sheet-detail-sc-links {
-  display: inline;
 }
 
 .sheet-detail-sc-link {
@@ -635,6 +618,8 @@ textarea.sheet-detail-input {
 
 .sheet-detail-edit-warning-icon {
   flex-shrink: 0;
+  width: 16px;
+  height: 16px;
 }
 
 /* â"€â"€â"€ Related issues â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
