@@ -1,6 +1,7 @@
 
 /* ─── About panel ─────────────────────────────────────────── */
 
+/* app override: smaller text for drawer panels (framework: --fs-body) */
 .panel-body {
   margin: 0;
   font-size: var(--fs-small);
@@ -8,6 +9,7 @@
   line-height: 1.5;
 }
 
+/* app override: extra margin for intro text */
 .panel-intro {
   margin-bottom: var(--size-8);
 }
@@ -792,6 +794,7 @@
   padding-bottom: 0;
 }
 
+/* app override: no uppercase for settings headings (framework: text-transform: uppercase) */
 .panel-section-heading {
   font-weight: 600;
   color: var(--color-text-heading);
@@ -880,6 +883,7 @@
 }
 
 
+/* app override: centered toggles with padding for settings (framework: align-items: start, column-gap) */
 .panel-toggle-row {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -963,6 +967,7 @@
   margin-bottom: var(--size-2);
 }
 
+/* app override: smaller labels for settings fields (framework: --fs-body weight: 600) */
 .panel-field-label {
   display: block;
   font-size: var(--fs-sub);
@@ -1158,6 +1163,7 @@ textarea[aria-disabled="true"].settings-key-input {
   color: var(--color-text-heading);
 }
 
+/* app override: show mobile back button only on mobile (inverted logic from framework) */
 .panel-mobile-back {
   display: none;
 }
