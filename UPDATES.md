@@ -2,6 +2,10 @@
 
 Plain-language snapshots of what changed and why (by date). For detailed technical changes, see [CHANGELOG.md](CHANGELOG.md). For completed features by phase, see [DONE.md](DONE.md). For remaining work, see [TODO.md](TODO.md).
 
+## May 23, 2026 -- Stability Fixes
+
+Fixed a bug where the Settings Privacy sheet and the Details sheet opened again after you tried to close them. This happened because the app tried to match the URL before the close animation finished. We added checks to make sure the sheets stay closed.
+
 ## May 19, 2026 -- Framework Extraction & Cleanup (Session 9)
 
 Completed @ulam framework extraction strategy: swipe/touch gestures moved to @ulam/sili (with React, Vue, Angular, and Remix 3 adapters); data export and relevance utilities kept in a11yfred as domain-specific features. Decision: @ulam provides accessibility infrastructure (focus management, keyboard handling, UI gestures, components); a11yfred provides domain-specific accessibility tooling. Removed export utilities from @ulam/ube, verified swipe gestures remain in @ulam/sili, pushed changes to origin.

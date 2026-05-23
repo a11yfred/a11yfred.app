@@ -1,6 +1,13 @@
-﻿# Changelog
+# Changelog
 
 All notable changes to A11yFred are documented here.
+
+## May 23, 2026 -- Stability Fixes
+
+### Detail Sheet and Settings Panel
+- **Fixed:** Fixed a bug where the Privacy sheet and Detail sheet opened again right after they were closed. This happened because React state updates conflicted with URL navigation.
+- **Implemented:** Added `pendingCloseRef` tracking in `useRouteHandler.js`. This makes sure the router waits for navigation to finish before it updates the active route.
+- **Fixed:** Fixed a `react-hooks/refs` error in `usePreviousValid.js` where a ref was read too early during render.
 
 ## May 19, 2026 -- Framework Extraction & Cleanup (Session 9)
 
