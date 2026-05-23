@@ -3,23 +3,45 @@
 
 .sheet-detail-sheet {
   padding-top: var(--size-2);
-  border-radius: var(--rounded-lg);
+  border-radius: 0;
 }
 
-ube-sheet {
-  border-radius: var(--rounded-lg);
+.sheet-panel,
+.sheet-panel.is-open,
+.sheet-panel.is-collapsed {
+  border-radius: var(--rounded-lg) var(--rounded-lg) 0 0;
 }
 
 .sheet-panel {
   max-width: var(--size-modal-max-width);
   border-top: 1px solid var(--color-border);
   border-inline: 1px solid var(--color-border);
+  overflow: visible;
 }
 
-.sheet-panel,
-.sheet-panel.is-open,
 .sheet-panel.is-collapsed {
-  border-radius: var(--rounded-lg);
+  min-height: var(--sheet-chrome-height, 60px);
+}
+
+.sheet-chrome {
+  min-height: var(--sheet-chrome-height, 60px);
+  border-radius: var(--rounded-lg) var(--rounded-lg) 0 0;
+}
+
+.sheet-handle {
+  background: var(--color-text-body);
+  width: 32px;
+  height: 4px;
+}
+
+.sheet-backdrop,
+.sheet-backdrop.is-open {
+  pointer-events: none;
+}
+
+.sheet-content {
+  overflow: hidden auto;
+  max-height: calc(92dvh - 72px);
 }
 
 /* ─── Form Control Overrides ──────────────────────────────────── */
@@ -134,11 +156,6 @@ input[type="checkbox"].control {
   transition: background var(--duration-fast);
 }
 
-@media (pointer: fine) {
-  .sheet-detail-title-row:hover {
-    background: var(--color-bg-subtle);
-  }
-}
 
 .sheet-detail-title {
   font-family: var(--font-display);

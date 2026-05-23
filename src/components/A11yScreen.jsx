@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@ulam/ube'
+import { Button, Screen as ScreenModule } from '@ulam/ube'
 import { RotateCcw } from 'lucide-react'
 
 function DefaultSearchIcon() {
@@ -14,13 +14,10 @@ function DefaultSearchIcon() {
   )
 }
 
-let ScreenComponent
-try {
-  const ScreenModule = require('@ulam/ube')
-  ScreenComponent = ScreenModule.Screen
-} catch (e) {
+let ScreenComponent = ScreenModule
+if (!ScreenComponent) {
   // Fallback: render as a div if import fails
-  ScreenComponent = ({ variant = 'no-results', ariaLabel, heading, body, activeFilters, action, actionLabel, onMount, onOpenSettings, children }) => {
+  ScreenComponent = function FallbackScreen({ variant = 'no-results', ariaLabel, heading, body, activeFilters, action, actionLabel, onMount, children }) {
     React.useEffect(() => {
       onMount?.()
     }, [onMount])

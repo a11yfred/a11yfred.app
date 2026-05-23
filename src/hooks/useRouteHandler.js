@@ -165,6 +165,7 @@ export default function useRouteHandler({
   }
 
   const applySelectEntry = (entry, triggerEl) => {
+    console.log('applySelectEntry called with:', entry ? entry.id : 'null')
     if (entry) {
       if (!selected) {
         entryTriggerRef.current = triggerEl ?? document.activeElement
@@ -181,6 +182,7 @@ export default function useRouteHandler({
     } else {
       removeSession(LS_LAST_SELECTED)
       setEntryHistory([])
+      console.log('Calling setSheetCollapsed(false) and setSelected(null)')
       setSheetCollapsed(false)
       setSelected(null)
       const triggerId = entryTriggerIdRef.current

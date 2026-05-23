@@ -1,5 +1,5 @@
 import { FadeTransition, FormControlCheckbox, Screen } from '@ulam/ube'
-import { useState, useEffect, useRef, lazy, Suspense } from 'react'
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react'
 import { X, ChevronLeft, ChevronRight, ChevronsUp, RotateCcw } from 'lucide-react'
 import AppInputSearchHero from './components/AppInputSearchHero.jsx'
 import AppScreenHeader from './components/AppScreenHeader.jsx'
@@ -78,6 +78,14 @@ const UlamMenu = import.meta.env.DEV
 
 const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify', 'debug deploy netlify': 'netlify', 'debug deploy pages': 'pages', 'debug deploy vercel': 'vercel' }
 
+
+function usePreviousValid(value) {
+  const ref = useRef(value)
+  if (value !== null && value !== undefined) {
+    ref.current = value
+  }
+  return ref.current
+}
 
 function recordRecentEntry(id) {
   const recent = getStorageJson(LS_RECENT_ENTRIES, [])
@@ -169,6 +177,8 @@ function AppContent() {
   const entryIdFromRoute = entryMatch?.id ?? null
   const isNotFound = !KNOWN_ROUTES.has(route) && !entryMatch
 
+  const displayEntry = usePreviousValid(selected)
+
   const { userEntries } = useUserEntries()
   const { overrides: userOverrides } = useUserOverrides()
 
@@ -219,8 +229,32 @@ function AppContent() {
     handleSelectEntry, applySelectEntry, handleSelectRelated, handleBack,
   } = routeHandler
 
+
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
   const [viewAllDontAsk, setViewAllDontAsk] = useState(false)
+  const [privacyOpen, setPrivacyOpen] = useState(false)
+  const [privacyCollapsed, setPrivacyCollapsed] = useState(false)
+  const handlePrivacyClose = useCallback(() => {
+    setPrivacyOpen(false)
+  }, [])
+
+  // Detail sheet close: applySelectEntry may change, so store it in a ref and update it
+  const applySelectEntryRef = useRef()
+  const returnToPanelRefStable = useRef(returnToPanelRef)
+
+  useEffect(() => {
+    applySelectEntryRef.current = applySelectEntry
+    returnToPanelRefStable.current = returnToPanelRef
+  })
+
+  const handleDetailSheetClose = useCallback(() => {
+    console.log('handleDetailSheetClose called, selected:', selected?.id)
+    applySelectEntryRef.current(null)
+    console.log('After applySelectEntry, selected:', selected?.id)
+    returnToPanelRefStable.current.current = false
+  }, [selected])
+
+
   const { toast: aiDebugToast, fading: aiDebugToastFading, fire: fireAiDebugToast } = useAiDebugToast()
   const [devAllEnabled, setDevAllEnabled] = useState(false)
   const [namesEnabled, setNamesEnabled] = useState(false)
@@ -409,6 +443,7 @@ function AppContent() {
     onResetRankings: resetRankings,
     onOpenPrivacy: () => {
       if (sheetCollapsed) { setPendingPrivacy(true); return }
+      setPrivacyOpen(true)
       navigate('/settings/privacy')
     },
   }
@@ -561,6 +596,7 @@ function AppContent() {
         onViewAllConfirm={handleViewAllConfirm}
         viewAllDontAsk={viewAllDontAsk}
         onViewAllDontAskChange={(checked) => setViewAllDontAsk(checked)}
+        viewAllCount={sortedEntries.length}
         viewAllConfirmContent={
           <>
             <p className="view-all-confirm-filters">
@@ -613,6 +649,27 @@ function AppContent() {
         pendingPrivacy={pendingPrivacy}
         onPendingPrivacyClose={() => setPendingPrivacy(false)}
         onPendingPrivacyConfirm={() => { setPendingPrivacy(false); setSheetCollapsed(false); setSelected(null); navigate('/settings/privacy') }}
+        privacyOpen={privacyOpen}
+        privacyCollapsed={privacyCollapsed}
+        setPrivacyCollapsed={setPrivacyCollapsed}
+        onPrivacyClose={handlePrivacyClose}
+        privacyButtonRef={null}
+        rhgPending={false}
+        onRhgClose={() => {}}
+        onRhgUseAnyway={() => {}}
+        unsavedOpen={false}
+        onUnsavedClose={() => {}}
+        onUnsavedSaveAndClose={() => {}}
+        onUnsavedDiscard={() => {}}
+        resetConfirmOpen={false}
+        onResetClose={() => {}}
+        onResetConfirm={() => {}}
+        noChangesOpen={false}
+        onNoChangesClose={() => {}}
+        saveButtonRef={null}
+        fiestaConfirmOpen={false}
+        onFiestaClose={() => {}}
+        onFiestaConfirm={() => {}}
       />
     </>
   )
@@ -772,11 +829,11 @@ function AppContent() {
 
       <Sheet
         open={!!selected && (isDesktop || (!settingsOpen && !aboutOpen && !helpOpen && !onboardingOpen && !adminOpen))}
-        onClose={() => { applySelectEntry(null); returnToPanelRef.current = false }}
+        onClose={handleDetailSheetClose}
         collapsed={sheetCollapsed}
         onCollapse={setSheetCollapsed}
         keepMounted={(settingsOpen || aboutOpen || helpOpen || onboardingOpen || adminOpen) && !!selected}
-        label={selected ? t('detail.sheet_label', { title: selected.title }) : t('detail.sheet_default')}
+        label={displayEntry ? t('detail.sheet_label', { title: displayEntry.title }) : t('detail.sheet_default')}
         closeLabel={t('common.close')}
         onBack={entryHistory.length > 0 ? handleBack : undefined}
         backLabel={t('detail.back_aria_label')}
@@ -786,10 +843,10 @@ function AppContent() {
         backRtlIcon={() => <ChevronRight size={20} strokeWidth={2.5} aria-hidden="true" />}
         collapseIcon={() => <ChevronsUp size={16} strokeWidth={2} aria-hidden="true" />}
       >
-        {selected && (
+        {displayEntry && (
           <AppSheetDetail
-            key={selected.id}
-            entry={selected}
+            key={displayEntry.id}
+            entry={displayEntry}
             agenticMode={isAgenticModeEnabled()}
             focusTrigger={panelFocusTrigger}
             allEntries={allEntries}

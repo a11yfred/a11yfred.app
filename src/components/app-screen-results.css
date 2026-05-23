@@ -848,6 +848,15 @@
   border-radius: var(--rounded);
 }
 
+/* Rank column visible: restore taller card sizing */
+.result-row--rank-visible .result-card-wrap {
+  min-height: calc(var(--size-touch-target) * 5);
+}
+
+.result-row--rank-visible .result-item {
+  min-height: calc(var(--size-touch-target) * 5);
+}
+
 /* Archived row: dim everything except the restore button */
 .result-row--archived .result-card-wrap {
   cursor: not-allowed;
@@ -1198,6 +1207,7 @@
 @media (width >= 768px) {
   .sheet-detail-badges .badge-prefix {
     display: inline;
+    margin-inline-end: 2px;
   }
 }
 
@@ -1228,6 +1238,10 @@
     max-height var(--duration-base) var(--ease-out),
     opacity var(--duration-base) var(--ease-out),
     margin-top var(--duration-base) var(--ease-out);
+}
+
+.result-row--rank-visible .result-item__desc {
+  -webkit-line-clamp: 4;
 }
 
 .result-item--selected .result-item__sc,

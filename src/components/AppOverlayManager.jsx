@@ -21,6 +21,7 @@ export default function AppOverlayManager({
   onViewAllDontAskChange: _onViewAllDontAskChange,
   viewAllConfirmContent,
   viewAllTriggerRef,
+  viewAllCount = 0,
   pendingEntry,
   onPendingEntryClose,
   onPendingEntryConfirm,
@@ -88,7 +89,7 @@ export default function AppOverlayManager({
     {
       id: 'viewAllConfirm',
       type: 'dialog',
-      heading: t('search.view_all_confirm_heading'),
+      heading: t('search.view_all_confirm_heading', { count: viewAllCount }),
       returnFocusRef: viewAllTriggerRef,
       actions: [
         { label: t('search.view_all_confirm_yes'), onClick: onViewAllConfirm, className: 'btn--primary' },
@@ -297,7 +298,7 @@ export default function AppOverlayManager({
         },
       ],
     },
-  ], [t, viewAllConfirmContent, viewAllTriggerRef, onViewAllConfirm, onPendingEntryConfirm, onPendingPrivacyConfirm, privacyCollapsed, setPrivacyCollapsed, onRhgUseAnyway, handleClose, onUnsavedSaveAndClose, onUnsavedDiscard, onFiestaConfirm, saveButtonRef, privacyButtonRef, onResetConfirm])
+  ], [t, viewAllConfirmContent, viewAllTriggerRef, onViewAllConfirm, onPendingEntryConfirm, onPendingPrivacyConfirm, privacyCollapsed, setPrivacyCollapsed, onRhgUseAnyway, handleClose, onUnsavedSaveAndClose, onUnsavedDiscard, onFiestaConfirm, saveButtonRef, privacyButtonRef, onResetConfirm, viewAllCount])
 
   return <OverlayManager overlays={overlays} activeId={activeId} onClose={handleClose} />
 }

@@ -77,17 +77,17 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
   const { liveSearch, showVoting: showRanking, platform, setPlatform: onPlatformChange, wcagFilter, setWcagFilter } = useSettings()
   const { narrowMode, narrowQuery, sortBy, setSortBy: onSortChange, setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery } = useSearch()
   const onNarrow = () => setNarrowMode(true)
-  const onNarrowExit = () => { setNarrowMode(false); setNarrowQuery(''); setSubmittedNarrowQuery('') }
+  const onNarrowExit = useCallback(() => { setNarrowMode(false); setNarrowQuery(''); setSubmittedNarrowQuery('') }, [setNarrowMode, setNarrowQuery, setSubmittedNarrowQuery])
   const onNarrowChange = setNarrowQuery
   const onNarrowSearch = () => setSubmittedNarrowQuery(narrowQuery)
   const { ratings, rankUp: onRankUp, rankDown: onRankDown, toggleStar: onStar, toggleArchive: onArchive, pinnedIds, togglePin: onPin } = useRatings()
   const t = useT()
-  const platformLabels = {
+  const platformLabels = useMemo(() => ({
     all:      t('settings.platform_all'),
     web:      t('settings.platform_web'),
     native:   t('settings.platform_native'),
     document: t('settings.platform_document'),
-  }
+  }), [t])
   const itemRefs = useRef({})
   const defaultCountHeadingRef = useRef(null)
   const countHeadingRef = countRef ?? defaultCountHeadingRef
@@ -296,7 +296,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
         results={results}
         platformNoResults={platformNoResults}
         platformLabels={platformLabels}
-        onClear={() => { announce(t('results.filters_cleared_aria_live')); setClearPending(true) }}
+        onClear={() => { announce(t('results.filters_cleared_aria_live')); setClearPending(true); onClear?.() }}
         countHeadingRef={countHeadingRef}
         hasAnyActiveFilter={hasAnyActiveFilter}
       />

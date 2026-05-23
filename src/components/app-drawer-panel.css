@@ -899,12 +899,6 @@
   color: var(--color-text-heading);
 }
 
-.panel-toggle-desc {
-  font-size: var(--fs-small);
-  color: var(--color-text-body);
-  margin: 0;
-}
-
 .panel-toggle-row ube-button,
 .panel-toggle-row .btn {
   padding: 0 var(--size-3);

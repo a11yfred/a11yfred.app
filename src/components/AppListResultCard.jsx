@@ -234,7 +234,7 @@ export default function AppListResultCard({
         id={`result-${entry.id}`}
         data-swipe-id={entry.id}
         data-flip-id={entry.id}
-        className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}${pinningIds.has(entry.id) ? ' result-row--pinning' : ''}${unpinningIds.has(entry.id) ? ' result-row--unpinning' : ''}${archivingIds.has(entry.id) ? ' result-row--archiving' : ''}${unarchivingIds.has(entry.id) ? ' result-row--unarchiving' : ''}`}
+        className={`result-row${archived ? ' result-row--archived' : ''}${swipeClass}${pinningIds.has(entry.id) ? ' result-row--pinning' : ''}${unpinningIds.has(entry.id) ? ' result-row--unpinning' : ''}${archivingIds.has(entry.id) ? ' result-row--archiving' : ''}${unarchivingIds.has(entry.id) ? ' result-row--unarchiving' : ''}${showRanking && !pinned ? ' result-row--rank-visible' : ''}`}
         style={{ '--result-i': index }}
         onTouchStart={(showRanking || onPin) ? handleSwipeTouchStart : undefined}
         onTouchEnd={(showRanking || onPin) ? handleSwipeTouchEnd : undefined}
