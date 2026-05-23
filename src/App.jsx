@@ -80,11 +80,11 @@ const DEPLOY_TARGETS = { 'debug deploy off': 'off', 'debug deploy on': 'netlify'
 
 
 function usePreviousValid(value) {
-  const ref = useRef(value)
-  if (value !== null && value !== undefined) {
-    ref.current = value
+  const [currentValid, setCurrentValid] = useState(value)
+  if (value !== null && value !== undefined && value !== currentValid) {
+    setCurrentValid(value)
   }
-  return ref.current
+  return value !== null && value !== undefined ? value : currentValid
 }
 
 function recordRecentEntry(id) {
