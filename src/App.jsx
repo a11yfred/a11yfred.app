@@ -232,11 +232,6 @@ function AppContent() {
 
   const [viewAllConfirmOpen, setViewAllConfirmOpen] = useState(false)
   const [viewAllDontAsk, setViewAllDontAsk] = useState(false)
-  const [privacyOpen, setPrivacyOpen] = useState(false)
-  const [privacyCollapsed, setPrivacyCollapsed] = useState(false)
-  const handlePrivacyClose = useCallback(() => {
-    setPrivacyOpen(false)
-  }, [])
 
   // Detail sheet close: applySelectEntry may change, so store it in a ref and update it
   const applySelectEntryRef = useRef()
@@ -443,7 +438,6 @@ function AppContent() {
     onResetRankings: resetRankings,
     onOpenPrivacy: () => {
       if (sheetCollapsed) { setPendingPrivacy(true); return }
-      setPrivacyOpen(true)
       navigate('/settings/privacy')
     },
   }
@@ -649,10 +643,10 @@ function AppContent() {
         pendingPrivacy={pendingPrivacy}
         onPendingPrivacyClose={() => setPendingPrivacy(false)}
         onPendingPrivacyConfirm={() => { setPendingPrivacy(false); setSheetCollapsed(false); setSelected(null); navigate('/settings/privacy') }}
-        privacyOpen={privacyOpen}
-        privacyCollapsed={privacyCollapsed}
-        setPrivacyCollapsed={setPrivacyCollapsed}
-        onPrivacyClose={handlePrivacyClose}
+        privacyOpen={false}
+        privacyCollapsed={false}
+        setPrivacyCollapsed={() => {}}
+        onPrivacyClose={() => {}}
         privacyButtonRef={null}
         rhgPending={false}
         onRhgClose={() => {}}

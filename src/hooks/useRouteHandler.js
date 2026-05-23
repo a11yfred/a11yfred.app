@@ -164,6 +164,8 @@ export default function useRouteHandler({
     applySelectEntry(entry, triggerEl)
   }
 
+  const pendingCloseRef = useRef(false)
+
   const applySelectEntry = (entry, triggerEl) => {
     console.log('applySelectEntry called with:', entry ? entry.id : 'null')
     if (entry) {
@@ -180,6 +182,7 @@ export default function useRouteHandler({
       setSelected(entry)
       navigate(`/entry/${entry.id}/${entrySlug(entry.title)}`)
     } else {
+      pendingCloseRef.current = true
       removeSession(LS_LAST_SELECTED)
       setEntryHistory([])
       console.log('Calling setSheetCollapsed(false) and setSelected(null)')
@@ -285,10 +288,25 @@ export default function useRouteHandler({
   }, [isNotFound])
 
   // Sync entry ID from route
+  const prevEntryIdRef = useRef(entryIdFromRoute)
   useEffect(() => {
-    if (!entryIdFromRoute || dataLoading || allEntries.length === 0) return
+    if (prevEntryIdRef.current !== entryIdFromRoute) {
+      pendingCloseRef.current = false
+      prevEntryIdRef.current = entryIdFromRoute
+    }
+
+    if (dataLoading || allEntries.length === 0) return
     if (sheetCollapsed) return
+
+    if (!entryIdFromRoute) {
+      if (selected) setSelected(null)
+      return
+    }
+
+    if (pendingCloseRef.current) return
+
     if (selected?.id === entryIdFromRoute) return
+
     const found = allEntries.find(d => d.id === entryIdFromRoute)
     if (found) setSelected(found)
   }, [entryIdFromRoute, dataLoading, sheetCollapsed, selected, allEntries, setSelected])
