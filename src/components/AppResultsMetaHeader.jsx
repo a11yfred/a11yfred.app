@@ -160,8 +160,7 @@ export default function AppResultsMetaHeader({
                     <Button
                       variant="primary"
                       active={sortFlash}
-                      disabled={!sortInteracted || pendingSort === sortBy}
-                      aria-disabled={!sortInteracted ? 'true' : undefined}
+                      aria-disabled={!sortInteracted || pendingSort === sortBy ? 'true' : undefined}
                       className="results-sort-btn"
                       onClick={() => {
                         setSortToCommit(pendingSort)

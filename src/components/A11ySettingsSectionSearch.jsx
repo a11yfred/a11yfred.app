@@ -31,7 +31,6 @@ function ClearDataRow({ t, labelKey, hasData, descKey, emptyKey, isDone, setIsDo
         activeLabel={t(labelDoneKey)}
         variant="primary"
         className={className}
-        disabled={!hasData}
         aria-disabled={!hasData ? 'true' : undefined}
         onClick={() => {
           onClear?.()
