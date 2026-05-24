@@ -35,9 +35,6 @@ export default defineConfig(({ command, mode }) => ({
   resolve: {
     alias: command === 'serve' ? {
       '@ulam/sawsawan': new URL('./src/sawsawan/index.js', import.meta.url).pathname,
-      '@ulam/sili/react': new URL('../ulam/packages/sili/react', import.meta.url).pathname,
-      '@ulam/sili': new URL('../ulam/packages/sili', import.meta.url).pathname,
-      '@ulam/ube': new URL('../ulam/packages/ube', import.meta.url).pathname,
     } : {
       '@ulam/sawsawan': new URL('./src/sawsawan/index.js', import.meta.url).pathname,
     },
