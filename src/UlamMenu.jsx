@@ -383,7 +383,7 @@ export default function UlamMenu() {
               type="text"
               className="ulam-input"
               value="Disabled value"
-              disabled
+              disabled /* eslint-disable-line @a11yfred/neighbor/prefer-aria-disabled */
               aria-label="Disabled input"
               onChange={() => {}}
             />

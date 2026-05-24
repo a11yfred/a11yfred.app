@@ -199,6 +199,7 @@ export default function AppDrawerPanelAdmin({
                 if (!isNaN(v) && v >= 1) setAdFrequency(v)
               }}
               className="admin-number-input"
+              /* eslint-disable-next-line @a11yfred/neighbor/prefer-aria-disabled */
               disabled={!showAds}
             />
           </div>
