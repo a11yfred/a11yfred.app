@@ -1,4 +1,4 @@
-﻿# About This Build
+# About This Build
 
 A11yFred started as a clipboard tool. Type an accessibility defect ID, copy the description and remediation, paste it into a bug report. That's the whole pitch. But somewhere along the way it became a peculiar little project.
 
@@ -95,10 +95,10 @@ The router provides primitives (`useRouter`, `useRouteMatch`, `Route`) but not a
 
 A11yFred is built on the ulam accessibility framework, developed alongside the app. Each package has a barrel export. See [ULAM.md](docs/archive/ULAM.md) for full documentation.
 
-- **@ulam/ube** (v0.3.0): UI component library: ButtonText, Dialog, Drawer, Sheet, FormInputSearch, FormInputWithClear, Screen, and 15+ others. Pure CSS with minimal dependencies.
-- **@ulam/taho**: ARIA live region announcer. Call `announce(message)` from anywhere. Announcer React component in `@ulam/taho/react`.
-- **@ulam/sili** (v0.3.0): Focus management: OverlayManager for orchestrating Dialog/Sheet/Drawer transitions, focus trap, return focus, aria-hide, escape key handling.
-- **@ulam/calamansi** (`src/calamansi/`): i18n, locale-aware hooks, and text utilities.
+- **@ulam/ube** (v0.4.2): UI component library: Button, Dialog, Drawer, Sheet, FormInputText, Screen, and 15+ others. Pure CSS with minimal dependencies.
+- **@ulam/taho** (v0.3.3): ARIA live region announcer. Call `announce(message)` from anywhere. Announcer React component in `@ulam/taho/react`.
+- **@ulam/sili** (v0.4.0): Focus management: OverlayManager for orchestrating Dialog/Sheet/Drawer transitions, focus trap, return focus, aria-hide, escape key handling.
+- **@ulam/calamansi** (v0.4.0): i18n, locale-aware hooks, and text utilities.
 - **@ulam/halohalo** (`src/halohalo/`): AI integration layer with connectivity checks.
 - **@ulam/sawsawan** (`src/sawsawan/`): Integration bridge wiring the packages together.
 - **@a11yfred/rogers** (`tools/rogers/`): Dev-only a11y diagnostics: focus debugger, names debugger, heading map, tab stops, deploy banner. Renders nothing in production.
