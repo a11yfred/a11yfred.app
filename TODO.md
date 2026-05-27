@@ -113,9 +113,9 @@ These are continuous maintenance tasks, not one-off features.
 
 ### Dependency Monitoring
 
-- [ ] Monitor @ulam packages for updates
-- [ ] Review breaking changes before upgrading
-- [ ] Update CHANGELOG when upgrading dependencies
+- [x] Monitor @ulam packages for updates (synced to 0.4.x / 0.3.x on May 27)
+- [x] Review breaking changes before upgrading
+- [x] Update CHANGELOG when upgrading dependencies
 
 ### Code Quality & Performance
 

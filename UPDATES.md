@@ -2,6 +2,10 @@
 
 Plain-language snapshots of what changed and why (by date). For detailed technical changes, see [CHANGELOG.md](CHANGELOG.md). For completed features by phase, see [DONE.md](DONE.md). For remaining work, see [TODO.md](TODO.md).
 
+## May 27, 2026 -- Framework Dependency Sync & Quality Polish
+
+Synchronized upstream `@ulam` framework package dependencies to their latest stable versions (calamansi `0.4.0`, halohalo `0.3.3`, sawsawan `0.3.1`, sili `0.4.0`, taho `0.3.3`, ube `0.4.2`). This updates the app's underlying accessibility, gesture, and i18n components to benefit from recent bugs fixes (like touch-target isolated collisions, event propagation improvements, select component lifecycle fixes, and React 19 compatibility). We also silenced false editor JSHint warning noise.
+
 ## May 23, 2026 -- Stability Fixes
 
 Fixed a bug where the Settings Privacy sheet and the Details sheet opened again after you tried to close them. This happened because the app tried to match the URL before the close animation finished. We added checks to make sure the sheets stay closed.

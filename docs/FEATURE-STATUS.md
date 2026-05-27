@@ -1,4 +1,4 @@
-﻿# Feature Status
+# Feature Status
 
 Living tracker of every feature in A11yFred, what is shipped, what is half-done, and what has not started.
 
@@ -39,6 +39,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 - Phase 2 hooks integration: AppContent refactored (1336 → ~730 lines), 602 lines of duplicate code removed
 - Five DRY optimization passes: command map consolidation, rating handlers, template formatting, URL param parsing, platform announcements
 - ulam 0.3.0 component naming updates (May 18): all imports updated to v0.3.0 conventions (FormInputSearch, FormInputWithClear, ButtonText, Screen, Dialog, etc)
+- ulam 0.4.2 framework dependency sync (May 27): resolved React 19 options parsing issues, prevented event leaks on disabled controls, and setup robust JSDOM testing
 - CSS organization: All components import individual CSS files; @ulam/ube/ui.css is the main stylesheet with foundational styles
 - All TODOs resolved, all imports optimized, full lint/build passing
 
@@ -51,7 +52,7 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | How To Use / Onboarding | ✅ | 100 |
 | PWA / Offline | ✅ | 100 |
 | Advanced Search Syntax | ✅ | 100 |
-| ulam framework: taho, sili, calamansi, halohalo, sawsawan | ✅ | 100 |
+| ulam framework: taho, sili, calamansi, halohalo, sawsawan, ube | ✅ | 100 |
 | ulam framework: vanilla route announcer + focus manager | ✅ | 100 |
 | ulam framework: neighbor lint rules (JSX a11y gaps + 3 ulam-specific) | ✅ | 100 |
 

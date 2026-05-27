@@ -3,7 +3,7 @@
 > Audit entry descriptions, fast.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.2.1-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
+[![Version](https://img.shields.io/badge/version-0.3.3-blue.svg)](https://github.com/a11yfred/a11yfred/releases)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)](https://nodejs.org/)
 
 Fast, consistent defect descriptions for accessibility entries, the kind that hold up in a ticket, a report, or a handoff. Search a library built on real audits, fact-checked against WCAG and accessibility practitioners, copy the text, paste it in. Built for auditors, testers, specialists and anyone doing manual accessibility testing and reviews.
@@ -22,7 +22,7 @@ npm run build      # production build
 
 ## Status
 
-**Launched.** Live at [a11yfred.app](https://a11yfred.app). Version [v0.2.1](https://github.com/a11yfred/a11yfred/releases/tag/v0.2.1).
+**Launched.** Live at [a11yfred.app](https://a11yfred.app). Version [v0.3.3](https://github.com/a11yfred/a11yfred/releases/tag/v0.3.3).
 
 **Phase 1 (Feature Complete):** Done (May 13).
 **Phase 2A (Code Quality):** Done (May 17).
