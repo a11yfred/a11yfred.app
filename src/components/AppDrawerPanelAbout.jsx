@@ -88,7 +88,7 @@ export default function AppDrawerPanelAbout({ onClose, allEntries = [] }) {
         <p className="panel-body">{t('settings.privacy_body_translations')}</p>
         <p className="panel-body panel-body--secondary">
           For complete details on data storage, AI Assist, analytics, and your rights, see the{' '}
-          <ExtLink href="https://github.com/a11yfred/a11yfred/blob/main/docs/PRIVACY.md">full Privacy Policy</ExtLink>.
+          <ExtLink href="https://github.com/a11yfred/a11yfred/blob/main/docs/PRIVACY.md">Full Privacy Policy</ExtLink>.
         </p>
       </section>
 
@@ -121,7 +121,7 @@ export default function AppDrawerPanelAbout({ onClose, allEntries = [] }) {
       <div className="panel-mobile-back">
         <Button
           variant="primary"
-          className="panel-mobile-back-btn"
+          className="btn-panel-mobile-back"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
           onClick={onClose}
           tabIndex={-1}

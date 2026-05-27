@@ -471,7 +471,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           label={t('detail.copy_all_aria_label')}
           onClick={handleCopyAll}
         >
-          {copiedAll ? t('detail.copy_all_copied_text') : t('detail.copy_all_text')}
+          {copiedAll ? <><Check size={14} aria-hidden="true" />{t('detail.copy_all_copied_text')}</> : t('detail.copy_all_text')}
         </Button>
         {/* <Button
           variant="primary"
@@ -517,12 +517,12 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           {
             label: t('detail.confirm_reset_yes'),
             onClick: () => { confirmReset?.doReset(); setConfirmReset(null) },
-            className: 'btn--primary modal-ok-btn',
+            className: 'btn--primary',
           },
           {
             label: t('detail.confirm_reset_no'),
             onClick: () => setConfirmReset(null),
-            className: 'btn--tertiary modal-ok-btn',
+            className: 'btn--tertiary',
           },
         ]}
       >

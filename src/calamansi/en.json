@@ -447,7 +447,7 @@
   "settings.privacy_body_1": "Everything is stored locally in your browser using localStorage. Nothing personal is sent to us or any server. Anonymous page view analytics are collected via Umami (no cookies, no personal data, no user tracking). Stored data includes: theme, language, platform filter, WCAG filter, Live Search setting, ranking controls visibility, personal entries visibility, AI provider preference, AI model selection, agentic mode setting, API keys, entry ratings, pinned entries, per-entry notes, recent entries, custom entries, personal corpus edits, co-selection pairs, pending contribution suggestions, your last opened entry, settings save count, onboarding status, and View All preference.",
   "settings.privacy_body_2": "API keys are stored in your browser only and sent directly to the AI provider you have configured. We never see or receive them. You can remove them at any time from the AI settings below, or by clearing your browser's site data for this page.",
   "settings.privacy_body_translations": "UI translations and the base public corpus were translated using AI. Some translations are incomplete and errors are expected. No user-entered data, custom entries, or personal edits are ever sent for translation.",
-  "settings.privacy_full_policy": "Full privacy policy",
+  "settings.privacy_full_policy": "Full Privacy Policy",
   "settings.reset_all": "Reset Settings & Clear Data",
   "settings.reset_all_aria_live": "All Settings Reset and Data Cleared.",
   "settings.confirm_reset_all_heading": "Reset Settings and Clear Data",

@@ -9,6 +9,11 @@
    - Dialogs & overlays
    ════════════════════════════════════════════════════════════ */
 
+p {
+  line-height: var(--line-height-body);
+  margin-bottom: var(--size-8);
+}
+
 .app-container {
   padding: var(--size-2) var(--size-4) var(--size-5);
   min-height: 100vh;
@@ -102,8 +107,7 @@
   text-decoration: none;
 }
 
-.header-link-github .external-link-icon,
-.header-link-github .inline-icon {
+.header-link-github svg {
   width: 0.8em;
   height: 0.8em;
   opacity: 0.7;
@@ -262,18 +266,202 @@
   outline-offset: var(--focus-outline-offset);
 }
 
-.footer-link .footer-brand-icon,
-.footer-link .inline-icon {
+.footer-link svg {
+  display: inline-block;
   width: 0.8em;
   height: 0.8em;
   opacity: 0.7;
-  margin-left: 0.1em;
+  margin-right: var(--size-1);
+  vertical-align: middle;
 }
 
-.footer-link svg {
-  display: inline-block;
-  width: var(--size-icon-sm);
-  height: var(--size-icon-sm);
+.external-link-icon {
+  width: var(--size-3);
+  height: var(--size-3);
+  vertical-align: middle;
+  margin-left: var(--size-1);
+}
+
+/* Temporary override until package update */
+.form-input--with-clear .form-input__clear {
+  right: var(--size-2);
+  padding: var(--size-2);
+}
+
+.btn--size-compact {
+  height: var(--size-8);
+}
+
+.control {
+  width: var(--size-4);
+  height: var(--size-4);
+}
+
+.radio-chip__indicator {
+  width: var(--size-3);
+  height: var(--size-3);
+}
+
+.screen svg {
+  width: var(--size-8);
+  height: var(--size-8);
+}
+
+.panel-group__desc {
+  margin-top: var(--size-1);
+}
+
+.panel-field-label {
+  margin-bottom: var(--size-1);
+}
+
+.info-box {
+  margin: var(--size-2) var(--size-2) var(--size-8);
+  border-left-width: var(--size-border-width-thick);
+}
+
+.info-box__icon {
+  margin-top: var(--size-1);
+}
+
+:root {
+  --toggle-radius: var(--rounded-full);
+  --inset-input-icon: var(--size-2);
+  --size-border-width-thick: 3px;
+  --toggle-thumb-size: calc(var(--toggle-height) - var(--size-border-width-normal));
+  --toggle-thumb-transition-offset: calc(var(--size-touch-target) - var(--toggle-thumb-size) - 1px);
+  --toggle-border-width: calc(var(--toggle-thumb-size) / 12);
+  --toggle-on-width: calc(var(--toggle-thumb-size) / 12);
+  --toggle-on-height: calc(var(--toggle-thumb-size) / 2);
+  --toggle-off-size: calc(var(--toggle-thumb-size) / 2);
+}
+
+.toggle__thumb,
+.toggle__off {
+  border-radius: var(--rounded-full);
+}
+
+input[role="switch"]:not([aria-disabled="true"]):focus-visible + span,
+input[role="switch"][aria-disabled="true"]:focus-visible + span {
+  border-radius: var(--toggle-radius);
+}
+
+.radio-chip {
+  gap: var(--size-2);
+}
+
+.panel-toggle-row .toggle {
+  margin-top: var(--size-1);
+}
+
+[class*="badge--"] {
+  padding: var(--size-1) var(--size-2);
+}
+
+
+
+.btn--primary,
+.btn--secondary,
+.btn--tertiary,
+.btn--warning {
+  border-width: var(--size-border-width-thin);
+}
+
+
+
+.select {
+  min-width: calc(var(--size-10) * 2);
+  padding: 0 var(--size-8) 0 var(--size-2);
+}
+
+.panel-field-error {
+  margin-top: var(--size-2);
+}
+
+.screen__action-inline,
+.screen__settings-link {
+  text-decoration-thickness: var(--size-border-width-thin);
+  text-underline-offset: var(--text-underline-offset);
+}
+
+.toggle__thumb {
+  transform: var(--transform-center-y);
+  background: var(--color-border);
+  outline: var(--size-border-width-thin) solid var(--color-border-control-accent);
+}
+
+.radio-chip-group .sr-only {
+  width: var(--size-border-width-thin);
+  height: var(--size-border-width-thin);
+  margin: calc(var(--size-border-width-thin) * -1);
+}
+
+.panel-toggle-row .panel-pending-note {
+  margin-top: 0;
+}
+
+
+
+
+.radio-chip:first-child {
+  flex: 1 0 100%;
+  border-radius: var(--rounded) var(--rounded) 0 0;
+  margin-left: 0;
+}
+
+.radio-chip:nth-child(2) {
+  margin-left: 0;
+  border-radius: 0 0 0 var(--rounded);
+}
+
+.radio-chip:last-child {
+  border-radius: 0 0 var(--rounded) 0;
+}
+
+@media (width >= 768px) {
+  .radio-chip:first-child {
+    flex: 1;
+    border-radius: var(--rounded) 0 0 var(--rounded);
+  }
+
+  .radio-chip:nth-child(2) {
+    margin-left: -1px;
+    border-radius: 0;
+  }
+
+  .radio-chip:last-child {
+    border-radius: 0 var(--rounded) var(--rounded) 0;
+  }
+}
+
+[dir="rtl"] .radio-chip:first-child {
+  border-radius: var(--rounded) var(--rounded) 0 0;
+  margin-right: 0;
+}
+
+[dir="rtl"] .radio-chip:nth-child(2) {
+  margin-right: 0;
+  border-radius: 0 0 var(--rounded) 0;
+}
+
+[dir="rtl"] .radio-chip:last-child {
+  border-radius: 0 0 0 var(--rounded);
+}
+
+@media (width >= 768px) {
+  [dir="rtl"] .radio-chip:first-child {
+    border-radius: 0 var(--rounded) var(--rounded) 0;
+    margin-right: 0;
+  }
+
+  [dir="rtl"] .radio-chip:nth-child(2) {
+    margin-right: -1px;
+    border-radius: 0;
+  }
+
+  [dir="rtl"] .radio-chip:last-child {
+    border-radius: var(--rounded) 0 0 var(--rounded);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -300,4 +488,27 @@ dialog,
     content: none;
   }
 }
+
+
+
+[data-theme="dark"] .toggle__thumb {
+  background: var(--color-text-disabled);
+  outline-color: var(--color-border);
+}
+
+input[type="radio"].control:checked {
+  border-width: var(--size-border-width-normal);
+}
+
+.toggle__track {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border-control);
+}
+
+[data-theme="dark"] .toggle:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--color-bg-subtle);
+  border-color: var(--color-border-control-accent);
+}
+
+
 

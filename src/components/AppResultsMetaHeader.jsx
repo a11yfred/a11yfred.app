@@ -80,7 +80,7 @@ export default function AppResultsMetaHeader({
                 label={t('results.copy_link_aria_label')}
                 activeLabel={t('results.copied_link')}
                 variant="secondary"
-                className="results-copy-link-btn"
+                className="btn-results-copy-link"
                 onClick={() => {
                   onCopyLink()
                   setLinkCopied(true)
@@ -161,7 +161,7 @@ export default function AppResultsMetaHeader({
                       variant="primary"
                       active={sortFlash}
                       aria-disabled={!sortInteracted || pendingSort === sortBy ? 'true' : undefined}
-                      className="results-sort-btn"
+                      className="btn-results-sort"
                       onClick={() => {
                         setSortToCommit(pendingSort)
                         setSortFlash(true)
@@ -179,7 +179,7 @@ export default function AppResultsMetaHeader({
               {results.length > 0 && onNarrow && (
                 <Button
                   variant="secondary"
-                  className="results-narrow-btn"
+                  className="btn-results-narrow"
                   onClick={narrowMode ? onNarrowExit : onNarrow}
                 >
                   {narrowMode ? (
@@ -198,7 +198,7 @@ export default function AppResultsMetaHeader({
               {onClear && (
                 <Button
                   variant="tertiary"
-                  className={`results-clear-btn${results.length > 0 ? ' results-clear-btn--visible' : ''}`}
+                  className={`btn-results-clear${results.length > 0 ? ' btn-results-clear--visible' : ''}`}
                   icon={<RotateCcw size={14} aria-hidden="true" />}
                   disabled={!hasAnyActiveFilter}
                   onClick={onClear}
@@ -235,9 +235,9 @@ export default function AppResultsMetaHeader({
                   onClear={() => onNarrowChange('')}
                   placeholder={!query && !narrowQuery ? t('search.narrow_placeholder_needs_query') : narrowResults ? t('search.narrow_placeholder', { count: results.length }) : t('search.narrow_placeholder_default')}
                   clearAriaLabel={t('search.narrow_clear_aria_label')}
-                  wrapClassName="results-narrow-input-wrap"
-                  inputClassName={`results-narrow-input${narrowQuery ? ' results-narrow-input--has-value' : ''}`}
-                  clearButtonClassName="btn--primary input-clear-btn"
+                  wrapClassName="search-input-wrap"
+                  inputClassName={`search-input${narrowQuery ? ' search-input--has-value' : ''}`}
+                  clearButtonClassName="btn--primary"
                   disabled={!query}
                 />
                 {!liveSearch && (
@@ -245,7 +245,7 @@ export default function AppResultsMetaHeader({
                     onClick={onNarrowSearch}
                     disabled={narrowQuery.length < 2 || !query}
                     variant="primary"
-                    className="btn-submit-narrow btn--input-height"
+                    className="btn-search-submit btn--input-height"
                   >
                     {t('search.narrow_button')}
                   </Button>
@@ -278,7 +278,6 @@ export default function AppResultsMetaHeader({
               </div>
             </fieldset>
           )}
-          {onPlatformChange && narrowMode && <hr className="results-narrow-divider" aria-hidden="true" />}
         </>
     </div>
   )

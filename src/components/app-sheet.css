@@ -30,8 +30,8 @@
 
 .sheet-handle {
   background: var(--color-text-body);
-  width: 32px;
-  height: 4px;
+  width: var(--size-8);
+  height: var(--size-1);
 }
 
 .sheet-backdrop,

@@ -1,4 +1,4 @@
-import { Button } from '@ulam/ube'
+import { Button, IconExternalLink } from '@ulam/ube'
 import { useMemo, useCallback } from 'react'
 import { AlertTriangle } from 'lucide-react'
 import { OverlayManager } from '@ulam/sili/react'
@@ -152,7 +152,7 @@ export default function AppOverlayManager({
           <p>{t('settings.privacy_body_2')}</p>
           <h3 className="panel-subheading">{t('settings.privacy_subhead_translations')}</h3>
           <p>{t('settings.privacy_body_translations')}</p>
-          <p><a href={URL_PRIVACY_POLICY} target="_blank" rel="noreferrer">{t('settings.privacy_full_policy')}<span className="sr-only"> (opens in new tab)</span></a></p>
+          <p><a href={URL_PRIVACY_POLICY} target="_blank" rel="noreferrer" className="panel-inline-link">{t('settings.privacy_full_policy')}<IconExternalLink /><span className="sr-only"> (opens in new tab)</span></a></p>
           <div className="sheet-detail-actions-end">
             <button className="btn btn--primary btn--close" onClick={handleClose}>
               {t('common.close')}

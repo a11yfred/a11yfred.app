@@ -277,7 +277,7 @@ export default function AppDrawerPanelAdmin({
           <h2 className="admin-section__title">AI Connectivity</h2>
           <button
             ref={connectivityCheckBtnRef}
-            className="btn--secondary admin-check-btn"
+            className="btn--secondary btn-admin-check"
             onClick={connectivityChecking ? undefined : runConnectivityCheck}
           >
             {connectivityChecking ? 'Checking…' : 'Check providers'}
@@ -305,7 +305,7 @@ export default function AppDrawerPanelAdmin({
             </a>
             ).
           </p>
-          <button className="btn--secondary admin-check-btn" onClick={runOverlayCheck}>
+          <button className="btn--secondary btn-admin-check" onClick={runOverlayCheck}>
             Scan page
           </button>
           {overlays !== null && (

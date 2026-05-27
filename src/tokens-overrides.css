@@ -61,7 +61,7 @@
   --size-outline-offset-thick: 3px;
 
   /* Background overlay */
-  --bg-overlay: rgb(0 0 0 / 0.45);
+  --overlay-bg: rgb(0 0 0 / 0.45);
 
   /* Announce toast colors (reduced-transparency fallback) */
   --announce-toast-bg-default: #111;

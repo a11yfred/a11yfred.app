@@ -22,7 +22,7 @@ export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
             </div>
             <Button
               variant="primary"
-              className="help-tour-btn"
+              className="btn-help-tour"
               onClick={() => { onClose(); onStartTour() }}
             >
               {t('help.take_tour')}
@@ -67,7 +67,7 @@ export default function AppDrawerPanelHelp({ onClose, onStartTour }) {
       <div className="panel-mobile-back">
         <Button
           variant="primary"
-          className="panel-mobile-back-btn"
+          className="btn-panel-mobile-back"
           icon={<ArrowLeft size={16} aria-hidden="true" />}
           onClick={onClose}
           tabIndex={-1}

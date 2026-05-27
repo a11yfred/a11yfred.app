@@ -575,7 +575,7 @@ function AppContent() {
                 <div className="view-all-section">
                   <button
                     type="button"
-                    className="btn--secondary view-all-btn"
+                    className="btn--secondary btn-view-all"
                     onClick={handleViewAllClick}
                   >
                     {t('search.view_all')}

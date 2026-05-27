@@ -20,8 +20,8 @@
   }
 
   /* Archived items */
-  .result-row--archived .result-pin-btn,
-  .result-row--archived .result-rank-btn:not(.result-rank-btn--archive),
+  .result-row--archived .btn-result-pin,
+  .result-row--archived .btn-result-rank:not(.btn-result-rank--archive),
   .result-row--archived .result-rank-score,
   .result-row--archived .result-item__badges,
   .result-row--archived .result-item__sc,
@@ -54,13 +54,13 @@
     opacity: 1;
   }
 
-  .header-link-github .external-link-icon {
+  .header-link-github svg {
     opacity: 1;
     color: var(--color-text-muted);
   }
 
-  .onboarding-arrow-btn:hover,
-  .onboarding-arrow-btn:focus-visible {
+  .btn-onboarding-arrow:hover,
+  .btn-onboarding-arrow:focus-visible {
     opacity: 1;
     color: var(--color-text-muted);
   }

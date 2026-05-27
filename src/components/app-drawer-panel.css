@@ -671,7 +671,7 @@
   text-overflow: ellipsis;
 }
 
-.admin-check-btn {
+.btn-admin-check {
   margin-bottom: var(--size-2);
 }
 
@@ -1168,7 +1168,7 @@ textarea[aria-disabled="true"].settings-key-input {
   }
 }
 
-.panel-mobile-back-btn {
+.btn-panel-mobile-back {
   display: flex;
   align-items: center;
   justify-content: center;

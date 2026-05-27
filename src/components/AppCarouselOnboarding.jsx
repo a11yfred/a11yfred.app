@@ -121,7 +121,7 @@ export default function AppCarouselOnboarding({ onClose }) {
           : (
             <button
               type="button"
-              className="onboarding-arrow-btn"
+              className="btn-onboarding-arrow"
               onClick={() => { setGradAngle(randomAngle()); setSlideDir('rtl'); setStep(s => { const next = s - 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }) }}
               aria-label={t('onboarding.prev_aria_label')}
             >
@@ -138,7 +138,7 @@ export default function AppCarouselOnboarding({ onClose }) {
 
         <button
           type="button"
-          className="onboarding-arrow-btn"
+          className="btn-onboarding-arrow"
           onClick={() => isLast ? commitClose() : (setGradAngle(randomAngle()), setSlideDir('ltr'), setStep(s => { const next = s + 1; announce(t('onboarding.step_of', { step: next + 1, total })); return next }))}
           aria-label={isLast ? t('onboarding.done_aria_label') : t('onboarding.next_aria_label')}
         >
@@ -149,7 +149,7 @@ export default function AppCarouselOnboarding({ onClose }) {
       <div className="onboarding-footer">
         <Button
           variant="tertiary"
-          className="onboarding-skip-btn"
+          className="btn-onboarding-skip"
           onClick={handleRequestClose}
         >
           {t('onboarding.skip_tour')}
@@ -164,12 +164,12 @@ export default function AppCarouselOnboarding({ onClose }) {
           {
             label: t('common.close'),
             onClick: () => { setConfirmOpen(false); commitClose() },
-            className: 'btn--primary modal-ok-btn',
+            className: 'btn--primary',
           },
           {
             label: t('onboarding.confirm_stay'),
             onClick: () => setConfirmOpen(false),
-            className: 'btn--secondary modal-ok-btn',
+            className: 'btn--secondary',
           },
         ]}
       >

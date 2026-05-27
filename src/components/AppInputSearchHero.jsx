@@ -77,7 +77,7 @@ export default function AppInputSearchHero({ query, onChange, onSearch, onExampl
           clearAriaLabel={t('search.clear_aria_label')}
           wrapClassName="search-input-wrap"
           inputClassName={`search-input${query.length ? ' search-input--has-value' : ''}`}
-          clearButtonClassName="btn--primary input-clear-btn"
+          clearButtonClassName="btn--primary"
           inputRef={inputRef}
         />
         {!liveSearch && (
@@ -85,7 +85,7 @@ export default function AppInputSearchHero({ query, onChange, onSearch, onExampl
             onClick={onSearch}
             disabled={query.length < 2}
             variant="primary"
-            className="search-submit-btn btn--input-height"
+            className="btn-search-submit btn--input-height"
           >
             {t('search.button')}
           </Button>

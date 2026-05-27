@@ -302,7 +302,7 @@ export default function AppListResultCard({
                   ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
                   : <Pin size={14} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth={2} />
                 }
-                className={`result-pin-btn${pinned ? ' result-pin-btn--active' : ''}`}
+                className={`btn-result-pin${pinned ? ' btn-result-pin--active' : ''}`}
               />
             )}
           </div>
@@ -314,7 +314,7 @@ export default function AppListResultCard({
               disabled={archived}
               onClick={handleStar}
               icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
-              className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
+              className={`btn-result-rank btn-result-rank--star${starred ? ' btn-result-rank--active' : ''}`}
             />
 
             {!pinned && <>
@@ -324,7 +324,7 @@ export default function AppListResultCard({
                 disabled={archived}
                 onClick={handleRankUp}
                 icon={<ThumbsUp size={14} aria-hidden="true" fill={animatingUp.has(entry.id) ? 'currentColor' : 'none'} />}
-                className="result-rank-btn result-rank-btn--up"
+                className="btn-result-rank btn-result-rank--up"
               />
 
               <span
@@ -340,7 +340,7 @@ export default function AppListResultCard({
                 disabled={archived}
                 onClick={handleRankDown}
                 icon={<ThumbsDown size={14} aria-hidden="true" fill={animatingDown.has(entry.id) ? 'currentColor' : 'none'} />}
-                className="result-rank-btn result-rank-btn--down"
+                className="btn-result-rank btn-result-rank--down"
               />
             </>}
 
@@ -352,7 +352,7 @@ export default function AppListResultCard({
                 ? <ArchiveRestore size={13} aria-hidden="true" />
                 : <Archive size={13} aria-hidden="true" />
               }
-              className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
+              className={`btn-result-rank btn-result-rank--archive${archived ? ' btn-result-rank--active' : ''}`}
             />
           </div>}
         </div>
@@ -372,7 +372,7 @@ export default function AppListResultCard({
                 ? <PinOff size={14} aria-hidden="true" fill="currentColor" />
                 : <Pin size={14} aria-hidden="true" fill="currentColor" />
               }
-              className={`result-rank-btn${pinned ? ' result-pin-btn--active' : ''}`}
+              className={`btn-result-rank${pinned ? ' btn-result-pin--active' : ''}`}
             />
           </div>
         )}
@@ -385,20 +385,20 @@ export default function AppListResultCard({
           >
             <Button variant="tertiary" label={starred ? t('results.unstar', { title: shortTitle }) : t('results.star', { title: shortTitle })} onClick={handleStar}
               icon={<Star size={13} aria-hidden="true" fill={starred ? 'currentColor' : 'none'} />}
-              className={`result-rank-btn result-rank-btn--star${starred ? ' result-rank-btn--active' : ''}`}
+              className={`btn-result-rank btn-result-rank--star${starred ? ' btn-result-rank--active' : ''}`}
             />
             <Button variant="tertiary" label={t('results.rank_up', { title: shortTitle })} disabled={archived} onClick={handleRankUp}
               icon={<ThumbsUp size={14} aria-hidden="true" />}
-              className="result-rank-btn result-rank-btn--up"
+              className="btn-result-rank btn-result-rank--up"
             />
             <span className="result-rank-score" aria-hidden="true">{score}</span>
             <Button variant="tertiary" label={t('results.rank_down', { title: shortTitle })} disabled={archived} onClick={handleRankDown}
               icon={<ThumbsDown size={14} aria-hidden="true" />}
-              className="result-rank-btn result-rank-btn--down"
+              className="btn-result-rank btn-result-rank--down"
             />
             <Button variant="tertiary" label={archived ? t('results.unarchive', { title: shortTitle }) : t('results.archive', { title: shortTitle })} onClick={handleArchive}
               icon={archived ? <ArchiveRestore size={13} aria-hidden="true" /> : <Archive size={13} aria-hidden="true" />}
-              className={`result-rank-btn result-rank-btn--archive${archived ? ' result-rank-btn--active' : ''}`}
+              className={`btn-result-rank btn-result-rank--archive${archived ? ' btn-result-rank--active' : ''}`}
             />
           </div>
         )}

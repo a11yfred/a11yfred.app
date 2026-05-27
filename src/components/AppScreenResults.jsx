@@ -302,13 +302,16 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
       />
 
       {!hideFilters && results.length > 0 && !platformNoResults && !narrowNoResults && (
-        <A11yResultsActiveFilterBar
-          activeFilters={activeFilters}
-          sortBy={sortBy}
-          sortLabels={sortLabels}
-          onSortChange={onSortChange}
-          hasNonDefaultSort={hasNonDefaultSort}
-        />
+        <>
+          <A11yResultsActiveFilterBar
+            activeFilters={activeFilters}
+            sortBy={sortBy}
+            sortLabels={sortLabels}
+            onSortChange={onSortChange}
+            hasNonDefaultSort={hasNonDefaultSort}
+          />
+          {onPlatformChange && narrowMode && <hr className="results-narrow-divider" aria-hidden="true" />}
+        </>
       )}
 
       {(narrowNoResults || platformNoResults)
@@ -375,7 +378,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
         <div className="view-all-section">
           <Button
             variant="secondary"
-            className="back-to-top-btn"
+            className="btn-back-to-top"
             onClick={() => {
               const drawer = document.querySelector('.drawer-panel.is-open')
               ;(drawer ?? window).scrollTo({ top: 0, behavior: 'smooth' })
