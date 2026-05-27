@@ -23,7 +23,7 @@ import useAppRatings from './hooks/useAppRatings.js'
 import { MAX_RECENT_ENTRIES, LS_RECENT_ENTRIES, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, EASTER_EGG_LOCALES, EASTER_EGGS, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getViewAllPlatformLabel } from './utils/labelFormatters.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson } from './utils/storage.js'
-import { getUnpinnedEntries, countRatingsByField } from './utils/entryFilters.js'
+import { countRatingsByField } from './utils/entryFilters.js'
 import { isAgenticModeEnabled, DEBUG_COMMANDS, DEBUG_COMMAND_VALUES } from '@ulam/halohalo'
 import {
   Router,

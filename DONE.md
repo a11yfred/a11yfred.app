@@ -298,7 +298,6 @@ These patterns have been implemented and validated:
 - Dark/Light/High-contrast mode support
 - Cross-browser compatibility (Chrome, Firefox, Safari, Edge)
 
-
 ## Phase 3 Performance & Privacy Updates (May 27)
 
 - [x] **Keyboard shortcut help dialog** `[ux]` `[a11y]` — Help panel exists with keyboard shortcuts documented; `?` and `Ctrl+/` hotkeys implemented

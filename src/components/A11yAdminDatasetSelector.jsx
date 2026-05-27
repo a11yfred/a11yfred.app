@@ -8,9 +8,9 @@ export default function AdminDatasetSelector({ dataset, setDataset, stats, onFil
       <h2 className="admin-section__title">Corpus</h2>
       <div className="admin-dataset-tabs">
         {[
-          { key: 'public',   label: 'Public',   count: publicCorpus.length },
-          { key: 'legacy',   label: 'Legacy',   count: legacyCorpus.length },
-          { key: 'personal', label: 'Personal', count: personalCorpus.length },
+          { key: 'public',   label: 'Public',   count: dataset === 'public' ? stats.total : '?' },
+          { key: 'legacy',   label: 'Legacy',   count: dataset === 'legacy' ? stats.total : '?' },
+          { key: 'personal', label: 'Personal', count: dataset === 'personal' ? stats.total : '?' },
         ].map(({ key, label, count }) => (
           <button
             key={key}

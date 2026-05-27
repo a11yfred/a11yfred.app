@@ -140,11 +140,13 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
   const displayResults = narrowMode && narrowResults ? narrowResults : results
   const displayCount = getDisplayCountLabel(narrowMode, narrowResults, filterLabel, hasPinnedItems, results, t)
   const [visibleCount, setVisibleCount] = useState(50)
+  const [prevDisplayResults, setPrevDisplayResults] = useState(displayResults)
   const observerRef = useRef(null)
 
-  useEffect(() => {
+  if (displayResults !== prevDisplayResults) {
+    setPrevDisplayResults(displayResults)
     setVisibleCount(50)
-  }, [displayResults])
+  }
 
   useEffect(() => {
     if (!observerRef.current) return
