@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Button, FormControlSelect, FormControlRadioChip, FormInputText, InfoBox } from '@ulam/ube'
 import { Link, Check, Filter, OctagonX, RotateCcw, Pin, Star, Archive, ThumbsUp, ThumbsDown, ArrowUpDown } from 'lucide-react'
 import { useT } from '../hooks/useTranslate.js'
+import { useAriaDisabled } from '../hooks/useAriaDisabled.js'
 
 
 
@@ -44,6 +45,8 @@ export default function AppResultsMetaHeader({
 }) {
   const t = useT()
   const [sortInteracted, setSortInteracted] = useState(false)
+  const clearBtnRef = useRef(null)
+  useAriaDisabled(clearBtnRef, !hasAnyActiveFilter)
 
   if (hideCount && hideFilters) return null
 
@@ -197,10 +200,10 @@ export default function AppResultsMetaHeader({
               )}
               {onClear && (
                 <Button
+                  ref={clearBtnRef}
                   variant="tertiary"
                   className={`btn-results-clear${results.length > 0 ? ' btn-results-clear--visible' : ''}`}
                   icon={<RotateCcw size={14} aria-hidden="true" />}
-                  disabled={!hasAnyActiveFilter}
                   onClick={onClear}
                 >
                   {t('results.clear_all_results')}

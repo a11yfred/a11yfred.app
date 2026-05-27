@@ -213,7 +213,7 @@
 
 .results-filter-btns {
   display: flex;
-  gap: var(--size-1);
+  gap: var(--size-2);
   flex-wrap: wrap;
   width: 100%;
 }
@@ -247,6 +247,13 @@
 .btn-results-clear--visible {
   opacity: 1;
   pointer-events: auto;
+}
+
+.btn-results-clear:disabled,
+.btn-results-clear[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .btn-results-clear:not(:disabled, [aria-disabled="true"]):hover {

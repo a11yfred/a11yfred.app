@@ -66,7 +66,7 @@ export const LS_SEARCH_HISTORY   = 'searchHistory'
 export const LS_AUDIT_REPORT     = 'auditReport'
 export const SS_COPIED_IDS       = 'sessionCopiedIds'
 
-export const DEFAULT_WCAG_FILTER = { maxVersion: '2.2', maxLevel: 'AA' }
+export const DEFAULT_WCAG_FILTER = { maxVersion: '2.2', maxLevel: 'AAA' }
 
 export const SEVERITY_SCORE = { Critical: 40, High: 30, Medium: 20, Low: 10, 'Best Practice': 5 }
 

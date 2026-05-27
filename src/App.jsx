@@ -370,7 +370,7 @@ function AppContent() {
     setTheme('auto')
     setLanguage('en')
     setPlatform('all')
-    setWcagFilter({ maxVersion: '2.2', maxLevel: 'AA' })
+    setWcagFilter({ maxVersion: '2.2', maxLevel: 'AAA' })
     setLiveSearch(true)
     setShowVoting(true)
     setAiEnabled(false)

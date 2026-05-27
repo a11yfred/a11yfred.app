@@ -85,7 +85,7 @@ export function filterByComponent(entries, componentFilter) {
  * @returns {Array}
  */
 export function filterByWcag(entries, wcagFilter = DEFAULT_WCAG_FILTER) {
-  const { maxVersion = '2.2', maxLevel = 'AA' } = wcagFilter ?? {}
+  const { maxVersion = '2.2', maxLevel = 'AAA' } = wcagFilter ?? {}
   const vMax = WCAG_VERSION_ORDER[maxVersion] ?? 2
   const lMax = WCAG_LEVEL_ORDER[maxLevel] ?? 1
   // AAA (level 2) has the most SC, so it includes all results; no filtering needed
