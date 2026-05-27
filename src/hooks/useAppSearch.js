@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { getInitUrlParams } from '../utils/storage.js'
+import { getInitUrlParams, getStorageJson } from '../utils/storage.js'
+import { LS_SEARCH_HISTORY } from '../utils/constants.js'
 
 /**
  * Manages search state: query, submission, narrow mode, sorting, selection, and focus.
@@ -37,6 +38,7 @@ export default function useAppSearch() {
   const initQ = initParams.get('q') || ''
   const initNarrow = initParams.get('narrow') || ''
   const initSort = initParams.get('sort') || 'smart'
+  const initComponent = initParams.get('component') || null
 
   const [query, setQuery] = useState(initQ)
   const [submittedQuery, setSubmittedQuery] = useState(initQ)
@@ -51,6 +53,10 @@ export default function useAppSearch() {
   const [submittedNarrowQuery, setSubmittedNarrowQuery] = useState(initNarrow)
   const [sortBy, setSortBy] = useState(initSort)
 
+  const [searchHistory, setSearchHistory] = useState(() => getStorageJson(LS_SEARCH_HISTORY, []))
+  const [componentFilter, setComponentFilter] = useState(initComponent)
+  const [compareIds, setCompareIds] = useState([])
+
   return {
     query, setQuery,
     submittedQuery, setSubmittedQuery,
@@ -64,5 +70,8 @@ export default function useAppSearch() {
     narrowQuery, setNarrowQuery,
     submittedNarrowQuery, setSubmittedNarrowQuery,
     sortBy, setSortBy,
+    searchHistory, setSearchHistory,
+    componentFilter, setComponentFilter,
+    compareIds, setCompareIds,
   }
 }

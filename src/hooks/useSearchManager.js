@@ -17,7 +17,10 @@ import {
   RESULTS_COUNT_FOCUS_DELAY,
   DEFAULT_WCAG_FILTER,
   EASTER_EGGS,
+  MAX_SEARCH_HISTORY,
+  LS_SEARCH_HISTORY,
 } from '../utils/constants.js'
+import { setStorageJson } from '../utils/storage.js'
 import { SEVERITY_VARS } from '../data/severityStyles.js'
 import { getPinnedEntries, getUnpinnedEntries } from '../utils/entryFilters.js'
 import { getViewAllPlatformLabel } from '../utils/labelFormatters.js'
@@ -58,6 +61,12 @@ const pluralResult = (n) => n === 1 ? 'result' : 'results'
  * @param {Function} deps.t - Translation function
  * @param {Function} deps.navigate - Router navigate function
  * @param {Function} deps.setLanguage - Setter for language
+ * @param {string[]} deps.searchHistory - Search history array
+ * @param {Function} deps.setSearchHistory - Setter for search history
+ * @param {string|null} deps.componentFilter - Component filter
+ * @param {Function} deps.setComponentFilter - Setter for component filter
+ * @param {string[]} deps.compareIds - Compare IDs
+ * @param {Function} deps.setCompareIds - Setter for compare IDs
  *
  * @returns {{
  *   query: string,
@@ -129,6 +138,12 @@ export default function useSearchManager({
   userOverrides,
   t,
   navigate,
+  searchHistory,
+  setSearchHistory,
+  componentFilter,
+  setComponentFilter,
+  compareIds,
+  setCompareIds,
 }) {
   const [searchFocused, setSearchFocused] = useState(false)
   const [badgeFilter, setBadgeFilter] = useState(() => {
@@ -161,7 +176,8 @@ export default function useSearchManager({
     ratings,
     showPersonalCorpus ? userEntries : [],
     wcagFilter,
-    userOverrides
+    userOverrides,
+    componentFilter
   )
 
   const smartScore = useCallback((f, index) => {
@@ -365,11 +381,13 @@ export default function useSearchManager({
     const isDefaultWcag = w.maxVersion === '2.2' && w.maxLevel === 'AA'
     if (!isDefaultWcag) url.searchParams.set('wcag', `${w.maxVersion}|${w.maxLevel}`)
     else url.searchParams.delete('wcag')
+    if (componentFilter) url.searchParams.set('component', componentFilter)
+    else url.searchParams.delete('component')
     history.replaceState(null, '', url.pathname + url.search + url.hash)
-  }, [platform, sortBy, narrowQuery, wcagFilter])
+  }, [platform, sortBy, narrowQuery, wcagFilter, componentFilter])
 
   // Sync filters to URL
-  useEffect(() => { syncFiltersUrl() }, [platform, sortBy, narrowQuery, wcagFilter, syncFiltersUrl])
+  useEffect(() => { syncFiltersUrl() }, [platform, sortBy, narrowQuery, wcagFilter, componentFilter, syncFiltersUrl])
 
   function handleSearchFocus() {
     clearTimeout(searchBlurTimerRef.current)
@@ -407,8 +425,18 @@ export default function useSearchManager({
     syncBadgeUrl(null)
     const egg = EASTER_EGGS[query.trim().toLowerCase()]
     if (egg) { activateEasterEgg(egg); return }
+    const q = query.trim()
     setSubmittedQuery(query)
     setSearchKey(k => k + 1)
+    if (q.length >= 2) {
+      setSearchHistory(prev => {
+        const deduped = prev.filter(h => h !== q)
+        deduped.unshift(q)
+        const next = deduped.slice(0, MAX_SEARCH_HISTORY)
+        setStorageJson(LS_SEARCH_HISTORY, next)
+        return next
+      })
+    }
     syncSearchUrl(query)
     setTimeout(() => resultsCountRef.current?.focus(), RESULTS_COUNT_FOCUS_DELAY)
   }
@@ -455,9 +483,23 @@ export default function useSearchManager({
     setSortBy('smart')
     setWcagFilter(DEFAULT_WCAG_FILTER)
     setBadgeFilter(null)
+    setComponentFilter(null)
+    setCompareIds([])
     syncBadgeUrl(null)
     searchInputRef.current?.focus()
   }
+
+  const addToCompare = useCallback((id) => {
+    setCompareIds(prev => prev.length < 2 && !prev.includes(id) ? [...prev, id] : prev)
+  }, [setCompareIds])
+
+  const removeFromCompare = useCallback((id) => {
+    setCompareIds(prev => prev.filter(c => c !== id))
+  }, [setCompareIds])
+
+  const clearCompare = useCallback(() => {
+    setCompareIds([])
+  }, [setCompareIds])
 
   const handleCopyLink = useCallback(() => {
     const url = new URL(window.location.origin + window.location.pathname)
@@ -535,5 +577,14 @@ export default function useSearchManager({
     syncSearchUrl,
     syncBadgeUrl,
     syncFiltersUrl,
+    searchHistory,
+    setSearchHistory,
+    componentFilter,
+    setComponentFilter,
+    compareIds,
+    setCompareIds,
+    addToCompare,
+    removeFromCompare,
+    clearCompare,
   }
 }

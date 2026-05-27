@@ -98,6 +98,21 @@ Status key: ✅ Complete · 🟡 Partial · 🔧 Backend only · 💤 Stubbed ·
 | Print view styles for audit reports | ✅ | 100 |
 | Email sharing for defect details | ✅ | 100 |
 
+**Backend Only (4):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Search History | 🔧 | 50 |
+| Audit Report Builder | 🔧 | 50 |
+| Component-Level Filtering | 🔧 | 40 |
+| Compare Mode | 🔧 | 40 |
+
+**Tools Complete (1):**
+
+| Feature | Status | % |
+| --- | --- | --- |
+| Batch Import Tooling (`scripts/import-audit.mjs`) | ✅ | 100 |
+
 **Stubbed (2):**
 
 | Feature | Status | % |
@@ -111,9 +126,8 @@ Features parked with no active timeline. Revisit post-launch.
 
 | Feature | Status | Notes |
 | --- | --- | --- |
-| Ko-fi Integration | 💤 | Widget disabled pending console error resolution; Ko-fi link in footer as fallback |
+| Ko-fi Integration | 💤 | Widget disabled pending console error resolution |
 | SCSS Migration | 💤 | CSS custom properties sufficient; migrate only if specificity/mixin complexity grows |
-| Compare Mode | 💤 | Side-by-side entry comparison; no user demand yet |
 | GitHub Sponsors | 💤 | Activate once public launch is stable |
 
 ---
@@ -418,11 +432,12 @@ Missing:
 
 ---
 
-### Import / Custom Data Source ,  20%
+### Import / Custom Data Source ,  30%
 
 Done:
 
 - `importFromUrl(url)` for public JSON corpus
+- `scripts/import-audit.mjs` CLI: parses CSV/XLSX via ExcelJS, maps columns to corpus schema, auto-splits delimited fields
 
 Missing:
 

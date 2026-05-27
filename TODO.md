@@ -28,15 +28,14 @@ Six-pass documentation and code audit: consolidated duplicate README content, fi
 
 ### UX / Interaction
 
-- [ ] **Search history** `[ux]` — show last 10 searches in `localStorage` below search field when empty; include recent defects list
-- [ ] **Audit report builder** `[ux]` — multi-select defects, add occurrence counts/severity overrides, export formatted report in Markdown/plain text
-- [ ] **Component-level filtering** `[ux]` `[corpus]` — secondary filter (modal, form, button, heading, image, etc); add `component` field to schema; update `useDefectSearch`
-- [ ] **Compare mode** `[ux]` — open two defects side-by-side in split view; useful for choosing which SC fits best
+- [/] **Search history** `[ux]` — show last 10 searches in `localStorage` below search field when empty; include recent defects list *(backend: state, persistence, and history recording done; UI pending)*
+- [/] **Audit report builder** `[ux]` — multi-select defects, add occurrence counts/severity overrides, export formatted report in Markdown/plain text *(backend: context, hook, Markdown export utility done; UI pending)*
+- [/] **Component-level filtering** `[ux]` `[corpus]` — secondary filter (modal, form, button, heading, image, etc); add `component` field to schema; update `useDefectSearch` *(backend: strict ALLOWED_COMPONENTS list, filterByComponent, URL sync done; UI + corpus tagging pending)*
+- [/] **Compare mode** `[ux]` — open two defects side-by-side in split view; useful for choosing which SC fits best *(backend: compareIds state, addToCompare/removeFromCompare/clearCompare done; UI pending)*
 
 ### Corpus & Localization
 
 - [ ] **Expand public corpus** `[corpus]` — target 150+ entries beyond ACC prefix; source from WAI Understanding docs, axe-core, Deque University
-- [ ] **Batch import tooling** `[corpus]` `[code]` — Node.js script to convert CSV/Excel audit exports to schema; run once, review, delete
 - [ ] **Platform coverage audit** `[corpus]` — verify native-only defects flagged correctly; balance native vs web entries
 - [ ] **Related SC links** `[corpus]` — spot-check `related` arrays for accuracy; add missing secondary SCs
 - [ ] **Corpus provenance field** `[corpus]` — add `source` field (personal, WAI, axe, Deque) to each entry; helps contributors follow the right style

@@ -319,3 +319,11 @@ These patterns have been implemented and validated:
 - [x] Monitor @ulam packages for updates (synced to 0.4.x / 0.3.x on May 27)
 - [x] Review breaking changes before upgrading
 - [x] Update CHANGELOG when upgrading dependencies
+
+## Phase 3 UX Backend & Tooling (May 27)
+
+- [x] **Search history backend** `[ux]` — `searchHistory` state in context, localStorage persistence via `LS_SEARCH_HISTORY`, auto-records last 10 unique queries on submit
+- [x] **Audit report builder backend** `[ux]` — `ContextReport` + `useAppReport` hook with `addDefect`/`removeDefect`/`updateDefect`/`clearReport`; `reportBuilder.js` generates structured Markdown with executive summary table and detailed findings
+- [x] **Component-level filtering backend** `[ux]` `[corpus]` — strict `ALLOWED_COMPONENTS` enum (28 types), `filterByComponent` in `entrySearchService.js`, `componentFilter` state with URL sync
+- [x] **Compare mode backend** `[ux]` — `compareIds` state (max 2), `addToCompare`/`removeFromCompare`/`clearCompare` helpers in `useSearchManager`
+- [x] **Batch import tooling** `[corpus]` `[code]` — `scripts/import-audit.mjs` Node.js script; parses CSV/XLSX via `exceljs`; maps columns directly to corpus schema keys; auto-splits delimited fields into arrays

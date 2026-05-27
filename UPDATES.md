@@ -2,6 +2,10 @@
 
 Plain-language snapshots of what changed and why (by date). For detailed technical changes, see [CHANGELOG.md](CHANGELOG.md). For completed features by phase, see [DONE.md](DONE.md). For remaining work, see [TODO.md](TODO.md).
 
+## May 27, 2026 -- UX Backend Architecture & Batch Import Tooling
+
+Implemented the backend state management for four new UX features: search history (last 10 queries persisted to localStorage), audit report builder (context, hook, and Markdown export utility with executive summary + detailed findings layout), component-level filtering (strict 28-type enum with URL sync and search pipeline integration), and compare mode (max 2 entries with add/remove/clear helpers). Also built a Node.js batch import script (`scripts/import-audit.mjs`) that converts CSV/Excel audit exports directly to corpus-compatible JSON using ExcelJS. All changes are additive — existing UI continues to work unchanged while the new features await their UI layer.
+
 ## May 27, 2026 -- Performance Optimizations & Corpus Updates
 
 Completed major performance optimization goals including infinite scroll chunking for large lists, memoization of Fuse.js search, search debouncing, and lazy loading of the detail panel. Reduced initial main bundle size by dynamically importing the corpus JSON data. Additionally, fully aligned the personal corpus to the latest WCAG 2.2 schema, confirming 100% coverage of A and AA success criteria.

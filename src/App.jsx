@@ -20,6 +20,7 @@ const A11yThemeWidgetFiestaMusicPlayer = lazy(() => import('./components/A11yThe
 import useAppSettings from './hooks/useAppSettings.js'
 import useAppSearch from './hooks/useAppSearch.js'
 import useAppRatings from './hooks/useAppRatings.js'
+import useAppReport from './hooks/useAppReport.js'
 import { MAX_RECENT_ENTRIES, LS_RECENT_ENTRIES, LS_LANGUAGE, LS_SAVE_COUNT, LS_LIVE_SEARCH, LS_SHOW_RANKING, LS_SHOW_PERSONAL_CORPUS, LS_PLATFORM, LS_WCAG_FILTER, EASTER_EGG_LOCALES, EASTER_EGGS, VIEW_ALL_SKIP_FLAG, LS_VIEW_ALL_SKIP, DEFAULT_WCAG_FILTER } from './utils/constants.js'
 import { getViewAllPlatformLabel } from './utils/labelFormatters.js'
 import { getStorage, setStorage, setStorageJson, getStorageJson } from './utils/storage.js'
@@ -47,6 +48,7 @@ import useStorageSync from './hooks/useStorageSync.js'
 import { ContextSettings, useSettings } from './context/contextSettings.js'
 import { ContextSearch, useSearch } from './context/contextSearch.js'
 import { ContextRatings, useRatings } from './context/contextRatings.js'
+import { ContextReport } from './context/contextReport.js'
 import { I18nProvider } from '@ulam/calamansi/react'
 import { initI18n } from '@ulam/calamansi'
 import { useT } from './hooks/useTranslate.js'
@@ -110,13 +112,16 @@ function AppShell() {
   const settingsValue = useAppSettings()
   const searchValue = useAppSearch()
   const ratingsValue = useAppRatings()
+  const reportValue = useAppReport()
 
   return (
     <I18nProvider locale={settingsValue.language}>
       <ContextSettings.Provider value={settingsValue}>
         <ContextSearch.Provider value={searchValue}>
           <ContextRatings.Provider value={ratingsValue}>
-            <AppContent />
+            <ContextReport.Provider value={reportValue}>
+              <AppContent />
+            </ContextReport.Provider>
           </ContextRatings.Provider>
         </ContextSearch.Provider>
       </ContextSettings.Provider>
@@ -159,7 +164,7 @@ function formatCountTemplate(tmpl, count) {
 
 function AppContent() {
   const { theme, setTheme, language, setLanguage, aiEnabled, setAiEnabled, liveSearch, setLiveSearch, showVoting, setShowVoting, showPersonalCorpus, setShowPersonalCorpus, setSaveCount, platform, setPlatform, wcagFilter, setWcagFilter } = useSettings()
-  const { query, setQuery, submittedQuery, setSubmittedQuery, searchKey, setSearchKey, selected, setSelected, sheetCollapsed, setSheetCollapsed, pendingEntry, setPendingEntry, pendingPrivacy, setPendingPrivacy, panelFocusTrigger, setPanelFocusTrigger, narrowMode, setNarrowMode, narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery, sortBy, setSortBy } = useSearch()
+  const { query, setQuery, submittedQuery, setSubmittedQuery, searchKey, setSearchKey, selected, setSelected, sheetCollapsed, setSheetCollapsed, pendingEntry, setPendingEntry, pendingPrivacy, setPendingPrivacy, panelFocusTrigger, setPanelFocusTrigger, narrowMode, setNarrowMode, narrowQuery, setNarrowQuery, submittedNarrowQuery, setSubmittedNarrowQuery, sortBy, setSortBy, searchHistory, setSearchHistory, componentFilter, setComponentFilter, compareIds, setCompareIds } = useSearch()
   const { ratings, toggleStar, toggleArchive, resetRankings, clearAllRatings, pinnedIds, togglePin, clearPins, recordCopy, recordOpen } = useRatings()
   const { route, navigate, appName } = useRouter()
   const isDesktop = useMediaQuery('(width >= 768px)')
@@ -191,6 +196,9 @@ function AppContent() {
     platform, setPlatform, language, setLanguage, wcagFilter, setWcagFilter,
     liveSearch, showPersonalCorpus, userEntries, userOverrides,
     t, navigate,
+    searchHistory, setSearchHistory,
+    componentFilter, setComponentFilter,
+    compareIds, setCompareIds,
   })
 
   const {

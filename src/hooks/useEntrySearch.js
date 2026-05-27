@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { getEntries } from '../services/dataService.js'
-import { mergeEntries, filterByPlatform, filterByWcag, sortEntries, searchEntries } from '../services/entrySearchService.js'
+import { mergeEntries, filterByPlatform, filterByWcag, filterByComponent, sortEntries, searchEntries } from '../services/entrySearchService.js'
 import { SEARCH_LOAD_TIMEOUT_MS, DEBUG_SKELETON_QUERY, DEFAULT_WCAG_FILTER } from '../utils/constants.js'
 
 /**
@@ -14,6 +14,7 @@ import { SEARCH_LOAD_TIMEOUT_MS, DEBUG_SKELETON_QUERY, DEFAULT_WCAG_FILTER } fro
  * @param {Array} [userEntries=[]] - user-created entries to append to corpus
  * @param {{ maxVersion: string, maxLevel: string }} [wcagFilter] - WCAG version/level ceiling
  * @param {Object} [userOverrides={}] - locale override map applied to corpus entries
+ * @param {string|null} [componentFilter=null] - filter by specific component
  * @returns {{
  *   results: Array,        search results (up to MAX_SEARCH_RESULTS), empty when query < 2 chars
  *   allEntries: Array,     full corpus with overrides and user entries merged
@@ -23,7 +24,7 @@ import { SEARCH_LOAD_TIMEOUT_MS, DEBUG_SKELETON_QUERY, DEFAULT_WCAG_FILTER } fro
  *   retryData: Function,   call to retry after a load error
  * }}
  */
-export default function useEntrySearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userEntries = [], wcagFilter = DEFAULT_WCAG_FILTER, userOverrides = {}) {
+export default function useEntrySearch(query, platform, locale = 'en', searchKey = 0, ratings = {}, userEntries = [], wcagFilter = DEFAULT_WCAG_FILTER, userOverrides = {}, componentFilter = null) {
   const [corpusEntries, setCorpusEntries] = useState([])
   const [dataLoading, setDataLoading] = useState(true)
   const [dataError, setDataError] = useState(false)
@@ -83,8 +84,8 @@ export default function useEntrySearch(query, platform, locale = 'en', searchKey
   )
 
   const versionFiltered = useMemo(
-    () => filterByWcag(filterByPlatform(allEntries, platform), wcagFilter),
-    [allEntries, platform, wcagFilter]
+    () => filterByComponent(filterByWcag(filterByPlatform(allEntries, platform), wcagFilter), componentFilter),
+    [allEntries, platform, wcagFilter, componentFilter]
   )
 
   const sortedEntries = useMemo(

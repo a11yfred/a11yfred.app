@@ -64,6 +64,18 @@ export function filterByPlatform(entries, platform) {
 }
 
 /**
+ * Filters entries by component.
+ *
+ * @param {Array} entries
+ * @param {string|null} componentFilter
+ * @returns {Array}
+ */
+export function filterByComponent(entries, componentFilter) {
+  if (!componentFilter) return entries
+  return entries.filter(d => d.component && d.component.includes(componentFilter))
+}
+
+/**
  * Filters entries by WCAG version and level ceiling.
  * AAA has the most SC, AA has fewer, A has the fewest.
  * AAA is the least restrictive and never filters results.

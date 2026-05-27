@@ -18,8 +18,16 @@ export const SORT_FLASH_MS = 1000
 export const pluralResult = (n) => n === 1 ? 'Result' : 'Results'
 
 export const MAX_RECENT_ENTRIES = 10
+export const MAX_SEARCH_HISTORY = 10
 export const VIEW_ALL_SKIP_FLAG = '1'
 export const FOOTER_CREDIT_NAME = 'Mikey Ilagan'
+
+export const ALLOWED_COMPONENTS = [
+  'button', 'link', 'form', 'input', 'select', 'checkbox', 'radio', 
+  'modal', 'dialog', 'tooltip', 'accordion', 'tabs', 'menu', 'dropdown',
+  'image', 'icon', 'video', 'audio', 'table', 'heading', 'list',
+  'navigation', 'header', 'footer', 'card', 'carousel', 'alert', 'toast'
+]
 
 export const SMART_SCORE_STAR_BONUS    = 50
 export const SMART_SCORE_RANK_WEIGHT   = 50
@@ -54,6 +62,8 @@ export const LS_USER_OVERRIDES   = 'userOverrides'
 export const LS_USER_ENTRIES     = 'userEntries'
 export const LS_CONTRIBUTIONS    = 'pendingContributions'
 export const LS_ADMIN_DATASET    = 'adminDataset'
+export const LS_SEARCH_HISTORY   = 'searchHistory'
+export const LS_AUDIT_REPORT     = 'auditReport'
 export const SS_COPIED_IDS       = 'sessionCopiedIds'
 
 export const DEFAULT_WCAG_FILTER = { maxVersion: '2.2', maxLevel: 'AA' }

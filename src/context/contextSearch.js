@@ -26,6 +26,12 @@ import { createContext, useContext } from 'react'
  * @property {(q: string) => void} setSubmittedNarrowQuery
  * @property {string} sortBy
  * @property {(sort: string) => void} setSortBy
+ * @property {string[]} searchHistory
+ * @property {(history: string[]) => void} setSearchHistory
+ * @property {string | null} componentFilter
+ * @property {(component: string | null) => void} setComponentFilter
+ * @property {string[]} compareIds
+ * @property {(ids: string[]) => void} setCompareIds
  */
 
 /**
