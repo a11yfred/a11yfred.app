@@ -91,14 +91,14 @@ Six-pass documentation and code audit: consolidated duplicate README content, fi
 - [ ] **Browser extensions** `[infra]` — Chrome and Firefox extensions (in progress on feature branches)
 - [ ] **Electron desktop app** `[infra]` — cross-platform desktop version (scaffold empty, no timeline)
 - [ ] **Phase 3 public corpus** `[corpus]` `[infra]` — separate repo with 150+ entries; never mixed with personal corpus
-- [ ] **GDPR privacy disclosure** `[privacy]` `[infra]` — brief statement for Phase 3 public launch
-- [ ] **Tip jar** `[infra]` — GitHub Sponsors link wired; Ko-fi deferred
+- [x] **GDPR privacy disclosure** `[privacy]` `[infra]` — brief statement for Phase 3 public launch
+- [x] **Tip jar** `[infra]` — GitHub Sponsors link wired; Ko-fi deferred
 
 ### Community & Accessibility
 
-- [ ] **Contribution guidelines** `[code]` `[a11y]` — how to improve accessibility or suggest features
-- [ ] **Community translations** `[i18n]` `[corpus]` — crowdsourced translations beyond current coverage
-- [ ] **Accessibility audit documentation** `[a11y]` — how this app was made accessible
+- [x] **Contribution guidelines** `[code]` `[a11y]` — how to improve accessibility or suggest features
+- [x] **Community translations** `[i18n]` `[corpus]` — crowdsourced translations beyond current coverage
+- [x] **Accessibility audit documentation** `[a11y]` — how this app was made accessible
 - [ ] **Case studies** `[a11y]` — accessibility-first design case studies
 
 ### Code Quality & Maintenance
