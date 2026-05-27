@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import useDebounce from './useDebounce'
 import useEntrySearch from './useEntrySearch'
 import {
   SEVERITY_SCORE,
@@ -149,7 +150,8 @@ export default function useSearchManager({
   const liveSearchHadResultsRef = useRef(false)
   const lastAnnouncedPlatformRef = useRef(platform)
 
-  const activeQuery = liveSearch ? (searchFocused ? query : submittedQuery) : submittedQuery
+  const liveActiveQuery = liveSearch ? (searchFocused ? query : submittedQuery) : submittedQuery
+  const activeQuery = useDebounce(liveActiveQuery, liveSearch ? 250 : 0)
 
   const { results, allEntries, sortedEntries, dataLoading, dataError, retryData } = useEntrySearch(
     activeQuery,
@@ -226,6 +228,11 @@ export default function useSearchManager({
   const pinnedSearchMatches = useMemo(() =>
     activeQuery.length >= 2 ? getPinnedEntries(results, pinnedIds) : [],
     [results, pinnedIds, activeQuery]
+  )
+
+  const viewAllResults = useMemo(() =>
+    applySortBy(getUnpinnedEntries(sortedEntries, pinnedIds)),
+    [sortedEntries, pinnedIds, applySortBy]
   )
 
   const badgeFilterLabel = useMemo(() => {
@@ -509,6 +516,7 @@ export default function useSearchManager({
     badgeFilterLabel,
     badgeResults,
     narrowedResults,
+    viewAllResults,
     viewAllLoading,
     setViewAllLoading,
     handleQueryChange,

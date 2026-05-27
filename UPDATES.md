@@ -2,6 +2,11 @@
 
 Plain-language snapshots of what changed and why (by date). For detailed technical changes, see [CHANGELOG.md](CHANGELOG.md). For completed features by phase, see [DONE.md](DONE.md). For remaining work, see [TODO.md](TODO.md).
 
+
+## May 27, 2026 -- Performance Optimizations & Corpus Updates
+
+Completed major performance optimization goals including infinite scroll chunking for large lists, memoization of Fuse.js search, search debouncing, and lazy loading of the detail panel. Reduced initial main bundle size by dynamically importing the corpus JSON data. Additionally, fully aligned the personal corpus to the latest WCAG 2.2 schema, confirming 100% coverage of A and AA success criteria.
+
 ## May 27, 2026 -- Framework Dependency Sync & Quality Polish
 
 Synchronized upstream `@ulam` framework package dependencies to their latest stable versions (calamansi `0.4.0`, halohalo `0.3.3`, sawsawan `0.3.1`, sili `0.4.0`, taho `0.3.3`, ube `0.4.2`). This updates the app's underlying accessibility, gesture, and i18n components to benefit from recent bugs fixes (like touch-target isolated collisions, event propagation improvements, select component lifecycle fixes, and React 19 compatibility). We also silenced false editor JSHint warning noise.

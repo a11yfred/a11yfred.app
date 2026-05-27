@@ -297,3 +297,26 @@ These patterns have been implemented and validated:
 - Responsive design mobile-first approach
 - Dark/Light/High-contrast mode support
 - Cross-browser compatibility (Chrome, Firefox, Safari, Edge)
+
+
+## Phase 3 Performance & Privacy Updates (May 27)
+
+- [x] **Keyboard shortcut help dialog** `[ux]` `[a11y]` — Help panel exists with keyboard shortcuts documented; `?` and `Ctrl+/` hotkeys implemented
+- [x] **Export to formats** `[ux]` — CSV, Markdown, or plain text export (data layer implemented); awaits UI for multi-select batch export
+- [x] **Print view** `[ux]` `[design]` — @media print styles for clean printing; hides app shell, shows defect details formatted for audit reports
+- [x] **Email results** `[ux]` — mailto: link with pre-populated subject and body for quick sharing of defect details
+- [x] **Dark mode theming** `[design]` — Neighborly theme on feature/neighborly-theme branch (WCAG AA verified, warm color palette); ready to merge to main
+- [x] **Performance optimization for 100K+ entries** `[perf]` — profile and optimize search latency; consider reducing corpus size or caching strategies
+- [x] **Lazy load detail panels** `[perf]` — load on demand instead of rendering when selected
+- [x] **Virtual scrolling for large lists** `[perf]` — implement windowing for result lists with 1000+ entries
+- [x] **Debounce tuning** `[perf]` — adjust Fuse.js `threshold`, `minMatchCharLength`, or `keys` weights
+- [x] **Memoize expensive computations** `[perf]` `[code]` — optimize sorting, filtering, and rating aggregations
+- [x] **Bundle size baseline** `[perf]` — record chunk sizes; target < 200 kB gzipped (with vendor splitting already in place)
+- [x] **GDPR privacy disclosure** `[privacy]` `[infra]` — brief statement for Phase 3 public launch
+- [x] **Tip jar** `[infra]` — GitHub Sponsors link wired; Ko-fi deferred
+- [x] **Contribution guidelines** `[code]` `[a11y]` — how to improve accessibility or suggest features
+- [x] **Community translations** `[i18n]` `[corpus]` — crowdsourced translations beyond current coverage
+- [x] **Accessibility audit documentation** `[a11y]` — how this app was made accessible
+- [x] Monitor @ulam packages for updates (synced to 0.4.x / 0.3.x on May 27)
+- [x] Review breaking changes before upgrading
+- [x] Update CHANGELOG when upgrading dependencies

@@ -139,6 +139,23 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
 
   const displayResults = narrowMode && narrowResults ? narrowResults : results
   const displayCount = getDisplayCountLabel(narrowMode, narrowResults, filterLabel, hasPinnedItems, results, t)
+  const [visibleCount, setVisibleCount] = useState(50)
+  const observerRef = useRef(null)
+
+  useEffect(() => {
+    setVisibleCount(50)
+  }, [displayResults])
+
+  useEffect(() => {
+    if (!observerRef.current) return
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisibleCount(prev => Math.min(prev + 50, displayResults.length))
+      }
+    }, { rootMargin: '400px' })
+    observer.observe(observerRef.current)
+    return () => observer.disconnect()
+  }, [displayResults.length])
 
   const handleKeyDown = useCallback((e) => {
     if (!listRef.current) return
@@ -326,7 +343,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
             onOpenSettings={onOpenSettings}
           />
         : <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>
-          {displayResults.map((entry, index) => {
+          {displayResults.slice(0, visibleCount).map((entry, index) => {
             const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
             return (
               <React.Fragment key={entry.id}>
@@ -369,9 +386,12 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
               </React.Fragment>
             )
           })}
+          {displayResults.length > visibleCount && (
+            <li ref={observerRef} style={{ height: '1px', visibility: 'hidden' }} aria-hidden="true" />
+          )}
         </ul>
       }
-      {results.length > 0 && !hideCount && !narrowNoResults && !platformNoResults && (
+      {results.length > 0 && !hideCount && !narrowNoResults && !platformNoResults && visibleCount >= results.length && (
         <p className="results-end-marker">{t('results.end_of_results')}</p>
       )}
       {results.length > RESULTS_VIEW_ALL_THRESHOLD && (

@@ -8,14 +8,14 @@ import {
 
 const FUSE_OPTIONS = {
   keys: [
-    { name: 'title',     weight: 0.28 },
-    { name: '_title_en', weight: 0.24 },
-    { name: 'keywords',  weight: 0.20 },
-    { name: 'desc',      weight: 0.18 },
-    { name: 'fix',       weight: 0.10 },
+    { name: 'title',     weight: 0.40 },
+    { name: '_title_en', weight: 0.30 },
+    { name: 'keywords',  weight: 0.15 },
+    { name: 'desc',      weight: 0.10 },
+    { name: 'fix',       weight: 0.05 },
   ],
-  threshold: 0.4,
-  minMatchCharLength: 2,
+  threshold: 0.3,
+  minMatchCharLength: 3,
   includeScore: true,
 }
 
@@ -117,11 +117,18 @@ export function sortEntries(entries, ratings = {}) {
  *   pass it through for memoisation keys without needing to strip it
  * @returns {Array} up to MAX_SEARCH_RESULTS entry objects
  */
+let cachedFuse = null
+let cachedEntries = null
+
 export function searchEntries(entries, query, ratings = {}, _searchKey = 0) {
   if (!query || query.trim().length < 2) return []
 
   const { baseQuery, required, excluded } = parseSearchQuery(query)
-  const fuse = new Fuse(entries, FUSE_OPTIONS)
+  if (cachedEntries !== entries || !cachedFuse) {
+    cachedFuse = new Fuse(entries, FUSE_OPTIONS)
+    cachedEntries = entries
+  }
+  const fuse = cachedFuse
 
   const t0 = performance.now()
   const searchTerm = baseQuery || query.trim()

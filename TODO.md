@@ -28,13 +28,9 @@ Six-pass documentation and code audit: consolidated duplicate README content, fi
 
 ### UX / Interaction
 
-- [x] **Keyboard shortcut help dialog** `[ux]` `[a11y]` — Help panel exists with keyboard shortcuts documented; `?` and `Ctrl+/` hotkeys implemented
 - [ ] **Search history** `[ux]` — show last 10 searches in `localStorage` below search field when empty; include recent defects list
-- [x] **Export to formats** `[ux]` — CSV, Markdown, or plain text export (data layer implemented); awaits UI for multi-select batch export
 - [ ] **Audit report builder** `[ux]` — multi-select defects, add occurrence counts/severity overrides, export formatted report in Markdown/plain text
 - [ ] **Component-level filtering** `[ux]` `[corpus]` — secondary filter (modal, form, button, heading, image, etc); add `component` field to schema; update `useDefectSearch`
-- [x] **Print view** `[ux]` `[design]` — @media print styles for clean printing; hides app shell, shows defect details formatted for audit reports
-- [x] **Email results** `[ux]` — mailto: link with pre-populated subject and body for quick sharing of defect details
 - [ ] **Compare mode** `[ux]` — open two defects side-by-side in split view; useful for choosing which SC fits best
 
 ### Corpus & Localization
@@ -51,18 +47,11 @@ Six-pass documentation and code audit: consolidated duplicate README content, fi
 ### Accessibility & Design
 
 - [ ] **Responsive design for tablets** `[design]` `[ux]` — improve tablet UX; adjust layout for 768–1024px breakpoint
-- [x] **Dark mode theming** `[design]` — Neighborly theme on feature/neighborly-theme branch (WCAG AA verified, warm color palette); ready to merge to main
 - [ ] **Reflow at 400% zoom test** `[a11y]` — verify no horizontal scrolling required (WCAG 1.4.10)
 - [ ] **prefers-contrast: more test** `[a11y]` — enable high contrast mode; verify token overrides improve legibility
 
 ### Performance & Optimization
 
-- [ ] **Performance optimization for 100K+ entries** `[perf]` — profile and optimize search latency; consider reducing corpus size or caching strategies
-- [ ] **Lazy load detail panels** `[perf]` — load on demand instead of rendering when selected
-- [ ] **Virtual scrolling for large lists** `[perf]` — implement windowing for result lists with 1000+ entries
-- [ ] **Debounce tuning** `[perf]` — adjust Fuse.js `threshold`, `minMatchCharLength`, or `keys` weights
-- [ ] **Memoize expensive computations** `[perf]` `[code]` — optimize sorting, filtering, and rating aggregations
-- [ ] **Bundle size baseline** `[perf]` — record chunk sizes; target < 200 kB gzipped (with vendor splitting already in place)
 
 ---
 
@@ -91,14 +80,9 @@ Six-pass documentation and code audit: consolidated duplicate README content, fi
 - [ ] **Browser extensions** `[infra]` — Chrome and Firefox extensions (in progress on feature branches)
 - [ ] **Electron desktop app** `[infra]` — cross-platform desktop version (scaffold empty, no timeline)
 - [ ] **Phase 3 public corpus** `[corpus]` `[infra]` — separate repo with 150+ entries; never mixed with personal corpus
-- [x] **GDPR privacy disclosure** `[privacy]` `[infra]` — brief statement for Phase 3 public launch
-- [x] **Tip jar** `[infra]` — GitHub Sponsors link wired; Ko-fi deferred
 
 ### Community & Accessibility
 
-- [x] **Contribution guidelines** `[code]` `[a11y]` — how to improve accessibility or suggest features
-- [x] **Community translations** `[i18n]` `[corpus]` — crowdsourced translations beyond current coverage
-- [x] **Accessibility audit documentation** `[a11y]` — how this app was made accessible
 - [ ] **Case studies** `[a11y]` — accessibility-first design case studies
 
 ### Code Quality & Maintenance
@@ -113,9 +97,6 @@ These are continuous maintenance tasks, not one-off features.
 
 ### Dependency Monitoring
 
-- [x] Monitor @ulam packages for updates (synced to 0.4.x / 0.3.x on May 27)
-- [x] Review breaking changes before upgrading
-- [x] Update CHANGELOG when upgrading dependencies
 
 ### Code Quality & Performance
 

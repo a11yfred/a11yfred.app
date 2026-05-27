@@ -26,7 +26,8 @@ npm run build      # production build
 
 **Phase 1 (Feature Complete):** Done (May 13).
 **Phase 2A (Code Quality):** Done (May 17).
-**Phase 3 (Theme + Extensions):** In progress.
+**Phase 3 (Theme + Extensions):** Done (May 27).
+**Phase 4+ (Extended Features & Ecosystem):** In progress.
 
 See [DONE.md](DONE.md) for detailed phase summaries and [TODO.md](TODO.md) for remaining work.
 

@@ -6,7 +6,7 @@ import AppScreenHeader from './components/AppScreenHeader.jsx'
 import A11yScreenFooter from './components/A11yScreenFooter.jsx'
 import A11yScreenNotFound from './components/A11yScreenNotFound.jsx'
 import AppScreenResults, { A11yResultSkeleton, PinnedSection } from './components/AppScreenResults.jsx'
-import AppSheetDetail from './components/AppSheetDetail.jsx'
+const AppSheetDetail = lazy(() => import('./components/AppSheetDetail.jsx'))
 import AppOverlayManager from './components/AppOverlayManager.jsx'
 import ErrorBoundary from './components/ErrorBoundary.jsx'
 
@@ -198,7 +198,7 @@ function AppContent() {
     dataLoading, dataError, retryData,
     pinnedResults, unpinnedResults, pinnedSearchMatches,
     badgeFilter, badgeFilterLabel, badgeResults,
-    narrowedResults, viewAllLoading, setViewAllLoading,
+    narrowedResults, viewAllResults, viewAllLoading, setViewAllLoading,
     applySortBy,
     resultsCountRef, searchInputRef,
     handleQueryChange, handleSearch, handleSearchFocus, handleSearchBlur,
@@ -513,7 +513,7 @@ function AppContent() {
               <AppScreenResults
                 key="view-all"
                 {...baseListProps}
-                results={applySortBy(getUnpinnedEntries(sortedEntries, pinnedIds))}
+                results={viewAllResults}
                 query=""
               />
             )
@@ -838,20 +838,22 @@ function AppContent() {
         collapseIcon={() => <ChevronsUp size={16} strokeWidth={2} aria-hidden="true" />}
       >
         {displayEntry && (
-          <AppSheetDetail
-            key={displayEntry.id}
-            entry={displayEntry}
-            agenticMode={isAgenticModeEnabled()}
-            focusTrigger={panelFocusTrigger}
-            allEntries={allEntries}
-            onSelect={handleSelectEntry}
-            onSelectRelated={handleSelectRelated}
-            onClose={() => applySelectEntry(null)}
-            onBadgeClick={handleBadgeClick}
-            onCopyEvent={recordCopy}
-            debugPanelCmd={debugPanelCmd}
-            onDebugPanelCmdHandled={() => setDebugPanelCmd(null)}
-          />
+          <Suspense fallback={null}>
+            <AppSheetDetail
+              key={displayEntry.id}
+              entry={displayEntry}
+              agenticMode={isAgenticModeEnabled()}
+              focusTrigger={panelFocusTrigger}
+              allEntries={allEntries}
+              onSelect={handleSelectEntry}
+              onSelectRelated={handleSelectRelated}
+              onClose={() => applySelectEntry(null)}
+              onBadgeClick={handleBadgeClick}
+              onCopyEvent={recordCopy}
+              debugPanelCmd={debugPanelCmd}
+              onDebugPanelCmdHandled={() => setDebugPanelCmd(null)}
+            />
+          </Suspense>
         )}
       </Sheet>
 

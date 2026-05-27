@@ -11,8 +11,6 @@
  * No other file needs to change.
  */
 
-import corpusData from '../data/corpus.json'
-
 // Raw overlay data cache, avoids re-fetching the same JSON module
 const overlayCache = {}
 
@@ -39,6 +37,8 @@ async function loadOverlay(locale) {
 }
 
 export async function getEntries(locale = 'en') {
+  const corpusData = (await import('../data/corpus.json')).default
+
   // All English variants use the corpus directly, no overlay needed
   if (!locale || locale.startsWith('en')) return corpusData
 

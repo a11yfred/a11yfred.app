@@ -1,6 +1,4 @@
-import publicCorpus from '../data/corpus.json'
-import legacyCorpus from '../data/legacy-corpus.json'
-import personalCorpus from '../data/personal-corpus.json'
+
 
 const PRIORITY_ORDER = ['Critical', 'High', 'Medium', 'Low', 'Best Practice']
 

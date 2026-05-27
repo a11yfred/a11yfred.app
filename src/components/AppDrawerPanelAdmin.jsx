@@ -3,9 +3,6 @@ import { setAriaDisabled } from '../utils/ariaDisabled.js'
 import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
 import { X, Copy, Check } from 'lucide-react'
 import './app-drawer-panel.css'
-import publicCorpus from '../data/corpus.json'
-import legacyCorpus from '../data/legacy-corpus.json'
-import personalCorpus from '../data/personal-corpus.json'
 import entrySlug from '../utils/entrySlug.js'
 import A11yAdminDatasetSelector from './A11yAdminDatasetSelector.jsx'
 import { LS_ADMIN_DATASET } from '../utils/constants.js'
@@ -76,6 +73,7 @@ export default function AppDrawerPanelAdmin({
   onClose,
 }) {
   const [dataset, setDataset] = useState(() => getStorage(LS_ADMIN_DATASET, 'public'))
+  const [corpus, setCorpus] = useState([])
   const [scFilter, setScFilter] = useState('all')
   const [levelFilter, setLevelFilter] = useState('all')
   const [versionFilter, setVersionFilter] = useState('all')
@@ -99,12 +97,24 @@ export default function AppDrawerPanelAdmin({
   useEffect(() => { setStorage(LS_ADMIN_DATASET, dataset) }, [dataset])
 
   useEffect(() => {
+    let active = true
+    async function load() {
+      let data
+      if (dataset === 'legacy') data = (await import('../data/legacy-corpus.json')).default
+      else if (dataset === 'personal') data = (await import('../data/personal-corpus.json')).default
+      else data = (await import('../data/corpus.json')).default
+      if (active) setCorpus(data)
+    }
+    load()
+    return () => { active = false }
+  }, [dataset])
+
+  useEffect(() => {
     if (connectivityCheckBtnRef.current) {
       setAriaDisabled(connectivityCheckBtnRef.current, connectivityChecking)
     }
   }, [connectivityChecking])
 
-  const corpus = { public: publicCorpus, legacy: legacyCorpus, personal: personalCorpus }[dataset] ?? publicCorpus
   const stats = useMemo(() => computeStats(corpus), [corpus])
 
   if (!IS_DEV) return null
