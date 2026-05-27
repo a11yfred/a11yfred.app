@@ -83,9 +83,9 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
   const { ratings, rankUp: onRankUp, rankDown: onRankDown, toggleStar: onStar, toggleArchive: onArchive, pinnedIds, togglePin: onPin } = useRatings()
   const t = useT()
   const platformLabels = useMemo(() => ({
-    all:      t('settings.platform_all'),
-    web:      t('settings.platform_web'),
-    native:   t('settings.platform_native'),
+    all: t('settings.platform_all'),
+    web: t('settings.platform_web'),
+    native: t('settings.platform_native'),
     document: t('settings.platform_document'),
   }), [t])
   const itemRefs = useRef({})
@@ -238,19 +238,20 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
   const isPlatformFilterActive = onPlatformChange && platform !== 'all'
   const isBadgeFilterActive = isBadgeFiltered && filterLabel && onClear
   const isWcagVersionFilterActive = !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxVersion !== defaultWcagFilter.maxVersion
-  const isWcagLevelFilterActive = !filterLabel && !isBadgeFiltered && wcagFilter && defaultWcagFilter && wcagFilter.maxLevel !== defaultWcagFilter.maxLevel && wcagFilter.maxLevel !== 'AAA'
+  const isWcagLevelFilterActive = !filterLabel && !isBadgeFiltered && wcagFilter && wcagFilter.maxLevel !== 'AAA'
 
   const activeFilters = useMemo(() => [
     isQueryFilterActive ? { label: `"${query}"`, onRemove: onClearQuery } : null,
     isNarrowFilterActive ? { label: t('results.filter_narrow', { query: narrowQuery }), onRemove: onNarrowExit } : null,
     isPlatformFilterActive ? { label: platformLabels[platform] ?? platform, onRemove: () => onPlatformChange('all') } : null,
     isBadgeFilterActive ? { label: filterLabel, onRemove: onClear } : null,
-    isWcagVersionFilterActive ? { label: `WCAG ${wcagFilter.maxVersion}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxVersion: defaultWcagFilter.maxVersion }) } : null,
-    isWcagLevelFilterActive ? { label: `Level ${wcagFilter.maxLevel}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxLevel: defaultWcagFilter.maxLevel }) } : null,
+    isWcagVersionFilterActive ? { label: `WCAG ${wcagFilter?.maxVersion}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxVersion: defaultWcagFilter.maxVersion }) } : null,
+    isWcagLevelFilterActive ? { label: `Level ${wcagFilter?.maxLevel}`, onRemove: () => setWcagFilter({ ...wcagFilter, maxLevel: 'AAA' }) } : null,
   ].filter(Boolean), [isQueryFilterActive, query, onClearQuery, isNarrowFilterActive, narrowQuery, onNarrowExit, isPlatformFilterActive, platform, platformLabels, onPlatformChange, isBadgeFilterActive, filterLabel, onClear, isWcagVersionFilterActive, wcagFilter, defaultWcagFilter, setWcagFilter, isWcagLevelFilterActive, t])
 
   const hasNonDefaultSort = sortBy !== 'smart'
-  const hasAnyActiveFilter = activeFilters.length > 0 || hasNonDefaultSort
+  const isWcagFilterActiveForClear = (wcagFilter?.maxVersion !== defaultWcagFilter?.maxVersion) || (wcagFilter?.maxLevel !== 'AAA')
+  const hasAnyActiveFilter = isQueryFilterActive || isNarrowFilterActive || isPlatformFilterActive || isBadgeFilterActive || isWcagFilterActiveForClear || hasNonDefaultSort
 
   if (results.length === 0 && platform === 'all') {
     return <Screen
@@ -329,21 +330,21 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
             onSortChange={onSortChange}
             hasNonDefaultSort={hasNonDefaultSort}
           />
-          {onPlatformChange && narrowMode && <hr className="results-narrow-divider" aria-hidden="true" />}
+          {onPlatformChange && narrowMode}
         </>
       )}
 
       {(narrowNoResults || platformNoResults)
         ? <Screen
-            variant="no-results"
-            ariaLabel={t('results.no_results_aria_live')}
-            heading={t('results.no_results_heading', { query: narrowNoResults ? narrowQuery : query })}
-            body={t('results.no_results_body')}
-            activeFilters={activeFilters}
-            action={narrowNoResults || hasAnyActiveFilter ? onClear : undefined}
-            actionLabel={narrowNoResults || hasAnyActiveFilter ? t('results.no_results_clear_filters') : undefined}
-            onOpenSettings={onOpenSettings}
-          />
+          variant="no-results"
+          ariaLabel={t('results.no_results_aria_live')}
+          heading={t('results.no_results_heading', { query: narrowNoResults ? narrowQuery : query })}
+          body={t('results.no_results_body')}
+          activeFilters={activeFilters}
+          action={narrowNoResults || hasAnyActiveFilter ? onClear : undefined}
+          actionLabel={narrowNoResults || hasAnyActiveFilter ? t('results.no_results_clear_filters') : undefined}
+          onOpenSettings={onOpenSettings}
+        />
         : <ul ref={listRef} className={`result-list${selected ? ' result-list--has-selection' : ''}${hasPinnedItems ? ' result-list--has-pinned' : ''}`} aria-label={t('results.aria_label')}>
           {displayResults.slice(0, visibleCount).map((entry, index) => {
             const showAdAfter = showAds && adFrequency > 0 && (index + 1) % adFrequency === 0
@@ -384,7 +385,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
                   itemRefs={itemRefs}
                   snapshotPositions={snapshotPositions}
                 />
-                {showAdAfter && <li key={`ad-${entry.id}`} role="presentation"><A11yResultAd /></li>}
+                {showAdAfter && <A11yResultAd key={`ad-${entry.id}`} />}
               </React.Fragment>
             )
           })}
@@ -403,7 +404,7 @@ export default function AppScreenResults({ results, selected, onSelect, query, c
             className="btn-back-to-top"
             onClick={() => {
               const drawer = document.querySelector('.drawer-panel.is-open')
-              ;(drawer ?? window).scrollTo({ top: 0, behavior: 'smooth' })
+                ; (drawer ?? window).scrollTo({ top: 0, behavior: 'smooth' })
               countHeadingRef.current?.focus({ preventScroll: true })
             }}
           >

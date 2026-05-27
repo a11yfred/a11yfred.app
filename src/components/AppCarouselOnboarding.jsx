@@ -39,7 +39,7 @@ const SLIDES = [
 export default function AppCarouselOnboarding({ onClose }) {
   const t = useT()
   const dir = useDir()
-  const FwdArrow  = dir === 'rtl' ? CircleArrowLeft  : CircleArrowRight
+  const FwdArrow = dir === 'rtl' ? CircleArrowLeft : CircleArrowRight
   const BackArrow = dir === 'rtl' ? CircleArrowRight : CircleArrowLeft
 
   const [step, setStep] = useState(0)
@@ -84,7 +84,7 @@ export default function AppCarouselOnboarding({ onClose }) {
   const SlideIcon = slide.Icon
 
   return (
-    <div className="onboarding-panel page-panel" style={{ '--onboarding-grad-angle': `${gradAngle}deg` }}>
+    <div className="onboarding-panel" style={{ '--onboarding-grad-angle': `${gradAngle}deg` }}>
       <div className="onboarding-deco" aria-hidden="true">
         <Hand size={64} className="onboarding-deco__icon" />
         <ClipboardPaste size={64} className="onboarding-deco__icon" />
@@ -99,12 +99,12 @@ export default function AppCarouselOnboarding({ onClose }) {
       <div className="onboarding-content">
         <FadeTransition watchKey={step} className="onboarding-slide" direction={slideDir}>
           {slide.isWelcome && (
-            <h1 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
+            <h1 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading page-title">
               {t(slide.headingKey)}
             </h1>
           )}
           {!slide.isWelcome && (
-            <h2 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading">
+            <h2 ref={stepHeadingRef} tabIndex={-1} className="onboarding-step-heading page-title">
               <SlideIcon size={36} strokeWidth={1.5} className="onboarding-step-icon" aria-hidden="true" />
               {t(slide.headingKey)}
             </h2>

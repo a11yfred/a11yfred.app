@@ -1,18 +1,28 @@
+/* ==========================================================================
+   CSS Section Hierarchy:
+   1. Onboarding Panel & Layout (Panel container, decorative bg, header/content areas)
+   2. Onboarding Steps (Headings, icons, body text)
+   3. Navigation Controls (Skip buttons, arrows, indicators, dot list)
+   4. Help Tour Widget (Promo banners, hover transitions, layouts)
+   ========================================================================== */
 
-/* â"€â"€â"€ Onboarding panel â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ==========================================================================
+   1. Onboarding Panel & Layout
+   ========================================================================== */
 
 .onboarding-panel {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(var(--onboarding-grad-angle, 135deg), var(--color-accent-bg) 0%, var(--color-bg-subtle) 100%);
-  transition: background var(--duration-base) var(--ease-out);
-  border: var(--size-border-width-thin) solid var(--color-accent-text);
-  border-radius: var(--rounded-lg);
+  gap: var(--size-4);
+  min-height: 66vh;
   padding: var(--size-6);
   margin-block: auto;
-  min-height: 66vh;
   overflow: hidden;
+  background: linear-gradient(var(--onboarding-grad-angle, 135deg), var(--color-accent-bg) 0%, var(--color-bg-subtle) 100%);
+  border: var(--size-border-width-thin) solid var(--color-accent-text);
+  border-radius: var(--rounded-lg);
+  transition: background var(--duration-base) var(--ease-out);
 }
 
 .onboarding-deco {
@@ -30,49 +40,58 @@
 }
 
 .onboarding-title {
+  margin: 0;
   font-family: var(--font-display);
   font-size: var(--fs-sub);
   font-weight: 800;
   color: var(--color-text-heading);
   letter-spacing: 0.02em;
-  margin: 0;
 }
-.onboarding-title:focus { outline: none; }
+
+.onboarding-title:focus {
+  outline: none;
+}
 
 .onboarding-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: var(--size-4);
+  flex: 1;
   min-height: calc(var(--size-4) * 10);
   overflow: hidden;
 }
 
+/* ==========================================================================
+   2. Onboarding Steps
+   ========================================================================== */
+
 .onboarding-step-heading {
-  font-family: var(--font-display);
-  font-size: var(--fs-h2);
-  font-weight: 800;
-  color: var(--color-text-heading);
-  line-height: 1.15;
-  margin: 0;
   display: flex;
   align-items: center;
   gap: var(--size-1);
+  line-height: 1.15;
 }
-.onboarding-step-heading:focus:not(:focus-visible) { outline: none; }
+
+.onboarding-step-heading:focus:not(:focus-visible) {
+  outline: none;
+}
 
 .onboarding-step-icon {
-  color: var(--color-accent-text);
   flex-shrink: 0;
+  color: var(--color-accent-text);
 }
 
 .onboarding-step-body {
+  margin-bottom: 0;
   font-size: var(--fs-sub);
   color: var(--color-text-heading);
   line-height: 1.6;
-  margin-bottom: 0;
 }
+
+/* ==========================================================================
+   3. Navigation Controls
+   ========================================================================== */
 
 .onboarding-footer {
   display: flex;
@@ -89,15 +108,15 @@
 }
 
 .btn-onboarding-skip:not([aria-disabled="true"]):hover {
-  background: transparent;
   color: var(--color-accent-text);
   text-decoration: none;
+  background: transparent;
 }
 
 .btn-onboarding-skip:not([aria-disabled="true"]):focus-visible {
+  text-decoration: none;
   background: none;
   outline: 1px solid var(--color-accent-text);
-  text-decoration: none;
 }
 
 .onboarding-nav {
@@ -116,13 +135,13 @@
 }
 
 .btn-onboarding-arrow {
-  background: none;
-  border: none;
+  display: flex;
+  align-items: center;
   padding: 0;
   cursor: pointer;
   color: var(--color-accent-text);
-  display: flex;
-  align-items: center;
+  background: none;
+  border: none;
   border-radius: var(--rounded);
   transition: opacity var(--duration-fast);
 }
@@ -138,20 +157,20 @@
 }
 
 .onboarding-dots {
-  list-style: none;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--size-2);
   flex: 1;
-  justify-content: center;
+  list-style: none;
 }
 
 .onboarding-dot {
+  display: block;
   width: var(--size-2);
   height: var(--size-2);
   border-radius: var(--rounded-full);
   background: var(--color-text-muted);
-  display: block;
   transition: box-shadow var(--duration-fast);
 }
 
@@ -159,21 +178,25 @@
   box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 3.5px var(--color-text-muted);
 }
 
+/* ==========================================================================
+   4. Help Tour Widget
+   ========================================================================== */
+
 .btn-help-tour {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   align-self: center;
   width: 100%;
   height: var(--size-input-big);
   padding: 0 var(--size-2);
-  border-radius: var(--rounded-lg);
   font-family: var(--font-display);
   font-size: var(--fs-sub);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--color-accent-bg);
   background: linear-gradient(135deg, var(--color-accent) 0%, color-mix(in srgb, var(--color-accent) 70%, var(--color-accent-bg)) 100%);
   background-size: 200% 200%;
   background-position: 0% 0%;
-  color: var(--color-accent-bg);
+  border-radius: var(--rounded-lg);
   transition: background-position var(--duration-base) var(--ease-in-out);
 }
 
@@ -181,23 +204,10 @@
   background-position: 100% 100%;
 }
 
+
+
 @media (width >= 768px) {
   .btn-help-tour {
     width: auto;
   }
 }
-
-.btn-help-tour--with-margin {
-  margin-bottom: var(--size-3);
-}
-
-
-
-
-
-
-
-
-
-
-

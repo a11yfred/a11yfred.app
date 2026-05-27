@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Screen as ScreenModule } from '@ulam/ube'
+import { Button } from '@ulam/ube'
 import { RotateCcw } from 'lucide-react'
 
 function DefaultSearchIcon() {
@@ -14,39 +14,35 @@ function DefaultSearchIcon() {
   )
 }
 
-let ScreenComponent = ScreenModule
-if (!ScreenComponent) {
-  // Fallback: render as a div if import fails
-  ScreenComponent = function FallbackScreen({ variant = 'no-results', ariaLabel, heading, body, activeFilters, action, actionLabel, onMount, children }) {
-    React.useEffect(() => {
-      onMount?.()
-    }, [onMount])
+const ScreenComponent = function FallbackScreen({ variant = 'no-results', ariaLabel, heading, body, activeFilters, action, actionLabel, onMount, children }) {
+  React.useEffect(() => {
+    onMount?.()
+  }, [onMount])
 
-    return (
-      <div className={`screen screen--${variant}`} role="region" aria-label={ariaLabel}>
-        {heading && <h2 className="screen__heading">{heading}</h2>}
-        <DefaultSearchIcon />
-        {body && <p className="screen__body">{body}</p>}
-        {activeFilters && activeFilters.length > 0 && (
-          <div className="screen-filters">
-            {activeFilters.map((filter, i) => (
-              <span key={i}>{filter.label}</span>
-            ))}
-          </div>
-        )}
-        {action && (
-          <Button
-            variant="primary"
-            onClick={action}
-            icon={<RotateCcw size={8} aria-hidden="true" />}
-          >
-            {actionLabel}
-          </Button>
-        )}
-        {children}
-      </div>
-    )
-  }
+  return (
+    <div className={`screen screen--${variant}`} role="region" aria-label={ariaLabel}>
+      {heading && <h2 className="screen__heading">{heading}</h2>}
+      <DefaultSearchIcon />
+      {body && <p className="screen__body">{body}</p>}
+      {activeFilters && activeFilters.length > 0 && (
+        <div className="screen-filters">
+          {activeFilters.map((filter, i) => (
+            <span key={i}>{filter.label}</span>
+          ))}
+        </div>
+      )}
+      {action && (
+        <Button
+          variant="primary"
+          onClick={action}
+          icon={<RotateCcw size={8} aria-hidden="true" />}
+        >
+          {actionLabel}
+        </Button>
+      )}
+      {children}
+    </div>
+  )
 }
 
 export default ScreenComponent

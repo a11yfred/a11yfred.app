@@ -1,24 +1,57 @@
-/* ═══════════════════════════════════════════════════════════
-   App Shell & Screen Component Styles
+/* ==========================================================================
+   CSS Section Hierarchy:
+   1. Base & Global Variables (Element rules, root parameters)
+   2. App Shell Container (Main layouts, responsive boundaries)
+   3. Page Header (Compacts, layouts, absolute button sections)
+   4. Page Brand & Typography (Title links, logos, font titles, subtitles)
+   5. Page Footer & Credits (Legal notes, inline links, icons)
+   6. Form & Control Widgets (Switches, selects, radio chip grids, custom variables)
+   7. Modals, Alerts & Dialogs (Error banners, overlay borders)
+   8. Print Rules
+   ========================================================================== */
 
-   Styles for:
-   - App container & layout structure
-   - AppScreenHeader / A11yTitle (page header, title, tagline)
-   - A11yScreenFooter (page footer, links, credit)
-   - A11yScreenNotFound (404 page)
-   - Dialogs & overlays
-   ════════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   1. Base & Global Variables
+   ========================================================================== */
 
-p {
-  line-height: var(--line-height-body);
-  margin-bottom: var(--size-8);
+:root {
+  --toggle-radius: var(--rounded-full);
+  --inset-input-icon: var(--size-2);
+  --size-border-width-thick: 3px;
+  --toggle-thumb-size: calc(var(--toggle-height) - var(--size-border-width-normal));
+  --toggle-thumb-transition-offset: calc(var(--size-touch-target) - var(--toggle-thumb-size) - 1px);
+  --toggle-border-width: calc(var(--toggle-thumb-size) / 12);
+  --toggle-on-width: calc(var(--toggle-thumb-size) / 12);
+  --toggle-on-height: calc(var(--toggle-thumb-size) / 2);
+  --toggle-off-size: calc(var(--toggle-thumb-size) / 2);
 }
 
+p {
+  margin-bottom: var(--size-8);
+  line-height: var(--line-height-body);
+}
+
+/* ==========================================================================
+   2. App Shell Container
+   ========================================================================== */
+
 .app-container {
-  padding: var(--size-2) var(--size-4) var(--size-5);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  padding: var(--size-2) var(--size-4) var(--size-5);
+}
+
+.app-background {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 @media (width >= 768px) {
@@ -29,33 +62,21 @@ p {
   }
 }
 
-.app-background {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.app-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Page Header
-   ════════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   3. Page Header
+   ========================================================================== */
 
 .page-header {
   position: relative;
   z-index: 1;
-  text-align: center;
-  margin-bottom: var(--size-8);
   padding-top: calc(var(--size-8) + var(--size-6));
+  margin-bottom: var(--size-8);
+  text-align: center;
 }
 
 .page-header--compact {
-  margin-bottom: var(--size-2);
   padding-top: 0;
+  margin-bottom: var(--size-2);
 }
 
 .page-header__actions {
@@ -72,7 +93,9 @@ p {
   left: 0;
 }
 
-/* ─── GitHub Link ─────────────────────────────────────────── */
+/* ==========================================================================
+   4. Page Brand & Typography
+   ========================================================================== */
 
 .header-link-github {
   position: absolute;
@@ -82,29 +105,31 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--size-1);
+  height: var(--size-touch-target);
+  padding: 0 var(--size-2);
   font-size: var(--fs-body);
   font-weight: 500;
   color: var(--color-accent-text);
   text-decoration: underline;
   text-underline-offset: var(--text-underline-offset);
   white-space: nowrap;
-  padding: 0 var(--size-2);
-  height: var(--size-touch-target);
   background: none;
   border: none;
   border-radius: var(--rounded);
-  transition: background-color var(--duration-fast), color var(--duration-fast);
+  transition:
+    background-color var(--duration-fast),
+    color var(--duration-fast);
 }
 
 [dir="rtl"] .header-link-github {
-  left: auto;
   right: 0;
+  left: auto;
 }
 
 .header-link-github:hover {
-  background: var(--color-bg-subtle);
   color: var(--color-text-heading);
   text-decoration: none;
+  background: var(--color-bg-subtle);
 }
 
 .header-link-github svg {
@@ -112,8 +137,6 @@ p {
   height: 0.8em;
   opacity: 0.7;
 }
-
-/* ─── Page Title ──────────────────────────────────────────── */
 
 .page-title-link {
   color: inherit;
@@ -135,9 +158,9 @@ p {
   font-family: var(--font-display);
   font-size: clamp(2rem, 4rem, 5rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
   color: var(--color-text-heading);
   line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .page-title:focus {
@@ -149,58 +172,30 @@ p {
   align-items: center;
   gap: 0.02em;
   margin-left: 0.1em;
-  vertical-align: middle;
   color: var(--color-accent-text);
+  vertical-align: middle;
 }
-
-/* ─── Tagline ─────────────────────────────────────────────── */
 
 .page-tagline {
-  font-size: var(--fs-body);
-  color: var(--color-text-body);
-  margin-top: var(--size-1);
-  margin-bottom: 0;
   max-width: 50%;
   margin-inline: auto;
-  text-align: center;
-  line-height: 1.25em;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   404 Not Found
-   ════════════════════════════════════════════════════════════ */
-
-.not-found {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--size-4);
-  min-height: 40vh;
-  text-align: center;
-  padding: var(--size-8) var(--size-4);
-}
-
-.not-found__heading {
-  font-size: var(--fs-heading);
-  font-weight: 700;
-  color: var(--color-text-heading);
-}
-
-.not-found__body {
+  margin-top: var(--size-1);
+  margin-bottom: 0;
+  font-size: var(--fs-body);
   color: var(--color-text-body);
-  max-width: 36ch;
+  line-height: 1.25em;
+  text-align: center;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   Page Footer
-   ════════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   5. Page Footer & Credits
+   ========================================================================== */
 
 .page-footer {
-  border-top: 1px solid var(--color-border);
-  margin-top: var(--size-8);
   padding: var(--size-8) 0;
+  margin-top: var(--size-8);
   text-align: center;
+  border-top: 1px solid var(--color-border);
 }
 
 .page-footer p {
@@ -208,36 +203,6 @@ p {
 }
 
 
-/* ─── Credit ──────────────────────────────────────────────── */
-
-.footer-credit {
-  font-size: var(--fs-body);
-  line-height: 1;
-  margin-bottom: 0;
-  width: 100%;
-}
-
-@media (width >= 768px) {
-  .footer-credit {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-.footer-credit-left {
-  display: block;
-}
-
-@media (width >= 768px) {
-  .footer-credit-left {
-    flex: 1;
-  }
-}
-
-.footer-privacy-link {
-  white-space: nowrap;
-}
 
 .footer-credit__name {
   font-family: Rockwell, "Rockwell Extra Bold", Georgia, serif;
@@ -246,15 +211,13 @@ p {
   letter-spacing: 0.01em;
 }
 
-/* ─── Links ───────────────────────────────────────────────── */
-
 .footer-link {
   display: inline;
+  font-size: inherit;
   color: var(--color-accent-text);
   text-decoration: underline;
   text-underline-offset: var(--text-underline-offset);
   white-space: nowrap;
-  font-size: inherit;
 }
 
 .footer-link:hover {
@@ -270,26 +233,26 @@ p {
   display: inline-block;
   width: 0.8em;
   height: 0.8em;
-  opacity: 0.7;
   margin-right: var(--size-1);
+  opacity: 0.7;
   vertical-align: middle;
 }
 
-.external-link-icon {
-  width: var(--size-3);
-  height: var(--size-3);
-  vertical-align: middle;
-  margin-left: var(--size-1);
-}
 
-/* Temporary override until package update */
-.form-input--with-clear .form-input__clear {
-  right: var(--size-2);
-  padding: var(--size-2);
-}
 
-.btn--size-compact {
-  height: var(--size-8);
+
+
+/* ==========================================================================
+   6. Form & Control Widgets
+   ========================================================================== */
+
+
+
+.btn--primary,
+.btn--secondary,
+.btn--tertiary,
+.btn--warning {
+  border-width: var(--size-border-width-thin);
 }
 
 .control {
@@ -297,10 +260,11 @@ p {
   height: var(--size-4);
 }
 
-.radio-chip__indicator {
-  width: var(--size-3);
-  height: var(--size-3);
+input[type="radio"].control:checked {
+  border-width: var(--size-border-width-normal);
 }
+
+
 
 .screen svg {
   width: var(--size-8);
@@ -315,30 +279,36 @@ p {
   margin-bottom: var(--size-1);
 }
 
-.info-box {
-  margin: var(--size-2) var(--size-2) var(--size-8);
-  border-left-width: var(--size-border-width-thick);
+.panel-field-error {
+  margin-top: var(--size-2);
 }
 
-.info-box__icon {
-  margin-top: var(--size-1);
-}
 
-:root {
-  --toggle-radius: var(--rounded-full);
-  --inset-input-icon: var(--size-2);
-  --size-border-width-thick: 3px;
-  --toggle-thumb-size: calc(var(--toggle-height) - var(--size-border-width-normal));
-  --toggle-thumb-transition-offset: calc(var(--size-touch-target) - var(--toggle-thumb-size) - 1px);
-  --toggle-border-width: calc(var(--toggle-thumb-size) / 12);
-  --toggle-on-width: calc(var(--toggle-thumb-size) / 12);
-  --toggle-on-height: calc(var(--toggle-thumb-size) / 2);
-  --toggle-off-size: calc(var(--toggle-thumb-size) / 2);
+
+.toggle__track {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border-control);
 }
 
 .toggle__thumb,
 .toggle__off {
   border-radius: var(--rounded-full);
+}
+
+.toggle__thumb {
+  background: var(--color-border);
+  outline: var(--size-border-width-thin) solid var(--color-border-control-accent);
+  transform: var(--transform-center-y);
+}
+
+[data-theme="dark"] .toggle__thumb {
+  background: var(--color-text-disabled);
+  outline-color: var(--color-border);
+}
+
+[data-theme="dark"] .toggle:not(:has(.toggle__input:checked)) .toggle__track {
+  background: var(--color-bg-subtle);
+  border-color: var(--color-border-control-accent);
 }
 
 input[role="switch"]:not([aria-disabled="true"]):focus-visible + span,
@@ -350,63 +320,33 @@ input[role="switch"][aria-disabled="true"]:focus-visible + span {
   gap: var(--size-2);
 }
 
-.panel-toggle-row .toggle {
-  margin-top: var(--size-1);
-}
-
-[class*="badge--"] {
-  padding: var(--size-1) var(--size-2);
-}
-
-
-
-.btn--primary,
-.btn--secondary,
-.btn--tertiary,
-.btn--warning {
-  border-width: var(--size-border-width-thin);
-}
-
-
-
-.select {
-  min-width: calc(var(--size-10) * 2);
-  padding: 0 var(--size-8) 0 var(--size-2);
-}
-
-.panel-field-error {
-  margin-top: var(--size-2);
-}
-
-.screen__action-inline,
-.screen__settings-link {
-  text-decoration-thickness: var(--size-border-width-thin);
-  text-underline-offset: var(--text-underline-offset);
-}
-
-.toggle__thumb {
-  transform: var(--transform-center-y);
-  background: var(--color-border);
-  outline: var(--size-border-width-thin) solid var(--color-border-control-accent);
-}
-
 .radio-chip-group .sr-only {
   width: var(--size-border-width-thin);
   height: var(--size-border-width-thin);
   margin: calc(var(--size-border-width-thin) * -1);
 }
 
+.panel-toggle-row .toggle {
+  margin-top: var(--size-1);
+}
+
 .panel-toggle-row .panel-pending-note {
   margin-top: 0;
 }
 
+[class*="badge--"] {
+  padding: var(--size-1) var(--size-2);
+}
 
-
+.select {
+  min-width: calc(var(--size-10) * 2);
+  padding: 0 var(--size-8) 0 var(--size-2);
+}
 
 .radio-chip:first-child {
   flex: 1 0 100%;
-  border-radius: var(--rounded) var(--rounded) 0 0;
   margin-left: 0;
+  border-radius: var(--rounded) var(--rounded) 0 0;
 }
 
 .radio-chip:nth-child(2) {
@@ -416,6 +356,20 @@ input[role="switch"][aria-disabled="true"]:focus-visible + span {
 
 .radio-chip:last-child {
   border-radius: 0 0 var(--rounded) 0;
+}
+
+[dir="rtl"] .radio-chip:first-child {
+  margin-right: 0;
+  border-radius: var(--rounded) var(--rounded) 0 0;
+}
+
+[dir="rtl"] .radio-chip:nth-child(2) {
+  margin-right: 0;
+  border-radius: 0 0 var(--rounded) 0;
+}
+
+[dir="rtl"] .radio-chip:last-child {
+  border-radius: 0 0 0 var(--rounded);
 }
 
 @media (width >= 768px) {
@@ -432,26 +386,10 @@ input[role="switch"][aria-disabled="true"]:focus-visible + span {
   .radio-chip:last-child {
     border-radius: 0 var(--rounded) var(--rounded) 0;
   }
-}
 
-[dir="rtl"] .radio-chip:first-child {
-  border-radius: var(--rounded) var(--rounded) 0 0;
-  margin-right: 0;
-}
-
-[dir="rtl"] .radio-chip:nth-child(2) {
-  margin-right: 0;
-  border-radius: 0 0 var(--rounded) 0;
-}
-
-[dir="rtl"] .radio-chip:last-child {
-  border-radius: 0 0 0 var(--rounded);
-}
-
-@media (width >= 768px) {
   [dir="rtl"] .radio-chip:first-child {
-    border-radius: 0 var(--rounded) var(--rounded) 0;
     margin-right: 0;
+    border-radius: 0 var(--rounded) var(--rounded) 0;
   }
 
   [dir="rtl"] .radio-chip:nth-child(2) {
@@ -464,9 +402,18 @@ input[role="switch"][aria-disabled="true"]:focus-visible + span {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   Dialog & Overlay Styles
-   ════════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   7. Modals, Alerts & Dialogs
+   ========================================================================== */
+
+.info-box {
+  margin: var(--size-2) var(--size-2) var(--size-8);
+  border-left-width: var(--size-border-width-thick);
+}
+
+.info-box__icon {
+  margin-top: var(--size-1);
+}
 
 dialog,
 .overlay-dialog,
@@ -474,9 +421,9 @@ dialog,
   border-radius: var(--rounded);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   Print Styles
-   ════════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   8. Print Rules
+   ========================================================================== */
 
 @media print {
   .page-header,
@@ -488,27 +435,3 @@ dialog,
     content: none;
   }
 }
-
-
-
-[data-theme="dark"] .toggle__thumb {
-  background: var(--color-text-disabled);
-  outline-color: var(--color-border);
-}
-
-input[type="radio"].control:checked {
-  border-width: var(--size-border-width-normal);
-}
-
-.toggle__track {
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border-control);
-}
-
-[data-theme="dark"] .toggle:not(:has(.toggle__input:checked)) .toggle__track {
-  background: var(--color-bg-subtle);
-  border-color: var(--color-border-control-accent);
-}
-
-
-

@@ -1,5 +1,14 @@
+/* ==========================================================================
+   CSS Section Hierarchy:
+   1. Search Bar & Basic Controls (Label, wrappers, inputs, states)
+   2. Typewriter Effect (Animations, fade animations, phrase styling)
+   3. View All & Confirms (Banners, confirmations, dont-ask toggles)
+   4. Markers & Back to Top (End markers, floating top buttons)
+   ========================================================================== */
 
-/* â"€â"€â"€ Search bar â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ==========================================================================
+   1. Search Bar & Basic Controls
+   ========================================================================== */
 
 .search-bar {
   display: block;
@@ -8,13 +17,12 @@
 
 .search-label {
   display: block;
+  margin-bottom: 0;
   font-size: var(--fs-body);
   font-weight: 500;
   color: var(--color-text-heading);
-  margin-bottom: 0;
   white-space: nowrap;
 }
-
 
 .search-row,
 .results-narrow-row {
@@ -35,45 +43,42 @@ input.search-input {
   width: 100%;
   height: var(--size-input-big);
   padding: var(--size-3) var(--size-4);
+  margin-bottom: 0;
+  box-sizing: border-box;
   font-size: var(--fs-sub);
+  color: var(--color-text-heading);
   line-height: 1.5;
   background: var(--color-bg-subtle);
   border: var(--size-border-width-thin) solid var(--color-border-control);
   border-radius: var(--rounded);
-  color: var(--color-text-heading);
-  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
-  box-sizing: border-box;
-  margin-bottom: 0;
   box-shadow: 0 0 0 1px #333;
-}
-
-[data-theme="dark"] input.search-input {
-  box-shadow: 0 0 0 1px #e0e0e0;
+  transition:
+    border-color var(--duration-fast),
+    box-shadow var(--duration-fast);
 }
 
 input.search-input--has-value {
-  padding-right: var(--size-10); /* space for clear button */
+  padding-right: var(--size-10);
 }
 
 input.search-input:focus {
   border-color: var(--color-focus);
 }
 
-
 .search-hint {
-  font-size: var(--fs-body);
   margin-top: var(--size-3);
   margin-bottom: 0;
+  font-size: var(--fs-body);
 }
 
 .search-hint-link {
+  padding: 0;
   font-size: inherit;
   color: var(--color-accent-text);
+  text-decoration: underline;
+  cursor: pointer;
   background: none;
   border: none;
-  padding: 0;
-  cursor: pointer;
-  text-decoration: underline;
 }
 
 .search-hint-link:hover {
@@ -84,7 +89,13 @@ input.search-input:focus {
   font: inherit;
 }
 
-/* â"€â"€â"€ Search typewriter â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+[data-theme="dark"] input.search-input {
+  box-shadow: 0 0 0 1px #e0e0e0;
+}
+
+/* ==========================================================================
+   2. Typewriter Effect
+   ========================================================================== */
 
 .search-label-row {
   display: flex;
@@ -95,43 +106,36 @@ input.search-input:focus {
 }
 
 .search-typewriter {
-  font-size: var(--fs-body);
-  white-space: nowrap;
-  overflow: hidden;
   display: flex;
   align-items: center;
   gap: var(--size-1);
   min-width: 0;
+  font-size: var(--fs-body);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .search-typewriter:focus-within {
   overflow: visible;
 }
 
-@keyframes typewriter-fade {
-  0%   { transform: translateY(4px); }
-  15%  { transform: translateY(0); }
-  85%  { transform: translateY(0); }
-  100% { transform: translateY(-4px); }
-}
-
 .search-typewriter__phrase {
   display: inline-block;
-  animation: typewriter-fade 2.5s ease both;
-  font-style: italic;
-  color: var(--color-accent-text);
-  overflow: hidden;
-  text-overflow: ellipsis;
   max-width: 18ch;
-  background: none;
-  border: none;
   padding: 0;
   font-size: inherit;
   font-family: inherit;
-  cursor: pointer;
+  font-style: italic;
+  color: var(--color-accent-text);
   text-decoration: underline;
   text-decoration-style: dotted;
   text-underline-offset: var(--text-underline-offset);
+  cursor: pointer;
+  background: none;
+  border: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: typewriter-fade 2.5s ease both;
   transition: color var(--duration-fast);
 }
 
@@ -146,36 +150,41 @@ input.search-input:focus {
   text-decoration: none;
 }
 
-/* â"€â"€â"€ End of Results marker â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+@keyframes typewriter-fade {
+  0% {
+    transform: translateY(4px);
+  }
 
-.results-end-marker {
-  text-align: center;
-  font-size: var(--fs-body);
-  color: var(--color-text-muted);
-  margin: var(--size-6) 0 0;
-}
+  15% {
+    transform: translateY(0);
+  }
 
-@media print {
-  .search-bar {
-    display: none !important;
+  85% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-4px);
   }
 }
 
-/* â"€â"€â"€ View All section â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ==========================================================================
+   3. View All & Confirms
+   ========================================================================== */
 
 .view-all-section {
-  margin-top: 0;
   padding-top: var(--size-5);
+  margin-top: 0;
 }
 
 .btn-view-all {
   display: block;
   width: 100%;
-  padding: var(--size-3) var(--size-4);
-  border-radius: var(--rounded);
-  font-size: var(--fs-body);
   min-height: var(--size-input-big);
+  padding: var(--size-3) var(--size-4);
+  font-size: var(--fs-body);
   text-align: center;
+  border-radius: var(--rounded);
 }
 
 .view-all-confirm-filters {
@@ -203,8 +212,8 @@ input.search-input:focus {
 }
 
 .view-all-confirm-stat:only-child {
-  list-style: none;
   margin-inline-start: calc(-1 * var(--size-5));
+  list-style: none;
 }
 
 .view-all-confirm-body {
@@ -216,8 +225,8 @@ input.search-input:focus {
   display: flex;
   align-items: center;
   gap: var(--size-2);
-  margin-top: var(--size-4);
   padding-inline-start: var(--size-3);
+  margin-top: var(--size-4);
   font-size: var(--fs-body);
   color: var(--color-text-heading);
   cursor: pointer;
@@ -230,6 +239,16 @@ input.search-input:focus {
   background: var(--color-bg-subtle);
 }
 
+/* ==========================================================================
+   4. Markers & Back to Top
+   ========================================================================== */
+
+.results-end-marker {
+  margin: var(--size-6) 0 0;
+  font-size: var(--fs-body);
+  color: var(--color-text-muted);
+  text-align: center;
+}
 
 .btn-back-to-top {
   display: flex;
@@ -237,21 +256,19 @@ input.search-input:focus {
   justify-content: center;
   gap: var(--size-2);
   width: calc(100% - 2 * var(--size-4));
+  min-height: var(--size-input-big);
   padding: var(--size-3) var(--size-4);
   margin-inline: var(--size-4);
-  border-radius: var(--rounded);
   font-size: var(--fs-body);
-  min-height: var(--size-input-big);
+  border-radius: var(--rounded);
 }
 
+/* ==========================================================================
+   5. Print Overrides
+   ========================================================================== */
 
-
-
-
-
-
-
-
-
-
-
+@media print {
+  .search-bar {
+    display: none !important;
+  }
+}

@@ -1,5 +1,14 @@
+/* ==========================================================================
+   CSS Section Hierarchy:
+   1. Theme-level Overrides (Fiesta themes, radial backgrounds, focus styles)
+   2. Canvas Elements (Confetti and sparkles overlays)
+   3. Fiesta Banners (Floating badges and bounce animations)
+   4. Floating Music Player (Player button, hover scales, and keyboard focus states)
+   ========================================================================== */
 
-/* ─── Fiesta mode ──────────────────────────────────────────────────────────── */
+/* ==========================================================================
+   1. Theme-level Overrides
+   ========================================================================= */
 
 [data-theme="fiesta"] body {
   background-image: radial-gradient(
@@ -8,31 +17,55 @@
     var(--color-bg-subtle) 45%,
     var(--color-bg) 100%
   );
+  background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-repeat: no-repeat;
 }
 
 [data-theme="fiesta"] :focus-visible {
   outline-style: dotted;
 }
 
-/* Fixed lower-right badge shown only in fiesta mode */
+/* ==========================================================================
+   2. Canvas Elements
+   ========================================================================== */
+
+.confetti-canvas,
+.sparkles-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.confetti-canvas {
+  z-index: 198;
+}
+
+.sparkles-canvas {
+  z-index: 199;
+}
+
+/* ==========================================================================
+   3. Fiesta Banners
+   ========================================================================== */
+
 .fiesta-banner {
   position: fixed;
   bottom: var(--size-4);
   right: var(--size-4);
   z-index: 190;
   padding: var(--size-2) var(--size-4);
-  background: var(--color-accent-bg);
-  color: var(--color-accent-text);
-  border: 2px solid var(--color-accent);
-  border-radius: var(--rounded-full);
   font-family: var(--font-display);
   font-size: var(--fs-body);
   font-weight: 700;
+  color: var(--color-accent-text);
   white-space: nowrap;
   cursor: default;
+  background: var(--color-accent-bg);
+  border: 2px solid var(--color-accent);
+  border-radius: var(--rounded-full);
   animation: fiesta-badge-bounce 1.4s ease-in-out infinite;
 }
 
@@ -41,7 +74,8 @@
 }
 
 @keyframes fiesta-badge-bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) rotate(-1deg);
   }
 
@@ -56,58 +90,37 @@
   }
 }
 
-/* Fiesta mode canvases (confetti + sparkles) */
-
-.confetti-canvas,
-.sparkles-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.confetti-canvas { z-index: 198; }
-.sparkles-canvas { z-index: 199; }
-
-/* Floating music player */
+/* ==========================================================================
+   4. Floating Music Player
+   ========================================================================== */
 
 .fiesta-player {
   position: fixed;
   z-index: 195;
-  width: var(--size-touch-target);
-  height: var(--size-touch-target);
-  border-radius: var(--rounded-full);
-  background: var(--color-accent);
-  color: var(--color-accent-bg);
-  border: 2px solid var(--color-accent-text);
   display: flex;
   align-items: center;
   justify-content: center;
+  width: var(--size-touch-target);
+  height: var(--size-touch-target);
   cursor: pointer;
+  color: var(--color-accent-bg);
+  background: var(--color-accent);
+  border: 2px solid var(--color-accent-text);
+  border-radius: var(--rounded-full);
   box-shadow: 0 2px 10px rgb(0 0 0 / 0.35);
-  transition: transform var(--duration-fast) var(--ease-in-out), background var(--duration-fast) var(--ease-in-out);
   translate: -50% -50%;
+  transition:
+    transform var(--duration-fast) var(--ease-in-out),
+    background var(--duration-fast) var(--ease-in-out);
 }
 
 .fiesta-player:hover {
-  transform: scale(1.18);
-  background: var(--color-accent-text);
   color: var(--color-accent-bg);
+  background: var(--color-accent-text);
+  transform: scale(1.18);
 }
 
 .fiesta-player:focus-visible {
   outline: 2px dotted var(--color-focus);
   outline-offset: var(--size-outline-offset-thick);
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Screen } from '@ulam/ube'
+import Screen from './A11yScreen.jsx'
 
 class ErrorBoundary extends Component {
   constructor(props) {

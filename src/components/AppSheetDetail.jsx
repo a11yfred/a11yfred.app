@@ -261,7 +261,7 @@ export default function AppSheetDetail({ entry, agenticMode = false, focusTrigge
           {entry.relatedSC.length > 0 && (
             <p className="sheet-detail-sc-row">
               <span className="sheet-detail-sc-label">{t('detail.related_sc')}</span>{' '}
-              <span className="sheet-detail-sc-links">
+              <span>
                 {entry.relatedSC.map((r, i) => (
                   <span key={r}>
                     <A11yLinkSc label={r} />{i < entry.relatedSC.length - 1 && ', '}

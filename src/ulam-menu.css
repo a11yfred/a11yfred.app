@@ -1,25 +1,30 @@
 @import "./tokens.css";
 
-/* ═══════════════════════════════════════════════════════════
-   Ulam Menu (Framework Package Menu/Demo)
-   ════════════════════════════════════════════════════════════ */
+/* ==========================================================================
+   CSS Section Hierarchy:
+   1. Menu Container & Brand Header (Main wrapper, logo, taglines, descriptive texts)
+   2. Main Content & Section Layouts (Section containers, rows, alignment, titles)
+   3. Form Inputs & Control Local Overrides (Input fields, textareas, wrapper overlays, clear buttons)
+   4. Status Indicators (Info, success, and warning decorators)
+   5. Interactive Modals & Panels (Shell templates, modals)
+   ========================================================================== */
 
-/* ─── Menu Container ───────────────────────────────────────── */
+/* ==========================================================================
+   1. Menu Container & Brand Header
+   ========================================================================== */
 
 .ulam-menu {
   min-height: 100vh;
-  background: var(--color-bg);
-  color: var(--color-text-body);
   font-family: var(--font);
   font-size: var(--fs-body);
+  color: var(--color-text-body);
+  background: var(--color-bg);
 }
-
-/* ─── Header ───────────────────────────────────────────────── */
 
 .ulam-menu-header {
   padding: var(--size-8) var(--size-6);
-  border-bottom: 1px solid var(--color-border);
   background: var(--color-bg-subtle);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .ulam-menu-header-brand {
@@ -43,24 +48,24 @@
 }
 
 .ulam-menu-desc {
+  margin: 0;
+  max-width: 56ch;
   font-size: var(--fs-small);
   color: var(--color-text-muted);
-  max-width: 56ch;
-  margin: 0;
 }
 
-/* ─── Main Content ─────────────────────────────────────────── */
+/* ==========================================================================
+   2. Main Content & Section Layouts
+   ========================================================================== */
 
 .ulam-menu-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: var(--size-6) var(--size-4);
   display: flex;
   flex-direction: column;
   gap: var(--size-10);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--size-6) var(--size-4);
 }
-
-/* ─── Section ───────────────────────────────────────────────── */
 
 .ulam-section {
   display: flex;
@@ -69,12 +74,12 @@
 }
 
 .ulam-section-title {
+  padding-bottom: var(--size-2);
   font-size: var(--fs-small);
   font-weight: 600;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-text-muted);
-  padding-bottom: var(--size-2);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -84,19 +89,17 @@
   gap: var(--size-4);
 }
 
-/* ─── Row ───────────────────────────────────────────────────── */
-
 .ulam-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--size-4);
   align-items: center;
+  gap: var(--size-4);
 }
 
 .ulam-row-label {
+  padding-top: 2px;
   font-size: var(--fs-small);
   color: var(--color-text-muted);
-  padding-top: 2px;
 }
 
 .ulam-row-content {
@@ -105,8 +108,6 @@
   align-items: center;
   gap: var(--size-3);
 }
-
-/* ─── Component Helpers ────────────────────────────────────── */
 
 .ulam-chip-group {
   display: flex;
@@ -133,18 +134,20 @@
   }
 }
 
-/* ─── Input Styles (Menu-local, no app dependencies) ────────── */
+/* ==========================================================================
+   3. Form Inputs & Control Local Overrides
+   ========================================================================== */
 
 .ulam-input {
+  width: 100%;
+  max-width: 320px;
   height: 2.75rem;
   padding: 0 var(--size-3);
+  font-size: var(--fs-body);
+  color: var(--color-text-body);
+  background: var(--color-bg);
   border: var(--size-border-width-thin) solid var(--color-border-control);
   border-radius: var(--rounded);
-  background: var(--color-bg);
-  color: var(--color-text-body);
-  font-size: var(--fs-body);
-  width: 100%;
-  max-width: 320px; /* mobile input constraint */
 }
 
 .ulam-input:focus-visible {
@@ -160,22 +163,22 @@
 @media (prefers-reduced-transparency: reduce) {
   .ulam-input[aria-disabled="true"] {
     opacity: 1;
-    background-color: var(--color-border);
     border-color: var(--color-border-control);
+    background-color: var(--color-border);
   }
 }
 
 .ulam-textarea {
+  width: 100%;
+  max-width: 480px;
   padding: var(--size-3);
+  font-size: var(--fs-body);
+  color: var(--color-text-body);
+  line-height: 1.5;
+  resize: vertical;
+  background: var(--color-bg);
   border: var(--size-border-width-thin) solid var(--color-border-control);
   border-radius: var(--rounded);
-  background: var(--color-bg);
-  color: var(--color-text-body);
-  font-size: var(--fs-body);
-  width: 100%;
-  max-width: 480px; /* mobile textarea constraint */
-  resize: vertical;
-  line-height: 1.5;
 }
 
 .ulam-textarea:focus-visible {
@@ -187,8 +190,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  max-width: 320px;
   width: 100%;
+  max-width: 320px;
 }
 
 .ulam-input-wrap .ulam-input {
@@ -199,13 +202,13 @@
 .ulam-input-clear {
   position: absolute;
   right: var(--size-2);
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--color-text-muted);
   display: flex;
   align-items: center;
   padding: var(--size-1);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
   border-radius: var(--rounded-sm);
 }
 
@@ -214,35 +217,9 @@
   outline-offset: var(--focus-outline-offset);
 }
 
-/* ─── Overlay Helpers ───────────────────────────────────────── */
-
-.ulam-overlay-content {
-  padding: var(--size-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-4);
-}
-
-.ulam-overlay-content h3 {
-  font-size: var(--fs-body);
-  font-weight: 600;
-}
-
-.ulam-modal-actions {
-  display: flex;
-  gap: var(--size-3);
-  justify-content: flex-end;
-  margin-top: var(--size-4);
-}
-
-.ulam-panel-shell {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: var(--color-bg);
-}
-
-/* ─── Status Indicators ────────────────────────────────────── */
+/* ==========================================================================
+   4. Status Indicators
+   ========================================================================== */
 
 .ulam-status {
   display: flex;
@@ -262,7 +239,39 @@
   color: var(--severity-high-text, #b45309);
 }
 
-/* ─── Responsive ────────────────────────────────────────────── */
+/* ==========================================================================
+   5. Interactive Modals & Panels
+   ========================================================================== */
+
+.ulam-overlay-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-4);
+  padding: var(--size-6);
+}
+
+.ulam-overlay-content h3 {
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+.ulam-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--size-3);
+  margin-top: var(--size-4);
+}
+
+.ulam-panel-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--color-bg);
+}
+
+/* ==========================================================================
+   6. Responsive Layout Adjustments
+   ========================================================================== */
 
 @media (width >= 768px) {
   .ulam-row {
@@ -273,4 +282,3 @@
     padding: var(--size-8) var(--size-6);
   }
 }
-
