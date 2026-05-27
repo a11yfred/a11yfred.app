@@ -1,0 +1,10 @@
+{
+  "esversion": 11,
+  "browser": true,
+  "node": true,
+  "devel": true,
+  "module": true,
+  "asi": true,
+  "boss": true,
+  "eqnull": true
+}
