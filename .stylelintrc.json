@@ -1,6 +1,6 @@
 {
   "extends": ["stylelint-config-standard"],
-  "plugins": ["@a11yfred/neighbor"],
+  "plugins": ["@a11yfred/neighbor/stylelint"],
   "rules": {
     "neighbor/user-preferences": true,
     "neighbor/no-outline-none": true,

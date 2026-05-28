@@ -562,19 +562,19 @@ textarea[aria-disabled="true"].settings-key-input {
 
 
 
-.settings-panel ube-panel-header,
+/* .settings-panel ube-panel-header,
 .page-panel ube-panel-header,
 .settings-panel > div:first-child,
 .page-panel > div:first-child {
   display: flex !important;
   align-items: center !important;
   gap: var(--size-2) !important;
-}
+} */
 
 .settings-panel h2,
 .page-panel h2 {
   min-width: 0;
-  margin: 0 0 var(--size-4) 0;
+  /* margin: 0 0 var(--size-4) 0; */
   font-size: var(--fs-h2);
   font-weight: 700;
   color: var(--color-text-heading);

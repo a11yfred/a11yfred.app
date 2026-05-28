@@ -229,7 +229,7 @@ const A11yDrawerPanelSettings = forwardRef(function AppDrawerPanelSettings({
   return (
     <Panel
       ref={settingsPanelRef}
-      className="settings-panel page-panel"
+      className="page-panel"
       heading={t('settings.heading')}
       onClose={guardedClose}
       closeAriaLabel={t('settings.back')}

@@ -417,10 +417,10 @@ textarea.sheet-detail-input {
 .btn,
 .btn--primary.btn--field,
 .btn--secondary.btn--field {
-  display: flex !important;
+  /* display: flex; */
   align-items: center;
-  justify-content: center;
-  gap: var(--size-1);
+  /* justify-content: center;
+  gap: var(--size-1); */
   min-height: var(--size-touch-target);
   padding: 0 var(--size-3);
   font-size: var(--fs-body);
