@@ -24,24 +24,7 @@
   --letter-spacing-sm: 0.1em;
 
   /* Sizing — renamed from spacing to --size-* prefix */
-  --size-1: 0.25rem;
-  --size-2: 0.5rem;
-  --size-3: 0.75rem;
-  --size-4: 1rem;
-  --size-5: 1.25rem;
-  --size-6: 1.5rem;
-  --size-7: 1.75rem;
-  --size-8: 2rem;
-  --size-9: 2.25rem;
-  --size-10: 2.5rem;
-  --size-11: 2.75rem;
-  --size-12: 3rem;
-
-  --size-touch-target: 48px;
-  --size-input-big: 4rem;
-  --size-control: calc(var(--size-touch-target) / 2);
-  --size-modal-max-width: 720px;
-  --size-panel-width-mobile: min(360px, calc(100vw - var(--size-8)));
+  /* Redundant size tokens removed: now in ulam/packages/ube/base-tokens.css */
   /* Icon sizing — unused in a11yfred */
   --size-icon-sm: var(--size-2);
   --size-icon-md: var(--size-4);
@@ -51,9 +34,7 @@
   --inset-input-icon: 8px;
 
   /* Border widths */
-  --size-border-width-thin: 1px;
-  --size-border-width-normal: 2px;
-  --size-border-width-thick: 3px;
+  /* Redundant border tokens removed */
 
   /* Outline offset */
   --size-outline-offset-thin: 1px;
@@ -61,29 +42,15 @@
   --size-outline-offset-thick: 3px;
 
   /* Background overlay */
-  --overlay-bg: rgb(0 0 0 / 0.45);
+  /* Redundant overlay token removed */
 
   /* Announce toast colors (reduced-transparency fallback) */
   --announce-toast-bg-default: #111;
   --announce-toast-bg-assertive: #b40000;
 
   /* Color — renamed to --color-* prefix */
-  --color-bg:              #f2f2f2;
-  --color-bg-subtle:       #e8e8e8;
-  --color-border:          #d0d0d0;
-  --color-border-control:  #626262;
-  --color-text-heading:    #2b2b2b;
-  --color-text-body:       #4a4a4a;
-  --color-text-muted:      #6a6a6a;
-  --color-text-disabled:   #a8a8a8;
-  --color-accent:          #5548c8;
-  --color-accent-bg:       #eeedfe;
-  --color-accent-text:     #3c3489;
+  /* Core base colors removed (now in base-tokens) */
   --color-border-control-accent: var(--color-text-muted);
-  --color-success:         #2d6a4f;
-  --color-error:           #b91c1c;
-  --color-focus:           #5548c8;
-  --color-focus-disabled:  var(--color-text-disabled);
 
   /* Badge tokens */
   --badge-bg:                 #fce7e6;
@@ -137,21 +104,7 @@
 }
 
 [data-theme="dark"] {
-  --color-bg:          #111;
-  --color-bg-subtle:   #1a1a1a;
-  --color-border:      #2a2a2a;
-  --color-text-heading:  #eee;
-  --color-text-body:     #999;
-  --color-text-muted:    #888;
-  --color-text-disabled: #505050;
-  --color-accent:      #7f77dd;
-  --color-accent-bg:   #26215c;
-  --color-accent-text: #afa9ec;
   --color-border-control-accent: var(--color-text-muted);
-  --color-success:     #5dca8a;
-  --color-error:       #f87171;
-  --color-focus:       #a09ce8;
-  --color-border-control: #686868;
 
   /* Invert badge tokens for dark mode */
   --badge-bg:                 #3b1515;
@@ -176,7 +129,7 @@
   --platform-bg:              #1e293b;
 
   /* Overlay backdrop dimming */
-  --overlay-bg: rgb(0 0 0 / 0.45);
+  /* Redundant overlay token removed */
 
   /* Announce toast colors (reduced-transparency fallback) */
   --announce-toast-bg-default: #222;
@@ -194,39 +147,8 @@ textarea {
 }
 
 /* ─── Toggle Input Fix ────────────────────────────────────────────────────
-   Fix: Make toggle input cover full clickable area
+   Fix removed — now handled in framework (ulam/packages/ube/form-control-toggle.css)
 ───────────────────────────────────────────────────────────────────────────── */
-
-.toggle {
-  pointer-events: auto;
-}
-
-.toggle__input {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-  z-index: var(--z-index-focus-local);
-  pointer-events: auto;
-}
-
-/* Ensure thumb is not interactive (input handles it) */
-.toggle__thumb {
-  pointer-events: none;
-  cursor: inherit;
-}
-
-/* Match radio background and hover state */
-.toggle__track {
-  background-color: var(--color-border);
-  border: var(--size-border-width-thin) solid var(--color-border-control-accent);
-}
-
-.toggle:not([aria-disabled="true"]):hover:not(:has(.toggle__input:checked)) .toggle__track {
-  background-color: var(--color-bg-subtle);
-}
 
 /* Control border */
 .control {

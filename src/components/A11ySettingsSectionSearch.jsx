@@ -83,16 +83,15 @@ export default function SettingsSectionSearch({
   return (
     <section className="panel-section">
       <h3 className="panel-section-heading">{t('settings.search_section')}</h3>
-
-      <div className="panel-section panel-data-row">
+      <div className="panel-group">
         <div className="panel-row">
           <div className="panel-row-label">
             <h3 className="panel-field-label">{t('settings.platform_label')}</h3>
             <p className="panel-field-desc">
-              {pendingPlatform === 'all'    ? <>Show <strong>all results</strong> across web, native apps, and documents.</> :
-               pendingPlatform === 'web'    ? <>Show <strong>web-oriented</strong> results.</> :
-               pendingPlatform === 'native' ? <>Show <strong>native app-oriented</strong> results.</> :
-                                              <>Show <strong>document-oriented</strong> results.</>
+              {pendingPlatform === 'all' ? <>Show <strong>all results</strong> across web, native apps, and documents.</> :
+                pendingPlatform === 'web' ? <>Show <strong>web-oriented</strong> results.</> :
+                  pendingPlatform === 'native' ? <>Show <strong>native app-oriented</strong> results.</> :
+                    <>Show <strong>document-oriented</strong> results.</>
               }
             </p>
             {pendingPlatform !== platform && <PendingNote t={t} />}
@@ -102,9 +101,9 @@ export default function SettingsSectionSearch({
               <legend className="sr-only">{t('settings.platform_label')}</legend>
               <div className="radio-chip-group">
                 {[
-                  { value: 'all',      labelKey: 'settings.platform_all',      announceKey: 'settings.platform_all_announce'      },
-                  { value: 'web',      labelKey: 'settings.platform_web',      announceKey: 'settings.platform_web_announce'      },
-                  { value: 'native',   labelKey: 'settings.platform_native',   announceKey: 'settings.platform_native_announce'   },
+                  { value: 'all', labelKey: 'settings.platform_all', announceKey: 'settings.platform_all_announce' },
+                  { value: 'web', labelKey: 'settings.platform_web', announceKey: 'settings.platform_web_announce' },
+                  { value: 'native', labelKey: 'settings.platform_native', announceKey: 'settings.platform_native_announce' },
                   { value: 'document', labelKey: 'settings.platform_document', announceKey: 'settings.platform_document_announce' },
                 ].map(({ value, labelKey, announceKey }) => (
                   <FormControlRadioChip
@@ -122,7 +121,7 @@ export default function SettingsSectionSearch({
         </div>
       </div>
 
-      <div className="panel-section">
+      <div className="panel-group">
         <div className="panel-toggle-row">
           <div className="panel-row-label">
             <label htmlFor="toggle-live-search" className="panel-field-label">{t('settings.live_search_label')}</label>
@@ -182,8 +181,8 @@ export default function SettingsSectionSearch({
             <legend className="panel-radio-legend">{t('settings.wcag_level_legend')}</legend>
             <div className="panel-radio-group">
               {[
-                { value: 'A',   labelKey: 'settings.wcag_level_a'   },
-                { value: 'AA',  labelKey: 'settings.wcag_level_aa'  },
+                { value: 'A', labelKey: 'settings.wcag_level_a' },
+                { value: 'AA', labelKey: 'settings.wcag_level_aa' },
                 { value: 'AAA', labelKey: 'settings.wcag_level_aaa' },
               ].map(({ value, labelKey }) => (
                 <label key={value} className="control__label">

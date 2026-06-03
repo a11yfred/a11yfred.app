@@ -15,15 +15,7 @@
    ========================================================================== */
 
 :root {
-  --toggle-radius: var(--rounded-full);
   --inset-input-icon: var(--size-2);
-  --size-border-width-thick: 3px;
-  --toggle-thumb-size: calc(var(--toggle-height) - var(--size-border-width-normal));
-  --toggle-thumb-transition-offset: calc(var(--size-touch-target) - var(--toggle-thumb-size) - 1px);
-  --toggle-border-width: calc(var(--toggle-thumb-size) / 12);
-  --toggle-on-width: calc(var(--toggle-thumb-size) / 12);
-  --toggle-on-height: calc(var(--toggle-thumb-size) / 2);
-  --toggle-off-size: calc(var(--toggle-thumb-size) / 2);
 }
 
 p {
@@ -285,36 +277,7 @@ input[type="radio"].control:checked {
 
 
 
-.toggle__track {
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border-control);
-}
 
-.toggle__thumb,
-.toggle__off {
-  border-radius: var(--rounded-full);
-}
-
-.toggle__thumb {
-  background: var(--color-border);
-  outline: var(--size-border-width-thin) solid var(--color-border-control-accent);
-  transform: var(--transform-center-y);
-}
-
-[data-theme="dark"] .toggle__thumb {
-  background: var(--color-text-disabled);
-  outline-color: var(--color-border);
-}
-
-[data-theme="dark"] .toggle:not(:has(.toggle__input:checked)) .toggle__track {
-  background: var(--color-bg-subtle);
-  border-color: var(--color-border-control-accent);
-}
-
-input[role="switch"]:not([aria-disabled="true"]):focus-visible + span,
-input[role="switch"][aria-disabled="true"]:focus-visible + span {
-  border-radius: var(--toggle-radius);
-}
 
 .radio-chip {
   gap: var(--size-2);
@@ -330,9 +293,9 @@ input[role="switch"][aria-disabled="true"]:focus-visible + span {
   margin-top: var(--size-1);
 }
 
-.panel-toggle-row .panel-pending-note {
+/* .panel-toggle-row .panel-pending-note {
   margin-top: 0;
-}
+} */
 
 [class*="badge--"] {
   padding: var(--size-1) var(--size-2);

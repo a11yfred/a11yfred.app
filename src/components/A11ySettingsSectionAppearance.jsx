@@ -2,10 +2,6 @@ import { FormControlRadioChip, FormControlSelect, Button } from '@ulam/ube'
 import { Check } from 'lucide-react'
 import { useT } from '../hooks/useTranslate.js'
 import { announce } from '@ulam/taho'
-
-
-
-
 import { SETTINGS_FLASH_MS } from '../utils/constants.js'
 import LANGUAGES from '../data/languages.js'
 
@@ -40,33 +36,42 @@ export default function SettingsSectionAppearance({
   return (
     <section className="panel-section">
       <h3 className="panel-section-heading">{t('settings.appearance')}</h3>
-
-      {pendingTheme !== theme && <PendingNote t={t} />}
-      <fieldset>
-        <legend className="sr-only">{t('settings.appearance')}</legend>
-        <div className="radio-chip-group">
-          {[
-            { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
-            { value: 'auto',  labelKey: 'settings.theme_auto',  announceKey: 'settings.theme_auto_announce'  },
-            { value: 'dark',  labelKey: 'settings.theme_dark',  announceKey: 'settings.theme_dark_announce'  },
-            ...(fiestaUnlocked ? [{ value: 'fiesta', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
-          ].map(({ value, labelKey, announceKey }) => (
-            <FormControlRadioChip
-              key={value}
-              name="theme-setting"
-              value={value}
-              label={t(labelKey)}
-              current={pendingTheme}
-              onChange={(val) => {
-                if (val === 'fiesta') { setFiestaConfirmOpen(true); return }
-                setPendingTheme(val); announce(t(announceKey))
-              }}
-            />
-          ))}
+      <div className="panel-group">
+        <div className="panel-row">
+          <div className="panel-row-label">
+            <h3 className="panel-field-label">Theme</h3>
+            <p className="panel-field-desc">The current theme is <strong>{theme}</strong>.</p>
+          </div>
+          {pendingTheme !== theme && <PendingNote t={t} />}
+          <div className="panel-row-control">
+            <fieldset>
+              <legend className="sr-only">{t('settings.appearance')}</legend>
+              <div className="radio-chip-group">
+                {[
+                  { value: 'light', labelKey: 'settings.theme_light', announceKey: 'settings.theme_light_announce' },
+                  { value: 'auto', labelKey: 'settings.theme_auto', announceKey: 'settings.theme_auto_announce' },
+                  { value: 'dark', labelKey: 'settings.theme_dark', announceKey: 'settings.theme_dark_announce' },
+                  ...(fiestaUnlocked ? [{ value: 'fiesta', labelKey: 'settings.theme_party', announceKey: 'settings.theme_party_announce' }] : []),
+                ].map(({ value, labelKey, announceKey }) => (
+                  <FormControlRadioChip
+                    key={value}
+                    name="theme-setting"
+                    value={value}
+                    label={t(labelKey)}
+                    current={pendingTheme}
+                    onChange={(val) => {
+                      if (val === 'fiesta') { setFiestaConfirmOpen(true); return }
+                      setPendingTheme(val); announce(t(announceKey))
+                    }}
+                  />
+                ))}
+              </div>
+            </fieldset>
+          </div>
         </div>
-      </fieldset>
+      </div>
 
-      <div className="panel-section">
+      <div className="panel-group">
         <div className="panel-row">
           <div className="panel-row-label">
             <label htmlFor="language-select" className="panel-field-label">{t('settings.language_label')}</label>

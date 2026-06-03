@@ -34,7 +34,7 @@ export default function SettingsSectionAi({
     <section className="panel-section">
       <h3 className="panel-section-heading">{t('settings.ai_heading')}</h3>
 
-      <div className="panel-section panel-section--no-spacing">
+      <div className="panel-group">
         <div className="panel-toggle-row">
           <div className="panel-row-label">
             <label htmlFor="toggle-ai" className="panel-field-label">{t('settings.ai_enable_label')}</label>
@@ -75,7 +75,7 @@ export default function SettingsSectionAi({
         )}
       </div>
 
-      <div className="settings-provider-group">
+      <div className="panel-group">
         <label htmlFor="active-model" className="panel-field-label">
           {t('settings.model_label')}
         </label>
@@ -97,7 +97,7 @@ export default function SettingsSectionAi({
         </FormControlSelect>
       </div>
 
-      <div className="settings-key-group">
+      <div className="panel-group">
         <label htmlFor="apikey-input" className="panel-field-label">
           {t('settings.api_key_label_prefix')}{activeProvider && `, ${PROVIDERS.find(p => p.id === activeProvider)?.label}`}
           {pendingAiEnabled && <span className="panel-field-required"> {t('settings.api_key_required')}</span>}
@@ -124,7 +124,7 @@ export default function SettingsSectionAi({
         )}
       </div>
 
-      <div className="panel-section">
+      <div className="panel-group">
         <div className="panel-toggle-row">
           <div className="panel-row-label">
             <label htmlFor="toggle-agentic" className="panel-field-label">{t('settings.agentic_mode_label')}</label>
