@@ -275,10 +275,6 @@ input[type="radio"].control:checked {
   margin-top: var(--size-2);
 }
 
-
-
-
-
 .radio-chip {
   gap: var(--size-2);
 }
